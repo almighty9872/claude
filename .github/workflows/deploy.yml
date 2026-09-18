@@ -1,0 +1,57 @@
+# Builds the static pages from data/ and content/ with tools/build.ps1 and publishes them to GitHub Pages.
+# Runs on every push to "main" (e.g. after editing content/hakkinda.md or data/*.js on github.com),
+# and can also be started by hand from the Actions tab ("Run workflow").
+#
+# One-time setup: repository Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build pages (PowerShell 7 is preinstalled on GitHub runners)
+        shell: pwsh
+        run: ./tools/build.ps1   # site URL comes from the CNAME file
+
+      - name: Collect the public files into _site
+        run: |
+          mkdir -p _site
+          cp -r ./*.html sitemap.xml robots.txt assets data _site/
+          if [ -f CNAME ]; then cp CNAME _site/; fi
+          touch _site/.nojekyll
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

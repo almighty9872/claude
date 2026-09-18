@@ -1,0 +1,9 @@
+# OS / editor files
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Temporary build output used by the GitHub Actions workflow
+_site/

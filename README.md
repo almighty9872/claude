@@ -1,0 +1,107 @@
+# Katolik Kilisesi İnanç Esasları Özeti
+
+This is a static Turkish edition of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005). It contains all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix (prayers in Turkish, English and Latin, plus the doctrinal formulas).
+
+The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
+
+## Folder layout
+
+```
+index.html              Home: search box + the four Parts as expandable panels (Part → Section → Chapter)
+iman-ikrari.html        Part I · Q 1–217   (reading page: sticky contents sidebar, chapter prev/next,
+kutsal-sirlar.html      Part II · Q 218–356  "English" button per question + "show all English")
+mesihte-yasam.html      Part III · Q 357–533
+hristiyan-duasi.html    Part IV · Q 534–598
+hakkinda.html           About page, generated from content/hakkinda.md
+404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
+motu-proprio.html       Motu Proprio (Turkish, English paragraph by paragraph on demand)
+giris.html              Introduction (same)
+ekler.html              Appendix: prayers (TR/EN/LA) + formulas of Catholic doctrine
+sitemap.xml, robots.txt
+assets/styles.css       All styling. Theme tokens at the top: dark = navy/gold, light = ivory/gold
+assets/script.js        Theme, clock, English reveal, search, reading bar, contents drawer
+assets/fonts/           EB Garamond .woff2 files (SIL Open Font License)
+assets/og-image.jpg     1200×630 social preview image
+data/compendium-1..4.js ← THE CONTENT (Turkish + English pairs), one file per part
+data/extras.js          ← Motu Proprio, Introduction, Creeds, Decalogue, Our Father, Appendix
+content/hakkinda.md     ← ABOUT PAGE TEXT (Markdown)
+tools/build.ps1         Regenerates the static pages from data/ and content/
+.github/workflows/deploy.yml  Builds and publishes the site on every push to main
+CNAME                   Your domain (one line). Also used for canonical/sitemap URLs
+```
+
+Search works on every page: it loads the four data files the first time someone uses it, then searches the Turkish and English text, or jumps straight to a question number. `index.html?q=...` opens the home page with a search already filled in.
+
+## Editing content
+
+1. Edit the text in `data/compendium-N.js` or `data/extras.js`. The format is described at the top of each file. A Q&A entry looks like this:
+   ```js
+   { "type": "qa", "n": 16, "id": "soru-16", "ccc": "85–90, 100",
+     "tr": { "q": "…", "a": "… [[Petrus'un|Peter]] ardılı …" },
+     "en": { "q": "…", "a": "…" } }
+   ```
+   - `[[Türkçe|English]]` marks a name that is spelled differently in Turkish. It is displayed as "Petrus'un (Peter)".
+   - In an answer, `\n` starts a new paragraph, and a line that starts with `- ` becomes a bullet point.
+   - Keep the text between the `/*JSON-START*/` and `/*JSON-END*/` markers as strict JSON: use double quotes and no trailing commas.
+2. Rebuild the static pages:
+   ```
+   powershell -ExecutionPolicy Bypass -File tools\build.ps1
+   ```
+   On macOS or Linux, run `pwsh tools/build.ps1` instead. The build takes about one second. On GitHub this happens automatically on every push (see below).
+
+Search reads the data files at runtime, so edits show up in search results immediately. The pages themselves are pre-rendered for search engines, so they need the build.
+
+**Domain:** the build reads your domain from the `CNAME` file (one line, e.g. `ornekalan.com`) and uses `https://<that domain>` for canonical, Open Graph and sitemap URLs. The file currently holds the placeholder `alanadiniz.com`, so the build prints a warning and falls back to `https://www.example.com` until you replace it.
+
+## Editing the About page
+
+Edit `content/hakkinda.md`. On github.com, open the file, click the pencil icon and commit. The workflow rebuilds `hakkinda.html` in about a minute. The top block (between the `---` lines) sets the title, subtitle and search-engine description. The rest is Markdown:
+
+| Write | Result |
+|---|---|
+| `## Heading` / `### Smaller heading` | section headings |
+| blank line between lines | new paragraph |
+| `**bold**`, `*italic*` | **bold**, *italic* |
+| `[link text](https://…)` | link |
+| `- item` or `1. item` | bullet / numbered list |
+| `> text` | highlighted quote |
+| `---` | divider line |
+
+Raw HTML is shown as plain text, so the page can't be broken by accident.
+
+## Publishing on GitHub Pages with your Cloudflare domain
+
+**1. Put the files in the repository.** The *contents* of this folder go at the root of the repository, so `index.html` is at the top level. Include the hidden files (`.github/`, `.nojekyll`, `.gitignore`, `.gitattributes`). The branch must be called `main`.
+- With GitHub Desktop or git: add everything, commit, push.
+- In the browser: repository → **Add file → Upload files**, drag in everything *inside* this folder (not the folder itself), then commit.
+
+**2. Turn on Pages (one time).** Repository → **Settings → Pages → Build and deployment → Source: "GitHub Actions"**. Pushing now runs the workflow; watch it under the **Actions** tab (a green tick means it's live).
+
+**3. Set your domain.**
+- Put your domain in `CNAME` (e.g. `ornekalan.com` or `www.ornekalan.com`) and commit.
+- Settings → Pages → **Custom domain**: enter the same domain → Save. (With Actions deployments, this setting, not the CNAME file, is what GitHub uses for serving; the file feeds the build.)
+
+**4. Cloudflare DNS** (Cloudflare → your domain → DNS → Records). Keep your existing GitHub verification TXT record.
+- Apex domain (`ornekalan.com`): four **A** records for `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`. Optional **AAAA** records for `@`: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`.
+- `www`: a **CNAME** record `www` → `<your-github-username>.github.io`. GitHub then redirects between www and the apex automatically.
+- Set these records to **DNS only** (grey cloud) at first, so GitHub can issue its HTTPS certificate.
+
+**5. HTTPS.** Once Settings → Pages shows the DNS check passed and the certificate is ready (minutes to a few hours), tick **Enforce HTTPS**. After that you may switch the Cloudflare records to **Proxied** (orange cloud) if you want Cloudflare's CDN. If you do, set Cloudflare **SSL/TLS mode to "Full (strict)"**. Never use "Flexible", which causes a redirect loop.
+
+**Updating later:** edit `data/*.js`, `content/hakkinda.md` or the assets, then commit. The workflow rebuilds and republishes. You don't need to run `tools/build.ps1` yourself (only for previewing locally).
+
+## Translation conventions
+
+- **Terminology** follows Turkish Catholic usage: Kutsal Sır (sacrament), Efkaristiya, Konfirmasyon, Tövbe ve Barışma, Kutsal Üçlü, Havari, Öğretim Makamı (Magisterium), Araf, Kutsal Ayin (Missa), and so on.
+- **Names:** when a name is spelled differently in Turkish, the first mention in each card shows the Turkish form followed by the English in parentheses, e.g. Petrus (Peter), Aziz Augustinus (Saint Augustine), İznik (Nicaea), Kadıköy (Kalkedon) (Chalcedon). İsa (Jesus) and Meryem (Mary) appear on almost every card, so they are not glossed each time. The footer explains this.
+- **Scripture:** citations keep the Catholic canon and the verse numbering of the Vatican source. That includes the Deuterocanonical books (e.g. 2 Makabeler 7:28, Bilgelik, Sirak) and the Catholic Psalm verse numbering (e.g. Mezmurlar 51:19). Book names are in Turkish.
+- **Source corrections:** a few errors in the Vatican page were fixed, and each fix is marked:
+  - Q420: "Galatians 1:25" becomes James 1:25. There is an editor's note on the card.
+  - Q39: the CCC reference "2112–213" becomes 212–213.
+  - Introduction footnote: "Laetarum magnopere" becomes *Laetamur magnopere*.
+- **Q469 (death penalty):** the card translates the 2005 text faithfully and adds an editor's note about Pope Francis' 2018 revision of CCC 2267.
+
+## Notes before publishing
+
+- This is an **unofficial translation**. The original text is © Libreria Editrice Vaticana, and publishing a translation publicly normally requires LEV's permission. You may also want a Turkish Catholic reviewer (for example, someone connected to the Episcopal Conference of Türkiye) to check the terminology before launch.
+- Serve the files with gzip or brotli. Most hosts do this automatically. With compression, the largest page (Part 1) is about 110 KB.
