@@ -13,5 +13,6 @@ Bu site, Katolik Kilisesi Katekizmi Özeti’ni (Compendium) Türkçe okumak ist
 
 - Kaynak metin: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html)
 - Türkçe çeviri © 2026 David Erduran
+- Özgün metin © 2005 Libreria Editrice Vaticana
 
 *Son güncelleme: 18 Eylül 2026*
