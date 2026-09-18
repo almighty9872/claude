@@ -61,7 +61,7 @@ $X = Read-Data 'extras.js'
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
   1 = @{ file = 'iman-ikrari.html';     ord = 'Birinci Kısım';  roman = 'I';
-         desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İman İkrarı. Vahiy, Kutsal Yazı, Kutsal Üçlü, İsa Mesih, Kutsal Ruh, Kilise, Meryem ve sonsuz yaşam üzerine 1–217. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İnanç Beyanı. Vahiy, Kutsal Yazı, Kutsal Üçlü, İsa Mesih, Kutsal Ruh, Kilise, Meryem ve sonsuz yaşam üzerine 1–217. sorular." }
   2 = @{ file = 'kutsal-sirlar.html';   ord = 'İkinci Kısım';   roman = 'II';
          desc = "Katolik Kilisesi Katekizmi Özeti, İkinci Kısım: Hristiyan Gizeminin Kutlanması. Litürji ve yedi Kutsal Sır (Vaftiz, Konfirmasyon, Efkaristiya, Tövbe, Evlilik…) üzerine 218–356. sorular." }
   3 = @{ file = 'mesihte-yasam.html';   ord = 'Üçüncü Kısım';   roman = 'III';
@@ -229,7 +229,7 @@ $NavItems = @(
   @{ href = 'index.html';           t = 'Ana Sayfa' },
   @{ href = 'motu-proprio.html';    t = 'Motu Proprio' },
   @{ href = 'giris.html';           t = 'Giriş' },
-  @{ href = 'iman-ikrari.html';     t = 'I. İman İkrarı' },
+  @{ href = 'iman-ikrari.html';     t = 'I. İnanç Beyanı' },
   @{ href = 'kutsal-sirlar.html';   t = 'II. Hristiyan Gizeminin Kutlanması' },
   @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam" },
   @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası' },

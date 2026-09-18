@@ -1,5 +1,5 @@
 /* =====================================================================
- * Katolik Kilisesi İnanç Esasları Özeti — Birinci Kısım: İman İkrarı
+ * Katolik Kilisesi İnanç Esasları Özeti — Birinci Kısım: İnanç Beyanı
  * Compendium of the Catechism of the Catholic Church — Part 1: The Profession of Faith
  * Sorular / Questions 1–217
  *
@@ -25,10 +25,10 @@
  * ===================================================================== */
 window.COMPENDIUM = window.COMPENDIUM || { parts: [] };
 COMPENDIUM.parts[0] = /*JSON-START*/{
-  "part": 1, "slug": "iman-ikrari", "tr": "İman İkrarı", "en": "The Profession of Faith", "from": 1, "to": 217,
+  "part": 1, "slug": "inanc-beyani", "tr": "İnanç Beyanı", "en": "The Profession of Faith", "from": 1, "to": 217,
   "items": [
-    { "type": "heading", "level": 1, "id": "birinci-kisim-iman-ikrari",
-      "tr": "Birinci Kısım: İman İkrarı",
+    { "type": "heading", "level": 1, "id": "birinci-kisim-inanc-beyani",
+      "tr": "Birinci Kısım: İnanç Beyanı",
       "en": "Part One: The Profession of Faith" },
     { "type": "heading", "level": 2, "id": "birinci-bolum-inaniyorum-inaniyoruz",
       "tr": "Birinci Bölüm: “İnanıyorum” – “İnanıyoruz”",
@@ -261,8 +261,8 @@ COMPENDIUM.parts[0] = /*JSON-START*/{
       "tr": "“Göğün ve yerin Yaratıcısı, her şeye gücü yeten Baba Tanrı’ya inanıyorum.”",
       "en": "“I believe in God the Father Almighty, Creator of heaven and earth.”" },
     { "type": "qa", "n": 36, "id": "soru-36", "ccc": "198–199",
-      "tr": { "q": "İman İkrarı neden “Tanrı’ya inanıyorum” sözleriyle başlar?",
-              "a": "İman İkrarı bu sözlerle başlar; çünkü “Tanrı’ya inanıyorum” onaylaması en önemli olanıdır: İnsana ve dünyaya ilişkin diğer bütün gerçeklerin ve Tanrı’ya inanan herkesin tüm yaşamının kaynağıdır." },
+      "tr": { "q": "İnanç Beyanı neden “Tanrı’ya inanıyorum” sözleriyle başlar?",
+              "a": "İnanç Beyanı bu sözlerle başlar; çünkü “Tanrı’ya inanıyorum” onaylaması en önemli olanıdır: İnsana ve dünyaya ilişkin diğer bütün gerçeklerin ve Tanrı’ya inanan herkesin tüm yaşamının kaynağıdır." },
       "en": { "q": "Why does the Profession of Faith begin with the words, “I believe in God”?",
               "a": "The Profession of Faith begins with these words because the affirmation “I believe in God” is the most important, the source of all the other truths about man and about the world, and about the entire life of everyone who believes in God." } },
     { "type": "qa", "n": 37, "id": "soru-37", "ccc": "200–202, 228",
