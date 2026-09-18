@@ -14,7 +14,8 @@
   No dependencies: Windows PowerShell 5.1 or PowerShell 7+ (Windows/macOS/Linux).
   Keep this file saved as UTF-8 WITH BOM so Windows PowerShell 5.1 reads the
   Turkish text correctly, and do not use typographic quote characters in string
-  literals (PowerShell treats them as quotes); use &#8220; &#8221; &#8217; instead.
+  literals (PowerShell treats them as quotes); use &#8220; &#8221; in markup, and
+  $Apos for the Turkish suffix apostrophe in text that Attr() will escape.
 
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File tools\build.ps1 -SiteUrl https://www.yourdomain.com
@@ -38,6 +39,10 @@ if (-not $SiteUrl) {
 $SiteUrl = $SiteUrl.TrimEnd('/')
 $BuildDate = (Get-Date).ToString('yyyy-MM-dd')
 $Utf8 = New-Object System.Text.UTF8Encoding $false
+# Turkish suffix apostrophe (U+2019). Built from its code point on purpose: PowerShell
+# treats a typographic quote as a string delimiter, so it must not appear in a literal,
+# and &#8217; is no use in text that Attr() escapes. Interpolate it as $Apos instead.
+$Apos = [char]0x2019
 $SiteName = 'Katolik Kilisesi İnanç Esasları Özeti'
 $SiteNameEn = 'Compendium of the Catechism of the Catholic Church'
 
@@ -60,9 +65,9 @@ $PartMeta = @{
   2 = @{ file = 'kutsal-sirlar.html';   ord = 'İkinci Kısım';   roman = 'II';
          desc = "Katolik Kilisesi Katekizmi Özeti, İkinci Kısım: Hristiyan Gizeminin Kutlanması. Litürji ve yedi Kutsal Sır (Vaftiz, Konfirmasyon, Efkaristiya, Tövbe, Evlilik…) üzerine 218–356. sorular." }
   3 = @{ file = 'mesihte-yasam.html';   ord = 'Üçüncü Kısım';   roman = 'III';
-         desc = "Katolik Kilisesi Katekizmi Özeti, Üçüncü Kısım: Mesih'te Yaşam. İnsan onuru, vicdan, erdemler, günah, lütuf ve On Emir üzerine 357–533. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, Üçüncü Kısım: Mesih$($Apos)te Yaşam. İnsan onuru, vicdan, erdemler, günah, lütuf ve On Emir üzerine 357–533. sorular." }
   4 = @{ file = 'hristiyan-duasi.html'; ord = 'Dördüncü Kısım'; roman = 'IV';
-         desc = "Katolik Kilisesi Katekizmi Özeti, Dördüncü Kısım: Hristiyan Duası. Dua ve Rab'bin Duası (Göklerdeki Babamız) üzerine 534–598. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, Dördüncü Kısım: Hristiyan Duası. Dua ve Rab$($Apos)bin Duası (Göklerdeki Babamız) üzerine 534–598. sorular." }
 }
 
 # ------------------------------------------------------------------ helpers
@@ -226,7 +231,7 @@ $NavItems = @(
   @{ href = 'giris.html';           t = 'Giriş' },
   @{ href = 'iman-ikrari.html';     t = 'I. İman İkrarı' },
   @{ href = 'kutsal-sirlar.html';   t = 'II. Hristiyan Gizeminin Kutlanması' },
-  @{ href = 'mesihte-yasam.html';   t = "III. Mesih'te Yaşam" },
+  @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam" },
   @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası' },
   @{ href = 'ekler.html';           t = 'Ekler' },
   @{ href = 'hakkinda.html';        t = 'Hakkında' }
@@ -235,7 +240,7 @@ $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
   return "<form class=`"search $cls`" role=`"search`" data-search action=`"index.html`"><div class=`"search-field`">$IcoSearch" +
-    "<label class=`"visually-hidden`" for=`"$id`">Özet'te ara (Türkçe veya İngilizce, ya da soru numarası)</label>" +
+    "<label class=`"visually-hidden`" for=`"$id`">Özet$($Apos)te ara (Türkçe veya İngilizce, ya da soru numarası)</label>" +
     "<input id=`"$id`" type=`"search`" name=`"q`" placeholder=`"$placeholder`" autocomplete=`"off`" enterkeyhint=`"search`"></div>" +
     "<div class=`"search-results`" hidden></div></form>"
 }
@@ -448,7 +453,7 @@ $bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $Sit
   '"translationOfWork":{"@type":"Book","name":' + (JStr $SiteNameEn) + ',"inLanguage":"en","datePublished":"2005-06-28","publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"}},' +
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.tr) + ',"url":' + (JStr "$SiteUrl/$($PartMeta[[int]$_.part].file)") + '}' }) -join ',') + ']}'
 Write-Page -File 'index.html' -Title "$SiteName | Katolik Kilisesi Katekizmi Özeti, 598 Soru ve Yanıt" `
-  -Description "Katolik Kilisesi Katekizmi Özeti'nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte." `
+  -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte." `
   -Path '' -Body $homeBody -JsonLd @($webSiteLd, $bookLd) -HeaderSearch $false
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
@@ -478,9 +483,9 @@ $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-pa
   (Parallel-Paragraphs $mp.tr.paragraphs $mp.en.paragraphs) +
   "<div class=`"signature`">$((($mp.tr.closing | ForEach-Object { "<p>$(Inline $_)</p>" }) -join ''))<div class=`"en-block en-par`" lang=`"en`" hidden>$((($mp.en.closing | ForEach-Object { "<p>$_</p>" }) -join ''))</div></div>"
 $mpLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr "Motu Proprio: $($mp.tr.title)") + ',"inLanguage":"tr","datePublished":"2005-06-28","author":{"@type":"Person","name":"Papa XVI. Benediktus"},"publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"},"mainEntityOfPage":' + (JStr "$SiteUrl/motu-proprio.html") + '}'
-Article-Page 'motu-proprio.html' 'Motu Proprio' 'Motu Proprio' "Katolik Kilisesi Katekizmi Özeti'nin Onaylanması ve Yayımlanması İçin Motu Proprio" `
+Article-Page 'motu-proprio.html' 'Motu Proprio' 'Motu Proprio' "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Onaylanması ve Yayımlanması İçin Motu Proprio" `
   'Motu Proprio for the approval and publication of the Compendium of the Catechism of the Catholic Church' $mpBody `
-  "Papa XVI. Benediktus'un 28 Haziran 2005 tarihli Motu Proprio'su: Katolik Kilisesi Katekizmi Özeti'nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin." $mpLd
+  "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin." $mpLd
 
 $in = $X.introduction
 $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
@@ -488,7 +493,7 @@ $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
   "<div class=`"footnotes`">$(Parallel-Paragraphs $in.tr.footnotes $in.en.footnotes)</div>"
 $inLd = '{"@context":"https://schema.org","@type":"Article","headline":"Giriş","inLanguage":"tr","datePublished":"2005-03-20","author":{"@type":"Person","name":"Kardinal Joseph Ratzinger"},"mainEntityOfPage":' + (JStr "$SiteUrl/giris.html") + '}'
 Article-Page 'giris.html' 'Giriş' 'Önsöz' 'Giriş' 'Introduction' $inBody `
-  "Katolik Kilisesi Katekizmi Özeti'nin Girişi (Kardinal Joseph Ratzinger, 2005): Özet'in hazırlanışı, üç temel özelliği ve dört kısmı. Türkçe çeviri ve İngilizce asıl metin." $inLd
+  "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Girişi (Kardinal Joseph Ratzinger, 2005): Özet$($Apos)in hazırlanışı, üç temel özelliği ve dört kısmı. Türkçe çeviri ve İngilizce asıl metin." $inLd
 
 # ================================================================== APPENDIX (ekler.html)
 $prayers = ($X.appendix.prayers | ForEach-Object { Text-Card $_ $_.id 3 "<div class=`"verse`">$(Verse $_.tr.text)</div>" "<div class=`"verse`">$(Verse $_.en.text)</div>" }) -join "`n"
@@ -514,7 +519,7 @@ $formulas
 </div>
 "@
 Write-Page -File 'ekler.html' -Title "Ekler: Sık Kullanılan Dualar ve Katolik Öğretinin Formülleri | $SiteName" `
-  -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince dualar (Haç İşareti, Selam Sana Meryem, Rab'bin Meleği, Salve Regina, Magnificat, Te Deum, Tespih) ve Katolik öğretinin formülleri." `
+  -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince dualar (Haç İşareti, Selam Sana Meryem, Rab$($Apos)bin Meleği, Salve Regina, Magnificat, Te Deum, Tespih) ve Katolik öğretinin formülleri." `
   -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html'))
 
 # ================================================================== ABOUT PAGE (hakkinda.html) from content/hakkinda.md

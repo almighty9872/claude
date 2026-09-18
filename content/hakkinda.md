@@ -1,6 +1,6 @@
 ---
 title: Bu Site Hakkında
-subtitle: Katolik Kilisesi İnanç Esasları Özeti'nin Türkçe çevirisi
+subtitle: Katolik Kilisesi İnanç Esasları Özeti’nin Türkçe çevirisi
 description: Katolik Kilisesi İnanç Esasları Özeti sitesinin amacı, çevirisi ve iletişim bilgileri.
 ---
 
@@ -8,7 +8,7 @@ description: Katolik Kilisesi İnanç Esasları Özeti sitesinin amacı, çeviri
 
 ## Bu site nedir?
 
-Bu site, Katolik Kilisesi Katekizmi Özeti'ni (Compendium) Türkçe okumak isteyenler için hazırlanmıştır.
+Bu site, Katolik Kilisesi Katekizmi Özeti’ni (Compendium) Türkçe okumak isteyenler için hazırlanmıştır.
 
 ## Çeviri hakkında
 
