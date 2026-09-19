@@ -62,6 +62,7 @@ $Parts = @(1..4 | ForEach-Object { Read-Data "compendium-$_.js" })
 $X = Read-Data 'extras.js'
 $FaqData = Read-Data 'sss.js'
 $Rosary = Read-Data 'tespih.js'
+$Sureci = Read-Data 'katolik-sureci.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -320,6 +321,7 @@ $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
 $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
+$IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
 $IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
@@ -368,6 +370,7 @@ $Sprite
             <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
           </li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
+          <li><a class="nav-link" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)>Katolik Süreci</a></li>
           <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
         </ul>
       </nav>
@@ -396,6 +399,7 @@ $Sprite
       $sheetPray
       <p class="ns-label">Diğer</p>
       <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
+      <a class="ns-item" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)><span class="ns-t">Katolik Süreci</span><span class="ns-s">Katolik olma süreci</span></a>
       <button type="button" class="ns-item ns-info" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
     </nav>
     <div class="ns-foot">$ClockHtml</div>
@@ -629,6 +633,12 @@ $homeBody = @"
       <span class="hub-s">Katolik olmayanların ve inancını yeni tanıyanların en sık sorduğu sorular, Katekizm$($Apos)e dayanan yanıtlarıyla.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
+    <a class="hub-card" href="katolik-sureci.html">
+      <span class="hub-ico">$IcoWay</span>
+      <span class="hub-t">Katolik Süreci</span>
+      <span class="hub-s">Katolik olmak isteyenler için: OCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
   </div>
   $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
 </div>
@@ -755,6 +765,47 @@ $kkBody = @"
 Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -Description $KkMeta.description `
   -Path 'kutsal-kitap.html' -Body $kkBody -JsonLd @((Breadcrumb-Ld 'Kutsal Kitap' 'kutsal-kitap.html'))
 
+# ================================================================== KATOLIK SURECI (katolik-sureci.html)
+$pathCards = ($Sureci.paths | ForEach-Object {
+  "<article class=`"text-card`"><h3 class=`"t-title`">$(Inline $_.title)</h3><div class=`"verse`">$(Verse $_.text)</div></article>"
+}) -join ""
+$stageList = ($Sureci.steps | ForEach-Object {
+  $i = [array]::IndexOf(@($Sureci.steps), $_) + 1
+  "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(Inline $_.title)</h3><p class=`"stage-en label`" lang=`"en`">$($_.en)</p><p>$(Inline $_.text)</p></div></li>"
+}) -join "`n"
+$sureciFaq = ($Sureci.faq | ForEach-Object {
+  "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
+    "<div class=`"faq-a`"><p>$(Inline $_.a)</p></div></details>"
+}) -join "`n"
+$sureciBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Katolik Süreci')
+  <header class="page-head center"><p class="label">Katolik Süreci</p><h1>$($Sureci.title)</h1><p class="sub" lang="en">$($Sureci.en)</p></header>
+  <p class="faq-intro">$(Inline $Sureci.intro)</p>
+  <h2 class="section-title" id="iki-yol"><span class="label">1</span>İki Yol</h2>
+  <div class="text-grid two">$pathCards</div>
+  <h2 class="section-title" id="surec"><span class="label">2</span>Süreç Adım Adım</h2>
+  <p class="faq-intro">$(Inline $Sureci.processIntro)</p>
+  <ol class="stage-list">
+$stageList
+  </ol>
+  <h2 class="section-title" id="zaten-hristiyan"><span class="label">3</span>$($Sureci.already.title)</h2>
+  <div class="prose">$(Blocks $Sureci.already.body)</div>
+  <h2 class="section-title" id="sartli-vaftiz"><span class="label">4</span>$($Sureci.conditional.title)</h2>
+  <div class="prose">$(Blocks $Sureci.conditional.body)</div>
+  <h2 class="section-title" id="beklerken"><span class="label">5</span>$($Sureci.waiting.title)</h2>
+  <div class="prose">$(Blocks $Sureci.waiting.body)</div>
+  <h2 class="section-title" id="pratik-sorular"><span class="label">6</span>Pratik Sorular</h2>
+  <div class="faq-list">
+$sureciFaq
+  </div>
+  <p class="conventions">Bu sayfadaki genel OCIA süreci evrensel bir Kilise düzenlemesidir (1972, Tanrısal Kült Cemaati); yukarıdaki bazı ayrıntılar (Paskalya Nöbeti dışında kabul, günah çıkarmanın zamanlaması gibi) ABD Katolik Episkoposlar Konferansı’nın Kateşümenlik İçin Ulusal Tüzüğü’nden (1986) alınmıştır. Kendi bölgenizdeki uygulama için en yakın cemaat kilisenize danışın.</p>
+</div>
+"@
+Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" `
+  -Description "Katolik olmak isteyenler için: OCIA/RCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler, hangi hazırlık gerekir." `
+  -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Süreci' 'katolik-sureci.html'))
+
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
 # The bead ring is generated rather than hand-drawn: five decades of one large bead
 # and ten small ones, with the pendant and crucifix above, mirroring a real rosary.
@@ -861,7 +912,7 @@ $pages = @(
   @{ p = ''; pr = '1.0' }, @{ p = 'katesizm.html'; pr = '0.9' },
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
-  @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' },
+  @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }
 )
