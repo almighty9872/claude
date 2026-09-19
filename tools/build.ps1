@@ -61,6 +61,7 @@ function Read-Data([string]$file) {
 $Parts = @(1..4 | ForEach-Object { Read-Data "compendium-$_.js" })
 $X = Read-Data 'extras.js'
 $FaqData = Read-Data 'sss.js'
+$Rosary = Read-Data 'tespih.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -269,6 +270,19 @@ function Render-Items($items) {
 }
 
 # ------------------------------------------------------------------ page shell
+# ---------------- content/*.md pages (front matter + minimal Markdown)
+function Read-Md([string]$name) {
+  $p = Join-Path (Join-Path $Root 'content') $name
+  $md = if (Test-Path $p) { [IO.File]::ReadAllText($p, [Text.Encoding]::UTF8) } else { '' }
+  $meta = @{}
+  $fmm = [regex]::Match($md, '^\uFEFF?\s*---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)')
+  if ($fmm.Success) {
+    foreach ($line in ($fmm.Groups[1].Value -split "`n")) { $kv = [regex]::Match($line, '^\s*([A-Za-z_]+)\s*:\s*(.*?)\s*$'); if ($kv.Success) { $meta[$kv.Groups[1].Value.ToLower()] = $kv.Groups[2].Value.Trim('"', "'") } }
+    $md = $md.Substring($fmm.Length)
+  }
+  return @{ meta = $meta; body = $md }
+}
+
 # ---------------- info panel (the old hakkinda.html, now a hover panel in the bar)
 # content/hakkinda.md stays the editable source; only its rendering moved.
 $aboutFile = Join-Path (Join-Path $Root 'content') 'hakkinda.md'
@@ -282,6 +296,8 @@ if ($fmMatch.Success) {
 $h1m = [regex]::Match($aboutMd, '(?m)^#\s+(.+?)\s*$')
 if ($h1m.Success) { $aboutMd = $aboutMd.Remove($h1m.Index, $h1m.Length) }
 $InfoHtml = Convert-Markdown $aboutMd
+$Kk = Read-Md 'kutsal-kitap.md'
+$KkMeta = $Kk.meta
 
 # Top bar: brand, Katesizm (a link that also opens a dropdown of the seven texts),
 # Sorular, and an (i) that reveals content/hakkinda.md on hover.
@@ -295,8 +311,14 @@ $TextNav = @(
   @{ href = 'ekler.html';           t = 'Ekler';                              s = 'Dualar ve formüller' }
 )
 # Every page that belongs to the Compendium, for the 'is-section' state and the breadcrumb
+$PrayerNav = @(
+  @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Meryem Ana Tesbih Duası' }
+)
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
+$PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
+$IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
+$IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
 $IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
@@ -315,6 +337,14 @@ function Header-Html([bool]$withSearch, [string]$current) {
   $textMenu = ($TextNav | ForEach-Object {
     "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
   }) -join ''
+  $inPray = $PrayerPages -contains $current
+  $prayCls = if ($inPray) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
+  $prayerMenu = ($PrayerNav | ForEach-Object {
+    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
+  }) -join ''
+  $sheetPray = ($PrayerNav | ForEach-Object {
+    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
+  }) -join ''
   $sheetText = ($TextNav | ForEach-Object {
     "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
   }) -join ''
@@ -330,6 +360,11 @@ $Sprite
           <li class="has-menu">
             <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Kateşizm$IcoChev</a>
             <div class="nav-menu glass" id="nav-katesizm"><ul>$textMenu</ul></div>
+          </li>
+          <li><a class="nav-link" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)>Kutsal Kitap</a></li>
+          <li class="has-menu">
+            <button type="button" class="$prayCls" aria-expanded="false" aria-controls="nav-dualar" aria-haspopup="true">Dualar$IcoChev</button>
+            <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
           </li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
           <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
@@ -354,6 +389,10 @@ $Sprite
       <p class="ns-label">Kateşizm</p>
       <a class="ns-item" href="katesizm.html"$(Cur 'katesizm.html' $current)><span class="ns-t">$WorkName</span><span class="ns-s">598 soru ve yanıt</span></a>
       $sheetText
+      <p class="ns-label">Kutsal Kitap</p>
+      <a class="ns-item" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)><span class="ns-t">Kutsal Kitap</span><span class="ns-s">Onaylı çeviriler</span></a>
+      <p class="ns-label">Dualar</p>
+      $sheetPray
       <p class="ns-label">Diğer</p>
       <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
       <button type="button" class="ns-item ns-info" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
@@ -560,11 +599,8 @@ Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
 
 # ---------------- index.html: the site hub
 $homeBody = @"
-<section class="hero wrap narrow">
+<section class="hero wrap narrow home-hero">
   $Logo
-  <h1 class="site-title">$SiteName</h1>
-  <p class="subtitle">$SiteTag</p>
-  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
 </section>
 <div class="wrap narrow">
   <div class="hub">
@@ -574,6 +610,18 @@ $homeBody = @"
       <span class="hub-s">$WorkName. İman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
+    <a class="hub-card" href="kutsal-kitap.html">
+      <span class="hub-ico">$IcoBook</span>
+      <span class="hub-t">Kutsal Kitap</span>
+      <span class="hub-s">$($KkMeta.short)</span>
+      <span class="hub-go">Devamını oku$IcoNext</span>
+    </a>
+    <a class="hub-card" href="tesbih-duasi.html">
+      <span class="hub-ico">$IcoBeads</span>
+      <span class="hub-t">Tesbih Duası</span>
+      <span class="hub-s">Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, bütün gizemler ve tesbihin nasıl dua edileceği.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
     <a class="hub-card" href="sss.html">
       <span class="hub-ico">$IcoAsk</span>
       <span class="hub-t">Sorular</span>
@@ -581,6 +629,7 @@ $homeBody = @"
       <span class="hub-go">Oku$IcoNext</span>
     </a>
   </div>
+  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
 </div>
 "@
 $webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JStr $SiteName) +
@@ -694,6 +743,105 @@ Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" `
   -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, Efkaristiya, papalık, araf, evrim, acı ve kötülük." `
   -Path 'sss.html' -Body $sssBody -JsonLd @($faqLd, (Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 
+# ================================================================== KUTSAL KITAP (kutsal-kitap.html)
+$kkBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Kutsal Kitap')
+  <header class="page-head center"><p class="label">Kutsal Kitap</p><h1>$($KkMeta.title)</h1><p class="sub">$($KkMeta.subtitle)</p></header>
+  <div class="body prose">$(Convert-Markdown $Kk.body)</div>
+</div>
+"@
+Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -Description $KkMeta.description `
+  -Path 'kutsal-kitap.html' -Body $kkBody -JsonLd @((Breadcrumb-Ld 'Kutsal Kitap' 'kutsal-kitap.html'))
+
+# ================================================================== TESBIH DUASI (tesbih-duasi.html)
+# The bead ring is generated rather than hand-drawn: five decades of one large bead
+# and ten small ones, with the pendant and crucifix above, mirroring a real rosary.
+$cx = 180.0; $cy = 372.0; $rr = 138.0
+$sb = New-Object Text.StringBuilder
+$seq = 0
+function Bead([double]$x, [double]$y, [string]$kind, [string]$prayer, [int]$n) {
+  $cls = if ($kind -eq 'lg') { 'bead lg' } else { 'bead sm' }
+  $rad = if ($kind -eq 'lg') { '8.5' } else { '5.6' }
+  return "<circle class=`"$cls`" cx=`"$x`" cy=`"$y`" r=`"$rad`" data-p=`"$prayer`" data-n=`"$n`"></circle>"
+}
+# pendant, from the crucifix down to the medal
+$seq++; $crossN = $seq
+$pend = ""
+$seq++; $pend += Bead 180 200 'lg' 'goklerdeki-pederimiz' $seq
+foreach ($y in 175, 152, 129) { $seq++; $pend += Bead 180 $y 'sm' 'selam-sana-meryem' $seq }
+$seq++; $pend += Bead 180 100 'lg' 'pedere-san' $seq
+$seq++; $medalN = $seq
+# the ring
+$ring = ""
+for ($i = 0; $i -lt 55; $i++) {
+  $ang = (-90.0 + (($i + 1) * 360.0 / 56.0)) * [Math]::PI / 180.0
+  $x = [Math]::Round($cx + $rr * [Math]::Cos($ang), 1)
+  $y = [Math]::Round($cy + $rr * [Math]::Sin($ang), 1)
+  $isBig = ($i % 11) -eq 0
+  $seq++
+  $ring += Bead $x $y ($(if ($isBig) { 'lg' } else { 'sm' })) ($(if ($isBig) { 'goklerdeki-pederimiz' } else { 'selam-sana-meryem' })) $seq
+}
+$rosarySvg = '<svg class="rosary" viewBox="0 0 360 560" role="img" aria-label="Tesbih">' +
+  '<circle class="ring-guide" cx="180" cy="372" r="138"></circle>' +
+  '<path class="ring-guide" d="M180 100 V 234"></path>' +
+  '<g class="cross-g" data-p="iman-aciklamasi" data-n="' + $crossN + '">' +
+    '<rect class="bead cross" x="172" y="28" width="16" height="62" rx="3"></rect>' +
+    '<rect class="bead cross" x="152" y="46" width="56" height="16" rx="3"></rect></g>' +
+  $pend +
+  '<circle class="bead medal" cx="180" cy="234" r="10" data-p="hac-isareti" data-n="' + $medalN + '"></circle>' +
+  $ring + '</svg>'
+
+$mysterySets = ($Rosary.sets | ForEach-Object {
+  $items = ($_.items | ForEach-Object { "<li><span class=`"m-tr`">$(Inline $_.tr)</span><span class=`"m-en`" lang=`"en`">$($_.en)</span></li>" }) -join ''
+  "<article class=`"myst`" data-days=`"$($_.days -join ',')`" id=`"gizem-$($_.id)`">" +
+    "<header><h3>$(Inline $_.tr)</h3><p class=`"m-day label`">$($_.dayTr)</p><p class=`"m-en-title`" lang=`"en`">$($_.en)</p></header>" +
+    "<ol class=`"myst-list`">$items</ol></article>"
+}) -join "`n"
+$stepList = ($Rosary.steps | ForEach-Object {
+  "<li><span class=`"s-tr`">$(Inline $_.tr)</span><span class=`"s-en`" lang=`"en`">$($_.en)</span></li>"
+}) -join ''
+$prayerCards = ($Rosary.prayers | ForEach-Object {
+  "<article class=`"pray`" id=`"dua-$($_.id)`" data-p=`"$($_.id)`">" +
+    "<h3>$(Inline $_.tr.title)</h3>" +
+    "<div class=`"p-tr`">$(Verse $_.tr.text)</div>" +
+    "<div class=`"p-en`" lang=`"en`"><span class=`"label`">$($_.en.title)</span>$(Verse $_.en.text)</div>" +
+  "</article>"
+}) -join "`n"
+$tespihBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Tesbih Duası')
+  <header class="page-head center"><p class="label">Dualar</p><h1>$($Rosary.title)</h1><p class="sub" lang="en">$($Rosary.en)</p></header>
+  <p class="faq-intro">$(Inline $Rosary.intro)</p>
+  <div class="rosary-wrap">
+    <div class="rosary-figure">$rosarySvg</div>
+    <div class="rosary-side">
+      <p class="label">Bugünün gizemleri</p>
+      <p class="today-set" data-today-set>...</p>
+      <ol class="today-list" data-today-list></ol>
+      <div class="rosary-controls">
+        <button type="button" class="btn btn-gold" data-rosary-play aria-pressed="false">Tesbihi izle</button>
+        <button type="button" class="btn" data-rosary-reset>Baştan</button>
+      </div>
+      <div class="rosary-now" data-rosary-now hidden><span class="label" data-now-title></span><div data-now-text></div></div>
+    </div>
+  </div>
+  <h2 class="section-title" id="gizemler">Gizemler</h2>
+  <div class="myst-grid">
+$mysterySets
+  </div>
+  <h2 class="section-title" id="nasil">Tesbih nasıl dua edilir?</h2>
+  <ol class="steps">$stepList</ol>
+  <h2 class="section-title" id="dualar">Dualar</h2>
+  <div class="pray-grid">
+$prayerCards
+  </div>
+</div>
+"@
+Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
+  -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." `
+  -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
+
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
 $notFoundBody = @"
 <div class="wrap narrow">
@@ -715,6 +863,7 @@ $pages = @(
   @{ p = ''; pr = '1.0' }, @{ p = 'katesizm.html'; pr = '0.9' },
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
+  @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }
 )

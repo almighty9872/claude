@@ -489,6 +489,95 @@
     window.addEventListener('resize', function () { if (!panel.hidden && !pinned) hide(); });
   }
 
+  /* ---------------------------------------------------------------
+     10. Rosary: today's mysteries in Istanbul time, and a walk
+         through the beads with the prayer for each one.
+     --------------------------------------------------------------- */
+  function initRosary() {
+    var svg = $('.rosary');
+    if (!svg) return;
+    var beads = $$('.bead[data-n]', svg).sort(function (a, b) {
+      return +a.getAttribute('data-n') - +b.getAttribute('data-n');
+    });
+    var crossG = $('.cross-g', svg);
+
+    /* The day is the one in Turkey, not the visitor's own time zone. */
+    function istanbulDay() {
+      try {
+        var name = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', weekday: 'short' }).format(new Date());
+        var i = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(name);
+        if (i !== -1) return i;
+      } catch (e) { /* fall through */ }
+      return new Date().getDay();
+    }
+    var day = istanbulDay(), todaySet = null;
+    $$('.myst').forEach(function (m) {
+      var days = (m.getAttribute('data-days') || '').split(',').map(Number);
+      if (days.indexOf(day) !== -1) { m.classList.add('is-today'); todaySet = m; }
+    });
+    if (todaySet) {
+      var label = $('[data-today-set]'), list = $('[data-today-list]');
+      if (label) label.textContent = $('h3', todaySet).textContent;
+      if (list) {
+        list.innerHTML = '';
+        $$('.m-tr', todaySet).forEach(function (li) {
+          var el = document.createElement('li'); el.textContent = li.textContent; list.appendChild(el);
+        });
+      }
+    }
+
+    /* Each bead names a prayer; the text already sits on the page, so read it from there. */
+    var now = $('[data-rosary-now]'), nowTitle = $('[data-now-title]'), nowText = $('[data-now-text]');
+    function show(el) {
+      var id = el.getAttribute('data-p');
+      var card = $('.pray[data-p="' + id + '"]');
+      if (!card || !now) return;
+      $$('.pray').forEach(function (c) { c.classList.toggle('is-active', c === card); });
+      now.hidden = false;
+      if (nowTitle) nowTitle.textContent = $('h3', card).textContent;
+      if (nowText) nowText.innerHTML = $('.p-tr', card).innerHTML;
+    }
+    function mark(el) {
+      $$('.bead.on', svg).forEach(function (b) { b.classList.remove('on'); });
+      if (el.classList.contains('cross')) { $$('.bead.cross', svg).forEach(function (b) { b.classList.add('on'); }); }
+      else el.classList.add('on');
+    }
+    function pick(el) { mark(el); show(el); }
+
+    beads.forEach(function (b) { b.addEventListener('click', function () { stop(); pick(b); }); });
+    if (crossG) crossG.addEventListener('click', function () { stop(); pick(crossG.querySelector('.bead')); });
+
+    var timer = null, at = -1;
+    var playBtn = $('[data-rosary-play]'), resetBtn = $('[data-rosary-reset]');
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+      if (playBtn) { playBtn.setAttribute('aria-pressed', 'false'); playBtn.textContent = 'Tesbihi izle'; }
+    }
+    function step() {
+      at++;
+      if (at >= beads.length) { at = beads.length - 1; stop(); return; }
+      beads[at].classList.add('done');
+      pick(beads[at]);
+    }
+    if (playBtn) {
+      playBtn.addEventListener('click', function () {
+        if (timer) { stop(); return; }
+        playBtn.setAttribute('aria-pressed', 'true');
+        playBtn.textContent = 'Duraklat';
+        step();
+        timer = setInterval(step, 1600);
+      });
+    }
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        stop(); at = -1;
+        $$('.bead', svg).forEach(function (b) { b.classList.remove('on', 'done'); });
+        $$('.pray').forEach(function (c) { c.classList.remove('is-active'); });
+        if (now) now.hidden = true;
+      });
+    }
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -501,6 +590,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary();
   });
 })();

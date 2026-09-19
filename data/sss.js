@@ -27,7 +27,7 @@ window.COMPENDIUM_FAQ = /*JSON-START*/{
           "id": "uc-tanri",
           "q": "Katolikler üç Allah’a mı inanır?",
           "ccc": "232–234, 253–256, 266",
-          "a": "Hayır. Tek bir Allah vardır; Hristiyanlar çoktanrıcı değildir. Kutsal Üçlü öğretisi üç tanrı olduğunu değil, tek Allah’ın üç Kişi olarak (Peder, Oğul ve Kutsal Ruh) var olduğunu söyler.\nBurada bir çelişki yoktur; çünkü “bir” olan ile “üç” olan aynı şey değildir. Allah özü (doğası) bakımından birdir ve bölünmez; Kişiler bakımından üçtür. Peder Oğul değildir, Oğul Kutsal Ruh değildir; ama her biri tam ve bütün olarak tek Allah’tır. Üç Kişi, tek tanrısal özü aralarında paylaşmaz; her biri ona bütünüyle sahiptir.\nBu, insan aklının kendiliğinden bulabileceği bir şey değildir; Allah’ın kendisi hakkında açıkladığı bir sırdır ve ancak imanla kabul edilir."
+          "a": "Hayır. Tek bir Allah vardır; Hristiyanlar çoktanrıcı değildir. Kutsal Üçlü öğretisi üç tanrı olduğunu değil, tek Allah’ın üç Kişi olarak (Peder, Oğul ve Kutsal Ruh) var olduğunu söyler.\nBurada bir çelişki yoktur; çünkü “bir” olan ile “üç” olan aynı şey değildir. Allah özü (doğası) bakımından birdir ve bölünmez; Kişiler bakımından üçtür. Peder Oğul değildir, Oğul Kutsal Ruh değildir; ama her biri tam ve bütün olarak tek Allah’tır. Üç Kişi, tek ilahi özü aralarında paylaşmaz; her biri ona bütünüyle sahiptir.\nBu, insan aklının kendiliğinden bulabileceği bir şey değildir; Allah’ın kendisi hakkında açıkladığı bir sırdır ve ancak imanla kabul edilir."
         },
         {
           "id": "heykeller-tasvirler",
