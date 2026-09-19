@@ -63,6 +63,7 @@ $X = Read-Data 'extras.js'
 $FaqData = Read-Data 'sss.js'
 $Rosary = Read-Data 'tespih.js'
 $Sureci = Read-Data 'katolik-sureci.js'
+$Saints = Read-Data 'azizler.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -322,6 +323,7 @@ $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
 $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
 $IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
+$IcoStar = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2c1 2.8 1.9 4.4 3.4 5.8 1.5 1.4 3.1 2.1 5.4 2.7-2.3.6-3.9 1.4-5.4 2.7-1.5 1.4-2.4 3-3.4 5.8-1-2.8-1.9-4.4-3.4-5.8-1.5-1.3-3.1-2.1-5.4-2.7 2.3-.6 3.9-1.3 5.4-2.7 1.5-1.4 2.4-3 3.4-5.8z"/></svg>'
 $IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
@@ -369,6 +371,7 @@ $Sprite
             <button type="button" class="$prayCls" aria-expanded="false" aria-controls="nav-dualar" aria-haspopup="true">Dualar$IcoChev</button>
             <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
           </li>
+          <li><a class="nav-link" href="azizler.html"$(Cur 'azizler.html' $current)>Azizler</a></li>
           <li><a class="nav-link" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)>Kutsal Kitap</a></li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
           <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
@@ -397,6 +400,8 @@ $Sprite
       <a class="ns-item" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)><span class="ns-t">Katolik Süreci</span><span class="ns-s">Katolik olma süreci</span></a>
       <p class="ns-label">Dualar</p>
       $sheetPray
+      <p class="ns-label">Azizler</p>
+      <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></a>
       <p class="ns-label">Kutsal Kitap</p>
       <a class="ns-item" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)><span class="ns-t">Kutsal Kitap</span><span class="ns-s">Onaylı çeviriler</span></a>
       <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
@@ -627,6 +632,12 @@ $homeBody = @"
       <span class="hub-s">Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, bütün gizemler ve tesbihin nasıl dua edileceği.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
+    <a class="hub-card" href="azizler.html">
+      <span class="hub-ico">$IcoStar</span>
+      <span class="hub-t">Azizler</span>
+      <span class="hub-s">Ayin takviminin azizleri: bugünün azizini görün, yılın her günü için hayat hikayelerini keşfedin.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
     <a class="hub-card" href="kutsal-kitap.html">
       <span class="hub-ico">$IcoBook</span>
       <span class="hub-t">Kutsal Kitap</span>
@@ -806,6 +817,66 @@ Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" `
   -Description "Katolik olmak isteyenler için: OCIA/RCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler, hangi hazırlık gerekir." `
   -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Süreci' 'katolik-sureci.html'))
 
+# ================================================================== AZIZLER (azizler.html)
+$MonthNamesTr = @('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
+function Rank-Class([string]$rank) {
+  if (-not $rank) { return 'rk-other' }
+  if ($rank -match 'En Büyük Bayram') { return 'rk-hi' }
+  if ($rank -match 'Büyük Bayram') { return 'rk-solemn' }
+  if ($rank -match '^Bayram$') { return 'rk-feast' }
+  if ($rank -match 'İhtiyari') { return 'rk-optional' }
+  if ($rank -match 'Anma') { return 'rk-memorial' }
+  return 'rk-other'
+}
+function Saint-Item($s) {
+  $titlePart = if ($s.title) { "<span class=`"s-title`">$(Inline $s.title)</span>" } else { '' }
+  return "<details class=`"saint-item`"><summary><span class=`"s-name`">$(Inline $s.name)</span>$titlePart$IcoChev</summary><div class=`"saint-bio`">$(Blocks $s.bio)</div></details>"
+}
+$monthSectionsHtml = (1..12 | ForEach-Object {
+  $mo = $_
+  $monthDays = @($Saints.days | Where-Object { $_.m -eq $mo }) | Sort-Object d
+  $cells = ($monthDays | ForEach-Object {
+    $day = $_
+    if ($day.genel) {
+      "<div class=`"day-cell genel`" data-m=`"$mo`" data-d=`"$($day.d)`"><span class=`"day-num`">$($day.d)</span><details class=`"saint-item genel-item`"><summary><span class=`"s-name`">$(Inline $Saints.genelTitle)</span>$IcoChev</summary><div class=`"saint-bio`">$(Blocks $Saints.genelBio)</div></details></div>"
+    } else {
+      $rc = Rank-Class $day.rank
+      $saintsHtml = (($day.saints | ForEach-Object { Saint-Item $_ }) -join '')
+      "<div class=`"day-cell $rc`" data-m=`"$mo`" data-d=`"$($day.d)`"><span class=`"day-num`">$($day.d)</span><span class=`"day-rank label`">$($day.rank)</span><div class=`"day-saints`">$saintsHtml</div></div>"
+    }
+  }) -join "`n"
+  "<section class=`"month`" id=`"ay-$mo`" data-month=`"$mo`"><h2 class=`"month-title`">$($MonthNamesTr[$mo - 1])</h2><div class=`"day-grid`">$cells</div></section>"
+}) -join "`n"
+$monthPillsHtml = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=`"$_`">$($MonthNamesTr[$_ - 1].Substring(0, 3))</a>" }) -join ''
+$movableCardsHtml = ($Saints.movable | ForEach-Object {
+  "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(Inline $_.title)</h3><p class=`"m-rank label`">$($_.rank)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(Blocks $_.bio)</div></article>"
+}) -join "`n"
+$azizlerBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Azizler')
+  <header class="page-head center"><p class="label">Ayin Takvimi</p><h1>$(Inline $Saints.title)</h1><p class="sub" lang="en">$($Saints.en)</p></header>
+  <p class="faq-intro">$(Inline $Saints.intro)</p>
+  <section class="today-saint glass" id="bugun-azizi" data-today>
+    <p class="label">Bugün <span data-today-date>...</span></p>
+    <div class="today-body" data-today-body><p class="hint">Bugünün azizini görmek için JavaScript$($Apos)i etkinleştirin.</p></div>
+  </section>
+  <nav class="month-pills" aria-label="Aylar" data-month-pills>$monthPillsHtml</nav>
+  <div class="saints-cal" data-saints-cal>
+$monthSectionsHtml
+  </div>
+  <h2 class="section-title" id="hareketli-bayramlar">Hareketli Bayramlar</h2>
+  <p class="faq-intro">Paskalya her yıl farklı bir tarihe denk gelir; ona bağlı bütün bayramlar da (Kül Çarşambası$($Apos)ndan Kutsal Kalp$($Apos)e dek) buna göre kayar. Aşağıdaki tarihler, sayfayı açtığınız yılın Paskalya$($Apos)sına göre otomatik hesaplanır.</p>
+  <div class="myst-grid movable-list" data-movable-list>
+$movableCardsHtml
+  </div>
+  <p class="conventions">Tarihler ve ayin dereceleri Roma Genel Takvimi$($Apos)ni esas alır; hareketli bayramların yılı, Meeus/Jones/Butcher algoritmasıyla hesaplanan Paskalya tarihine göre belirlenir. Aziz hayat öyküleri bu site için Türkçe olarak özgün biçimde kaleme alınmıştır; belirli bir aziz anmasının bulunmadığı günler için Kilise$($Apos)nin kendi tanımı esas alınmıştır.</p>
+</div>
+<div class="hover-panel glass" id="saint-panel" role="tooltip" hidden></div>
+"@
+Write-Page -File 'azizler.html' -Title "$($Saints.title) | $SiteName" `
+  -Description "Katolik ayin takviminin azizleri: bugünün azizini Türkiye saatiyle görün, yılın her günü için Türkçe aziz hayat hikayelerini keşfedin." `
+  -Path 'azizler.html' -Body $azizlerBody -JsonLd @((Breadcrumb-Ld 'Azizler' 'azizler.html'))
+
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
 # The bead ring is generated rather than hand-drawn: five decades of one large bead
 # and ten small ones, with the pendant and crucifix above, mirroring a real rosary.
@@ -914,6 +985,7 @@ $pages = @(
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
+  @{ p = 'azizler.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }
 )

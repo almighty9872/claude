@@ -616,6 +616,171 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
 
+  /* ---------------------------------------------------------------
+     11. Azizler: today's saint in Istanbul time, movable feasts
+         (Easter and everything computed from it) grafted onto the
+         fixed calendar, month scroll-spy, and hover panel for bios.
+     --------------------------------------------------------------- */
+  function initSaints() {
+    var cal = $('.saints-cal');
+    if (!cal) return;
+
+    function istanbulParts() {
+      try {
+        var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date());
+        var o = {};
+        parts.forEach(function (p) { if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
+        if (o.year && o.month && o.day) return o;
+      } catch (e) { /* fall through */ }
+      var d = new Date();
+      return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
+    }
+    /* Meeus/Jones/Butcher Gregorian Easter algorithm (public domain method) */
+    function easter(year) {
+      var a = year % 19, b = Math.floor(year / 100), c = year % 100;
+      var d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+      var g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+      var i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+      var m = Math.floor((a + 11 * h + 22 * l) / 451);
+      var month = Math.floor((h + l - 7 * m + 114) / 31);
+      var day = ((h + l - 7 * m + 114) % 31) + 1;
+      return { m: month, d: day };
+    }
+    function addDays(base, year, n) {
+      var dt = new Date(Date.UTC(year, base.m - 1, base.d));
+      dt.setUTCDate(dt.getUTCDate() + n);
+      return { m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
+    }
+
+    var MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+    var today = istanbulParts();
+    var easterThis = easter(today.year);
+    var movableTodayCard = null;
+
+    /* Resolve this year's movable feasts and graft each onto its fixed-calendar day */
+    $$('.movable-card').forEach(function (card) {
+      var offset = parseInt(card.getAttribute('data-offset'), 10);
+      var date = addDays(easterThis, today.year, offset);
+      var dateEl = $('[data-movable-date]', card);
+      if (dateEl) dateEl.textContent = ' · ' + date.d + ' ' + MONTHS[date.m - 1];
+      var isToday = date.m === today.month && date.d === today.day;
+      if (isToday) movableTodayCard = card;
+      var cell = $('.day-cell[data-m="' + date.m + '"][data-d="' + date.d + '"]');
+      if (!cell) return;
+      cell.classList.add('has-movable');
+      if (cell.classList.contains('genel')) {
+        cell.classList.remove('genel');
+        var oldItem = $('.saint-item', cell);
+        if (oldItem) oldItem.remove();
+      }
+      var wrap = $('.day-saints', cell);
+      if (!wrap) { wrap = document.createElement('div'); wrap.className = 'day-saints'; cell.appendChild(wrap); }
+      var h3 = $('h3', card), bio = $('.m-bio', card);
+      if (!h3 || !bio) return;
+      var det = document.createElement('details');
+      det.className = 'saint-item';
+      det.innerHTML = '<summary><span class="s-name">' + h3.innerHTML + '</span></summary><div class="saint-bio">' + bio.innerHTML + '</div>';
+      wrap.appendChild(det);
+      if (isToday) cell.classList.add('is-today');
+    });
+    if (!movableTodayCard) {
+      var fixedToday = $('.day-cell[data-m="' + today.month + '"][data-d="' + today.day + '"]');
+      if (fixedToday) fixedToday.classList.add('is-today');
+    }
+
+    /* Hero: today's saint(s), in full, above the fold */
+    var dateLabel = $('[data-today-date]');
+    if (dateLabel) dateLabel.textContent = today.day + ' ' + MONTHS[today.month - 1];
+    var body = $('[data-today-body]');
+    if (body) {
+      var source = movableTodayCard || $('.day-cell.is-today');
+      var pieces = [];
+      if (source) {
+        var items = movableTodayCard ? [{ name: $('h3', source).innerHTML, title: '', bio: $('.m-bio', source).innerHTML }] :
+          $$('.saint-item', source).map(function (it) {
+            var t = $('.s-title', it);
+            return { name: $('.s-name', it).innerHTML, title: t ? t.innerHTML : '', bio: $('.saint-bio', it).innerHTML };
+          });
+        items.forEach(function (it) {
+          pieces.push('<div class="today-more"><span class="today-name">' + it.name + '</span>' +
+            (it.title ? '<span class="today-title">' + it.title + '</span>' : '') +
+            '<div class="today-bio">' + it.bio + '</div></div>');
+        });
+      }
+      if (pieces.length) body.innerHTML = pieces.join('');
+    }
+
+    /* Month pills: smooth-scroll anchors (native) plus a scroll-spy active state */
+    var pills = $$('.month-pills a');
+    if (pills.length && window.IntersectionObserver) {
+      var byMonth = {};
+      pills.forEach(function (a) { byMonth[a.getAttribute('data-month-link')] = a; });
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var m = en.target.getAttribute('data-month');
+          pills.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-month-link') === m); });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      $$('.month').forEach(function (sec) { obs.observe(sec); });
+    }
+
+    /* Desktop: hover a saint's name for a floating bio panel (reuses placePanel).
+       Touch/no-hover: the native <details> disclosure handles it instead. */
+    var panel = $('#saint-panel');
+    if (panel && FINE) {
+      cal.classList.add('fine-hover');
+      var pinned = null;
+      function fillPanel(item) {
+        var name = $('.s-name', item), t = $('.s-title', item), bio = $('.saint-bio', item);
+        panel.innerHTML = '<div class="info-inner"><span class="s-panel-name">' + (name ? name.innerHTML : '') + '</span>' +
+          (t ? '<span class="s-panel-title">' + t.innerHTML + '</span>' : '') + (bio ? bio.innerHTML : '') + '</div>';
+      }
+      function openPanel(item, x, y) {
+        fillPanel(item);
+        panel.hidden = false;
+        void panel.offsetHeight;
+        panel.classList.add('open');
+        if (x === undefined) { var r = item.getBoundingClientRect(); x = r.left; y = r.bottom - 8; }
+        placePanel(panel, x, y);
+      }
+      function closePanel() {
+        panel.classList.remove('open', 'pinned');
+        setTimeout(function () { if (!panel.classList.contains('open')) panel.hidden = true; }, 200);
+        pinned = null;
+      }
+      cal.addEventListener('mouseover', function (e) {
+        var summary = e.target.closest('.saint-item > summary');
+        if (!summary || pinned) return;
+        openPanel(summary.parentElement, e.clientX, e.clientY);
+      });
+      cal.addEventListener('mousemove', function (e) {
+        if (pinned || !panel || panel.hidden) return;
+        if (e.target.closest('.saints-cal') === cal) placePanel(panel, e.clientX, e.clientY);
+      });
+      cal.addEventListener('mouseout', function (e) {
+        if (pinned) return;
+        var leaving = e.target.closest('.saint-item > summary');
+        if (leaving && !leaving.contains(e.relatedTarget)) closePanel();
+      });
+      cal.addEventListener('click', function (e) {
+        var summary = e.target.closest('.saint-item > summary');
+        if (!summary) return;
+        e.preventDefault();
+        var item = summary.parentElement;
+        if (pinned === item) { closePanel(); return; }
+        closePanel();
+        pinned = item;
+        openPanel(item);
+        panel.classList.add('pinned');
+      });
+      document.addEventListener('click', function (e) {
+        if (pinned && panel && !panel.contains(e.target) && !cal.contains(e.target)) closePanel();
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+    }
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -628,6 +793,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints();
   });
 })();
