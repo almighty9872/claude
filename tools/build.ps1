@@ -359,7 +359,7 @@ $Sprite
       <nav class="mainnav" aria-label="Ana menü">
         <ul>
           <li class="has-menu">
-            <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Kateşizm$IcoChev</a>
+            <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Katekizm$IcoChev</a>
             <div class="nav-menu glass" id="nav-katesizm"><ul>$textMenu</ul></div>
           </li>
           <li><a class="nav-link" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)>Kutsal Kitap</a></li>
@@ -387,7 +387,7 @@ $Sprite
     <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
     <nav class="ns-nav" aria-label="Menü">
       <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-t">Ana Sayfa</span></a>
-      <p class="ns-label">Kateşizm</p>
+      <p class="ns-label">Katekizm</p>
       <a class="ns-item" href="katesizm.html"$(Cur 'katesizm.html' $current)><span class="ns-t">$WorkName</span><span class="ns-s">598 soru ve yanıt</span></a>
       $sheetText
       <p class="ns-label">Kutsal Kitap</p>
@@ -500,7 +500,7 @@ for ($i = 0; $i -lt 4; $i++) {
 
   $body = @"
 <div class="wrap">
-  $(Crumbs $meta.ord 'Kateşizm' 'katesizm.html')
+  $(Crumbs $meta.ord 'Katekizm' 'katesizm.html')
   <header class="page-head">
     <span class="roman" aria-hidden="true">$($meta.roman)</span>
     <div><p class="label">$($meta.ord) · Sorular $($p.from)–$($p.to)</p><h1>$($p.tr)</h1><p class="sub" lang="en">$($l1.en)</p></div>
@@ -534,7 +534,7 @@ $(Render-Items $items)
       ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain (($_.tr.a -split "`n") -join ' '))) + '}}'
     }) -join ',') + ']}'
   Write-Page -File $meta.file -Title "$($meta.ord): $($p.tr) (Sorular $($p.from)–$($p.to)) | $SiteName" -Description $meta.desc `
-    -Path $meta.file -Body $body -JsonLd @($partFaqLd, (Breadcrumb-Ld $p.tr $meta.file 'Kateşizm' 'katesizm.html')) -OgType 'article'
+    -Path $meta.file -Body $body -JsonLd @($partFaqLd, (Breadcrumb-Ld $p.tr $meta.file 'Katekizm' 'katesizm.html')) -OgType 'article'
 }
 
 # ================================================================== HOME (index.html): search + accordion of the four parts
@@ -570,7 +570,7 @@ $IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="curre
 # ---------------- katesizm.html: the Compendium landing page (search + the four parts)
 $katesizmBody = @"
 <div class="wrap narrow">
-  $(Crumbs 'Kateşizm')
+  $(Crumbs 'Katekizm')
   <section class="hero work-hero">
     $Logo
     <h1>$WorkName</h1>
@@ -596,7 +596,7 @@ $bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $Wor
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.tr) + ',"url":' + (JStr "$SiteUrl/$($PartMeta[[int]$_.part].file)") + '}' }) -join ',') + ']}'
 Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
   -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte." `
-  -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Kateşizm' 'katesizm.html'))
+  -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Katekizm' 'katesizm.html'))
 
 # ---------------- index.html: the site hub
 $homeBody = @"
@@ -607,7 +607,7 @@ $homeBody = @"
   <div class="hub">
     <a class="hub-card" href="katesizm.html">
       <span class="hub-ico">$SmallCross</span>
-      <span class="hub-t">Kateşizm</span>
+      <span class="hub-t">Katekizm</span>
       <span class="hub-s">$WorkName. İman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
@@ -653,7 +653,7 @@ function Parallel-Paragraphs($trList, $enList) {
 function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$sub, [string]$bodyHtml, [string]$desc, [string]$ld) {
   $body = @"
 <div class="wrap">
-  $(Crumbs $crumb 'Kateşizm' 'katesizm.html')
+  $(Crumbs $crumb 'Katekizm' 'katesizm.html')
   <article class="article" id="article">
     <header class="page-head center"><p class="label">$label</p><h1>$h1</h1><p class="sub" lang="en">$sub</p></header>
     <div class="article-tools"><button type="button" class="btn" data-en-all="article" aria-pressed="false">$IcoGlobe<span class="btn-label">İngilizce aslını göster</span></button></div>
@@ -661,7 +661,7 @@ function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1
   </article>
 </div>
 "@
-  Write-Page -File $file -Title "$h1 | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Kateşizm' 'katesizm.html')) -OgType 'article'
+  Write-Page -File $file -Title "$h1 | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Katekizm' 'katesizm.html')) -OgType 'article'
 }
 $mp = $X.motuProprio
 $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-par`" lang=`"en`" hidden><p class=`"address`">$($mp.en.address)</p></div>" +
@@ -690,7 +690,7 @@ $formulas = ($X.appendix.formulas | ForEach-Object {
 }) -join "`n"
 $eklerBody = @"
 <div class="wrap narrow" id="ekler">
-  $(Crumbs 'Ekler' 'Kateşizm' 'katesizm.html')
+  $(Crumbs 'Ekler' 'Katekizm' 'katesizm.html')
   <header class="page-head center"><p class="label">Ekler</p><h1>Ekler</h1><p class="sub" lang="en">Appendix</p></header>
   <div class="article-tools"><button type="button" class="btn" data-en-all="ekler" aria-pressed="false">$IcoGlobe<span class="btn-label">İngilizce aslını göster</span></button></div>
   <h2 class="section-title" id="ek-a"><span class="label">A</span>Sık Kullanılan Dualar</h2>
@@ -705,7 +705,7 @@ $formulas
 "@
 Write-Page -File 'ekler.html' -Title "Ekler: Sık Kullanılan Dualar ve Katolik Öğretinin Formülleri | $SiteName" `
   -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince dualar (Haç İşareti, Selam Sana Meryem, Rab$($Apos)bin Meleği, Salve Regina, Magnificat, Te Deum, Tespih) ve Katolik öğretinin formülleri." `
-  -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html' 'Kateşizm' 'katesizm.html'))
+  -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html' 'Katekizm' 'katesizm.html'))
 
 # ================================================================== SSS (sss.html): questions from non-Catholics and newcomers
 # Plain <details>/<summary> accordions: they open without JavaScript, are searchable by the

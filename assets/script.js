@@ -352,10 +352,14 @@
         the bottom sheet on phones. Both are plain DOM, no dependencies.
      --------------------------------------------------------------- */
   function initNav() {
-    var item = $('.has-menu'), trigger = item && $('.nav-trigger', item);
-    if (item && trigger) {
-      /* The trigger is a real link to katesizm.html, so a click must navigate.
-         Hover and keyboard focus open the menu instead. */
+    /* Every dropdown in the bar (Katesizm, Dualar, ...): $$ so a second and third
+       .has-menu are not silently skipped the way a single $() would skip them. */
+    $$('.has-menu').forEach(function (item) {
+      var trigger = $('.nav-trigger', item);
+      if (!trigger) return;
+      /* A trigger that is a real link (Katesizm -> katesizm.html) must still navigate on
+         click, so hover and keyboard focus open it instead. A trigger with no page of its
+         own (Dualar) is a <button>, so a click is the only way to open or close it. */
       var openMenu = function () { item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
       var closeMenu = function () { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
       if (trigger.tagName === 'BUTTON') {
@@ -374,7 +378,7 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && item.classList.contains('open')) { closeMenu(); trigger.blur(); }
       });
-    }
+    });
 
     var sheet = $('#navsheet');
     if (!sheet) return;
