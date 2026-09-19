@@ -364,13 +364,13 @@ $Sprite
             <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Katekizm$IcoChev</a>
             <div class="nav-menu glass" id="nav-katesizm"><ul>$textMenu</ul></div>
           </li>
-          <li><a class="nav-link" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)>Kutsal Kitap</a></li>
+          <li><a class="nav-link" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)>Katolik Süreci</a></li>
           <li class="has-menu">
             <button type="button" class="$prayCls" aria-expanded="false" aria-controls="nav-dualar" aria-haspopup="true">Dualar$IcoChev</button>
             <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
           </li>
+          <li><a class="nav-link" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)>Kutsal Kitap</a></li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
-          <li><a class="nav-link" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)>Katolik Süreci</a></li>
           <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
         </ul>
       </nav>
@@ -393,13 +393,13 @@ $Sprite
       <p class="ns-label">Katekizm</p>
       <a class="ns-item" href="katesizm.html"$(Cur 'katesizm.html' $current)><span class="ns-t">$WorkName</span><span class="ns-s">598 soru ve yanıt</span></a>
       $sheetText
-      <p class="ns-label">Kutsal Kitap</p>
-      <a class="ns-item" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)><span class="ns-t">Kutsal Kitap</span><span class="ns-s">Onaylı çeviriler</span></a>
+      <p class="ns-label">Diğer</p>
+      <a class="ns-item" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)><span class="ns-t">Katolik Süreci</span><span class="ns-s">Katolik olma süreci</span></a>
       <p class="ns-label">Dualar</p>
       $sheetPray
-      <p class="ns-label">Diğer</p>
+      <p class="ns-label">Kutsal Kitap</p>
+      <a class="ns-item" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)><span class="ns-t">Kutsal Kitap</span><span class="ns-s">Onaylı çeviriler</span></a>
       <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
-      <a class="ns-item" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)><span class="ns-t">Katolik Süreci</span><span class="ns-s">Katolik olma süreci</span></a>
       <button type="button" class="ns-item ns-info" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
     </nav>
     <div class="ns-foot">$ClockHtml</div>
@@ -615,11 +615,11 @@ $homeBody = @"
       <span class="hub-s">$WorkName. İman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
-    <a class="hub-card" href="kutsal-kitap.html">
-      <span class="hub-ico">$IcoBook</span>
-      <span class="hub-t">Kutsal Kitap</span>
-      <span class="hub-s">$($KkMeta.short)</span>
-      <span class="hub-go">Devamını oku$IcoNext</span>
+    <a class="hub-card" href="katolik-sureci.html">
+      <span class="hub-ico">$IcoWay</span>
+      <span class="hub-t">Katolik Süreci</span>
+      <span class="hub-s">Katolik olmak isteyenler için: OCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler.</span>
+      <span class="hub-go">Oku$IcoNext</span>
     </a>
     <a class="hub-card" href="tesbih-duasi.html">
       <span class="hub-ico">$IcoBeads</span>
@@ -627,16 +627,16 @@ $homeBody = @"
       <span class="hub-s">Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, bütün gizemler ve tesbihin nasıl dua edileceği.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
+    <a class="hub-card" href="kutsal-kitap.html">
+      <span class="hub-ico">$IcoBook</span>
+      <span class="hub-t">Kutsal Kitap</span>
+      <span class="hub-s">$($KkMeta.short)</span>
+      <span class="hub-go">Devamını oku$IcoNext</span>
+    </a>
     <a class="hub-card" href="sss.html">
       <span class="hub-ico">$IcoAsk</span>
       <span class="hub-t">Sorular</span>
       <span class="hub-s">Katolik olmayanların ve inancını yeni tanıyanların en sık sorduğu sorular, Katekizm$($Apos)e dayanan yanıtlarıyla.</span>
-      <span class="hub-go">Oku$IcoNext</span>
-    </a>
-    <a class="hub-card" href="katolik-sureci.html">
-      <span class="hub-ico">$IcoWay</span>
-      <span class="hub-t">Katolik Süreci</span>
-      <span class="hub-s">Katolik olmak isteyenler için: OCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
   </div>
