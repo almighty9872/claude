@@ -65,13 +65,13 @@ $FaqData = Read-Data 'sss.js'
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
   1 = @{ file = 'iman-ikrari.html';     ord = 'Birinci Kısım';  roman = 'I';
-         desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İnanç Beyanı. Vahiy, Kutsal Yazı, Kutsal Üçlü, İsa Mesih, Kutsal Ruh, Kilise, Meryem ve sonsuz yaşam üzerine 1–217. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İnanç Beyanı. Vahiy, Kutsal Yazı, Kutsal Üçlü, Mesih İsa, Kutsal Ruh, Kilise, Meryem ve ebedi hayat üzerine 1–217. sorular." }
   2 = @{ file = 'kutsal-sirlar.html';   ord = 'İkinci Kısım';   roman = 'II';
          desc = "Katolik Kilisesi Katekizmi Özeti, İkinci Kısım: Hristiyan Gizeminin Kutlanması. Litürji ve yedi Kutsal Sır (Vaftiz, Konfirmasyon, Efkaristiya, Tövbe, Evlilik…) üzerine 218–356. sorular." }
   3 = @{ file = 'mesihte-yasam.html';   ord = 'Üçüncü Kısım';   roman = 'III';
          desc = "Katolik Kilisesi Katekizmi Özeti, Üçüncü Kısım: Mesih$($Apos)te Yaşam. İnsan onuru, vicdan, erdemler, günah, lütuf ve On Emir üzerine 357–533. sorular." }
   4 = @{ file = 'hristiyan-duasi.html'; ord = 'Dördüncü Kısım'; roman = 'IV';
-         desc = "Katolik Kilisesi Katekizmi Özeti, Dördüncü Kısım: Hristiyan Duası. Dua ve Rab$($Apos)bin Duası (Göklerdeki Babamız) üzerine 534–598. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, Dördüncü Kısım: Hristiyan Duası. Dua ve Rab$($Apos)bin Duası (Göklerdeki Pederimiz) üzerine 534–598. sorular." }
 }
 
 # ------------------------------------------------------------------ helpers
