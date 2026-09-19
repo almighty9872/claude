@@ -15,7 +15,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "id": "hac-isareti",
       "tr": {
         "title": "Haç İşareti",
-        "text": "Peder’in, Oğul’un\nve Kutsal Ruh’un adına.\nAmin."
+        "text": "Peder, Oğul ve Kutsal Ruh’un adına.\nAmin."
       },
       "en": {
         "title": "The Sign of the Cross",
@@ -41,11 +41,11 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "id": "goklerdeki-pederimiz",
       "tr": {
         "title": "Göklerdeki Pederimiz",
-        "text": "Göklerdeki Pederimiz,\nadın yüceltilsin, hükümdarlığın gelsin,\ngöklerde olduğu gibi, yeryüzünde de Senin isteğin olsun.\nGünlük ekmeğimizi bugün de bize ver,\nbize kötülük edenleri bağışladığımız gibi,\nSen de bağışla suçlarımızı.\nBizi günah işlemekten koru ve kötülükten kurtar.\nÇünkü hükümdarlık, kudret ve yücelik ebediyen Senin’dir.\nAmin."
+        "text": "Göklerdeki Pederimiz,\nadın yüceltilsin, hükümdarlığın gelsin,\ngöklerde olduğu gibi yeryüzünde de senin isteğin olsun.\nGünlük ekmeğimizi bugün de bize ver.\nBize kötülük edenleri bağışladığımız gibi Sen de bağışla suçlarımızı.\nBizi günah işlemekten koru ve kötülükten kurtar.\nAmin."
       },
       "en": {
         "title": "The Our Father",
-        "text": "Our Father, who art in heaven,\nhallowed be thy name; thy kingdom come;\nthy will be done on earth as it is in heaven.\nGive us this day our daily bread;\nand forgive us our trespasses\nas we forgive those who trespass against us;\nand lead us not into temptation, but deliver us from evil.\nFor the kingdom, the power and the glory are yours, now and for ever.\nAmen."
+        "text": "Our Father, who art in heaven,\nhallowed be thy name; thy kingdom come;\nthy will be done on earth as it is in heaven.\nGive us this day our daily bread;\nand forgive us our trespasses\nas we forgive those who trespass against us;\nand lead us not into temptation, but deliver us from evil.\nAmen."
       },
       "spot": "lg",
       "note": "Büyük tanelerde"
@@ -54,7 +54,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "id": "selam-sana-meryem",
       "tr": {
         "title": "Selam Sana Meryem",
-        "text": "Selam sana,\nAllah’ın en sevgili kulu Meryem,\nRab seninledir.\nKadınların en mübareği sensin\nve mübarektir senin evladın İsa.\nAziz Meryem, Allah’ın annesi,\nbiz günahkârlar için\nşimdi ve ölüm saatimizde dua eyle.\nAmin."
+        "text": "Selam sana,\nAllah’ın en sevgili kulu Meryem,\nRab seninledir.\nKadınların en mübareği Sensin\nve mübarektir Senin evladın İsa.\nAziz Meryem, Allah’ın annesi,\nbiz günahkârlar için,\nşimdi ve ölüm saatimizde dua eyle.\nAmin."
       },
       "en": {
         "title": "The Hail Mary",
@@ -67,7 +67,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "id": "pedere-san",
       "tr": {
         "title": "Peder’e Şan",
-        "text": "Peder’e, Oğul’a ve Kutsal Ruh’a\nşan ve şeref olsun.\nEzelde olduğu gibi,\nşimdi, her zaman ve ebediyete kadar.\nAmin."
+        "text": "Peder’e, Oğul’a ve Kutsal Ruh’a\nşan ve şeref olsun.\nEzelde olduğu gibi,\nşimdi her zaman ve ebediyete kadar.\nAmin."
       },
       "en": {
         "title": "Glory Be",
@@ -80,7 +80,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "id": "fatima-duasi",
       "tr": {
         "title": "Fatima Duası",
-        "text": "Ey İsa’m, günahlarımızı bağışla,\nbizi cehennem ateşinden koru,\nbütün canları göğe götür,\nözellikle senin merhametine\nen çok muhtaç olanları.\nAmin."
+        "text": "Mesih İsa, suçlarımızı affet;\ncehennem ateşinden bizi koru.\nTüm ruhları, özellikle de merhametine\ndaha çok muhtaç olanları cennete kabul et."
       },
       "en": {
         "title": "The Fatima Prayer",
@@ -93,7 +93,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "id": "selam-sana-kralice",
       "tr": {
         "title": "Selam Sana Kraliçe",
-        "text": "Selam sana, ey Kraliçe, merhametin Annesi,\nyaşamımız, tatlılığımız ve umudumuz, selam sana!\nHavva’nın sürgündeki çocukları olarak sana yakarıyoruz.\nBu gözyaşı vadisinde inleyip ağlayarak\nsana iç çekiyoruz.\nHaydi öyleyse, ey savunucumuz,\no merhametli gözlerini bize çevir.\nVe bu sürgünden sonra\nbize rahminin kutsanmış meyvesi İsa’yı göster.\nEy merhametli, ey sevecen,\ney tatlı Bakire Meryem!"
+        "text": "Sağ ol Kraliçe, merhametli Annemiz,\nhayatımız, aşkımız ve ümidimiz Sensin.\nBizler cennetten kovulmuş olan Havva’nın evlatları, Sana yalvarıyoruz.\nBu dünyada gözyaşı dökerek ve sızlanarak Seni hasretle özlüyoruz.\nBizim için şefaatte bulunan Annemiz, merhametli gözlerini bize çevir\nve bu gurbet ülkesinden sonra bizleri Oğlun Mesih İsa’ya kavuştur.\nEy merhametli, ey şefkatli, ey tatlı Bakire Meryem!\nAmin."
       },
       "en": {
         "title": "Hail Holy Queen",
@@ -157,7 +157,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
   "sets": [
     {
       "id": "sevinc",
-      "tr": "Sevinç Gizemleri",
+      "tr": "Sevinçli Gizemler",
       "en": "The Joyful Mysteries",
       "days": [
         1,
@@ -167,23 +167,23 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "dayEn": "Monday and Saturday",
       "items": [
         {
-          "tr": "Müjde",
+          "tr": "Meleğin Meryem’e müjdeyi getirmesi",
           "en": "The Annunciation"
         },
         {
-          "tr": "Meryem’in Elizabet’i Ziyareti",
+          "tr": "Meryem’in Elizabet’i ziyaret etmesi",
           "en": "The Visitation"
         },
         {
-          "tr": "İsa’nın Doğuşu",
+          "tr": "Mesih İsa’nın doğuşu",
           "en": "The Nativity"
         },
         {
-          "tr": "İsa’nın Tapınakta Takdimi",
+          "tr": "Mesih İsa’nın tapınakta sunulması",
           "en": "The Presentation"
         },
         {
-          "tr": "İsa’nın Tapınakta Bulunuşu",
+          "tr": "Mesih İsa’nın kaybolması ve tapınakta bulunması",
           "en": "The Finding in the Temple"
         }
       ]
@@ -199,30 +199,30 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "dayEn": "Thursday",
       "items": [
         {
-          "tr": "İsa’nın Şeria Irmağı’nda Vaftizi",
+          "tr": "Mesih İsa’nın Ürdün nehrinde vaftizi",
           "en": "The Baptism of Jesus"
         },
         {
-          "tr": "Kana’daki Düğün",
+          "tr": "Mesih İsa’nın Kana düğününde kendini açıklaması",
           "en": "The Wedding Feast of Cana"
         },
         {
-          "tr": "Hükümdarlığın Duyurulması ve Tövbeye Çağrı",
+          "tr": "Allah’ın Hükümdarlığı’nın ilan edilmesi",
           "en": "The Proclamation of the Kingdom"
         },
         {
-          "tr": "Görünüm Değişimi",
+          "tr": "Mesih İsa’nın görünüm değiştirmesi",
           "en": "The Transfiguration"
         },
         {
-          "tr": "Efkaristiya’nın Kurulması",
+          "tr": "Mesih İsa’nın Efkaristiya’yı kurması",
           "en": "The Institution of the Eucharist"
         }
       ]
     },
     {
       "id": "aci",
-      "tr": "Acı Gizemleri",
+      "tr": "Kederli Gizemler",
       "en": "The Sorrowful Mysteries",
       "days": [
         2,
@@ -232,30 +232,30 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "dayEn": "Tuesday and Friday",
       "items": [
         {
-          "tr": "Bahçedeki Can Çekişme",
+          "tr": "Mesih İsa’nın Getsemani bahçesinde dua etmesi",
           "en": "The Agony in the Garden"
         },
         {
-          "tr": "İsa’nın Direğe Bağlanıp Kamçılanması",
+          "tr": "Mesih İsa’nın kırbaçlanması",
           "en": "The Scourging at the Pillar"
         },
         {
-          "tr": "Dikenli Taç Giydirilmesi",
+          "tr": "Mesih İsa’ya dikenli tacın takılması",
           "en": "The Crowning with Thorns"
         },
         {
-          "tr": "Haçın Taşınması",
+          "tr": "Mesih İsa’nın haçı taşıması",
           "en": "The Carrying of the Cross"
         },
         {
-          "tr": "Çarmıha Gerilme ve Ölüm",
+          "tr": "Mesih İsa’nın haça gerilmesi ve ölümü",
           "en": "The Crucifixion"
         }
       ]
     },
     {
       "id": "yucelik",
-      "tr": "Yücelik Gizemleri",
+      "tr": "Şanlı Gizemler",
       "en": "The Glorious Mysteries",
       "days": [
         3,
@@ -265,23 +265,23 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "dayEn": "Wednesday and Sunday",
       "items": [
         {
-          "tr": "Diriliş",
+          "tr": "Mesih İsa’nın dirilişi",
           "en": "The Resurrection"
         },
         {
-          "tr": "Göğe Yükseliş",
+          "tr": "Mesih İsa’nın göğe çıkması",
           "en": "The Ascension"
         },
         {
-          "tr": "Kutsal Ruh’un İnişi",
+          "tr": "Mesih İsa’nın Kutsal Ruh’u göndermesi",
           "en": "The Descent of the Holy Spirit"
         },
         {
-          "tr": "Meryem’in Göğe Alınışı",
+          "tr": "Meryem Ana’nın göğe alınması",
           "en": "The Assumption"
         },
         {
-          "tr": "Meryem’in Göğün ve Yerin Kraliçesi Olarak Taç Giyişi",
+          "tr": "Meryem Ana’nın, yerin ve göğün kraliçesi olarak taçlandırılması",
           "en": "The Coronation of Mary"
         }
       ]

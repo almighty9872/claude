@@ -881,6 +881,7 @@ $tespihBody = @"
   <div class="myst-grid">
 $mysterySets
   </div>
+  <p class="conventions">Dua metinleri, İstanbul’daki Sant’Antuan (Aziz Antuan) Bazilikası’nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir.</p>
 </div>
 <div class="pray-store" hidden>
 $prayerStore
