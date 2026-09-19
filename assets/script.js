@@ -24,11 +24,7 @@
      1. Theme (navy/gold dark, ivory/gold light) — persisted in localStorage
      --------------------------------------------------------------- */
   function storedTheme() { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
-  function isDark() {
-    var t = document.documentElement.getAttribute('data-theme');
-    if (t) return t === 'dark';
-    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }
+  function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
   function syncTheme() {
     $$('.theme-toggle').forEach(function (b) {
       b.setAttribute('aria-checked', String(isDark()));
@@ -36,8 +32,9 @@
     });
   }
   function initTheme() {
+    /* Light is the default: the site does not follow the OS setting, only an explicit choice. */
     var saved = storedTheme();
-    if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+    document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
     syncTheme();
     $$('.theme-toggle').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -47,11 +44,6 @@
         syncTheme();
       });
     });
-    if (window.matchMedia) {
-      var mq = window.matchMedia('(prefers-color-scheme: dark)');
-      var cb = function () { if (!storedTheme()) syncTheme(); };
-      if (mq.addEventListener) mq.addEventListener('change', cb); else if (mq.addListener) mq.addListener(cb);
-    }
   }
 
   /* ---------------------------------------------------------------

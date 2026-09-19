@@ -57,6 +57,7 @@ function Read-Data([string]$file) {
 }
 $Parts = @(1..4 | ForEach-Object { Read-Data "compendium-$_.js" })
 $X = Read-Data 'extras.js'
+$FaqData = Read-Data 'sss.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -234,6 +235,7 @@ $NavItems = @(
   @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam" },
   @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası' },
   @{ href = 'ekler.html';           t = 'Ekler' },
+  @{ href = 'sss.html';             t = 'Sıkça Sorulan Sorular' },
   @{ href = 'hakkinda.html';        t = 'Hakkında' }
 )
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
@@ -296,8 +298,7 @@ function Write-Page {
 <meta name="description" content="$(Attr $Description)">
 <meta name="robots" content="$Robots">
 $canon
-<meta name="theme-color" content="#f5f2ea" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0c1322" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5f2ea">
 <meta property="og:type" content="$OgType">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:site_name" content="$(Attr $SiteName)">
@@ -315,7 +316,7 @@ $canon
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
 <link rel="stylesheet" href="assets/styles.css">
-<script>try{var t=localStorage.getItem('kkio-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script>document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
 $ld
 <script src="assets/script.js" defer></script>
 </head>
@@ -387,13 +388,13 @@ $(Render-Items $items)
 </div>
 "@
   $qas = $items | Where-Object { $_.type -eq 'qa' }
-  $faq = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","name":' + (JStr "$($p.tr) - $SiteName") +
+  $partFaqLd = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","name":' + (JStr "$($p.tr) - $SiteName") +
     ',"url":' + (JStr "$SiteUrl/$($meta.file)") + ',"mainEntity":[' + (($qas | ForEach-Object {
       '{"@type":"Question","name":' + (JStr "$($_.n). $(Plain $_.tr.q)") + ',"url":' + (JStr "$SiteUrl/$($meta.file)#soru-$($_.n)") +
       ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain (($_.tr.a -split "`n") -join ' '))) + '}}'
     }) -join ',') + ']}'
   Write-Page -File $meta.file -Title "$($meta.ord): $($p.tr) (Sorular $($p.from)–$($p.to)) | $SiteName" -Description $meta.desc `
-    -Path $meta.file -Body $body -JsonLd @($faq, (Breadcrumb-Ld $p.tr $meta.file)) -OgType 'article'
+    -Path $meta.file -Body $body -JsonLd @($partFaqLd, (Breadcrumb-Ld $p.tr $meta.file)) -OgType 'article'
 }
 
 # ================================================================== HOME (index.html): search + accordion of the four parts
@@ -441,6 +442,7 @@ $acc
     <a class="text-link" href="motu-proprio.html"><span class="label">Önsöz</span><span class="t-title">Motu Proprio</span><span class="t-sub">XVI. Benediktus, 28 Haziran 2005</span></a>
     <a class="text-link" href="giris.html"><span class="label">Önsöz</span><span class="t-title">Giriş</span><span class="t-sub">Kardinal Joseph Ratzinger, 20 Mart 2005</span></a>
     <a class="text-link" href="ekler.html"><span class="label">Ekler</span><span class="t-title">Dualar ve Formüller</span><span class="t-sub">A. Sık Kullanılan Dualar · B. Katolik Öğretinin Formülleri</span></a>
+    <a class="text-link" href="sss.html"><span class="label">Yeni başlayanlar için</span><span class="t-title">Sıkça Sorulan Sorular</span><span class="t-sub">Katolik inancı üzerine en çok sorulan sorular ve yanıtları</span></a>
   </div>
   <p class="about-link"><a href="hakkinda.html">Bu site hakkında</a></p>
 </div>
@@ -521,6 +523,43 @@ $formulas
 Write-Page -File 'ekler.html' -Title "Ekler: Sık Kullanılan Dualar ve Katolik Öğretinin Formülleri | $SiteName" `
   -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince dualar (Haç İşareti, Selam Sana Meryem, Rab$($Apos)bin Meleği, Salve Regina, Magnificat, Te Deum, Tespih) ve Katolik öğretinin formülleri." `
   -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html'))
+
+# ================================================================== SSS (sss.html): questions from non-Catholics and newcomers
+# Plain <details>/<summary> accordions: they open without JavaScript, are searchable by the
+# browser find-in-page in supporting browsers, and each carries the CCC paragraphs it rests on.
+$script:FaqN = 0
+$faqToc = ($FaqData.categories | ForEach-Object { "<li><a href=`"#$($_.id)`">$(Inline $_.title)</a></li>" }) -join ''
+$faqCats = ($FaqData.categories | ForEach-Object {
+  $script:FaqN++; $cat = $_
+  $qs = ($cat.items | ForEach-Object {
+    "<details class=`"faq-item`" id=`"$($_.id)`">" +
+      "<summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
+      "<div class=`"faq-a`">$(Blocks $_.a)" +
+        "<p class=`"faq-ref`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">KKK $($_.ccc)</span></p></div>" +
+    "</details>"
+  }) -join "`n"
+  "<section class=`"faq-cat`" id=`"$($cat.id)`">" +
+    "<h2 class=`"section-title`"><span class=`"label`">$($script:FaqN)</span>$(Inline $cat.title)</h2>" +
+    "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>" +
+    "<div class=`"faq-list`">$qs</div></section>"
+}) -join "`n"
+$faqLd = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","name":' + (JStr $FaqData.title) +
+  ',"url":' + (JStr "$SiteUrl/sss.html") + ',"mainEntity":[' + ((($FaqData.categories | ForEach-Object { $_.items }) | ForEach-Object {
+    '{"@type":"Question","name":' + (JStr (Plain $_.q)) + ',"url":' + (JStr "$SiteUrl/sss.html#$($_.id)") +
+    ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain (($_.a -split "`n") -join ' '))) + '}}'
+  }) -join ',') + ']}'
+$sssBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Sıkça Sorulan Sorular')
+  <header class="page-head center"><p class="label">Sıkça Sorulan Sorular</p><h1>$(Inline $FaqData.title)</h1><p class="sub" lang="en">$($FaqData.en)</p></header>
+  <p class="faq-intro">$(Inline $FaqData.intro)</p>
+  <nav class="faq-toc" aria-label="Kategoriler"><ul>$faqToc</ul></nav>
+$faqCats
+</div>
+"@
+Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" `
+  -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, Efkaristiya, papalık, araf, evrim, acı ve kötülük." `
+  -Path 'sss.html' -Body $sssBody -JsonLd @($faqLd, (Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 
 # ================================================================== ABOUT PAGE (hakkinda.html) from content/hakkinda.md
 # Minimal, dependency-free Markdown: # and ## headings -> <h2> (the page title is the <h1>), ### -> <h3>,
@@ -616,7 +655,8 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -Description 
 $pages = @(
   @{ p = ''; pr = '1.0' }, @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
-  @{ p = 'motu-proprio.html'; pr = '0.6' }, @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'hakkinda.html'; pr = '0.5' }
+  @{ p = 'sss.html'; pr = '0.8' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
+  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'hakkinda.html'; pr = '0.5' }
 )
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
