@@ -43,7 +43,10 @@ $Utf8 = New-Object System.Text.UTF8Encoding $false
 # treats a typographic quote as a string delimiter, so it must not appear in a literal,
 # and &#8217; is no use in text that Attr() escapes. Interpolate it as $Apos instead.
 $Apos = [char]0x2019
-$SiteName = 'Katolik Kilisesi İnanç Esasları Özeti'
+# The site is the brand now; the Compendium is one work published on it.
+$SiteName = 'katolikdunyasi.com'
+$SiteTag = 'Türkçe Katolik kaynakları'
+$WorkName = 'Katolik Kilisesi İnanç Esasları Özeti'
 $SiteNameEn = 'Compendium of the Catechism of the Catholic Church'
 
 # ------------------------------------------------------------------ data
@@ -119,6 +122,46 @@ function Split-Heading([string]$s) {
 }
 function Split-Attr([string]$s) { $m = [regex]::Match($s, '^([\s\S]*?)\s*\(([^()]*)\)\s*$'); if ($m.Success) { return @($m.Groups[1].Value, $m.Groups[2].Value) }; return @($s, '') }
 
+# ---------------- minimal Markdown (content/hakkinda.md feeds the info panel)
+# Defined here rather than further down because Header-Html renders the panel on every page.
+function Md-Inline([string]$s) {
+  $s = $s -replace '&', '&amp;' -replace '<', '&lt;' -replace '>', '&gt;'
+  $s = [regex]::Replace($s, '`([^`]+)`', '<code>$1</code>')
+  $s = [regex]::Replace($s, '\[([^\]]+)\]\(([^)\s]+)\)', [Text.RegularExpressions.MatchEvaluator]{
+    param($m) $u = $m.Groups[2].Value
+    $rel = if ($u -match '^https?://') { ' rel="noopener"' } else { '' }
+    "<a href=`"$u`"$rel>$($m.Groups[1].Value)</a>" })
+  $s = [regex]::Replace($s, '\*\*(.+?)\*\*', '<strong>$1</strong>')
+  $s = [regex]::Replace($s, '(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])', '<em>$1</em>')
+  $s = [regex]::Replace($s, '(?<![\w])_(?!\s)(.+?)(?<!\s)_(?![\w])', '<em>$1</em>')
+  return $s
+}
+function Convert-Markdown([string]$md) {
+  $lines = ($md -replace "`r", '') -split "`n"
+  $sb = New-Object Text.StringBuilder
+  $para = New-Object Collections.ArrayList; $items = New-Object Collections.ArrayList; $quote = New-Object Collections.ArrayList
+  $listTag = 'ul'
+  $flush = {
+    if ($para.Count)  { [void]$sb.Append('<p>' + (Md-Inline ($para -join ' ')) + '</p>'); $para.Clear() }
+    if ($items.Count) { [void]$sb.Append("<$listTag>" + (($items | ForEach-Object { '<li>' + (Md-Inline $_) + '</li>' }) -join '') + "</$listTag>"); $items.Clear() }
+    if ($quote.Count) { [void]$sb.Append('<blockquote><p>' + (Md-Inline ($quote -join ' ')) + '</p></blockquote>'); $quote.Clear() }
+  }
+  foreach ($raw in $lines) {
+    $l = $raw.TrimEnd()
+    if ($l -match '^\s*$') { . $flush; continue }
+    if ($l -match '^(#{1,4})\s+(.+)$') { . $flush; $lvl = [Math]::Max(2, $Matches[1].Length); [void]$sb.Append("<h$lvl>" + (Md-Inline $Matches[2]) + "</h$lvl>"); continue }
+    if ($l -match '^\s*(-{3,}|\*{3,}|_{3,})\s*$') { . $flush; [void]$sb.Append('<hr>'); continue }
+    if ($l -match '^>\s?(.*)$') { $q = $Matches[1]; if ($para.Count -or $items.Count) { . $flush }; [void]$quote.Add($q); continue }
+    if ($l -match '^\s{0,3}[-*+]\s+(.+)$') { $v = $Matches[1]; if ($para.Count -or $quote.Count -or ($items.Count -and $listTag -ne 'ul')) { . $flush }; $listTag = 'ul'; [void]$items.Add($v); continue }
+    if ($l -match '^\s{0,3}\d+[.)]\s+(.+)$') { $v = $Matches[1]; if ($para.Count -or $quote.Count -or ($items.Count -and $listTag -ne 'ol')) { . $flush }; $listTag = 'ol'; [void]$items.Add($v); continue }
+    if ($items.Count -and $raw -match '^\s{2,}\S') { $items[$items.Count - 1] = $items[$items.Count - 1] + ' ' + $l.Trim(); continue }
+    if ($quote.Count) { [void]$quote.Add($l.Trim()); continue }
+    if ($items.Count) { . $flush }
+    [void]$para.Add($l.Trim())
+  }
+  . $flush
+  return $sb.ToString()
+}
 # ------------------------------------------------------------------ icons (inline SVG, no image files)
 # Sprite emitted once per page; repeated icons reference it with <use>
 $Sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">' +
@@ -226,20 +269,22 @@ function Render-Items($items) {
 }
 
 # ------------------------------------------------------------------ page shell
-# Footer keeps the flat list of every page; the header collapses the seven texts of the
-# Compendium into one dropdown so the bar stays short as pages are added.
-$NavItems = @(
-  @{ href = 'index.html';           t = 'Ana Sayfa' },
-  @{ href = 'motu-proprio.html';    t = 'Motu Proprio' },
-  @{ href = 'giris.html';           t = 'Giriş' },
-  @{ href = 'iman-ikrari.html';     t = 'I. İnanç Beyanı' },
-  @{ href = 'kutsal-sirlar.html';   t = 'II. Hristiyan Gizeminin Kutlanması' },
-  @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam" },
-  @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası' },
-  @{ href = 'ekler.html';           t = 'Ekler' },
-  @{ href = 'sss.html';             t = 'Sıkça Sorulan Sorular' },
-  @{ href = 'hakkinda.html';        t = 'Hakkında' }
-)
+# ---------------- info panel (the old hakkinda.html, now a hover panel in the bar)
+# content/hakkinda.md stays the editable source; only its rendering moved.
+$aboutFile = Join-Path (Join-Path $Root 'content') 'hakkinda.md'
+$aboutMd = if (Test-Path $aboutFile) { [IO.File]::ReadAllText($aboutFile, [Text.Encoding]::UTF8) } else { '' }
+$fm = @{}
+$fmMatch = [regex]::Match($aboutMd, '^\uFEFF?\s*---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)')
+if ($fmMatch.Success) {
+  foreach ($line in ($fmMatch.Groups[1].Value -split "`n")) { $kv = [regex]::Match($line, '^\s*([A-Za-z_]+)\s*:\s*(.*?)\s*$'); if ($kv.Success) { $fm[$kv.Groups[1].Value.ToLower()] = $kv.Groups[2].Value.Trim('"', "'") } }
+  $aboutMd = $aboutMd.Substring($fmMatch.Length)
+}
+$h1m = [regex]::Match($aboutMd, '(?m)^#\s+(.+?)\s*$')
+if ($h1m.Success) { $aboutMd = $aboutMd.Remove($h1m.Index, $h1m.Length) }
+$InfoHtml = Convert-Markdown $aboutMd
+
+# Top bar: brand, Katesizm (a link that also opens a dropdown of the seven texts),
+# Sorular, and an (i) that reveals content/hakkinda.md on hover.
 $TextNav = @(
   @{ href = 'motu-proprio.html';    t = 'Motu Proprio';                       s = 'XVI. Benediktus, 2005' },
   @{ href = 'giris.html';           t = 'Giriş';                              s = 'Kardinal Ratzinger, 2005' },
@@ -249,37 +294,29 @@ $TextNav = @(
   @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası';                s = 'Sorular 534–598' },
   @{ href = 'ekler.html';           t = 'Ekler';                              s = 'Dualar ve formüller' }
 )
-$TopNav = @(
-  @{ href = 'sss.html';      t = 'SSS';      full = 'Sıkça Sorulan Sorular' },
-  @{ href = 'hakkinda.html'; t = 'Hakkında'; full = 'Hakkında' }
-)
+# Every page that belongs to the Compendium, for the 'is-section' state and the breadcrumb
+$WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
+$IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
-  return "<form class=`"search $cls`" role=`"search`" data-search action=`"index.html`"><div class=`"search-field`">$IcoSearch" +
+  return "<form class=`"search $cls`" role=`"search`" data-search action=`"katesizm.html`"><div class=`"search-field`">$IcoSearch" +
     "<label class=`"visually-hidden`" for=`"$id`">Özet$($Apos)te ara (Türkçe veya İngilizce, ya da soru numarası)</label>" +
     "<input id=`"$id`" type=`"search`" name=`"q`" placeholder=`"$placeholder`" autocomplete=`"off`" enterkeyhint=`"search`"></div>" +
     "<div class=`"search-results`" hidden></div></form>"
 }
-# aria-current on the page we are generating, so the bar and the sheet both show where you are
 function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
 function Header-Html([bool]$withSearch, [string]$current) {
   $search = if ($withSearch) { Search-Form 'header-search' 'q-header' '598 soruda ara…' } else { '' }
   $toggle = if ($withSearch) { "<button type=`"button`" class=`"icon-btn search-toggle`" aria-label=`"Ara`" aria-expanded=`"false`">$IcoSearch</button>" } else { '' }
   $cls = if ($withSearch) { 'site-header has-search' } else { 'site-header' }
-  $inText = @($TextNav | Where-Object { $_.href -eq $current }).Count -gt 0
-  $trigCls = if ($inText) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
+  $inWork = $WorkPages -contains $current
+  $trigCls = if ($inWork) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
   $textMenu = ($TextNav | ForEach-Object {
     "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
   }) -join ''
-  $topMenu = ($TopNav | ForEach-Object {
-    "<li><a class=`"nav-link`" href=`"$($_.href)`"$(Cur $_.href $current) title=`"$(Attr $_.full)`">$($_.t)</a></li>"
-  }) -join ''
   $sheetText = ($TextNav | ForEach-Object {
-    "<a class=`"ns-item`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
-  }) -join ''
-  $sheetTop = ($TopNav | ForEach-Object {
-    "<a class=`"ns-item`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.full)</span></a>"
+    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
   }) -join ''
   return @"
 $Sprite
@@ -291,10 +328,11 @@ $Sprite
       <nav class="mainnav" aria-label="Ana menü">
         <ul>
           <li class="has-menu">
-            <button type="button" class="$trigCls" aria-expanded="false" aria-controls="nav-metin" aria-haspopup="true">Özet Metni$IcoChev</button>
-            <div class="nav-menu glass" id="nav-metin"><ul>$textMenu</ul></div>
+            <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Kateşizm$IcoChev</a>
+            <div class="nav-menu glass" id="nav-katesizm"><ul>$textMenu</ul></div>
           </li>
-          $topMenu
+          <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
+          <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
         </ul>
       </nav>
       $search
@@ -307,15 +345,18 @@ $Sprite
     </div>
   </div>
 </header>
+<div class="info-panel glass" id="info-panel" role="note" hidden><div class="info-inner">$InfoHtml</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
     <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
     <nav class="ns-nav" aria-label="Menü">
       <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-t">Ana Sayfa</span></a>
-      <p class="ns-label">Özet Metni</p>
+      <p class="ns-label">Kateşizm</p>
+      <a class="ns-item" href="katesizm.html"$(Cur 'katesizm.html' $current)><span class="ns-t">$WorkName</span><span class="ns-s">598 soru ve yanıt</span></a>
       $sheetText
       <p class="ns-label">Diğer</p>
-      $sheetTop
+      <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
+      <button type="button" class="ns-item ns-info" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
     </nav>
     <div class="ns-foot">$ClockHtml</div>
   </div>
@@ -324,14 +365,12 @@ $Sprite
 }
 $FooterHtml = @"
 <footer class="site-footer">
-  <div class="wrap">
-    <nav aria-label="Alt menü"><ul>$(($NavItems | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }) -join '')</ul></nav>
-    <p><i lang="en">$SiteNameEn</i> (2005) metninin gayriresmî Türkçe çevirisidir. Resmî metin: <a href="https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html" rel="noopener">vatican.va</a>. Özgün metin © 2005 Libreria Editrice Vaticana.</p>
-    <p>Kutsal Kitap göndermeleri Katolik kanonuna (Deuterokanonik kitaplar dahil) ve kaynak metindeki Katolik ayet numaralandırmasına göre verilmiştir. Türkçede farklı yazılan özel adların İngilizcesi ilk geçtikleri yerde parantez içinde verilir; ör. Petrus <span class="gloss">(Peter)</span>. İsa <span class="gloss">(Jesus)</span> ve Meryem <span class="gloss">(Mary)</span> adları sık geçtiği için yinelenmez. KKK: Katolik Kilisesi Katekizmi madde numaraları.</p>
+  <div class="wrap foot-row">
+    <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
+    <p class="foot-line">$SiteTag · Özgün metin © 2005 Libreria Editrice Vaticana</p>
   </div>
 </footer>
 "@
-
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
         [string[]]$JsonLd = @(), [string]$OgType = 'website', [bool]$HeaderSearch = $true,
@@ -387,12 +426,20 @@ $FooterHtml
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
   Write-Host "  + $File"
 }
-function Breadcrumb-Ld([string]$name, [string]$path) {
-  return '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[' +
-    '{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":' + (JStr "$SiteUrl/") + '},' +
-    '{"@type":"ListItem","position":2,"name":' + (JStr $name) + ',"item":' + (JStr "$SiteUrl/$path") + '}]}'
+function Breadcrumb-Ld([string]$name, [string]$path, [string]$parentName = '', [string]$parentPath = '') {
+  $items = '{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":' + (JStr "$SiteUrl/") + '}'
+  $pos = 2
+  if ($parentName) {
+    $items += ',{"@type":"ListItem","position":2,"name":' + (JStr $parentName) + ',"item":' + (JStr "$SiteUrl/$parentPath") + '}'
+    $pos = 3
+  }
+  $items += ',{"@type":"ListItem","position":' + $pos + ',"name":' + (JStr $name) + ',"item":' + (JStr "$SiteUrl/$path") + '}'
+  return '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[' + $items + ']}'
 }
-function Crumbs([string]$here) { return "<nav class=`"crumbs`" aria-label=`"Konum`"><a href=`"index.html`">Ana Sayfa</a><span aria-hidden=`"true`">›</span><span aria-current=`"page`">$here</span></nav>" }
+function Crumbs([string]$here, [string]$parentName = '', [string]$parentPath = '') {
+  $mid = if ($parentName) { "<a href=`"$parentPath`">$parentName</a><span aria-hidden=`"true`">›</span>" } else { '' }
+  return "<nav class=`"crumbs`" aria-label=`"Konum`"><a href=`"index.html`">Ana Sayfa</a><span aria-hidden=`"true`">›</span>$mid<span aria-current=`"page`">$here</span></nav>"
+}
 
 Write-Host "Building pages ($SiteUrl)..."
 
@@ -413,7 +460,7 @@ for ($i = 0; $i -lt 4; $i++) {
 
   $body = @"
 <div class="wrap">
-  $(Crumbs $meta.ord)
+  $(Crumbs $meta.ord 'Kateşizm' 'katesizm.html')
   <header class="page-head">
     <span class="roman" aria-hidden="true">$($meta.roman)</span>
     <div><p class="label">$($meta.ord) · Sorular $($p.from)–$($p.to)</p><h1>$($p.tr)</h1><p class="sub" lang="en">$($l1.en)</p></div>
@@ -447,7 +494,7 @@ $(Render-Items $items)
       ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain (($_.tr.a -split "`n") -join ' '))) + '}}'
     }) -join ',') + ']}'
   Write-Page -File $meta.file -Title "$($meta.ord): $($p.tr) (Sorular $($p.from)–$($p.to)) | $SiteName" -Description $meta.desc `
-    -Path $meta.file -Body $body -JsonLd @($partFaqLd, (Breadcrumb-Ld $p.tr $meta.file)) -OgType 'article'
+    -Path $meta.file -Body $body -JsonLd @($partFaqLd, (Breadcrumb-Ld $p.tr $meta.file 'Kateşizm' 'katesizm.html')) -OgType 'article'
 }
 
 # ================================================================== HOME (index.html): search + accordion of the four parts
@@ -478,15 +525,19 @@ $acc = ($Parts | ForEach-Object {
 "@
 }) -join "`n"
 $SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
-$homeBody = @"
-<section class="hero wrap narrow">
-  $Logo
-  <h1>$SiteName</h1>
-  <p class="subtitle" lang="en">$SiteNameEn</p>
-  <p class="hint">Başlıklarını görmek için bir kısmı açın ya da bir soru arayın.</p>
-  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
-</section>
+$IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.2a2.8 2.8 0 1 1 3.5 3.1c-.6.2-.9.7-.9 1.3v.6"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor" stroke="none"/></svg>'
+
+# ---------------- katesizm.html: the Compendium landing page (search + the four parts)
+$katesizmBody = @"
 <div class="wrap narrow">
+  $(Crumbs 'Kateşizm')
+  <section class="hero work-hero">
+    $Logo
+    <h1>$WorkName</h1>
+    <p class="subtitle" lang="en">$SiteNameEn</p>
+    <p class="hint">Başlıklarını görmek için bir kısmı açın ya da bir soru arayın.</p>
+    $(Search-Form 'hero-search' 'q-katesizm' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
+  </section>
   <div class="parts">
 $acc
   </div>
@@ -495,21 +546,50 @@ $acc
     <a class="text-link" href="motu-proprio.html"><span class="label">Önsöz</span><span class="t-title">Motu Proprio</span><span class="t-sub">XVI. Benediktus, 28 Haziran 2005</span></a>
     <a class="text-link" href="giris.html"><span class="label">Önsöz</span><span class="t-title">Giriş</span><span class="t-sub">Kardinal Joseph Ratzinger, 20 Mart 2005</span></a>
     <a class="text-link" href="ekler.html"><span class="label">Ekler</span><span class="t-title">Dualar ve Formüller</span><span class="t-sub">A. Sık Kullanılan Dualar · B. Katolik Öğretinin Formülleri</span></a>
-    <a class="text-link" href="sss.html"><span class="label">Yeni başlayanlar için</span><span class="t-title">Sıkça Sorulan Sorular</span><span class="t-sub">Katolik inancı üzerine en çok sorulan sorular ve yanıtları</span></a>
   </div>
-  <p class="about-link"><a href="hakkinda.html">Bu site hakkında</a></p>
+  <p class="conventions">Kutsal Kitap göndermeleri Katolik kanonuna (Deuterokanonik kitaplar dahil) ve kaynak metindeki Katolik ayet numaralandırmasına göre verilmiştir. Türkçede farklı yazılan özel adların İngilizcesi ilk geçtikleri yerde parantez içinde verilir; ör. Petrus <span class="gloss">(Peter)</span>. İsa <span class="gloss">(Jesus)</span> ve Meryem <span class="gloss">(Mary)</span> adları sık geçtiği için yinelenmez. KKK: Katolik Kilisesi Katekizmi madde numaraları.</p>
 </div>
 "@
-$webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JStr $SiteName) + ',"alternateName":' + (JStr $SiteNameEn) +
-  ',"url":' + (JStr "$SiteUrl/") + ',"inLanguage":"tr","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
-  (JStr "$SiteUrl/?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
-$bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $SiteName) + ',"alternateName":' + (JStr "$SiteNameEn (Türkçe)") +
-  ',"inLanguage":"tr","url":' + (JStr "$SiteUrl/") + ',"about":{"@type":"Thing","name":"Katolik Kilisesi"},' +
+$bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $WorkName) + ',"alternateName":' + (JStr "$SiteNameEn (Türkçe)") +
+  ',"inLanguage":"tr","url":' + (JStr "$SiteUrl/katesizm.html") + ',"about":{"@type":"Thing","name":"Katolik Kilisesi"},' +
   '"translationOfWork":{"@type":"Book","name":' + (JStr $SiteNameEn) + ',"inLanguage":"en","datePublished":"2005-06-28","publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"}},' +
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.tr) + ',"url":' + (JStr "$SiteUrl/$($PartMeta[[int]$_.part].file)") + '}' }) -join ',') + ']}'
-Write-Page -File 'index.html' -Title "$SiteName | Katolik Kilisesi Katekizmi Özeti, 598 Soru ve Yanıt" `
+Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
   -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte." `
-  -Path '' -Body $homeBody -JsonLd @($webSiteLd, $bookLd) -HeaderSearch $false
+  -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Kateşizm' 'katesizm.html'))
+
+# ---------------- index.html: the site hub
+$homeBody = @"
+<section class="hero wrap narrow">
+  $Logo
+  <h1 class="site-title">$SiteName</h1>
+  <p class="subtitle">$SiteTag</p>
+  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
+</section>
+<div class="wrap narrow">
+  <div class="hub">
+    <a class="hub-card" href="katesizm.html">
+      <span class="hub-ico">$SmallCross</span>
+      <span class="hub-t">Kateşizm</span>
+      <span class="hub-s">$WorkName. İman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
+    <a class="hub-card" href="sss.html">
+      <span class="hub-ico">$IcoAsk</span>
+      <span class="hub-t">Sorular</span>
+      <span class="hub-s">Katolik olmayanların ve inancını yeni tanıyanların en sık sorduğu sorular, Katekizm$($Apos)e dayanan yanıtlarıyla.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
+  </div>
+</div>
+"@
+$webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JStr $SiteName) +
+  ',"url":' + (JStr "$SiteUrl/") + ',"inLanguage":"tr","description":' + (JStr $SiteTag) +
+  ',"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
+  (JStr "$SiteUrl/katesizm.html?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
+Write-Page -File 'index.html' -Title "$SiteName | $SiteTag" `
+  -Description "Türkçe Katolik kaynakları: Katolik Kilisesi Katekizmi Özeti$($Apos)nin tam çevirisi ve Katolik inancı üzerine sıkça sorulan sorular." `
+  -Path '' -Body $homeBody -JsonLd @($webSiteLd) -HeaderSearch $false
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
 function Parallel-Paragraphs($trList, $enList) {
@@ -523,7 +603,7 @@ function Parallel-Paragraphs($trList, $enList) {
 function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$sub, [string]$bodyHtml, [string]$desc, [string]$ld) {
   $body = @"
 <div class="wrap">
-  $(Crumbs $crumb)
+  $(Crumbs $crumb 'Kateşizm' 'katesizm.html')
   <article class="article" id="article">
     <header class="page-head center"><p class="label">$label</p><h1>$h1</h1><p class="sub" lang="en">$sub</p></header>
     <div class="article-tools"><button type="button" class="btn" data-en-all="article" aria-pressed="false">$IcoGlobe<span class="btn-label">İngilizce aslını göster</span></button></div>
@@ -531,7 +611,7 @@ function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1
   </article>
 </div>
 "@
-  Write-Page -File $file -Title "$h1 | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file)) -OgType 'article'
+  Write-Page -File $file -Title "$h1 | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Kateşizm' 'katesizm.html')) -OgType 'article'
 }
 $mp = $X.motuProprio
 $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-par`" lang=`"en`" hidden><p class=`"address`">$($mp.en.address)</p></div>" +
@@ -560,7 +640,7 @@ $formulas = ($X.appendix.formulas | ForEach-Object {
 }) -join "`n"
 $eklerBody = @"
 <div class="wrap narrow" id="ekler">
-  $(Crumbs 'Ekler')
+  $(Crumbs 'Ekler' 'Kateşizm' 'katesizm.html')
   <header class="page-head center"><p class="label">Ekler</p><h1>Ekler</h1><p class="sub" lang="en">Appendix</p></header>
   <div class="article-tools"><button type="button" class="btn" data-en-all="ekler" aria-pressed="false">$IcoGlobe<span class="btn-label">İngilizce aslını göster</span></button></div>
   <h2 class="section-title" id="ek-a"><span class="label">A</span>Sık Kullanılan Dualar</h2>
@@ -575,7 +655,7 @@ $formulas
 "@
 Write-Page -File 'ekler.html' -Title "Ekler: Sık Kullanılan Dualar ve Katolik Öğretinin Formülleri | $SiteName" `
   -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince dualar (Haç İşareti, Selam Sana Meryem, Rab$($Apos)bin Meleği, Salve Regina, Magnificat, Te Deum, Tespih) ve Katolik öğretinin formülleri." `
-  -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html'))
+  -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html' 'Kateşizm' 'katesizm.html'))
 
 # ================================================================== SSS (sss.html): questions from non-Catholics and newcomers
 # Plain <details>/<summary> accordions: they open without JavaScript, are searchable by the
@@ -614,80 +694,6 @@ Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" `
   -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, Efkaristiya, papalık, araf, evrim, acı ve kötülük." `
   -Path 'sss.html' -Body $sssBody -JsonLd @($faqLd, (Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 
-# ================================================================== ABOUT PAGE (hakkinda.html) from content/hakkinda.md
-# Minimal, dependency-free Markdown: # and ## headings -> <h2> (the page title is the <h1>), ### -> <h3>,
-# paragraphs, **bold**, *italic*, `code`,
-# [links](https://...), - / 1. lists, > quotes, --- rules. Raw HTML is escaped (shown as text).
-# Optional front matter at the top of the file:
-#   ---
-#   title: Hakkında
-#   description: One sentence for search engines
-#   ---
-function Md-Inline([string]$s) {
-  $s = $s -replace '&', '&amp;' -replace '<', '&lt;' -replace '>', '&gt;'
-  $s = [regex]::Replace($s, '`([^`]+)`', '<code>$1</code>')
-  $s = [regex]::Replace($s, '\[([^\]]+)\]\(([^)\s]+)\)', [Text.RegularExpressions.MatchEvaluator]{
-    param($m) $u = $m.Groups[2].Value
-    $rel = if ($u -match '^https?://') { ' rel="noopener"' } else { '' }
-    "<a href=`"$u`"$rel>$($m.Groups[1].Value)</a>" })
-  $s = [regex]::Replace($s, '\*\*(.+?)\*\*', '<strong>$1</strong>')
-  $s = [regex]::Replace($s, '(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])', '<em>$1</em>')
-  $s = [regex]::Replace($s, '(?<![\w])_(?!\s)(.+?)(?<!\s)_(?![\w])', '<em>$1</em>')
-  return $s
-}
-function Convert-Markdown([string]$md) {
-  $lines = ($md -replace "`r", '') -split "`n"
-  $sb = New-Object Text.StringBuilder
-  $para = New-Object Collections.ArrayList; $items = New-Object Collections.ArrayList; $quote = New-Object Collections.ArrayList
-  $listTag = 'ul'
-  $flush = {
-    if ($para.Count)  { [void]$sb.Append('<p>' + (Md-Inline ($para -join ' ')) + '</p>'); $para.Clear() }
-    if ($items.Count) { [void]$sb.Append("<$listTag>" + (($items | ForEach-Object { '<li>' + (Md-Inline $_) + '</li>' }) -join '') + "</$listTag>"); $items.Clear() }
-    if ($quote.Count) { [void]$sb.Append('<blockquote><p>' + (Md-Inline ($quote -join ' ')) + '</p></blockquote>'); $quote.Clear() }
-  }
-  foreach ($raw in $lines) {
-    $l = $raw.TrimEnd()
-    if ($l -match '^\s*$') { . $flush; continue }
-    if ($l -match '^(#{1,4})\s+(.+)$') { . $flush; $lvl = [Math]::Max(2, $Matches[1].Length); [void]$sb.Append("<h$lvl>" + (Md-Inline $Matches[2]) + "</h$lvl>"); continue }
-    if ($l -match '^\s*(-{3,}|\*{3,}|_{3,})\s*$') { . $flush; [void]$sb.Append('<hr>'); continue }
-    if ($l -match '^>\s?(.*)$') { $q = $Matches[1]; if ($para.Count -or $items.Count) { . $flush }; [void]$quote.Add($q); continue }
-    if ($l -match '^\s{0,3}[-*+]\s+(.+)$') { $v = $Matches[1]; if ($para.Count -or $quote.Count -or ($items.Count -and $listTag -ne 'ul')) { . $flush }; $listTag = 'ul'; [void]$items.Add($v); continue }
-    if ($l -match '^\s{0,3}\d+[.)]\s+(.+)$') { $v = $Matches[1]; if ($para.Count -or $quote.Count -or ($items.Count -and $listTag -ne 'ol')) { . $flush }; $listTag = 'ol'; [void]$items.Add($v); continue }
-    if ($items.Count -and $raw -match '^\s{2,}\S') { $items[$items.Count - 1] = $items[$items.Count - 1] + ' ' + $l.Trim(); continue }
-    if ($quote.Count) { [void]$quote.Add($l.Trim()); continue }
-    if ($items.Count) { . $flush }
-    [void]$para.Add($l.Trim())
-  }
-  . $flush
-  return $sb.ToString()
-}
-$aboutFile = Join-Path (Join-Path $Root 'content') 'hakkinda.md'
-$aboutMd = if (Test-Path $aboutFile) { [IO.File]::ReadAllText($aboutFile, [Text.Encoding]::UTF8) } else { "# Hakkında`n`nBu sayfa henüz yazılmadı." }
-$fm = @{}
-$fmMatch = [regex]::Match($aboutMd, '^\uFEFF?\s*---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)')
-if ($fmMatch.Success) {
-  foreach ($line in ($fmMatch.Groups[1].Value -split "`n")) { $kv = [regex]::Match($line, '^\s*([A-Za-z_]+)\s*:\s*(.*?)\s*$'); if ($kv.Success) { $fm[$kv.Groups[1].Value.ToLower()] = $kv.Groups[2].Value.Trim('"', "'") } }
-  $aboutMd = $aboutMd.Substring($fmMatch.Length)
-}
-if (-not $fm['title']) {   # no front matter title: use the first "# Heading"
-  $h1 = [regex]::Match($aboutMd, '(?m)^#\s+(.+?)\s*$')
-  if ($h1.Success) { $fm['title'] = $h1.Groups[1].Value; $aboutMd = $aboutMd.Remove($h1.Index, $h1.Length) } else { $fm['title'] = 'Hakkında' }
-}
-$aboutTitle = $fm['title']
-$aboutDesc = if ($fm['description']) { $fm['description'] } else { "$SiteName hakkında." }
-$aboutSub = if ($fm['subtitle']) { "<p class=`"sub`">$(Md-Inline $fm['subtitle'])</p>" } else { '' }
-$aboutBody = @"
-<div class="wrap">
-  $(Crumbs 'Hakkında')
-  <article class="article">
-    <header class="page-head center"><p class="label">Hakkında</p><h1>$(Md-Inline $aboutTitle)</h1>$aboutSub</header>
-    <div class="body prose">$(Convert-Markdown $aboutMd)</div>
-  </article>
-</div>
-"@
-Write-Page -File 'hakkinda.html' -Title "$aboutTitle | $SiteName" -Description $aboutDesc -Path 'hakkinda.html' -Body $aboutBody `
-  -JsonLd @((Breadcrumb-Ld 'Hakkında' 'hakkinda.html'))
-
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
 $notFoundBody = @"
 <div class="wrap narrow">
@@ -706,10 +712,11 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -Description 
 
 # ================================================================== sitemap.xml & robots.txt
 $pages = @(
-  @{ p = ''; pr = '1.0' }, @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
+  @{ p = ''; pr = '1.0' }, @{ p = 'katesizm.html'; pr = '0.9' },
+  @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
-  @{ p = 'sss.html'; pr = '0.8' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
-  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'hakkinda.html'; pr = '0.5' }
+  @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
+  @{ p = 'giris.html'; pr = '0.6' }
 )
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +

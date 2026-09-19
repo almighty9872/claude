@@ -5,6 +5,7 @@
    2. Live clock              6. Reading bar: current chapter, prev/next
    3. English-original reveal 7. Table-of-contents drawer (small screens)
    4. "Show all English"       8. Main nav: dropdown + mobile sheet
+   9. Info panel (i)
    ========================================================================= */
 (function () {
   'use strict';
@@ -353,25 +354,19 @@
   function initNav() {
     var item = $('.has-menu'), trigger = item && $('.nav-trigger', item);
     if (item && trigger) {
-      var closeMenu = function (refocus) {
-        if (!item.classList.contains('open')) return;
-        item.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
-        if (refocus) trigger.focus();
-      };
-      trigger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var open = !item.classList.contains('open');
-        item.classList.toggle('open', open);
-        trigger.setAttribute('aria-expanded', String(open));
-        if (open) { var a = $('.nav-menu a', item); if (a) a.focus(); }
-      });
-      document.addEventListener('click', function (e) { if (!item.contains(e.target)) closeMenu(false); });
-      /* Tab out of the last link and the menu closes itself */
+      /* The trigger is a real link to katesizm.html, so a click must navigate.
+         Hover and keyboard focus open the menu instead. */
+      var openMenu = function () { item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
+      var closeMenu = function () { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
+      item.addEventListener('mouseenter', openMenu);
+      item.addEventListener('mouseleave', closeMenu);
+      item.addEventListener('focusin', openMenu);
       item.addEventListener('focusout', function () {
-        setTimeout(function () { if (!item.contains(document.activeElement)) closeMenu(false); }, 0);
+        setTimeout(function () { if (!item.contains(document.activeElement)) closeMenu(); }, 0);
       });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(true); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && item.classList.contains('open')) { closeMenu(); trigger.blur(); }
+      });
     }
 
     var sheet = $('#navsheet');
@@ -410,6 +405,90 @@
     window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });
   }
 
+  /* ---------------------------------------------------------------
+     9. The (i) panel: content/hakkinda.md, revealed on hover and
+        tracking the pointer. Click pins it; touch opens it centred.
+     --------------------------------------------------------------- */
+  function initInfo() {
+    var panel = $('#info-panel');
+    if (!panel) return;
+    var btn = $('.info-btn'), sheetBtn = $('.ns-info'), pinned = false, hideTimer = null;
+    var fine = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function mark(open) {
+      [btn, sheetBtn].forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(open)); });
+    }
+    function show() {
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      panel.hidden = false;
+      void panel.offsetHeight;
+      panel.classList.add('open');
+      mark(true);
+    }
+    function hide() {
+      pinned = false;
+      panel.classList.remove('open', 'pinned');
+      mark(false);
+      hideTimer = setTimeout(function () { panel.hidden = true; hideTimer = null; }, 220);
+    }
+    /* Offset from the cursor. Near an edge it flips to the other side rather than
+       clamping, so the panel keeps tracking the pointer instead of sticking. */
+    function place(x, y) {
+      panel.classList.remove('centered');
+      var w = panel.offsetWidth, h = panel.offsetHeight, m = 12, gap = 18;
+      var left = x + gap;
+      if (left + w > window.innerWidth - m) left = x - w - gap;
+      left = Math.max(m, Math.min(left, window.innerWidth - w - m));
+      var top = y + 20;
+      if (top + h > window.innerHeight - m) top = Math.max(m, y - h - gap);
+      panel.style.left = left + 'px';
+      panel.style.top = top + 'px';
+    }
+    function centre() {
+      panel.classList.add('centered');
+      panel.style.left = ''; panel.style.top = '';
+    }
+
+    if (btn) {
+      if (fine) {
+        btn.addEventListener('mouseenter', function (e) { show(); place(e.clientX, e.clientY); });
+        btn.addEventListener('mousemove', function (e) { if (!pinned) place(e.clientX, e.clientY); });
+        btn.addEventListener('mouseleave', function () { if (!pinned) hide(); });
+      }
+      btn.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (pinned) { hide(); return; }
+        pinned = true;
+        show();
+        panel.classList.add('pinned');
+        if (!fine) centre();
+      });
+      /* Keyboard: focus reveals it, blur puts it away again */
+      btn.addEventListener('focus', function () {
+        if (pinned) return;
+        show();
+        var r = btn.getBoundingClientRect();
+        place(r.left, r.bottom - 8);
+      });
+      btn.addEventListener('blur', function () { if (!pinned) hide(); });
+    }
+    if (sheetBtn) {
+      sheetBtn.addEventListener('click', function () {
+        var toggle = $('.menu-toggle');
+        if (toggle && $('#navsheet') && $('#navsheet').classList.contains('open')) toggle.click();
+        pinned = true;
+        setTimeout(function () { show(); panel.classList.add('pinned'); centre(); }, 60);
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (pinned && !panel.contains(e.target) && e.target !== btn) hide();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hidden) { hide(); if (btn) btn.blur(); }
+    });
+    window.addEventListener('resize', function () { if (!panel.hidden && !pinned) hide(); });
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -422,6 +501,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo();
   });
 })();
