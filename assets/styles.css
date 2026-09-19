@@ -685,7 +685,7 @@ body.sheet-open { overflow: hidden; }
 .info-btn svg { width: 1.15rem; height: 1.15rem; }
 .info-btn:hover, .info-btn[aria-expanded="true"] { color: var(--gold); background: var(--gold-bg); border-color: var(--glass-brd); }
 .info-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.info-panel {
+.info-panel, .hover-panel {
   position: fixed; left: 0; top: 0; z-index: 95;
   width: min(25rem, calc(100vw - 2rem)); max-height: min(70vh, 34rem); overflow-y: auto;
   padding: 1.1rem 1.25rem; border-radius: 20px;
@@ -694,11 +694,11 @@ body.sheet-open { overflow: hidden; }
   opacity: 0; transform: translateY(-6px); pointer-events: none;
   transition: opacity .18s ease, transform .18s ease;
 }
-.info-panel[hidden] { display: none; }
-.info-panel.open { opacity: 1; transform: none; }
-.info-panel.pinned { pointer-events: auto; }
-.info-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
-.info-panel.centered.open { transform: translate(-50%, -50%); }
+.info-panel[hidden], .hover-panel[hidden] { display: none; }
+.info-panel.open, .hover-panel.open { opacity: 1; transform: none; }
+.info-panel.pinned, .hover-panel.pinned { pointer-events: auto; }
+.info-panel.centered, .hover-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
+.info-panel.centered.open, .hover-panel.centered.open { transform: translate(-50%, -50%); }
 .info-inner > :first-child { margin-top: 0; }
 .info-inner > :last-child { margin-bottom: 0; }
 .info-inner h2 { margin: 1.1rem 0 .35rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-family: var(--sans); }
@@ -743,22 +743,11 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .bead.medal { fill: var(--gold); stroke: var(--gold); }
 .bead.cross { fill: var(--gold); stroke: none; }
 .bead:hover { fill: var(--gold); stroke: var(--gold); }
-.bead.on { fill: var(--gold); stroke: var(--gold); }
-.bead.sm.on { r: 7.5; }
-.bead.lg.on { r: 10.5; }
-.bead.done { fill: var(--gold-soft); }
 @media (prefers-reduced-motion: reduce) { .bead { transition: none; } }
 
 .rosary-side .today-set { margin: .1rem 0 .6rem; font-size: 1.35rem; font-weight: 600; color: var(--gold); }
 .today-list { margin: 0 0 1.1rem; padding-left: 1.2rem; color: var(--text-soft); }
 .today-list li { margin-bottom: .25rem; }
-.rosary-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
-.rosary-now {
-  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: .85rem 1rem; min-height: 7rem;
-}
-.rosary-now .label { display: block; margin-bottom: .35rem; color: var(--gold); }
-.rosary-now p { margin: 0 0 .4rem; font-size: .98rem; line-height: 1.5; }
 
 .myst-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
 @media (min-width: 760px) { .myst-grid { grid-template-columns: 1fr 1fr; } }
@@ -781,9 +770,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .s-tr { display: block; }
 .s-en { display: block; font-family: var(--sans); font-size: .8rem; color: var(--muted); margin-top: .15rem; }
 
-.pray-grid { display: grid; gap: 1rem; }
-@media (min-width: 760px) { .pray-grid { grid-template-columns: 1fr 1fr; } }
-.pray {
+@media (min-width: 760px) { .pray {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow); padding: 1.15rem 1.25rem; scroll-margin-top: calc(var(--header-h) + 1.5rem);
 }
@@ -793,3 +780,32 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .pray .p-en { border-top: 1px dotted var(--border); padding-top: .6rem; margin-top: .4rem; }
 .pray .p-en p { margin: 0 0 .5rem; font-family: var(--sans); font-size: .88rem; color: var(--muted); }
 .pray .p-en .label { display: block; margin-bottom: .3rem; }
+
+/* Beads are static now: they light up to show where a prayer is said. */
+.bead { cursor: default; }
+.bead.hl { fill: var(--gold); stroke: var(--gold); }
+.bead.hl-ghost { fill: var(--gold-bg); stroke: var(--gold); stroke-dasharray: 2.5 2.5; }
+.rosary-cap {
+  margin: .6rem 0 0; text-align: center; font-family: var(--sans); font-size: .8rem;
+  line-height: 1.45; color: var(--muted); min-height: 2.4em;
+}
+.pray-head { margin-top: 1.4rem; }
+.pray-list { list-style: none; margin: .3rem 0 0; padding: 0; display: grid; gap: .15rem; }
+.pray-link {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  padding: .5rem .7rem; border: 1px solid transparent; border-radius: var(--radius-sm);
+  background: none; font: inherit; font-size: 1.02rem; color: var(--text);
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.pray-link::before { content: ''; display: inline-block; width: .5rem; height: .5rem; margin-right: .55rem; border-radius: 50%; background: var(--gold-soft); vertical-align: middle; }
+.pray-link:hover, .pray-link:focus-visible, .pray-link.is-on {
+  background: var(--gold-bg); border-color: var(--glass-brd); color: var(--gold); outline: none;
+}
+.hover-panel .p-note {
+  margin: 0 0 .7rem; font-family: var(--sans); font-size: .78rem; color: var(--gold);
+}
+.hover-panel h3 { margin: 0 0 .5rem; font-size: 1.15rem; font-weight: 600; }
+.hover-panel .p-tr p { margin: 0 0 .5rem; font-size: .97rem; line-height: 1.5; }
+.hover-panel .p-en { border-top: 1px dotted var(--border); padding-top: .55rem; margin-top: .3rem; }
+.hover-panel .p-en p { margin: 0 0 .45rem; font-family: var(--sans); font-size: .85rem; color: var(--muted); line-height: 1.45; }
+.hover-panel .p-en .label { display: block; margin-bottom: .3rem; }

@@ -5,7 +5,7 @@
    2. Live clock              6. Reading bar: current chapter, prev/next
    3. English-original reveal 7. Table-of-contents drawer (small screens)
    4. "Show all English"       8. Main nav: dropdown + mobile sheet
-   9. Info panel (i)
+   9. Info panel (i)   10. Rosary
    ========================================================================= */
 (function () {
   'use strict';
@@ -358,6 +358,13 @@
          Hover and keyboard focus open the menu instead. */
       var openMenu = function () { item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
       var closeMenu = function () { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
+      if (trigger.tagName === 'BUTTON') {
+        trigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (item.classList.contains('open')) closeMenu(); else openMenu();
+        });
+        document.addEventListener('click', function (e) { if (!item.contains(e.target)) closeMenu(); });
+      }
       item.addEventListener('mouseenter', openMenu);
       item.addEventListener('mouseleave', closeMenu);
       item.addEventListener('focusin', openMenu);
@@ -405,6 +412,21 @@
     window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });
   }
 
+  /* Offset from the cursor, flipping near an edge rather than clamping. Shared
+     by the (i) panel and the rosary prayer list. */
+  function placePanel(panel, x, y) {
+    panel.classList.remove('centered');
+    var w = panel.offsetWidth, h = panel.offsetHeight, m = 12, gap = 18;
+    var left = x + gap;
+    if (left + w > window.innerWidth - m) left = x - w - gap;
+    left = Math.max(m, Math.min(left, window.innerWidth - w - m));
+    var top = y + 20;
+    if (top + h > window.innerHeight - m) top = Math.max(m, y - h - gap);
+    panel.style.left = left + 'px';
+    panel.style.top = top + 'px';
+  }
+  var FINE = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
   /* ---------------------------------------------------------------
      9. The (i) panel: content/hakkinda.md, revealed on hover and
         tracking the pointer. Click pins it; touch opens it centred.
@@ -413,7 +435,7 @@
     var panel = $('#info-panel');
     if (!panel) return;
     var btn = $('.info-btn'), sheetBtn = $('.ns-info'), pinned = false, hideTimer = null;
-    var fine = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var fine = FINE;
 
     function mark(open) {
       [btn, sheetBtn].forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(open)); });
@@ -431,19 +453,7 @@
       mark(false);
       hideTimer = setTimeout(function () { panel.hidden = true; hideTimer = null; }, 220);
     }
-    /* Offset from the cursor. Near an edge it flips to the other side rather than
-       clamping, so the panel keeps tracking the pointer instead of sticking. */
-    function place(x, y) {
-      panel.classList.remove('centered');
-      var w = panel.offsetWidth, h = panel.offsetHeight, m = 12, gap = 18;
-      var left = x + gap;
-      if (left + w > window.innerWidth - m) left = x - w - gap;
-      left = Math.max(m, Math.min(left, window.innerWidth - w - m));
-      var top = y + 20;
-      if (top + h > window.innerHeight - m) top = Math.max(m, y - h - gap);
-      panel.style.left = left + 'px';
-      panel.style.top = top + 'px';
-    }
+    function place(x, y) { placePanel(panel, x, y); }
     function centre() {
       panel.classList.add('centered');
       panel.style.left = ''; panel.style.top = '';
@@ -490,16 +500,12 @@
   }
 
   /* ---------------------------------------------------------------
-     10. Rosary: today's mysteries in Istanbul time, and a walk
-         through the beads with the prayer for each one.
+     10. Rosary: today's mysteries in Istanbul time, and a prayer list
+         whose hover shows the text and lights up where it is prayed.
      --------------------------------------------------------------- */
   function initRosary() {
     var svg = $('.rosary');
     if (!svg) return;
-    var beads = $$('.bead[data-n]', svg).sort(function (a, b) {
-      return +a.getAttribute('data-n') - +b.getAttribute('data-n');
-    });
-    var crossG = $('.cross-g', svg);
 
     /* The day is the one in Turkey, not the visitor's own time zone. */
     function istanbulDay() {
@@ -526,56 +532,84 @@
       }
     }
 
-    /* Each bead names a prayer; the text already sits on the page, so read it from there. */
-    var now = $('[data-rosary-now]'), nowTitle = $('[data-now-title]'), nowText = $('[data-now-text]');
-    function show(el) {
-      var id = el.getAttribute('data-p');
-      var card = $('.pray[data-p="' + id + '"]');
-      if (!card || !now) return;
-      $$('.pray').forEach(function (c) { c.classList.toggle('is-active', c === card); });
-      now.hidden = false;
-      if (nowTitle) nowTitle.textContent = $('h3', card).textContent;
-      if (nowText) nowText.innerHTML = $('.p-tr', card).innerHTML;
-    }
-    function mark(el) {
-      $$('.bead.on', svg).forEach(function (b) { b.classList.remove('on'); });
-      if (el.classList.contains('cross')) { $$('.bead.cross', svg).forEach(function (b) { b.classList.add('on'); }); }
-      else el.classList.add('on');
-    }
-    function pick(el) { mark(el); show(el); }
+    /* Which beads belong to each prayer. The last two are prayed at points the
+       rosary has no bead for, so they mark their anchor faintly instead. */
+    var SPOT = {
+      'cross':  { sel: '.bead.cross', ghost: false },
+      'lg':     { sel: '.bead.lg', ghost: false },
+      'sm':     { sel: '.bead.sm', ghost: false },
+      'lg-end': { sel: '.bead.lg', ghost: true },
+      'end':    { sel: '.bead.medal, .bead.cross', ghost: true }
+    };
+    var panel = $('#prayer-panel'), store = $('.pray-store'), cap = $('[data-rosary-cap]');
+    var capDefault = cap ? cap.textContent : '';
+    var pinned = null;
 
-    beads.forEach(function (b) { b.addEventListener('click', function () { stop(); pick(b); }); });
-    if (crossG) crossG.addEventListener('click', function () { stop(); pick(crossG.querySelector('.bead')); });
+    function clearBeads() {
+      $$('.bead.hl, .bead.hl-ghost', svg).forEach(function (b) { b.classList.remove('hl', 'hl-ghost'); });
+    }
+    function lightUp(spot) {
+      clearBeads();
+      var s = SPOT[spot];
+      if (!s) return;
+      $$(s.sel, svg).forEach(function (b) { b.classList.add(s.ghost ? 'hl-ghost' : 'hl'); });
+    }
+    function fill(id) {
+      if (!panel || !store) return false;
+      var src = $('[data-pray="' + id + '"]', store);
+      if (!src) return false;
+      panel.innerHTML = '<div class="info-inner">' + src.innerHTML + '</div>';
+      return true;
+    }
+    function open(btn, x, y) {
+      if (!fill(btn.getAttribute('data-p'))) return;
+      panel.hidden = false;
+      void panel.offsetHeight;
+      panel.classList.add('open');
+      if (x === undefined) {
+        var r = btn.getBoundingClientRect(); x = r.left; y = r.bottom - 8;
+      }
+      placePanel(panel, x, y);
+      lightUp(btn.getAttribute('data-spot'));
+      var note = $('.p-note', panel);
+      if (cap && note) cap.textContent = note.textContent;
+      btn.classList.add('is-on');
+    }
+    function close() {
+      if (!panel) return;
+      panel.classList.remove('open', 'pinned');
+      setTimeout(function () { if (!panel.classList.contains('open')) panel.hidden = true; }, 200);
+      clearBeads();
+      if (cap) cap.textContent = capDefault;
+      $$('.pray-link.is-on').forEach(function (b) { b.classList.remove('is-on'); });
+      pinned = null;
+    }
 
-    var timer = null, at = -1;
-    var playBtn = $('[data-rosary-play]'), resetBtn = $('[data-rosary-reset]');
-    function stop() {
-      if (timer) { clearInterval(timer); timer = null; }
-      if (playBtn) { playBtn.setAttribute('aria-pressed', 'false'); playBtn.textContent = 'Tesbihi izle'; }
-    }
-    function step() {
-      at++;
-      if (at >= beads.length) { at = beads.length - 1; stop(); return; }
-      beads[at].classList.add('done');
-      pick(beads[at]);
-    }
-    if (playBtn) {
-      playBtn.addEventListener('click', function () {
-        if (timer) { stop(); return; }
-        playBtn.setAttribute('aria-pressed', 'true');
-        playBtn.textContent = 'Duraklat';
-        step();
-        timer = setInterval(step, 1600);
+    $$('.pray-link').forEach(function (btn) {
+      if (FINE) {
+        btn.addEventListener('mouseenter', function (e) { if (!pinned) open(btn, e.clientX, e.clientY); });
+        btn.addEventListener('mousemove', function (e) { if (!pinned && panel && !panel.hidden) placePanel(panel, e.clientX, e.clientY); });
+        btn.addEventListener('mouseleave', function () { if (!pinned) close(); });
+      }
+      /* Click pins it, which is also how it works on a touch screen */
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (pinned === btn) { close(); return; }
+        close();
+        pinned = btn;
+        open(btn);
+        if (panel) {
+          panel.classList.add('pinned');
+          if (!FINE) { panel.classList.add('centered'); panel.style.left = ''; panel.style.top = ''; }
+        }
       });
-    }
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        stop(); at = -1;
-        $$('.bead', svg).forEach(function (b) { b.classList.remove('on', 'done'); });
-        $$('.pray').forEach(function (c) { c.classList.remove('is-active'); });
-        if (now) now.hidden = true;
-      });
-    }
+      btn.addEventListener('focus', function () { if (!pinned) open(btn); });
+      btn.addEventListener('blur', function () { if (!pinned) close(); });
+    });
+    document.addEventListener('click', function (e) {
+      if (pinned && panel && !panel.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
 
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */

@@ -312,7 +312,8 @@ $TextNav = @(
 )
 # Every page that belongs to the Compendium, for the 'is-section' state and the breadcrumb
 $PrayerNav = @(
-  @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Meryem Ana Tesbih Duası' }
+  @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası' },
+  @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller' }
 )
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
@@ -758,20 +759,16 @@ Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -Desc
 # The bead ring is generated rather than hand-drawn: five decades of one large bead
 # and ten small ones, with the pendant and crucifix above, mirroring a real rosary.
 $cx = 180.0; $cy = 372.0; $rr = 138.0
-$sb = New-Object Text.StringBuilder
-$seq = 0
-function Bead([double]$x, [double]$y, [string]$kind, [string]$prayer, [int]$n) {
+function Bead([double]$x, [double]$y, [string]$kind, [string]$prayer) {
   $cls = if ($kind -eq 'lg') { 'bead lg' } else { 'bead sm' }
   $rad = if ($kind -eq 'lg') { '8.5' } else { '5.6' }
-  return "<circle class=`"$cls`" cx=`"$x`" cy=`"$y`" r=`"$rad`" data-p=`"$prayer`" data-n=`"$n`"></circle>"
+  return "<circle class=`"$cls`" cx=`"$x`" cy=`"$y`" r=`"$rad`" data-p=`"$prayer`"></circle>"
 }
 # pendant, from the crucifix down to the medal
-$seq++; $crossN = $seq
 $pend = ""
-$seq++; $pend += Bead 180 200 'lg' 'goklerdeki-pederimiz' $seq
-foreach ($y in 175, 152, 129) { $seq++; $pend += Bead 180 $y 'sm' 'selam-sana-meryem' $seq }
-$seq++; $pend += Bead 180 100 'lg' 'pedere-san' $seq
-$seq++; $medalN = $seq
+$pend += Bead 180 200 'lg' 'goklerdeki-pederimiz'
+foreach ($y in 175, 152, 129) { $pend += Bead 180 $y 'sm' 'selam-sana-meryem' }
+$pend += Bead 180 100 'lg' 'pedere-san'
 # the ring
 $ring = ""
 for ($i = 0; $i -lt 55; $i++) {
@@ -779,17 +776,16 @@ for ($i = 0; $i -lt 55; $i++) {
   $x = [Math]::Round($cx + $rr * [Math]::Cos($ang), 1)
   $y = [Math]::Round($cy + $rr * [Math]::Sin($ang), 1)
   $isBig = ($i % 11) -eq 0
-  $seq++
-  $ring += Bead $x $y ($(if ($isBig) { 'lg' } else { 'sm' })) ($(if ($isBig) { 'goklerdeki-pederimiz' } else { 'selam-sana-meryem' })) $seq
+  $ring += Bead $x $y ($(if ($isBig) { 'lg' } else { 'sm' })) ($(if ($isBig) { 'goklerdeki-pederimiz' } else { 'selam-sana-meryem' }))
 }
 $rosarySvg = '<svg class="rosary" viewBox="0 0 360 560" role="img" aria-label="Tesbih">' +
   '<circle class="ring-guide" cx="180" cy="372" r="138"></circle>' +
   '<path class="ring-guide" d="M180 100 V 234"></path>' +
-  '<g class="cross-g" data-p="iman-aciklamasi" data-n="' + $crossN + '">' +
+  '<g class="cross-g" data-p="iman-aciklamasi">' +
     '<rect class="bead cross" x="172" y="28" width="16" height="62" rx="3"></rect>' +
     '<rect class="bead cross" x="152" y="46" width="56" height="16" rx="3"></rect></g>' +
   $pend +
-  '<circle class="bead medal" cx="180" cy="234" r="10" data-p="hac-isareti" data-n="' + $medalN + '"></circle>' +
+  '<circle class="bead medal" cx="180" cy="234" r="10" data-p="hac-isareti"></circle>' +
   $ring + '</svg>'
 
 $mysterySets = ($Rosary.sets | ForEach-Object {
@@ -801,42 +797,44 @@ $mysterySets = ($Rosary.sets | ForEach-Object {
 $stepList = ($Rosary.steps | ForEach-Object {
   "<li><span class=`"s-tr`">$(Inline $_.tr)</span><span class=`"s-en`" lang=`"en`">$($_.en)</span></li>"
 }) -join ''
-$prayerCards = ($Rosary.prayers | ForEach-Object {
-  "<article class=`"pray`" id=`"dua-$($_.id)`" data-p=`"$($_.id)`">" +
-    "<h3>$(Inline $_.tr.title)</h3>" +
+$prayerList = ($Rosary.prayers | ForEach-Object {
+  "<li><button type=`"button`" class=`"pray-link`" data-p=`"$($_.id)`" data-spot=`"$($_.spot)`" aria-describedby=`"prayer-panel`">$(Inline $_.tr.title)</button></li>"
+}) -join ''
+$prayerStore = ($Rosary.prayers | ForEach-Object {
+  "<div data-pray=`"$($_.id)`"><h3>$(Inline $_.tr.title)</h3>" +
+    "<p class=`"p-note`">$(Inline $_.note)</p>" +
     "<div class=`"p-tr`">$(Verse $_.tr.text)</div>" +
-    "<div class=`"p-en`" lang=`"en`"><span class=`"label`">$($_.en.title)</span>$(Verse $_.en.text)</div>" +
-  "</article>"
+    "<div class=`"p-en`" lang=`"en`"><span class=`"label`">$($_.en.title)</span>$(Verse $_.en.text)</div></div>"
 }) -join "`n"
 $tespihBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Tesbih Duası')
   <header class="page-head center"><p class="label">Dualar</p><h1>$($Rosary.title)</h1><p class="sub" lang="en">$($Rosary.en)</p></header>
   <p class="faq-intro">$(Inline $Rosary.intro)</p>
+  <h2 class="section-title" id="nasil">Tesbih nasıl dua edilir?</h2>
+  <ol class="steps">$stepList</ol>
   <div class="rosary-wrap">
-    <div class="rosary-figure">$rosarySvg</div>
+    <div class="rosary-figure">
+      $rosarySvg
+      <p class="rosary-cap" data-rosary-cap>Bir duanın üzerine gelin, tesbihte nerede okunduğu işaretlensin.</p>
+    </div>
     <div class="rosary-side">
       <p class="label">Bugünün gizemleri</p>
       <p class="today-set" data-today-set>...</p>
       <ol class="today-list" data-today-list></ol>
-      <div class="rosary-controls">
-        <button type="button" class="btn btn-gold" data-rosary-play aria-pressed="false">Tesbihi izle</button>
-        <button type="button" class="btn" data-rosary-reset>Baştan</button>
-      </div>
-      <div class="rosary-now" data-rosary-now hidden><span class="label" data-now-title></span><div data-now-text></div></div>
+      <p class="label pray-head">Dualar</p>
+      <ul class="pray-list">$prayerList</ul>
     </div>
   </div>
   <h2 class="section-title" id="gizemler">Gizemler</h2>
   <div class="myst-grid">
 $mysterySets
   </div>
-  <h2 class="section-title" id="nasil">Tesbih nasıl dua edilir?</h2>
-  <ol class="steps">$stepList</ol>
-  <h2 class="section-title" id="dualar">Dualar</h2>
-  <div class="pray-grid">
-$prayerCards
-  </div>
 </div>
+<div class="pray-store" hidden>
+$prayerStore
+</div>
+<div class="hover-panel glass" id="prayer-panel" role="tooltip" hidden></div>
 "@
 Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
   -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." `
