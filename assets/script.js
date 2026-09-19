@@ -1,10 +1,10 @@
 /* =========================================================================
-   Katolik Kilisesi İnanç Esasları Özeti — script.js
+   Katolik Kilisesi İnanç Esasları Özeti · script.js
    Vanilla JavaScript, no libraries. Loaded (defer) on every page.
    1. Theme toggle            5. Search (lazy-loads data/*.js on first use)
    2. Live clock              6. Reading bar: current chapter, prev/next
    3. English-original reveal 7. Table-of-contents drawer (small screens)
-   4. "Show all English"
+   4. "Show all English"       8. Main nav: dropdown + mobile sheet
    ========================================================================= */
 (function () {
   'use strict';
@@ -21,7 +21,7 @@
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
   /* ---------------------------------------------------------------
-     1. Theme (navy/gold dark, ivory/gold light) — persisted in localStorage
+     1. Theme (navy/gold dark, ivory/gold light), persisted in localStorage
      --------------------------------------------------------------- */
   function storedTheme() { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
   function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
@@ -47,7 +47,7 @@
   }
 
   /* ---------------------------------------------------------------
-     2. Live clock — full Turkish date + 24-hour time with seconds
+     2. Live clock: full Turkish date + 24-hour time with seconds
         e.g. "Cuma, 18 Eylül 2026  14:05:09"
      --------------------------------------------------------------- */
   function initClock() {
@@ -80,7 +80,7 @@
 
   /* ---------------------------------------------------------------
      3. English original: per-item reveal (toggles the [hidden] block;
-        CSS plays a short opacity fade — no layout-heavy animation)
+        CSS plays a short opacity fade, no layout-heavy animation)
      --------------------------------------------------------------- */
   function setReveal(btn, open) {
     var block = document.getElementById(btn.getAttribute('aria-controls'));
@@ -113,7 +113,7 @@
   }
 
   /* ---------------------------------------------------------------
-     5. Search — Turkish + English, loads the data files on first use
+     5. Search: Turkish + English, loads the data files on first use
      --------------------------------------------------------------- */
   var foldCache = {};
   /* Case/diacritic folding that preserves string length ("İsa" ~ "isa", "şükran" ~ "sukran") */
@@ -269,7 +269,7 @@
   }
 
   /* ---------------------------------------------------------------
-     6. Reading bar — current chapter title, prev/next chapter,
+     6. Reading bar: current chapter title, prev/next chapter,
         and TOC highlighting (rAF-throttled scroll handler)
      --------------------------------------------------------------- */
   function initReader() {
@@ -346,6 +346,70 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
 
+  /* ---------------------------------------------------------------
+     8. Main navigation: the "Ozet Metni" dropdown on wide screens and
+        the bottom sheet on phones. Both are plain DOM, no dependencies.
+     --------------------------------------------------------------- */
+  function initNav() {
+    var item = $('.has-menu'), trigger = item && $('.nav-trigger', item);
+    if (item && trigger) {
+      var closeMenu = function (refocus) {
+        if (!item.classList.contains('open')) return;
+        item.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        if (refocus) trigger.focus();
+      };
+      trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = !item.classList.contains('open');
+        item.classList.toggle('open', open);
+        trigger.setAttribute('aria-expanded', String(open));
+        if (open) { var a = $('.nav-menu a', item); if (a) a.focus(); }
+      });
+      document.addEventListener('click', function (e) { if (!item.contains(e.target)) closeMenu(false); });
+      /* Tab out of the last link and the menu closes itself */
+      item.addEventListener('focusout', function () {
+        setTimeout(function () { if (!item.contains(document.activeElement)) closeMenu(false); }, 0);
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(true); });
+    }
+
+    var sheet = $('#navsheet');
+    if (!sheet) return;
+    var toggles = $$('.menu-toggle'), panel = $('.navsheet-panel', sheet), hideTimer = null;
+    function openSheet() {
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      sheet.hidden = false;
+      void sheet.offsetHeight;            /* force a frame so the slide-up actually animates */
+      sheet.classList.add('open');
+      document.body.classList.add('sheet-open');
+      toggles.forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
+      var first = $('.ns-item[aria-current="page"]', sheet) || $('.ns-item', sheet);
+      if (first) first.focus();
+    }
+    function closeSheet(refocus) {
+      if (!sheet.classList.contains('open')) return;
+      sheet.classList.remove('open');
+      document.body.classList.remove('sheet-open');
+      toggles.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      if (refocus && toggles[0]) toggles[0].focus();
+      hideTimer = setTimeout(function () { sheet.hidden = true; hideTimer = null; }, 400);
+    }
+    toggles.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (sheet.classList.contains('open')) closeSheet(true); else openSheet();
+      });
+    });
+    /* Tapping the dimmed area outside the panel closes it */
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(false); });
+    if (panel) panel.addEventListener('click', function (e) { if (e.target.closest('a')) closeSheet(false); });
+    var grab = $('.navsheet-grab', sheet);
+    if (grab) grab.addEventListener('click', function () { closeSheet(true); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(true); });
+    /* Growing past the phone breakpoint while the sheet is open would leave the page locked */
+    window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -356,5 +420,8 @@
   }
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
-  ready(function () { initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll(); initSearch(); initReader(); initDrawer(); });
+  ready(function () {
+    initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
+    initSearch(); initReader(); initDrawer(); initNav();
+  });
 })();

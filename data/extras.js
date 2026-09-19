@@ -1,5 +1,5 @@
 /* =====================================================================
- * EN: Non-Q&A texts — Motu Proprio, Introduction, the two Creeds, the Decalogue
+ * EN: Non-Q&A texts: Motu Proprio, Introduction, the two Creeds, the Decalogue
  *     table, the Our Father and the APPENDIX (A. Common Prayers, B. Formulas).
  *     Each text has "tr" (Turkish), "en" (English original) and, where present,
  *     "la" (Latin). "\n" = line break, "\n\n" = stanza/paragraph break.

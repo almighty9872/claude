@@ -1,6 +1,6 @@
 /* =====================================================================
- * Katolik Kilisesi İnanç Esasları Özeti — Dördüncü Kısım: Hristiyan Duası
- * Compendium of the Catechism of the Catholic Church — Part 4: Christian Prayer
+ * Katolik Kilisesi İnanç Esasları Özeti · Dördüncü Kısım: Hristiyan Duası
+ * Compendium of the Catechism of the Catholic Church · Part 4: Christian Prayer
  * Sorular / Questions 534–598
  *
  * DATA FORMAT (edit this file, then run tools/build.ps1 to refresh the static pages)

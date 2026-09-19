@@ -1,6 +1,6 @@
 /* =====================================================================
- * Katolik Kilisesi İnanç Esasları Özeti — Üçüncü Kısım: Mesih'te Yaşam
- * Compendium of the Catechism of the Catholic Church — Part 3: Life in Christ
+ * Katolik Kilisesi İnanç Esasları Özeti · Üçüncü Kısım: Mesih'te Yaşam
+ * Compendium of the Catechism of the Catholic Church · Part 3: Life in Christ
  * Sorular / Questions 357–533
  *
  * DATA FORMAT (edit this file, then run tools/build.ps1 to refresh the static pages)

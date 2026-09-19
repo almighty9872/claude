@@ -226,6 +226,8 @@ function Render-Items($items) {
 }
 
 # ------------------------------------------------------------------ page shell
+# Footer keeps the flat list of every page; the header collapses the seven texts of the
+# Compendium into one dropdown so the bar stays short as pages are added.
 $NavItems = @(
   @{ href = 'index.html';           t = 'Ana Sayfa' },
   @{ href = 'motu-proprio.html';    t = 'Motu Proprio' },
@@ -238,6 +240,19 @@ $NavItems = @(
   @{ href = 'sss.html';             t = 'Sıkça Sorulan Sorular' },
   @{ href = 'hakkinda.html';        t = 'Hakkında' }
 )
+$TextNav = @(
+  @{ href = 'motu-proprio.html';    t = 'Motu Proprio';                       s = 'XVI. Benediktus, 2005' },
+  @{ href = 'giris.html';           t = 'Giriş';                              s = 'Kardinal Ratzinger, 2005' },
+  @{ href = 'iman-ikrari.html';     t = 'I. İnanç Beyanı';                    s = 'Sorular 1–217' },
+  @{ href = 'kutsal-sirlar.html';   t = 'II. Hristiyan Gizeminin Kutlanması'; s = 'Sorular 218–356' },
+  @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam";         s = 'Sorular 357–533' },
+  @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası';                s = 'Sorular 534–598' },
+  @{ href = 'ekler.html';           t = 'Ekler';                              s = 'Dualar ve formüller' }
+)
+$TopNav = @(
+  @{ href = 'sss.html';      t = 'SSS';      full = 'Sıkça Sorulan Sorular' },
+  @{ href = 'hakkinda.html'; t = 'Hakkında'; full = 'Hakkında' }
+)
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
@@ -246,27 +261,65 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
     "<input id=`"$id`" type=`"search`" name=`"q`" placeholder=`"$placeholder`" autocomplete=`"off`" enterkeyhint=`"search`"></div>" +
     "<div class=`"search-results`" hidden></div></form>"
 }
-function Header-Html([bool]$withSearch) {
+# aria-current on the page we are generating, so the bar and the sheet both show where you are
+function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
+function Header-Html([bool]$withSearch, [string]$current) {
   $search = if ($withSearch) { Search-Form 'header-search' 'q-header' '598 soruda ara…' } else { '' }
   $toggle = if ($withSearch) { "<button type=`"button`" class=`"icon-btn search-toggle`" aria-label=`"Ara`" aria-expanded=`"false`">$IcoSearch</button>" } else { '' }
   $cls = if ($withSearch) { 'site-header has-search' } else { 'site-header' }
+  $inText = @($TextNav | Where-Object { $_.href -eq $current }).Count -gt 0
+  $trigCls = if ($inText) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
+  $textMenu = ($TextNav | ForEach-Object {
+    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
+  }) -join ''
+  $topMenu = ($TopNav | ForEach-Object {
+    "<li><a class=`"nav-link`" href=`"$($_.href)`"$(Cur $_.href $current) title=`"$(Attr $_.full)`">$($_.t)</a></li>"
+  }) -join ''
+  $sheetText = ($TextNav | ForEach-Object {
+    "<a class=`"ns-item`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
+  }) -join ''
+  $sheetTop = ($TopNav | ForEach-Object {
+    "<a class=`"ns-item`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.full)</span></a>"
+  }) -join ''
   return @"
 $Sprite
 <a class="skip-link" href="#main">İçeriğe geç</a>
 <header class="$cls">
   <div class="wrap">
     <div class="header-row">
-      <a class="brand" href="index.html">$Logo<span class="brand-name">$SiteName</span></a>
+      <a class="brand" href="index.html"$(Cur 'index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
+      <nav class="mainnav" aria-label="Ana menü">
+        <ul>
+          <li class="has-menu">
+            <button type="button" class="$trigCls" aria-expanded="false" aria-controls="nav-metin" aria-haspopup="true">Özet Metni$IcoChev</button>
+            <div class="nav-menu glass" id="nav-metin"><ul>$textMenu</ul></div>
+          </li>
+          $topMenu
+        </ul>
+      </nav>
       $search
       <div class="header-tools">
         $ClockHtml
         $toggle
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
+        <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
       </div>
     </div>
-    <div class="clock-row">$ClockHtml</div>
   </div>
 </header>
+<div class="navsheet" id="navsheet" hidden>
+  <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
+    <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
+    <nav class="ns-nav" aria-label="Menü">
+      <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-t">Ana Sayfa</span></a>
+      <p class="ns-label">Özet Metni</p>
+      $sheetText
+      <p class="ns-label">Diğer</p>
+      $sheetTop
+    </nav>
+    <div class="ns-foot">$ClockHtml</div>
+  </div>
+</div>
 "@
 }
 $FooterHtml = @"
@@ -321,7 +374,7 @@ $ld
 <script src="assets/script.js" defer></script>
 </head>
 <body>
-$(Header-Html $HeaderSearch)
+$(Header-Html $HeaderSearch $File)
 <main id="main">
 $Body
 </main>

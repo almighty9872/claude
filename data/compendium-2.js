@@ -1,6 +1,6 @@
 /* =====================================================================
- * Katolik Kilisesi İnanç Esasları Özeti — İkinci Kısım: Hristiyan Gizeminin Kutlanması
- * Compendium of the Catechism of the Catholic Church — Part 2: The Celebration of the Christian Mystery
+ * Katolik Kilisesi İnanç Esasları Özeti · İkinci Kısım: Hristiyan Gizeminin Kutlanması
+ * Compendium of the Catechism of the Catholic Church · Part 2: The Celebration of the Christian Mystery
  * Sorular / Questions 218–356
  *
  * DATA FORMAT (edit this file, then run tools/build.ps1 to refresh the static pages)

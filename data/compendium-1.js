@@ -1,6 +1,6 @@
 /* =====================================================================
- * Katolik Kilisesi İnanç Esasları Özeti — Birinci Kısım: İnanç Beyanı
- * Compendium of the Catechism of the Catholic Church — Part 1: The Profession of Faith
+ * Katolik Kilisesi İnanç Esasları Özeti · Birinci Kısım: İnanç Beyanı
+ * Compendium of the Catechism of the Catholic Church · Part 1: The Profession of Faith
  * Sorular / Questions 1–217
  *
  * DATA FORMAT (edit this file, then run tools/build.ps1 to refresh the static pages)
