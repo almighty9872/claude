@@ -16,6 +16,15 @@ Satın alırken bakılacak iki şey vardır:
 
 Onay yetkisi keyfi değildir: 1983 tarihli Kanonik Hukuk Kanunu, Kutsal Yazıların çevirilerini onaylama yetkisini Havarisel Makam'a ve episkoposlar konferanslarına verir (kanon 825, §1).
 
+## Türkçe okumak istiyorum, nereden başlamalıyım?
+
+Şu anda kilise onayı (Nihil obstat/Imprimatur) taşıyan, basılı bir Türkçe Katolik Kutsal Kitap baskısı bulunmuyor. En yakın seçenek, Kitabı Mukaddes Şirketi'nin 2003 tarihli *Ekümenik* çevirisidir: **Kutsal Kitap ve Deuterokanonik Kitaplar**. Bu baskı, Katolik ve Ortodoks kiliselerinin kullandığı yedi deuterokanonik kitabı da içerir ve çağdaş, okunması kolay bir Türkçedir.
+
+Ücretsiz olarak okuyabileceğiniz iki yer:
+
+- [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU) — Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
+- [kitabimukaddes.com/tr/kutsal-kitap](https://kitabimukaddes.com/tr/kutsal-kitap)
+
 ## Neden bu kadar çok çeviri var?
 
 Çünkü çevirmenler iki farklı yol izler.

@@ -385,6 +385,7 @@ $Sprite
   <div class="wrap">
     <div class="header-row">
       <a class="brand" href="index.html"$(Cur 'index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
+      <button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
       <nav class="mainnav" aria-label="Ana menü">
         <ul>
           <li class="has-menu">
@@ -401,7 +402,6 @@ $Sprite
           </li>
           <li><a class="nav-link" href="azizler.html"$(Cur 'azizler.html' $current)>Azizler</a></li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
-          <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
         </ul>
       </nav>
       $search
@@ -649,6 +649,7 @@ Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
 $homeBody = @"
 <section class="hero wrap narrow home-hero">
   $Logo
+  <h1 class="visually-hidden">$SiteName · $SiteTag</h1>
 </section>
 <div class="wrap narrow">
   <div class="hub">
