@@ -650,8 +650,10 @@ $homeBody = @"
 <section class="hero wrap narrow home-hero">
   $Logo
   <h1 class="visually-hidden">$SiteName · $SiteTag</h1>
+  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
 </section>
 <div class="wrap narrow">
+  <div class="home-layout">
   <div class="hub">
     <a class="hub-card" href="katesizm.html">
       <span class="hub-ico">$SmallCross</span>
@@ -696,7 +698,19 @@ $homeBody = @"
       <span class="hub-go">Oku$IcoNext</span>
     </a>
   </div>
-  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
+  <aside class="home-side" aria-label="Bugün">
+    <div class="side-card" data-home-saint>
+      <p class="side-label">$IcoStar Bugünün Azizi</p>
+      <div class="side-body"><p class="hint">Yükleniyor…</p></div>
+      <a class="side-go" href="azizler.html">Azizleri keşfet$IcoNext</a>
+    </div>
+    <div class="side-card" data-home-mystery>
+      <p class="side-label">$IcoBeads Bugünün Gizemi</p>
+      <div class="side-body"><p class="hint">Yükleniyor…</p></div>
+      <a class="side-go" href="tesbih-duasi.html">Tesbih duasını aç$IcoNext</a>
+    </div>
+  </aside>
+  </div>
 </div>
 "@
 $webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JStr $SiteName) +

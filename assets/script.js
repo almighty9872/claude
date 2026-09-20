@@ -797,6 +797,60 @@
     $$('.mass-part').forEach(function (sec) { obs.observe(sec); });
   }
 
+  /* ---------------------------------------------------------------
+     13. Home page: today's saint and today's rosary mystery, each
+         lazy-loaded from its own data file (same pattern as search)
+         only when the home page actually has the widgets to fill.
+     --------------------------------------------------------------- */
+  function loadDataScript(src, globalName) {
+    return new Promise(function (resolve, reject) {
+      if (window[globalName]) return resolve();
+      var s = document.createElement('script');
+      s.src = ROOT + src; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  function initHomeWidgets() {
+    var saintBox = $('[data-home-saint] .side-body'), mysteryBox = $('[data-home-mystery] .side-body');
+    if (!saintBox && !mysteryBox) return;
+
+    function istanbulToday() {
+      try {
+        var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'short' }).formatToParts(new Date());
+        var o = {};
+        parts.forEach(function (p) { if (p.type === 'weekday') o.weekday = p.value; else if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
+        if (o.year && o.month && o.day) return o;
+      } catch (e) { /* fall through */ }
+      var d = new Date();
+      return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate(), weekday: null };
+    }
+    var today = istanbulToday();
+
+    if (saintBox) {
+      loadDataScript('data/azizler.js', 'SAINTS').then(function () {
+        var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
+        if (!day || !day.saints || !day.saints.length) { saintBox.innerHTML = '<p class="hint">Bugün için özel bir aziz yok.</p>'; return; }
+        var s = day.saints[0];
+        var bio = s.bio.length > 170 ? s.bio.slice(0, 170).replace(/\s+\S*$/, '') + '…' : s.bio;
+        saintBox.innerHTML = '<span class="side-name">' + s.name + '</span>' +
+          (s.title ? '<span class="side-title">' + s.title + '</span>' : '') +
+          '<p class="side-snippet">' + bio + '</p>';
+      })['catch'](function () { saintBox.innerHTML = '<p class="hint">Yüklenemedi.</p>'; });
+    }
+    if (mysteryBox) {
+      loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
+        var dayIdx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(today.weekday);
+        if (dayIdx === -1) dayIdx = new Date().getDay();
+        var set = window.COMPENDIUM_ROSARY.sets.filter(function (s) { return s.days.indexOf(dayIdx) !== -1; })[0];
+        if (!set) { mysteryBox.innerHTML = '<p class="hint">Bulunamadı.</p>'; return; }
+        var items = set.items.slice(0, 2).map(function (it) { return it.tr; }).join('; ');
+        mysteryBox.innerHTML = '<span class="side-name">' + set.tr + '</span>' +
+          '<span class="side-title">' + set.dayTr + '</span>' +
+          '<p class="side-snippet">' + items + '…</p>';
+      })['catch'](function () { mysteryBox.innerHTML = '<p class="hint">Yüklenemedi.</p>'; });
+    }
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -809,6 +863,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets();
   });
 })();

@@ -740,13 +740,36 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 }
 @media (max-width: 440px) { .foot-sitemap { grid-template-columns: 1fr 1fr; gap: 1.2rem 1rem; } }
 @media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
-@media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
 
-/* ---------- 16. Home hub (four cards) and the Rosary page ---------- */
+/* ---------- 16. Home hub (cards + today sidebar) and the Rosary page ---------- */
 .home-hero { padding: clamp(2rem, 5vw, 3.2rem) 0 .6rem; }
 .home-hero .logo { width: 64px; height: 64px; margin: 0 auto; }
-@media (min-width: 760px) { .hub { grid-template-columns: 1fr 1fr; } }
-.hub + .search { max-width: 34rem; margin: .4rem auto 2.5rem; }
+.home-layout { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 860px) { .home-layout { grid-template-columns: 2fr 1fr; } }
+.home-side { display: grid; gap: 1rem; }
+@media (min-width: 860px) { .home-side { position: sticky; top: calc(var(--header-h) + 1.2rem); } }
+.side-card {
+  display: flex; flex-direction: column; gap: .6rem;
+  padding: 1.25rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); box-shadow: var(--shadow);
+}
+.side-label {
+  display: flex; align-items: center; gap: .45rem; margin: 0;
+  font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--gold);
+}
+.side-label svg { width: 1rem; height: 1rem; flex: none; }
+.side-body .hint { margin: 0; color: var(--muted); font-style: italic; }
+.side-name { display: block; font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
+.side-title { display: block; font-family: var(--sans); font-size: .74rem; color: var(--muted); margin-top: .1rem; }
+.side-snippet { margin: .5rem 0 0; font-size: .92rem; line-height: 1.5; color: var(--text-soft); }
+.side-go {
+  display: inline-flex; align-items: center; gap: .3rem; margin-top: .2rem;
+  font-family: var(--sans); font-size: .82rem; font-weight: 600; color: var(--gold); text-decoration: none;
+}
+.side-go svg { width: .9rem; height: .9rem; transition: transform .2s; }
+.side-card:hover .side-go svg { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .side-go svg { transition: none; } }
 
 .rosary-wrap { display: grid; gap: 1.5rem; align-items: start; margin: 1.5rem 0 2rem; }
 @media (min-width: 820px) { .rosary-wrap { grid-template-columns: minmax(0, 300px) 1fr; gap: 2.5rem; } }
