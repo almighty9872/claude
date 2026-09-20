@@ -595,7 +595,9 @@
         btn.addEventListener('mousemove', function (e) { if (!pinned && panel && !panel.hidden) placePanel(panel, e.clientX, e.clientY); });
         btn.addEventListener('mouseleave', function () { if (!pinned) close(); });
       }
-      /* Click pins it, which is also how it works on a touch screen */
+      /* Click pins it, which is also how it works on a touch screen. On touch it opens as a
+         bottom sheet instead of a centered dialog, so the sticky rosary figure above stays
+         visible and the lit-up bead is visible at the same time as the prayer text. */
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
         if (pinned === btn) { close(); return; }
@@ -604,7 +606,7 @@
         open(btn);
         if (panel) {
           panel.classList.add('pinned');
-          if (!FINE) { panel.classList.add('centered'); panel.style.left = ''; panel.style.top = ''; }
+          if (!FINE) { panel.classList.add('sheet'); panel.style.left = ''; panel.style.top = ''; }
         }
       });
       btn.addEventListener('focus', function () { if (!pinned) open(btn); });

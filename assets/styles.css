@@ -712,6 +712,15 @@ body.sheet-open { overflow: hidden; }
 .info-panel.pinned, .hover-panel.pinned { pointer-events: auto; }
 .info-panel.centered, .hover-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
 .info-panel.centered.open, .hover-panel.centered.open { transform: translate(-50%, -50%); }
+/* Touch-device rosary popup: a bottom sheet instead of a centered dialog, so the sticky
+   rosary figure (and the bead it just lit up) stays visible above it at the same time. */
+.hover-panel.sheet {
+  left: 0; right: 0; top: auto; bottom: 0; width: 100%;
+  max-width: 100%; max-height: 60vh; border-radius: 20px 20px 0 0;
+  padding-bottom: calc(1.1rem + env(safe-area-inset-bottom));
+  transform: translateY(100%);
+}
+.hover-panel.sheet.open { transform: translateY(0); }
 .info-inner > :first-child { margin-top: 0; }
 .info-inner > :last-child { margin-bottom: 0; }
 .info-inner h2 { margin: 1.1rem 0 .35rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-family: var(--sans); }
@@ -791,6 +800,12 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   box-shadow: var(--shadow); padding: 1rem;
 }
 .rosary { display: block; width: 100%; height: auto; max-height: 62vh; margin: 0 auto; }
+/* Below 820px the figure and the prayer list stack, so pin the beads under the header while
+   the list scrolls underneath: tapping a prayer further down still lights up a visible bead. */
+@media (max-width: 819px) {
+  .rosary-figure { position: sticky; top: calc(var(--header-h) + .6rem); z-index: 5; }
+  .rosary { max-height: 34vh; }
+}
 .ring-guide { fill: none; stroke: var(--border-strong); stroke-width: 1.2; opacity: .55; }
 .bead { fill: var(--surface-3); stroke: var(--border-strong); stroke-width: 1.1; cursor: pointer; transition: fill .18s, stroke .18s, r .18s; }
 .bead.lg { fill: var(--gold-soft); stroke: var(--gold); }

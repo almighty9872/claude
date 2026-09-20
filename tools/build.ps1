@@ -1047,10 +1047,12 @@ $prayerList = ($Rosary.prayers | ForEach-Object {
   "<li><button type=`"button`" class=`"pray-link`" data-p=`"$($_.id)`" data-spot=`"$($_.spot)`" aria-describedby=`"prayer-panel`">$(Inline $_.tr.title)</button></li>"
 }) -join ''
 $prayerStore = ($Rosary.prayers | ForEach-Object {
+  $enId = "en-pray-$($_.id)"
   "<div data-pray=`"$($_.id)`"><h3>$(Inline $_.tr.title)</h3>" +
     "<p class=`"p-note`">$(Inline $_.note)</p>" +
     "<div class=`"p-tr`">$(Verse $_.tr.text)</div>" +
-    "<div class=`"p-en`" lang=`"en`"><span class=`"label`">$($_.en.title)</span>$(Verse $_.en.text)</div></div>"
+    "$(En-Toggle $enId)" +
+    "<div class=`"en-block p-en`" id=`"$enId`" lang=`"en`" hidden><span class=`"label`">$($_.en.title)</span>$(Verse $_.en.text)</div></div>"
 }) -join "`n"
 $tespihBody = @"
 <div class="wrap narrow">
@@ -1062,7 +1064,7 @@ $tespihBody = @"
   <div class="rosary-wrap">
     <div class="rosary-figure">
       $rosarySvg
-      <p class="rosary-cap" data-rosary-cap>Bir duanın üzerine gelin, tesbihte nerede okunduğu işaretlensin.</p>
+      <p class="rosary-cap" data-rosary-cap>Bir duaya dokunun ya da üzerine gelin, tesbihte nerede okunduğu işaretlensin.</p>
     </div>
     <div class="rosary-side">
       <p class="label">Bugünün gizemleri</p>
