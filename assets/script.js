@@ -438,11 +438,11 @@
   function initInfo() {
     var panel = $('#info-panel');
     if (!panel) return;
-    var btn = $('.info-btn'), sheetBtn = $('.ns-info'), pinned = false, hideTimer = null;
+    var btn = $('.info-btn'), sheetBtns = $$('.info-open'), pinned = false, hideTimer = null;
     var fine = FINE;
 
     function mark(open) {
-      [btn, sheetBtn].forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(open)); });
+      [btn].concat(sheetBtns).forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(open)); });
     }
     function show() {
       if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
@@ -486,16 +486,16 @@
       });
       btn.addEventListener('blur', function () { if (!pinned) hide(); });
     }
-    if (sheetBtn) {
+    sheetBtns.forEach(function (sheetBtn) {
       sheetBtn.addEventListener('click', function () {
         var toggle = $('.menu-toggle');
-        if (toggle && $('#navsheet') && $('#navsheet').classList.contains('open')) toggle.click();
+        if (toggle && $('#navsheet') && $('#navsheet').classList.contains('open') && sheetBtn.closest('#navsheet')) toggle.click();
         pinned = true;
         setTimeout(function () { show(); panel.classList.add('pinned'); centre(); }, 60);
       });
-    }
+    });
     document.addEventListener('click', function (e) {
-      if (pinned && !panel.contains(e.target) && e.target !== btn) hide();
+      if (pinned && !panel.contains(e.target) && e.target !== btn && sheetBtns.indexOf(e.target) === -1) hide();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !panel.hidden) { hide(); if (btn) btn.blur(); }
@@ -781,6 +781,22 @@
     }
   }
 
+  /* ---------------------------------------------------------------
+     12. Kutsal Ayin: scroll-spy on the six part icons
+     --------------------------------------------------------------- */
+  function initMass() {
+    var pills = $$('.mass-pills a');
+    if (!pills.length || !window.IntersectionObserver) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var n = en.target.getAttribute('data-part');
+        pills.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-part-link') === n); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    $$('.mass-part').forEach(function (sec) { obs.observe(sec); });
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -793,6 +809,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass();
   });
 })();

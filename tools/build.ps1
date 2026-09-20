@@ -64,6 +64,7 @@ $FaqData = Read-Data 'sss.js'
 $Rosary = Read-Data 'tespih.js'
 $Sureci = Read-Data 'katolik-sureci.js'
 $Saints = Read-Data 'azizler.js'
+$Mass = Read-Data 'kutsal-ayin.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -317,13 +318,29 @@ $PrayerNav = @(
   @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası' },
   @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller' }
 )
+# "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many
+$KaynaklarNav = @(
+  @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci'; s = 'Katolik olma süreci' },
+  @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';    s = 'Ayinin sırası, adım adım' },
+  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';   s = 'Onaylı çeviriler' }
+)
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
+$KaynaklarPages = @($KaynaklarNav | ForEach-Object { $_.href })
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
 $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
 $IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
 $IcoStar = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2c1 2.8 1.9 4.4 3.4 5.8 1.5 1.4 3.1 2.1 5.4 2.7-2.3.6-3.9 1.4-5.4 2.7-1.5 1.4-2.4 3-3.4 5.8-1-2.8-1.9-4.4-3.4-5.8-1.5-1.3-3.1-2.1-5.4-2.7 2.3-.6 3.9-1.3 5.4-2.7 1.5-1.4 2.4-3 3.4-5.8z"/></svg>'
+$IcoChalice = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.6 4c0 4.4 1.3 7.6 4.4 7.6s4.4-3.2 4.4-7.6"/><path d="M12 11.6V19"/><path d="M8 19h8"/></svg>'
+$MassIcons = @{
+  gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
+  book     = $IcoBook
+  gifts    = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.4" cy="8" r="3.3"/><path d="M14.6 5h5"/><path d="M15.2 5c0 3.4 1 5.8 3.4 5.8s3.4-2.4 3.4-5.8" transform="translate(-1 0)"/><path d="M18.1 10.8V19"/><path d="M15 19h6.2"/></svg>'
+  chalice  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h10"/><path d="M7.6 5c0 4.4 1.3 7.6 4.4 7.6s4.4-3.2 4.4-7.6"/><path d="M12 12.6V19"/><path d="M8 19h8"/><path d="M4.6 3.4 6.4 5M19.4 3.4 17.6 5"/></svg>'
+  host     = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2.4 3 5.6 4.4 8 4.4s5.6-1.4 8-4.4"/><circle cx="12" cy="7.6" r="3.4"/><path d="M12 5.6v.01M10.2 8.3h3.6"/></svg>'
+  blessing = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2M6.5 6.5 5 5M19 5l-1.5 1.5M6.5 17.5 5 19M19 19l-1.5-1.5"/><circle cx="12" cy="12" r="3.4"/></svg>'
+}
 $IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
@@ -347,10 +364,18 @@ function Header-Html([bool]$withSearch, [string]$current) {
   $prayerMenu = ($PrayerNav | ForEach-Object {
     "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
   }) -join ''
+  $inKaynaklar = $KaynaklarPages -contains $current
+  $kaynaklarCls = if ($inKaynaklar) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
+  $kaynaklarMenu = ($KaynaklarNav | ForEach-Object {
+    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
+  }) -join ''
   $sheetPray = ($PrayerNav | ForEach-Object {
     "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
   }) -join ''
   $sheetText = ($TextNav | ForEach-Object {
+    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
+  }) -join ''
+  $sheetKaynaklar = ($KaynaklarNav | ForEach-Object {
     "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
   }) -join ''
   return @"
@@ -366,13 +391,15 @@ $Sprite
             <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Katekizm$IcoChev</a>
             <div class="nav-menu glass" id="nav-katesizm"><ul>$textMenu</ul></div>
           </li>
-          <li><a class="nav-link" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)>Katolik Süreci</a></li>
+          <li class="has-menu">
+            <button type="button" class="$kaynaklarCls" aria-expanded="false" aria-controls="nav-kaynaklar" aria-haspopup="true">Kaynaklar$IcoChev</button>
+            <div class="nav-menu glass" id="nav-kaynaklar"><ul>$kaynaklarMenu</ul></div>
+          </li>
           <li class="has-menu">
             <button type="button" class="$prayCls" aria-expanded="false" aria-controls="nav-dualar" aria-haspopup="true">Dualar$IcoChev</button>
             <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
           </li>
           <li><a class="nav-link" href="azizler.html"$(Cur 'azizler.html' $current)>Azizler</a></li>
-          <li><a class="nav-link" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)>Kutsal Kitap</a></li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
           <li><button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button></li>
         </ul>
@@ -396,16 +423,15 @@ $Sprite
       <p class="ns-label">Katekizm</p>
       <a class="ns-item" href="katesizm.html"$(Cur 'katesizm.html' $current)><span class="ns-t">$WorkName</span><span class="ns-s">598 soru ve yanıt</span></a>
       $sheetText
-      <p class="ns-label">Diğer</p>
-      <a class="ns-item" href="katolik-sureci.html"$(Cur 'katolik-sureci.html' $current)><span class="ns-t">Katolik Süreci</span><span class="ns-s">Katolik olma süreci</span></a>
+      <p class="ns-label">Kaynaklar</p>
+      $sheetKaynaklar
       <p class="ns-label">Dualar</p>
       $sheetPray
       <p class="ns-label">Azizler</p>
       <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></a>
-      <p class="ns-label">Kutsal Kitap</p>
-      <a class="ns-item" href="kutsal-kitap.html"$(Cur 'kutsal-kitap.html' $current)><span class="ns-t">Kutsal Kitap</span><span class="ns-s">Onaylı çeviriler</span></a>
+      <p class="ns-label">Sorular</p>
       <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
-      <button type="button" class="ns-item ns-info" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
+      <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
     </nav>
     <div class="ns-foot">$ClockHtml</div>
   </div>
@@ -414,9 +440,22 @@ $Sprite
 }
 $FooterHtml = @"
 <footer class="site-footer">
-  <div class="wrap foot-row">
-    <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
-    <p class="foot-line">$SiteTag · Özgün metin © 2005 Libreria Editrice Vaticana</p>
+  <div class="wrap foot-grid">
+    <div class="foot-about">
+      <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
+      <p class="foot-tag">$SiteTag</p>
+      <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 David Erduran</p>
+    </div>
+    <div class="foot-sources">
+      <p class="foot-label">Kaynaklar</p>
+      <ul>
+        <li>Katekizm: Compendium of the CCC © 2005 Libreria Editrice Vaticana</li>
+        <li>Tesbih Duası: Sant’Antuan Bazilikası, İstanbul</li>
+        <li>Kutsal Ayin: Azize Tereza Kilisesi, Ankara</li>
+        <li>Azizler: Roma Genel Takvimi · Roma Azizler Cetveli</li>
+      </ul>
+    </div>
+    <button type="button" class="foot-info-btn info-open" aria-controls="info-panel" aria-expanded="false">Site hakkında ve tam kaynak listesi$IcoChev</button>
   </div>
 </footer>
 "@
@@ -626,6 +665,18 @@ $homeBody = @"
       <span class="hub-s">Katolik olmak isteyenler için: OCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
+    <a class="hub-card" href="kutsal-ayin.html">
+      <span class="hub-ico">$IcoChalice</span>
+      <span class="hub-t">Kutsal Ayin</span>
+      <span class="hub-s">Ayinin sırası adım adım: cemaatin toplanmasından son takdise altı bölüm, Türkçe ve İngilizce.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
+    <a class="hub-card" href="kutsal-kitap.html">
+      <span class="hub-ico">$IcoBook</span>
+      <span class="hub-t">Kutsal Kitap</span>
+      <span class="hub-s">$($KkMeta.short)</span>
+      <span class="hub-go">Devamını oku$IcoNext</span>
+    </a>
     <a class="hub-card" href="tesbih-duasi.html">
       <span class="hub-ico">$IcoBeads</span>
       <span class="hub-t">Tesbih Duası</span>
@@ -637,12 +688,6 @@ $homeBody = @"
       <span class="hub-t">Azizler</span>
       <span class="hub-s">Ayin takviminin azizleri: bugünün azizini görün, yılın her günü için hayat hikayelerini keşfedin.</span>
       <span class="hub-go">Oku$IcoNext</span>
-    </a>
-    <a class="hub-card" href="kutsal-kitap.html">
-      <span class="hub-ico">$IcoBook</span>
-      <span class="hub-t">Kutsal Kitap</span>
-      <span class="hub-s">$($KkMeta.short)</span>
-      <span class="hub-go">Devamını oku$IcoNext</span>
     </a>
     <a class="hub-card" href="sss.html">
       <span class="hub-ico">$IcoAsk</span>
@@ -877,6 +922,52 @@ Write-Page -File 'azizler.html' -Title "$($Saints.title) | $SiteName" `
   -Description "Katolik ayin takviminin azizleri: bugünün azizini Türkiye saatiyle görün, yılın her günü için Türkçe aziz hayat hikayelerini keşfedin." `
   -Path 'azizler.html' -Body $azizlerBody -JsonLd @((Breadcrumb-Ld 'Azizler' 'azizler.html'))
 
+# ================================================================== KUTSAL AYIN (kutsal-ayin.html)
+function Mass-Lines($lines, [string]$lang) {
+  $roleLabels = if ($lang -eq 'en') { $Mass.roleLabelsEn } else { $Mass.roleLabels }
+  $sb = New-Object Text.StringBuilder
+  foreach ($ln in $lines) {
+    $txt = if ($lang -eq 'en') { $ln.en } else { $ln.tr }
+    switch ($ln.role) {
+      'N'  { [void]$sb.Append("<p class=`"mass-note`"><em>$(Inline $txt)</em></p>") }
+      'PC' { [void]$sb.Append("<p class=`"mass-line mass-pc`"><span class=`"mass-role label`">$($roleLabels.PC)</span>$(Inline $txt)</p>") }
+      'P'  { [void]$sb.Append("<p class=`"mass-line mass-p`"><span class=`"mass-role label`">$($roleLabels.P)</span>$(Inline $txt)</p>") }
+      'C'  { [void]$sb.Append("<p class=`"mass-line mass-c`"><span class=`"mass-role label`">$($roleLabels.C)</span>$(Inline $txt)</p>") }
+    }
+  }
+  return $sb.ToString()
+}
+$massPillsHtml = ($Mass.parts | ForEach-Object {
+  "<a href=`"#$($_.id)`" data-part-link=`"$($_.n)`" title=`"$(Attr $_.title)`">$($MassIcons[$_.icon])<span class=`"visually-hidden`">$($_.title)</span></a>"
+}) -join ''
+$massPartsHtml = ($Mass.parts | ForEach-Object {
+  $p = $_
+  $icon = $MassIcons[$p.icon]
+  $trHtml = Mass-Lines $p.lines 'tr'
+  $enHtml = Mass-Lines $p.lines 'en'
+  "<section class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
+    "<div class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Bölüm $($p.n)</p><h2>$(Inline $p.title)</h2><p class=`"sub`" lang=`"en`">$($p.en)</p></div></div>" +
+    "<p class=`"mass-lead`">$(Inline $p.lead)</p>" +
+    "<div class=`"mass-dialogue`" data-tr>$trHtml</div>" +
+    "<footer class=`"qa-foot end`">$(En-Toggle "en-$($p.id)")</footer>" +
+    "<div class=`"en-block mass-dialogue`" id=`"en-$($p.id)`" lang=`"en`" hidden>$enHtml</div>" +
+  "</section>"
+}) -join "`n"
+$massBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Kutsal Ayin')
+  <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Mass.title)</h1><p class="sub" lang="en">$($Mass.en)</p></header>
+  <p class="faq-intro">$(Inline $Mass.intro)</p>
+  <nav class="mass-pills" aria-label="Ayinin bölümleri" data-mass-pills>$massPillsHtml</nav>
+  <div class="mass-parts" data-mass-parts>
+$massPartsHtml
+  </div>
+</div>
+"@
+Write-Page -File 'kutsal-ayin.html' -Title "$($Mass.title) | $SiteName" `
+  -Description "Kutsal Ayin$($Apos)in sırası: cemaatin toplanmasından son takdise, Kutsal Kitabın okunmasından Efkaristiya$($Apos)nın kutsanmasına dek altı bölüm, Türkçe ve İngilizce." `
+  -Path 'kutsal-ayin.html' -Body $massBody -JsonLd @((Breadcrumb-Ld 'Kutsal Ayin' 'kutsal-ayin.html'))
+
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
 # The bead ring is generated rather than hand-drawn: five decades of one large bead
 # and ten small ones, with the pendant and crucifix above, mirroring a real rosary.
@@ -985,7 +1076,7 @@ $pages = @(
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
-  @{ p = 'azizler.html'; pr = '0.9' },
+  @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }
 )
