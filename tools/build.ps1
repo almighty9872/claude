@@ -438,6 +438,9 @@ $Sprite
 </div>
 "@
 }
+$footKatekizm = (@(@{ href = 'katesizm.html'; t = 'Katekizm' }) + $TextNav) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+$footKaynaklar = $KaynaklarNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+$footDualar = $PrayerNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
@@ -446,16 +449,12 @@ $FooterHtml = @"
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 David Erduran</p>
     </div>
-    <div class="foot-sources">
-      <p class="foot-label">Kaynaklar</p>
-      <ul>
-        <li>Katekizm: Compendium of the CCC © 2005 Libreria Editrice Vaticana</li>
-        <li>Tesbih Duası: Sant’Antuan Bazilikası, İstanbul</li>
-        <li>Kutsal Ayin: Azize Tereza Kilisesi, Ankara</li>
-        <li>Azizler: Roma Genel Takvimi · Roma Azizler Cetveli</li>
-      </ul>
-    </div>
-    <button type="button" class="foot-info-btn info-open" aria-controls="info-panel" aria-expanded="false">Site hakkında ve tam kaynak listesi$IcoChev</button>
+    <nav class="foot-sitemap" aria-label="Site haritası">
+      <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
+      <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
+      <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li></ul></div>
+    </nav>
   </div>
 </footer>
 "@

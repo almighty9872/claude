@@ -715,33 +715,28 @@ body.sheet-open { overflow: hidden; }
 button.ns-item { width: 100%; text-align: left; border: 0; background: none; font: inherit; cursor: pointer; }
 
 .foot-grid {
-  display: grid; grid-template-columns: 1.1fr 1fr; column-gap: 2.5rem; row-gap: 1.6rem; align-items: start;
+  display: grid; grid-template-columns: 1.1fr 2fr; column-gap: 2.5rem; row-gap: 1.8rem; align-items: start;
 }
 .foot-brand { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--text); font-weight: 600; }
 .foot-brand .logo { width: 22px; height: 22px; color: var(--gold); }
 .foot-brand span { font-family: var(--sans); font-size: .95rem; }
 .foot-tag { margin: .6rem 0 .15rem; font-family: var(--sans); font-size: .85rem; }
 .foot-copy { margin: 0; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
+.foot-sitemap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .foot-label {
-  margin: 0 0 .5rem; font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  margin: 0 0 .6rem; font-family: var(--sans); font-size: .7rem; font-weight: 700;
   letter-spacing: .1em; text-transform: uppercase; color: var(--gold);
 }
-.foot-sources ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
-.foot-sources li { font-family: var(--sans); font-size: .74rem; line-height: 1.5; color: var(--muted); }
-.foot-info-btn {
-  grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: .35rem;
-  padding: .55rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface);
-  font-family: var(--sans); font-size: .8rem; font-weight: 600; color: var(--text-soft); cursor: pointer;
-  transition: border-color .2s, color .2s, background-color .2s;
-}
-.foot-info-btn .ico { width: .85rem; height: .85rem; }
-.foot-info-btn:hover, .foot-info-btn[aria-expanded="true"] { border-color: var(--gold-soft); color: var(--gold); background: var(--gold-bg); }
+.foot-sitemap ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.foot-sitemap li { font-family: var(--sans); font-size: .76rem; line-height: 1.4; }
+.foot-sitemap a { color: var(--muted); text-decoration: none; }
+.foot-sitemap a:hover { color: var(--gold); }
 @media (max-width: 720px) {
   .foot-grid { grid-template-columns: 1fr; text-align: center; }
-  .foot-info-btn { justify-self: center; }
-  .foot-sources ul { justify-items: center; }
+  .foot-sitemap { grid-template-columns: repeat(2, 1fr); text-align: left; }
 }
-@media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg, .foot-info-btn { transition: none; } }
+@media (max-width: 440px) { .foot-sitemap { grid-template-columns: 1fr 1fr; gap: 1.2rem 1rem; } }
+@media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
 @media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
 
 /* ---------- 16. Home hub (four cards) and the Rosary page ---------- */

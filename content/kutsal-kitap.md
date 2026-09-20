@@ -22,7 +22,7 @@ Onay yetkisi keyfi değildir: 1983 tarihli Kanonik Hukuk Kanunu, Kutsal Yazılar
 
 **Sözel çeviri** özgün metne olabildiğince bağlı kalır; sözcükleri, çoğu zaman sözcük sırasını bile korur. **Dinamik çeviri** ise dilbilgisini değil anlamı aktarmayı amaçlar ve çevirmene daha rahat bir Türkçe ya da İngilizce kurma özgürlüğü tanır.
 
-Fark şurada görülür: Levililer 18'deki İbranice deyimi sözel bir çeviri olan NAS “uncover the nakedness of” diye verir; dinamik bir çeviri olan NIV ise “have sexual relations with” der. İkisi de aynı şeyi söyler, ama biri deyimi korur, diğeri anlamı günlük dile taşır.
+Fark şurada görülür: Levililer 18'deki İbranice deyimi sözel bir çeviri olan Douay-Rheims “uncover the nakedness of” (“çıplaklığını açığa çıkarma”) diye, özgün deyimi olduğu gibi koruyarak verir; daha dinamik çeviriler ise aynı ayeti “cinsel ilişkiye girme” gibi doğrudan günlük bir ifadeyle karşılar. İkisi de aynı şeyi söyler, ama biri deyimi korur, diğeri anlamı günlük dile taşır.
 
 ## Ciddi çalışma için hangisi?
 
@@ -34,24 +34,26 @@ Dinamik ya da ortada duran bir çeviri. Daha hızlı okursunuz ve metnin ana anl
 
 ## Çeviri öğretiyi değiştirebilir mi?
 
-Evet, değiştirebilir. Bilinen bir örnek Yunanca *ergon* sözcüğüdür. NIV, Romalılar 4:2'de bunu “works” diye çevirir; orada yalnızca imanla kurtuluş öğretisi desteklenir. Ama aynı kökten sözcükleri Romalılar 2:6-7'de “done” ve “doing” diye verir. Tutarlı çevrilseydi metin, Allah'ın herkesi *işlerine göre* yargılayacağını ve *iyilik işlemekte direnenlere* ebedi hayat vereceğini açıkça söylerdi; yani Katolik kurtuluş anlayışını.
+Evet, değiştirebilir. Bilinen bir örnek Yunanca *ergon* (“iş, eylem”) sözcüğüdür. Kimi Protestan çevirilerinde bu sözcük Romalılar 4:2'de “işler” diye çevrilirken, aynı kökten sözcükler Romalılar 2:6-7'de farklı bir Türkçe/İngilizce karşılıkla verilir. Tutarlı çevrilseydi metin, Allah'ın herkesi *işlerine göre* yargılayacağını ve *iyilik işlemekte direnenlere* ebedi hayat vereceğini açıkça söylerdi; yani Katolik kurtuluş anlayışını.
 
 Öğretisel bir amaç olmasa bile, dinamik çevirilerde kutsal yazarın niyeti bulanıklaşabilir.
 
 ## Hangi çeviri nerede duruyor?
 
-- **Sözele en yakın:** King James (KJV), New King James (NKJV), New American Standard (NAS), Douay-Rheims
-- **Biraz daha az sözel:** Revised Standard Version (RSV), Confraternity
-- **Ağırlıklı olarak dinamik:** New International Version (NIV), New American Bible (NAB)
-- **Dinamiğe en yakın:** New Jerusalem Bible (NJB), New English Bible (NEB), Revised English Bible (REB), Contemporary English Version (CEV), Good News Bible (TEV)
+Aşağıdaki sıralama yalnızca Katolik baskıları (deuterokanonik kitapları ve kilise onayını taşıyan çevirileri) içerir:
 
-İki not: **NRSV** bu ölçeğe zor yerleşir; temel metni sözeldir ama “cinsiyet kapsayıcı dil” kullanır, yani özgün metin “kardeşler” derken “brothers and sisters” yazıp dipnot düşer. **Serbest anlatımlar** (örneğin Living Bible) ise çeviri değildir; İngilizce bir çevirinin yeniden anlatımıdır.
+- **Sözele en yakın:** Douay-Rheims (Challoner gözden geçirmesi)
+- **Sözel, daha okunur:** Revised Standard Version, Catholic Edition (RSV-CE ve RSV-2CE), Confraternity Bible
+- **Ortada:** New American Bible, Revised Edition (NABRE), New Jerusalem Bible (NJB)
+- **Dinamiğe yakın:** New Revised Standard Version, Catholic Edition (NRSV-CE), Good News Translation (Katolik baskısı)
+
+Bir not: **NRSV-CE** bu ölçeğe zor yerleşir; temel metni sözeldir ama “cinsiyet kapsayıcı dil” kullanır, yani özgün metin “kardeşler” derken “brothers and sisters” yazıp dipnot düşer. **Serbest anlatımlar** (örneğin Living Bible'ın çevirileri) ise çeviri değildir; başka bir çevirinin yeniden anlatımıdır ve kilise onayı taşımaz.
 
 ## Eski çeviriler daha mı güvenilir?
 
 Hayır, yalnızca daha eskidirler. Ağırbaşlı ve etkileyici durabilirler, ama dört yüz yıl önceki İngilizceyle yazıldıkları için okunmaları zordur.
 
-“Yalnızca King James” ya da “yalnızca Douay-Rheims” doğrudur diyenler de vardır. İki iddia da yanlıştır. KJV'nin dayandığı elyazmalarını derleyen kişi Katolik olan Erasmus'tur ve kusursuz bir elyazması takımı yoktur. Üstelik bugün satılan baskıların hiçbiri 1600'lerdeki özgün metin değildir: piyasadaki Douay'ın teknik adı **Douay-Challoner**'dır, çünkü on sekizinci yüzyılda Episkopos Richard Challoner tarafından, Yunanca ve İbranice elyazmalarına da bakılarak gözden geçirilmiştir.
+“Yalnızca Douay-Rheims doğrudur, diğerleri güvenilmez” diyenler de vardır; bu iddia yanlıştır. Kusursuz bir elyazması takımı yoktur ve bugün satılan baskıların hiçbiri 1600'lerdeki özgün metin değildir: piyasadaki Douay'ın teknik adı **Douay-Challoner**'dır, çünkü on sekizinci yüzyılda Episkopos Richard Challoner tarafından, Yunanca ve İbranice elyazmalarına da bakılarak gözden geçirilmiştir.
 
 ## Peki hangisini almalıyım?
 
@@ -83,6 +85,8 @@ Amerika Birleşik Devletleri Katolik Episkoposlar Konferansı'nın (USCCB) 1983'
 - Good News Translation (Today's English Version, Second Edition), American Bible Society
 - Translation for Early Youth, A Translation of the New Testament for Children, Contemporary English Version, American Bible Society
 
-Bu liste yalnızca ABD konferansını bağlar. Usulüne uygun kilise onayı almış her çeviri özel dua ve çalışma için kullanılabilir; başka bir ülkede yaşıyorsanız kendi episkoposlar konferansınızın listesine bakın.
+Bu liste yalnızca ABD konferansını bağlar ve yalnızca çağdaş çevirileri kapsar. **Douay-Rheims (Challoner gözden geçirmesi)** bu yüzden listede yer almaz, ama kendi tarihî kilise onayını taşır ve bugün de meşru, kullanılabilir bir Katolik çeviridir.
+
+Usulüne uygun kilise onayı almış her çeviri özel dua ve çalışma için kullanılabilir; başka bir ülkede yaşıyorsanız kendi episkoposlar konferansınızın listesine bakın.
 
 > Çeviri anlayışlarıyla ilgili bölümler Catholic Answers'ın *Bible Translations Guide* broşüründen uyarlanmıştır. Onaylı çeviriler listesi USCCB kaynaklıdır.
