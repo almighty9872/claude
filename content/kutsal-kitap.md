@@ -2,7 +2,7 @@
 title: Kutsal Kitap
 subtitle: Hangi çeviriyi seçmeli?
 description: Bir Kutsal Kitap baskısını Katolik yapan nedir, çeviriler neden birbirinden farklıdır ve hangisini seçmeli? Kısa sorular ve yanıtlar, onaylı çeviriler listesiyle.
-short: Bir baskıyı Katolik yapan nedir, çeviriler neden farklıdır ve hangisini almalı? Kısa yanıtlar ve onaylı çeviriler listesi.
+short: Onaylı Türkçe çeviriler ve nereden başlamalı, kısaca.
 ---
 
 ## Bir baskıyı Katolik yapan nedir?

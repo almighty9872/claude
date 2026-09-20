@@ -617,13 +617,16 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .navsheet-grab span { display: block; width: 2.5rem; height: .3rem; margin: 0 auto; border-radius: 999px; background: var(--border-strong); }
 .ns-label { margin: .7rem .55rem .25rem; font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 .ns-item {
-  display: block; min-height: 2.9rem; padding: .55rem .85rem; margin-bottom: .1rem;
+  display: flex; align-items: center; gap: .7rem; min-height: 2.9rem; padding: .55rem .85rem; margin-bottom: .1rem;
   border-radius: 15px; text-decoration: none; color: var(--text);
   transition: background-color .15s;
 }
 .ns-item:active { background: var(--surface-2); }
 .ns-item[aria-current="page"] { background: var(--gold-bg); }
 .ns-item[aria-current="page"] .ns-t { color: var(--gold); }
+.ns-ico { flex: none; width: 1.3rem; height: 1.3rem; color: var(--gold); }
+.ns-ico svg { width: 100%; height: 100%; }
+.ns-body { min-width: 0; }
 .ns-t { display: block; font-size: 1.02rem; font-weight: 600; line-height: 1.3; }
 .ns-s { display: block; margin-top: .1rem; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
 .ns-foot { margin-top: .7rem; padding-top: .65rem; border-top: 1px solid var(--border); text-align: center; }
@@ -662,6 +665,7 @@ body.sheet-open { overflow: hidden; }
   transition: border-color .2s, transform .2s, box-shadow .2s;
 }
 .hub-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.hub-head { display: contents; }
 .hub-ico { width: 2.2rem; height: 2.2rem; color: var(--gold); }
 .hub-ico svg { width: 100%; height: 100%; }
 .hub-t { font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
@@ -672,6 +676,15 @@ body.sheet-open { overflow: hidden; }
 }
 .hub-go svg { width: .95rem; height: .95rem; transition: transform .2s; }
 .hub-card:hover .hub-go svg { transform: translateX(3px); }
+/* Mobile only: icon sits beside the title instead of above it, and the whole card is more compact. */
+@media (max-width: 759px) {
+  .hub-card { padding: 1.05rem 1.15rem .95rem; gap: .4rem; }
+  .hub-head { display: flex; align-items: center; gap: .6rem; }
+  .hub-ico { width: 1.7rem; height: 1.7rem; }
+  .hub-t { font-size: 1.12rem; }
+  .hub-s { font-size: .86rem; line-height: 1.42; }
+  .hub-go { font-size: .8rem; margin-top: .15rem; }
+}
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
 
 /* (i) in the bar: hover reveals content/hakkinda.md and the panel tracks the pointer.
@@ -722,6 +735,9 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .foot-brand span { font-family: var(--sans); font-size: .95rem; }
 .foot-tag { margin: .6rem 0 .15rem; font-family: var(--sans); font-size: .85rem; }
 .foot-copy { margin: 0; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
+.foot-copy a { color: var(--muted); text-decoration: none; }
+.foot-copy a:hover { color: var(--gold); }
+.foot-about .foot-copy + .foot-copy { margin-top: .2rem; }
 .foot-sitemap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .foot-label {
   margin: 0 0 .6rem; font-family: var(--sans); font-size: .7rem; font-weight: 700;

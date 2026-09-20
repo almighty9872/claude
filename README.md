@@ -118,3 +118,7 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 
 - This is an **unofficial translation**. The original text is © Libreria Editrice Vaticana, and publishing a translation publicly normally requires LEV's permission. You may also want a Turkish Catholic reviewer (for example, someone connected to the Episcopal Conference of Türkiye) to check the terminology before launch.
 - Serve the files with gzip or brotli. Most hosts do this automatically. With compression, the largest page (Part 1) is about 110 KB.
+
+## Contact
+
+The site is written and maintained by David Erduran (Toronto, Canada): **david@katolikdunyasi.com**. Translation corrections, content suggestions and general feedback are welcome there, or through the site's own [İletişim page](https://katolikdunyasi.com/iletisim.html).

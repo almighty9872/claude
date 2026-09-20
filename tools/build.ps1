@@ -339,6 +339,28 @@ $IcoStar = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="curr
 $IcoChalice = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.6 4c0 4.4 1.3 7.6 4.4 7.6s4.4-3.2 4.4-7.6"/><path d="M12 11.6V19"/><path d="M8 19h8"/></svg>'
 $IcoQuill = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.2-1 10-10a2 2 0 0 0-2.8-2.8l-10 10z"/><path d="M13 6l3 3"/><path d="M4 20l1-4.2"/></svg>'
 $IcoRadiance = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg>'
+$IcoHome = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1V10"/></svg>'
+$IcoMail = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="5.5" width="17.6" height="13" rx="1.6"/><path d="m4 6.5 8 6.5 8-6.5"/></svg>'
+$IcoPrayers = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14"/><path d="M8 5.5c0 5-1 8-3.5 10"/><path d="M16 5.5c0 5 1 8 3.5 10"/><path d="M8 20.5c1.3-1 2.7-1 4 0 1.3-1 2.7-1 4 0"/></svg>'
+$IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.2a2.8 2.8 0 1 1 3.5 3.1c-.6.2-.9.7-.9 1.3v.6"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor" stroke="none"/></svg>'
+$SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
+# href -> icon lookup for the mobile menu sheet (each real destination gets a small icon; the
+# plain-text ns-label section headers do not). Defined early, before Header-Html is first called
+# by the Compendium part-page loop below, so every icon it references must already exist here.
+$NavIcons = @{
+  'index.html'          = $IcoHome
+  'blog.html'            = $IcoQuill
+  'katesizm.html'        = $SmallCross
+  'katolik-sureci.html'  = $IcoWay
+  'kutsal-ayin.html'     = $IcoChalice
+  'kutsal-kitap.html'    = $IcoBook
+  'tesbih-duasi.html'    = $IcoBeads
+  'ekler.html'           = $IcoPrayers
+  'mucizeler.html'       = $IcoRadiance
+  'azizler.html'         = $IcoStar
+  'sss.html'             = $IcoAsk
+  'iletisim.html'        = $IcoMail
+}
 $MassIcons = @{
   gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
   book     = $IcoBook
@@ -371,10 +393,10 @@ function Header-Html([bool]$withSearch, [string]$current) {
     "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
   }) -join ''
   $sheetPray = ($PrayerNav | ForEach-Object {
-    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
+    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($NavIcons[$_.href])</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
   }) -join ''
   $sheetKaynaklar = ($KaynaklarNav | ForEach-Object {
-    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
+    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($NavIcons[$_.href])</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
   }) -join ''
   return @"
 $Sprite
@@ -398,6 +420,7 @@ $Sprite
           <li><a class="nav-link" href="mucizeler.html"$(Cur 'mucizeler.html' $current)>Mucizeler</a></li>
           <li><a class="nav-link" href="azizler.html"$(Cur 'azizler.html' $current)>Azizler</a></li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
+          <li><a class="nav-link" href="iletisim.html"$(Cur 'iletisim.html' $current)>İletişim</a></li>
         </ul>
       </nav>
       $search
@@ -415,20 +438,22 @@ $Sprite
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
     <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
     <nav class="ns-nav" aria-label="Menü">
-      <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-t">Ana Sayfa</span></a>
+      <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
       <p class="ns-label">Blog</p>
-      <a class="ns-item" href="blog.html"$(Cur 'blog.html' $current)><span class="ns-t">Blog</span><span class="ns-s">Yazılar yakında</span></a>
+      <a class="ns-item" href="blog.html"$(Cur 'blog.html' $current)><span class="ns-ico">$IcoQuill</span><span class="ns-body"><span class="ns-t">Blog</span><span class="ns-s">Yazılar yakında</span></span></a>
       <p class="ns-label">Kaynaklar</p>
       $sheetKaynaklar
       <p class="ns-label">Dualar</p>
       $sheetPray
       <p class="ns-label">Mucizeler</p>
-      <a class="ns-item" href="mucizeler.html"$(Cur 'mucizeler.html' $current)><span class="ns-t">Mucizeler</span><span class="ns-s">Görünmeler, kalıntılar, Efkaristiya mucizeleri</span></a>
+      <a class="ns-item" href="mucizeler.html"$(Cur 'mucizeler.html' $current)><span class="ns-ico">$IcoRadiance</span><span class="ns-body"><span class="ns-t">Mucizeler</span><span class="ns-s">Görünmeler, kalıntılar, Efkaristiya mucizeleri</span></span></a>
       <p class="ns-label">Azizler</p>
-      <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></a>
+      <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></span></a>
       <p class="ns-label">Sorular</p>
-      <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></a>
-      <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-t">Hakkında</span></button>
+      <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></span></a>
+      <p class="ns-label">İletişim</p>
+      <a class="ns-item" href="iletisim.html"$(Cur 'iletisim.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">İletişim</span><span class="ns-s">Bana ulaşın</span></span></a>
+      <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">Hakkında</span></span></button>
     </nav>
     <div class="ns-foot">$ClockHtml</div>
   </div>
@@ -445,12 +470,13 @@ $FooterHtml = @"
       <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 David Erduran</p>
+      <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -608,8 +634,6 @@ $acc = ($Parts | ForEach-Object {
 </details>
 "@
 }) -join "`n"
-$SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
-$IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.2a2.8 2.8 0 1 1 3.5 3.1c-.6.2-.9.7-.9 1.3v.6"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor" stroke="none"/></svg>'
 
 # ---------------- katesizm.html: the Compendium landing page (search + the four parts)
 $katesizmBody = @"
@@ -653,52 +677,44 @@ $homeBody = @"
   <div class="home-layout">
   <div class="hub">
     <a class="hub-card" href="katesizm.html">
-      <span class="hub-ico">$SmallCross</span>
-      <span class="hub-t">Katekizm</span>
-      <span class="hub-s">$WorkName. İman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$SmallCross</span><span class="hub-t">Katekizm</span></span>
+      <span class="hub-s">İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="katolik-sureci.html">
-      <span class="hub-ico">$IcoWay</span>
-      <span class="hub-t">Katolik Süreci</span>
-      <span class="hub-s">Katolik olmak isteyenler için: OCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Süreci</span></span>
+      <span class="hub-s">Katolik olmak isteyenler için OCIA süreci, adım adım.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="kutsal-ayin.html">
-      <span class="hub-ico">$IcoChalice</span>
-      <span class="hub-t">Kutsal Ayin</span>
-      <span class="hub-s">Ayinin sırası adım adım: cemaatin toplanmasından son takdise altı bölüm, Türkçe ve İngilizce.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$IcoChalice</span><span class="hub-t">Kutsal Ayin</span></span>
+      <span class="hub-s">Ayinin sırası, toplanmadan son takdise altı bölüm.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="kutsal-kitap.html">
-      <span class="hub-ico">$IcoBook</span>
-      <span class="hub-t">Kutsal Kitap</span>
+      <span class="hub-head"><span class="hub-ico">$IcoBook</span><span class="hub-t">Kutsal Kitap</span></span>
       <span class="hub-s">$($KkMeta.short)</span>
-      <span class="hub-go">Devamını oku$IcoNext</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="tesbih-duasi.html">
-      <span class="hub-ico">$IcoBeads</span>
-      <span class="hub-t">Tesbih Duası</span>
-      <span class="hub-s">Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, bütün gizemler ve tesbihin nasıl dua edileceği.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$IcoBeads</span><span class="hub-t">Tesbih Duası</span></span>
+      <span class="hub-s">Duaların Türkçesi ve İngilizcesi, bütün gizemleriyle.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="mucizeler.html">
-      <span class="hub-ico">$IcoRadiance</span>
-      <span class="hub-t">Mucizeler</span>
-      <span class="hub-s">Meryem Ana$($Apos)nın görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler üzerine dürüst ve kaynaklı bir bölüm.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$IcoRadiance</span><span class="hub-t">Mucizeler</span></span>
+      <span class="hub-s">Görünmeler, Torino Kefeni, Efkaristiya mucizeleri, çürümeyen azizler.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="azizler.html">
-      <span class="hub-ico">$IcoStar</span>
-      <span class="hub-t">Azizler</span>
-      <span class="hub-s">Ayin takviminin azizleri: bugünün azizini görün, yılın her günü için hayat hikayelerini keşfedin.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
+      <span class="hub-s">Bugünün azizini görün, yılın her günü için hayat hikâyeleri.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
     <a class="hub-card" href="sss.html">
-      <span class="hub-ico">$IcoAsk</span>
-      <span class="hub-t">Sorular</span>
-      <span class="hub-s">Katolik olmayanların ve inancını yeni tanıyanların en sık sorduğu sorular, Katekizm$($Apos)e dayanan yanıtlarıyla.</span>
-      <span class="hub-go">Oku$IcoNext</span>
+      <span class="hub-head"><span class="hub-ico">$IcoAsk</span><span class="hub-t">Sorular</span></span>
+      <span class="hub-s">Katolik inancı üzerine en sık sorulan sorular ve yanıtları.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
   </div>
   <aside class="home-side" aria-label="Bugün">
@@ -1123,6 +1139,24 @@ Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
   -Description "Katolik Kilisesi$($Apos)nde bilinen mucizeler: Meryem Ana görünmeleri (Fatima, Lourdes, Guadalupe, Zeytun), Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler." `
   -Path 'mucizeler.html' -Body $mucizelerBody -JsonLd @((Breadcrumb-Ld 'Mucizeler' 'mucizeler.html'))
 
+# ================================================================== ILETISIM (iletisim.html)
+$iletisimBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'İletişim')
+  <header class="page-head center"><p class="label">İletişim</p><h1>İletişim</h1></header>
+  <div class="placeholder-page contact-page">
+    $IcoMail
+    <p class="placeholder-lead">Bize ulaşın</p>
+    <p>Bu site, Toronto, Kanada$($Apos)da yaşayan David Erduran tarafından hazırlanıyor ve tek başına yürütülüyor. Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa, ya da sadece merhaba demek isterseniz, aşağıdaki adresten yazabilirsiniz.</p>
+    <p class="contact-email"><a class="btn" href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
+    <p>Her mesajı okuyorum. Yoğunluğa göre yanıtım biraz gecikebilir, ama her geri bildirim için şimdiden teşekkür ederim.</p>
+  </div>
+</div>
+"@
+Write-Page -File 'iletisim.html' -Title "İletişim | $SiteName" `
+  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." `
+  -Path 'iletisim.html' -Body $iletisimBody -JsonLd @((Breadcrumb-Ld 'İletişim' 'iletisim.html'))
+
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
 $notFoundBody = @"
 <div class="wrap narrow">
@@ -1147,7 +1181,8 @@ $pages = @(
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
-  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' }
+  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
+  @{ p = 'iletisim.html'; pr = '0.4' }
 )
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +

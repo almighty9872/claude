@@ -15,7 +15,11 @@ katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türk�
 - Kutsal Ayin: Azize Tereza Kilisesi’nin (Ankara, İstanbul-Ankara Latin Katolik Ruhani Reisliği) yayımladığı Türkçe metin esas alınmış, sitenin terim seçimleriyle uyumlu hâle getirilmiştir.
 - Azizler: tarihler ve ayin dereceleri Roma Genel Takvimi’ni, boş kalan günler için seçilen azizler Roma Azizler Cetveli’ni (Martyrologium Romanum) esas alır; hayat öyküleri bu site için özgün olarak Türkçe kaleme alınmıştır.
 - Katolik Süreci ve Sorular bölümlerindeki metinler, Katekizm’e ve güvenilir Katolik kaynaklarına dayanılarak bu site için özgün olarak yazılmıştır.
-- Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir. Bir çeviri ya da açıklamada hata fark ederseniz bildirmekten çekinmeyin.
+- Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir.
+
+## İletişim
+
+Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu varsa ya da sadece merhaba demek isterseniz: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com). Ayrıntılar için [İletişim sayfasını](iletisim.html) ziyaret edebilirsiniz.
 
 Türkçe çeviriler ve özgün içerik © 2026 David Erduran.
 
