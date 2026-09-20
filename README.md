@@ -1,30 +1,43 @@
-# Katolik Kilisesi İnanç Esasları Özeti
+# katolikdunyasi.com
 
-This is a static Turkish edition of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005). It contains all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix (prayers in Turkish, English and Latin, plus the doctrinal formulas).
+A static, Turkish-language Catholic resource site. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections on the OCIA/RCIA process for becoming Catholic, the Mass explained step by step, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, and frequently asked questions.
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
 ## Folder layout
 
 ```
-index.html              Home: search box + the four Parts as expandable panels (Part → Section → Chapter)
-iman-ikrari.html        Part I · Q 1–217   (reading page: sticky contents sidebar, chapter prev/next,
-kutsal-sirlar.html      Part II · Q 218–356  "English" button per question + "show all English")
-mesihte-yasam.html      Part III · Q 357–533
-hristiyan-duasi.html    Part IV · Q 534–598
-hakkinda.html           About page, generated from content/hakkinda.md
-404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
+index.html              Home: search box, section cards, today's saint and Rosary mystery
+iman-ikrari.html        Compendium Part I · Q 1–217   (reading page: sticky contents sidebar, chapter
+kutsal-sirlar.html      Compendium Part II · Q 218–356  prev/next, "English" button per question +
+mesihte-yasam.html      Compendium Part III · Q 357–533 "show all English")
+hristiyan-duasi.html    Compendium Part IV · Q 534–598
 motu-proprio.html       Motu Proprio (Turkish, English paragraph by paragraph on demand)
 giris.html              Introduction (same)
 ekler.html              Appendix: prayers (TR/EN/LA) + formulas of Catholic doctrine
+katolik-sureci.html     Becoming Catholic: the OCIA/RCIA process
+kutsal-ayin.html        The Mass, part by part
+tesbih-duasi.html       The Rosary: prayers and the four sets of mysteries
+azizler.html            Calendar of the saints, one entry per day of the year
+kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)
+mucizeler.html          Catholic miracles: apparitions, relics, Eucharistic miracles, incorrupt saints
+sss.html                Frequently asked questions, grouped by topic
+blog.html               Placeholder for future original writing
+404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
 sitemap.xml, robots.txt
 assets/styles.css       All styling. Theme tokens at the top: dark = navy/gold, light = ivory/gold
-assets/script.js        Theme, clock, English reveal, search, reading bar, contents drawer
+assets/script.js        Theme, clock, English reveal, search, reading bar, contents drawer, widgets
 assets/fonts/           EB Garamond .woff2 files (SIL Open Font License)
 assets/og-image.jpg     1200×630 social preview image
-data/compendium-1..4.js ← THE CONTENT (Turkish + English pairs), one file per part
+data/compendium-1..4.js ← Compendium content (Turkish + English pairs), one file per part
 data/extras.js          ← Motu Proprio, Introduction, Creeds, Decalogue, Our Father, Appendix
-content/hakkinda.md     ← ABOUT PAGE TEXT (Markdown)
+data/katolik-sureci.js  ← OCIA/RCIA process content
+data/kutsal-ayin.js     ← The Mass content
+data/tespih.js          ← Rosary prayers and mysteries
+data/azizler.js         ← Saints calendar (one entry per day)
+data/sss.js             ← FAQ content
+content/kutsal-kitap.md ← Bible guide text (Markdown)
+content/hakkinda.md     ← "About this site" text shown in the (i) panel (Markdown)
 tools/build.ps1         Regenerates the static pages from data/ and content/
 .github/workflows/deploy.yml  Builds and publishes the site on every push to main
 CNAME                   Your domain (one line). Also used for canonical/sitemap URLs

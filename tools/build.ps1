@@ -1,11 +1,13 @@
 ﻿<#
 .SYNOPSIS
-  Static page generator for "Katolik Kilisesi İnanç Esasları Özeti"
-  (Turkish Compendium of the Catechism of the Catholic Church).
+  Static page generator for katolikdunyasi.com, a Turkish-language Catholic
+  resource site: the Compendium of the Catechism of the Catholic Church,
+  the OCIA/RCIA process, the Mass explained, prayers and the Rosary, a
+  calendar of the saints, the Bible in Turkish, miracles, and an FAQ.
 
 .DESCRIPTION
-  Reads the single source of truth, data/compendium-1..4.js and data/extras.js,
-  and writes crawlable static HTML pages (all Q&As pre-rendered for SEO), JSON-LD
+  Reads the single source of truth, data/*.js and content/*.md, and writes
+  crawlable static HTML pages (all content pre-rendered for SEO), JSON-LD
   structured data (FAQPage, WebSite, Book, Article, BreadcrumbList), sitemap.xml
   and robots.txt into the site root.
 
@@ -45,7 +47,7 @@ $Utf8 = New-Object System.Text.UTF8Encoding $false
 $Apos = [char]0x2019
 # The site is the brand now; the Compendium is one work published on it.
 $SiteName = 'katolikdunyasi.com'
-$SiteTag = 'Türkçe Katolik kaynakları'
+$SiteTag = 'Türkçe Katolik Portalı'
 $WorkName = 'Katolik Kilisesi İnanç Esasları Özeti'
 $SiteNameEn = 'Compendium of the Catechism of the Catholic Church'
 
@@ -680,6 +682,12 @@ $homeBody = @"
       <span class="hub-s">Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, bütün gizemler ve tesbihin nasıl dua edileceği.</span>
       <span class="hub-go">Oku$IcoNext</span>
     </a>
+    <a class="hub-card" href="mucizeler.html">
+      <span class="hub-ico">$IcoRadiance</span>
+      <span class="hub-t">Mucizeler</span>
+      <span class="hub-s">Meryem Ana$($Apos)nın görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler üzerine dürüst ve kaynaklı bir bölüm.</span>
+      <span class="hub-go">Oku$IcoNext</span>
+    </a>
     <a class="hub-card" href="azizler.html">
       <span class="hub-ico">$IcoStar</span>
       <span class="hub-t">Azizler</span>
@@ -713,7 +721,7 @@ $webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JSt
   ',"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
   (JStr "$SiteUrl/katesizm.html?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
 Write-Page -File 'index.html' -Title "$SiteName | $SiteTag" `
-  -Description "Türkçe Katolik kaynakları: Katolik Kilisesi Katekizmi Özeti$($Apos)nin tam çevirisi ve Katolik inancı üzerine sıkça sorulan sorular." `
+  -Description "Türkçe Katolik Portalı: Katolik Kilisesi Katekizmi Özeti$($Apos)nin tam çevirisi ve Katolik inancı üzerine sıkça sorulan sorular." `
   -Path '' -Body $homeBody -JsonLd @($webSiteLd) -HeaderSearch $false
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
@@ -1080,21 +1088,39 @@ Write-Page -File 'blog.html' -Title "Blog | $SiteName" `
   -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar. Yakında yayında." `
   -Path 'blog.html' -Body $blogBody -JsonLd @((Breadcrumb-Ld 'Blog' 'blog.html'))
 
-# ================================================================== MUCIZELER (mucizeler.html) — placeholder, full content pending
+# ================================================================== MUCIZELER (mucizeler.html)
+$Miracles = Read-Data 'mucizeler.js'
+$MiracleIcons = @{
+  apparition = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.2 13.3 10.7 17 12 13.3 13.3 12 16.8 10.7 13.3 7 12 10.7 10.7Z"/></svg>'
+  relic      = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="3.5" width="15" height="19" rx="1.2"/><path d="M12 8.5v8M8.5 12.5h7"/></svg>'
+  eucharist  = $IcoChalice
+  incorrupt  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11a7 7 0 0 1 14 0v9"/><path d="M4 20h16"/><path d="M12 3.4v2.2M10.8 4.5h2.4"/></svg>'
+}
+$script:MiraN = 0
+$miraToc = ($Miracles.categories | ForEach-Object { "<li><a href=`"#$($_.id)`">$(Inline $_.title)</a></li>" }) -join ''
+$miraCats = ($Miracles.categories | ForEach-Object {
+  $script:MiraN++; $cat = $_
+  $icon = $MiracleIcons[$cat.icon]
+  $items = ($cat.items | ForEach-Object {
+    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.name)</span><span class=`"mira-place label`">$($_.place)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bio)</div></details>"
+  }) -join "`n"
+  "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
+    "<h2 class=`"section-title`"><span class=`"label`">$($script:MiraN)</span>$(Inline $cat.title)</h2>" +
+    "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>" +
+    "<p class=`"faq-intro`">$(Inline $cat.lead)</p>" +
+    "<div class=`"mira-list`">$items</div></section>"
+}) -join "`n"
 $mucizelerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Mucizeler')
-  <header class="page-head center"><p class="label">Mucizeler</p><h1>Mucizeler</h1></header>
-  <div class="placeholder-page">
-    $IcoRadiance
-    <p class="placeholder-lead">İçerik hazırlanıyor.</p>
-    <p>Meryem Ana$($Apos)nın görünmeleri, kutsal kalıntılar, Efkaristiya mucizeleri ve çürümeyen azizler üzerine Türkçe, özgün ve kaynaklı bir bölüm hazırlanıyor.</p>
-    <p><a class="btn" href="index.html">Ana sayfaya dön</a></p>
-  </div>
+  <header class="page-head center"><p class="label">Mucizeler</p><h1>$($Miracles.title)</h1><p class="sub" lang="en">$($Miracles.en)</p></header>
+  <p class="faq-intro">$(Inline $Miracles.intro)</p>
+  <nav class="faq-toc" aria-label="Kategoriler"><ul>$miraToc</ul></nav>
+$miraCats
 </div>
 "@
 Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
-  -Description "Katolik Kilisesi$($Apos)nde tanınan Meryem Ana görünmeleri, kutsal kalıntılar, Efkaristiya mucizeleri ve çürümeyen azizler. Yakında." `
+  -Description "Katolik Kilisesi$($Apos)nde bilinen mucizeler: Meryem Ana görünmeleri (Fatima, Lourdes, Guadalupe, Zeytun), Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler." `
   -Path 'mucizeler.html' -Body $mucizelerBody -JsonLd @((Breadcrumb-Ld 'Mucizeler' 'mucizeler.html'))
 
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)

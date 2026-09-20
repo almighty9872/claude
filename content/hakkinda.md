@@ -1,6 +1,6 @@
 ---
 title: katolikdunyasi.com
-subtitle: Türkçe Katolik kaynakları
+subtitle: Türkçe Katolik Portalı
 description: katolikdunyasi.com hakkında: sitenin amacı, kaynakları ve telif bilgileri.
 ---
 
