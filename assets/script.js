@@ -504,12 +504,12 @@
   }
 
   /* ---------------------------------------------------------------
-     10. Rosary: today's mysteries in Istanbul time, and a prayer list
-         whose hover shows the text and lights up where it is prayed.
+     10. Rosary: highlights today's set of mysteries (Istanbul time).
+         The bead diagram is a static image; the prayers are plain
+         <details> cards handled by initReveal()/the browser, no JS.
      --------------------------------------------------------------- */
   function initRosary() {
-    var svg = $('.rosary');
-    if (!svg) return;
+    if (!$('.myst')) return;
 
     /* The day is the one in Turkey, not the visitor's own time zone. */
     function istanbulDay() {
@@ -520,102 +520,11 @@
       } catch (e) { /* fall through */ }
       return new Date().getDay();
     }
-    var day = istanbulDay(), todaySet = null;
+    var day = istanbulDay();
     $$('.myst').forEach(function (m) {
       var days = (m.getAttribute('data-days') || '').split(',').map(Number);
-      if (days.indexOf(day) !== -1) { m.classList.add('is-today'); todaySet = m; }
+      if (days.indexOf(day) !== -1) m.classList.add('is-today');
     });
-    if (todaySet) {
-      var label = $('[data-today-set]'), list = $('[data-today-list]');
-      if (label) label.textContent = $('h3', todaySet).textContent;
-      if (list) {
-        list.innerHTML = '';
-        $$('.m-tr', todaySet).forEach(function (li) {
-          var el = document.createElement('li'); el.textContent = li.textContent; list.appendChild(el);
-        });
-      }
-    }
-
-    /* Which beads belong to each prayer. The last two are prayed at points the
-       rosary has no bead for, so they mark their anchor faintly instead. */
-    var SPOT = {
-      'cross':  { sel: '.bead.cross', ghost: false },
-      'lg':     { sel: '.bead.lg', ghost: false },
-      'sm':     { sel: '.bead.sm', ghost: false },
-      'lg-end': { sel: '.bead.lg', ghost: true },
-      'end':    { sel: '.bead.medal, .bead.cross', ghost: true }
-    };
-    var panel = $('#prayer-panel'), store = $('.pray-store'), cap = $('[data-rosary-cap]');
-    var capDefault = cap ? cap.textContent : '';
-    var pinned = null;
-
-    function clearBeads() {
-      $$('.bead.hl, .bead.hl-ghost', svg).forEach(function (b) { b.classList.remove('hl', 'hl-ghost'); });
-    }
-    function lightUp(spot) {
-      clearBeads();
-      var s = SPOT[spot];
-      if (!s) return;
-      $$(s.sel, svg).forEach(function (b) { b.classList.add(s.ghost ? 'hl-ghost' : 'hl'); });
-    }
-    function fill(id) {
-      if (!panel || !store) return false;
-      var src = $('[data-pray="' + id + '"]', store);
-      if (!src) return false;
-      panel.innerHTML = '<div class="info-inner">' + src.innerHTML + '</div>';
-      return true;
-    }
-    function open(btn, x, y) {
-      if (!fill(btn.getAttribute('data-p'))) return;
-      panel.hidden = false;
-      void panel.offsetHeight;
-      panel.classList.add('open');
-      if (x === undefined) {
-        var r = btn.getBoundingClientRect(); x = r.left; y = r.bottom - 8;
-      }
-      placePanel(panel, x, y);
-      lightUp(btn.getAttribute('data-spot'));
-      var note = $('.p-note', panel);
-      if (cap && note) cap.textContent = note.textContent;
-      btn.classList.add('is-on');
-    }
-    function close() {
-      if (!panel) return;
-      panel.classList.remove('open', 'pinned');
-      setTimeout(function () { if (!panel.classList.contains('open')) panel.hidden = true; }, 200);
-      clearBeads();
-      if (cap) cap.textContent = capDefault;
-      $$('.pray-link.is-on').forEach(function (b) { b.classList.remove('is-on'); });
-      pinned = null;
-    }
-
-    $$('.pray-link').forEach(function (btn) {
-      if (FINE) {
-        btn.addEventListener('mouseenter', function (e) { if (!pinned) open(btn, e.clientX, e.clientY); });
-        btn.addEventListener('mousemove', function (e) { if (!pinned && panel && !panel.hidden) placePanel(panel, e.clientX, e.clientY); });
-        btn.addEventListener('mouseleave', function () { if (!pinned) close(); });
-      }
-      /* Click pins it, which is also how it works on a touch screen. On touch it opens as a
-         bottom sheet instead of a centered dialog, so the sticky rosary figure above stays
-         visible and the lit-up bead is visible at the same time as the prayer text. */
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        if (pinned === btn) { close(); return; }
-        close();
-        pinned = btn;
-        open(btn);
-        if (panel) {
-          panel.classList.add('pinned');
-          if (!FINE) { panel.classList.add('sheet'); panel.style.left = ''; panel.style.top = ''; }
-        }
-      });
-      btn.addEventListener('focus', function () { if (!pinned) open(btn); });
-      btn.addEventListener('blur', function () { if (!pinned) close(); });
-    });
-    document.addEventListener('click', function (e) {
-      if (pinned && panel && !panel.contains(e.target)) close();
-    });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
 
   /* ---------------------------------------------------------------

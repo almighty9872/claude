@@ -712,15 +712,6 @@ body.sheet-open { overflow: hidden; }
 .info-panel.pinned, .hover-panel.pinned { pointer-events: auto; }
 .info-panel.centered, .hover-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
 .info-panel.centered.open, .hover-panel.centered.open { transform: translate(-50%, -50%); }
-/* Touch-device rosary popup: a bottom sheet instead of a centered dialog, so the sticky
-   rosary figure (and the bead it just lit up) stays visible above it at the same time. */
-.hover-panel.sheet {
-  left: 0; right: 0; top: auto; bottom: 0; width: 100%;
-  max-width: 100%; max-height: 60vh; border-radius: 20px 20px 0 0;
-  padding-bottom: calc(1.1rem + env(safe-area-inset-bottom));
-  transform: translateY(100%);
-}
-.hover-panel.sheet.open { transform: translateY(0); }
 .info-inner > :first-child { margin-top: 0; }
 .info-inner > :last-child { margin-bottom: 0; }
 .info-inner h2 { margin: 1.1rem 0 .35rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-family: var(--sans); }
@@ -793,30 +784,61 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .side-card:hover .side-go svg { transform: translateX(3px); }
 @media (prefers-reduced-motion: reduce) { .side-go svg { transition: none; } }
 
-.rosary-wrap { display: grid; gap: 1.5rem; align-items: start; margin: 1.5rem 0 2rem; }
-@media (min-width: 820px) { .rosary-wrap { grid-template-columns: minmax(0, 300px) 1fr; gap: 2.5rem; } }
+/* Static bead diagram: a picture with numbered callouts, a legend names each number. */
 .rosary-figure {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 1rem;
+  box-shadow: var(--shadow); padding: 1.2rem 1.4rem; margin: 1.5rem 0 2rem;
 }
-.rosary { display: block; width: 100%; height: auto; max-height: 62vh; margin: 0 auto; }
-/* Below 820px the figure and the prayer list stack, so pin the beads under the header while
-   the list scrolls underneath: tapping a prayer further down still lights up a visible bead. */
-@media (max-width: 819px) {
-  .rosary-figure { position: sticky; top: calc(var(--header-h) + .6rem); z-index: 5; }
-  .rosary { max-height: 34vh; }
-}
+.rosary { display: block; width: 100%; max-width: 20rem; height: auto; margin: 0 auto; }
 .ring-guide { fill: none; stroke: var(--border-strong); stroke-width: 1.2; opacity: .55; }
-.bead { fill: var(--surface-3); stroke: var(--border-strong); stroke-width: 1.1; cursor: pointer; transition: fill .18s, stroke .18s, r .18s; }
+.bead { fill: var(--surface-3); stroke: var(--border-strong); stroke-width: 1.1; }
 .bead.lg { fill: var(--gold-soft); stroke: var(--gold); }
-.bead.medal { fill: var(--gold); stroke: var(--gold); }
-.bead.cross { fill: var(--gold); stroke: none; }
-.bead:hover { fill: var(--gold); stroke: var(--gold); }
-@media (prefers-reduced-motion: reduce) { .bead { transition: none; } }
+.bead.medal, .bead.cross { fill: var(--gold); stroke: var(--gold); }
+.callout circle { fill: var(--gold); stroke: var(--bg); stroke-width: 2; }
+.callout text { fill: var(--bg); font-family: var(--sans); font-size: 12px; font-weight: 700; }
+.rosary-legend { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .55rem; }
+.rosary-legend li { display: flex; align-items: baseline; gap: .6rem; font-size: .92rem; line-height: 1.5; color: var(--text-soft); }
+.rosary-legend .ln {
+  flex: none; display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem;
+  border-radius: 999px; background: var(--gold); color: var(--bg);
+  font-family: var(--sans); font-size: .74rem; font-weight: 700; transform: translateY(.15em);
+}
 
-.rosary-side .today-set { margin: .1rem 0 .6rem; font-size: 1.35rem; font-weight: 600; color: var(--gold); }
-.today-list { margin: 0 0 1.1rem; padding-left: 1.2rem; color: var(--text-soft); }
-.today-list li { margin-bottom: .25rem; }
+.rosary-sub-title { margin: 2rem 0 .8rem; font-size: 1.15rem; font-weight: 600; }
+.pray-cards { display: grid; gap: .65rem; margin-bottom: 1rem; }
+.pray-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); transition: border-color .2s;
+  scroll-margin-top: calc(var(--header-h) + 1.5rem);
+}
+.pray-card:hover, .pray-card[open] { border-color: var(--border-strong); }
+.pray-card > summary {
+  display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+  padding: 1rem 1.25rem; cursor: pointer; list-style: none;
+}
+.pray-card > summary::-webkit-details-marker { display: none; }
+.pray-card > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius); }
+.pray-card > summary .chev { flex: none; margin-left: auto; color: var(--muted); }
+.pray-card[open] > summary .chev { transform: rotate(180deg); color: var(--gold); }
+.pray-name { font-size: 1.08rem; font-weight: 600; }
+.pray-card[open] > summary .pray-name { color: var(--gold); }
+.pray-hint { flex-basis: 100%; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
+.pray-count {
+  font-family: var(--sans); font-size: .72rem; font-weight: 700; color: var(--gold);
+  background: var(--gold-bg); border-radius: 999px; padding: .1rem .55rem;
+}
+.pray-card-body { padding: 0 1.25rem 1.15rem; border-top: 1px solid var(--border); padding-top: .95rem; }
+.pray-sub + .pray-sub { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed var(--border); }
+.pray-sub h4 { display: flex; align-items: center; gap: .5rem; margin: 0 0 .5rem; font-size: 1rem; font-weight: 600; }
+.p-note { margin: 0 0 .6rem; font-family: var(--sans); font-size: .78rem; color: var(--gold); }
+.p-tr p { margin: 0 0 .55rem; }
+.p-tr p:last-child { margin-bottom: 0; }
+.p-en p { margin: 0 0 .45rem; font-family: var(--sans); font-size: .85rem; color: var(--muted); line-height: 1.45; }
+.p-en p:last-child { margin-bottom: 0; }
+@media (max-width: 560px) {
+  .pray-card > summary { padding: .9rem 1rem; }
+  .pray-card-body { padding: 0 1rem 1rem; padding-top: .85rem; }
+}
 
 .myst-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
 @media (min-width: 760px) { .myst-grid { grid-template-columns: 1fr 1fr; } }
@@ -839,45 +861,6 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .s-tr { display: block; }
 .s-en { display: block; font-family: var(--sans); font-size: .8rem; color: var(--muted); margin-top: .15rem; }
 
-@media (min-width: 760px) { .pray {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 1.15rem 1.25rem; scroll-margin-top: calc(var(--header-h) + 1.5rem);
-} }
-.pray.is-active { border-color: var(--gold-soft); }
-.pray h3 { margin: 0 0 .6rem; font-size: 1.2rem; font-weight: 600; }
-.pray .p-tr p { margin: 0 0 .6rem; }
-.pray .p-en { border-top: 1px dotted var(--border); padding-top: .6rem; margin-top: .4rem; }
-.pray .p-en p { margin: 0 0 .5rem; font-family: var(--sans); font-size: .88rem; color: var(--muted); }
-.pray .p-en .label { display: block; margin-bottom: .3rem; }
-
-/* Beads are static now: they light up to show where a prayer is said. */
-.bead { cursor: default; }
-.bead.hl { fill: var(--gold); stroke: var(--gold); }
-.bead.hl-ghost { fill: var(--gold-bg); stroke: var(--gold); stroke-dasharray: 2.5 2.5; }
-.rosary-cap {
-  margin: .6rem 0 0; text-align: center; font-family: var(--sans); font-size: .8rem;
-  line-height: 1.45; color: var(--muted); min-height: 2.4em;
-}
-.pray-head { margin-top: 1.4rem; }
-.pray-list { list-style: none; margin: .3rem 0 0; padding: 0; display: grid; gap: .15rem; }
-.pray-link {
-  display: block; width: 100%; text-align: left; cursor: pointer;
-  padding: .5rem .7rem; border: 1px solid transparent; border-radius: var(--radius-sm);
-  background: none; font: inherit; font-size: 1.02rem; color: var(--text);
-  transition: background-color .15s, border-color .15s, color .15s;
-}
-.pray-link::before { content: ''; display: inline-block; width: .5rem; height: .5rem; margin-right: .55rem; border-radius: 50%; background: var(--gold-soft); vertical-align: middle; }
-.pray-link:hover, .pray-link:focus-visible, .pray-link.is-on {
-  background: var(--gold-bg); border-color: var(--glass-brd); color: var(--gold); outline: none;
-}
-.hover-panel .p-note {
-  margin: 0 0 .7rem; font-family: var(--sans); font-size: .78rem; color: var(--gold);
-}
-.hover-panel h3 { margin: 0 0 .5rem; font-size: 1.15rem; font-weight: 600; }
-.hover-panel .p-tr p { margin: 0 0 .5rem; font-size: .97rem; line-height: 1.5; }
-.hover-panel .p-en { border-top: 1px dotted var(--border); padding-top: .55rem; margin-top: .3rem; }
-.hover-panel .p-en p { margin: 0 0 .45rem; font-family: var(--sans); font-size: .85rem; color: var(--muted); line-height: 1.45; }
-.hover-panel .p-en .label { display: block; margin-bottom: .3rem; }
 
 /* ---------- 17. Katolik Suureci: two-path cards + numbered stage list ---------- */
 .stage-list { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: .9rem; }
