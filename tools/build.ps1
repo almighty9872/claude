@@ -318,21 +318,25 @@ $PrayerNav = @(
   @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası' },
   @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller' }
 )
-# "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many
+# "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many.
+# Katekizm sits here too as a single link (no chapter submenu in the nav; katesizm.html itself is the way in).
 $KaynaklarNav = @(
+  @{ href = 'katesizm.html';       t = 'Katekizm';       s = '598 soru ve yanıt' },
   @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci'; s = 'Katolik olma süreci' },
   @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';    s = 'Ayinin sırası, adım adım' },
   @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';   s = 'Onaylı çeviriler' }
 )
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
-$KaynaklarPages = @($KaynaklarNav | ForEach-Object { $_.href })
+$KaynaklarPages = @($KaynaklarNav | ForEach-Object { $_.href }) + $WorkPages
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
 $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
 $IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
 $IcoStar = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2c1 2.8 1.9 4.4 3.4 5.8 1.5 1.4 3.1 2.1 5.4 2.7-2.3.6-3.9 1.4-5.4 2.7-1.5 1.4-2.4 3-3.4 5.8-1-2.8-1.9-4.4-3.4-5.8-1.5-1.3-3.1-2.1-5.4-2.7 2.3-.6 3.9-1.3 5.4-2.7 1.5-1.4 2.4-3 3.4-5.8z"/></svg>'
 $IcoChalice = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.6 4c0 4.4 1.3 7.6 4.4 7.6s4.4-3.2 4.4-7.6"/><path d="M12 11.6V19"/><path d="M8 19h8"/></svg>'
+$IcoQuill = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.2-1 10-10a2 2 0 0 0-2.8-2.8l-10 10z"/><path d="M13 6l3 3"/><path d="M4 20l1-4.2"/></svg>'
+$IcoRadiance = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg>'
 $MassIcons = @{
   gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
   book     = $IcoBook
@@ -354,11 +358,6 @@ function Header-Html([bool]$withSearch, [string]$current) {
   $search = if ($withSearch) { Search-Form 'header-search' 'q-header' '598 soruda ara…' } else { '' }
   $toggle = if ($withSearch) { "<button type=`"button`" class=`"icon-btn search-toggle`" aria-label=`"Ara`" aria-expanded=`"false`">$IcoSearch</button>" } else { '' }
   $cls = if ($withSearch) { 'site-header has-search' } else { 'site-header' }
-  $inWork = $WorkPages -contains $current
-  $trigCls = if ($inWork) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
-  $textMenu = ($TextNav | ForEach-Object {
-    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
-  }) -join ''
   $inPray = $PrayerPages -contains $current
   $prayCls = if ($inPray) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
   $prayerMenu = ($PrayerNav | ForEach-Object {
@@ -370,9 +369,6 @@ function Header-Html([bool]$withSearch, [string]$current) {
     "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
   }) -join ''
   $sheetPray = ($PrayerNav | ForEach-Object {
-    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
-  }) -join ''
-  $sheetText = ($TextNav | ForEach-Object {
     "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></a>"
   }) -join ''
   $sheetKaynaklar = ($KaynaklarNav | ForEach-Object {
@@ -388,10 +384,7 @@ $Sprite
       <button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
       <nav class="mainnav" aria-label="Ana menü">
         <ul>
-          <li class="has-menu">
-            <a class="$trigCls" href="katesizm.html" aria-expanded="false" aria-controls="nav-katesizm">Katekizm$IcoChev</a>
-            <div class="nav-menu glass" id="nav-katesizm"><ul>$textMenu</ul></div>
-          </li>
+          <li><a class="nav-link" href="blog.html"$(Cur 'blog.html' $current)>Blog</a></li>
           <li class="has-menu">
             <button type="button" class="$kaynaklarCls" aria-expanded="false" aria-controls="nav-kaynaklar" aria-haspopup="true">Kaynaklar$IcoChev</button>
             <div class="nav-menu glass" id="nav-kaynaklar"><ul>$kaynaklarMenu</ul></div>
@@ -400,6 +393,7 @@ $Sprite
             <button type="button" class="$prayCls" aria-expanded="false" aria-controls="nav-dualar" aria-haspopup="true">Dualar$IcoChev</button>
             <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
           </li>
+          <li><a class="nav-link" href="mucizeler.html"$(Cur 'mucizeler.html' $current)>Mucizeler</a></li>
           <li><a class="nav-link" href="azizler.html"$(Cur 'azizler.html' $current)>Azizler</a></li>
           <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
         </ul>
@@ -420,13 +414,14 @@ $Sprite
     <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
     <nav class="ns-nav" aria-label="Menü">
       <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-t">Ana Sayfa</span></a>
-      <p class="ns-label">Katekizm</p>
-      <a class="ns-item" href="katesizm.html"$(Cur 'katesizm.html' $current)><span class="ns-t">$WorkName</span><span class="ns-s">598 soru ve yanıt</span></a>
-      $sheetText
+      <p class="ns-label">Blog</p>
+      <a class="ns-item" href="blog.html"$(Cur 'blog.html' $current)><span class="ns-t">Blog</span><span class="ns-s">Yazılar yakında</span></a>
       <p class="ns-label">Kaynaklar</p>
       $sheetKaynaklar
       <p class="ns-label">Dualar</p>
       $sheetPray
+      <p class="ns-label">Mucizeler</p>
+      <a class="ns-item" href="mucizeler.html"$(Cur 'mucizeler.html' $current)><span class="ns-t">Mucizeler</span><span class="ns-s">Görünmeler, kalıntılar, Efkaristiya mucizeleri</span></a>
       <p class="ns-label">Azizler</p>
       <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></a>
       <p class="ns-label">Sorular</p>
@@ -439,7 +434,7 @@ $Sprite
 "@
 }
 $footKatekizm = (@(@{ href = 'katesizm.html'; t = 'Katekizm' }) + $TextNav) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
-$footKaynaklar = $KaynaklarNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+$footKaynaklar = ($KaynaklarNav | Where-Object { $_.href -ne 'katesizm.html' }) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $footDualar = $PrayerNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $FooterHtml = @"
 <footer class="site-footer">
@@ -453,7 +448,7 @@ $FooterHtml = @"
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -1068,6 +1063,40 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
   -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." `
   -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
 
+# ================================================================== BLOG (blog.html) — placeholder, no posts yet
+$blogBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Blog')
+  <header class="page-head center"><p class="label">Blog</p><h1>Blog</h1></header>
+  <div class="placeholder-page">
+    $IcoQuill
+    <p class="placeholder-lead">Yazılar yakında.</p>
+    <p>Katolik inancı, Türkiye$($Apos)deki Katolik cemaati ve günlük hayatta imanla ilgili özgün yazılar burada yayınlanacak.</p>
+    <p><a class="btn" href="index.html">Ana sayfaya dön</a></p>
+  </div>
+</div>
+"@
+Write-Page -File 'blog.html' -Title "Blog | $SiteName" `
+  -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar. Yakında yayında." `
+  -Path 'blog.html' -Body $blogBody -JsonLd @((Breadcrumb-Ld 'Blog' 'blog.html'))
+
+# ================================================================== MUCIZELER (mucizeler.html) — placeholder, full content pending
+$mucizelerBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Mucizeler')
+  <header class="page-head center"><p class="label">Mucizeler</p><h1>Mucizeler</h1></header>
+  <div class="placeholder-page">
+    $IcoRadiance
+    <p class="placeholder-lead">İçerik hazırlanıyor.</p>
+    <p>Meryem Ana$($Apos)nın görünmeleri, kutsal kalıntılar, Efkaristiya mucizeleri ve çürümeyen azizler üzerine Türkçe, özgün ve kaynaklı bir bölüm hazırlanıyor.</p>
+    <p><a class="btn" href="index.html">Ana sayfaya dön</a></p>
+  </div>
+</div>
+"@
+Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
+  -Description "Katolik Kilisesi$($Apos)nde tanınan Meryem Ana görünmeleri, kutsal kalıntılar, Efkaristiya mucizeleri ve çürümeyen azizler. Yakında." `
+  -Path 'mucizeler.html' -Body $mucizelerBody -JsonLd @((Breadcrumb-Ld 'Mucizeler' 'mucizeler.html'))
+
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
 $notFoundBody = @"
 <div class="wrap narrow">
@@ -1092,7 +1121,7 @@ $pages = @(
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
-  @{ p = 'giris.html'; pr = '0.6' }
+  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' }
 )
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
