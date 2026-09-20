@@ -323,10 +323,11 @@ $PrayerNav = @(
 # "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many.
 # Katekizm sits here too as a single link (no chapter submenu in the nav; katesizm.html itself is the way in).
 $KaynaklarNav = @(
-  @{ href = 'katesizm.html';       t = 'Katekizm';       s = '598 soru ve yanıt' },
-  @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci'; s = 'Katolik olma süreci' },
-  @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';    s = 'Ayinin sırası, adım adım' },
-  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';   s = 'Onaylı çeviriler' }
+  @{ href = 'katesizm.html';       t = 'Katekizm';             s = '598 soru ve yanıt' },
+  @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci';       s = 'Katolik olma süreci' },
+  @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım' },
+  @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille' },
+  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler' }
 )
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
@@ -342,6 +343,7 @@ $IcoRadiance = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 $IcoHome = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1V10"/></svg>'
 $IcoMail = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="5.5" width="17.6" height="13" rx="1.6"/><path d="m4 6.5 8 6.5 8-6.5"/></svg>'
 $IcoPrayers = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14"/><path d="M8 5.5c0 5-1 8-3.5 10"/><path d="M16 5.5c0 5 1 8 3.5 10"/><path d="M8 20.5c1.3-1 2.7-1 4 0 1.3-1 2.7-1 4 0"/></svg>'
+$IcoScroll = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4.5h11a2 2 0 0 1 2 2V8H9a2 2 0 0 0-2 2Z"/><path d="M7 4.5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5H9a2 2 0 0 1-2-2Z"/><path d="M11.5 11.5h5M11.5 14.5h5"/></svg>'
 $IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.2a2.8 2.8 0 1 1 3.5 3.1c-.6.2-.9.7-.9 1.3v.6"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor" stroke="none"/></svg>'
 $SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
 # href -> icon lookup for the mobile menu sheet (each real destination gets a small icon; the
@@ -353,6 +355,7 @@ $NavIcons = @{
   'katesizm.html'        = $SmallCross
   'katolik-sureci.html'  = $IcoWay
   'kutsal-ayin.html'     = $IcoChalice
+  'meseller.html'        = $IcoScroll
   'kutsal-kitap.html'    = $IcoBook
   'tesbih-duasi.html'    = $IcoBeads
   'ekler.html'           = $IcoPrayers
@@ -691,6 +694,11 @@ $homeBody = @"
       <span class="hub-s">Ayinin sırası, toplanmadan son takdise altı bölüm.</span>
       <span class="hub-go">Sayfaya Git$IcoNext</span>
     </a>
+    <a class="hub-card" href="meseller.html">
+      <span class="hub-head"><span class="hub-ico">$IcoScroll</span><span class="hub-t">İsa$($Apos)nın Meselleri</span></span>
+      <span class="hub-s">Otuz iki mesel, kısaca yeniden anlatılmış ve düz bir dille açıklanmış.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
+    </a>
     <a class="hub-card" href="kutsal-kitap.html">
       <span class="hub-head"><span class="hub-ico">$IcoBook</span><span class="hub-t">Kutsal Kitap</span></span>
       <span class="hub-s">$($KkMeta.short)</span>
@@ -1001,6 +1009,44 @@ Write-Page -File 'kutsal-ayin.html' -Title "$($Mass.title) | $SiteName" `
   -Description "Kutsal Ayin$($Apos)in sırası: cemaatin toplanmasından son takdise, Kutsal Kitabın okunmasından Efkaristiya$($Apos)nın kutsanmasına dek altı bölüm, Türkçe ve İngilizce." `
   -Path 'kutsal-ayin.html' -Body $massBody -JsonLd @((Breadcrumb-Ld 'Kutsal Ayin' 'kutsal-ayin.html'))
 
+# ================================================================== ISA'NIN MESELLERI (meseller.html)
+$Parables = Read-Data 'meseller.js'
+$ParableIcons = @{
+  sprout = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V11.5"/><path d="M12 11.5C12 7 8.4 5.8 5 5.8 5 10.4 7.8 11.5 12 11.5z"/><path d="M12 11.5c0-3.6 2.7-4.6 5.5-4.6 0 3.6-1.9 4.6-5.5 4.6z"/></svg>'
+  heart  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.3s-7.3-4.5-9.6-9.1C.9 7.6 2.6 4.5 5.8 4c2-.3 3.9.8 6.2 3.2C14.3 4.8 16.2 3.7 18.2 4c3.2.5 4.9 3.6 3.4 7.2-2.3 4.6-9.6 9.1-9.6 9.1z"/></svg>'
+  prayer = $IcoPrayers
+  lamp   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2 2.4 3.1 4.4 3.1 6.3a3.1 3.1 0 1 1-6.2 0C8.9 7.4 10 5.4 12 3z"/><path d="M8.2 18.6h7.6M9.6 15.6h4.8"/></svg>'
+  coins  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.3" rx="7" ry="2.6"/><path d="M5 6.3v5c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-5"/><path d="M5 11.3v5c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-5"/></svg>'
+  door   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V9a6 6 0 0 1 12 0v12"/><path d="M4 21h16"/><circle cx="14.3" cy="14" r=".9" fill="currentColor" stroke="none"/></svg>'
+}
+$script:MeselN = 0
+$meselToc = ($Parables.categories | ForEach-Object { "<li><a href=`"#$($_.id)`">$(Inline $_.title)</a></li>" }) -join ''
+$meselCats = ($Parables.categories | ForEach-Object {
+  $script:MeselN++; $cat = $_
+  $icon = $ParableIcons[$cat.icon]
+  $items = ($cat.items | ForEach-Object {
+    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.name)</span><span class=`"mira-place label`">$($_.ref)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bio)</div></details>"
+  }) -join "`n"
+  "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
+    "<h2 class=`"section-title`"><span class=`"label`">$($script:MeselN)</span>$(Inline $cat.title)</h2>" +
+    "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>" +
+    "<p class=`"faq-intro`">$(Inline $cat.lead)</p>" +
+    "<div class=`"mira-list`">$items</div></section>"
+}) -join "`n"
+$MeselTitle = "İsa$($Apos)nın Meselleri"
+$meselBody = @"
+<div class="wrap narrow">
+  $(Crumbs $MeselTitle)
+  <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Parables.title)</h1><p class="sub" lang="en">$($Parables.en)</p></header>
+  <p class="faq-intro">$(Inline $Parables.intro)</p>
+  <nav class="faq-toc" aria-label="Kategoriler"><ul>$meselToc</ul></nav>
+$meselCats
+</div>
+"@
+Write-Page -File 'meseller.html' -Title "$($Parables.title) | $SiteName" `
+  -Description "Mesih İsa$($Apos)nın İnciller$($Apos)deki başlıca meselleri: kısaca yeniden anlatılmış ve konularına göre bölümlere ayrılmış, düz bir dille açıklanmış otuz ikisi bir arada." `
+  -Path 'meseller.html' -Body $meselBody -JsonLd @((Breadcrumb-Ld $MeselTitle 'meseller.html'))
+
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
 # A static, numbered diagram of the bead ring (no hover/click state at all, so it works the
 # same way on every device) plus the prayers as collapsible cards, grouped into the order
@@ -1226,7 +1272,7 @@ $pages = @(
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
-  @{ p = 'iletisim.html'; pr = '0.4' }
+  @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }
 )
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
