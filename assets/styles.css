@@ -477,6 +477,9 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 }
 .post-author-name { margin: 0 0 .2rem; font-weight: 600; }
 .post-author-bio { margin: 0; color: var(--text-soft); font-size: .95rem; }
+.read-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 50; pointer-events: none; }
+.read-progress .bar { display: block; height: 100%; width: 0%; background: var(--gold); }
+@media (prefers-reduced-motion: no-preference) { .read-progress .bar { transition: width .12s linear; } }
 
 /* About page (Markdown content from content/hakkinda.md) */
 .prose h2 { font-size: clamp(1.45rem, 3vw, 1.75rem); font-weight: 600; line-height: 1.25; margin: 2rem 0 .7rem; }

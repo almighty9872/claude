@@ -1228,6 +1228,7 @@ $Blog.posts | ForEach-Object {
   $post = $_
   $postLang = Post-Lang $post.id $post
   $postBody = @"
+<div class="read-progress" aria-hidden="true"><span class="bar"></span></div>
 <div class="wrap narrow">
   $(Crumbs $post.title 'Blog' 'blog.html')
   <article class="article post" id="post">

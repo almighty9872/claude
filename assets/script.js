@@ -118,6 +118,28 @@
   }
 
   /* ---------------------------------------------------------------
+     3c. Blog posts: reading-progress bar (fills as the article,
+     not the whole page, scrolls through the viewport)
+     --------------------------------------------------------------- */
+  function initReadProgress() {
+    var article = document.getElementById('post');
+    var bar = $('.read-progress .bar');
+    if (!article || !bar) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var top = article.offsetTop, height = article.offsetHeight;
+      var start = top, end = top + height - window.innerHeight;
+      var pct = end <= start ? 100 : ((window.pageYOffset - start) / (end - start)) * 100;
+      bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+
+  /* ---------------------------------------------------------------
      4. "Show all English" (reading bar / article pages)
      --------------------------------------------------------------- */
   function initRevealAll() {
@@ -780,7 +802,7 @@
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll(); initPostLang();
+    initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets();
   });
 })();
