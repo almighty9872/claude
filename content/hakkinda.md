@@ -10,7 +10,7 @@ katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türk�
 
 ## Kaynaklar ve telif
 
-- Katekizm: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Türkçe çeviri © 2026 David Erduran; özgün metin © 2005 Libreria Editrice Vaticana.
+- Katekizm: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Türkçe çeviri © 2026 katolikdunyasi.com; özgün metin © 2005 Libreria Editrice Vaticana.
 - Tesbih Duası: İstanbul’daki Sant’Antuan (Aziz Antuan) Bazilikası’nda kullanılan Türkçe dua kartı esas alınmıştır.
 - Kutsal Ayin: Azize Tereza Kilisesi’nin (Ankara, İstanbul-Ankara Latin Katolik Ruhani Reisliği) yayımladığı Türkçe metin esas alınmış, sitenin terim seçimleriyle uyumlu hâle getirilmiştir.
 - Azizler: tarihler ve ayin dereceleri Roma Genel Takvimi’ni, boş kalan günler için seçilen azizler Roma Azizler Cetveli’ni (Martyrologium Romanum) esas alır; hayat öyküleri bu site için özgün olarak Türkçe kaleme alınmıştır.
@@ -22,6 +22,6 @@ katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türk�
 
 Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu varsa ya da sadece merhaba demek isterseniz: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com). Ayrıntılar için [İletişim sayfasını](iletisim.html) ziyaret edebilirsiniz.
 
-Türkçe çeviriler ve özgün içerik © 2026 David Erduran.
+Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
 
 *Son güncelleme: 20 Eylül 2026*

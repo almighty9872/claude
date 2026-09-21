@@ -484,7 +484,7 @@ $FooterHtml = @"
     <div class="foot-about">
       <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
       <p class="foot-tag">$SiteTag</p>
-      <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 David Erduran</p>
+      <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">
@@ -1199,9 +1199,6 @@ function Read-Minutes([string]$body, [string]$closing) {
   $words = Word-Count ($body + ' ' + $closing)
   return [Math]::Max(1, [Math]::Ceiling($words / 200.0))
 }
-function Author-Initials([string]$name) {
-  return (($name -split '\s+' | ForEach-Object { $_.Substring(0, 1) }) -join '').ToUpperInvariant()
-}
 function Post-Lang([string]$idSuffix, $post) {
   $enId = "post-en-$idSuffix"; $trId = "post-tr-$idSuffix"; $readId = "post-read-$idSuffix"
   $enMinutes = Read-Minutes $post.en.body $post.en.closing
@@ -1210,20 +1207,17 @@ function Post-Lang([string]$idSuffix, $post) {
   $trParas = Convert-Markdown $post.tr.body
   $enSign = ($post.en.signature | ForEach-Object { "<p>$_</p>" }) -join ''
   $trSign = ($post.tr.signature | ForEach-Object { "<p>$_</p>" }) -join ''
-  $initials = Author-Initials $post.author
-  $enAuthor = "<div class=`"post-author-card`"><span class=`"post-author-avatar`" aria-hidden=`"true`">$initials</span><div><p class=`"post-author-name`">$($post.author)</p><p class=`"post-author-bio`">$($post.en.authorBio)</p></div></div>"
-  $trAuthor = "<div class=`"post-author-card`"><span class=`"post-author-avatar`" aria-hidden=`"true`">$initials</span><div><p class=`"post-author-name`">$($post.author)</p><p class=`"post-author-bio`">$(Inline $post.tr.authorBio)</p></div></div>"
   $enClosing = if ($post.en.closing) { "<p class=`"post-closing`">$($post.en.closing)</p>" } else { '' }
   $trClosing = if ($post.tr.closing) { "<p class=`"post-closing`">$(Inline $post.tr.closing)</p>" } else { '' }
-  $enBody = "<div class=`"post-body prose`" id=`"$enId`" lang=`"en`">$enParas$enClosing<div class=`"signature`">$enSign</div>$enAuthor</div>"
-  $trBody = "<div class=`"post-body prose`" id=`"$trId`" lang=`"tr`" hidden>$trParas$trClosing<div class=`"signature`">$trSign</div>$trAuthor</div>"
+  $enBody = "<div class=`"post-body prose`" id=`"$enId`" lang=`"en`">$enParas$enClosing<div class=`"signature`">$enSign</div></div>"
+  $trBody = "<div class=`"post-body prose`" id=`"$trId`" lang=`"tr`" hidden>$trParas$trClosing<div class=`"signature`">$trSign</div></div>"
   $toggle = "<div class=`"article-tools`"><button type=`"button`" class=`"btn lang-toggle`" data-show-en=`"$enId`" data-show-tr=`"$trId`" data-read-target=`"$readId`" data-read-en=`"$enMinutes dk okuma`" data-read-tr=`"$trMinutes dk okuma`" aria-pressed=`"false`">$IcoGlobe<span class=`"btn-label`">Türkçe$($Apos)ye çevir</span></button></div>"
   return [pscustomobject]@{ Html = "$toggle$enBody$trBody"; EnMinutes = $enMinutes; ReadId = $readId }
 }
 $blogCards = ($Blog.posts | ForEach-Object {
   $post = $_
   $mins = Read-Minutes $post.en.body $post.en.closing
-  "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel) · $mins dk okuma</span><span class=`"t-title`" lang=`"en`">$($post.titleEn)</span><span class=`"t-sub`">$(Inline $post.title)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p><span class=`"post-author`">$($post.author)</span></a>"
+  "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel) · $mins dk okuma</span><span class=`"t-title`" lang=`"en`">$($post.titleEn)</span><span class=`"t-sub`">$(Inline $post.title)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p></a>"
 }) -join "`n"
 $blogBody = @"
 <div class="wrap narrow">
@@ -1234,7 +1228,7 @@ $blogBody = @"
 </div>
 "@
 Write-Page -File 'blog.html' -Title "Blog | $SiteName" `
-  -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar: David Erduran$($Apos)ın İngilizce metinleri ve Türkçe çevirileriyle bir arada." `
+  -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar, İngilizce aslı ve Türkçe çevirisiyle bir arada." `
   -Path 'blog.html' -Body $blogBody -JsonLd @((Breadcrumb-Ld 'Blog' 'blog.html'))
 
 $Blog.posts | ForEach-Object {
