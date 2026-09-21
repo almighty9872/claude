@@ -667,8 +667,6 @@ body.sheet-open { overflow: hidden; }
 }
 .work-hero { padding-top: .5rem; }
 
-.hub { display: grid; gap: 1rem; margin: 1.5rem 0 2.5rem; }
-@media (min-width: 760px) { .hub { grid-template-columns: 1fr 1fr; } }
 .hub-card {
   display: flex; flex-direction: column; gap: .5rem;
   padding: 1.6rem 1.5rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius);
@@ -683,7 +681,7 @@ body.sheet-open { overflow: hidden; }
 .hub-s { color: var(--text-soft); font-size: 1.02rem; line-height: 1.5; flex: 1; }
 .hub-go {
   display: inline-flex; align-items: center; gap: .3rem; margin-top: .3rem;
-  font-family: var(--sans); font-size: .85rem; font-weight: 600; color: var(--gold);
+  font-family: var(--sans); font-size: .78rem; font-weight: 600; color: var(--gold);
 }
 .hub-go svg { width: .95rem; height: .95rem; transition: transform .2s; }
 .hub-card:hover .hub-go svg { transform: translateX(3px); }
@@ -694,7 +692,7 @@ body.sheet-open { overflow: hidden; }
   .hub-ico { width: 1.7rem; height: 1.7rem; }
   .hub-t { font-size: 1.12rem; }
   .hub-s { font-size: .86rem; line-height: 1.42; }
-  .hub-go { font-size: .8rem; margin-top: .15rem; }
+  .hub-go { font-size: .74rem; margin-top: .15rem; }
 }
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
 
@@ -774,35 +772,100 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 @media (max-width: 440px) { .foot-sitemap { grid-template-columns: 1fr 1fr; gap: 1.2rem 1rem; } }
 @media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
 
-/* ---------- 16. Home hub (cards + today sidebar) and the Rosary page ---------- */
-.home-hero { padding: clamp(2rem, 5vw, 3.2rem) 0 .6rem; }
-.home-hero .logo { width: 64px; height: 64px; margin: 0 auto; }
-.home-layout { display: grid; gap: 2rem; align-items: start; }
-@media (min-width: 860px) { .home-layout { grid-template-columns: 2fr 1fr; } }
-.home-side { display: grid; gap: 1rem; }
-@media (min-width: 860px) { .home-side { position: sticky; top: calc(var(--header-h) + 1.2rem); } }
-.side-card {
-  display: flex; flex-direction: column; gap: .6rem;
-  padding: 1.25rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius);
-  background: var(--surface); box-shadow: var(--shadow);
+/* ---------- 16. Home hero + library shelves ---------- */
+.home-hero { text-align: center; padding: clamp(1.6rem, 5vw, 3.6rem) 0 .4rem; position: relative; }
+.home-hero .glow {
+  position: absolute; top: -2rem; left: 50%; transform: translateX(-50%); width: 30rem; height: 30rem;
+  border-radius: 50%; z-index: -1; background: radial-gradient(circle, var(--gold-bg) 0%, transparent 70%);
 }
-.side-label {
-  display: flex; align-items: center; gap: .45rem; margin: 0;
-  font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--gold);
+.home-hero .logo { width: 52px; height: 52px; margin: 0 auto .85rem; color: var(--gold); }
+.home-hero h1 { font-size: clamp(1.85rem, 5vw, 2.85rem); line-height: 1.1; font-weight: 600; margin: 0; letter-spacing: -.01em; }
+.home-hero .lead { margin: .65rem auto 0; max-width: 36rem; color: var(--text-soft); font-size: 1.05rem; line-height: 1.5; }
+.home-hero .hero-search { margin: 1.25rem auto 0; max-width: 30rem; }
+
+/* "New post" notification: shaped and paced like an iOS banner notification */
+.notif-banner {
+  display: flex; gap: .7rem; align-items: flex-start; text-align: left; text-decoration: none; color: var(--text);
+  max-width: 28rem; margin: 1rem auto 0; padding: .7rem .85rem; border-radius: 18px;
+  background: var(--glass-strong); border: 1px solid var(--glass-brd);
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+  box-shadow: 0 10px 26px -14px rgba(20, 14, 4, .3);
+  transition: transform .2s;
 }
-.side-label svg { width: 1rem; height: 1rem; flex: none; }
-.side-body .hint { margin: 0; color: var(--muted); font-style: italic; }
-.side-name { display: block; font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
-.side-title { display: block; font-family: var(--sans); font-size: .74rem; color: var(--muted); margin-top: .1rem; }
-.side-snippet { margin: .5rem 0 0; font-size: .92rem; line-height: 1.5; color: var(--text-soft); }
-.side-go {
-  display: inline-flex; align-items: center; gap: .3rem; margin-top: .2rem;
-  font-family: var(--sans); font-size: .82rem; font-weight: 600; color: var(--gold); text-decoration: none;
+.notif-banner:hover { transform: translateY(-2px); }
+.notif-icon {
+  flex: none; width: 2.1rem; height: 2.1rem; border-radius: 8px; display: grid; place-items: center;
+  background: #0c1322; color: #d6b16b;
 }
-.side-go svg { width: .9rem; height: .9rem; transition: transform .2s; }
-.side-card:hover .side-go svg { transform: translateX(3px); }
-@media (prefers-reduced-motion: reduce) { .side-go svg { transition: none; } }
+.notif-icon svg { width: 1.15rem; height: 1.15rem; }
+.notif-body { min-width: 0; flex: 1; }
+.notif-top { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+.notif-app { font-family: var(--sans); font-size: .62rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.notif-time { font-family: var(--sans); font-size: .68rem; color: var(--muted); flex: none; }
+.notif-title { display: block; margin-top: .1rem; font-family: var(--sans); font-size: .88rem; font-weight: 700; }
+.notif-text { display: block; margin-top: .05rem; font-size: .87rem; color: var(--text-soft); line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.today-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin: 1.1rem 0 0; }
+.today-pill {
+  display: flex; align-items: center; gap: .55rem; padding: .5rem .9rem .5rem .65rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s;
+}
+.today-pill:hover { border-color: var(--gold-soft); transform: translateY(-1px); }
+.today-pill .tp-ico { flex: none; width: 1.5rem; height: 1.5rem; color: var(--gold); }
+.today-pill .tp-ico svg { width: 100%; height: 100%; }
+.today-pill .tp-label { display: block; font-family: var(--sans); font-size: .64rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.today-pill .tp-value { display: block; font-size: .88rem; font-weight: 600; margin-top: .04rem; }
+.today-pill .tp-value.hint { font-weight: 400; font-style: italic; color: var(--muted); }
+
+.lib-section { padding: 1.7rem 0; border-top: 1px solid var(--border); }
+.lib-section:first-of-type { border-top: 0; padding-top: 2rem; }
+.lib-head { display: flex; gap: .85rem; align-items: baseline; }
+.lib-head .roman { flex: none; font-size: clamp(1.9rem, 5.4vw, 3rem); }
+.lib-head h2 { margin: 0; font-size: clamp(1.3rem, 3.4vw, 1.95rem); font-weight: 600; }
+.lib-lead { margin: .45rem 0 1.1rem; color: var(--text-soft); max-width: 42rem; line-height: 1.5; font-size: .96rem; }
+.shelf + .shelf { margin-top: 1.1rem; }
+
+/* Shared shelf/grid container: a native horizontal snap-scroll rail on
+   touch/narrow screens, a plain CSS grid from tablet width up. Every
+   card row on the home page (library cards, blog posts, closing links)
+   uses this same class, so there is one responsive pattern, not three.
+   The negative margin/padding pair lets it bleed to the true viewport
+   edge on mobile without touching the shared .wrap.narrow padding. */
+.shelf {
+  display: flex; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scroll-padding-left: var(--gutter);
+  margin: 0 calc(-1 * var(--gutter)); padding: .1rem var(--gutter) .5rem;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.shelf::-webkit-scrollbar { display: none; }
+.shelf > * { flex: 0 0 76%; scroll-snap-align: start; scroll-snap-stop: always; }
+.shelf > .mini-post { flex-basis: 82%; }
+.shelf > .saint-card { flex-basis: 84%; }
+@media (min-width: 420px) { .shelf > * { flex-basis: 62%; } .shelf > .mini-post, .shelf > .saint-card { flex-basis: 68%; } }
+@media (min-width: 720px) {
+  .shelf { display: grid; overflow-x: visible; scroll-snap-type: none; margin: 0; padding: 0; }
+  .shelf > * { flex-basis: auto; }
+  .shelf.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .shelf.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .shelf.cols-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.saint-card { display: flex; flex-direction: column; }
+.saint-card .hub-s { flex: none; }
+.saint-today { margin-top: .5rem; padding-top: .7rem; border-top: 1px dashed var(--border); font-size: .88rem; color: var(--text-soft); }
+.saint-today b { color: var(--text); font-weight: 600; }
+
+.mini-post { display: block; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; transition: border-color .2s, transform .2s; }
+.mini-post:hover { border-color: var(--gold-soft); transform: translateY(-2px); }
+.mini-post .mp-date { font-family: var(--sans); font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
+.mini-post .mp-title { display: block; margin-top: .35rem; font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
+.mini-post .mp-sub { display: block; margin-top: .15rem; font-style: italic; color: var(--muted); font-size: .9rem; }
+
+@media (max-width: 719px) {
+  .lib-section { padding-top: 1.3rem; padding-bottom: .2rem; }
+  .lib-section:first-of-type { padding-top: 1.5rem; }
+}
 
 /* Static bead diagram: a picture with numbered callouts, a legend names each number. */
 .rosary-figure {

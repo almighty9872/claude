@@ -751,8 +751,10 @@
     });
   }
   function initHomeWidgets() {
-    var saintBox = $('[data-home-saint] .side-body'), mysteryBox = $('[data-home-mystery] .side-body');
-    if (!saintBox && !mysteryBox) return;
+    var saintPill = $('[data-home-saint-pill] .tp-value');
+    var saintCard = $('[data-home-saint-card]');
+    var mysteryPill = $('[data-home-mystery-pill] .tp-value');
+    if (!saintPill && !saintCard && !mysteryPill) return;
 
     function istanbulToday() {
       try {
@@ -766,28 +768,29 @@
     }
     var today = istanbulToday();
 
-    if (saintBox) {
+    if (saintPill || saintCard) {
       loadDataScript('data/azizler.js', 'SAINTS').then(function () {
         var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
-        if (!day || !day.saints || !day.saints.length) { saintBox.innerHTML = '<p class="hint">Bugün için özel bir aziz yok.</p>'; return; }
-        var s = day.saints[0];
-        var bio = s.bio.length > 170 ? s.bio.slice(0, 170).replace(/\s+\S*$/, '') + '…' : s.bio;
-        saintBox.innerHTML = '<span class="side-name">' + s.name + '</span>' +
-          (s.title ? '<span class="side-title">' + s.title + '</span>' : '') +
-          '<p class="side-snippet">' + bio + '</p>';
-      })['catch'](function () { saintBox.innerHTML = '<p class="hint">Yüklenemedi.</p>'; });
+        var s = day && day.saints && day.saints[0];
+        if (saintPill) { saintPill.textContent = s ? s.name : 'Bugün için yok'; saintPill.classList.remove('hint'); }
+        if (saintCard) {
+          if (!s) { saintCard.hidden = true; return; }
+          var bio = s.bio.length > 170 ? s.bio.slice(0, 170).replace(/\s+\S*$/, '') + '…' : s.bio;
+          saintCard.innerHTML = '<b>Bugün:</b> ' + s.name + (s.title ? ', ' + s.title : '') + '. ' + bio;
+        }
+      })['catch'](function () {
+        if (saintPill) { saintPill.textContent = 'Yüklenemedi'; saintPill.classList.remove('hint'); }
+        if (saintCard) saintCard.hidden = true;
+      });
     }
-    if (mysteryBox) {
+    if (mysteryPill) {
       loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
         var dayIdx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(today.weekday);
         if (dayIdx === -1) dayIdx = new Date().getDay();
         var set = window.COMPENDIUM_ROSARY.sets.filter(function (s) { return s.days.indexOf(dayIdx) !== -1; })[0];
-        if (!set) { mysteryBox.innerHTML = '<p class="hint">Bulunamadı.</p>'; return; }
-        var items = set.items.slice(0, 2).map(function (it) { return it.tr; }).join('; ');
-        mysteryBox.innerHTML = '<span class="side-name">' + set.tr + '</span>' +
-          '<span class="side-title">' + set.dayTr + '</span>' +
-          '<p class="side-snippet">' + items + '…</p>';
-      })['catch'](function () { mysteryBox.innerHTML = '<p class="hint">Yüklenemedi.</p>'; });
+        mysteryPill.textContent = set ? set.tr : 'Bulunamadı';
+        mysteryPill.classList.remove('hint');
+      })['catch'](function () { mysteryPill.textContent = 'Yüklenemedi'; mysteryPill.classList.remove('hint'); });
     }
   }
 

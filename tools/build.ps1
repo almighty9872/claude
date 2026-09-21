@@ -682,74 +682,119 @@ Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
   -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Katekizm' 'katesizm.html'))
 
 # ---------------- index.html: the site hub
+$latestPost = $Blog.posts[0]
+$latestDateShort = $latestPost.dateLabel -replace '\s+\d{4}$', ''
+$NotifIcon = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
 $homeBody = @"
-<section class="hero wrap narrow home-hero">
-  $Logo
-  <h1 class="visually-hidden">$SiteName · $SiteTag</h1>
-  $(Search-Form 'hero-search' 'q-home' '598 soruda ara: Türkçe, İngilizce ya da soru numarası')
-</section>
 <div class="wrap narrow">
-  <div class="home-layout">
-  <div class="hub">
-    <a class="hub-card" href="katesizm.html">
-      <span class="hub-head"><span class="hub-ico">$SmallCross</span><span class="hub-t">Katekizm</span></span>
-      <span class="hub-s">İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
+
+  <section class="home-hero">
+    <div class="glow"></div>
+    $Logo
+    <h1>$SiteTag</h1>
+    <p class="lead">Katekizm, Katolik olma süreci, Kutsal Ayin, İsa$($Apos)nın meselleri, günlük dualar, azizlerin hayat hikâyeleri, mucizeler ve özgün yazılar: hepsi Türkçe, tek bir sitede.</p>
+    $(Search-Form 'hero-search' 'q-home' "Katekizm$($Apos)de ara: Türkçe, İngilizce ya da soru numarası")
+    <a class="notif-banner" href="$($latestPost.id).html">
+      <span class="notif-icon">$NotifIcon</span>
+      <span class="notif-body">
+        <span class="notif-top"><span class="notif-app">Son Blog Yazısı</span><span class="notif-time">$latestDateShort</span></span>
+        <span class="notif-title">$($latestPost.titleEn)</span>
+        <span class="notif-text">$(Inline $latestPost.title)</span>
+      </span>
     </a>
-    <a class="hub-card" href="katolik-sureci.html">
-      <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Süreci</span></span>
-      <span class="hub-s">Katolik olmak isteyenler için OCIA süreci, adım adım.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="kutsal-ayin.html">
-      <span class="hub-head"><span class="hub-ico">$IcoChalice</span><span class="hub-t">Kutsal Ayin</span></span>
-      <span class="hub-s">Ayinin sırası, toplanmadan son takdise altı bölüm.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="meseller.html">
-      <span class="hub-head"><span class="hub-ico">$IcoScroll</span><span class="hub-t">İsa$($Apos)nın Meselleri</span></span>
-      <span class="hub-s">Otuz iki mesel, kısaca yeniden anlatılmış ve düz bir dille açıklanmış.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="kutsal-kitap.html">
-      <span class="hub-head"><span class="hub-ico">$IcoBook</span><span class="hub-t">Kutsal Kitap</span></span>
-      <span class="hub-s">$($KkMeta.short)</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="tesbih-duasi.html">
-      <span class="hub-head"><span class="hub-ico">$IcoBeads</span><span class="hub-t">Tesbih Duası</span></span>
-      <span class="hub-s">Duaların Türkçesi ve İngilizcesi, bütün gizemleriyle.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="mucizeler.html">
-      <span class="hub-head"><span class="hub-ico">$IcoRadiance</span><span class="hub-t">Mucizeler</span></span>
-      <span class="hub-s">Görünmeler, Torino Kefeni, Efkaristiya mucizeleri, çürümeyen azizler.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="azizler.html">
-      <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
-      <span class="hub-s">Bugünün azizini görün, yılın her günü için hayat hikâyeleri.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-    <a class="hub-card" href="sss.html">
-      <span class="hub-head"><span class="hub-ico">$IcoAsk</span><span class="hub-t">Sorular</span></span>
-      <span class="hub-s">Katolik inancı üzerine en sık sorulan sorular ve yanıtları.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
-  </div>
-  <aside class="home-side" aria-label="Bugün">
-    <div class="side-card" data-home-saint>
-      <p class="side-label">$IcoStar Bugünün Azizi</p>
-      <div class="side-body"><p class="hint">Yükleniyor…</p></div>
-      <a class="side-go" href="azizler.html">Azizleri keşfet$IcoNext</a>
+    <div class="today-pills">
+      <a class="today-pill" href="azizler.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint">Yükleniyor…</span></span></a>
+      <a class="today-pill" href="tesbih-duasi.html" data-home-mystery-pill><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Bugünün Gizemi</span><span class="tp-value hint">Yükleniyor…</span></span></a>
     </div>
-    <div class="side-card" data-home-mystery>
-      <p class="side-label">$IcoBeads Bugünün Gizemi</p>
-      <div class="side-body"><p class="hint">Yükleniyor…</p></div>
-      <a class="side-go" href="tesbih-duasi.html">Tesbih duasını aç$IcoNext</a>
+  </section>
+
+  <section class="lib-section">
+    <div class="lib-head"><span class="roman">I</span><h2>Öğretiler</h2></div>
+    <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: Katekizm$($Apos)in tam çevirisi, Katolik olma süreci ve hangi Kutsal Kitap çevirisini seçmeli sorusuna kısa bir rehber.</p>
+    <div class="shelf cols-3">
+      <a class="hub-card" href="katesizm.html">
+        <span class="hub-head"><span class="hub-ico">$SmallCross</span><span class="hub-t">Katekizm</span></span>
+        <span class="hub-s">İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="katolik-sureci.html">
+        <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Süreci</span></span>
+        <span class="hub-s">Katolik olmak isteyenler için OCIA süreci, adım adım.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="kutsal-kitap.html">
+        <span class="hub-head"><span class="hub-ico">$IcoBook</span><span class="hub-t">Kutsal Kitap</span></span>
+        <span class="hub-s">$($KkMeta.short)</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
     </div>
-  </aside>
-  </div>
+  </section>
+
+  <section class="lib-section">
+    <div class="lib-head"><span class="roman">II</span><h2>Yaşam ve Dua</h2></div>
+    <p class="lib-lead">Ayine katılmaktan Meryem Ana Tesbihi$($Apos)ne, Mesih İsa$($Apos)nın mesellerinden günlük dualara: imanın günlük pratiği.</p>
+    <div class="shelf cols-4">
+      <a class="hub-card" href="kutsal-ayin.html">
+        <span class="hub-head"><span class="hub-ico">$IcoChalice</span><span class="hub-t">Kutsal Ayin</span></span>
+        <span class="hub-s">Ayinin sırası, toplanmadan son takdise altı bölüm.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="meseller.html">
+        <span class="hub-head"><span class="hub-ico">$IcoScroll</span><span class="hub-t">İsa$($Apos)nın Meselleri</span></span>
+        <span class="hub-s">Otuz iki mesel, düz bir dille açıklanmış.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="tesbih-duasi.html">
+        <span class="hub-head"><span class="hub-ico">$IcoBeads</span><span class="hub-t">Tesbih Duası</span></span>
+        <span class="hub-s">Duaların Türkçesi ve İngilizcesi, bütün gizemleriyle.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="ekler.html">
+        <span class="hub-head"><span class="hub-ico">$IcoPrayers</span><span class="hub-t">Sık Kullanılan Dualar</span></span>
+        <span class="hub-s">Günlük dualar ve formüller, tek sayfada.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="lib-section">
+    <div class="lib-head"><span class="roman">III</span><h2>Azizler ve Mucizeler</h2></div>
+    <p class="lib-lead">Yılın her günü için bir aziz, Kilise tarihinin görünmeleri, kalıntıları ve Efkaristiya mucizeleri.</p>
+    <div class="shelf cols-2">
+      <a class="hub-card saint-card" href="azizler.html">
+        <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
+        <span class="hub-s">Bugünün azizini görün, yılın her günü için hayat hikâyeleri.</span>
+        <span class="saint-today" data-home-saint-card>Yükleniyor…</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="mucizeler.html">
+        <span class="hub-head"><span class="hub-ico">$IcoRadiance</span><span class="hub-t">Mucizeler</span></span>
+        <span class="hub-s">Görünmeler, Torino Kefeni, Efkaristiya mucizeleri, çürümeyen azizler.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="lib-section">
+    <div class="lib-head"><span class="roman">IV</span><h2>Blog</h2></div>
+    <p class="lib-lead">Katolik inancı üzerine kişisel yazılar, İngilizce aslı ve Türkçe çevirisiyle bir arada.</p>
+    <div class="shelf cols-2">
+$(($Blog.posts | Select-Object -First 2 | ForEach-Object { "      <a class=`"mini-post`" href=`"$($_.id).html`"><span class=`"mp-date`">$($_.dateLabel)</span><span class=`"mp-title`">$($_.titleEn)</span><span class=`"mp-sub`">$(Inline $_.title)</span></a>" }) -join "`n")
+    </div>
+    <div class="shelf cols-2">
+      <a class="hub-card" href="sss.html">
+        <span class="hub-head"><span class="hub-ico">$IcoAsk</span><span class="hub-t">Sorular</span></span>
+        <span class="hub-s">Katolik inancı üzerine en sık sorulan sorular.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="iletisim.html">
+        <span class="hub-head"><span class="hub-ico">$IcoMail</span><span class="hub-t">İletişim</span></span>
+        <span class="hub-s">Bir çeviri düzeltmesi, öneri ya da merhaba demek için.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+    </div>
+  </section>
+
 </div>
 "@
 $webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JStr $SiteName) +
