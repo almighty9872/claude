@@ -1183,20 +1183,34 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
 # Each post keeps the English original ("en") shown by default, with a "Türkçe'ye çevir"
 # button that swaps in the Turkish translation ("tr") — the reverse of the site's usual
 # Turkish-first/English-toggle pattern, since these are the author's own English essays.
+function Word-Count([string]$s) { return ([regex]::Matches($s, '\S+')).Count }
+function Read-Minutes($paragraphs, [string]$closing) {
+  $words = (Word-Count (($paragraphs -join ' ') + ' ' + $closing))
+  return [Math]::Max(1, [Math]::Ceiling($words / 200.0))
+}
+function Author-Initials([string]$name) {
+  return (($name -split '\s+' | ForEach-Object { $_.Substring(0, 1) }) -join '').ToUpperInvariant()
+}
 function Post-Lang([string]$idSuffix, $post) {
-  $enId = "post-en-$idSuffix"; $trId = "post-tr-$idSuffix"
+  $enId = "post-en-$idSuffix"; $trId = "post-tr-$idSuffix"; $readId = "post-read-$idSuffix"
+  $enMinutes = Read-Minutes $post.en.paragraphs $post.en.closing
+  $trMinutes = Read-Minutes $post.tr.paragraphs $post.tr.closing
   $enParas = ($post.en.paragraphs | ForEach-Object { "<p>$_</p>" }) -join ''
   $trParas = ($post.tr.paragraphs | ForEach-Object { "<p>$(Inline $_)</p>" }) -join ''
   $enSign = ($post.en.signature | ForEach-Object { "<p>$_</p>" }) -join ''
   $trSign = ($post.tr.signature | ForEach-Object { "<p>$_</p>" }) -join ''
-  $enBody = "<div class=`"post-body`" id=`"$enId`" lang=`"en`">$enParas<p class=`"post-closing`">$($post.en.closing)</p><div class=`"signature`">$enSign</div></div>"
-  $trBody = "<div class=`"post-body`" id=`"$trId`" lang=`"tr`" hidden>$trParas<p class=`"post-closing`">$(Inline $post.tr.closing)</p><div class=`"signature`">$trSign</div></div>"
-  $toggle = "<div class=`"article-tools`"><button type=`"button`" class=`"btn lang-toggle`" data-show-en=`"$enId`" data-show-tr=`"$trId`" aria-pressed=`"false`">$IcoGlobe<span class=`"btn-label`">Türkçe$($Apos)ye çevir</span></button></div>"
-  return "$toggle$enBody$trBody"
+  $initials = Author-Initials $post.author
+  $enAuthor = "<div class=`"post-author-card`"><span class=`"post-author-avatar`" aria-hidden=`"true`">$initials</span><div><p class=`"post-author-name`">$($post.author)</p><p class=`"post-author-bio`">$($post.en.authorBio)</p></div></div>"
+  $trAuthor = "<div class=`"post-author-card`"><span class=`"post-author-avatar`" aria-hidden=`"true`">$initials</span><div><p class=`"post-author-name`">$($post.author)</p><p class=`"post-author-bio`">$(Inline $post.tr.authorBio)</p></div></div>"
+  $enBody = "<div class=`"post-body`" id=`"$enId`" lang=`"en`">$enParas<p class=`"post-closing`">$($post.en.closing)</p><div class=`"signature`">$enSign</div>$enAuthor</div>"
+  $trBody = "<div class=`"post-body`" id=`"$trId`" lang=`"tr`" hidden>$trParas<p class=`"post-closing`">$(Inline $post.tr.closing)</p><div class=`"signature`">$trSign</div>$trAuthor</div>"
+  $toggle = "<div class=`"article-tools`"><button type=`"button`" class=`"btn lang-toggle`" data-show-en=`"$enId`" data-show-tr=`"$trId`" data-read-target=`"$readId`" data-read-en=`"$enMinutes dk okuma`" data-read-tr=`"$trMinutes dk okuma`" aria-pressed=`"false`">$IcoGlobe<span class=`"btn-label`">Türkçe$($Apos)ye çevir</span></button></div>"
+  return [pscustomobject]@{ Html = "$toggle$enBody$trBody"; EnMinutes = $enMinutes; ReadId = $readId }
 }
 $blogCards = ($Blog.posts | ForEach-Object {
   $post = $_
-  "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel)</span><span class=`"t-title`">$(Inline $post.title)</span><span class=`"t-sub`" lang=`"en`">$($post.titleEn)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p><span class=`"post-author`">$($post.author)</span></a>"
+  $mins = Read-Minutes $post.en.paragraphs $post.en.closing
+  "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel) · $mins dk okuma</span><span class=`"t-title`" lang=`"en`">$($post.titleEn)</span><span class=`"t-sub`">$(Inline $post.title)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p><span class=`"post-author`">$($post.author)</span></a>"
 }) -join "`n"
 $blogBody = @"
 <div class="wrap narrow">
@@ -1212,13 +1226,13 @@ Write-Page -File 'blog.html' -Title "Blog | $SiteName" `
 
 $Blog.posts | ForEach-Object {
   $post = $_
-  $postHtml = Post-Lang $post.id $post
+  $postLang = Post-Lang $post.id $post
   $postBody = @"
 <div class="wrap narrow">
   $(Crumbs $post.title 'Blog' 'blog.html')
   <article class="article post" id="post">
-    <header class="page-head center"><p class="label">$($post.dateLabel) · $($post.author)</p><h1>$(Inline $post.title)</h1><p class="sub" lang="en">$($post.titleEn)</p></header>
-    $postHtml
+    <header class="page-head center"><p class="label">$($post.dateLabel) · <span id="$($postLang.ReadId)">$($postLang.EnMinutes) dk okuma</span></p><h1 lang="en">$($post.titleEn)</h1><p class="sub">$(Inline $post.title)</p></header>
+    $($postLang.Html)
   </article>
 </div>
 "@

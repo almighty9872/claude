@@ -33,7 +33,8 @@ window.BLOG = /*JSON-START*/{
           "Everything above was an argument. What’s left is an invitation. If you’re curious, unsettled, or quietly drawn toward Catholicism, His table is prepared for you. Come home, confession and all, and be seen in the fullness of His grace."
         ],
         "closing": "May God bless you all.",
-        "signature": ["David Erduran", "September 16, 2026"]
+        "signature": ["David Erduran", "September 16, 2026"],
+        "authorBio": "David Erduran lives in Toronto, Canada, and writes and maintains katolikdunyasi.com on his own."
       },
       "tr": {
         "paragraphs": [
@@ -50,7 +51,8 @@ window.BLOG = /*JSON-START*/{
           "Yukarıdaki her şey bir savunmaydı. Geriye kalansa bir davet. Merak ediyorsanız, huzursuzsanız ya da sessizce Katolikliğe doğru çekiliyorsanız, O’nun sofrası sizin için hazır. Eve gelin, günah çıkarmasıyla birlikte, ve O’nun lütfunun tamlığında görülün."
         ],
         "closing": "Allah hepinizi kutsasın.",
-        "signature": ["David Erduran", "16 Eylül 2026"]
+        "signature": ["David Erduran", "16 Eylül 2026"],
+        "authorBio": "David Erduran, Toronto, Kanada’da yaşıyor ve katolikdunyasi.com’u tek başına hazırlayıp yürütüyor."
       }
     }
   ]

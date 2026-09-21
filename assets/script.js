@@ -111,6 +111,8 @@
         btn.setAttribute('aria-pressed', String(showTr));
         var label = btn.querySelector('.btn-label');
         if (label) label.textContent = showTr ? 'İngilizce aslını göster' : "Türkçe’ye çevir";
+        var readEl = document.getElementById(btn.getAttribute('data-read-target'));
+        if (readEl) readEl.textContent = btn.getAttribute(showTr ? 'data-read-tr' : 'data-read-en');
       });
     });
   }

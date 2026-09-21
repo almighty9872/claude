@@ -470,6 +470,13 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .post-card .post-author { display: block; margin-top: .7rem; font-family: var(--sans); font-size: .78rem; letter-spacing: .04em; color: var(--muted); }
 .post-body p { margin: 0 0 1em; }
 .post-body .post-closing { margin-top: 1.4rem; font-style: italic; }
+.post-author-card { display: flex; gap: .9rem; align-items: flex-start; margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--border); }
+.post-author-avatar {
+  flex: none; width: 2.6rem; height: 2.6rem; border-radius: 999px; display: grid; place-items: center;
+  background: var(--gold-bg); color: var(--gold); font-family: var(--sans); font-weight: 700; font-size: .92rem;
+}
+.post-author-name { margin: 0 0 .2rem; font-weight: 600; }
+.post-author-bio { margin: 0; color: var(--text-soft); font-size: .95rem; }
 
 /* About page (Markdown content from content/hakkinda.md) */
 .prose h2 { font-size: clamp(1.45rem, 3vw, 1.75rem); font-weight: 600; line-height: 1.25; margin: 2rem 0 .7rem; }
