@@ -40,6 +40,8 @@ if (-not $SiteUrl) {
 }
 $SiteUrl = $SiteUrl.TrimEnd('/')
 $BuildDate = (Get-Date).ToString('yyyy-MM-dd')
+$MonthNamesTr = @('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
+$BuildDateTr = "$((Get-Date).Day) $($MonthNamesTr[(Get-Date).Month - 1]) $((Get-Date).Year)"
 $Utf8 = New-Object System.Text.UTF8Encoding $false
 # Cache-busting query string for the shared CSS/JS: a short hash of the minified
 # file's own content, so every page automatically requests a fresh copy the
@@ -357,6 +359,7 @@ function Read-Md([string]$name) {
 # content/hakkinda.md stays the editable source; only its rendering moved.
 $aboutFile = Join-Path (Join-Path $Root 'content') 'hakkinda.md'
 $aboutMd = if (Test-Path $aboutFile) { [IO.File]::ReadAllText($aboutFile, [Text.Encoding]::UTF8) } else { '' }
+$aboutMd = $aboutMd -replace '\{\{TARIH\}\}', $BuildDateTr
 $fm = @{}
 $fmMatch = [regex]::Match($aboutMd, '^\uFEFF?\s*---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)')
 if ($fmMatch.Success) {
@@ -1040,7 +1043,6 @@ Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" `
   -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Süreci' 'katolik-sureci.html'))
 
 # ================================================================== AZIZLER (azizler.html)
-$MonthNamesTr = @('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
 function Rank-Class([string]$rank) {
   if (-not $rank) { return 'rk-other' }
   if ($rank -match 'En Büyük Bayram') { return 'rk-hi' }

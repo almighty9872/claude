@@ -28,4 +28,4 @@ Bu site tamamen ücretsizdir ve öyle kalacaktır; hiçbir içerik bir ücret ka
 
 Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
 
-*Son güncelleme: 20 Eylül 2026*
+*Son güncelleme: {{TARIH}}*
