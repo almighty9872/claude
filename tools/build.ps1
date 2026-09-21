@@ -711,7 +711,7 @@ $homeBody = @"
   <section class="lib-section">
     <div class="lib-head"><span class="roman">I</span><h2>Öğretiler</h2></div>
     <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: Katekizm$($Apos)in tam çevirisi, Katolik olma süreci ve hangi Kutsal Kitap çevirisini seçmeli sorusuna kısa bir rehber.</p>
-    <div class="shelf cols-3">
+    <div class="shelf cols-4">
       <a class="hub-card" href="katesizm.html">
         <span class="hub-head"><span class="hub-ico">$SmallCross</span><span class="hub-t">Katekizm</span></span>
         <span class="hub-s">İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.</span>
@@ -725,6 +725,11 @@ $homeBody = @"
       <a class="hub-card" href="kutsal-kitap.html">
         <span class="hub-head"><span class="hub-ico">$IcoBook</span><span class="hub-t">Kutsal Kitap</span></span>
         <span class="hub-s">$($KkMeta.short)</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="sss.html">
+        <span class="hub-head"><span class="hub-ico">$IcoAsk</span><span class="hub-t">Sorular</span></span>
+        <span class="hub-s">Katolik inancı üzerine en sık sorulan sorular.</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
     </div>
@@ -781,18 +786,16 @@ $homeBody = @"
     <div class="shelf posts cols-2">
 $(($Blog.posts | Select-Object -First 2 | ForEach-Object { "      <a class=`"mini-post`" href=`"$($_.id).html`"><span class=`"mp-date`">$($_.dateLabel)</span><span class=`"mp-title`">$($_.titleEn)</span><span class=`"mp-sub`">$(Inline $_.title)</span></a>" }) -join "`n")
     </div>
-    <div class="shelf cols-2">
-      <a class="hub-card" href="sss.html">
-        <span class="hub-head"><span class="hub-ico">$IcoAsk</span><span class="hub-t">Sorular</span></span>
-        <span class="hub-s">Katolik inancı üzerine en sık sorulan sorular.</span>
-        <span class="hub-go">Sayfaya Git$IcoNext</span>
-      </a>
-      <a class="hub-card" href="iletisim.html">
-        <span class="hub-head"><span class="hub-ico">$IcoMail</span><span class="hub-t">İletişim</span></span>
-        <span class="hub-s">Bir çeviri düzeltmesi, öneri ya da merhaba demek için.</span>
-        <span class="hub-go">Sayfaya Git$IcoNext</span>
-      </a>
-    </div>
+  </section>
+
+  <section class="lib-section">
+    <div class="lib-head"><span class="roman">V</span><h2>İletişim</h2></div>
+    <p class="lib-lead">Bir çeviri düzeltmesi, eklenmesini istediğiniz bir konu ya da sadece merhaba demek için.</p>
+    <a class="hub-card hub-card-wide" href="iletisim.html">
+      <span class="hub-head"><span class="hub-ico">$IcoMail</span><span class="hub-t">İletişim</span></span>
+      <span class="hub-s">Bir çeviri düzeltmesi, öneri ya da merhaba demek için.</span>
+      <span class="hub-go">Sayfaya Git$IcoNext</span>
+    </a>
   </section>
 
 </div>

@@ -685,15 +685,19 @@ body.sheet-open { overflow: hidden; }
 }
 .hub-go svg { width: .95rem; height: .95rem; transition: transform .2s; }
 .hub-card:hover .hub-go svg { transform: translateX(3px); }
-/* Mobile only: icon sits beside the title instead of above it, and the whole card is more compact. */
+/* Mobile only: icon sits beside the title instead of above it, and the card
+   leans on icon + title + a one-line description, no CTA text (the whole
+   card is already the tap target). */
 @media (max-width: 759px) {
-  .hub-card { padding: 1.05rem 1.15rem .95rem; gap: .4rem; }
+  .hub-card { padding: 1.05rem 1.15rem .95rem; gap: .3rem; }
   .hub-head { display: flex; align-items: center; gap: .6rem; }
   .hub-ico { width: 1.7rem; height: 1.7rem; }
   .hub-t { font-size: 1.12rem; }
-  .hub-s { font-size: .86rem; line-height: 1.42; }
-  .hub-go { font-size: .74rem; margin-top: .15rem; }
+  .hub-s { flex: none; font-size: .82rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .hub-go { display: none; }
 }
+.hub-card-wide { max-width: 26rem; margin: 0 auto; }
+
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
 
 /* (i) in the bar: hover reveals content/hakkinda.md and the panel tracks the pointer.
@@ -793,6 +797,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   transition: transform .2s;
 }
 .notif-banner:hover { transform: translateY(-2px); }
+@media (max-width: 759px) { .notif-banner { display: none; } }
 .notif-icon {
   flex: none; width: 2.1rem; height: 2.1rem; border-radius: 8px; display: grid; place-items: center;
   background: #0c1322; color: #d6b16b;
