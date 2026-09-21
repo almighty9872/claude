@@ -538,6 +538,12 @@ $FooterHtml = @"
   </div>
 </footer>
 "@
+$EmailObfEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  $classMatch = [regex]::Match($m.Groups[1].Value, 'class="([^"]*)"')
+  $cls = if ($classMatch.Success) { "$($classMatch.Groups[1].Value) email-link" } else { 'email-link' }
+  "<a class=`"$cls`" data-u=`"david`" data-d=`"katolikdunyasi.com`" href=`"#`">(e-posta için JavaScript gerekli)</a>"
+}
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
         [string[]]$JsonLd = @(), [string]$OgType = 'website',
@@ -562,6 +568,8 @@ function Write-Page {
 <meta name="robots" content="$Robots">
 $canon
 <meta name="theme-color" content="#f5f2ea">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="$OgType">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:site_name" content="$(Attr $SiteName)">
@@ -594,6 +602,11 @@ $FooterHtml
 "@
   # 404.html is served for any missing URL (e.g. /a/b/c), so its links must start at the site root
   if ($RootRelative) { $html = [regex]::Replace($html, '(href|src)="(?!https?:|#|/|data:|mailto:)', '$1="/') }
+  # The contact address is public on every page (footer) and a few others (İletişim, the About
+  # panel, Erişilebilirlik, Gizlilik); catching it here once, after every page is assembled,
+  # keeps it out of the raw HTML for basic scrapers without touching the markdown/build source
+  # that writes it in plainly. JS reassembles the real mailto link on page load (see initEmail).
+  $html = [regex]::Replace($html, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
   Write-Host "  + $File"
 }
@@ -756,7 +769,7 @@ $homeBody = @"
   <div class="kso" id="home-katekizm-search" hidden>
     <div class="kso-backdrop" data-kso-close></div>
     <div class="kso-panel" role="dialog" aria-modal="true" aria-label="Katekizm$($Apos)de ara">
-      <button type="button" class="kso-close" aria-label="Kapat">$IcoClose</button>
+      <button type="button" class="kso-close" aria-label="Kapat" data-kso-close>$IcoClose</button>
       $(Search-Form 'kso-search' 'q-home-katekizm' "Katekizm$($Apos)de ara: Türkçe, İngilizce ya da soru numarası")
     </div>
   </div>

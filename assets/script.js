@@ -848,6 +848,24 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) hide(); });
   }
 
+  /* GitHub Pages doesn't send an X-Frame-Options/frame-ancestors header, and that CSP
+     directive is ignored when set via a <meta> tag, so this is the remaining defense
+     against the site being loaded inside someone else's iframe (clickjacking). */
+  function initFrameBust() {
+    try { if (window.top !== window.self) window.top.location = window.self.location.href; } catch (e) { /* cross-origin top: assume framed and bail the same way */ window.top.location = window.self.location.href; }
+  }
+
+  /* Build.ps1 writes the public contact address as a placeholder with the user/domain split
+     across two data attributes, not as plain "name@domain" text, so a basic scraper reading
+     the raw HTML finds nothing to harvest. Real visitors with JS never notice the difference. */
+  function initEmail() {
+    $$('.email-link').forEach(function (a) {
+      var addr = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+      a.href = 'mailto:' + addr;
+      a.textContent = addr;
+    });
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -859,7 +877,7 @@
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initHeaderHeight(); initTheme(); initFontSize(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
+    initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch();
   });
 })();
