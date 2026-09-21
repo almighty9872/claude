@@ -773,7 +773,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 @media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
 
 /* ---------- 16. Home hero + library shelves ---------- */
-.home-hero { text-align: center; padding: clamp(1.6rem, 5vw, 3.6rem) 0 .4rem; position: relative; }
+.home-hero { text-align: center; padding: clamp(1.6rem, 5vw, 3.6rem) 0 .4rem; position: relative; overflow: hidden; }
 .home-hero .glow {
   position: absolute; top: -2rem; left: 50%; transform: translateX(-50%); width: 30rem; height: 30rem;
   border-radius: 50%; z-index: -1; background: radial-gradient(circle, var(--gold-bg) 0%, transparent 70%);
@@ -826,26 +826,17 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .lib-lead { margin: .45rem 0 1.1rem; color: var(--text-soft); max-width: 42rem; line-height: 1.5; font-size: .96rem; }
 .shelf + .shelf { margin-top: 1.1rem; }
 
-/* Shared shelf/grid container: a native horizontal snap-scroll rail on
-   touch/narrow screens, a plain CSS grid from tablet width up. Every
-   card row on the home page (library cards, blog posts, closing links)
-   uses this same class, so there is one responsive pattern, not three.
-   The negative margin/padding pair lets it bleed to the true viewport
-   edge on mobile without touching the shared .wrap.narrow padding. */
-.shelf {
-  display: flex; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch; scroll-padding-left: var(--gutter);
-  margin: 0 calc(-1 * var(--gutter)); padding: .1rem var(--gutter) .5rem;
-  -ms-overflow-style: none; scrollbar-width: none;
-}
-.shelf::-webkit-scrollbar { display: none; }
-.shelf > * { flex: 0 0 76%; scroll-snap-align: start; scroll-snap-stop: always; }
-.shelf > .mini-post { flex-basis: 82%; }
-.shelf > .saint-card { flex-basis: 84%; }
-@media (min-width: 420px) { .shelf > * { flex-basis: 62%; } .shelf > .mini-post, .shelf > .saint-card { flex-basis: 68%; } }
+/* Shared grid container for every card row on the home page (library
+   cards, blog posts, closing links). Mobile shows a plain 2-column grid
+   so all cards are visible without swiping; a lone leftover card spans
+   the full row instead of sitting alone. The .posts modifier keeps blog
+   post cards a single stacked column on mobile, where two-up is cramped.
+   From tablet width up, the .cols-N modifiers take over as before. */
+.shelf { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+.shelf.posts { grid-template-columns: 1fr; }
+.shelf:not(.posts) > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
 @media (min-width: 720px) {
-  .shelf { display: grid; overflow-x: visible; scroll-snap-type: none; margin: 0; padding: 0; }
-  .shelf > * { flex-basis: auto; }
+  .shelf > *:last-child:nth-child(odd) { grid-column: auto; }
   .shelf.cols-2 { grid-template-columns: repeat(2, 1fr); }
   .shelf.cols-3 { grid-template-columns: repeat(3, 1fr); }
   .shelf.cols-4 { grid-template-columns: repeat(4, 1fr); }

@@ -778,7 +778,7 @@ $homeBody = @"
   <section class="lib-section">
     <div class="lib-head"><span class="roman">IV</span><h2>Blog</h2></div>
     <p class="lib-lead">Katolik inancı üzerine kişisel yazılar, İngilizce aslı ve Türkçe çevirisiyle bir arada.</p>
-    <div class="shelf cols-2">
+    <div class="shelf posts cols-2">
 $(($Blog.posts | Select-Object -First 2 | ForEach-Object { "      <a class=`"mini-post`" href=`"$($_.id).html`"><span class=`"mp-date`">$($_.dateLabel)</span><span class=`"mp-title`">$($_.titleEn)</span><span class=`"mp-sub`">$(Inline $_.title)</span></a>" }) -join "`n")
     </div>
     <div class="shelf cols-2">
