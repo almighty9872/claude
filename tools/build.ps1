@@ -1195,8 +1195,8 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
 # button that swaps in the Turkish translation ("tr") — the reverse of the site's usual
 # Turkish-first/English-toggle pattern, since these are the author's own English essays.
 function Word-Count([string]$s) { return ([regex]::Matches($s, '\S+')).Count }
-function Read-Minutes($paragraphs, [string]$closing) {
-  $words = (Word-Count (($paragraphs -join ' ') + ' ' + $closing))
+function Read-Minutes([string]$body, [string]$closing) {
+  $words = Word-Count ($body + ' ' + $closing)
   return [Math]::Max(1, [Math]::Ceiling($words / 200.0))
 }
 function Author-Initials([string]$name) {
@@ -1204,23 +1204,25 @@ function Author-Initials([string]$name) {
 }
 function Post-Lang([string]$idSuffix, $post) {
   $enId = "post-en-$idSuffix"; $trId = "post-tr-$idSuffix"; $readId = "post-read-$idSuffix"
-  $enMinutes = Read-Minutes $post.en.paragraphs $post.en.closing
-  $trMinutes = Read-Minutes $post.tr.paragraphs $post.tr.closing
-  $enParas = ($post.en.paragraphs | ForEach-Object { "<p>$_</p>" }) -join ''
-  $trParas = ($post.tr.paragraphs | ForEach-Object { "<p>$(Inline $_)</p>" }) -join ''
+  $enMinutes = Read-Minutes $post.en.body $post.en.closing
+  $trMinutes = Read-Minutes $post.tr.body $post.tr.closing
+  $enParas = Convert-Markdown $post.en.body
+  $trParas = Convert-Markdown $post.tr.body
   $enSign = ($post.en.signature | ForEach-Object { "<p>$_</p>" }) -join ''
   $trSign = ($post.tr.signature | ForEach-Object { "<p>$_</p>" }) -join ''
   $initials = Author-Initials $post.author
   $enAuthor = "<div class=`"post-author-card`"><span class=`"post-author-avatar`" aria-hidden=`"true`">$initials</span><div><p class=`"post-author-name`">$($post.author)</p><p class=`"post-author-bio`">$($post.en.authorBio)</p></div></div>"
   $trAuthor = "<div class=`"post-author-card`"><span class=`"post-author-avatar`" aria-hidden=`"true`">$initials</span><div><p class=`"post-author-name`">$($post.author)</p><p class=`"post-author-bio`">$(Inline $post.tr.authorBio)</p></div></div>"
-  $enBody = "<div class=`"post-body`" id=`"$enId`" lang=`"en`">$enParas<p class=`"post-closing`">$($post.en.closing)</p><div class=`"signature`">$enSign</div>$enAuthor</div>"
-  $trBody = "<div class=`"post-body`" id=`"$trId`" lang=`"tr`" hidden>$trParas<p class=`"post-closing`">$(Inline $post.tr.closing)</p><div class=`"signature`">$trSign</div>$trAuthor</div>"
+  $enClosing = if ($post.en.closing) { "<p class=`"post-closing`">$($post.en.closing)</p>" } else { '' }
+  $trClosing = if ($post.tr.closing) { "<p class=`"post-closing`">$(Inline $post.tr.closing)</p>" } else { '' }
+  $enBody = "<div class=`"post-body prose`" id=`"$enId`" lang=`"en`">$enParas$enClosing<div class=`"signature`">$enSign</div>$enAuthor</div>"
+  $trBody = "<div class=`"post-body prose`" id=`"$trId`" lang=`"tr`" hidden>$trParas$trClosing<div class=`"signature`">$trSign</div>$trAuthor</div>"
   $toggle = "<div class=`"article-tools`"><button type=`"button`" class=`"btn lang-toggle`" data-show-en=`"$enId`" data-show-tr=`"$trId`" data-read-target=`"$readId`" data-read-en=`"$enMinutes dk okuma`" data-read-tr=`"$trMinutes dk okuma`" aria-pressed=`"false`">$IcoGlobe<span class=`"btn-label`">Türkçe$($Apos)ye çevir</span></button></div>"
   return [pscustomobject]@{ Html = "$toggle$enBody$trBody"; EnMinutes = $enMinutes; ReadId = $readId }
 }
 $blogCards = ($Blog.posts | ForEach-Object {
   $post = $_
-  $mins = Read-Minutes $post.en.paragraphs $post.en.closing
+  $mins = Read-Minutes $post.en.body $post.en.closing
   "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel) · $mins dk okuma</span><span class=`"t-title`" lang=`"en`">$($post.titleEn)</span><span class=`"t-sub`">$(Inline $post.title)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p><span class=`"post-author`">$($post.author)</span></a>"
 }) -join "`n"
 $blogBody = @"
