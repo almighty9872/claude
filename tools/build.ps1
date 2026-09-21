@@ -232,6 +232,7 @@ $IcoSearch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $IcoSun    = '<svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>'
 $IcoMoon   = '<svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/></svg>'
 $IcoList   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>'
+$IcoTextSize = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M10.5 7.8v5.4M7.8 10.5h5.4"/></svg>'
 $IcoPrev   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>'
 $IcoNext   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>'
 $IcoClose  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
@@ -436,10 +437,7 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
     "<div class=`"search-results`" hidden></div></form>"
 }
 function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
-function Header-Html([bool]$withSearch, [string]$current) {
-  $search = if ($withSearch) { Search-Form 'header-search' 'q-header' '598 soruda ara…' } else { '' }
-  $toggle = if ($withSearch) { "<button type=`"button`" class=`"icon-btn search-toggle`" aria-label=`"Ara`" aria-expanded=`"false`">$IcoSearch</button>" } else { '' }
-  $cls = if ($withSearch) { 'site-header has-search' } else { 'site-header' }
+function Header-Html([string]$current) {
   $inPray = $PrayerPages -contains $current
   $prayCls = if ($inPray) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
   $prayerMenu = ($PrayerNav | ForEach-Object {
@@ -459,11 +457,13 @@ function Header-Html([bool]$withSearch, [string]$current) {
   return @"
 $Sprite
 <a class="skip-link" href="#main">İçeriğe geç</a>
-<header class="$cls">
+<header class="site-header">
   <div class="wrap">
     <div class="header-row">
-      <a class="brand" href="index.html"$(Cur 'index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
-      <button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
+      <div class="brand-group">
+        <a class="brand" href="index.html"$(Cur 'index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
+        <button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
+      </div>
       <nav class="mainnav" aria-label="Ana menü">
         <ul>
           <li><a class="nav-link" href="blog.html"$(Cur 'blog.html' $current)>Blog</a></li>
@@ -481,11 +481,9 @@ $Sprite
           <li><a class="nav-link" href="iletisim.html"$(Cur 'iletisim.html' $current)>İletişim</a></li>
         </ul>
       </nav>
-      $search
       <div class="header-tools">
         $ClockHtml
-        $toggle
-        <button type="button" class="icon-btn fontsize-toggle" aria-label="Yazı boyutunu büyüt">Aa</button>
+        <button type="button" class="fontsize-toggle" aria-label="Yazı boyutunu büyüt">$IcoTextSize<span>Aa</span></button>
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
         <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
       </div>
@@ -542,7 +540,7 @@ $FooterHtml = @"
 "@
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
-        [string[]]$JsonLd = @(), [string]$OgType = 'website', [bool]$HeaderSearch = $true,
+        [string[]]$JsonLd = @(), [string]$OgType = 'website',
         [string]$Robots = 'index,follow,max-snippet:-1,max-image-preview:large', [bool]$Canonical = $true, [bool]$RootRelative = $false)
   $url = "$SiteUrl/$Path"
   $ld = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
@@ -586,7 +584,7 @@ $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
 <body>
-$(Header-Html $HeaderSearch $File)
+$(Header-Html $File)
 <main id="main">
 $Body
 </main>
@@ -854,7 +852,7 @@ $webSiteLd = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JSt
   (JStr "$SiteUrl/katesizm.html?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
 Write-Page -File 'index.html' -Title "$SiteName | $SiteTag" `
   -Description "Türkçe Katolik Portalı: Katolik Kilisesi Katekizmi Özeti$($Apos)nin tam çevirisi ve Katolik inancı üzerine sıkça sorulan sorular." `
-  -Path '' -Body $homeBody -JsonLd @($webSiteLd) -HeaderSearch $false
+  -Path '' -Body $homeBody -JsonLd @($webSiteLd)
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
 function Parallel-Paragraphs($trList, $enList) {
@@ -1435,7 +1433,7 @@ $notFoundBody = @"
 </div>
 "@
 Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -Description 'Sayfa bulunamadı.' -Path '404.html' -Body $notFoundBody `
-  -Robots 'noindex' -Canonical $false -HeaderSearch $false -RootRelative $true
+  -Robots 'noindex' -Canonical $false -RootRelative $true
 
 # ================================================================== sitemap.xml & robots.txt
 $pages = @(

@@ -324,15 +324,6 @@
       document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) box.hidden = true; });
       wrap.addEventListener('submit', function (e) { e.preventDefault(); });
     });
-    /* Mobile: magnifier button opens the header search */
-    $$('.search-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var header = btn.closest('.site-header'), open = !header.classList.contains('search-open');
-        header.classList.toggle('search-open', open);
-        btn.setAttribute('aria-expanded', String(open));
-        if (open) { var i = $('.header-search input', header); if (i) i.focus(); }
-      });
-    });
     /* ?q=… (used by the WebSite SearchAction on the home page) */
     var q = new URLSearchParams(location.search).get('q');
     var hero = $('.hero-search input');

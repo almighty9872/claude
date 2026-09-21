@@ -140,8 +140,10 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
   .site-header { background: var(--surface); }
 }
 .header-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; min-height: 64px; }
-.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; flex: 1 1 0; min-width: 0; margin-right: auto; }
-@media (min-width: 900px) { .brand { flex: 0 1 auto; } }
+/* Brand and the (i) info button are one visual cluster, closer to each other than to the
+   nav/search/tools that follow, so (i) reads as "about this name" rather than a nav item. */
+.brand-group { display: flex; align-items: center; gap: .3rem; flex: 1 1 0; min-width: 0; margin-right: auto; }
+.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; min-width: 0; }
 .brand .logo { width: 30px; height: 30px; color: var(--gold); flex: none; }
 .brand-name { font-size: 1.12rem; font-weight: 600; line-height: 1.15; letter-spacing: .005em; }
 @media (max-width: 520px) { .brand-name { font-size: .95rem; } .brand .logo { width: 26px; height: 26px; } }
@@ -159,10 +161,15 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 }
 .icon-btn:hover { border-color: var(--border-strong); color: var(--gold); }
 .icon-btn svg { width: 1.15rem; height: 1.15rem; }
-.fontsize-toggle { font-family: var(--sans); font-size: .8rem; font-weight: 700; letter-spacing: -.02em; }
-html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-toggle { color: var(--gold); border-color: var(--gold-soft); }
-.search-toggle { display: none; }
-@media (max-width: 1099px) { .site-header.has-search .search-toggle { display: inline-grid; } }
+/* Plain text + icon, no button pill: the least visually heavy control in the bar. */
+.fontsize-toggle {
+  display: inline-flex; align-items: center; gap: .3rem; flex: none;
+  border: 0; background: none; padding: 0; color: var(--text-soft); cursor: pointer;
+  font-family: var(--sans); font-size: .8rem; font-weight: 700; letter-spacing: -.02em;
+}
+.fontsize-toggle svg { width: 1.05rem; height: 1.05rem; }
+.fontsize-toggle:hover { color: var(--gold); }
+html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-toggle { color: var(--gold); }
 
 /* Theme switch */
 .theme-toggle {
@@ -191,11 +198,6 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .search input::placeholder { color: var(--muted); }
 .search input:focus { outline: none; border-color: var(--gold-soft); box-shadow: 0 0 0 3px var(--gold-bg); }
 .search input::-webkit-search-cancel-button { filter: grayscale(1); }
-.header-search { width: 20rem; }
-@media (max-width: 1099px) {
-  .header-search { display: none; order: 10; flex: 1 1 100%; width: 100%; padding-bottom: .7rem; }
-  .site-header.search-open .header-search { display: block; }
-}
 .hero-search { max-width: 34rem; margin: 1.6rem auto 0; }
 .hero-search input { height: 3.2rem; font-size: 1rem; }
 .search-results {
@@ -204,8 +206,6 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
   background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius);
   box-shadow: var(--shadow); padding: .35rem; text-align: left;
 }
-.header-search .search-results { left: auto; width: min(34rem, calc(100vw - 2rem)); }
-@media (max-width: 899px) { .header-search .search-results { left: 0; width: auto; } }
 .sr-head { padding: .45rem .7rem .35rem; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
 .sr-item {
   display: flex; gap: .75rem; align-items: flex-start; padding: .6rem .7rem; border-radius: var(--radius-sm);
@@ -601,10 +601,9 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 
 @media (min-width: 900px) {
   .header-row { flex-wrap: nowrap; }
-  /* The site name never truncates; the search field (already flexible) absorbs a tight bar instead */
-  .brand { flex: none; min-width: 0; }
+  /* The site name never truncates; it keeps its natural width instead of sharing the squeeze */
+  .brand-group { flex: none; min-width: 0; }
   .brand-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .header-search { flex: 0 1 18rem; width: auto; min-width: 7rem; }
 }
 /* The clock is the first thing to go when the bar gets tight, so the site name stays whole */
 @media (max-width: 1399px) { .header-tools .clock { display: none; } }
@@ -702,14 +701,13 @@ body.sheet-open { overflow: hidden; }
 
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
 
-/* (i) in the bar: hover reveals content/hakkinda.md and the panel tracks the pointer.
-   Sits right beside the brand; hidden on small screens (the navsheet has its own "Hakkında" entry). */
+/* (i) beside the brand at every width: reveals content/hakkinda.md, anchored under the button
+   on a mouse (fine pointer), centered like a small dialog on touch (coarse pointer). */
 .info-btn {
-  display: none; place-items: center; width: 2.2rem; height: 2.2rem; flex: none;
+  display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; flex: none;
   border: 1px solid transparent; border-radius: 999px; background: none; color: var(--muted); cursor: pointer;
   transition: color .18s, background-color .18s, border-color .18s;
 }
-@media (min-width: 900px) { .info-btn { display: inline-grid; } }
 .info-btn svg { width: 1.15rem; height: 1.15rem; }
 .info-btn:hover, .info-btn[aria-expanded="true"] { color: var(--gold); background: var(--gold-bg); border-color: var(--glass-brd); }
 .info-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
