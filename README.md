@@ -19,7 +19,10 @@ katolik-sureci.html     Becoming Catholic: the OCIA/RCIA process
 kutsal-ayin.html        The Mass, part by part
 meseller.html           The parables of Jesus, retold and explained plainly, by theme
 tesbih-duasi.html       The Rosary: prayers and the four sets of mysteries
-azizler.html            Calendar of the saints, one entry per day of the year
+azizler.html            Calendar of the saints (current month shown, other months a click away),
+                        plus a "20 best-known saints" list, each linking to its own page below
+<saint-id>.html         One page per saint in the "20 best-known" list (e.g. meryem-ana.html),
+                        a long original Turkish biography
 kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)
 mucizeler.html          Catholic miracles: apparitions, relics, Eucharistic miracles, incorrupt saints
 sss.html                Frequently asked questions, grouped by topic
@@ -40,6 +43,7 @@ data/kutsal-ayin.js     ← The Mass content
 data/meseller.js        ← The parables of Jesus (six thematic categories)
 data/tespih.js          ← Rosary prayers and mysteries
 data/azizler.js         ← Saints calendar (one entry per day)
+data/buyuk-azizler.js   ← The 20 best-known saints: long original biography per saint, one page each
 data/sss.js             ← FAQ content
 data/mucizeler.js       ← Catholic miracles (four thematic categories)
 data/blog.js            ← Blog posts (English original + Turkish translation, Markdown body)

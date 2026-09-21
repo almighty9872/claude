@@ -471,6 +471,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 /* Blog: post listing + individual post (English shown by default, Turkish behind a toggle) */
 .post-list { display: grid; gap: 1rem; margin-top: 1.8rem; }
 .post-card { position: relative; }
+.saint-grid { margin-top: 1.4rem; margin-bottom: 1rem; }
+@media (min-width: 760px) { .saint-grid { grid-template-columns: 1fr 1fr; } }
 .post-date { display: block; }
 .post-card .post-excerpt { margin: .6rem 0 0; color: var(--text-soft); font-size: 1rem; }
 .post-body p { margin: 0 0 1em; }

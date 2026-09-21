@@ -106,6 +106,7 @@ $FaqData = Read-Data 'sss.js'
 $Rosary = Read-Data 'tespih.js'
 $Sureci = Read-Data 'katolik-sureci.js'
 $Saints = Read-Data 'azizler.js'
+$GreatSaints = Read-Data 'buyuk-azizler.js'
 $Mass = Read-Data 'kutsal-ayin.js'
 $Blog = Read-Data 'blog.js'
 
@@ -1056,6 +1057,9 @@ $monthPillsHtml = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=
 $movableCardsHtml = ($Saints.movable | ForEach-Object {
   "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(Inline $_.title)</h3><p class=`"m-rank label`">$($_.rank)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(Blocks $_.bio)</div></article>"
 }) -join "`n"
+$greatSaintsCardsHtml = ($GreatSaints.saints | ForEach-Object {
+  "<a class=`"text-link post-card`" href=`"$($_.id).html`"><span class=`"post-date label`">$(Inline $_.epithet) · $($_.era)</span><span class=`"t-title`">$(Inline $_.name)</span><span class=`"t-sub`" lang=`"en`">$($_.en)</span><p class=`"post-excerpt`">$(Inline $_.summary)</p></a>"
+}) -join "`n"
 $azizlerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Azizler')
@@ -1069,6 +1073,11 @@ $azizlerBody = @"
   <div class="saints-cal" data-saints-cal>
 $monthSectionsHtml
   </div>
+  <h2 class="section-title" id="buyuk-azizler">$(Inline $GreatSaints.title)</h2>
+  <p class="faq-intro">$(Inline $GreatSaints.intro)</p>
+  <div class="post-list saint-grid">
+$greatSaintsCardsHtml
+  </div>
   <h2 class="section-title" id="hareketli-bayramlar">Hareketli Bayramlar</h2>
   <p class="faq-intro">Paskalya her yıl farklı bir tarihe denk gelir; ona bağlı bütün bayramlar da (Kül Çarşambası$($Apos)ndan Kutsal Kalp$($Apos)e dek) buna göre kayar. Aşağıdaki tarihler, sayfayı açtığınız yılın Paskalya$($Apos)sına göre otomatik hesaplanır.</p>
   <div class="myst-grid movable-list" data-movable-list>
@@ -1081,6 +1090,24 @@ $movableCardsHtml
 Write-Page -File 'azizler.html' -Title "$($Saints.title) | $SiteName" `
   -Description "Katolik ayin takviminin azizleri: bugünün azizini Türkiye saatiyle görün, yılın her günü için Türkçe aziz hayat hikayelerini keşfedin." `
   -Path 'azizler.html' -Body $azizlerBody -JsonLd @((Breadcrumb-Ld 'Azizler' 'azizler.html'))
+
+# ------------------------------------------------------------------ one page per great saint
+$GreatSaints.saints | ForEach-Object {
+  $s = $_
+  $saintBody = @"
+<div class="wrap narrow">
+  $(Crumbs $s.name 'Azizler' 'azizler.html')
+  <article class="article" id="article">
+    <header class="page-head center"><p class="label">$(Inline $s.epithet) · $($s.era)</p><h1>$(Inline $s.name)</h1><p class="sub" lang="en">$($s.en)</p></header>
+    <div class="body prose">$(Convert-Markdown $s.body)</div>
+  </article>
+</div>
+"@
+  $saintLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr $s.name) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/$($s.id).html") + '}'
+  Write-Page -File "$($s.id).html" -Title "$($s.name) | $SiteName" `
+    -Description (Meta-Trim (Plain $s.summary)) -Path "$($s.id).html" -Body $saintBody `
+    -JsonLd @($saintLd, (Breadcrumb-Ld $s.name "$($s.id).html" 'Azizler' 'azizler.html')) -OgType 'article'
+}
 
 # ================================================================== KUTSAL AYIN (kutsal-ayin.html)
 function Mass-Lines($lines, [string]$lang) {
@@ -1459,7 +1486,8 @@ $pages = @(
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }
-) + ($Blog.posts | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
+) + ($Blog.posts | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) +
+  ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
   "`n</urlset>`n"
