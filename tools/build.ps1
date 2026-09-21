@@ -257,8 +257,12 @@ function Qa-Html($it, [int]$hl) {
     "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><div class=`"qa-a`">$(Blocks $it.en.a)</div><span class=`"ccc`">CCC $($it.ccc)</span></div>" +
     "</article>"
 }
-function Heading-Html($it, [int]$offset) {
-  $tag = HTag ([int]$it.level + $offset)
+# $tagLevel is the true HTML heading level (never skips a level in the DOM); it can
+# differ from $it.level, which only sets the sec-l$level class (visual size) — e.g. a
+# bridging title like "The Creed" sits right under a Part heading and is styled a size
+# smaller (sec-l4) even though it is only one level deep, not four.
+function Heading-Html($it, [int]$tagLevel) {
+  $tag = HTag $tagLevel
   $tr = Split-Heading $it.tr
   $label = if ($tr[0]) { "<span class=`"sec-label`">$($tr[0])</span>" } else { '' }
   return "<$tag class=`"sec sec-l$($it.level)`" id=`"$($it.id)`">$label<span class=`"sec-title`">$(Inline $tr[1])</span><span class=`"en`" lang=`"en`">$(Inline $it.en)</span></$tag>"
@@ -317,7 +321,15 @@ function Render-Items($items) {
   $sb = New-Object Text.StringBuilder; $current = 1
   foreach ($it in $items) {
     switch ($it.type) {
-      'heading' { if ($it.level -gt 1) { [void]$sb.Append((Heading-Html $it 0)) }; $current = [int]$it.level }
+      'heading' {
+        if ($it.level -gt 1) {
+          $tagLevel = [Math]::Min([int]$it.level, $current + 1)
+          [void]$sb.Append((Heading-Html $it $tagLevel))
+          $current = $tagLevel
+        } else {
+          $current = [int]$it.level
+        }
+      }
       'qa'      { [void]$sb.Append((Qa-Html $it ($current + 1))) }
       'quote'   { [void]$sb.Append((Quote-Html $it)) }
       'special' { [void]$sb.Append((Special-Html $it.ref ($current + 1))) }
@@ -738,7 +750,7 @@ $bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $Wor
   '"translationOfWork":{"@type":"Book","name":' + (JStr $SiteNameEn) + ',"inLanguage":"en","datePublished":"2005-06-28","publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"}},' +
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.tr) + ',"url":' + (JStr "$SiteUrl/$($PartMeta[[int]$_.part].file)") + '}' }) -join ',') + ']}'
 Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
-  -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte." `
+  -Description (Meta-Trim "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.") `
   -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Katekizm' 'katesizm.html'))
 
 # ---------------- index.html: the site hub
@@ -897,7 +909,7 @@ $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-pa
 $mpLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr "Motu Proprio: $($mp.tr.title)") + ',"inLanguage":"tr","datePublished":"2005-06-28","author":{"@type":"Person","name":"Papa XVI. Benediktus"},"publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"},"mainEntityOfPage":' + (JStr "$SiteUrl/motu-proprio.html") + '}'
 Article-Page 'motu-proprio.html' 'Motu Proprio' 'Motu Proprio' "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Onaylanması ve Yayımlanması İçin Motu Proprio" `
   'Motu Proprio for the approval and publication of the Compendium of the Catechism of the Catholic Church' $mpBody `
-  "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin." $mpLd
+  (Meta-Trim "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin.") $mpLd
 
 $in = $X.introduction
 $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
@@ -905,7 +917,7 @@ $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
   "<div class=`"footnotes`">$(Parallel-Paragraphs $in.tr.footnotes $in.en.footnotes)</div>"
 $inLd = '{"@context":"https://schema.org","@type":"Article","headline":"Giriş","inLanguage":"tr","datePublished":"2005-03-20","author":{"@type":"Person","name":"Kardinal Joseph Ratzinger"},"mainEntityOfPage":' + (JStr "$SiteUrl/giris.html") + '}'
 Article-Page 'giris.html' 'Giriş' 'Önsöz' 'Giriş' 'Introduction' $inBody `
-  "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Girişi (Kardinal Joseph Ratzinger, 2005): Özet$($Apos)in hazırlanışı, üç temel özelliği ve dört kısmı. Türkçe çeviri ve İngilizce asıl metin." $inLd
+  (Meta-Trim "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Girişi (Kardinal Joseph Ratzinger, 2005): Özet$($Apos)in hazırlanışı, üç temel özelliği ve dört kısmı. Türkçe çeviri ve İngilizce asıl metin.") $inLd
 
 # ================================================================== APPENDIX (ekler.html)
 $prayers = ($X.appendix.prayers | ForEach-Object { Text-Card $_ $_.id 3 "<div class=`"verse`">$(Verse $_.tr.text)</div>" "<div class=`"verse`">$(Verse $_.en.text)</div>" }) -join "`n"
