@@ -20,6 +20,10 @@
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  /* Runs fn on the frame after next, so a class added inside it reliably starts a CSS
+     transition from the element's just-applied "closed" state. Same goal as the classic
+     "read el.offsetHeight to force a reflow" trick, without forcing that reflow synchronously. */
+  var nextFrame = function (fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); };
 
   /* ---------------------------------------------------------------
      1. Theme (navy/gold dark, ivory/gold light), persisted in localStorage
@@ -447,8 +451,7 @@
     function openSheet() {
       if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
       sheet.hidden = false;
-      void sheet.offsetHeight;            /* force a frame so the slide-up actually animates */
-      sheet.classList.add('open');
+      nextFrame(function () { sheet.classList.add('open'); });
       document.body.classList.add('sheet-open');
       toggles.forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
       var first = $('.ns-item[aria-current="page"]', sheet) || $('.ns-item', sheet);
@@ -510,8 +513,7 @@
     function show(anchor) {
       open = true;
       panel.hidden = false;
-      void panel.offsetHeight;
-      panel.classList.add('open', 'pinned');
+      nextFrame(function () { panel.classList.add('open', 'pinned'); });
       mark(true);
       if (anchor && FINE) {
         panel.classList.remove('centered');
@@ -697,8 +699,7 @@
       function openPanel(item, x, y) {
         fillPanel(item);
         panel.hidden = false;
-        void panel.offsetHeight;
-        panel.classList.add('open');
+        nextFrame(function () { panel.classList.add('open'); });
         if (x === undefined) { var r = item.getBoundingClientRect(); x = r.left; y = r.bottom - 8; }
         placePanel(panel, x, y);
       }
@@ -830,8 +831,7 @@
     function show() {
       open = true;
       overlay.hidden = false;
-      void overlay.offsetHeight;
-      overlay.classList.add('open');
+      nextFrame(function () { overlay.classList.add('open'); });
       btn.setAttribute('aria-expanded', 'true');
       var input = $('input', overlay);
       if (input) input.focus();
