@@ -83,12 +83,12 @@
     if (!clocks.length) return;
     var pad = function (n) { return (n < 10 ? '0' : '') + n; };
     var dateFmt = null;
-    try { dateFmt = new Intl.DateTimeFormat('tr-TR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); } catch (e) { /* fallback below */ }
+    try { dateFmt = new Intl.DateTimeFormat('tr-TR', { weekday: 'short', day: 'numeric', month: 'long' }); } catch (e) { /* fallback below */ }
     function dateText(d) {
       if (dateFmt && dateFmt.formatToParts) {
         var p = {};
         dateFmt.formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
-        return p.weekday + ', ' + p.day + ' ' + p.month + ' ' + p.year;
+        return p.weekday + '. ' + p.day + ' ' + p.month;
       }
       return pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
     }
@@ -812,6 +812,42 @@
     }
   }
 
+  /* Home page only: the Katekizm card's search icon pops out a large, backdrop-blurred
+     search dialog instead of the old always-visible hero search box. The button is hidden
+     on mobile by CSS, so this never wires up there; the card itself still needs a plain
+     click-to-navigate handler since (unlike its siblings) it is a <div>, not one big <a>,
+     to give the search button its own valid, separately clickable target. */
+  function initHomeSearch() {
+    var overlay = $('#home-katekizm-search'), btn = $('.card-search-btn'), card = $('.katekizm-card');
+    if (card) {
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('.card-search-btn')) return;
+        location.href = 'katesizm.html';
+      });
+    }
+    if (!overlay || !btn) return;
+    var open = false;
+    function show() {
+      open = true;
+      overlay.hidden = false;
+      void overlay.offsetHeight;
+      overlay.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      var input = $('input', overlay);
+      if (input) input.focus();
+    }
+    function hide() {
+      open = false;
+      overlay.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      setTimeout(function () { if (!open) overlay.hidden = true; }, 220);
+      btn.focus();
+    }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); show(); });
+    $$('[data-kso-close]', overlay).forEach(function (el) { el.addEventListener('click', hide); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) hide(); });
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -824,6 +860,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initHeaderHeight(); initTheme(); initFontSize(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch();
   });
 })();

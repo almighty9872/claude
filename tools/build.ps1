@@ -739,7 +739,6 @@ $homeBody = @"
     $Logo
     <h1>$SiteTag</h1>
     <p class="lead">Katekizm, Katolik olma süreci, Kutsal Ayin, İsa$($Apos)nın meselleri, günlük dualar, azizlerin hayat hikâyeleri, mucizeler ve özgün yazılar: hepsi Türkçe, tek bir sitede.</p>
-    $(Search-Form 'hero-search' 'q-home' "Katekizm$($Apos)de ara: Türkçe, İngilizce ya da soru numarası")
     <a class="notif-banner" href="$($latestPost.id).html">
       <span class="notif-icon">$NotifIcon</span>
       <span class="notif-body">
@@ -754,15 +753,26 @@ $homeBody = @"
     </div>
   </section>
 
+  <div class="kso" id="home-katekizm-search" hidden>
+    <div class="kso-backdrop" data-kso-close></div>
+    <div class="kso-panel" role="dialog" aria-modal="true" aria-label="Katekizm$($Apos)de ara">
+      <button type="button" class="kso-close" aria-label="Kapat">$IcoClose</button>
+      $(Search-Form 'kso-search' 'q-home-katekizm' "Katekizm$($Apos)de ara: Türkçe, İngilizce ya da soru numarası")
+    </div>
+  </div>
+
   <section class="lib-section">
     <div class="lib-head"><span class="roman">I</span><h2>Öğretiler</h2></div>
     <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: Katekizm$($Apos)in tam çevirisi, Katolik olma süreci ve hangi Kutsal Kitap çevirisini seçmeli sorusuna kısa bir rehber.</p>
     <div class="shelf cols-4">
-      <a class="hub-card" href="katesizm.html">
-        <span class="hub-head"><span class="hub-ico">$SmallCross</span><span class="hub-t">Katekizm</span></span>
+      <div class="hub-card katekizm-card">
+        <span class="hub-head">
+          <span class="hub-ico">$SmallCross</span>
+          <span class="hub-t">Katekizm<button type="button" class="card-search-btn" aria-label="Katekizm$($Apos)de ara" aria-haspopup="dialog" aria-expanded="false" aria-controls="home-katekizm-search">$IcoSearch</button></span>
+        </span>
         <span class="hub-s">İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.</span>
-        <span class="hub-go">Sayfaya Git$IcoNext</span>
-      </a>
+        <a class="hub-go" href="katesizm.html">Sayfaya Git$IcoNext</a>
+      </div>
       <a class="hub-card" href="katolik-sureci.html">
         <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Süreci</span></span>
         <span class="hub-s">Katolik olmak isteyenler için OCIA süreci, adım adım.</span>
@@ -832,16 +842,6 @@ $homeBody = @"
     <div class="shelf posts cols-2">
 $(($Blog.posts | Select-Object -First 2 | ForEach-Object { "      <a class=`"mini-post`" href=`"$($_.id).html`"><span class=`"mp-date`">$($_.dateLabel)</span><span class=`"mp-title`">$($_.titleEn)</span><span class=`"mp-sub`">$(Inline $_.title)</span></a>" }) -join "`n")
     </div>
-  </section>
-
-  <section class="lib-section">
-    <div class="lib-head"><span class="roman">V</span><h2>İletişim</h2></div>
-    <p class="lib-lead">Bir çeviri düzeltmesi, eklenmesini istediğiniz bir konu ya da sadece merhaba demek için.</p>
-    <a class="hub-card hub-card-wide" href="iletisim.html">
-      <span class="hub-head"><span class="hub-ico">$IcoMail</span><span class="hub-t">İletişim</span></span>
-      <span class="hub-s">Bir çeviri düzeltmesi, öneri ya da merhaba demek için.</span>
-      <span class="hub-go">Sayfaya Git$IcoNext</span>
-    </a>
   </section>
 
 </div>

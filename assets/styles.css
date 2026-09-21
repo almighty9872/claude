@@ -696,9 +696,12 @@ body.sheet-open { overflow: hidden; }
   .hub-t { font-size: 1.12rem; }
   .hub-s { flex: none; font-size: .82rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
   .hub-go { display: none; }
+  /* The Katekizm card is a <div>, not a whole-card <a> like its siblings (it
+     needs a second, separate control for the search button), so its own
+     link needs to stay visible and reachable on mobile even though the
+     "Sayfaya Git" text is redundant everywhere else. */
+  .katekizm-card .hub-go { display: inline-flex; }
 }
-.hub-card-wide { max-width: 26rem; margin: 0 auto; }
-
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
 
 /* (i) beside the brand at every width: reveals content/hakkinda.md, anchored under the button
@@ -822,6 +825,49 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .today-pill .tp-label { display: block; font-family: var(--sans); font-size: .64rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
 .today-pill .tp-value { display: block; font-size: .88rem; font-weight: 600; margin-top: .04rem; }
 .today-pill .tp-value.hint { font-weight: 400; font-style: italic; color: var(--muted); }
+
+/* Katekizm card search: a small icon beside the title that pops out a large,
+   backdrop-blurred search dialog (desktop only; mobile hides the button and
+   keeps the card a plain link, no search entry point on the home page). */
+.katekizm-card { cursor: pointer; }
+.katekizm-card .hub-t { display: inline-flex; align-items: center; gap: .5rem; }
+.card-search-btn {
+  display: inline-grid; place-items: center; width: 1.9rem; height: 1.9rem; flex: none;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-soft);
+  cursor: pointer; transition: color .18s, border-color .18s, background-color .18s;
+}
+.card-search-btn svg { width: .95rem; height: .95rem; }
+.card-search-btn:hover, .card-search-btn[aria-expanded="true"] { color: var(--gold); border-color: var(--gold-soft); background: var(--gold-bg); }
+@media (max-width: 759px) { .card-search-btn { display: none; } }
+
+.kso {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: start center;
+  padding: 12vh 1.5rem 1.5rem;
+}
+.kso[hidden] { display: none; }
+.kso-backdrop {
+  position: absolute; inset: 0; background: rgba(12, 19, 34, .45);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity .22s ease;
+}
+.kso.open .kso-backdrop { opacity: 1; }
+.kso-panel {
+  position: relative; z-index: 1; width: min(38rem, 100%);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  box-shadow: 0 24px 60px -20px rgba(12, 19, 34, .5); padding: 1.6rem;
+  opacity: 0; transform: translateY(-10px) scale(.98); transition: opacity .22s ease, transform .22s ease;
+}
+.kso.open .kso-panel { opacity: 1; transform: none; }
+.kso-close {
+  position: absolute; top: .8rem; right: .8rem; display: grid; place-items: center;
+  width: 2rem; height: 2rem; border: 0; border-radius: 999px; background: var(--surface-2); color: var(--muted); cursor: pointer;
+}
+.kso-close svg { width: .9rem; height: .9rem; }
+.kso-close:hover { color: var(--gold); background: var(--gold-bg); }
+.kso-panel .search { margin-top: .3rem; }
+.kso-panel .search input { height: 3rem; font-size: 1.05rem; }
+@media (prefers-reduced-motion: reduce) { .kso-backdrop, .kso-panel { transition: none; } }
+@media (max-width: 759px) { .kso { padding-top: 15vh; } .kso-panel { padding: 1.2rem; } }
 
 .lib-section { padding: 1.7rem 0; border-top: 1px solid var(--border); }
 .lib-section:first-of-type { border-top: 0; padding-top: 2rem; }
