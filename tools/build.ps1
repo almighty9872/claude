@@ -356,6 +356,8 @@ $Kk = Read-Md 'kutsal-kitap.md'
 $KkMeta = $Kk.meta
 $Er = Read-Md 'erisilebilirlik.md'
 $ErMeta = $Er.meta
+$Gz = Read-Md 'gizlilik.md'
+$GzMeta = $Gz.meta
 
 # Top bar: brand, Katesizm (a link that also opens a dropdown of the seven texts),
 # Sorular, and an (i) that reveals content/hakkinda.md on hover.
@@ -533,7 +535,7 @@ $FooterHtml = @"
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li><li><a href="gizlilik.html">Gizlilik Politikası</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -1408,6 +1410,17 @@ $erBody = @"
 Write-Page -File 'erisilebilirlik.html' -Title "$($ErMeta.title) | $SiteName" -Description $ErMeta.description `
   -Path 'erisilebilirlik.html' -Body $erBody -JsonLd @((Breadcrumb-Ld 'Erişilebilirlik' 'erisilebilirlik.html'))
 
+# ================================================================== GIZLILIK (gizlilik.html)
+$gzBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Gizlilik Politikası')
+  <header class="page-head center"><p class="label">Gizlilik</p><h1>$($GzMeta.title)</h1><p class="sub">$($GzMeta.subtitle)</p></header>
+  <div class="body prose">$(Convert-Markdown $Gz.body)</div>
+</div>
+"@
+Write-Page -File 'gizlilik.html' -Title "$($GzMeta.title) | $SiteName" -Description $GzMeta.description `
+  -Path 'gizlilik.html' -Body $gzBody -JsonLd @((Breadcrumb-Ld 'Gizlilik Politikası' 'gizlilik.html'))
+
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
 $notFoundBody = @"
 <div class="wrap narrow">
@@ -1433,12 +1446,31 @@ $pages = @(
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
-  @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' }
+  @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
+  @{ p = 'gizlilik.html'; pr = '0.3' }
 ) + ($Blog.posts | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
   "`n</urlset>`n"
 [IO.File]::WriteAllText((Join-Path $Root 'sitemap.xml'), $sm, $Utf8)
-[IO.File]::WriteAllText((Join-Path $Root 'robots.txt'), "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $SiteUrl/sitemap.xml`n", $Utf8)
-Write-Host "  + sitemap.xml, robots.txt"
+# Dedicated AI-training crawlers (not the same user agent as that company's regular search
+# crawler, e.g. Google-Extended vs Googlebot) are blocked by request; ordinary search engines
+# are untouched by the User-agent: * block above them.
+$AiCrawlers = @(
+  'GPTBot', 'ChatGPT-User', 'Google-Extended', 'CCBot', 'anthropic-ai', 'ClaudeBot', 'Claude-Web',
+  'Bytespider', 'Meta-ExternalAgent', 'Meta-ExternalFetcher', 'FacebookBot', 'Applebot-Extended',
+  'Diffbot', 'PerplexityBot', 'cohere-ai', 'cohere-training-data-crawler', 'Omgilibot', 'Omgili',
+  'Amazonbot', 'Timpibot', 'ImagesiftBot', 'Youbot', 'Kangaroo Bot', 'Panscient'
+)
+$aiBlock = ($AiCrawlers | ForEach-Object { "User-agent: $_`nDisallow: /`n" }) -join "`n"
+[IO.File]::WriteAllText((Join-Path $Root 'robots.txt'), "User-agent: *`nAllow: /`nDisallow: /tools/`n`n# AI-training crawlers (search engines above are unaffected)`n$aiBlock`nSitemap: $SiteUrl/sitemap.xml`n", $Utf8)
+
+# security.txt (RFC 9116): how to report a vulnerability, without publicly guessing at one.
+# Expires a year out from each build, so the file never goes silently stale.
+$wellKnownDir = Join-Path $Root '.well-known'
+if (-not (Test-Path $wellKnownDir)) { New-Item -ItemType Directory -Path $wellKnownDir | Out-Null }
+$secExpires = (Get-Date).AddYears(1).ToString('yyyy-MM-ddT00:00:00.000Z')
+$secTxt = "Contact: mailto:david@katolikdunyasi.com`nExpires: $secExpires`nPreferred-Languages: tr, en`nCanonical: $SiteUrl/.well-known/security.txt`n"
+[IO.File]::WriteAllText((Join-Path $wellKnownDir 'security.txt'), $secTxt, $Utf8)
+Write-Host "  + sitemap.xml, robots.txt, .well-known/security.txt"
 Write-Host "Done."
