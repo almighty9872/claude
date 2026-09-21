@@ -41,6 +41,17 @@ if (-not $SiteUrl) {
 $SiteUrl = $SiteUrl.TrimEnd('/')
 $BuildDate = (Get-Date).ToString('yyyy-MM-dd')
 $Utf8 = New-Object System.Text.UTF8Encoding $false
+# Cache-busting query string for the shared CSS/JS: a short hash of the file's own
+# content, so every page automatically requests a fresh copy the moment either file
+# changes, instead of browsers reusing a stale cached assets/styles.css or script.js
+# indefinitely across deploys (both files keep the same name release to release).
+function File-Ver([string]$path) {
+  $bytes = [IO.File]::ReadAllBytes($path)
+  $hash = [Security.Cryptography.MD5]::Create().ComputeHash($bytes)
+  return ([BitConverter]::ToString($hash) -replace '-', '').Substring(0, 10).ToLowerInvariant()
+}
+$CssVer = File-Ver (Join-Path $Root 'assets/styles.css')
+$JsVer = File-Ver (Join-Path $Root 'assets/script.js')
 # Turkish suffix apostrophe (U+2019). Built from its code point on purpose: PowerShell
 # treats a typographic quote as a string delimiter, so it must not appear in a literal,
 # and &#8217; is no use in text that Attr() escapes. Interpolate it as $Apos instead.
@@ -521,10 +532,10 @@ $canon
 <meta name="twitter:image" content="$SiteUrl/assets/og-image.jpg">
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/styles.css?v=$CssVer">
 <script>document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
 $ld
-<script src="assets/script.js" defer></script>
+<script src="assets/script.js?v=$JsVer" defer></script>
 </head>
 <body>
 $(Header-Html $HeaderSearch $File)
