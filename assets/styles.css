@@ -661,10 +661,6 @@ body.sheet-open { overflow: hidden; }
 }
 
 /* ---------- 15. Hub, info panel, compact footer ---------- */
-.site-title {
-  font-family: var(--sans); font-weight: 600; letter-spacing: -.025em; text-transform: none;
-  font-size: clamp(1.85rem, 4.2vw, 2.7rem); overflow-wrap: anywhere;
-}
 .work-hero { padding-top: .5rem; }
 
 .hub-card {
@@ -843,7 +839,6 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 @media (min-width: 720px) {
   .shelf > *:last-child:nth-child(odd) { grid-column: auto; }
   .shelf.cols-2 { grid-template-columns: repeat(2, 1fr); }
-  .shelf.cols-3 { grid-template-columns: repeat(3, 1fr); }
   .shelf.cols-4 { grid-template-columns: repeat(4, 1fr); }
 }
 

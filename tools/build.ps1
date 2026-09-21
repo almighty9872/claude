@@ -41,17 +41,46 @@ if (-not $SiteUrl) {
 $SiteUrl = $SiteUrl.TrimEnd('/')
 $BuildDate = (Get-Date).ToString('yyyy-MM-dd')
 $Utf8 = New-Object System.Text.UTF8Encoding $false
-# Cache-busting query string for the shared CSS/JS: a short hash of the file's own
-# content, so every page automatically requests a fresh copy the moment either file
-# changes, instead of browsers reusing a stale cached assets/styles.css or script.js
-# indefinitely across deploys (both files keep the same name release to release).
-function File-Ver([string]$path) {
-  $bytes = [IO.File]::ReadAllBytes($path)
+# Cache-busting query string for the shared CSS/JS: a short hash of the minified
+# file's own content, so every page automatically requests a fresh copy the
+# moment either one changes, instead of browsers reusing a stale cached
+# assets/styles.min.css or script.min.js indefinitely across deploys (both
+# files keep the same name release to release).
+function File-Ver([byte[]]$bytes) {
   $hash = [Security.Cryptography.MD5]::Create().ComputeHash($bytes)
   return ([BitConverter]::ToString($hash) -replace '-', '').Substring(0, 10).ToLowerInvariant()
 }
-$CssVer = File-Ver (Join-Path $Root 'assets/styles.css')
-$JsVer = File-Ver (Join-Path $Root 'assets/script.js')
+# Minifies CSS: strips /* */ comments, collapses whitespace runs, and removes
+# the space around { } : ; , . Safe for this file specifically because it has
+# no string values containing those characters with meaningful surrounding
+# space (checked: quoted values here are single tokens like font names), and
+# calc()/attribute-selector spacing never touches those five characters.
+function Minify-Css([string]$css) {
+  $css = [regex]::Replace($css, '/\*[\s\S]*?\*/', '')
+  $css = [regex]::Replace($css, '\s+', ' ')
+  $css = [regex]::Replace($css, '\s*([{}:;,])\s*', '$1')
+  $css = $css -replace ';}', '}'
+  return $css.Trim()
+}
+# Minifies JS conservatively: strips /* */ comments (safe here, verified no
+# string/regex literal in the file contains an unmatched */ that would close
+# a comment early) and trims each line's leading/trailing whitespace and
+# blank lines. Does not join lines or touch in-line spacing, so it cannot
+# affect ASI or regex-literal parsing. script.js has no template literals,
+# so no string ever depends on preserved newlines/indentation either.
+function Minify-Js([string]$js) {
+  $js = [regex]::Replace($js, '/\*[\s\S]*?\*/', '')
+  $lines = $js -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' }
+  return ($lines -join "`n")
+}
+$CssSrc = [IO.File]::ReadAllText((Join-Path $Root 'assets/styles.css'))
+$JsSrc = [IO.File]::ReadAllText((Join-Path $Root 'assets/script.js'))
+$CssMin = Minify-Css $CssSrc
+$JsMin = Minify-Js $JsSrc
+[IO.File]::WriteAllText((Join-Path $Root 'assets/styles.min.css'), $CssMin, $Utf8)
+[IO.File]::WriteAllText((Join-Path $Root 'assets/script.min.js'), $JsMin, $Utf8)
+$CssVer = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/styles.min.css')))
+$JsVer = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/script.min.js')))
 # Turkish suffix apostrophe (U+2019). Built from its code point on purpose: PowerShell
 # treats a typographic quote as a string delimiter, so it must not appear in a literal,
 # and &#8217; is no use in text that Attr() escapes. Interpolate it as $Apos instead.
@@ -83,9 +112,9 @@ $Blog = Read-Data 'blog.js'
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
   1 = @{ file = 'iman-ikrari.html';     ord = 'Birinci Kısım';  roman = 'I';
-         desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İnanç Beyanı. Vahiy, Kutsal Yazı, Kutsal Üçlü, Mesih İsa, Kutsal Ruh, Kilise, Meryem ve ebedi hayat üzerine 1–217. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İnanç Beyanı. Vahiy, Kutsal Üçlü, Mesih İsa, Kilise ve ebedi hayat üzerine 1–217. sorular." }
   2 = @{ file = 'kutsal-sirlar.html';   ord = 'İkinci Kısım';   roman = 'II';
-         desc = "Katolik Kilisesi Katekizmi Özeti, İkinci Kısım: Hristiyan Gizeminin Kutlanması. Litürji ve yedi Kutsal Sır (Vaftiz, Konfirmasyon, Efkaristiya, Tövbe, Evlilik…) üzerine 218–356. sorular." }
+         desc = "Katolik Kilisesi Katekizmi Özeti, İkinci Kısım: Hristiyan Gizeminin Kutlanması. Litürji ve yedi Kutsal Sır üzerine 218–356. sorular." }
   3 = @{ file = 'mesihte-yasam.html';   ord = 'Üçüncü Kısım';   roman = 'III';
          desc = "Katolik Kilisesi Katekizmi Özeti, Üçüncü Kısım: Mesih$($Apos)te Yaşam. İnsan onuru, vicdan, erdemler, günah, lütuf ve On Emir üzerine 357–533. sorular." }
   4 = @{ file = 'hristiyan-duasi.html'; ord = 'Dördüncü Kısım'; roman = 'IV';
@@ -97,6 +126,16 @@ $GlossRx = '\[\[([^|\]]+)\|([^\]]+)\]\]'
 function Inline([string]$s) { if (-not $s) { return '' }; return [regex]::Replace($s, $GlossRx, '$1<span class="gloss" lang="en"> ($2)</span>') }
 function Plain([string]$s)  { if (-not $s) { return '' }; $s = [regex]::Replace($s, $GlossRx, '$1 ($2)'); return (($s -replace '<[^>]+>', '') -replace '\s+', ' ').Trim() }
 function Attr([string]$s)   { return ($s -replace '&', '&amp;' -replace '"', '&quot;' -replace '<', '&lt;' -replace '>', '&gt;') }
+# Shortens text for a <meta name="description"> so search engines don't cut it
+# off mid-sentence; trims at the last full word within the limit. Only for the
+# meta tag, never for text shown on the page (e.g. a blog post's own excerpt).
+function Meta-Trim([string]$s, [int]$max = 160) {
+  if ($s.Length -le $max) { return $s }
+  $cut = $s.Substring(0, $max)
+  $lastSpace = $cut.LastIndexOf(' ')
+  if ($lastSpace -gt 0) { $cut = $cut.Substring(0, $lastSpace) }
+  return $cut.TrimEnd('.', ',', ';', ':') + '…'
+}
 function Blocks([string]$s) {
   $sb = New-Object Text.StringBuilder; $list = New-Object Collections.ArrayList
   foreach ($line in ($s -split "`n")) {
@@ -503,7 +542,11 @@ function Write-Page {
   $url = "$SiteUrl/$Path"
   $ld = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
   $canon = if ($Canonical) { "<link rel=`"canonical`" href=`"$url`">" } else { '' }
-  $preload = if (Test-Path (Join-Path $Root 'assets/fonts/eb-garamond-latin.woff2')) { '<link rel="preload" href="assets/fonts/eb-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>' } else { '' }
+  # Preload the latin-ext subset, not the base latin one: nearly every word of
+  # Turkish body text carries a character in that range (ç, ğ, ı, ö, ş, ü, İ),
+  # and it is also the largest of the four font files, so it is the one worth
+  # a head start on the request over the wire.
+  $preload = if (Test-Path (Join-Path $Root 'assets/fonts/eb-garamond-latin-ext.woff2')) { '<link rel="preload" href="assets/fonts/eb-garamond-latin-ext.woff2" as="font" type="font/woff2" crossorigin>' } else { '' }
   $rootAttr = if ($RootRelative) { ' data-root="/"' } else { '' }
   $html = @"
 <!DOCTYPE html>
@@ -532,10 +575,10 @@ $canon
 <meta name="twitter:image" content="$SiteUrl/assets/og-image.jpg">
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
-<link rel="stylesheet" href="assets/styles.css?v=$CssVer">
+<link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
 <script>document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
 $ld
-<script src="assets/script.js?v=$JsVer" defer></script>
+<script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
 <body>
 $(Header-Html $HeaderSearch $File)
@@ -871,7 +914,7 @@ $formulas
 </div>
 "@
 Write-Page -File 'ekler.html' -Title "Ekler: Sık Kullanılan Dualar ve Katolik Öğretinin Formülleri | $SiteName" `
-  -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince dualar (Haç İşareti, Selam Sana Meryem, Rab$($Apos)bin Meleği, Salve Regina, Magnificat, Te Deum, Tespih) ve Katolik öğretinin formülleri." `
+  -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince sık kullanılan dualar ve Katolik öğretinin formülleri." `
   -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html' 'Katekizm' 'katesizm.html'))
 
 # ================================================================== SSS (sss.html): questions from non-Catholics and newcomers
@@ -908,7 +951,7 @@ $faqCats
 </div>
 "@
 Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" `
-  -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, Efkaristiya, papalık, araf, evrim, acı ve kötülük." `
+  -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, papalık, araf, evrim." `
   -Path 'sss.html' -Body $sssBody -JsonLd @($faqLd, (Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 
 # ================================================================== KUTSAL KITAP (kutsal-kitap.html)
@@ -1294,7 +1337,7 @@ $Blog.posts | ForEach-Object {
 "@
   $postLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr $post.titleEn) + ',"inLanguage":"en","datePublished":"' + $post.date + '","author":{"@type":"Person","name":' + (JStr $post.author) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/$($post.id).html") + '}'
   Write-Page -File "$($post.id).html" -Title "$($post.title) | $SiteName" `
-    -Description $post.excerpt -Path "$($post.id).html" -Body $postBody `
+    -Description (Meta-Trim $post.excerpt) -Path "$($post.id).html" -Body $postBody `
     -JsonLd @($postLd, (Breadcrumb-Ld $post.title "$($post.id).html" 'Blog' 'blog.html')) -OgType 'article'
 }
 
