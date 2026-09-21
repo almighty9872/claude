@@ -354,6 +354,8 @@ if ($h1m.Success) { $aboutMd = $aboutMd.Remove($h1m.Index, $h1m.Length) }
 $InfoHtml = Convert-Markdown $aboutMd
 $Kk = Read-Md 'kutsal-kitap.md'
 $KkMeta = $Kk.meta
+$Er = Read-Md 'erisilebilirlik.md'
+$ErMeta = $Er.meta
 
 # Top bar: brand, Katesizm (a link that also opens a dropdown of the seven texts),
 # Sorular, and an (i) that reveals content/hakkinda.md on hover.
@@ -481,6 +483,7 @@ $Sprite
       <div class="header-tools">
         $ClockHtml
         $toggle
+        <button type="button" class="icon-btn fontsize-toggle" aria-label="Yazı boyutunu büyüt">Aa</button>
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
         <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
       </div>
@@ -530,7 +533,7 @@ $FooterHtml = @"
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -576,7 +579,7 @@ $canon
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
+<script>document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs)}catch(e){}</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
@@ -746,8 +749,8 @@ $homeBody = @"
       </span>
     </a>
     <div class="today-pills">
-      <a class="today-pill" href="azizler.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint">Yükleniyor…</span></span></a>
-      <a class="today-pill" href="tesbih-duasi.html" data-home-mystery-pill><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Bugünün Gizemi</span><span class="tp-value hint">Yükleniyor…</span></span></a>
+      <a class="today-pill" href="azizler.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" aria-live="polite">Yükleniyor…</span></span></a>
+      <a class="today-pill" href="tesbih-duasi.html" data-home-mystery-pill><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Bugünün Gizemi</span><span class="tp-value hint" aria-live="polite">Yükleniyor…</span></span></a>
     </div>
   </section>
 
@@ -812,7 +815,7 @@ $homeBody = @"
       <a class="hub-card saint-card" href="azizler.html">
         <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
         <span class="hub-s">Bugünün azizini görün, yılın her günü için hayat hikâyeleri.</span>
-        <span class="saint-today" data-home-saint-card>Yükleniyor…</span>
+        <span class="saint-today" data-home-saint-card aria-live="polite">Yükleniyor…</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
       <a class="hub-card" href="mucizeler.html">
@@ -1394,6 +1397,17 @@ Write-Page -File 'iletisim.html' -Title "İletişim | $SiteName" `
   -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." `
   -Path 'iletisim.html' -Body $iletisimBody -JsonLd @((Breadcrumb-Ld 'İletişim' 'iletisim.html'))
 
+# ================================================================== ERISILEBILIRLIK (erisilebilirlik.html)
+$erBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Erişilebilirlik')
+  <header class="page-head center"><p class="label">Erişilebilirlik</p><h1>$($ErMeta.title)</h1><p class="sub">$($ErMeta.subtitle)</p></header>
+  <div class="body prose">$(Convert-Markdown $Er.body)</div>
+</div>
+"@
+Write-Page -File 'erisilebilirlik.html' -Title "$($ErMeta.title) | $SiteName" -Description $ErMeta.description `
+  -Path 'erisilebilirlik.html' -Body $erBody -JsonLd @((Breadcrumb-Ld 'Erişilebilirlik' 'erisilebilirlik.html'))
+
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
 $notFoundBody = @"
 <div class="wrap narrow">
@@ -1419,7 +1433,7 @@ $pages = @(
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
-  @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }
+  @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' }
 ) + ($Blog.posts | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +

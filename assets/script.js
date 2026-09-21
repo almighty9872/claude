@@ -48,6 +48,33 @@
   }
 
   /* ---------------------------------------------------------------
+     1b. Text size (0 = default, 1 = large, 2 = larger), persisted like
+     the theme. Scales the root font-size, so every rem-based measurement
+     on the page (type, spacing, icons) grows together.
+     --------------------------------------------------------------- */
+  var FONTSIZE_KEY = 'kkio-fontsize';
+  var FONTSIZE_LABELS = ['Yazı boyutunu büyüt', 'Yazı boyutunu büyüt', 'Yazı boyutunu sıfırla'];
+  function fontsizeLevel() { return document.documentElement.getAttribute('data-fontsize') || '0'; }
+  function syncFontsize() {
+    var level = fontsizeLevel();
+    $$('.fontsize-toggle').forEach(function (b) {
+      b.setAttribute('aria-label', FONTSIZE_LABELS[Number(level)]);
+    });
+  }
+  function initFontSize() {
+    syncFontsize();
+    $$('.fontsize-toggle').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var next = (Number(fontsizeLevel()) + 1) % 3;
+        if (next === 0) { document.documentElement.removeAttribute('data-fontsize'); }
+        else { document.documentElement.setAttribute('data-fontsize', String(next)); }
+        try { localStorage.setItem(FONTSIZE_KEY, String(next)); } catch (e) { /* private mode */ }
+        syncFontsize();
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------
      2. Live clock: full Turkish date + 24-hour time with seconds
         e.g. "Cuma, 18 Eylül 2026  14:05:09"
      --------------------------------------------------------------- */
@@ -805,7 +832,7 @@
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
+    initHeaderHeight(); initTheme(); initFontSize(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets();
   });
 })();
