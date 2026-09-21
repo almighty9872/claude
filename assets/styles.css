@@ -462,6 +462,15 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .article-tools { display: flex; justify-content: center; margin: 0 0 1.6rem; }
 .article .en-block { margin-top: 2rem; padding: 1.2rem 1.4rem .6rem; }
 
+/* Blog: post listing + individual post (English shown by default, Turkish behind a toggle) */
+.post-list { display: grid; gap: 1rem; margin-top: 1.8rem; }
+.post-card { position: relative; }
+.post-date { display: block; }
+.post-card .post-excerpt { margin: .6rem 0 0; color: var(--text-soft); font-size: 1rem; }
+.post-card .post-author { display: block; margin-top: .7rem; font-family: var(--sans); font-size: .78rem; letter-spacing: .04em; color: var(--muted); }
+.post-body p { margin: 0 0 1em; }
+.post-body .post-closing { margin-top: 1.4rem; font-style: italic; }
+
 /* About page (Markdown content from content/hakkinda.md) */
 .prose h2 { font-size: clamp(1.45rem, 3vw, 1.75rem); font-weight: 600; line-height: 1.25; margin: 2rem 0 .7rem; }
 .prose h3 { font-size: 1.3rem; font-weight: 600; margin: 1.6rem 0 .5rem; }
@@ -712,6 +721,15 @@ body.sheet-open { overflow: hidden; }
 .info-panel.pinned, .hover-panel.pinned { pointer-events: auto; }
 .info-panel.centered, .hover-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
 .info-panel.centered.open, .hover-panel.centered.open { transform: translate(-50%, -50%); }
+.info-close {
+  position: absolute; top: .7rem; right: .7rem; z-index: 1;
+  display: grid; place-items: center; width: 1.8rem; height: 1.8rem;
+  border: 0; border-radius: 999px; background: var(--surface-2); color: var(--muted); cursor: pointer;
+  transition: color .15s, background-color .15s;
+}
+.info-close svg { width: .85rem; height: .85rem; }
+.info-close:hover { color: var(--gold); background: var(--gold-bg); }
+.info-inner { padding-right: 1.6rem; }
 .info-inner > :first-child { margin-top: 0; }
 .info-inner > :last-child { margin-bottom: 0; }
 .info-inner h2 { margin: 1.1rem 0 .35rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-family: var(--sans); }
@@ -1024,7 +1042,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 
 /* ---------- 20. Placeholder pages (blog.html) ---------- */
 .placeholder-page { max-width: 32rem; margin: 0 auto; padding: 2.4rem 0 4rem; text-align: center; }
-.placeholder-page svg { width: 2.6rem; height: 2.6rem; color: var(--gold); margin-bottom: 1rem; }
+.placeholder-page svg { width: 2.6rem; height: 2.6rem; color: var(--gold); margin: 0 auto 1rem; }
 .placeholder-lead { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 0 0 .6rem; }
 .placeholder-page p { color: var(--muted); }
 .placeholder-page .btn { margin-top: 1.2rem; }

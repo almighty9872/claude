@@ -4,7 +4,7 @@ subtitle: Türkçe Katolik Portalı
 description: katolikdunyasi.com hakkında: sitenin amacı, kaynakları ve telif bilgileri.
 ---
 
-## Bu site nedir?
+## Site Hakkında
 
 katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türkçe olarak erişilebilir kılmak için hazırlanmıştır: Katekizm, Katolik olma süreci, Kutsal Ayin, İsa’nın Meselleri, dualar, azizler, Kutsal Kitap ve sıkça sorulan sorular. Site zamanla büyümeye devam edecektir.
 

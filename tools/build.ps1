@@ -67,6 +67,7 @@ $Rosary = Read-Data 'tespih.js'
 $Sureci = Read-Data 'katolik-sureci.js'
 $Saints = Read-Data 'azizler.js'
 $Mass = Read-Data 'kutsal-ayin.js'
+$Blog = Read-Data 'blog.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -135,7 +136,7 @@ function Md-Inline([string]$s) {
   $s = [regex]::Replace($s, '`([^`]+)`', '<code>$1</code>')
   $s = [regex]::Replace($s, '\[([^\]]+)\]\(([^)\s]+)\)', [Text.RegularExpressions.MatchEvaluator]{
     param($m) $u = $m.Groups[2].Value
-    $rel = if ($u -match '^https?://') { ' rel="noopener"' } else { '' }
+    $rel = if ($u -match '^https?://') { ' target="_blank" rel="noopener"' } else { '' }
     "<a href=`"$u`"$rel>$($m.Groups[1].Value)</a>" })
   $s = [regex]::Replace($s, '\*\*(.+?)\*\*', '<strong>$1</strong>')
   $s = [regex]::Replace($s, '(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])', '<em>$1</em>')
@@ -436,14 +437,14 @@ $Sprite
     </div>
   </div>
 </header>
-<div class="info-panel glass" id="info-panel" role="note" hidden><div class="info-inner">$InfoHtml</div></div>
+<div class="info-panel glass" id="info-panel" role="dialog" aria-label="Site hakkında" hidden><button type="button" class="info-close" aria-label="Kapat">$IcoClose</button><div class="info-inner">$InfoHtml</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
     <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
     <nav class="ns-nav" aria-label="Menü">
       <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
       <p class="ns-label">Blog</p>
-      <a class="ns-item" href="blog.html"$(Cur 'blog.html' $current)><span class="ns-ico">$IcoQuill</span><span class="ns-body"><span class="ns-t">Blog</span><span class="ns-s">Yazılar yakında</span></span></a>
+      <a class="ns-item" href="blog.html"$(Cur 'blog.html' $current)><span class="ns-ico">$IcoQuill</span><span class="ns-body"><span class="ns-t">Blog</span><span class="ns-s">Özgün yazılar</span></span></a>
       <p class="ns-label">Kaynaklar</p>
       $sheetKaynaklar
       <p class="ns-label">Dualar</p>
@@ -1025,7 +1026,8 @@ $meselCats = ($Parables.categories | ForEach-Object {
   $script:MeselN++; $cat = $_
   $icon = $ParableIcons[$cat.icon]
   $items = ($cat.items | ForEach-Object {
-    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.name)</span><span class=`"mira-place label`">$($_.ref)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bio)</div></details>"
+    $enId = "en-$($_.id)"
+    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.name)</span><span class=`"mira-place label`">$($_.ref)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bio)$(En-Toggle $enId)</div><div class=`"en-block p-en`" id=`"$enId`" lang=`"en`" hidden><span class=`"label`">$($_.en.ref)</span>$(Verse $_.en.text)</div></details>"
   }) -join "`n"
   "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
     "<h2 class=`"section-title`"><span class=`"label`">$($script:MeselN)</span>$(Inline $cat.title)</h2>" +
@@ -1177,22 +1179,54 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
   -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." `
   -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
 
-# ================================================================== BLOG (blog.html) — placeholder, no posts yet
+# ================================================================== BLOG (blog.html + one page per post)
+# Each post keeps the English original ("en") shown by default, with a "Türkçe'ye çevir"
+# button that swaps in the Turkish translation ("tr") — the reverse of the site's usual
+# Turkish-first/English-toggle pattern, since these are the author's own English essays.
+function Post-Lang([string]$idSuffix, $post) {
+  $enId = "post-en-$idSuffix"; $trId = "post-tr-$idSuffix"
+  $enParas = ($post.en.paragraphs | ForEach-Object { "<p>$_</p>" }) -join ''
+  $trParas = ($post.tr.paragraphs | ForEach-Object { "<p>$(Inline $_)</p>" }) -join ''
+  $enSign = ($post.en.signature | ForEach-Object { "<p>$_</p>" }) -join ''
+  $trSign = ($post.tr.signature | ForEach-Object { "<p>$_</p>" }) -join ''
+  $enBody = "<div class=`"post-body`" id=`"$enId`" lang=`"en`">$enParas<p class=`"post-closing`">$($post.en.closing)</p><div class=`"signature`">$enSign</div></div>"
+  $trBody = "<div class=`"post-body`" id=`"$trId`" lang=`"tr`" hidden>$trParas<p class=`"post-closing`">$(Inline $post.tr.closing)</p><div class=`"signature`">$trSign</div></div>"
+  $toggle = "<div class=`"article-tools`"><button type=`"button`" class=`"btn lang-toggle`" data-show-en=`"$enId`" data-show-tr=`"$trId`" aria-pressed=`"false`">$IcoGlobe<span class=`"btn-label`">Türkçe$($Apos)ye çevir</span></button></div>"
+  return "$toggle$enBody$trBody"
+}
+$blogCards = ($Blog.posts | ForEach-Object {
+  $post = $_
+  "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel)</span><span class=`"t-title`">$(Inline $post.title)</span><span class=`"t-sub`" lang=`"en`">$($post.titleEn)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p><span class=`"post-author`">$($post.author)</span></a>"
+}) -join "`n"
 $blogBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Blog')
-  <header class="page-head center"><p class="label">Blog</p><h1>Blog</h1></header>
-  <div class="placeholder-page">
-    $IcoQuill
-    <p class="placeholder-lead">Yazılar yakında.</p>
-    <p>Katolik inancı, Türkiye$($Apos)deki Katolik cemaati ve günlük hayatta imanla ilgili özgün yazılar burada yayınlanacak.</p>
-    <p><a class="btn" href="index.html">Ana sayfaya dön</a></p>
-  </div>
+  <header class="page-head center"><p class="label">Blog</p><h1>Blog</h1><p class="sub" lang="en">Essays on the Catholic faith</p></header>
+  <p class="faq-intro">Katolik inancı ve günlük hayatta imanla ilgili özgün yazılar. Yazarın kendi İngilizce metniyle birlikte, Türkçe çevirisi de bir tıkla açılır.</p>
+  <div class="post-list">$blogCards</div>
 </div>
 "@
 Write-Page -File 'blog.html' -Title "Blog | $SiteName" `
-  -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar. Yakında yayında." `
+  -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar: David Erduran$($Apos)ın İngilizce metinleri ve Türkçe çevirileriyle bir arada." `
   -Path 'blog.html' -Body $blogBody -JsonLd @((Breadcrumb-Ld 'Blog' 'blog.html'))
+
+$Blog.posts | ForEach-Object {
+  $post = $_
+  $postHtml = Post-Lang $post.id $post
+  $postBody = @"
+<div class="wrap narrow">
+  $(Crumbs $post.title 'Blog' 'blog.html')
+  <article class="article post" id="post">
+    <header class="page-head center"><p class="label">$($post.dateLabel) · $($post.author)</p><h1>$(Inline $post.title)</h1><p class="sub" lang="en">$($post.titleEn)</p></header>
+    $postHtml
+  </article>
+</div>
+"@
+  $postLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr $post.titleEn) + ',"inLanguage":"en","datePublished":"' + $post.date + '","author":{"@type":"Person","name":' + (JStr $post.author) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/$($post.id).html") + '}'
+  Write-Page -File "$($post.id).html" -Title "$($post.title) | $SiteName" `
+    -Description $post.excerpt -Path "$($post.id).html" -Body $postBody `
+    -JsonLd @($postLd, (Breadcrumb-Ld $post.title "$($post.id).html" 'Blog' 'blog.html')) -OgType 'article'
+}
 
 # ================================================================== MUCIZELER (mucizeler.html)
 $Miracles = Read-Data 'mucizeler.js'
@@ -1233,7 +1267,7 @@ Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
 $iletisimBody = @"
 <div class="wrap narrow">
   $(Crumbs 'İletişim')
-  <header class="page-head center"><p class="label">İletişim</p><h1>İletişim</h1></header>
+  <header class="page-head center"><p class="label">Contact</p><h1>İletişim</h1></header>
   <div class="placeholder-page contact-page">
     $IcoMail
     <p class="placeholder-lead">Bize ulaşın</p>
@@ -1273,7 +1307,7 @@ $pages = @(
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }
-)
+) + ($Blog.posts | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
   "`n</urlset>`n"

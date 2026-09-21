@@ -97,6 +97,25 @@
   }
 
   /* ---------------------------------------------------------------
+     3b. Blog posts: whole-post language swap (English shown by
+     default, "Türkçe'ye çevir" swaps in the Turkish translation)
+     --------------------------------------------------------------- */
+  function initPostLang() {
+    $$('.lang-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var en = document.getElementById(btn.getAttribute('data-show-en'));
+        var tr = document.getElementById(btn.getAttribute('data-show-tr'));
+        if (!en || !tr) return;
+        var showTr = en.hidden === false && tr.hidden === true;
+        en.hidden = showTr; tr.hidden = !showTr;
+        btn.setAttribute('aria-pressed', String(showTr));
+        var label = btn.querySelector('.btn-label');
+        if (label) label.textContent = showTr ? 'İngilizce aslını göster' : "Türkçe’ye çevir";
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------
      4. "Show all English" (reading bar / article pages)
      --------------------------------------------------------------- */
   function initRevealAll() {
@@ -432,75 +451,61 @@
   var FINE = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------------------------------------------------------------
-     9. The (i) panel: content/hakkinda.md, revealed on hover and
-        tracking the pointer. Click pins it; touch opens it centred.
+     9. The (i) panel: content/hakkinda.md. A plain click-to-open
+        popover anchored under the button (centred on touch), so it
+        never depends on the pointer staying put — the panel's own
+        content scrolls normally once it's open.
      --------------------------------------------------------------- */
   function initInfo() {
     var panel = $('#info-panel');
     if (!panel) return;
-    var btn = $('.info-btn'), sheetBtns = $$('.info-open'), pinned = false, hideTimer = null;
-    var fine = FINE;
+    var btn = $('.info-btn'), sheetBtns = $$('.info-open'), closeBtn = $('.info-close', panel);
+    var open = false;
 
-    function mark(open) {
-      [btn].concat(sheetBtns).forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(open)); });
+    function mark(v) {
+      [btn].concat(sheetBtns).forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(v)); });
     }
-    function show() {
-      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    function show(anchor) {
+      open = true;
       panel.hidden = false;
       void panel.offsetHeight;
-      panel.classList.add('open');
+      panel.classList.add('open', 'pinned');
       mark(true);
+      if (anchor && FINE) {
+        panel.classList.remove('centered');
+        var r = anchor.getBoundingClientRect();
+        placePanel(panel, r.left, r.bottom + 10);
+      } else {
+        panel.classList.add('centered');
+        panel.style.left = ''; panel.style.top = '';
+      }
     }
     function hide() {
-      pinned = false;
+      open = false;
       panel.classList.remove('open', 'pinned');
       mark(false);
-      hideTimer = setTimeout(function () { panel.hidden = true; hideTimer = null; }, 220);
-    }
-    function place(x, y) { placePanel(panel, x, y); }
-    function centre() {
-      panel.classList.add('centered');
-      panel.style.left = ''; panel.style.top = '';
+      setTimeout(function () { if (!open) panel.hidden = true; }, 220);
     }
 
-    if (btn) {
-      if (fine) {
-        btn.addEventListener('mouseenter', function (e) { show(); place(e.clientX, e.clientY); });
-        btn.addEventListener('mousemove', function (e) { if (!pinned) place(e.clientX, e.clientY); });
-        btn.addEventListener('mouseleave', function () { if (!pinned) hide(); });
-      }
-      btn.addEventListener('click', function (e) {
-        e.preventDefault(); e.stopPropagation();
-        if (pinned) { hide(); return; }
-        pinned = true;
-        show();
-        panel.classList.add('pinned');
-        if (!fine) centre();
-      });
-      /* Keyboard: focus reveals it, blur puts it away again */
-      btn.addEventListener('focus', function () {
-        if (pinned) return;
-        show();
-        var r = btn.getBoundingClientRect();
-        place(r.left, r.bottom - 8);
-      });
-      btn.addEventListener('blur', function () { if (!pinned) hide(); });
-    }
+    if (btn) btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      if (open) hide(); else show(btn);
+    });
     sheetBtns.forEach(function (sheetBtn) {
       sheetBtn.addEventListener('click', function () {
         var toggle = $('.menu-toggle');
         if (toggle && $('#navsheet') && $('#navsheet').classList.contains('open') && sheetBtn.closest('#navsheet')) toggle.click();
-        pinned = true;
-        setTimeout(function () { show(); panel.classList.add('pinned'); centre(); }, 60);
+        setTimeout(function () { show(null); }, 60);
       });
     });
+    if (closeBtn) closeBtn.addEventListener('click', hide);
     document.addEventListener('click', function (e) {
-      if (pinned && !panel.contains(e.target) && e.target !== btn && sheetBtns.indexOf(e.target) === -1) hide();
+      if (open && !panel.contains(e.target) && e.target !== btn && sheetBtns.indexOf(e.target) === -1) hide();
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !panel.hidden) { hide(); if (btn) btn.blur(); }
+      if (e.key === 'Escape' && open) { hide(); if (btn) btn.blur(); }
     });
-    window.addEventListener('resize', function () { if (!panel.hidden && !pinned) hide(); });
+    window.addEventListener('resize', function () { if (open) hide(); });
   }
 
   /* ---------------------------------------------------------------
@@ -773,7 +778,7 @@
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll();
+    initHeaderHeight(); initTheme(); initClock(); initReveal(); initRevealAll(); initPostLang();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets();
   });
 })();
