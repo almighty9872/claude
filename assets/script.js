@@ -670,19 +670,26 @@
       if (pieces.length) body.innerHTML = pieces.join('');
     }
 
-    /* Month pills: smooth-scroll anchors (native) plus a scroll-spy active state */
+    /* Month pills: without JS these are plain #ay-N anchors and every month shows, full
+       year, scroll-to-jump. With JS, only one month shows at a time (today's, at first)
+       and a pill click swaps which one instead of scrolling past the other eleven. */
     var pills = $$('.month-pills a');
-    if (pills.length && window.IntersectionObserver) {
-      var byMonth = {};
-      pills.forEach(function (a) { byMonth[a.getAttribute('data-month-link')] = a; });
-      var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (!en.isIntersecting) return;
-          var m = en.target.getAttribute('data-month');
-          pills.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-month-link') === m); });
+    var months = $$('.month', cal);
+    if (pills.length && months.length) {
+      cal.classList.add('month-filter');
+      var pillsNav = $('.month-pills');
+      function showMonth(m) {
+        months.forEach(function (sec) { sec.classList.toggle('is-shown', sec.getAttribute('data-month') === String(m)); });
+        pills.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-month-link') === String(m)); });
+      }
+      pills.forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          showMonth(a.getAttribute('data-month-link'));
+          if (pillsNav) pillsNav.scrollIntoView({ block: 'start', behavior: FINE ? 'smooth' : 'auto' });
         });
-      }, { rootMargin: '-45% 0px -50% 0px' });
-      $$('.month').forEach(function (sec) { obs.observe(sec); });
+      });
+      showMonth(today.month);
     }
 
     /* Desktop: hover a saint's name for a floating bio panel (reuses placePanel).

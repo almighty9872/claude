@@ -1036,6 +1036,10 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   scroll-margin-top: calc(var(--header-h) + 3.2rem); margin-bottom: 2rem;
   content-visibility: auto; contain-intrinsic-size: 0 1200px;
 }
+/* JS-only: once a month is picked, the rest hide instead of being scrolled past.
+   No class is added at all without JS, so a non-JS visitor still gets the full year. */
+.saints-cal.month-filter .month { display: none; }
+.saints-cal.month-filter .month.is-shown { display: block; }
 .month-title { font-size: 1.5rem; margin: 0 0 .9rem; }
 .day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; }
 .day-cell {
