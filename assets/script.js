@@ -914,22 +914,62 @@
   }
 
   /* ---------------------------------------------------------------
-     14. Kiliseler (parish locator): rite filter pills. The Mass-times
-         disclosure per card is a plain native <details> (click/tap to
-         toggle, same on every device); its expanded body is styled as
-         a floating popup on wide screens purely in CSS, no JS needed
-         for that part.
+     14. Kiliseler (parish locator): rite filter pills plus a
+         one-city-at-a-time browsing mode. Every city is a native
+         <details> (collapsed by default, works with no JS at all);
+         this script only adds two things on top of that:
+           - on load, only İstanbul's <details> is left visible, so
+             the page opens on one manageable city instead of all ten;
+           - "Tüm Kiliseler" or the city pills, or a specific rite
+             filter that matches churches elsewhere, bring the other
+             cities back (a rite filter also force-opens whichever
+             cities it reveals, since the point of picking one is to
+             actually see the matching churches, not another click).
+         The Mass-times disclosure per card is a separate, plain
+         native <details>; its expanded body is styled as a floating
+         popup on wide screens purely in CSS, no JS needed for that.
      --------------------------------------------------------------- */
   function initChurchFilter() {
-    var nav = $('.rite-filter');
-    if (!nav) return;
-    var btns = $$('button', nav), cards = $$('.church-card'), cities = $$('.church-city');
-    function apply(rite) {
-      cards.forEach(function (c) { c.hidden = rite !== 'all' && c.getAttribute('data-rite') !== rite; });
-      cities.forEach(function (sec) { sec.hidden = $$('.church-card', sec).every(function (c) { return c.hidden; }); });
-      btns.forEach(function (b) { b.classList.toggle('is-current', b.getAttribute('data-rite-link') === rite); });
+    var wrap = $('.rite-filter-wrap');
+    if (!wrap) return;
+    var riteBtns = $$('button[data-rite-link]', wrap);
+    var cityLinks = $$('[data-city-link]');
+    var cities = $$('.church-city');
+    var cards = $$('.church-card');
+
+    function showOnlyCity(id) { cities.forEach(function (sec) { sec.hidden = sec.id !== id; }); }
+    function showAllCities() { cities.forEach(function (sec) { sec.hidden = false; }); }
+    function markCurrentCity(id) {
+      cityLinks.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-city-link') === id); });
     }
-    btns.forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-rite-link')); }); });
+
+    function applyRite(rite) {
+      cards.forEach(function (c) { c.hidden = rite !== 'all' && c.getAttribute('data-rite') !== rite; });
+      riteBtns.forEach(function (b) { b.classList.toggle('is-current', b.getAttribute('data-rite-link') === rite); });
+      showAllCities();
+      if (rite !== 'all') {
+        cities.forEach(function (sec) {
+          var anyMatch = $$('.church-card', sec).some(function (c) { return !c.hidden; });
+          sec.hidden = !anyMatch;
+          if (anyMatch) sec.open = true;
+        });
+      }
+      markCurrentCity(null);
+    }
+
+    function goToCity(id) {
+      applyRite('all'); // a fresh city view shows everything in it, regardless of any prior rite filter
+      showOnlyCity(id);
+      var sec = document.getElementById(id);
+      if (sec) sec.open = true;
+      markCurrentCity(id);
+    }
+
+    riteBtns.forEach(function (b) { b.addEventListener('click', function () { applyRite(b.getAttribute('data-rite-link')); }); });
+    cityLinks.forEach(function (a) { a.addEventListener('click', function () { goToCity(a.getAttribute('data-city-link')); }); });
+
+    showOnlyCity('istanbul');
+    markCurrentCity('istanbul');
   }
 
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
