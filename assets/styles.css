@@ -792,6 +792,17 @@ body.sheet-open { overflow: hidden; }
 }
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
 
+/* Kiliseler page footnote on receiving Communion from an Orthodox church absent a Catholic
+   one nearby (Canon 844 §2): kept smaller than the body copy and visually set apart, since
+   it is a narrow pastoral exception rather than the page's main subject. */
+.eucharist-note {
+  margin: 1.75rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--border);
+  font-family: var(--sans); font-size: .8rem; line-height: 1.65; color: var(--muted);
+}
+.eucharist-note p { margin: 0 0 .6rem; }
+.eucharist-note p:last-child { margin-bottom: 0; font-style: italic; }
+.eucharist-note strong { color: var(--text-soft); font-weight: 600; }
+
 /* (i) beside the brand at every width: reveals content/hakkinda.md, anchored under the button
    on a mouse (fine pointer), centered like a small dialog on touch (coarse pointer). */
 .info-btn {
@@ -1309,16 +1320,24 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .church-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .4rem 0 0; }
 .church-actions .btn { font-size: .8rem; }
 
-/* Inactive/closed parish: a loud, always-visible warning (not tucked behind a click,
-   since this is exactly the kind of thing a reader needs before deciding to visit). */
+/* Inactive/closed parish: the label alone is always visible (so a reader never misses it),
+   but the full explanation is tucked behind a click/tap, same as the Mass-times disclosure,
+   so one closed parish doesn't dominate the card. */
 .church-warn {
-  display: flex; gap: .6rem; align-items: flex-start; margin: .3rem 0 0; padding: .7rem .85rem;
-  border-radius: var(--radius-sm); background: var(--danger-bg); border: 1px solid var(--danger-border);
-  color: var(--danger); font-size: .92rem; line-height: 1.5;
+  margin: .3rem 0 0; border-radius: var(--radius-sm); background: var(--danger-bg);
+  border: 1px solid var(--danger-border); color: var(--danger); font-size: .92rem;
 }
-.church-warn svg { flex: none; width: 1.3rem; height: 1.3rem; margin-top: .1rem; }
-.church-warn strong { display: block; margin-bottom: .2rem; font-size: .95rem; text-transform: uppercase; letter-spacing: .03em; }
-.church-warn.en { margin-top: .4rem; padding: 0 0 0 2.35rem; background: transparent; border: 0; font-style: italic; opacity: .9; }
+.church-warn summary {
+  display: flex; align-items: center; gap: .5rem; cursor: pointer; list-style: none;
+  padding: .55rem .85rem; font-weight: 600;
+}
+.church-warn summary::-webkit-details-marker { display: none; }
+.church-warn summary svg { flex: none; width: 1.2rem; height: 1.2rem; }
+.church-warn summary strong { text-transform: uppercase; letter-spacing: .03em; font-size: .88rem; }
+.church-warn summary .en { font-weight: 400; opacity: .85; font-size: .85rem; }
+.church-warn-body { padding: 0 .85rem .75rem 2.55rem; line-height: 1.5; }
+.church-warn-body p { margin: 0 0 .4rem; }
+.church-warn-body p:last-child { margin-bottom: 0; font-style: italic; opacity: .9; }
 
 /* Mass times: a plain native <details>, click/tap to toggle, same on every device. On a
    wide screen the expanded body floats as a small popup instead of pushing the rest of

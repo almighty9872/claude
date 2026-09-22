@@ -1470,8 +1470,8 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     $siteLink = if ($_.website) { "<a class=`"btn`" href=`"$($_.website)`" target=`"_blank`" rel=`"noopener`">Resmi Site $IcoExternal</a>" }
                 else { "<a class=`"btn`" href=`"$(Google-Url "$($_.name) $($city.name)")`" target=`"_blank`" rel=`"noopener`">Web$($Apos)te Ara $IcoExternal</a>" }
     $warnRow = if ($_.inactive) {
-      "<p class=`"church-warn`">$IcoWarn<span><strong>Şu anda kapalı</strong>$(Inline $_.inactiveNote)</span></p>" +
-      "<p class=`"church-warn en`" lang=`"en`">$(Inline $_.inactiveNoteEn)</p>"
+      "<details class=`"church-warn`"><summary>$IcoWarn<strong>Şu anda kapalı</strong><span class=`"en`" lang=`"en`">(Currently closed)</span></summary>" +
+        "<div class=`"church-warn-body`"><p>$(Inline $_.inactiveNote)</p><p lang=`"en`">$(Inline $_.inactiveNoteEn)</p></div></details>"
     } else { '' }
     "<article class=`"text-card church-card`" id=`"$($_.id)`" data-rite=`"$($_.rite)`">" +
       "<header class=`"church-head`"><h3 class=`"t-title`">$(Inline $_.name)</h3><span class=`"church-rite rite-$($_.rite)`">$($rite.tr)</span></header>" +
@@ -1499,6 +1499,10 @@ $kiliselerBody = @"
   <nav class="faq-toc" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
 $kiliselerCities
   <p class="conventions">$(Inline $Churches.note)</p>
+  <div class="eucharist-note">
+    <p><strong>Katolik kilisesi bulunamadığında:</strong> $(Inline $Churches.orthodoxNote)</p>
+    <p lang="en"><strong>Where no Catholic church can be found:</strong> $(Inline $Churches.orthodoxNoteEn)</p>
+  </div>
 </div>
 "@
 Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" `
