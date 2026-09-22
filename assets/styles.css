@@ -512,11 +512,46 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .site-footer p { margin: 0 0 .7rem; max-width: 60rem; }
 
 /* ---------- 9. Print ---------- */
+/* Every reading page (Katekizm parts, Ekler, Azizler, Meseller, Mucizeler,
+   blog posts...) already has its full text in the DOM; this only changes how
+   a browser's own Print / Save-as-PDF renders that same page: no site chrome,
+   solid black-on-white regardless of the active theme, a plain academic
+   serif at a comfortable size, and clean page breaks around questions and
+   headings. Nothing here is a separate export path — it only ever runs when
+   the reader chooses to print, on the page they were already reading. */
 @media print {
-  .site-header, .readbar, .toc, .toc-backdrop, .en-toggle, .pager, .site-footer nav, .search { display: none !important; }
-  body { background: #fff; color: #000; font-size: 11pt; }
-  .qa, .text-card { border: 0; padding: 0; break-inside: avoid; }
-  .en-block[hidden] { display: none; }
+  .site-header, .navsheet, .info-panel, .skip-link, .read-progress,
+  .readbar, .toc, .toc-backdrop, .pager, .site-footer,
+  .en-toggle, .article-tools, [data-en-all], .gloss,
+  .search, .home-katekizm-search, .today-pills, .hub-go,
+  .hover-panel, .month-pills
+  { display: none !important; }
+
+  html, body { background: #fff !important; }
+  body {
+    color: #000; font-family: var(--serif); font-size: 12.5pt; line-height: 1.5;
+  }
+  * { color: #000 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important; }
+
+  a { text-decoration: none; }
+
+  .wrap, .wrap.narrow { max-width: 100%; padding: 0; }
+  .page-head { border-bottom: 1px solid #000; }
+
+  h1 { font-size: 20pt; }
+  h2, .section-title { font-size: 16pt; margin-top: 1.4em; }
+  h3 { font-size: 13.5pt; }
+  .sec { break-after: avoid; }
+
+  .qa, .text-card, .day-cell, .faq-item, .movable-card { border: 0; padding: 0; box-shadow: none; break-inside: avoid; }
+  .qa-q, .t-title { font-size: 13pt; }
+  .qa-foot, .ccc { font-size: 9.5pt; }
+  .en-block[hidden], details:not([open]) .saint-bio, .search-results { display: none !important; }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker, details > summary::marker { display: none; }
+
+  h1, h2, h3, .qa-head { break-after: avoid; break-inside: avoid; }
+  p, li { orphans: 3; widows: 3; }
 }
 
 /* ---------- 11. FAQ (sss.html) ---------- */

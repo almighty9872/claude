@@ -895,6 +895,22 @@
     });
   }
 
+  /* Printing (or Save as PDF) should show every <details> section in full,
+     not just the ones the reader happened to have open (saint bios, FAQ
+     answers, Latin prayer text). Opens them all right before the browser's
+     print dialog, then restores whichever ones were actually open. */
+  function initPrintExpand() {
+    var reopen = [];
+    window.addEventListener('beforeprint', function () {
+      reopen = [];
+      $$('details:not([open])').forEach(function (d) { d.setAttribute('open', ''); reopen.push(d); });
+    });
+    window.addEventListener('afterprint', function () {
+      reopen.forEach(function (d) { d.removeAttribute('open'); });
+      reopen = [];
+    });
+  }
+
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
   function initHeaderHeight() {
     var header = $('.site-header');
@@ -907,6 +923,6 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
   });
 })();
