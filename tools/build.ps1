@@ -851,15 +851,14 @@ $homeBody = @"
     <div class="lib-head"><span class="roman">III</span><h2>Azizler ve Mucizeler</h2></div>
     <p class="lib-lead">Yılın her günü için bir aziz, Kilise tarihinin görünmeleri, kalıntıları ve Efkaristiya mucizeleri.</p>
     <div class="shelf cols-2">
-      <a class="hub-card saint-card" href="azizler.html">
+      <a class="hub-card" href="azizler.html">
         <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
         <span class="hub-s">Bugünün azizini görün, yılın her günü için hayat hikâyeleri.</span>
-        <span class="saint-today" data-home-saint-card aria-live="polite">Yükleniyor…</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
       <a class="hub-card" href="mucizeler.html">
         <span class="hub-head"><span class="hub-ico">$IcoRadiance</span><span class="hub-t">Mucizeler</span></span>
-        <span class="hub-s">Görünmeler, Torino Kefeni, Efkaristiya mucizeleri, çürümeyen azizler.</span>
+        <span class="hub-s">Meryem Ana görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizlerin öyküleri.</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
     </div>

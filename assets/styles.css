@@ -894,11 +894,6 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   .shelf.cols-4 { grid-template-columns: repeat(4, 1fr); }
 }
 
-.saint-card { display: flex; flex-direction: column; }
-.saint-card .hub-s { flex: none; }
-.saint-today { margin-top: .5rem; padding-top: .7rem; border-top: 1px dashed var(--border); font-size: .88rem; color: var(--text-soft); }
-.saint-today b { color: var(--text); font-weight: 600; }
-
 .mini-post { display: block; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; transition: border-color .2s, transform .2s; }
 .mini-post:hover { border-color: var(--gold-soft); transform: translateY(-2px); }
 .mini-post .mp-date { font-family: var(--sans); font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }

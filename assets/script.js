@@ -801,9 +801,8 @@
   };
   function initHomeWidgets() {
     var saintPill = $('[data-home-saint-pill] .tp-value');
-    var saintCard = $('[data-home-saint-card]');
     var mysteryPill = $('[data-home-mystery-pill] .tp-value');
-    if (!saintPill && !saintCard && !mysteryPill) return;
+    if (!saintPill && !mysteryPill) return;
 
     function istanbulToday() {
       try {
@@ -817,28 +816,19 @@
     }
     var today = istanbulToday();
 
-    if (saintPill || saintCard) {
+    if (saintPill) {
       loadDataScript('data/azizler.js', 'SAINTS').then(function () {
         var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
         var s = day && day.saints && day.saints[0];
         var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
         var href = top20Id ? top20Id + '.html' : 'azizler.html';
-        if (saintPill) {
-          saintPill.textContent = s ? s.name : 'Bugün için yok';
-          saintPill.classList.remove('hint');
-          var pillLink = saintPill.closest('a');
-          if (pillLink) pillLink.setAttribute('href', href);
-        }
-        if (saintCard) {
-          if (!s) { saintCard.hidden = true; return; }
-          var bio = s.bio.length > 170 ? s.bio.slice(0, 170).replace(/\s+\S*$/, '') + '…' : s.bio;
-          saintCard.innerHTML = '<b>Bugün:</b> ' + s.name + (s.title ? ', ' + s.title : '') + '. ' + bio;
-          var cardLink = saintCard.closest('a');
-          if (cardLink) cardLink.setAttribute('href', href);
-        }
+        saintPill.textContent = s ? s.name : 'Bugün için yok';
+        saintPill.classList.remove('hint');
+        var pillLink = saintPill.closest('a');
+        if (pillLink) pillLink.setAttribute('href', href);
       })['catch'](function () {
-        if (saintPill) { saintPill.textContent = 'Yüklenemedi'; saintPill.classList.remove('hint'); }
-        if (saintCard) saintCard.hidden = true;
+        saintPill.textContent = 'Yüklenemedi';
+        saintPill.classList.remove('hint');
       });
     }
     if (mysteryPill) {
