@@ -765,8 +765,6 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .foot-copy a { color: var(--muted); text-decoration: none; }
 .foot-copy a:hover { color: var(--gold); }
 .foot-about .foot-copy + .foot-copy { margin-top: .2rem; }
-.foot-support { margin-top: .9rem; }
-.foot-support svg { width: .95rem; height: .95rem; }
 .foot-sitemap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .foot-label {
   margin: 0 0 .6rem; font-family: var(--sans); font-size: .7rem; font-weight: 700;

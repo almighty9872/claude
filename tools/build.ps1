@@ -445,8 +445,6 @@ $MassIcons = @{
   blessing = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2M6.5 6.5 5 5M19 5l-1.5 1.5M6.5 17.5 5 19M19 19l-1.5-1.5"/><circle cx="12" cy="12" r="3.4"/></svg>'
 }
 $IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
-$IcoHeart = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
-$SupportUrl = 'https://paypal.me/katolikdunyasi'
 
 function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
   return "<form class=`"search $cls`" role=`"search`" data-search action=`"katesizm.html`"><div class=`"search-field`">$IcoSearch" +
@@ -530,7 +528,6 @@ $Sprite
       <p class="ns-label">İletişim</p>
       <a class="ns-item" href="iletisim.html"$(Cur 'iletisim.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">İletişim</span><span class="ns-s">Bana ulaşın</span></span></a>
       <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">Hakkında</span></span></button>
-      <a class="ns-item" href="$SupportUrl" target="_blank" rel="noopener"><span class="ns-ico">$IcoHeart</span><span class="ns-body"><span class="ns-t">Destek Ol</span></span></a>
     </nav>
   </div>
 </div>
@@ -547,7 +544,6 @@ $FooterHtml = @"
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
-      <a class="btn foot-support" href="$SupportUrl" target="_blank" rel="noopener">$IcoHeart Bu siteyi destekleyin</a>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>

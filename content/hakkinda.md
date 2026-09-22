@@ -22,10 +22,6 @@ katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türk�
 
 Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu varsa ya da sadece merhaba demek isterseniz: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com). Ayrıntılar için [İletişim sayfasını](iletisim.html) ziyaret edebilirsiniz.
 
-## Destek Olun
-
-Bu site tamamen ücretsizdir ve öyle kalacaktır; hiçbir içerik bir ücret karşılığında sunulmaz. Alan adı ve barındırma giderlerine katkıda bulunmak isterseniz, [PayPal üzerinden bir bağış](https://paypal.me/katolikdunyasi) yapabilirsiniz. Bu tamamen gönüllülük esasına dayanır; hiçbir içerik ya da özellik bir bağışa bağlı değildir.
-
 Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
 
 *Son güncelleme: {{TARIH}}*
