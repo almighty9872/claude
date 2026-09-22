@@ -528,27 +528,58 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   { display: none !important; }
 
   html, body { background: #fff !important; }
-  body {
-    color: #000; font-family: var(--serif); font-size: 12.5pt; line-height: 1.5;
-  }
-  * { color: #000 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important; }
+  body { color: #000; font-size: 12pt; line-height: 1.5; }
 
+  /* One plain academic serif, one size scale, no colour, no letter-spacing
+     tricks, no uppercase — every question reads like a printed book page. */
+  * {
+    color: #000 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important;
+    font-family: var(--serif) !important; text-transform: none !important; letter-spacing: normal !important;
+  }
   a { text-decoration: none; }
 
   .wrap, .wrap.narrow { max-width: 100%; padding: 0; }
-  .page-head { border-bottom: 1px solid #000; }
+  .page-head { border-bottom: 1px solid #000; padding-bottom: .5em; margin-bottom: 1.2em; }
+  .page-head .roman { font-size: 16pt; }
+  .page-head h1 { font-size: 18pt; }
+  .page-head .sub { font-size: 12pt; }
 
-  h1 { font-size: 20pt; }
-  h2, .section-title { font-size: 16pt; margin-top: 1.4em; }
-  h3 { font-size: 13.5pt; }
+  h1 { font-size: 18pt; font-weight: 700; }
+  h2, .section-title { font-size: 14pt; font-weight: 700; margin-top: 1.6em; }
+  h3 { font-size: 12.5pt; font-weight: 700; }
+  .sec .sec-label { font-size: 12pt; font-weight: 700; margin-bottom: .2em; }
+  .sec-l4 .sec-title::before { display: none; }
   .sec { break-after: avoid; }
 
-  .qa, .text-card, .day-cell, .faq-item, .movable-card { border: 0; padding: 0; box-shadow: none; break-inside: avoid; }
-  .qa-q, .t-title { font-size: 13pt; }
-  .qa-foot, .ccc { font-size: 9.5pt; }
+  /* Flatten every "card" into plain flowing text: no borders, no boxes.
+     !important because several of these classes are re-declared with a
+     border/box-shadow further down the stylesheet outside this media
+     query, which would otherwise win the cascade at equal specificity. */
+  .qa, .text-card, .day-cell, .faq-item, .movable-card, .part-acc {
+    border: 0 !important; padding: 0 !important; border-radius: 0 !important;
+    margin: 0 0 1.4em !important; box-shadow: none !important; break-inside: avoid;
+  }
+  .part-acc > summary { padding: 0 !important; gap: .4em; }
+  .part-acc .p-title { font-size: 14pt; font-weight: 700; }
+  .qa-head { gap: .5em; }
+  .qa-num {
+    border: 0 !important; padding: 0 !important; min-width: auto !important; border-radius: 0 !important;
+    font-size: 12pt; font-weight: 700;
+  }
+  .qa-num::after { content: '.'; }
+  .qa-q, .t-title, .faq-q { font-size: 12pt; font-weight: 700; line-height: 1.4; }
+  .qa-a, .qa-a p, .qa-a li, .faq-a p, .faq-a li, .t-body p { font-size: 12pt; }
+  .note { padding: 0 !important; margin: .4em 0 .8em; border-left: 0 !important; background: transparent !important; }
+  .qa-foot { border-top: 0 !important; padding-top: .2em !important; margin-top: 0; justify-content: flex-start; gap: .5em; }
+  .qa-foot, .ccc { font-size: 10pt; }
+  .faq-a { border-top: 0 !important; padding: .4em 0 0 !important; }
+  .faq-ref { border-top: 0 !important; padding-top: 0 !important; }
+  .faq-item > summary { padding: 0 !important; gap: .4em; }
+
   .en-block[hidden], details:not([open]) .saint-bio, .search-results { display: none !important; }
   details > summary { list-style: none; }
   details > summary::-webkit-details-marker, details > summary::marker { display: none; }
+  .chev { display: none !important; }
 
   h1, h2, h3, .qa-head { break-after: avoid; break-inside: avoid; }
   p, li { orphans: 3; widows: 3; }

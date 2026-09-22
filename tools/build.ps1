@@ -255,8 +255,8 @@ function Qa-Html($it, [int]$hl) {
   return "<article class=`"qa`" id=`"soru-$n`" data-n=`"$n`">" +
     "<header class=`"qa-head`"><a class=`"qa-num`" href=`"#soru-$n`" aria-label=`"Soru $n bağlantısı`">$n</a><$tag class=`"qa-q`">$(Inline $it.tr.q)</$tag></header>" +
     "<div class=`"qa-a`">$(Blocks $it.tr.a)</div>$note" +
-    "<footer class=`"qa-foot`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">KKK $($it.ccc)</span>$(En-Toggle "en-$n")</footer>" +
-    "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><div class=`"qa-a`">$(Blocks $it.en.a)</div><span class=`"ccc`">CCC $($it.ccc)</span></div>" +
+    "<footer class=`"qa-foot`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($it.ccc)</span>$(En-Toggle "en-$n")</footer>" +
+    "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><div class=`"qa-a`">$(Blocks $it.en.a)</div><span class=`"ccc`">$($it.ccc)</span></div>" +
     "</article>"
 }
 # $tagLevel is the true HTML heading level (never skips a level in the DOM); it can
@@ -745,7 +745,7 @@ $acc
     <a class="text-link" href="giris.html"><span class="label">Önsöz</span><span class="t-title">Giriş</span><span class="t-sub">Kardinal Joseph Ratzinger, 20 Mart 2005</span></a>
     <a class="text-link" href="ekler.html"><span class="label">Ekler</span><span class="t-title">Dualar ve Formüller</span><span class="t-sub">A. Sık Kullanılan Dualar · B. Katolik Öğretinin Formülleri</span></a>
   </div>
-  <p class="conventions">Kutsal Kitap göndermeleri Katolik kanonuna (Deuterokanonik kitaplar dahil) ve kaynak metindeki Katolik ayet numaralandırmasına göre verilmiştir. Türkçede farklı yazılan özel adların İngilizcesi ilk geçtikleri yerde parantez içinde verilir; ör. Petrus <span class="gloss">(Peter)</span>. İsa <span class="gloss">(Jesus)</span> ve Meryem <span class="gloss">(Mary)</span> adları sık geçtiği için yinelenmez. KKK: Katolik Kilisesi Katekizmi madde numaraları.</p>
+  <p class="conventions">Kutsal Kitap göndermeleri Katolik kanonuna (Deuterokanonik kitaplar dahil) ve kaynak metindeki Katolik ayet numaralandırmasına göre verilmiştir. Türkçede farklı yazılan özel adların İngilizcesi ilk geçtikleri yerde parantez içinde verilir; ör. Petrus <span class="gloss">(Peter)</span>. İsa <span class="gloss">(Jesus)</span> ve Meryem <span class="gloss">(Mary)</span> adları sık geçtiği için yinelenmez. Her sorunun altındaki sayılar, Katolik Kilisesi Katekizmi’nin ilgili madde numaralarıdır.</p>
 </div>
 "@
 $bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $WorkName) + ',"alternateName":' + (JStr "$SiteNameEn (Türkçe)") +
@@ -959,7 +959,7 @@ $faqCats = ($FaqData.categories | ForEach-Object {
     "<details class=`"faq-item`" id=`"$($_.id)`">" +
       "<summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
       "<div class=`"faq-a`">$(Blocks $_.a)" +
-        "<p class=`"faq-ref`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">KKK $($_.ccc)</span></p></div>" +
+        "<p class=`"faq-ref`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($_.ccc)</span></p></div>" +
     "</details>"
   }) -join "`n"
   "<section class=`"faq-cat`" id=`"$($cat.id)`">" +
