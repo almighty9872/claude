@@ -239,6 +239,17 @@ $IcoTextSize = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 $IcoPrev   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>'
 $IcoNext   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>'
 $IcoClose  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+# Page-head icons: replace the small-caps section label on a few pages where the label was
+# purely decorative (repeating the nav category, or just the page's own title back at itself).
+$IcoDoor     = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21V4.5A1.5 1.5 0 0 1 8.5 3h5L18 6.5V21"/><path d="M4 21h16"/><circle cx="14.3" cy="12.5" r=".6" fill="currentColor" stroke="none"/></svg>'
+$IcoChalice  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.5 4c0 4.5 1.3 8 4.5 8s4.5-3.5 4.5-8"/><path d="M12 12v5.5"/><path d="M8 21h8"/><path d="M12 17.5v3.5"/></svg>'
+$IcoBookOpen = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.3-3.6-2-6-2-.6 0-1 .4-1 1v11.5c0 .6.4 1 1 1 2.4 0 4.4.7 6 2 1.6-1.3 3.6-2 6-2 .6 0 1-.4 1-1V5.5c0-.6-.4-1-1-1-2.4 0-4.4.7-6 2Z"/><path d="M12 6.5v13"/></svg>'
+$IcoBible    = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3H19v16.5a1 1 0 0 1-1 1H7.5A1.5 1.5 0 0 1 6 19Z"/><path d="M6 19a1.5 1.5 0 0 1 1.5-1.5H19"/><path d="M9.5 3v5.2l2-1.4 2 1.4V3"/></svg>'
+$IcoQuestion = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.3 9.4a2.7 2.7 0 1 1 4 2.4c-.9.5-1.3 1.1-1.3 2.1v.4"/><circle cx="12" cy="17.6" r=".7" fill="currentColor" stroke="none"/></svg>'
+$IcoPen      = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5 19 9 9 19H4.5v-4.5Z"/><path d="M13 6l5 5"/></svg>'
+$IcoSparkle  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M12 2c.9 4.6 3.1 6.8 7.7 7.7-4.6.9-6.8 3.1-7.7 7.7-.9-4.6-3.1-6.8-7.7-7.7C8.9 8.8 11.1 6.6 12 2Z"/></svg>'
+$IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15l6-5.5"/></svg>'
+function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" }
 # Jerusalem cross: large cross potent in the centre, a small cross in each quadrant (100x100 grid)
 $CrossShapes = '<rect x="44" y="12" width="12" height="76"/><rect x="12" y="44" width="76" height="12"/><rect x="33" y="8" width="34" height="9"/><rect x="33" y="83" width="34" height="9"/><rect x="8" y="33" width="9" height="34"/><rect x="83" y="33" width="9" height="34"/><rect x="23.5" y="18" width="5" height="16"/><rect x="18" y="23.5" width="16" height="5"/><rect x="71.5" y="18" width="5" height="16"/><rect x="66" y="23.5" width="16" height="5"/><rect x="23.5" y="66" width="5" height="16"/><rect x="18" y="71.5" width="16" height="5"/><rect x="71.5" y="66" width="5" height="16"/><rect x="66" y="71.5" width="16" height="5"/>'
 $Logo = '<svg class="logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
@@ -985,7 +996,7 @@ $faqLd = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","
 $sssBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Sıkça Sorulan Sorular')
-  <header class="page-head center"><p class="label">Sıkça Sorulan Sorular</p><h1>$(Inline $FaqData.title)</h1><p class="sub" lang="en">$($FaqData.en)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoQuestion)<h1>$(Inline $FaqData.title)</h1><p class="sub" lang="en">$($FaqData.en)</p></header>
   <p class="faq-intro">$(Inline $FaqData.intro)</p>
   <nav class="faq-toc" aria-label="Kategoriler"><ul>$faqToc</ul></nav>
 $faqCats
@@ -999,7 +1010,7 @@ Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" `
 $kkBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kutsal Kitap')
-  <header class="page-head center"><p class="label">Kutsal Kitap</p><h1>$($KkMeta.title)</h1><p class="sub">$($KkMeta.subtitle)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoBible)<h1>$($KkMeta.title)</h1><p class="sub">$($KkMeta.subtitle)</p></header>
   <div class="body prose">$(Convert-Markdown $Kk.body)</div>
 </div>
 "@
@@ -1021,7 +1032,7 @@ $sureciFaq = ($Sureci.faq | ForEach-Object {
 $sureciBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Katolik Süreci')
-  <header class="page-head center"><p class="label">Katolik Süreci</p><h1>$($Sureci.title)</h1><p class="sub" lang="en">$($Sureci.en)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoDoor)<h1>$($Sureci.title)</h1><p class="sub" lang="en">$($Sureci.en)</p></header>
   <p class="faq-intro">$(Inline $Sureci.intro)</p>
   <h2 class="section-title" id="iki-yol"><span class="label">1</span>İki Yol</h2>
   <div class="text-grid two">$pathCards</div>
@@ -1077,6 +1088,13 @@ $monthSectionsHtml = (1..12 | ForEach-Object {
   "<section class=`"month`" id=`"ay-$mo`" data-month=`"$mo`"><h2 class=`"month-title`">$($MonthNamesTr[$mo - 1])</h2><div class=`"day-grid`">$cells</div></section>"
 }) -join "`n"
 $monthPillsHtml = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=`"$_`">$($MonthNamesTr[$_ - 1].Substring(0, 3))</a>" }) -join ''
+$azizlerTocMonthOpts = (1..12 | ForEach-Object { "<option value=`"ay-$_`">$($MonthNamesTr[$_ - 1])</option>" }) -join ''
+$azizlerTocHtml = "<div class=`"select-wrap`"><select id=`"azizler-toc`" data-jump-select aria-label=`"Bölüme git`">" +
+  "<option value=`"`" selected disabled>İçindekiler</option>" +
+  "<option value=`"bugun-azizi`">Bugünün Azizi</option>$azizlerTocMonthOpts" +
+  "<option value=`"buyuk-azizler`">En Bilinen 20 Aziz</option>" +
+  "<option value=`"hareketli-bayramlar`">Yıla Göre Değişen Bayramlar</option>" +
+"</select>$IcoChevDown</div>"
 $movableCardsHtml = ($Saints.movable | ForEach-Object {
   "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(Inline $_.title)</h3><p class=`"m-rank label`">$($_.rank)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(Blocks $_.bio)</div></article>"
 }) -join "`n"
@@ -1092,6 +1110,7 @@ $azizlerBody = @"
     <p class="label">Bugün <span data-today-date>...</span></p>
     <div class="today-body" data-today-body><p class="hint">Bugünün azizini görmek için JavaScript$($Apos)i etkinleştirin.</p></div>
   </section>
+  $azizlerTocHtml
   <nav class="month-pills" aria-label="Aylar" data-month-pills>$monthPillsHtml</nav>
   <div class="saints-cal" data-saints-cal>
 $monthSectionsHtml
@@ -1166,7 +1185,7 @@ $massPartsHtml = ($Mass.parts | ForEach-Object {
 $massBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kutsal Ayin')
-  <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Mass.title)</h1><p class="sub" lang="en">$($Mass.en)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$($Mass.title)</h1><p class="sub" lang="en">$($Mass.en)</p></header>
   <p class="faq-intro">$(Inline $Mass.intro)</p>
   <nav class="mass-pills" aria-label="Ayinin bölümleri" data-mass-pills>$massPillsHtml</nav>
   <div class="mass-parts" data-mass-parts>
@@ -1207,7 +1226,7 @@ $MeselTitle = "İsa$($Apos)nın Meselleri"
 $meselBody = @"
 <div class="wrap narrow">
   $(Crumbs $MeselTitle)
-  <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Parables.title)</h1><p class="sub" lang="en">$($Parables.en)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoBookOpen)<h1>$($Parables.title)</h1><p class="sub" lang="en">$($Parables.en)</p></header>
   <p class="faq-intro">$(Inline $Parables.intro)</p>
   <nav class="faq-toc" aria-label="Kategoriler"><ul>$meselToc</ul></nav>
 $meselCats
@@ -1379,7 +1398,7 @@ $blogCards = ($Blog.posts | ForEach-Object {
 $blogBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Blog')
-  <header class="page-head center"><p class="label">Blog</p><h1>Blog</h1><p class="sub" lang="en">Essays on the Catholic faith</p></header>
+  <header class="page-head center">$(Page-Ico $IcoPen)<h1>Blog</h1><p class="sub" lang="en">Essays on the Catholic faith</p></header>
   <p class="faq-intro">Katolik inancı ve günlük hayatta imanla ilgili özgün yazılar. Yazarın kendi İngilizce metniyle birlikte, Türkçe çevirisi de bir tıkla açılır.</p>
   <div class="post-list">$blogCards</div>
 </div>
@@ -1432,7 +1451,7 @@ $miraCats = ($Miracles.categories | ForEach-Object {
 $mucizelerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Mucizeler')
-  <header class="page-head center"><p class="label">Mucizeler</p><h1>$($Miracles.title)</h1><p class="sub" lang="en">$($Miracles.en)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoSparkle)<h1>$($Miracles.title)</h1><p class="sub" lang="en">$($Miracles.en)</p></header>
   <p class="faq-intro">$(Inline $Miracles.intro)</p>
   <nav class="faq-toc" aria-label="Kategoriler"><ul>$miraToc</ul></nav>
 $miraCats
@@ -1455,12 +1474,11 @@ $IcoClock = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cur
 $IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4h3.1l1.3 4-2 1.4a12.5 12.5 0 0 0 5.9 5.9l1.4-2 4 1.3v3.1a1.6 1.6 0 0 1-1.7 1.6A16.3 16.3 0 0 1 3.6 5.7 1.6 1.6 0 0 1 5.2 4Z"/></svg>'
 $IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
 $IcoWarn = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 18.2a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0Z"/><path d="M12 9.5v4.4"/><circle cx="12" cy="16.8" r="1" fill="currentColor" stroke="none"/></svg>'
-$IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15l6-5.5"/></svg>'
 $IcoFlagEn = '<svg class="flag-en" viewBox="0 0 24 16" aria-hidden="true" focusable="false"><rect width="24" height="16" fill="#1a237e"/><path d="M0 0 24 16M24 0 0 16" stroke="#fff" stroke-width="3"/><path d="M0 0 24 16M24 0 0 16" stroke="#c8102e" stroke-width="1.2"/><path d="M12 0V16M0 8H24" stroke="#fff" stroke-width="5.4"/><path d="M12 0V16M0 8H24" stroke="#c8102e" stroke-width="2.6"/></svg>'
 $IcoFlagTr = '<svg class="flag-tr" viewBox="0 0 24 16" aria-hidden="true" focusable="false"><rect width="24" height="16" fill="#e30a17"/><circle cx="9.6" cy="8" r="4.3" fill="#fff"/><circle cx="10.7" cy="8" r="3.5" fill="#e30a17"/><polygon fill="#fff" points="15.6,6.95 15.85,7.66 16.6,7.68 16.0,8.13 16.22,8.85 15.6,8.42 14.98,8.85 15.2,8.13 14.6,7.68 15.35,7.66"/></svg>'
 $IcoChurch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v3.1M10.6 4.1h2.8"/><path d="M5 10.8 12 6l7 4.8V21H5Z"/><path d="M9.6 21v-4.6a2.4 2.4 0 0 1 4.8 0V21"/></svg>'
 $riteSelectOpts = ($Churches.rites | ForEach-Object { "<option value=`"$($_.id)`">$($_.tr) ($($_.en))</option>" }) -join ''
-$riteFilterHtml = "<div class=`"rite-select-wrap`">" +
+$riteFilterHtml = "<div class=`"select-wrap`">" +
   "<select id=`"rite-select`" aria-label=`"Kilise türüne göre filtrele`"><option value=`"all`">Tüm Kiliseler (All Churches)</option>$riteSelectOpts</select>$IcoChevDown" +
 "</div>"
 $kiliselerToc = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`" data-city-link=`"$($_.id)`">$($_.name)</a></li>" }) -join ''
@@ -1503,7 +1521,7 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
 $kiliselerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kilise Bul')
-  <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
+  <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
   <div class="kiliseler-intro">
     <div id="kiliseler-intro-tr">
       <p>$(Inline $Churches.intro)</p>

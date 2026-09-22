@@ -16,7 +16,7 @@
 window.SAINTS = /*JSON-START*/{
   "title": "Azizler",
   "en": "Saints",
-  "intro": "Kilise, her günü bir ya da birkaç azizin anısına ayırır. Bu kutsal erkek ve kadınlar bize inanç yolunda örnek olsunlar diye Kilise’nin ayin takvimine kazınmıştır. Aşağıda yılın her günü için azizleri bulabilir, bugünün azizini görebilir ve hayatlarını keşfedebilirsiniz. Roma Genel Takvimi’nin zorunlu ya da ihtiyari kıldığı anmaların yanında, bu takvimin boş bıraktığı günler için de Roma Azizler Cetveli’nden (Martyrologium Romanum) ya da Batı’nın tarihî takvim geleneğinden bir aziz seçilmiştir; bu günler ayrı bir etiketle (“Roma Azizler Cetveli”) işaretlenmiştir, çünkü Kilise’nin bugün için zorunlu kıldığı bir anma değildir.",
+  "intro": "Kilise, her günü bir ya da birkaç azizin anısına ayırır; bu kutsal erkek ve kadınlar inanç yolunda bize örnek olsun diye ayin takvimine kazınmıştır.",
   "genelTitle": "Bugün İçin Özel Bir Aziz Yok",
   "genelBio": "Ne Roma Genel Takvimi’nde ne de Roma Azizler Cetveli’nde bu tarihe atanmış, güvenle aktarabileceğimiz bir aziz anması bulunuyor. Bu, o günün azizsiz geçtiği anlamına gelmez; Kilise’nin tarih boyunca tanıdığı sayısız aziz arasından, adı ve tarihi bu ayrıntıda güvenle doğrulanamayan pek çok kutsal insan vardır. Böyle günlerde Kilise bizi, ismini bilmesek de Allah’ın huzurunda olan bütün azizleri, yani cennetteki bütün kutsal ruhları anmaya çağırır.",
   "days": [

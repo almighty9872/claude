@@ -305,6 +305,11 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .page-head h1 { margin: .15rem 0 0; font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.1; font-weight: 600; }
 .page-head .sub { margin: .3rem 0 0; font-style: italic; color: var(--muted); }
 .page-head.center { flex-direction: column; text-align: center; gap: .2rem; }
+.page-ico {
+  display: grid; place-items: center; width: 3rem; height: 3rem; margin-bottom: .3rem;
+  border-radius: 999px; background: var(--gold-bg); color: var(--gold);
+}
+.page-ico svg { width: 1.6rem; height: 1.6rem; }
 
 .reader { display: grid; gap: 2.2rem; padding-bottom: 4rem; }
 @media (min-width: 1040px) { .reader { grid-template-columns: 17.5rem minmax(0, 1fr); align-items: start; } }
@@ -1306,17 +1311,17 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .flag-toggle:hover { border-color: var(--gold-soft); }
 .flag-toggle svg { width: 1.15rem; height: auto; display: block; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-strong); }
 
-/* Rite filter: a single compact <select> instead of a row of pills, so the city list below
-   doesn't have to compete with it for space. */
-.rite-select-wrap { position: relative; max-width: 19rem; margin: 0 auto 1.6rem; }
-.rite-select-wrap select {
+/* A compact <select> used wherever a row of pills or a long list of links would take up too
+   much space (the Kiliseler rite filter, the Azizler contents jump menu, ...). */
+.select-wrap { position: relative; max-width: 19rem; margin: 0 auto 1.6rem; }
+.select-wrap select {
   width: 100%; appearance: none; -webkit-appearance: none; -moz-appearance: none;
   padding: .55rem 2.3rem .55rem 1.1rem; border: 1px solid var(--border); border-radius: 999px;
   background: var(--surface); font-family: var(--sans); font-size: .86rem; font-weight: 600;
   color: var(--text-soft); cursor: pointer; transition: border-color .2s, color .2s;
 }
-.rite-select-wrap select:hover, .rite-select-wrap select:focus-visible { border-color: var(--gold-soft); color: var(--gold); }
-.rite-select-wrap svg {
+.select-wrap select:hover, .select-wrap select:focus-visible { border-color: var(--gold-soft); color: var(--gold); }
+.select-wrap svg {
   position: absolute; right: 1.05rem; top: 50%; transform: translateY(-50%);
   width: .8rem; height: .8rem; color: var(--muted); pointer-events: none;
 }
