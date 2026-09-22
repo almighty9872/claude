@@ -1457,10 +1457,11 @@ $IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 $IcoWarn = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 18.2a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0Z"/><path d="M12 9.5v4.4"/><circle cx="12" cy="16.8" r="1" fill="currentColor" stroke="none"/></svg>'
 $IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15l6-5.5"/></svg>'
 $IcoFlagEn = '<svg class="flag-en" viewBox="0 0 24 16" aria-hidden="true" focusable="false"><rect width="24" height="16" fill="#1a237e"/><path d="M0 0 24 16M24 0 0 16" stroke="#fff" stroke-width="3"/><path d="M0 0 24 16M24 0 0 16" stroke="#c8102e" stroke-width="1.2"/><path d="M12 0V16M0 8H24" stroke="#fff" stroke-width="5.4"/><path d="M12 0V16M0 8H24" stroke="#c8102e" stroke-width="2.6"/></svg>'
-$riteFilterBtns = ($Churches.rites | ForEach-Object { "<button type=`"button`" data-rite-link=`"$($_.id)`">$($_.tr)</button>" }) -join ''
-$riteFilterHtml = "<div class=`"rite-filter-wrap`">" +
-  "<button type=`"button`" class=`"rite-all is-current`" data-rite-link=`"all`">Tüm Kiliseler <span class=`"en`" lang=`"en`">(All Churches)</span></button>" +
-  "<nav class=`"faq-toc rite-filter`" aria-label=`"Kilise türüne göre filtrele`">$riteFilterBtns</nav>" +
+$IcoFlagTr = '<svg class="flag-tr" viewBox="0 0 24 16" aria-hidden="true" focusable="false"><rect width="24" height="16" fill="#e30a17"/><circle cx="9.6" cy="8" r="4.3" fill="#fff"/><circle cx="10.7" cy="8" r="3.5" fill="#e30a17"/><polygon fill="#fff" points="15.6,6.95 15.85,7.66 16.6,7.68 16.0,8.13 16.22,8.85 15.6,8.42 14.98,8.85 15.2,8.13 14.6,7.68 15.35,7.66"/></svg>'
+$IcoChurch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v3.1M10.6 4.1h2.8"/><path d="M5 10.8 12 6l7 4.8V21H5Z"/><path d="M9.6 21v-4.6a2.4 2.4 0 0 1 4.8 0V21"/></svg>'
+$riteSelectOpts = ($Churches.rites | ForEach-Object { "<option value=`"$($_.id)`">$($_.tr) ($($_.en))</option>" }) -join ''
+$riteFilterHtml = "<div class=`"rite-select-wrap`">" +
+  "<select id=`"rite-select`" aria-label=`"Kilise türüne göre filtrele`"><option value=`"all`">Tüm Kiliseler (All Churches)</option>$riteSelectOpts</select>$IcoChevDown" +
 "</div>"
 $kiliselerToc = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`" data-city-link=`"$($_.id)`">$($_.name)</a></li>" }) -join ''
 $kiliselerCities = ($Churches.cities | ForEach-Object {
@@ -1491,8 +1492,12 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
       "<p class=`"church-actions`"><a class=`"btn`" href=`"$(Map-Url $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a>$siteLink</p>" +
     "</article>"
   }) -join "`n"
-  "<details class=`"church-city`" id=`"$($city.id)`"><summary class=`"church-city-head`"><h2 class=`"section-title`">$($city.name)</h2>" +
-    "<span class=`"church-city-hint`">Kiliseleri görmek için tıklayın <span class=`"en`" lang=`"en`">(Click to see the churches)</span> $IcoChevDown</span></summary>" +
+  $cityNames = (($city.churches | ForEach-Object { Inline $_.name }) -join ', ')
+  "<details class=`"church-city`" id=`"$($city.id)`"><summary class=`"church-city-head`">" +
+    "<span class=`"church-city-ico`">$IcoChurch</span>" +
+    "<span class=`"church-city-body`"><span class=`"church-city-name`">$($city.name)</span><span class=`"church-city-names`">$cityNames</span></span>" +
+    "<span class=`"church-city-more`">Tüm Liste <span class=`"en`" lang=`"en`">(Full List)</span> $IcoChevDown</span>" +
+    "</summary>" +
     "<div class=`"church-list`">$cards</div></details>"
 }) -join "`n"
 $kiliselerBody = @"
@@ -1500,16 +1505,20 @@ $kiliselerBody = @"
   $(Crumbs 'Kilise Bul')
   <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
   <div class="kiliseler-intro">
-    <p>$(Inline $Churches.intro)</p>
-    <p>$(Inline $Churches.touristNote)</p>
-    <button type="button" class="en-toggle lang-flag" aria-expanded="false" aria-controls="kiliseler-intro-en">$IcoFlagEn <span class="btn-label">İngilizce</span></button>
-    <div id="kiliseler-intro-en" class="en-block" lang="en" hidden>
+    <div id="kiliseler-intro-tr">
+      <p>$(Inline $Churches.intro)</p>
+      <p>$(Inline $Churches.touristNote)</p>
+    </div>
+    <div id="kiliseler-intro-en" lang="en" hidden>
       <p>$(Inline $Churches.introEn)</p>
       <p>$(Inline $Churches.touristNoteEn)</p>
     </div>
+    <button type="button" class="flag-toggle" data-show-en="kiliseler-intro-en" data-show-tr="kiliseler-intro-tr" aria-pressed="false">
+      <span class="flag-show-en">$IcoFlagEn</span><span class="flag-show-tr" hidden>$IcoFlagTr</span>
+    </button>
   </div>
-  $riteFilterHtml
   <nav class="faq-toc" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
+  $riteFilterHtml
 $kiliselerCities
   <p class="conventions">$(Inline $Churches.note)</p>
   <div class="eucharist-note">

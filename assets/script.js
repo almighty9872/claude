@@ -914,25 +914,24 @@
   }
 
   /* ---------------------------------------------------------------
-     14. Kiliseler (parish locator): rite filter pills plus a
+     14. Kiliseler (parish locator): a rite <select> plus a
          one-city-at-a-time browsing mode. Every city is a native
          <details> (collapsed by default, works with no JS at all);
-         this script only adds two things on top of that:
+         this script only adds on top of that:
            - on load, only İstanbul's <details> is left visible, so
              the page opens on one manageable city instead of all ten;
-           - "Tüm Kiliseler" or the city pills, or a specific rite
-             filter that matches churches elsewhere, bring the other
-             cities back (a rite filter also force-opens whichever
-             cities it reveals, since the point of picking one is to
-             actually see the matching churches, not another click).
+           - a city pill shows only that city and opens it;
+           - "Tüm Kiliseler" in the rite <select> shows every city,
+             already expanded; a specific rite (e.g. Süryani Katolik)
+             instead reveals and expands only the cities that actually
+             have a matching church, wherever they are.
          The Mass-times disclosure per card is a separate, plain
          native <details>; its expanded body is styled as a floating
          popup on wide screens purely in CSS, no JS needed for that.
      --------------------------------------------------------------- */
   function initChurchFilter() {
-    var wrap = $('.rite-filter-wrap');
-    if (!wrap) return;
-    var riteBtns = $$('button[data-rite-link]', wrap);
+    var select = $('#rite-select');
+    if (!select) return;
     var cityLinks = $$('[data-city-link]');
     var cities = $$('.church-city');
     var cards = $$('.church-card');
@@ -943,9 +942,8 @@
       cityLinks.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-city-link') === id); });
     }
 
-    function applyRite(rite) {
+    function applyRite(rite, expandAll) {
       cards.forEach(function (c) { c.hidden = rite !== 'all' && c.getAttribute('data-rite') !== rite; });
-      riteBtns.forEach(function (b) { b.classList.toggle('is-current', b.getAttribute('data-rite-link') === rite); });
       showAllCities();
       if (rite !== 'all') {
         cities.forEach(function (sec) {
@@ -953,23 +951,44 @@
           sec.hidden = !anyMatch;
           if (anyMatch) sec.open = true;
         });
+      } else if (expandAll) {
+        cities.forEach(function (sec) { sec.open = true; });
       }
       markCurrentCity(null);
     }
 
     function goToCity(id) {
-      applyRite('all'); // a fresh city view shows everything in it, regardless of any prior rite filter
+      applyRite('all', false); // a fresh city view shows everything in it, regardless of any prior rite filter
+      select.value = 'all';
       showOnlyCity(id);
       var sec = document.getElementById(id);
       if (sec) sec.open = true;
       markCurrentCity(id);
     }
 
-    riteBtns.forEach(function (b) { b.addEventListener('click', function () { applyRite(b.getAttribute('data-rite-link')); }); });
+    select.addEventListener('change', function () { applyRite(select.value, select.value === 'all'); });
     cityLinks.forEach(function (a) { a.addEventListener('click', function () { goToCity(a.getAttribute('data-city-link')); }); });
 
     showOnlyCity('istanbul');
     markCurrentCity('istanbul');
+  }
+
+  /* Kiliseler intro: a flag button swaps the Turkish/English copy in place
+     (not an add-on reveal), and swaps which flag it shows to match. */
+  function initLangFlag() {
+    $$('.flag-toggle').forEach(function (btn) {
+      var en = document.getElementById(btn.getAttribute('data-show-en'));
+      var tr = document.getElementById(btn.getAttribute('data-show-tr'));
+      var flagEn = $('.flag-show-en', btn), flagTr = $('.flag-show-tr', btn);
+      if (!en || !tr) return;
+      btn.addEventListener('click', function () {
+        var showEn = tr.hidden === false;
+        tr.hidden = showEn; en.hidden = !showEn;
+        if (flagEn) flagEn.hidden = showEn;
+        if (flagTr) flagTr.hidden = !showEn;
+        btn.setAttribute('aria-pressed', String(showEn));
+      });
+    });
   }
 
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
@@ -985,6 +1004,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter();
+    initChurchFilter(); initLangFlag();
   });
 })();
