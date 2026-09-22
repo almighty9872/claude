@@ -1093,7 +1093,7 @@ $monthSectionsHtml
   <div class="post-list saint-grid">
 $greatSaintsCardsHtml
   </div>
-  <h2 class="section-title" id="hareketli-bayramlar">Hareketli Bayramlar</h2>
+  <h2 class="section-title" id="hareketli-bayramlar">Yıla Göre Değişen Bayramlar</h2>
   <p class="faq-intro">Paskalya her yıl farklı bir tarihe denk gelir; ona bağlı bütün bayramlar da (Kül Çarşambası$($Apos)ndan Kutsal Kalp$($Apos)e dek) buna göre kayar. Aşağıdaki tarihler, sayfayı açtığınız yılın Paskalya$($Apos)sına göre otomatik hesaplanır.</p>
   <div class="myst-grid movable-list" data-movable-list>
 $movableCardsHtml
