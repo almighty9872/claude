@@ -56,6 +56,9 @@
   --glass-shadow: 0 10px 34px -12px rgba(27, 35, 54, .28);
   --scrim: rgba(40, 36, 28, .5);
   --focus: #1d4f91;
+  --danger: #b3261e;        /* WCAG AA on ivory */
+  --danger-bg: rgba(179, 38, 30, .1);
+  --danger-border: rgba(179, 38, 30, .38);
 
   --serif: "EB Garamond", Garamond, "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -84,6 +87,9 @@
   --glass-shadow: 0 10px 34px -12px rgba(0, 0, 0, .7);
   --scrim: rgba(4, 8, 16, .62);
   --focus: #e6c47f;
+  --danger: #f2938c;        /* lighter on navy so it still reads as red, not brown */
+  --danger-bg: rgba(242, 147, 140, .12);
+  --danger-border: rgba(242, 147, 140, .4);
   color-scheme: dark;
 }
 
@@ -1303,9 +1309,20 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .church-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .4rem 0 0; }
 .church-actions .btn { font-size: .8rem; }
 
-/* Mass times: a native <details> so touch just taps to toggle. On a fine (hover-capable)
-   pointer, JS also opens/closes it on mouseenter/mouseleave, and the expanded body floats
-   as a small popup instead of pushing the card's own layout around. */
+/* Inactive/closed parish: a loud, always-visible warning (not tucked behind a click,
+   since this is exactly the kind of thing a reader needs before deciding to visit). */
+.church-warn {
+  display: flex; gap: .6rem; align-items: flex-start; margin: .3rem 0 0; padding: .7rem .85rem;
+  border-radius: var(--radius-sm); background: var(--danger-bg); border: 1px solid var(--danger-border);
+  color: var(--danger); font-size: .92rem; line-height: 1.5;
+}
+.church-warn svg { flex: none; width: 1.3rem; height: 1.3rem; margin-top: .1rem; }
+.church-warn strong { display: block; margin-bottom: .2rem; font-size: .95rem; text-transform: uppercase; letter-spacing: .03em; }
+.church-warn.en { margin-top: .4rem; padding: 0 0 0 2.35rem; background: transparent; border: 0; font-style: italic; opacity: .9; }
+
+/* Mass times: a plain native <details>, click/tap to toggle, same on every device. On a
+   wide screen the expanded body floats as a small popup instead of pushing the rest of
+   the card's layout around; on narrow screens it just expands in place. */
 .church-hours-item { margin-top: .2rem; }
 .church-hours-item summary {
   display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; list-style: none;

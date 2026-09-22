@@ -1454,6 +1454,7 @@ function Google-Url([string]$q) { return 'https://www.google.com/search?q=' + [u
 $IcoClock = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 7.4V12l3.2 2"/></svg>'
 $IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4h3.1l1.3 4-2 1.4a12.5 12.5 0 0 0 5.9 5.9l1.4-2 4 1.3v3.1a1.6 1.6 0 0 1-1.7 1.6A16.3 16.3 0 0 1 3.6 5.7 1.6 1.6 0 0 1 5.2 4Z"/></svg>'
 $IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
+$IcoWarn = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 18.2a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0Z"/><path d="M12 9.5v4.4"/><circle cx="12" cy="16.8" r="1" fill="currentColor" stroke="none"/></svg>'
 $riteFilterBtns = ($Churches.rites | ForEach-Object { "<button type=`"button`" data-rite-link=`"$($_.id)`">$($_.tr)</button>" }) -join ''
 $riteFilterHtml = "<nav class=`"faq-toc rite-filter`" aria-label=`"Kilise türüne göre filtrele`"><button type=`"button`" class=`"is-current`" data-rite-link=`"all`">Tümü</button>$riteFilterBtns</nav>"
 $kiliselerToc = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$($_.name)</a></li>" }) -join ''
@@ -1468,8 +1469,13 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     $addrRow = if ($_.address -ne "$($_.district), $($city.name)") { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
     $siteLink = if ($_.website) { "<a class=`"btn`" href=`"$($_.website)`" target=`"_blank`" rel=`"noopener`">Resmi Site $IcoExternal</a>" }
                 else { "<a class=`"btn`" href=`"$(Google-Url "$($_.name) $($city.name)")`" target=`"_blank`" rel=`"noopener`">Web$($Apos)te Ara $IcoExternal</a>" }
+    $warnRow = if ($_.inactive) {
+      "<p class=`"church-warn`">$IcoWarn<span><strong>Şu anda kapalı</strong>$(Inline $_.inactiveNote)</span></p>" +
+      "<p class=`"church-warn en`" lang=`"en`">$(Inline $_.inactiveNoteEn)</p>"
+    } else { '' }
     "<article class=`"text-card church-card`" id=`"$($_.id)`" data-rite=`"$($_.rite)`">" +
       "<header class=`"church-head`"><h3 class=`"t-title`">$(Inline $_.name)</h3><span class=`"church-rite rite-$($_.rite)`">$($rite.tr)</span></header>" +
+      $warnRow +
       "<p class=`"sub`" lang=`"en`">$(Inline $_.nameEn) · $($rite.en)</p>" +
       "<p class=`"church-meta`">$IcoPin $($_.district), $($city.name)</p>" +
       $addrRow +

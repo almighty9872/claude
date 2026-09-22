@@ -914,10 +914,11 @@
   }
 
   /* ---------------------------------------------------------------
-     14. Kiliseler (parish locator): rite filter pills, and the Mass-
-         times disclosure per card (native <details>: tap to toggle on
-         touch, and on top of that, opens/closes on hover for a fine
-         pointer so it reads as a popup rather than a click target).
+     14. Kiliseler (parish locator): rite filter pills. The Mass-times
+         disclosure per card is a plain native <details> (click/tap to
+         toggle, same on every device); its expanded body is styled as
+         a floating popup on wide screens purely in CSS, no JS needed
+         for that part.
      --------------------------------------------------------------- */
   function initChurchFilter() {
     var nav = $('.rite-filter');
@@ -929,19 +930,6 @@
       btns.forEach(function (b) { b.classList.toggle('is-current', b.getAttribute('data-rite-link') === rite); });
     }
     btns.forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-rite-link')); }); });
-  }
-  function initChurchHours() {
-    if (!FINE) return;
-    $$('.church-hours-item').forEach(function (det) {
-      var closeTimer = null;
-      det.addEventListener('mouseenter', function () {
-        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-        det.setAttribute('open', '');
-      });
-      det.addEventListener('mouseleave', function () {
-        closeTimer = setTimeout(function () { det.removeAttribute('open'); }, 150);
-      });
-    });
   }
 
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
@@ -957,6 +945,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initChurchHours();
+    initChurchFilter();
   });
 })();
