@@ -897,13 +897,15 @@
 
   /* Printing (or Save as PDF) should show every <details> section in full,
      not just the ones the reader happened to have open (saint bios, FAQ
-     answers, Latin prayer text). Opens them all right before the browser's
-     print dialog, then restores whichever ones were actually open. */
+     answers). Opens them all right before the browser's print dialog, then
+     restores whichever ones were actually open. Latin prayer text (.latin)
+     is excluded: the print stylesheet hides it outright, screen/mobile keep
+     it as a collapsed toggle either way. */
   function initPrintExpand() {
     var reopen = [];
     window.addEventListener('beforeprint', function () {
       reopen = [];
-      $$('details:not([open])').forEach(function (d) { d.setAttribute('open', ''); reopen.push(d); });
+      $$('details:not(.latin):not([open])').forEach(function (d) { d.setAttribute('open', ''); reopen.push(d); });
     });
     window.addEventListener('afterprint', function () {
       reopen.forEach(function (d) { d.removeAttribute('open'); });

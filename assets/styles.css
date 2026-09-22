@@ -527,7 +527,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   .readbar, .toc, .toc-backdrop, .pager, .site-footer,
   .en-toggle, .article-tools, [data-en-all], .gloss,
   .search, .home-katekizm-search, .today-pills, .hub-go,
-  .hover-panel, .month-pills
+  .hover-panel, .month-pills, .latin
   { display: none !important; }
 
   /* Always print with the light theme's ivory/gold palette, even if the
