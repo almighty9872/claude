@@ -827,7 +827,7 @@ $homeBody = @"
   <section class="lib-section">
     <div class="lib-head"><span class="roman">II</span><h2>Yaşam ve Dua</h2></div>
     <p class="lib-lead">Ayine katılmaktan Meryem Ana Tesbihi$($Apos)ne, Mesih İsa$($Apos)nın mesellerinden günlük dualara: imanın günlük pratiği.</p>
-    <div class="shelf cols-4">
+    <div class="shelf cols-3">
       <a class="hub-card" href="kutsal-ayin.html">
         <span class="hub-head"><span class="hub-ico">$IcoChalice</span><span class="hub-t">Kutsal Ayin</span></span>
         <span class="hub-s">Ayinin sırası, toplanmadan son takdise altı bölüm.</span>
@@ -846,6 +846,11 @@ $homeBody = @"
       <a class="hub-card" href="ekler.html">
         <span class="hub-head"><span class="hub-ico">$IcoPrayers</span><span class="hub-t">Sık Kullanılan Dualar</span></span>
         <span class="hub-s">Günlük dualar ve formüller, tek sayfada.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="kiliseler.html">
+        <span class="hub-head"><span class="hub-ico">$IcoPin</span><span class="hub-t">Kilise Bul</span></span>
+        <span class="hub-s">Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir.</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
     </div>
@@ -1439,19 +1444,18 @@ Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
 
 # ================================================================== KILISELER (kiliseler.html): parish locator
 $Churches = Read-Data 'kiliseler.js'
-$RiteLabels = @{
-  latin   = @{ tr = 'Latin Katolik';   en = 'Latin Catholic' }
-  ermeni  = @{ tr = 'Ermeni Katolik';  en = 'Armenian Catholic' }
-  suryani = @{ tr = 'Süryani Katolik'; en = 'Syriac Catholic' }
-  keldani = @{ tr = 'Keldani Katolik'; en = 'Chaldean Catholic' }
-}
+$RiteLabels = @{}
+$Churches.rites | ForEach-Object { $RiteLabels[$_.id] = @{ tr = $_.tr; en = $_.en } }
 # Deliberately searches Google Maps by the church's own name + district + city rather than a
 # possibly-imprecise street address: these are all named, independently mappable landmarks, so
 # a name search resolves reliably even where the sourced address text is only district-level.
 function Map-Url([string]$q) { return 'https://www.google.com/maps/search/?api=1&query=' + [uri]::EscapeDataString($q) }
+function Google-Url([string]$q) { return 'https://www.google.com/search?q=' + [uri]::EscapeDataString($q) }
 $IcoClock = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 7.4V12l3.2 2"/></svg>'
 $IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4h3.1l1.3 4-2 1.4a12.5 12.5 0 0 0 5.9 5.9l1.4-2 4 1.3v3.1a1.6 1.6 0 0 1-1.7 1.6A16.3 16.3 0 0 1 3.6 5.7 1.6 1.6 0 0 1 5.2 4Z"/></svg>'
 $IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
+$riteFilterBtns = ($Churches.rites | ForEach-Object { "<button type=`"button`" data-rite-link=`"$($_.id)`">$($_.tr)</button>" }) -join ''
+$riteFilterHtml = "<nav class=`"faq-toc rite-filter`" aria-label=`"Kilise türüne göre filtrele`"><button type=`"button`" class=`"is-current`" data-rite-link=`"all`">Tümü</button>$riteFilterBtns</nav>"
 $kiliselerToc = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$($_.name)</a></li>" }) -join ''
 $kiliselerCities = ($Churches.cities | ForEach-Object {
   $city = $_
@@ -1462,15 +1466,17 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     # Skip the address line entirely when the sourced data was only district-level (the address
     # field then just repeats "district, city", which the line above already shows).
     $addrRow = if ($_.address -ne "$($_.district), $($city.name)") { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
-    "<article class=`"text-card church-card`" id=`"$($_.id)`">" +
+    $siteLink = if ($_.website) { "<a class=`"btn`" href=`"$($_.website)`" target=`"_blank`" rel=`"noopener`">Resmi Site $IcoExternal</a>" }
+                else { "<a class=`"btn`" href=`"$(Google-Url "$($_.name) $($city.name)")`" target=`"_blank`" rel=`"noopener`">Web$($Apos)te Ara $IcoExternal</a>" }
+    "<article class=`"text-card church-card`" id=`"$($_.id)`" data-rite=`"$($_.rite)`">" +
       "<header class=`"church-head`"><h3 class=`"t-title`">$(Inline $_.name)</h3><span class=`"church-rite rite-$($_.rite)`">$($rite.tr)</span></header>" +
       "<p class=`"sub`" lang=`"en`">$(Inline $_.nameEn) · $($rite.en)</p>" +
       "<p class=`"church-meta`">$IcoPin $($_.district), $($city.name)</p>" +
       $addrRow +
-      "<p class=`"church-meta church-hours`">$IcoClock $(Inline $_.hours)</p>" +
-      "<p class=`"church-meta church-hours en`" lang=`"en`">$(Inline $_.hoursEn)</p>" +
       $phoneRow +
-      "<p class=`"church-actions`"><a class=`"btn`" href=`"$(Map-Url $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a></p>" +
+      "<details class=`"church-hours-item`"><summary>$IcoClock Ayin Saatleri <span class=`"en`" lang=`"en`">(Mass Times)</span></summary>" +
+        "<div class=`"church-hours-body`"><p class=`"church-hours`">$(Inline $_.hours)</p><p class=`"church-hours en`" lang=`"en`">$(Inline $_.hoursEn)</p></div></details>" +
+      "<p class=`"church-actions`"><a class=`"btn`" href=`"$(Map-Url $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a>$siteLink</p>" +
     "</article>"
   }) -join "`n"
   "<section class=`"church-city`" id=`"$($city.id)`"><h2 class=`"section-title`">$($city.name)</h2><div class=`"church-list`">$cards</div></section>"
@@ -1480,6 +1486,10 @@ $kiliselerBody = @"
   $(Crumbs 'Kilise Bul')
   <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
   <p class="faq-intro">$(Inline $Churches.intro)</p>
+  <p class="faq-intro sub" lang="en">$(Inline $Churches.introEn)</p>
+  <p class="faq-intro">$(Inline $Churches.touristNote)</p>
+  <p class="faq-intro sub" lang="en">$(Inline $Churches.touristNoteEn)</p>
+  $riteFilterHtml
   <nav class="faq-toc" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
 $kiliselerCities
   <p class="conventions">$(Inline $Churches.note)</p>

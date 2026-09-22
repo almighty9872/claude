@@ -971,6 +971,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 @media (min-width: 720px) {
   .shelf > *:last-child:nth-child(odd) { grid-column: auto; }
   .shelf.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .shelf.cols-3 { grid-template-columns: repeat(3, 1fr); }
   .shelf.cols-4 { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -1271,10 +1272,23 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 }
 
 /* ---------- 22. Kiliseler (parish locator) ---------- */
+/* .sub elsewhere is only ever styled nested (.page-head .sub, .mass-part-head .sub); this page
+   also uses the bare class directly, so give it the same italic/muted look on its own. */
+.sub { font-style: italic; color: var(--muted); }
+.rite-filter { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin: 0 0 1rem; }
+.rite-filter button {
+  display: block; padding: .4rem .9rem; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); font-family: var(--sans); font-size: .82rem; color: var(--text-soft);
+  cursor: pointer; transition: border-color .2s, color .2s, background-color .2s;
+}
+.rite-filter button:hover { border-color: var(--gold-soft); color: var(--gold); }
+.rite-filter button.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold); font-weight: 600; }
 .church-city { margin-bottom: 2.6rem; }
+.church-city[hidden] { display: none; }
 .church-list { display: grid; gap: .8rem; margin-top: 1rem; }
 @media (min-width: 720px) { .church-list { grid-template-columns: 1fr 1fr; } }
 .church-card { display: flex; flex-direction: column; gap: .35rem; }
+.church-card[hidden] { display: none; }
 .church-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .7rem; }
 .church-head .t-title { margin: 0; }
 .church-rite {
@@ -1285,7 +1299,29 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   display: flex; align-items: flex-start; gap: .5rem; margin: 0; font-size: .95rem; color: var(--text-soft);
 }
 .church-meta svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: var(--muted); }
-.church-meta.en { font-style: italic; color: var(--muted); font-size: .88rem; }
 .church-address { color: var(--muted); font-size: .88rem; padding-left: 1.5rem; }
-.church-actions { margin: .4rem 0 0; }
+.church-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .4rem 0 0; }
 .church-actions .btn { font-size: .8rem; }
+
+/* Mass times: a native <details> so touch just taps to toggle. On a fine (hover-capable)
+   pointer, JS also opens/closes it on mouseenter/mouseleave, and the expanded body floats
+   as a small popup instead of pushing the card's own layout around. */
+.church-hours-item { margin-top: .2rem; }
+.church-hours-item summary {
+  display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; list-style: none;
+  font-family: var(--sans); font-size: .85rem; font-weight: 600; color: var(--gold);
+}
+.church-hours-item summary svg { width: 1rem; height: 1rem; }
+.church-hours-item summary::-webkit-details-marker { display: none; }
+.church-hours-item summary .en { margin-left: .1rem; font-weight: 400; }
+.church-hours-body p { margin: 0 0 .4rem; font-size: .92rem; }
+.church-hours-body p:last-child { margin-bottom: 0; }
+.church-hours-body .church-hours.en { font-style: italic; color: var(--muted); font-size: .86rem; }
+@media (hover: hover) and (pointer: fine) {
+  .church-hours-item { position: relative; }
+  .church-hours-item[open] .church-hours-body {
+    position: absolute; top: 100%; left: 0; z-index: 6; margin-top: .5rem;
+    width: max-content; max-width: 22rem; padding: .8rem 1rem; border-radius: var(--radius-sm);
+    background: var(--surface); border: 1px solid var(--border-strong); box-shadow: var(--shadow);
+  }
+}
