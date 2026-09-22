@@ -1269,3 +1269,23 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   .mira-name { font-size: .98rem; }
   .mira-bio { padding: .85rem 1rem 1rem; }
 }
+
+/* ---------- 22. Kiliseler (parish locator) ---------- */
+.church-city { margin-bottom: 2.6rem; }
+.church-list { display: grid; gap: .8rem; margin-top: 1rem; }
+@media (min-width: 720px) { .church-list { grid-template-columns: 1fr 1fr; } }
+.church-card { display: flex; flex-direction: column; gap: .35rem; }
+.church-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .7rem; }
+.church-head .t-title { margin: 0; }
+.church-rite {
+  flex: none; padding: .15rem .6rem; border-radius: 999px; background: var(--gold-bg);
+  font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .04em; color: var(--gold);
+}
+.church-meta {
+  display: flex; align-items: flex-start; gap: .5rem; margin: 0; font-size: .95rem; color: var(--text-soft);
+}
+.church-meta svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: var(--muted); }
+.church-meta.en { font-style: italic; color: var(--muted); font-size: .88rem; }
+.church-address { color: var(--muted); font-size: .88rem; padding-left: 1.5rem; }
+.church-actions { margin: .4rem 0 0; }
+.church-actions .btn { font-size: .8rem; }

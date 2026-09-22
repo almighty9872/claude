@@ -1,6 +1,6 @@
 # katolikdunyasi.com
 
-A static, Turkish-language Catholic resource site. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections on the OCIA/RCIA process for becoming Catholic, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, and frequently asked questions.
+A static, Turkish-language Catholic resource site. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections on the OCIA/RCIA process for becoming Catholic, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, frequently asked questions, and a directory of active Catholic churches in Turkey.
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
@@ -26,6 +26,7 @@ azizler.html            Calendar of the saints (current month shown, other month
 kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)
 mucizeler.html          Catholic miracles: apparitions, relics, Eucharistic miracles, incorrupt saints
 sss.html                Frequently asked questions, grouped by topic
+kiliseler.html          Parish locator: active Catholic churches in Turkey, grouped by city
 blog.html               Blog index: original personal writing, English original + Turkish translation
 iletisim.html           Contact page (email, based in Toronto)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
@@ -46,6 +47,7 @@ data/azizler.js         ← Saints calendar (one entry per day)
 data/buyuk-azizler.js   ← The 20 best-known saints: long original biography per saint, one page each
 data/sss.js             ← FAQ content
 data/mucizeler.js       ← Catholic miracles (four thematic categories)
+data/kiliseler.js       ← Parish locator: churches in Turkey by city and rite
 data/blog.js            ← Blog posts (English original + Turkish translation, Markdown body)
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← "About this site" text shown in the (i) panel (Markdown)

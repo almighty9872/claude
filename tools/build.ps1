@@ -400,7 +400,8 @@ $KaynaklarNav = @(
   @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci';       s = 'Katolik olma süreci' },
   @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım' },
   @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille' },
-  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler' }
+  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler' },
+  @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri" }
 )
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
@@ -418,6 +419,7 @@ $IcoMail = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="curr
 $IcoPrayers = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14"/><path d="M8 5.5c0 5-1 8-3.5 10"/><path d="M16 5.5c0 5 1 8 3.5 10"/><path d="M8 20.5c1.3-1 2.7-1 4 0 1.3-1 2.7-1 4 0"/></svg>'
 $IcoScroll = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4.5h11a2 2 0 0 1 2 2V8H9a2 2 0 0 0-2 2Z"/><path d="M7 4.5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5H9a2 2 0 0 1-2-2Z"/><path d="M11.5 11.5h5M11.5 14.5h5"/></svg>'
 $IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.2a2.8 2.8 0 1 1 3.5 3.1c-.6.2-.9.7-.9 1.3v.6"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor" stroke="none"/></svg>'
+$IcoPin = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>'
 $SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
 # href -> icon lookup for the mobile menu sheet (each real destination gets a small icon; the
 # plain-text ns-label section headers do not). Defined early, before Header-Html is first called
@@ -435,6 +437,7 @@ $NavIcons = @{
   'mucizeler.html'       = $IcoRadiance
   'azizler.html'         = $IcoStar
   'sss.html'             = $IcoAsk
+  'kiliseler.html'       = $IcoPin
   'iletisim.html'        = $IcoMail
 }
 $MassIcons = @{
@@ -1434,6 +1437,58 @@ Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
   -Description "Katolik Kilisesi$($Apos)nde bilinen mucizeler: Meryem Ana görünmeleri (Fatima, Lourdes, Guadalupe, Zeytun), Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler." `
   -Path 'mucizeler.html' -Body $mucizelerBody -JsonLd @((Breadcrumb-Ld 'Mucizeler' 'mucizeler.html'))
 
+# ================================================================== KILISELER (kiliseler.html): parish locator
+$Churches = Read-Data 'kiliseler.js'
+$RiteLabels = @{
+  latin   = @{ tr = 'Latin Katolik';   en = 'Latin Catholic' }
+  ermeni  = @{ tr = 'Ermeni Katolik';  en = 'Armenian Catholic' }
+  suryani = @{ tr = 'Süryani Katolik'; en = 'Syriac Catholic' }
+  keldani = @{ tr = 'Keldani Katolik'; en = 'Chaldean Catholic' }
+}
+# Deliberately searches Google Maps by the church's own name + district + city rather than a
+# possibly-imprecise street address: these are all named, independently mappable landmarks, so
+# a name search resolves reliably even where the sourced address text is only district-level.
+function Map-Url([string]$q) { return 'https://www.google.com/maps/search/?api=1&query=' + [uri]::EscapeDataString($q) }
+$IcoClock = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 7.4V12l3.2 2"/></svg>'
+$IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4h3.1l1.3 4-2 1.4a12.5 12.5 0 0 0 5.9 5.9l1.4-2 4 1.3v3.1a1.6 1.6 0 0 1-1.7 1.6A16.3 16.3 0 0 1 3.6 5.7 1.6 1.6 0 0 1 5.2 4Z"/></svg>'
+$IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
+$kiliselerToc = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$($_.name)</a></li>" }) -join ''
+$kiliselerCities = ($Churches.cities | ForEach-Object {
+  $city = $_
+  $cards = ($city.churches | ForEach-Object {
+    $rite = $RiteLabels[$_.rite]
+    $mapQ = "$($_.name), $($_.district), $($city.name), Türkiye"
+    $phoneRow = if ($_.phone) { "<p class=`"church-meta`">$IcoPhone $($_.phone)</p>" } else { '' }
+    # Skip the address line entirely when the sourced data was only district-level (the address
+    # field then just repeats "district, city", which the line above already shows).
+    $addrRow = if ($_.address -ne "$($_.district), $($city.name)") { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
+    "<article class=`"text-card church-card`" id=`"$($_.id)`">" +
+      "<header class=`"church-head`"><h3 class=`"t-title`">$(Inline $_.name)</h3><span class=`"church-rite rite-$($_.rite)`">$($rite.tr)</span></header>" +
+      "<p class=`"sub`" lang=`"en`">$(Inline $_.nameEn) · $($rite.en)</p>" +
+      "<p class=`"church-meta`">$IcoPin $($_.district), $($city.name)</p>" +
+      $addrRow +
+      "<p class=`"church-meta church-hours`">$IcoClock $(Inline $_.hours)</p>" +
+      "<p class=`"church-meta church-hours en`" lang=`"en`">$(Inline $_.hoursEn)</p>" +
+      $phoneRow +
+      "<p class=`"church-actions`"><a class=`"btn`" href=`"$(Map-Url $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a></p>" +
+    "</article>"
+  }) -join "`n"
+  "<section class=`"church-city`" id=`"$($city.id)`"><h2 class=`"section-title`">$($city.name)</h2><div class=`"church-list`">$cards</div></section>"
+}) -join "`n"
+$kiliselerBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Kilise Bul')
+  <header class="page-head center"><p class="label">Kaynaklar</p><h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
+  <p class="faq-intro">$(Inline $Churches.intro)</p>
+  <nav class="faq-toc" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
+$kiliselerCities
+  <p class="conventions">$(Inline $Churches.note)</p>
+</div>
+"@
+Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" `
+  -Description "Türkiye$($Apos)deki etkin Katolik kiliselerinin listesi: Latin, Ermeni Katolik, Süryani Katolik ve Keldani Katolik cemaatleri, adres ve ayin saatleriyle." `
+  -Path 'kiliseler.html' -Body $kiliselerBody -JsonLd @((Breadcrumb-Ld 'Kilise Bul' 'kiliseler.html'))
+
 # ================================================================== ILETISIM (iletisim.html)
 $iletisimBody = @"
 <div class="wrap narrow">
@@ -1497,7 +1552,7 @@ $pages = @(
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
-  @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
+  @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }
