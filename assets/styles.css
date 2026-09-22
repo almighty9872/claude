@@ -385,6 +385,7 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 }
 a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .qa-q { margin: 0; font-size: clamp(1.18rem, 2.5vw, 1.34rem); line-height: 1.3; font-weight: 600; }
+.qa-ref { margin: .35rem 0 0; font-size: .92rem; color: var(--muted); }
 .qa-a { margin-top: .6rem; }
 .qa-a p { margin: 0 0 .7em; }
 .qa-a ul { margin: 0 0 .7em; padding-left: 1.25rem; }
@@ -395,7 +396,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   background: var(--gold-bg); border-left: 3px solid var(--gold-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 .qa-foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: .6rem; margin-top: .2rem; }
-.ccc { font-family: var(--sans); font-size: .74rem; letter-spacing: .04em; color: var(--muted); }
 .en-toggle {
   display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .75rem; min-height: 2.1rem;
   border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text-soft);
@@ -515,10 +515,13 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 /* Every reading page (Katekizm parts, Ekler, Azizler, Meseller, Mucizeler,
    blog posts...) already has its full text in the DOM; this only changes how
    a browser's own Print / Save-as-PDF renders that same page: no site chrome,
-   solid black-on-white regardless of the active theme, a plain academic
-   serif at a comfortable size, and clean page breaks around questions and
-   headings. Nothing here is a separate export path — it only ever runs when
-   the reader chooses to print, on the page they were already reading. */
+   the same ivory/gold palette as the light theme (regardless of which theme
+   was active on screen), a plain academic serif at a comfortable size, and
+   clean page breaks around questions and headings — the official Compendium
+   layout, with the article-number range set on its own line right after the
+   question and before the answer. Nothing here is a separate export path —
+   it only ever runs when the reader chooses to print, on the page they were
+   already reading. */
 @media print {
   .site-header, .navsheet, .info-panel, .skip-link, .read-progress,
   .readbar, .toc, .toc-backdrop, .pager, .site-footer,
@@ -527,27 +530,39 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   .hover-panel, .month-pills
   { display: none !important; }
 
-  html, body { background: #fff !important; }
-  body { color: #000; font-size: 12pt; line-height: 1.5; }
+  /* Always print with the light theme's ivory/gold palette, even if the
+     reader has dark mode on screen — guarantees readable contrast on paper
+     while keeping the same gold headings as the official Compendium page. */
+  :root, :root[data-theme="dark"] {
+    --bg: #fff !important; --surface: #fff !important; --surface-2: #fff !important; --surface-3: #fff !important;
+    --text: #1b2336 !important; --text-soft: #39425a !important; --muted: #55597a !important;
+    --gold: #8a6720 !important; --gold-soft: #b99a5b !important; --gold-bg: transparent !important;
+    --border: #ccc !important; --border-strong: #999 !important;
+  }
 
-  /* One plain academic serif, one size scale, no colour, no letter-spacing
-     tricks, no uppercase — every question reads like a printed book page. */
+  html, body { background: #fff !important; }
+  body { font-size: 12pt; line-height: 1.5; }
+
+  /* One plain academic serif, one size scale, no letter-spacing tricks, no
+     uppercase — every question reads like a printed book page. Colour is
+     kept (see the palette reset above) so headings stay gold like the
+     official layout; only backgrounds/shadows are stripped. */
   * {
-    color: #000 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important;
+    background: transparent !important; box-shadow: none !important; text-shadow: none !important;
     font-family: var(--serif) !important; text-transform: none !important; letter-spacing: normal !important;
   }
-  a { text-decoration: none; }
+  a { text-decoration: none; color: inherit; }
 
   .wrap, .wrap.narrow { max-width: 100%; padding: 0; }
-  .page-head { border-bottom: 1px solid #000; padding-bottom: .5em; margin-bottom: 1.2em; }
+  .page-head { border-bottom: 1px solid var(--border-strong); padding-bottom: .5em; margin-bottom: 1.2em; }
   .page-head .roman { font-size: 16pt; }
   .page-head h1 { font-size: 18pt; }
   .page-head .sub { font-size: 12pt; }
 
-  h1 { font-size: 18pt; font-weight: 700; }
-  h2, .section-title { font-size: 14pt; font-weight: 700; margin-top: 1.6em; }
-  h3 { font-size: 12.5pt; font-weight: 700; }
-  .sec .sec-label { font-size: 12pt; font-weight: 700; margin-bottom: .2em; }
+  h1 { font-size: 18pt; font-weight: 700; color: var(--gold); }
+  h2, .section-title { font-size: 14pt; font-weight: 700; margin-top: 1.6em; color: var(--gold); }
+  h3 { font-size: 12.5pt; font-weight: 700; color: var(--gold); }
+  .sec .sec-label { font-size: 12pt; font-weight: 700; margin-bottom: .2em; color: var(--gold); }
   .sec-l4 .sec-title::before { display: none; }
   .sec { break-after: avoid; }
 
@@ -560,20 +575,19 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
     margin: 0 0 1.4em !important; box-shadow: none !important; break-inside: avoid;
   }
   .part-acc > summary { padding: 0 !important; gap: .4em; }
-  .part-acc .p-title { font-size: 14pt; font-weight: 700; }
+  .part-acc .p-title { font-size: 14pt; font-weight: 700; color: var(--text); }
   .qa-head { gap: .5em; }
   .qa-num {
     border: 0 !important; padding: 0 !important; min-width: auto !important; border-radius: 0 !important;
-    font-size: 12pt; font-weight: 700;
+    font-size: 12pt; font-weight: 700; color: var(--text);
   }
   .qa-num::after { content: '.'; }
-  .qa-q, .t-title, .faq-q { font-size: 12pt; font-weight: 700; line-height: 1.4; }
+  .qa-q, .t-title, .faq-q { font-size: 12pt; font-weight: 700; line-height: 1.4; color: var(--text); }
+  .qa-ref, .faq-ref { font-size: 11pt; color: var(--text); margin: .3em 0 .6em; }
   .qa-a, .qa-a p, .qa-a li, .faq-a p, .faq-a li, .t-body p { font-size: 12pt; }
   .note { padding: 0 !important; margin: .4em 0 .8em; border-left: 0 !important; background: transparent !important; }
   .qa-foot { border-top: 0 !important; padding-top: .2em !important; margin-top: 0; justify-content: flex-start; gap: .5em; }
-  .qa-foot, .ccc { font-size: 10pt; }
   .faq-a { border-top: 0 !important; padding: .4em 0 0 !important; }
-  .faq-ref { border-top: 0 !important; padding-top: 0 !important; }
   .faq-item > summary { padding: 0 !important; gap: .4em; }
 
   .en-block[hidden], details:not([open]) .saint-bio, .search-results { display: none !important; }
@@ -615,7 +629,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .faq-a { padding: .95rem 1.25rem 1.15rem; border-top: 1px solid var(--border); }
 .faq-a p { margin: 0 0 .85rem; }
 .faq-a ul { margin: 0 0 .85rem; padding-left: 1.3rem; }
-.faq-ref { margin: 0; padding-top: .3rem; border-top: 1px dotted var(--border); }
+.faq-ref { margin: 0 0 .7rem; font-size: .92rem; color: var(--muted); }
 @media (max-width: 560px) {
   .faq-item > summary { padding: .9rem 1rem; gap: .7rem; }
   .faq-q { font-size: 1.04rem; }

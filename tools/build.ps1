@@ -254,9 +254,10 @@ function Qa-Html($it, [int]$hl) {
   $note = if ($it.note) { "<p class=`"note`"><b>Not:</b> $(Inline $it.note)</p>" } else { '' }
   return "<article class=`"qa`" id=`"soru-$n`" data-n=`"$n`">" +
     "<header class=`"qa-head`"><a class=`"qa-num`" href=`"#soru-$n`" aria-label=`"Soru $n bağlantısı`">$n</a><$tag class=`"qa-q`">$(Inline $it.tr.q)</$tag></header>" +
+    "<p class=`"qa-ref`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($it.ccc)</p>" +
     "<div class=`"qa-a`">$(Blocks $it.tr.a)</div>$note" +
-    "<footer class=`"qa-foot`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($it.ccc)</span>$(En-Toggle "en-$n")</footer>" +
-    "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><div class=`"qa-a`">$(Blocks $it.en.a)</div><span class=`"ccc`">$($it.ccc)</span></div>" +
+    "<footer class=`"qa-foot end`">$(En-Toggle "en-$n")</footer>" +
+    "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><p class=`"qa-ref`">$($it.ccc)</p><div class=`"qa-a`">$(Blocks $it.en.a)</div></div>" +
     "</article>"
 }
 # $tagLevel is the true HTML heading level (never skips a level in the DOM); it can
@@ -958,8 +959,9 @@ $faqCats = ($FaqData.categories | ForEach-Object {
   $qs = ($cat.items | ForEach-Object {
     "<details class=`"faq-item`" id=`"$($_.id)`">" +
       "<summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
-      "<div class=`"faq-a`">$(Blocks $_.a)" +
-        "<p class=`"faq-ref`"><span class=`"ccc`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($_.ccc)</span></p></div>" +
+      "<div class=`"faq-a`">" +
+        "<p class=`"faq-ref`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($_.ccc)</p>" +
+        "$(Blocks $_.a)</div>" +
     "</details>"
   }) -join "`n"
   "<section class=`"faq-cat`" id=`"$($cat.id)`">" +
