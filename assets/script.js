@@ -128,49 +128,6 @@
   }
 
   /* ---------------------------------------------------------------
-     3b. Blog posts: whole-post language swap (English shown by
-     default, "Türkçe'ye çevir" swaps in the Turkish translation)
-     --------------------------------------------------------------- */
-  function initPostLang() {
-    $$('.lang-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var en = document.getElementById(btn.getAttribute('data-show-en'));
-        var tr = document.getElementById(btn.getAttribute('data-show-tr'));
-        if (!en || !tr) return;
-        var showTr = en.hidden === false && tr.hidden === true;
-        en.hidden = showTr; tr.hidden = !showTr;
-        btn.setAttribute('aria-pressed', String(showTr));
-        var label = btn.querySelector('.btn-label');
-        if (label) label.textContent = showTr ? 'İngilizce aslını göster' : "Türkçe’ye çevir";
-        var readEl = document.getElementById(btn.getAttribute('data-read-target'));
-        if (readEl) readEl.textContent = btn.getAttribute(showTr ? 'data-read-tr' : 'data-read-en');
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     3c. Blog posts: reading-progress bar (fills as the article,
-     not the whole page, scrolls through the viewport)
-     --------------------------------------------------------------- */
-  function initReadProgress() {
-    var article = document.getElementById('post');
-    var bar = $('.read-progress .bar');
-    if (!article || !bar) return;
-    var ticking = false;
-    function update() {
-      ticking = false;
-      var top = article.offsetTop, height = article.offsetHeight;
-      var start = top, end = top + height - window.innerHeight;
-      var pct = end <= start ? 100 : ((window.pageYOffset - start) / (end - start)) * 100;
-      bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
-    }
-    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
-  }
-
-  /* ---------------------------------------------------------------
      4. "Show all English" (reading bar / article pages)
      --------------------------------------------------------------- */
   function initRevealAll() {
@@ -764,9 +721,9 @@
   }
 
   /* ---------------------------------------------------------------
-     13. Home page: today's saint and today's rosary mystery, each
-         lazy-loaded from its own data file (same pattern as search)
-         only when the home page actually has the widgets to fill.
+     13. Home page: today's saint, lazy-loaded from its own data file
+         (same pattern as search) only when the home page actually has
+         the widget to fill.
      --------------------------------------------------------------- */
   function loadDataScript(src, globalName) {
     return new Promise(function (resolve, reject) {
@@ -801,45 +758,33 @@
   };
   function initHomeWidgets() {
     var saintPill = $('[data-home-saint-pill] .tp-value');
-    var mysteryPill = $('[data-home-mystery-pill] .tp-value');
-    if (!saintPill && !mysteryPill) return;
+    if (!saintPill) return;
 
     function istanbulToday() {
       try {
-        var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'short' }).formatToParts(new Date());
+        var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date());
         var o = {};
-        parts.forEach(function (p) { if (p.type === 'weekday') o.weekday = p.value; else if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
+        parts.forEach(function (p) { if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
         if (o.year && o.month && o.day) return o;
       } catch (e) { /* fall through */ }
       var d = new Date();
-      return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate(), weekday: null };
+      return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
     }
     var today = istanbulToday();
 
-    if (saintPill) {
-      loadDataScript('data/azizler.js', 'SAINTS').then(function () {
-        var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
-        var s = day && day.saints && day.saints[0];
-        var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
-        var href = top20Id ? top20Id + '.html' : 'azizler.html';
-        saintPill.textContent = s ? s.name : 'Bugün için yok';
-        saintPill.classList.remove('hint');
-        var pillLink = saintPill.closest('a');
-        if (pillLink) pillLink.setAttribute('href', href);
-      })['catch'](function () {
-        saintPill.textContent = 'Yüklenemedi';
-        saintPill.classList.remove('hint');
-      });
-    }
-    if (mysteryPill) {
-      loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
-        var dayIdx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(today.weekday);
-        if (dayIdx === -1) dayIdx = new Date().getDay();
-        var set = window.COMPENDIUM_ROSARY.sets.filter(function (s) { return s.days.indexOf(dayIdx) !== -1; })[0];
-        mysteryPill.textContent = set ? set.tr : 'Bulunamadı';
-        mysteryPill.classList.remove('hint');
-      })['catch'](function () { mysteryPill.textContent = 'Yüklenemedi'; mysteryPill.classList.remove('hint'); });
-    }
+    loadDataScript('data/azizler.js', 'SAINTS').then(function () {
+      var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
+      var s = day && day.saints && day.saints[0];
+      var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
+      var href = top20Id ? top20Id + '.html' : 'azizler.html';
+      saintPill.textContent = s ? s.name : 'Bugün için yok';
+      saintPill.classList.remove('hint');
+      var pillLink = saintPill.closest('a');
+      if (pillLink) pillLink.setAttribute('href', href);
+    })['catch'](function () {
+      saintPill.textContent = 'Yüklenemedi';
+      saintPill.classList.remove('hint');
+    });
   }
 
   /* Home page only: the Katekizm card's search icon pops out a large, backdrop-blurred
@@ -1014,7 +959,7 @@
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll(); initPostLang(); initReadProgress();
+    initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
     initChurchFilter(); initLangFlag(); initJumpSelect();
   });

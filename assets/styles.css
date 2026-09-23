@@ -443,9 +443,15 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 /* Text cards: Creeds, Decalogue, Our Father, prayers, formulas */
 .text-grid { display: grid; gap: 1rem; margin: 1rem 0 1.6rem; }
 @media (min-width: 900px) { .text-grid.two { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 720px) { .text-grid.three { grid-template-columns: repeat(3, 1fr); } }
 .text-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.15rem 1.3rem .85rem; min-width: 0; scroll-margin-top: calc(var(--header-h) + 4.5rem); }
 .text-card:target { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-bg); }
 .text-card .t-title { margin: 0 0 .7rem; font-size: 1.35rem; line-height: 1.2; font-weight: 600; }
+/* Günah Çıkarma: examination-of-conscience checklist, one card per commandment */
+.examen-title { font-size: 1.05rem; }
+.examen-list { margin: 0; padding-left: 1.25rem; color: var(--text-soft); }
+.examen-list li { margin-bottom: .5rem; line-height: 1.5; }
+.examen-list li:last-child { margin-bottom: 0; }
 .verse p { margin: 0 0 .8em; }
 .verse ol { margin: 0 0 .7em; padding-left: 1.5rem; }
 .verse ol.plain { list-style: none; padding-left: 0; }
@@ -479,18 +485,14 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .article-tools { display: flex; justify-content: center; margin: 0 0 1.6rem; }
 .article .en-block { margin-top: 2rem; padding: 1.2rem 1.4rem .6rem; }
 
-/* Blog: post listing + individual post (English shown by default, Turkish behind a toggle) */
+/* Text-link card list (originally shared with the blog; now just the Azizler "20 best-known
+   saints" grid) */
 .post-list { display: grid; gap: 1rem; margin-top: 1.8rem; }
 .post-card { position: relative; }
 .saint-grid { margin-top: 1.4rem; margin-bottom: 1rem; }
 @media (min-width: 760px) { .saint-grid { grid-template-columns: 1fr 1fr; } }
 .post-date { display: block; }
 .post-card .post-excerpt { margin: .6rem 0 0; color: var(--text-soft); font-size: 1rem; }
-.post-body p { margin: 0 0 1em; }
-.post-body .post-closing { margin-top: 1.4rem; font-style: italic; }
-.read-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 50; pointer-events: none; }
-.read-progress .bar { display: block; height: 100%; width: 0%; background: var(--gold); }
-@media (prefers-reduced-motion: no-preference) { .read-progress .bar { transition: width .12s linear; } }
 
 /* About page (Markdown content from content/hakkinda.md) */
 .prose h2 { font-size: clamp(1.45rem, 3vw, 1.75rem); font-weight: 600; line-height: 1.25; margin: 2rem 0 .7rem; }
@@ -523,8 +525,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .site-footer p { margin: 0 0 .7rem; max-width: 60rem; }
 
 /* ---------- 9. Print ---------- */
-/* Every reading page (Katekizm parts, Ekler, Azizler, Meseller, Mucizeler,
-   blog posts...) already has its full text in the DOM; this only changes how
+/* Every reading page (Katekizm parts, Ekler, Azizler, Meseller, Mucizeler...)
+   already has its full text in the DOM; this only changes how
    a browser's own Print / Save-as-PDF renders that same page: no site chrome,
    the same ivory/gold palette as the light theme (regardless of which theme
    was active on screen), a plain academic serif at a comfortable size, and
@@ -534,7 +536,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
    it only ever runs when the reader chooses to print, on the page they were
    already reading. */
 @media print {
-  .site-header, .navsheet, .info-panel, .skip-link, .read-progress,
+  .site-header, .navsheet, .info-panel, .skip-link,
   .readbar, .toc, .toc-backdrop, .pager, .site-footer,
   .en-toggle, .article-tools, [data-en-all], .gloss,
   .search, .home-katekizm-search, .today-pills, .hub-go,
@@ -796,6 +798,10 @@ body.sheet-open { overflow: hidden; }
   .katekizm-card .hub-go { display: inline-flex; }
 }
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
+.closing-note {
+  font-family: var(--serif); font-size: 1.1rem; font-style: italic; text-align: center;
+  color: var(--text-soft); max-width: 40rem; margin-left: auto; margin-right: auto;
+}
 
 /* Kiliseler page footnote on receiving Communion from an Orthodox church absent a Catholic
    one nearby (Canon 844 §2): kept smaller than the body copy and visually set apart, since
@@ -894,29 +900,6 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .home-hero .lead { margin: .65rem auto 0; max-width: 36rem; color: var(--text-soft); font-size: 1.05rem; line-height: 1.5; }
 .home-hero .hero-search { margin: 1.25rem auto 0; max-width: 30rem; }
 
-/* "New post" notification: shaped and paced like an iOS banner notification */
-.notif-banner {
-  display: flex; gap: .7rem; align-items: flex-start; text-align: left; text-decoration: none; color: var(--text);
-  max-width: 28rem; margin: 1rem auto 0; padding: .7rem .85rem; border-radius: 18px;
-  background: var(--glass-strong); border: 1px solid var(--glass-brd);
-  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
-  box-shadow: 0 10px 26px -14px rgba(20, 14, 4, .3);
-  transition: transform .2s;
-}
-.notif-banner:hover { transform: translateY(-2px); }
-@media (max-width: 759px) { .notif-banner { display: none; } }
-.notif-icon {
-  flex: none; width: 2.1rem; height: 2.1rem; border-radius: 8px; display: grid; place-items: center;
-  background: #0c1322; color: #d6b16b;
-}
-.notif-icon svg { width: 1.15rem; height: 1.15rem; }
-.notif-body { min-width: 0; flex: 1; }
-.notif-top { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
-.notif-app { font-family: var(--sans); font-size: .62rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
-.notif-time { font-family: var(--sans); font-size: .68rem; color: var(--muted); flex: none; }
-.notif-title { display: block; margin-top: .1rem; font-family: var(--sans); font-size: .88rem; font-weight: 700; }
-.notif-text { display: block; margin-top: .05rem; font-size: .87rem; color: var(--text-soft); line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
 .today-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin: 1.1rem 0 0; }
 .today-pill {
   display: flex; align-items: center; gap: .55rem; padding: .5rem .9rem .5rem .65rem;
@@ -929,6 +912,12 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .today-pill .tp-label { display: block; font-family: var(--sans); font-size: .64rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
 .today-pill .tp-value { display: block; font-size: .88rem; font-weight: 600; margin-top: .04rem; }
 .today-pill .tp-value.hint { font-weight: 400; font-style: italic; color: var(--muted); }
+/* The only pill left in .today-pills now that the Rosary-mystery one is gone, so it can
+   afford to read as a small card rather than a pill lost in the middle of the hero. */
+.today-pill-lg { padding: .75rem 1.4rem .75rem 1rem; gap: .8rem; border-radius: var(--radius); }
+.today-pill-lg .tp-ico { width: 2rem; height: 2rem; }
+.today-pill-lg .tp-label { font-size: .7rem; }
+.today-pill-lg .tp-value { font-size: 1.05rem; margin-top: .1rem; }
 
 /* Katekizm card search: a small icon beside the title that pops out a large,
    backdrop-blurred search dialog (desktop only; mobile hides the button and
@@ -981,27 +970,16 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .lib-lead { margin: .45rem 0 1.1rem; color: var(--text-soft); max-width: 42rem; line-height: 1.5; font-size: .96rem; }
 .shelf + .shelf { margin-top: 1.1rem; }
 
-/* Shared grid container for every card row on the home page (library
-   cards, blog posts, closing links). Mobile shows a plain 2-column grid
-   so all cards are visible without swiping; a lone leftover card spans
-   the full row instead of sitting alone. The .posts modifier keeps blog
-   post cards a single stacked column on mobile, where two-up is cramped.
-   From tablet width up, the .cols-N modifiers take over as before. */
+/* Shared grid container for every card row on the home page (library cards,
+   closing links). Mobile shows a plain 2-column grid so all cards are visible
+   without swiping; a lone leftover card spans the full row instead of sitting
+   alone. From tablet width up, the .cols-N modifiers take over as before. */
 .shelf { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
-.shelf.posts { grid-template-columns: 1fr; }
-.shelf:not(.posts) > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.shelf > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
 @media (min-width: 720px) {
   .shelf > *:last-child:nth-child(odd) { grid-column: auto; }
-  .shelf.cols-2 { grid-template-columns: repeat(2, 1fr); }
   .shelf.cols-3 { grid-template-columns: repeat(3, 1fr); }
-  .shelf.cols-4 { grid-template-columns: repeat(4, 1fr); }
 }
-
-.mini-post { display: block; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; transition: border-color .2s, transform .2s; }
-.mini-post:hover { border-color: var(--gold-soft); transform: translateY(-2px); }
-.mini-post .mp-date { font-family: var(--sans); font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
-.mini-post .mp-title { display: block; margin-top: .35rem; font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
-.mini-post .mp-sub { display: block; margin-top: .15rem; font-style: italic; color: var(--muted); font-size: .9rem; }
 
 @media (max-width: 719px) {
   .lib-section { padding-top: 1.3rem; padding-bottom: .2rem; }
@@ -1250,7 +1228,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   .mass-line { padding: .45rem .6rem; gap: .5rem; }
 }
 
-/* ---------- 20. Placeholder pages (blog.html) ---------- */
+/* ---------- 20. Placeholder-style pages (İletişim) ---------- */
 .placeholder-page { max-width: 32rem; margin: 0 auto; padding: 2.4rem 0 4rem; text-align: center; }
 .placeholder-page svg { width: 2.6rem; height: 2.6rem; color: var(--gold); margin: 0 auto 1rem; }
 .placeholder-lead { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 0 0 .6rem; }

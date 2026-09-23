@@ -107,10 +107,12 @@ $X = Read-Data 'extras.js'
 $FaqData = Read-Data 'sss.js'
 $Rosary = Read-Data 'tespih.js'
 $Sureci = Read-Data 'katolik-sureci.js'
+$Confession = Read-Data 'gunah-cikarma.js'
+$Anatolia = Read-Data 'topraklarimizda-hristiyanlik.js'
+$WhyCatholic = Read-Data 'neden-katoligiz.js'
 $Saints = Read-Data 'azizler.js'
 $GreatSaints = Read-Data 'buyuk-azizler.js'
 $Mass = Read-Data 'kutsal-ayin.js'
-$Blog = Read-Data 'blog.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
 $PartMeta = @{
@@ -242,11 +244,13 @@ $IcoClose  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 # Page-head icons: replace the small-caps section label on a few pages where the label was
 # purely decorative (repeating the nav category, or just the page's own title back at itself).
 $IcoDoor     = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21V4.5A1.5 1.5 0 0 1 8.5 3h5L18 6.5V21"/><path d="M4 21h16"/><circle cx="14.3" cy="12.5" r=".6" fill="currentColor" stroke="none"/></svg>'
+$IcoKey      = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="3.7"/><path d="M9.8 9.8 18.5 18.5"/><path d="M15 15l2.2-2.2"/><path d="M17.8 17.8l2.2-2.2"/></svg>'
+$IcoRoots    = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3.1"/><path d="M12 9.1V14"/><path d="M12 14 8 20M12 14v6M12 14l4 6"/></svg>'
+$IcoCompass  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.3 8.7 13.2 13.2 8.7 15.3 10.8 10.8Z"/></svg>'
 $IcoChalice  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.5 4c0 4.5 1.3 8 4.5 8s4.5-3.5 4.5-8"/><path d="M12 12v5.5"/><path d="M8 21h8"/><path d="M12 17.5v3.5"/></svg>'
 $IcoBookOpen = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.3-3.6-2-6-2-.6 0-1 .4-1 1v11.5c0 .6.4 1 1 1 2.4 0 4.4.7 6 2 1.6-1.3 3.6-2 6-2 .6 0 1-.4 1-1V5.5c0-.6-.4-1-1-1-2.4 0-4.4.7-6 2Z"/><path d="M12 6.5v13"/></svg>'
 $IcoBible    = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3H19v16.5a1 1 0 0 1-1 1H7.5A1.5 1.5 0 0 1 6 19Z"/><path d="M6 19a1.5 1.5 0 0 1 1.5-1.5H19"/><path d="M9.5 3v5.2l2-1.4 2 1.4V3"/></svg>'
 $IcoQuestion = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.3 9.4a2.7 2.7 0 1 1 4 2.4c-.9.5-1.3 1.1-1.3 2.1v.4"/><circle cx="12" cy="17.6" r=".7" fill="currentColor" stroke="none"/></svg>'
-$IcoPen      = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5 19 9 9 19H4.5v-4.5Z"/><path d="M13 6l5 5"/></svg>'
 $IcoSparkle  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M12 2c.9 4.6 3.1 6.8 7.7 7.7-4.6.9-6.8 3.1-7.7 7.7-.9-4.6-3.1-6.8-7.7-7.7C8.9 8.8 11.1 6.6 12 2Z"/></svg>'
 $IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15l6-5.5"/></svg>'
 function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" }
@@ -409,10 +413,12 @@ $PrayerNav = @(
 $KaynaklarNav = @(
   @{ href = 'katesizm.html';       t = 'Katekizm';             s = '598 soru ve yanıt' },
   @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci';       s = 'Katolik olma süreci' },
+  @{ href = 'gunah-cikarma.html';  t = 'Günah Çıkarma';        s = 'Nasıl işler, adım adım' },
   @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım' },
   @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille' },
   @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler' },
-  @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri" }
+  @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri" },
+  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus'tan İznik'e" }
 )
 $WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
@@ -423,7 +429,6 @@ $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cur
 $IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
 $IcoStar = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2c1 2.8 1.9 4.4 3.4 5.8 1.5 1.4 3.1 2.1 5.4 2.7-2.3.6-3.9 1.4-5.4 2.7-1.5 1.4-2.4 3-3.4 5.8-1-2.8-1.9-4.4-3.4-5.8-1.5-1.3-3.1-2.1-5.4-2.7 2.3-.6 3.9-1.3 5.4-2.7 1.5-1.4 2.4-3 3.4-5.8z"/></svg>'
 $IcoChalice = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.6 4c0 4.4 1.3 7.6 4.4 7.6s4.4-3.2 4.4-7.6"/><path d="M12 11.6V19"/><path d="M8 19h8"/></svg>'
-$IcoQuill = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.2-1 10-10a2 2 0 0 0-2.8-2.8l-10 10z"/><path d="M13 6l3 3"/><path d="M4 20l1-4.2"/></svg>'
 $IcoRadiance = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg>'
 $IcoHome = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1V10"/></svg>'
 $IcoMail = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="5.5" width="17.6" height="13" rx="1.6"/><path d="m4 6.5 8 6.5 8-6.5"/></svg>'
@@ -437,9 +442,9 @@ $SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentCol
 # by the Compendium part-page loop below, so every icon it references must already exist here.
 $NavIcons = @{
   'index.html'          = $IcoHome
-  'blog.html'            = $IcoQuill
   'katesizm.html'        = $SmallCross
   'katolik-sureci.html'  = $IcoWay
+  'gunah-cikarma.html'   = $IcoKey
   'kutsal-ayin.html'     = $IcoChalice
   'meseller.html'        = $IcoScroll
   'kutsal-kitap.html'    = $IcoBook
@@ -449,6 +454,7 @@ $NavIcons = @{
   'azizler.html'         = $IcoStar
   'sss.html'             = $IcoAsk
   'kiliseler.html'       = $IcoPin
+  'topraklarimizda-hristiyanlik.html' = $IcoRoots
   'iletisim.html'        = $IcoMail
 }
 $MassIcons = @{
@@ -497,7 +503,7 @@ $Sprite
       </div>
       <nav class="mainnav" aria-label="Ana menü">
         <ul>
-          <li><a class="nav-link" href="blog.html"$(Cur 'blog.html' $current)>Blog</a></li>
+          <li><a class="nav-link" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)>Neden Katoliğiz?</a></li>
           <li class="has-menu">
             <button type="button" class="$kaynaklarCls" aria-expanded="false" aria-controls="nav-kaynaklar" aria-haspopup="true">Kaynaklar$IcoChev</button>
             <div class="nav-menu glass" id="nav-kaynaklar"><ul>$kaynaklarMenu</ul></div>
@@ -528,8 +534,8 @@ $Sprite
     <div class="ns-head">$ClockHtml</div>
     <nav class="ns-nav" aria-label="Menü">
       <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
-      <p class="ns-label">Blog</p>
-      <a class="ns-item" href="blog.html"$(Cur 'blog.html' $current)><span class="ns-ico">$IcoQuill</span><span class="ns-body"><span class="ns-t">Blog</span><span class="ns-s">Özgün yazılar</span></span></a>
+      <p class="ns-label">Neden Katoliğiz?</p>
+      <a class="ns-item" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)><span class="ns-ico">$IcoCompass</span><span class="ns-body"><span class="ns-t">Neden Katoliğiz?</span><span class="ns-s">İmanın beş adımda özeti</span></span></a>
       <p class="ns-label">Kaynaklar</p>
       $sheetKaynaklar
       <p class="ns-label">Dualar</p>
@@ -564,7 +570,7 @@ $FooterHtml = @"
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="blog.html">Blog</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li><li><a href="gizlilik.html">Gizlilik Politikası</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="neden-katoligiz.html">Neden Katoliğiz?</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li><li><a href="gizlilik.html">Gizlilik Politikası</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -772,9 +778,6 @@ Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
   -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Katekizm' 'katesizm.html'))
 
 # ---------------- index.html: the site hub
-$latestPost = $Blog.posts[0]
-$latestDateShort = $latestPost.dateLabel -replace '\s+\d{4}$', ''
-$NotifIcon = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
 $homeBody = @"
 <div class="wrap narrow">
 
@@ -782,18 +785,9 @@ $homeBody = @"
     <div class="glow"></div>
     $Logo
     <h1>$SiteTag</h1>
-    <p class="lead">Katekizm, Katolik olma süreci, Kutsal Ayin, İsa$($Apos)nın meselleri, günlük dualar, azizlerin hayat hikâyeleri, mucizeler ve özgün yazılar: hepsi Türkçe, tek bir sitede.</p>
-    <a class="notif-banner" href="$($latestPost.id).html">
-      <span class="notif-icon">$NotifIcon</span>
-      <span class="notif-body">
-        <span class="notif-top"><span class="notif-app">Son Blog Yazısı</span><span class="notif-time">$latestDateShort</span></span>
-        <span class="notif-title">$($latestPost.titleEn)</span>
-        <span class="notif-text">$(Inline $latestPost.title)</span>
-      </span>
-    </a>
+    <p class="lead">Katekizm, Katolik olma süreci, Kutsal Ayin, İsa$($Apos)nın meselleri, günlük dualar, azizlerin hayat hikâyeleri, mucizeler ve Anadolu$($Apos)daki köklerimiz: hepsi Türkçe, tek bir sitede.</p>
     <div class="today-pills">
-      <a class="today-pill" href="azizler.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" aria-live="polite">Yükleniyor…</span></span></a>
-      <a class="today-pill" href="tesbih-duasi.html" data-home-mystery-pill><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Bugünün Gizemi</span><span class="tp-value hint" aria-live="polite">Yükleniyor…</span></span></a>
+      <a class="today-pill today-pill-lg" href="azizler.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" aria-live="polite">Yükleniyor…</span></span></a>
     </div>
   </section>
 
@@ -807,8 +801,13 @@ $homeBody = @"
 
   <section class="lib-section">
     <div class="lib-head"><span class="roman">I</span><h2>Öğretiler</h2></div>
-    <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: Katekizm$($Apos)in tam çevirisi, Katolik olma süreci ve hangi Kutsal Kitap çevirisini seçmeli sorusuna kısa bir rehber.</p>
-    <div class="shelf cols-4">
+    <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: neden Katolik olduğumuzdan Katekizm$($Apos)in tam çevirisine, Katolik olma sürecinden günah çıkarmaya.</p>
+    <div class="shelf cols-3">
+      <a class="hub-card" href="neden-katoligiz.html">
+        <span class="hub-head"><span class="hub-ico">$IcoCompass</span><span class="hub-t">Neden Katoliğiz?</span></span>
+        <span class="hub-s">İmanın beş adımda, akla ve kalbe birlikte hitap eden özeti.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
       <div class="hub-card katekizm-card">
         <span class="hub-head">
           <span class="hub-ico">$SmallCross</span>
@@ -820,6 +819,11 @@ $homeBody = @"
       <a class="hub-card" href="katolik-sureci.html">
         <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Süreci</span></span>
         <span class="hub-s">Katolik olmak isteyenler için OCIA süreci, adım adım.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
+      <a class="hub-card" href="gunah-cikarma.html">
+        <span class="hub-head"><span class="hub-ico">$IcoKey</span><span class="hub-t">Günah Çıkarma</span></span>
+        <span class="hub-s">Nasıl işler, adım adım; vicdan muhasebesi ve sık sorulan sorular.</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
       <a class="hub-card" href="kutsal-kitap.html">
@@ -868,9 +872,9 @@ $homeBody = @"
   </section>
 
   <section class="lib-section">
-    <div class="lib-head"><span class="roman">III</span><h2>Azizler ve Mucizeler</h2></div>
-    <p class="lib-lead">Yılın her günü için bir aziz, Kilise tarihinin görünmeleri, kalıntıları ve Efkaristiya mucizeleri.</p>
-    <div class="shelf cols-2">
+    <div class="lib-head"><span class="roman">III</span><h2>Azizler, Mucizeler ve Tarihimiz</h2></div>
+    <p class="lib-lead">Yılın her günü için bir aziz, Kilise tarihinin görünmeleri ve mucizeleri, imanımızın bu topraklardaki kökleri.</p>
+    <div class="shelf cols-3">
       <a class="hub-card" href="azizler.html">
         <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
         <span class="hub-s">Bugünün azizini görün, yılın her günü için hayat hikâyeleri.</span>
@@ -881,16 +885,14 @@ $homeBody = @"
         <span class="hub-s">Meryem Ana görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizlerin öyküleri.</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
+      <a class="hub-card" href="topraklarimizda-hristiyanlik.html">
+        <span class="hub-head"><span class="hub-ico">$IcoRoots</span><span class="hub-t">Topraklarımızda Hristiyanlık</span></span>
+        <span class="hub-s">Pavlus$($Apos)un memleketi, Vahiy$($Apos)in yedi kilisesi, İznik Konsili.</span>
+        <span class="hub-go">Sayfaya Git$IcoNext</span>
+      </a>
     </div>
   </section>
 
-  <section class="lib-section">
-    <div class="lib-head"><span class="roman">IV</span><h2>Blog</h2></div>
-    <p class="lib-lead">Katolik inancı üzerine kişisel yazılar, İngilizce aslı ve Türkçe çevirisiyle bir arada.</p>
-    <div class="shelf posts cols-2">
-$(($Blog.posts | Select-Object -First 2 | ForEach-Object { "      <a class=`"mini-post`" href=`"$($_.id).html`"><span class=`"mp-date`">$($_.dateLabel)</span><span class=`"mp-title`">$($_.titleEn)</span><span class=`"mp-sub`">$(Inline $_.title)</span></a>" }) -join "`n")
-    </div>
-  </section>
 
 </div>
 "@
@@ -1057,6 +1059,90 @@ $sureciFaq
 Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" `
   -Description "Katolik olmak isteyenler için: OCIA/RCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler, hangi hazırlık gerekir." `
   -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Süreci' 'katolik-sureci.html'))
+
+# ================================================================== GUNAH CIKARMA (gunah-cikarma.html)
+$confessionSteps = ($Confession.steps | ForEach-Object {
+  $i = [array]::IndexOf(@($Confession.steps), $_) + 1
+  "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(Inline $_.title)</h3><p class=`"stage-en label`" lang=`"en`">$($_.en)</p><p>$(Inline $_.text)</p></div></li>"
+}) -join "`n"
+$examenGroups = ($Confession.examenGroups | ForEach-Object {
+  $items = ($_.items | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
+  "<article class=`"text-card`"><h3 class=`"t-title examen-title`">$(Inline $_.title)</h3><ul class=`"examen-list`">$items</ul></article>"
+}) -join "`n"
+$confessionFaq = ($Confession.faq | ForEach-Object {
+  "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
+    "<div class=`"faq-a`"><p>$(Inline $_.a)</p></div></details>"
+}) -join "`n"
+$confessionBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Günah Çıkarma')
+  <header class="page-head center">$(Page-Ico $IcoKey)<h1>$($Confession.title)</h1><p class="sub" lang="en">$($Confession.en)</p></header>
+  <p class="faq-intro">$(Inline $Confession.intro)</p>
+  <h2 class="section-title" id="adim-adim"><span class="label">1</span>Nasıl İşler? Adım Adım</h2>
+  <ol class="stage-list">
+$confessionSteps
+  </ol>
+  <h2 class="section-title" id="vicdan-muhasebesi"><span class="label">2</span>Vicdan Muhasebesi</h2>
+  <p class="faq-intro">$(Inline $Confession.examenIntro)</p>
+  <div class="text-grid two examen-grid">
+$examenGroups
+  </div>
+  <h2 class="section-title" id="sorular-ve-korkular"><span class="label">3</span>Sık Sorulan Sorular ve Korkular</h2>
+  <div class="faq-list">
+$confessionFaq
+  </div>
+  <p class="conventions">Bu sayfa, Katolik Kilisesi Katekizmi’nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (KKK 1420-1498) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href="kiliseler.html">Kilise Bul</a> sayfası size yardımcı olabilir.</p>
+</div>
+"@
+Write-Page -File 'gunah-cikarma.html' -Title "$($Confession.title) | $SiteName" `
+  -Description "Günah çıkarma nasıl işler? Adım adım pratik rehber, vicdan muhasebesi listesi ve ilk kez günah çıkaracaklar için sık sorulan sorular." `
+  -Path 'gunah-cikarma.html' -Body $confessionBody -JsonLd @((Breadcrumb-Ld 'Günah Çıkarma' 'gunah-cikarma.html'))
+
+# ================================================================== TOPRAKLARIMIZDA HRISTIYANLIK (topraklarimizda-hristiyanlik.html)
+$anatoliaSections = ($Anatolia.sections | ForEach-Object {
+  $i = [array]::IndexOf(@($Anatolia.sections), $_) + 1
+  "<section id=`"$($_.id)`">" +
+    "<h2 class=`"section-title`"><span class=`"label`">$i</span>$(Inline $_.title)</h2>" +
+    "<p class=`"faq-cat-en`" lang=`"en`">$($_.en)</p>" +
+    "<div class=`"prose`">$(Blocks $_.body)</div></section>"
+}) -join "`n"
+$anatoliaBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Topraklarımızda Hristiyanlık')
+  <header class="page-head center">$(Page-Ico $IcoRoots)<h1>$($Anatolia.title)</h1><p class="sub" lang="en">$($Anatolia.en)</p></header>
+  <p class="faq-intro">$(Inline $Anatolia.intro)</p>
+$anatoliaSections
+  <p class="conventions closing-note">$(Inline $Anatolia.closing)</p>
+</div>
+"@
+Write-Page -File 'topraklarimizda-hristiyanlik.html' -Title "$($Anatolia.title) | $SiteName" `
+  -Description "Hristiyanlığın Anadolu'daki kökleri: Pavlus'un memleketi Tarsus, Vahiy Kitabı'nın yedi kilisesi, İznik Konsili ve Antakya ile İzmir'de yazan ilk Kilise Babaları." `
+  -Path 'topraklarimizda-hristiyanlik.html' -Body $anatoliaBody -JsonLd @((Breadcrumb-Ld 'Topraklarımızda Hristiyanlık' 'topraklarimizda-hristiyanlik.html'))
+
+# ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html)
+$whyParts = ($WhyCatholic.parts | ForEach-Object {
+  $i = [array]::IndexOf(@($WhyCatholic.parts), $_) + 1
+  $part = $_
+  $topicCards = ($part.topics | ForEach-Object {
+    "<article class=`"text-card`"><h3 class=`"t-title`">$(Inline $_.title)</h3><p class=`"sub`" lang=`"en`">$($_.en)</p><div class=`"prose`">$(Blocks $_.body)</div></article>"
+  }) -join "`n"
+  "<section id=`"$($part.id)`">" +
+    "<h2 class=`"section-title`"><span class=`"label`">$i</span>$(Inline $part.title)</h2>" +
+    "<p class=`"faq-cat-en`" lang=`"en`">$($part.en)</p>" +
+    "<div class=`"text-grid three`">$topicCards</div></section>"
+}) -join "`n"
+$whyCatholicBody = @"
+<div class="wrap narrow">
+  $(Crumbs 'Neden Katoliğiz?')
+  <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$($WhyCatholic.title)</h1><p class="sub" lang="en">$($WhyCatholic.en)</p></header>
+  <p class="faq-intro">$(Inline $WhyCatholic.intro)</p>
+$whyParts
+  <p class="conventions closing-note">$(Inline $WhyCatholic.closing)</p>
+</div>
+"@
+Write-Page -File 'neden-katoligiz.html' -Title "$($WhyCatholic.title) | $SiteName" `
+  -Description "Katolik inancının akla ve kalbe birlikte hitap eden beş adımlık özeti: hakikat ve Tanrı, İsa ve Kutsal Kitap, Kilise ve kutsal sırlar, azizler, ahlak ve sonsuz yazgı." `
+  -Path 'neden-katoligiz.html' -Body $whyCatholicBody -JsonLd @((Breadcrumb-Ld 'Neden Katoliğiz?' 'neden-katoligiz.html'))
 
 # ================================================================== AZIZLER (azizler.html)
 function Rank-Class([string]$rank) {
@@ -1366,65 +1452,6 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
   -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." `
   -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
 
-# ================================================================== BLOG (blog.html + one page per post)
-# Each post keeps the English original ("en") shown by default, with a "Türkçe'ye çevir"
-# button that swaps in the Turkish translation ("tr") — the reverse of the site's usual
-# Turkish-first/English-toggle pattern, since these are the author's own English essays.
-function Word-Count([string]$s) { return ([regex]::Matches($s, '\S+')).Count }
-function Read-Minutes([string]$body, [string]$closing) {
-  $words = Word-Count ($body + ' ' + $closing)
-  return [Math]::Max(1, [Math]::Ceiling($words / 200.0))
-}
-function Post-Lang([string]$idSuffix, $post) {
-  $enId = "post-en-$idSuffix"; $trId = "post-tr-$idSuffix"; $readId = "post-read-$idSuffix"
-  $enMinutes = Read-Minutes $post.en.body $post.en.closing
-  $trMinutes = Read-Minutes $post.tr.body $post.tr.closing
-  $enParas = Convert-Markdown $post.en.body
-  $trParas = Convert-Markdown $post.tr.body
-  $enSign = ($post.en.signature | ForEach-Object { "<p>$_</p>" }) -join ''
-  $trSign = ($post.tr.signature | ForEach-Object { "<p>$_</p>" }) -join ''
-  $enClosing = if ($post.en.closing) { "<p class=`"post-closing`">$($post.en.closing)</p>" } else { '' }
-  $trClosing = if ($post.tr.closing) { "<p class=`"post-closing`">$(Inline $post.tr.closing)</p>" } else { '' }
-  $enBody = "<div class=`"post-body prose`" id=`"$enId`" lang=`"en`">$enParas$enClosing<div class=`"signature`">$enSign</div></div>"
-  $trBody = "<div class=`"post-body prose`" id=`"$trId`" lang=`"tr`" hidden>$trParas$trClosing<div class=`"signature`">$trSign</div></div>"
-  $toggle = "<div class=`"article-tools`"><button type=`"button`" class=`"btn lang-toggle`" data-show-en=`"$enId`" data-show-tr=`"$trId`" data-read-target=`"$readId`" data-read-en=`"$enMinutes dk okuma`" data-read-tr=`"$trMinutes dk okuma`" aria-pressed=`"false`">$IcoGlobe<span class=`"btn-label`">Türkçe$($Apos)ye çevir</span></button></div>"
-  return [pscustomobject]@{ Html = "$toggle$enBody$trBody"; EnMinutes = $enMinutes; ReadId = $readId }
-}
-$blogCards = ($Blog.posts | ForEach-Object {
-  $post = $_
-  $mins = Read-Minutes $post.en.body $post.en.closing
-  "<a class=`"text-link post-card`" href=`"$($post.id).html`"><span class=`"post-date label`">$($post.dateLabel) · $mins dk okuma</span><span class=`"t-title`" lang=`"en`">$($post.titleEn)</span><span class=`"t-sub`">$(Inline $post.title)</span><p class=`"post-excerpt`">$(Inline $post.excerpt)</p></a>"
-}) -join "`n"
-$blogBody = @"
-<div class="wrap narrow">
-  $(Crumbs 'Blog')
-  <header class="page-head center">$(Page-Ico $IcoPen)<h1>Blog</h1><p class="sub" lang="en">Essays on the Catholic faith</p></header>
-  <p class="faq-intro">Katolik inancı ve günlük hayatta imanla ilgili özgün yazılar. Yazarın kendi İngilizce metniyle birlikte, Türkçe çevirisi de bir tıkla açılır.</p>
-  <div class="post-list">$blogCards</div>
-</div>
-"@
-Write-Page -File 'blog.html' -Title "Blog | $SiteName" `
-  -Description "Katolik inancı ve günlük yaşam üzerine özgün yazılar, İngilizce aslı ve Türkçe çevirisiyle bir arada." `
-  -Path 'blog.html' -Body $blogBody -JsonLd @((Breadcrumb-Ld 'Blog' 'blog.html'))
-
-$Blog.posts | ForEach-Object {
-  $post = $_
-  $postLang = Post-Lang $post.id $post
-  $postBody = @"
-<div class="read-progress" aria-hidden="true"><span class="bar"></span></div>
-<div class="wrap narrow">
-  $(Crumbs $post.title 'Blog' 'blog.html')
-  <article class="article post" id="post">
-    <header class="page-head center"><p class="label">$($post.dateLabel) · <span id="$($postLang.ReadId)">$($postLang.EnMinutes) dk okuma</span></p><h1 lang="en">$($post.titleEn)</h1><p class="sub">$(Inline $post.title)</p></header>
-    $($postLang.Html)
-  </article>
-</div>
-"@
-  $postLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr $post.titleEn) + ',"inLanguage":"en","datePublished":"' + $post.date + '","author":{"@type":"Person","name":' + (JStr $post.author) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/$($post.id).html") + '}'
-  Write-Page -File "$($post.id).html" -Title "$($post.title) | $SiteName" `
-    -Description (Meta-Trim $post.excerpt) -Path "$($post.id).html" -Body $postBody `
-    -JsonLd @($postLd, (Breadcrumb-Ld $post.title "$($post.id).html" 'Blog' 'blog.html')) -OgType 'article'
-}
 
 # ================================================================== MUCIZELER (mucizeler.html)
 $Miracles = Read-Data 'mucizeler.js'
@@ -1611,13 +1638,14 @@ $pages = @(
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
+  @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.8' },
+  @{ p = 'neden-katoligiz.html'; pr = '0.9' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
-  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'blog.html'; pr = '0.5' }, @{ p = 'mucizeler.html'; pr = '0.7' },
+  @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'mucizeler.html'; pr = '0.7' },
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }
-) + ($Blog.posts | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) +
-  ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
+) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
   "`n</urlset>`n"

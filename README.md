@@ -1,13 +1,14 @@
 # katolikdunyasi.com
 
-A static, Turkish-language Catholic resource site. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections on the OCIA/RCIA process for becoming Catholic, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, frequently asked questions, and a directory of active Catholic churches in Turkey.
+A static, Turkish-language Catholic resource site. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, frequently asked questions, and a directory of active Catholic churches in Turkey.
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
 ## Folder layout
 
 ```
-index.html              Home: search box, section cards, today's saint and Rosary mystery
+index.html              Home: search box, section cards, today's saint
+neden-katoligiz.html    Why we're Catholic: a five-part case for the faith, reason to doctrine
 iman-ikrari.html        Compendium Part I · Q 1–217   (reading page: sticky contents sidebar, chapter
 kutsal-sirlar.html      Compendium Part II · Q 218–356  prev/next, "English" button per question +
 mesihte-yasam.html      Compendium Part III · Q 357–533 "show all English")
@@ -16,6 +17,8 @@ motu-proprio.html       Motu Proprio (Turkish, English paragraph by paragraph on
 giris.html              Introduction (same)
 ekler.html              Appendix: prayers (TR/EN/LA) + formulas of Catholic doctrine
 katolik-sureci.html     Becoming Catholic: the OCIA/RCIA process
+gunah-cikarma.html      Confession: how it works step by step, an examination-of-conscience
+                        checklist, and common first-timer fears/questions
 kutsal-ayin.html        The Mass, part by part
 meseller.html           The parables of Jesus, retold and explained plainly, by theme
 tesbih-duasi.html       The Rosary: prayers and the four sets of mysteries
@@ -25,9 +28,10 @@ azizler.html            Calendar of the saints (current month shown, other month
                         a long original Turkish biography
 kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)
 mucizeler.html          Catholic miracles: apparitions, relics, Eucharistic miracles, incorrupt saints
+topraklarimizda-hristiyanlik.html  Christianity's roots in Anatolia: Paul's homeland, the Seven
+                        Churches of Revelation, Nicaea, the early Church Fathers
 sss.html                Frequently asked questions, grouped by topic
 kiliseler.html          Parish locator: active Catholic churches in Turkey, grouped by city
-blog.html               Blog index: original personal writing, English original + Turkish translation
 iletisim.html           Contact page (email, based in Toronto)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
 sitemap.xml, robots.txt
@@ -40,6 +44,7 @@ assets/og-image.jpg     1200×630 social preview image
 data/compendium-1..4.js ← Compendium content (Turkish + English pairs), one file per part
 data/extras.js          ← Motu Proprio, Introduction, Creeds, Decalogue, Our Father, Appendix
 data/katolik-sureci.js  ← OCIA/RCIA process content
+data/gunah-cikarma.js   ← Confession guide content
 data/kutsal-ayin.js     ← The Mass content
 data/meseller.js        ← The parables of Jesus (six thematic categories)
 data/tespih.js          ← Rosary prayers and mysteries
@@ -47,8 +52,9 @@ data/azizler.js         ← Saints calendar (one entry per day)
 data/buyuk-azizler.js   ← The 20 best-known saints: long original biography per saint, one page each
 data/sss.js             ← FAQ content
 data/mucizeler.js       ← Catholic miracles (four thematic categories)
+data/topraklarimizda-hristiyanlik.js ← Christianity's roots in Anatolia content
+data/neden-katoligiz.js ← "Why we're Catholic" content
 data/kiliseler.js       ← Parish locator: churches in Turkey by city and rite
-data/blog.js            ← Blog posts (English original + Turkish translation, Markdown body)
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← "About this site" text shown in the (i) panel (Markdown)
 tools/build.ps1         Regenerates the static pages from data/ and content/
