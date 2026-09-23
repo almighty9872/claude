@@ -810,9 +810,9 @@ body.sheet-open { overflow: hidden; }
   margin: 1.75rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--border);
   font-family: var(--sans); font-size: .8rem; line-height: 1.65; color: var(--muted);
 }
-.eucharist-note p { margin: 0 0 .6rem; }
-.eucharist-note p:last-child { margin-bottom: 0; font-style: italic; }
+.eucharist-note p { margin: 0; }
 .eucharist-note strong { color: var(--text-soft); font-weight: 600; }
+.eucharist-note .flag-toggle { margin-top: .7rem; }
 
 /* (i) beside the brand at every width: reveals content/hakkinda.md, anchored under the button
    on a mouse (fine pointer), centered like a small dialog on touch (coarse pointer). */

@@ -1510,7 +1510,10 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     # Skip the address line entirely when the sourced data was only district-level (the address
     # field then just repeats "district, city", which the line above already shows).
     $hasRealAddr = $_.address -ne "$($_.district), $($city.name)"
-    $mapQ = if ($hasRealAddr) { "$($_.name), $($_.address), Türkiye" } else { "$($_.name), $($_.district), $($city.name), Türkiye" }
+    # Searching by the church's own name (all 31 are unique) resolves to the right building far
+    # more reliably in Google/Apple Maps than an assembled street address, which both apps have
+    # sometimes mis-parsed or only matched down to the district centroid.
+    $mapQ = "$($_.name), $($city.name)"
     $mapQAttr = $mapQ -replace '&', '&amp;' -replace '"', '&quot;'
     $phoneRow = if ($_.phone) { "<p class=`"church-meta`">$IcoPhone $($_.phone)</p>" } else { '' }
     $addrRow = if ($hasRealAddr) { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
@@ -1563,8 +1566,15 @@ $kiliselerBody = @"
 $kiliselerCities
   <p class="conventions">$(Inline $Churches.note)</p>
   <div class="eucharist-note">
-    <p><strong>Katolik kilisesi bulunamadığında:</strong> $(Inline $Churches.orthodoxNote)</p>
-    <p lang="en"><strong>Where no Catholic church can be found:</strong> $(Inline $Churches.orthodoxNoteEn)</p>
+    <div id="eucharist-note-tr">
+      <p><strong>Katolik kilisesi bulunamadığında:</strong> $(Inline $Churches.orthodoxNote)</p>
+    </div>
+    <div id="eucharist-note-en" lang="en" hidden>
+      <p><strong>Where no Catholic church can be found:</strong> $(Inline $Churches.orthodoxNoteEn)</p>
+    </div>
+    <button type="button" class="flag-toggle" data-show-en="eucharist-note-en" data-show-tr="eucharist-note-tr" aria-pressed="false">
+      <span class="flag-show-en">$IcoFlagEn</span><span class="flag-show-tr" hidden>$IcoFlagTr</span>
+    </button>
   </div>
 </div>
 "@
