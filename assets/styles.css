@@ -1095,6 +1095,13 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .today-bio p { margin: 0 0 .7rem; }
 .today-bio p:last-child { margin-bottom: 0; }
 .today-more + .today-more { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dotted var(--border); }
+.today-more-link {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-family: var(--sans); font-size: .78rem; font-weight: 600; color: var(--gold); text-decoration: none;
+}
+.today-more-link svg { width: .95rem; height: .95rem; transition: transform .2s; }
+.today-more-link:hover svg { transform: translateX(3px); }
+.mira-bio .today-more-link { margin-top: .5rem; }
 
 .month-pills {
   position: sticky; top: calc(var(--header-h) + .5rem); z-index: 20; background: var(--bg);

@@ -112,6 +112,7 @@ $Anatolia = Read-Data 'topraklarimizda-hristiyanlik.js'
 $WhyCatholic = Read-Data 'neden-katoligiz.js'
 $Saints = Read-Data 'azizler.js'
 $GreatSaints = Read-Data 'buyuk-azizler.js'
+$GreatSaintIds = @{}; foreach ($s in $GreatSaints.saints) { $GreatSaintIds[$s.id] = $true }
 $Mass = Read-Data 'kutsal-ayin.js'
 
 # Page file, ordinal label and meta description per part (descriptions are for search engines only)
@@ -1091,7 +1092,7 @@ $examenGroups
   <div class="faq-list">
 $confessionFaq
   </div>
-  <p class="conventions">Bu sayfa, Katolik Kilisesi Katekizmi’nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (KKK 1420-1498) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href="kiliseler.html">Kilise Bul</a> sayfası size yardımcı olabilir.</p>
+  <p class="conventions">Bu sayfa, Katolik Kilisesi Katekizmi’nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (<a href="https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html" target="_blank" rel="noopener">KKK 1420-1498</a>) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href="kiliseler.html">Kilise Bul</a> sayfası size yardımcı olabilir.</p>
 </div>
 "@
 Write-Page -File 'gunah-cikarma.html' -Title "$($Confession.title) | $SiteName" `
@@ -1467,7 +1468,8 @@ $miraCats = ($Miracles.categories | ForEach-Object {
   $script:MiraN++; $cat = $_
   $icon = $MiracleIcons[$cat.icon]
   $items = ($cat.items | ForEach-Object {
-    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.name)</span><span class=`"mira-place label`">$($_.place)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bio)</div></details>"
+    $more = if ($GreatSaintIds.ContainsKey($_.id)) { "<a class=`"today-more-link`" href=`"$($_.id).html`">Devamını oku$IcoNext</a>" } else { '' }
+    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.name)</span><span class=`"mira-place label`">$($_.place)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bio)$more</div></details>"
   }) -join "`n"
   "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
     "<h2 class=`"section-title`"><span class=`"label`">$($script:MiraN)</span>$(Inline $cat.title)</h2>" +
@@ -1514,6 +1516,7 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
   $cards = ($city.churches | ForEach-Object {
     $rite = $RiteLabels[$_.rite]
     $mapQ = "$($_.name), $($_.district), $($city.name), Türkiye"
+    $mapQAttr = $mapQ -replace '&', '&amp;' -replace '"', '&quot;'
     $phoneRow = if ($_.phone) { "<p class=`"church-meta`">$IcoPhone $($_.phone)</p>" } else { '' }
     # Skip the address line entirely when the sourced data was only district-level (the address
     # field then just repeats "district, city", which the line above already shows).
@@ -1534,7 +1537,7 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
       $phoneRow +
       "<details class=`"church-hours-item`"><summary>$IcoClock Ayin Saatleri <span class=`"en`" lang=`"en`">(Mass Times)</span></summary>" +
         "<div class=`"church-hours-body`"><p class=`"church-hours`">$(Inline $_.hours)</p><p class=`"church-hours en`" lang=`"en`">$(Inline $_.hoursEn)</p></div></details>" +
-      "<p class=`"church-actions`"><a class=`"btn`" href=`"$(Map-Url $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a>$siteLink</p>" +
+      "<p class=`"church-actions`"><a class=`"btn map-link`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$mapQAttr`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a>$siteLink</p>" +
     "</article>"
   }) -join "`n"
   $cityNames = (($city.churches | ForEach-Object { Inline $_.name }) -join ', ')

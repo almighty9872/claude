@@ -613,15 +613,18 @@
       var source = movableTodayCard || $('.day-cell.is-today');
       var pieces = [];
       if (source) {
+        var top20Id = !movableTodayCard && typeof TOP20_BY_DATE !== 'undefined' ? TOP20_BY_DATE[today.month + '-' + today.day] : null;
         var items = movableTodayCard ? [{ name: $('h3', source).innerHTML, title: '', bio: $('.m-bio', source).innerHTML }] :
           $$('.saint-item', source).map(function (it) {
             var t = $('.s-title', it);
             return { name: $('.s-name', it).innerHTML, title: t ? t.innerHTML : '', bio: $('.saint-bio', it).innerHTML };
           });
         items.forEach(function (it) {
+          var more = top20Id ? '<a class="today-more-link" href="' + top20Id + '.html">Devamını oku' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></a>' : '';
           pieces.push('<div class="today-more"><span class="today-name">' + it.name + '</span>' +
             (it.title ? '<span class="today-title">' + it.title + '</span>' : '') +
-            '<div class="today-bio">' + it.bio + '</div></div>');
+            '<div class="today-bio">' + it.bio + '</div>' + more + '</div>');
         });
       }
       if (pieces.length) body.innerHTML = pieces.join('');
@@ -949,6 +952,18 @@
   }
 
   /* Keep --header-h equal to the real (sticky) header height so the reading bar and anchors never hide under it */
+  function initMapLinks() {
+    var links = $$('.map-link');
+    if (!links.length) return;
+    var ua = window.navigator.userAgent || '';
+    var isIOS = /iPad|iPhone|iPod/.test(ua) || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+    if (!isIOS) return;
+    links.forEach(function (a) {
+      var q = a.getAttribute('data-map-q');
+      if (q) a.href = 'https://maps.apple.com/?q=' + encodeURIComponent(q);
+    });
+  }
+
   function initHeaderHeight() {
     var header = $('.site-header');
     if (!header) return;
@@ -961,6 +976,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initLangFlag(); initJumpSelect();
+    initChurchFilter(); initLangFlag(); initJumpSelect(); initMapLinks();
   });
 })();

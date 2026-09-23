@@ -15,7 +15,7 @@
 window.WHY_CATHOLIC = /*JSON-START*/{
   "title": "Neden Katoliğiz?",
   "en": "Why We're Catholic",
-  "intro": "Bu sayfa, Katolik inancının neden yalnızca kalbe değil, akla da hitap ettiğini anlatıyor: en temel gerçeklerden başlayıp adım adım özel Katolik öğretilerine varan bir yolculuk. Amaç sizi bir cümlede ikna etmek değil, bu yolun neden baştan sona mantıklı olduğunu göstermek. Beş bölüm, on beş kısa durak; hepsini bir oturuşta okuyabilirsiniz.",
+  "intro": "Bu sayfa, Katolik inancının neden yalnızca kalbe değil, akla da hitap ettiğini anlatıyor: en temel gerçeklerden başlayıp adım adım özel Katolik öğretilerine varan bir yolculuk. Amaç sizi bir cümlede ikna etmek değil, bu yolun neden baştan sona mantıklı olduğunu göstermek.",
   "parts": [
     {
       "id": "hakikat-ve-tanri", "title": "Hakikat ve Tanrı", "en": "Truth and God",
