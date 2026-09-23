@@ -775,7 +775,7 @@ $bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $Wor
   '"translationOfWork":{"@type":"Book","name":' + (JStr $SiteNameEn) + ',"inLanguage":"en","datePublished":"2005-06-28","publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"}},' +
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.tr) + ',"url":' + (JStr "$SiteUrl/$($PartMeta[[int]$_.part].file)") + '}' }) -join ',') + ']}'
 Write-Page -File 'katesizm.html' -Title "$WorkName | $SiteName" `
-  -Description (Meta-Trim "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla birlikte.") `
+  -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla." `
   -Path 'katesizm.html' -Body $katesizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Katekizm' 'katesizm.html'))
 
 # ---------------- index.html: the site hub
@@ -914,7 +914,7 @@ function Parallel-Paragraphs($trList, $enList) {
   }
   return $sb.ToString()
 }
-function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$sub, [string]$bodyHtml, [string]$desc, [string]$ld) {
+function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$sub, [string]$bodyHtml, [string]$desc, [string]$ld, [string]$titleOverride = '') {
   $body = @"
 <div class="wrap">
   $(Crumbs $crumb 'Katekizm' 'katesizm.html')
@@ -925,7 +925,8 @@ function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1
   </article>
 </div>
 "@
-  Write-Page -File $file -Title "$h1 | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Katekizm' 'katesizm.html')) -OgType 'article'
+  $pageTitle = if ($titleOverride) { $titleOverride } else { $h1 }
+  Write-Page -File $file -Title "$pageTitle | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Katekizm' 'katesizm.html')) -OgType 'article'
 }
 $mp = $X.motuProprio
 $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-par`" lang=`"en`" hidden><p class=`"address`">$($mp.en.address)</p></div>" +
@@ -934,7 +935,8 @@ $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-pa
 $mpLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr "Motu Proprio: $($mp.tr.title)") + ',"inLanguage":"tr","datePublished":"2005-06-28","author":{"@type":"Person","name":"Papa XVI. Benediktus"},"publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"},"mainEntityOfPage":' + (JStr "$SiteUrl/motu-proprio.html") + '}'
 Article-Page 'motu-proprio.html' 'Motu Proprio' 'Motu Proprio' "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Onaylanması ve Yayımlanması İçin Motu Proprio" `
   'Motu Proprio for the approval and publication of the Compendium of the Catechism of the Catholic Church' $mpBody `
-  (Meta-Trim "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin.") $mpLd
+  (Meta-Trim "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin.") $mpLd `
+  "Motu Proprio: Katekizm Özeti$($Apos)nin Onaylanması"
 
 $in = $X.introduction
 $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
@@ -967,7 +969,7 @@ $formulas
   </div>
 </div>
 "@
-Write-Page -File 'ekler.html' -Title "Ekler: Sık Kullanılan Dualar ve Katolik Öğretinin Formülleri | $SiteName" `
+Write-Page -File 'ekler.html' -Title "Ekler: Dualar ve Katolik Öğreti Formülleri | $SiteName" `
   -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince sık kullanılan dualar ve Katolik öğretinin formülleri." `
   -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html' 'Katekizm' 'katesizm.html'))
 
@@ -1117,7 +1119,7 @@ $anatoliaSections
 </div>
 "@
 Write-Page -File 'topraklarimizda-hristiyanlik.html' -Title "$($Anatolia.title) | $SiteName" `
-  -Description "Hristiyanlığın Anadolu'daki kökleri: Pavlus'un memleketi Tarsus, Vahiy Kitabı'nın yedi kilisesi, İznik Konsili ve Antakya ile İzmir'de yazan ilk Kilise Babaları." `
+  -Description "Hristiyanlığın Anadolu'daki kökleri: Pavlus'un memleketi Tarsus, Vahiy Kitabı'nın yedi kilisesi, İznik Konsili, Antakya ve İzmir'deki ilk Kilise Babaları." `
   -Path 'topraklarimizda-hristiyanlik.html' -Body $anatoliaBody -JsonLd @((Breadcrumb-Ld 'Topraklarımızda Hristiyanlık' 'topraklarimizda-hristiyanlik.html'))
 
 # ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html)
@@ -1142,7 +1144,7 @@ $whyParts
 </div>
 "@
 Write-Page -File 'neden-katoligiz.html' -Title "$($WhyCatholic.title) | $SiteName" `
-  -Description "Katolik inancının akla ve kalbe birlikte hitap eden beş adımlık özeti: hakikat ve Tanrı, İsa ve Kutsal Kitap, Kilise ve kutsal sırlar, azizler, ahlak ve sonsuz yazgı." `
+  -Description "Katolik inancının akla ve kalbe hitap eden beş adımlık özeti: hakikat ve Tanrı, İsa ve Kutsal Kitap, Kilise ve kutsal sırlar, azizler, ahlak ve sonsuz yazgı." `
   -Path 'neden-katoligiz.html' -Body $whyCatholicBody -JsonLd @((Breadcrumb-Ld 'Neden Katoliğiz?' 'neden-katoligiz.html'))
 
 # ================================================================== AZIZLER (azizler.html)
@@ -1557,7 +1559,7 @@ $kiliselerBody = @"
       <p>$(Inline $Churches.introEn)</p>
       <p>$(Inline $Churches.touristNoteEn)</p>
     </div>
-    <button type="button" class="flag-toggle" data-show-en="kiliseler-intro-en" data-show-tr="kiliseler-intro-tr" aria-pressed="false">
+    <button type="button" class="flag-toggle" data-show-en="kiliseler-intro-en" data-show-tr="kiliseler-intro-tr" aria-pressed="false" aria-label="İngilizceye geçir">
       <span class="flag-show-en">$IcoFlagEn</span><span class="flag-show-tr" hidden>$IcoFlagTr</span>
     </button>
   </div>
@@ -1572,7 +1574,7 @@ $kiliselerCities
     <div id="eucharist-note-en" lang="en" hidden>
       <p><strong>Where no Catholic church can be found:</strong> $(Inline $Churches.orthodoxNoteEn)</p>
     </div>
-    <button type="button" class="flag-toggle" data-show-en="eucharist-note-en" data-show-tr="eucharist-note-tr" aria-pressed="false">
+    <button type="button" class="flag-toggle" data-show-en="eucharist-note-en" data-show-tr="eucharist-note-tr" aria-pressed="false" aria-label="İngilizceye geçir">
       <span class="flag-show-en">$IcoFlagEn</span><span class="flag-show-tr" hidden>$IcoFlagTr</span>
     </button>
   </div>

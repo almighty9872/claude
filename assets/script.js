@@ -935,6 +935,7 @@
         if (flagEn) flagEn.hidden = showEn;
         if (flagTr) flagTr.hidden = !showEn;
         btn.setAttribute('aria-pressed', String(showEn));
+        btn.setAttribute('aria-label', showEn ? 'Türkçeye geçir' : 'İngilizceye geçir');
       });
     });
   }
