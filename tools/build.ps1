@@ -1175,13 +1175,6 @@ $monthSectionsHtml = (1..12 | ForEach-Object {
   "<section class=`"month`" id=`"ay-$mo`" data-month=`"$mo`"><h2 class=`"month-title`">$($MonthNamesTr[$mo - 1])</h2><div class=`"day-grid`">$cells</div></section>"
 }) -join "`n"
 $monthPillsHtml = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=`"$_`">$($MonthNamesTr[$_ - 1].Substring(0, 3))</a>" }) -join ''
-$azizlerTocMonthOpts = (1..12 | ForEach-Object { "<option value=`"ay-$_`">$($MonthNamesTr[$_ - 1])</option>" }) -join ''
-$azizlerTocHtml = "<div class=`"select-wrap`"><select id=`"azizler-toc`" data-jump-select aria-label=`"Bölüme git`">" +
-  "<option value=`"`" selected disabled>İçindekiler</option>" +
-  "<option value=`"bugun-azizi`">Bugünün Azizi</option>$azizlerTocMonthOpts" +
-  "<option value=`"buyuk-azizler`">En Bilinen 20 Aziz</option>" +
-  "<option value=`"hareketli-bayramlar`">Yıla Göre Değişen Bayramlar</option>" +
-"</select>$IcoChevDown</div>"
 $movableCardsHtml = ($Saints.movable | ForEach-Object {
   "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(Inline $_.title)</h3><p class=`"m-rank label`">$($_.rank)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(Blocks $_.bio)</div></article>"
 }) -join "`n"
@@ -1197,7 +1190,6 @@ $azizlerBody = @"
     <p class="label">Bugün <span data-today-date>...</span></p>
     <div class="today-body" data-today-body><p class="hint">Bugünün azizini görmek için JavaScript$($Apos)i etkinleştirin.</p></div>
   </section>
-  $azizlerTocHtml
   <nav class="month-pills" aria-label="Aylar" data-month-pills>$monthPillsHtml</nav>
   <div class="saints-cal" data-saints-cal>
 $monthSectionsHtml
@@ -1515,12 +1507,13 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
   $city = $_
   $cards = ($city.churches | ForEach-Object {
     $rite = $RiteLabels[$_.rite]
-    $mapQ = "$($_.name), $($_.district), $($city.name), Türkiye"
-    $mapQAttr = $mapQ -replace '&', '&amp;' -replace '"', '&quot;'
-    $phoneRow = if ($_.phone) { "<p class=`"church-meta`">$IcoPhone $($_.phone)</p>" } else { '' }
     # Skip the address line entirely when the sourced data was only district-level (the address
     # field then just repeats "district, city", which the line above already shows).
-    $addrRow = if ($_.address -ne "$($_.district), $($city.name)") { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
+    $hasRealAddr = $_.address -ne "$($_.district), $($city.name)"
+    $mapQ = if ($hasRealAddr) { "$($_.name), $($_.address), Türkiye" } else { "$($_.name), $($_.district), $($city.name), Türkiye" }
+    $mapQAttr = $mapQ -replace '&', '&amp;' -replace '"', '&quot;'
+    $phoneRow = if ($_.phone) { "<p class=`"church-meta`">$IcoPhone $($_.phone)</p>" } else { '' }
+    $addrRow = if ($hasRealAddr) { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
     $siteLink = if ($_.website) { "<a class=`"btn`" href=`"$($_.website)`" target=`"_blank`" rel=`"noopener`">Resmi Site $IcoExternal</a>" }
                 else { "<a class=`"btn`" href=`"$(Google-Url "$($_.name) $($city.name)")`" target=`"_blank`" rel=`"noopener`">Web$($Apos)te Ara $IcoExternal</a>" }
     $warnRow = if ($_.inactive) {

@@ -921,18 +921,6 @@
     markCurrentCity('istanbul');
   }
 
-  /* A page-contents <select> (Azizler): jumping is just a hash change, since the page
-     already gives every section scroll-margin/scroll-padding for the sticky header. */
-  function initJumpSelect() {
-    $$('[data-jump-select]').forEach(function (sel) {
-      sel.addEventListener('change', function () {
-        var id = sel.value;
-        if (id) { location.hash = id; }
-        sel.value = '';
-      });
-    });
-  }
-
   /* Kiliseler intro: a flag button swaps the Turkish/English copy in place
      (not an add-on reveal), and swaps which flag it shows to match. */
   function initLangFlag() {
@@ -976,6 +964,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initLangFlag(); initJumpSelect(); initMapLinks();
+    initChurchFilter(); initLangFlag(); initMapLinks();
   });
 })();
