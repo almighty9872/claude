@@ -17,6 +17,7 @@ window.SAINTS = /*JSON-START*/{
   "title": "Azizler",
   "en": "Saints",
   "intro": "Kilise, her günü bir ya da birkaç azizin anısına ayırır; bu kutsal erkek ve kadınlar inanç yolunda bize örnek olsun diye ayin takvimine kazınmıştır.",
+  "introEn": "The Church sets aside every day of the year to remember one or more saints; these holy men and women are woven into the liturgical calendar so their lives can guide us on the path of faith.",
   "genelTitle": "Bugün İçin Özel Bir Aziz Yok",
   "genelBio": "Ne Roma Genel Takvimi’nde ne de Roma Azizler Cetveli’nde bu tarihe atanmış, güvenle aktarabileceğimiz bir aziz anması bulunuyor. Bu, o günün azizsiz geçtiği anlamına gelmez; Kilise’nin tarih boyunca tanıdığı sayısız aziz arasından, adı ve tarihi bu ayrıntıda güvenle doğrulanamayan pek çok kutsal insan vardır. Böyle günlerde Kilise bizi, ismini bilmesek de Allah’ın huzurunda olan bütün azizleri, yani cennetteki bütün kutsal ruhları anmaya çağırır.",
   "days": [
