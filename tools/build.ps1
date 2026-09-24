@@ -2709,7 +2709,7 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     "</article>"
   }) -join "`n"
   $cityNames = (($city.churches | ForEach-Object { Inline $_.name }) -join ', ')
-  "<details class=`"church-city`" id=`"$($city.id)`"><summary class=`"church-city-head`">" +
+  "<details class=`"church-city`" id=`"$($city.id)`" open><summary class=`"church-city-head`">" +
     "<span class=`"church-city-ico`">$IcoChurch</span>" +
     "<span class=`"church-city-body`"><span class=`"church-city-name`">$($city.name)</span><span class=`"church-city-names`">$cityNames</span></span>" +
     "<span class=`"church-city-more`">Tüm Liste <span class=`"en`" lang=`"en`">(Full List)</span> $IcoChevDown</span>" +
@@ -2721,32 +2721,16 @@ $kiliselerBody = @"
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
   <div class="kiliseler-intro">
-    <div id="kiliseler-intro-tr">
-      <p>$(Inline $Churches.intro)</p>
-      <p>$(Inline $Churches.touristNote)</p>
-    </div>
-    <div id="kiliseler-intro-en" lang="en" hidden>
-      <p>$(Inline $Churches.introEn)</p>
-      <p>$(Inline $Churches.touristNoteEn)</p>
-    </div>
-    <button type="button" class="flag-toggle" data-show-en="kiliseler-intro-en" data-show-tr="kiliseler-intro-tr" aria-pressed="false" aria-label="İngilizceye geçir">
-      <span class="flag-show-en">$IcoFlagEn</span><span class="flag-show-tr" hidden>$IcoFlagTr</span>
-    </button>
+    <p>$(Inline $Churches.intro)</p>
+    <p>$(Inline $Churches.touristNote)</p>
   </div>
   <nav class="faq-toc" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
   $riteFilterHtml
 $kiliselerCities
   <p class="conventions">$(Inline $Churches.note)</p>
-  <div class="eucharist-note">
-    <div id="eucharist-note-tr">
-      <p><strong>Katolik kilisesi bulunamadığında:</strong> $(Inline $Churches.orthodoxNote)</p>
-    </div>
-    <div id="eucharist-note-en" lang="en" hidden>
-      <p><strong>Where no Catholic church can be found:</strong> $(Inline $Churches.orthodoxNoteEn)</p>
-    </div>
-    <button type="button" class="flag-toggle" data-show-en="eucharist-note-en" data-show-tr="eucharist-note-tr" aria-pressed="false" aria-label="İngilizceye geçir">
-      <span class="flag-show-en">$IcoFlagEn</span><span class="flag-show-tr" hidden>$IcoFlagTr</span>
-    </button>
+  <div class="faq-list">
+    <details class="faq-item" id="katolik-bulunamadiginda"><summary><span class="faq-q">Yakınımda Katolik kilisesi yoksa ne yapmalıyım?</span>$IcoChevLg</summary>
+      <div class="faq-a"><p>$(Inline $Churches.orthodoxNote)</p></div></details>
   </div>
 </div>
 "@
@@ -2788,7 +2772,7 @@ $kiliselerCitiesEn = ($Churches.cities | ForEach-Object {
     "</article>"
   }) -join "`n"
   $cityNamesEn = (($city.churches | ForEach-Object { Inline $_.nameEn }) -join ', ')
-  "<details class=`"church-city`" id=`"$($city.id)`"><summary class=`"church-city-head`">" +
+  "<details class=`"church-city`" id=`"$($city.id)`" open><summary class=`"church-city-head`">" +
     "<span class=`"church-city-ico`">$IcoChurch</span>" +
     "<span class=`"church-city-body`"><span class=`"church-city-name`">$($city.name)</span><span class=`"church-city-names`">$cityNamesEn</span></span>" +
     "<span class=`"church-city-more`">Full List $IcoChevDown</span>" +
@@ -2807,8 +2791,9 @@ $kiliselerBodyEn = @"
   $riteFilterHtmlEn
 $kiliselerCitiesEn
   <p class="conventions">$(Inline $Churches.noteEn)</p>
-  <div class="eucharist-note">
-    <p><strong>Where no Catholic church can be found:</strong> $(Inline $Churches.orthodoxNoteEn)</p>
+  <div class="faq-list">
+    <details class="faq-item" id="no-catholic-church-nearby"><summary><span class="faq-q">What should I do if there's no Catholic church nearby?</span>$IcoChevLg</summary>
+      <div class="faq-a"><p>$(Inline $Churches.orthodoxNoteEn)</p></div></details>
   </div>
 </div>
 "@

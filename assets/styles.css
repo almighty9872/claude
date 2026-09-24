@@ -877,17 +877,6 @@ body.sheet-open { overflow: hidden; }
   line-height: 1.55; color: var(--text); max-width: 40rem;
 }
 
-/* Kiliseler page footnote on receiving Communion from an Orthodox church absent a Catholic
-   one nearby (Canon 844 §2): kept smaller than the body copy and visually set apart, since
-   it is a narrow pastoral exception rather than the page's main subject. */
-.eucharist-note {
-  margin: 1.75rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--border);
-  font-family: var(--sans); font-size: .8rem; line-height: 1.65; color: var(--muted);
-}
-.eucharist-note p { margin: 0; }
-.eucharist-note strong { color: var(--text-soft); font-weight: 600; }
-.eucharist-note .flag-toggle { margin-top: .7rem; }
-
 /* (i) beside the brand at every width: reveals content/hakkinda.md, anchored under the button
    on a mouse (fine pointer), centered like a small dialog on touch (coarse pointer). */
 .info-btn {
@@ -1496,18 +1485,9 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
    also uses the bare class directly, so give it the same italic/muted look on its own. */
 .sub { font-style: italic; color: var(--muted); }
 
-/* Intro copy: centered, kept short. The English version replaces the Turkish text in place
-   (not printed underneath) when the flag button is clicked; the button's own flag always shows
-   the language you'd switch TO, so it swaps too. */
+/* Intro copy: centered, kept short. */
 .kiliseler-intro { max-width: 56ch; margin: 0 auto 1.6rem; color: var(--text-soft); text-align: center; }
 .kiliseler-intro p { margin: 0 0 .55rem; }
-.flag-toggle {
-  display: inline-flex; align-items: center; justify-content: center; margin-top: .3rem;
-  width: 2.1rem; height: 2.1rem; padding: 0; border: 1px solid var(--border); border-radius: 999px;
-  background: var(--surface); cursor: pointer; transition: border-color .2s;
-}
-.flag-toggle:hover { border-color: var(--gold-soft); }
-.flag-toggle svg { width: 1.15rem; height: auto; display: block; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-strong); }
 
 /* A compact <select> used wherever a row of pills or a long list of links would take up too
    much space (the Kiliseler rite filter, the Azizler contents jump menu, ...). */

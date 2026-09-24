@@ -972,24 +972,6 @@
     markCurrentCity('istanbul');
   }
 
-  /* Kiliseler intro: a flag button swaps the Turkish/English copy in place
-     (not an add-on reveal), and swaps which flag it shows to match. */
-  function initLangFlag() {
-    $$('.flag-toggle').forEach(function (btn) {
-      var en = document.getElementById(btn.getAttribute('data-show-en'));
-      var tr = document.getElementById(btn.getAttribute('data-show-tr'));
-      var flagEn = $('.flag-show-en', btn), flagTr = $('.flag-show-tr', btn);
-      if (!en || !tr) return;
-      btn.addEventListener('click', function () {
-        var showEn = tr.hidden === false;
-        tr.hidden = showEn; en.hidden = !showEn;
-        if (flagEn) flagEn.hidden = showEn;
-        if (flagTr) flagTr.hidden = !showEn;
-        btn.setAttribute('aria-pressed', String(showEn));
-        btn.setAttribute('aria-label', showEn ? 'Türkçeye geçir' : 'İngilizceye geçir');
-      });
-    });
-  }
 
   /* ---------------------------------------------------------------
      11. Accessibility widget: floating button opens a panel of profile
@@ -1165,6 +1147,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initLangFlag(); initMapLinks(); initA11y();
+    initChurchFilter(); initMapLinks(); initA11y();
   });
 })();
