@@ -981,7 +981,20 @@
     }
     function speakEl(el) {
       if (!('speechSynthesis' in window) || el === speaking) return;
-      var text = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 500);
+      /* Many elements carry a nested translation/original in a different
+         language (e.g. a heading's English gloss span, a hidden Latin or
+         "original English" toggle block) purely for sighted/print use.
+         textContent would pull all of it in regardless of visibility or
+         language, so the wrong-language portion gets read aloud in the
+         page's voice. Strip any descendant whose lang doesn't match the
+         language of the element actually being read. */
+      var effLang = ((el.closest('[lang]') || document.documentElement).getAttribute('lang') || document.documentElement.lang || 'tr').split('-')[0];
+      var clone = el.cloneNode(true);
+      $$('[lang]', clone).forEach(function (n) {
+        var l = (n.getAttribute('lang') || '').split('-')[0];
+        if (l && l !== effLang) n.remove();
+      });
+      var text = (clone.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 500);
       if (!text) return;
       try { window.speechSynthesis.cancel(); } catch (e) { /* unsupported */ }
       if (speaking) speaking.classList.remove('a11y-reading');
@@ -989,7 +1002,7 @@
       el.classList.add('a11y-reading');
       try {
         var u = new SpeechSynthesisUtterance(text);
-        u.lang = LANG === 'en' ? 'en-US' : 'tr-TR';
+        u.lang = effLang === 'en' ? 'en-US' : effLang === 'tr' ? 'tr-TR' : effLang;
         window.speechSynthesis.speak(u);
       } catch (e) { /* unsupported */ }
     }

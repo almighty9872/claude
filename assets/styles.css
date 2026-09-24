@@ -169,18 +169,6 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 }
 .icon-btn:hover { border-color: var(--border-strong); color: var(--gold); }
 .icon-btn svg { width: 1.15rem; height: 1.15rem; }
-/* Header/footer language switcher: navigates (not a toggle), so it's a link, not a button.
-   Always shows the flag of the language you'd switch TO, matching the site's other flag controls. */
-.lang-switch {
-  display: inline-flex; align-items: center; justify-content: center; flex: none;
-  width: 2.1rem; height: 2.1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface);
-  transition: border-color .2s;
-}
-.lang-switch:hover { border-color: var(--gold-soft); }
-.lang-switch svg { width: 1.2rem; height: auto; display: block; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-strong); }
-.foot-lang { display: inline-flex; align-items: center; gap: .4rem; margin-top: .6rem; font-family: var(--sans); font-size: .82rem; color: var(--text-soft); text-decoration: none; }
-.foot-lang:hover { color: var(--gold); }
-.foot-lang svg { width: 1.15rem; height: auto; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-strong); }
 /* Plain text + icon, no button pill: the least visually heavy control in the bar. */
 .fontsize-toggle {
   display: inline-flex; align-items: center; gap: .3rem; flex: none;
@@ -699,6 +687,10 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   transition: opacity .2s ease, transform .2s cubic-bezier(.32, .72, 0, 1), visibility .2s;
 }
 .has-menu.open .nav-menu { opacity: 1; visibility: visible; transform: none; }
+/* The EN nav's "More" trigger sits at the right edge of the header; anchoring its
+   menu at left:0 like the others would push a fixed min-width box off the right
+   edge of the viewport and force horizontal scroll even while closed. */
+#nav-more { left: auto; right: 0; transform-origin: top right; }
 .nav-menu { background: var(--glass-menu); -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px); }
 .nav-menu ul { margin: 0; padding: 0; list-style: none; }
 .nav-menu a { display: block; padding: .55rem .75rem; border-radius: 13px; text-decoration: none; color: var(--text); }
@@ -914,6 +906,16 @@ body.sheet-open { overflow: hidden; }
 }
 .a11y-close svg { width: .85rem; height: .85rem; }
 .a11y-close:hover { color: var(--gold); background: var(--gold-bg); }
+/* Language switcher: navigates (not a toggle), so it's a link, not a button. Sits above
+   Profiller as the first control in the panel, showing the flag of the language you'd switch TO. */
+.a11y-lang-switch {
+  display: flex; align-items: center; gap: .5rem; width: 100%; margin-bottom: .3rem;
+  padding: .55rem .7rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+  color: var(--text-soft); font-family: var(--sans); font-size: .82rem; font-weight: 600; text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.a11y-lang-switch:hover { border-color: var(--gold-soft); color: var(--gold); }
+.a11y-lang-switch svg { width: 1.2rem; height: auto; flex: none; display: block; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-strong); }
 .a11y-group-label {
   margin: .8rem 0 .5rem; font-family: var(--sans); font-size: .68rem; font-weight: 700;
   letter-spacing: .1em; text-transform: uppercase; color: var(--muted);

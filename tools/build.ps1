@@ -647,6 +647,7 @@ $A11yWidgetHtml = @"
 <div class="a11y-panel glass" id="a11y-panel" role="dialog" aria-modal="false" aria-label="Erişilebilirlik ayarları" hidden>
   <div class="a11y-head"><p class="a11y-title">$IcoA11y Erişilebilirlik</p><button type="button" class="a11y-close icon-btn" aria-label="Kapat">$IcoClose</button></div>
   <div class="a11y-body">
+    <a class="a11y-lang-switch" href="{{LANG_TARGET}}" aria-label="Switch to English">$IcoFlagEn<span>English</span></a>
     <p class="a11y-group-label">Profiller</p>
     <div class="a11y-profiles">
       <button type="button" class="a11y-profile" data-a11y-profile="motor" aria-pressed="false">$IcoWheelchair<span>Hareket Kısıtlılığı</span></button>
@@ -675,6 +676,7 @@ $A11yWidgetHtmlEn = @"
 <div class="a11y-panel glass" id="a11y-panel" role="dialog" aria-modal="false" aria-label="Accessibility settings" hidden>
   <div class="a11y-head"><p class="a11y-title">$IcoA11y Accessibility</p><button type="button" class="a11y-close icon-btn" aria-label="Close">$IcoClose</button></div>
   <div class="a11y-body">
+    <a class="a11y-lang-switch" href="{{LANG_TARGET}}" aria-label="Türkçeye geç">$IcoFlagTr<span>Türkçe</span></a>
     <p class="a11y-group-label">Profiles</p>
     <div class="a11y-profiles">
       <button type="button" class="a11y-profile" data-a11y-profile="motor" aria-pressed="false">$IcoWheelchair<span>Motor Impaired</span></button>
@@ -754,7 +756,6 @@ $Sprite
       </nav>
       <div class="header-tools">
         $ClockHtml
-        <a class="lang-switch" href="$(Lang-Switch-Target $current 'tr')" aria-label="Switch to English">$IcoFlagEn</a>
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
         <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
       </div>
@@ -828,7 +829,6 @@ function Header-Html-En([string]$current) {
   }) -join ''
   $inMore = @($MoreNavEn | ForEach-Object { $_.href }) -contains $current
   $moreCls = if ($inMore) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
-  $langTarget = Lang-Switch-Target $current 'en'
   return @"
 $Sprite
 <a class="skip-link" href="#main">Skip to content</a>
@@ -859,7 +859,6 @@ $Sprite
       </nav>
       <div class="header-tools">
         $ClockHtmlEn
-        <a class="lang-switch" href="$langTarget" aria-label="Türkçeye geç">$IcoFlagTr</a>
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark theme">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
         <button type="button" class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
       </div>
@@ -906,7 +905,6 @@ $FooterHtml = @"
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
-      <a class="foot-lang" href="en/index.html">$IcoFlagEn<span>English</span></a>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
@@ -927,7 +925,6 @@ $FooterHtmlEn = @"
       <p class="foot-tag">$SiteTagEn</p>
       <p class="foot-copy">English pages © 2026 $SiteName</p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
-      <a class="foot-lang" href="index.html">$IcoFlagTr<span>Türkçe</span></a>
     </div>
     <nav class="foot-sitemap" aria-label="Sitemap">
       <div class="foot-col"><p class="foot-label">Compendium</p><ul>$($footCompendiumEn -join '')</ul></div>
@@ -971,7 +968,8 @@ function Write-Page {
   }
   $headerHtml = if ($Lang -eq 'en') { Header-Html-En $File } else { Header-Html $File }
   $footerHtml = if ($Lang -eq 'en') { $FooterHtmlEn } else { $FooterHtml }
-  $a11yHtml = if ($Lang -eq 'en') { $A11yWidgetHtmlEn } else { $A11yWidgetHtml }
+  $a11yLangTarget = Lang-Switch-Target $File $Lang
+  $a11yHtml = ($(if ($Lang -eq 'en') { $A11yWidgetHtmlEn } else { $A11yWidgetHtml })) -replace '\{\{LANG_TARGET\}\}', $a11yLangTarget
   $html = @"
 <!DOCTYPE html>
 <html lang="$Lang"$rootAttr>
