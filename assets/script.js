@@ -377,38 +377,11 @@
   }
 
   /* ---------------------------------------------------------------
-     8. Main navigation: the dropdown menus on wide screens and the
-        full-screen overlay on phones. Both are plain DOM, no dependencies.
+     8. Main navigation: four plain links in the bar plus a hamburger,
+        shown at every width, that opens the full-site overlay menu.
+        Plain DOM, no dependencies.
      --------------------------------------------------------------- */
   function initNav() {
-    /* Every dropdown in the bar (Katesizm, Dualar, ...): $$ so a second and third
-       .has-menu are not silently skipped the way a single $() would skip them. */
-    $$('.has-menu').forEach(function (item) {
-      var trigger = $('.nav-trigger', item);
-      if (!trigger) return;
-      /* A trigger that is a real link (Katesizm -> katesizm.html) must still navigate on
-         click, so hover and keyboard focus open it instead. A trigger with no page of its
-         own (Dualar) is a <button>, so a click is the only way to open or close it. */
-      var openMenu = function () { item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
-      var closeMenu = function () { item.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
-      if (trigger.tagName === 'BUTTON') {
-        trigger.addEventListener('click', function (e) {
-          e.stopPropagation();
-          if (item.classList.contains('open')) closeMenu(); else openMenu();
-        });
-        document.addEventListener('click', function (e) { if (!item.contains(e.target)) closeMenu(); });
-      }
-      item.addEventListener('mouseenter', openMenu);
-      item.addEventListener('mouseleave', closeMenu);
-      item.addEventListener('focusin', openMenu);
-      item.addEventListener('focusout', function () {
-        setTimeout(function () { if (!item.contains(document.activeElement)) closeMenu(); }, 0);
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && item.classList.contains('open')) { closeMenu(); trigger.blur(); }
-      });
-    });
-
     var sheet = $('#navsheet');
     if (!sheet) return;
     var toggles = $$('.menu-toggle'), panel = $('.navsheet-panel', sheet), hideTimer = null;

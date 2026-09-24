@@ -581,8 +581,14 @@ $KaynaklarNav = @(
   @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus'tan İznik'e" }
 )
 $KatekizmPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
-$PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
-$KaynaklarPages = @($KaynaklarNav | ForEach-Object { $_.href })
+# The four links shown directly in the bar at all times; everything else (including these
+# four again, for completeness) lives in the hamburger's full-screen overlay only.
+$CoreNav = @(
+  @{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?' },
+  @{ href = 'katesizm.html';        t = 'Katekizm' },
+  @{ href = 'kiliseler.html';       t = 'Kilise Bul' },
+  @{ href = 'sss.html';             t = 'Sorular' }
+)
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $ClockHtmlEn = '<time class="clock" aria-label="Date and time"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
@@ -717,23 +723,12 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder, [string]$l
 }
 function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
 function Header-Html([string]$current) {
-  $inKatekizm = $KatekizmPages -contains $current
-  $katekizmCls = if ($inKatekizm) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
-  $katekizmMenu = ($KatekizmNav | ForEach-Object {
-    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
+  $coreMenu = ($CoreNav | ForEach-Object {
+    $cls = if ($_.href -eq 'katesizm.html' -and $KatekizmPages -contains $current) { 'nav-link is-section' } else { 'nav-link' }
+    "<li><a class=`"$cls`" href=`"$($_.href)`"$(Cur $_.href $current)>$($_.t)</a></li>"
   }) -join ''
   $sheetKatekizm = ($KatekizmNav | ForEach-Object {
     "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$SmallCross</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
-  }) -join ''
-  $inPray = $PrayerPages -contains $current
-  $prayCls = if ($inPray) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
-  $prayerMenu = ($PrayerNav | ForEach-Object {
-    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
-  }) -join ''
-  $inKaynaklar = $KaynaklarPages -contains $current
-  $kaynaklarCls = if ($inKaynaklar) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
-  $kaynaklarMenu = ($KaynaklarNav | ForEach-Object {
-    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
   }) -join ''
   $sheetPray = ($PrayerNav | ForEach-Object {
     "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($NavIcons[$_.href])</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
@@ -752,25 +747,7 @@ $Sprite
         <button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
       </div>
       <nav class="mainnav" aria-label="Ana menü">
-        <ul>
-          <li><a class="nav-link" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)>Neden Katoliğiz?</a></li>
-          <li class="has-menu">
-            <button type="button" class="$katekizmCls" aria-expanded="false" aria-controls="nav-katekizm" aria-haspopup="true">Katekizm$IcoChev</button>
-            <div class="nav-menu glass" id="nav-katekizm"><ul>$katekizmMenu</ul></div>
-          </li>
-          <li class="has-menu">
-            <button type="button" class="$kaynaklarCls" aria-expanded="false" aria-controls="nav-kaynaklar" aria-haspopup="true">Kaynaklar$IcoChev</button>
-            <div class="nav-menu glass" id="nav-kaynaklar"><ul>$kaynaklarMenu</ul></div>
-          </li>
-          <li class="has-menu">
-            <button type="button" class="$prayCls" aria-expanded="false" aria-controls="nav-dualar" aria-haspopup="true">Dualar$IcoChev</button>
-            <div class="nav-menu glass" id="nav-dualar"><ul>$prayerMenu</ul></div>
-          </li>
-          <li><a class="nav-link" href="mucizeler.html"$(Cur 'mucizeler.html' $current)>Mucizeler</a></li>
-          <li><a class="nav-link" href="azizler.html"$(Cur 'azizler.html' $current)>Azizler</a></li>
-          <li><a class="nav-link" href="sss.html"$(Cur 'sss.html' $current)>Sorular</a></li>
-          <li><a class="nav-link" href="iletisim.html"$(Cur 'iletisim.html' $current)>İletişim</a></li>
-        </ul>
+        <ul>$coreMenu</ul>
       </nav>
       <div class="header-tools">
         $ClockHtml
@@ -785,24 +762,44 @@ $Sprite
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
     <div class="ns-head">$ClockHtml</div>
     <nav class="ns-nav" aria-label="Menü">
-      <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
-      <p class="ns-label">Neden Katoliğiz?</p>
-      <a class="ns-item" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)><span class="ns-ico">$IcoCompass</span><span class="ns-body"><span class="ns-t">Neden Katoliğiz?</span><span class="ns-s">İmanın beş adımda özeti</span></span></a>
-      <p class="ns-label">Katekizm</p>
-      $sheetKatekizm
-      <p class="ns-label">Kaynaklar</p>
-      $sheetKaynaklar
-      <p class="ns-label">Dualar</p>
-      $sheetPray
-      <p class="ns-label">Mucizeler</p>
-      <a class="ns-item" href="mucizeler.html"$(Cur 'mucizeler.html' $current)><span class="ns-ico">$IcoRadiance</span><span class="ns-body"><span class="ns-t">Mucizeler</span><span class="ns-s">Görünmeler, kalıntılar, Efkaristiya mucizeleri</span></span></a>
-      <p class="ns-label">Azizler</p>
-      <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></span></a>
-      <p class="ns-label">Sorular</p>
-      <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></span></a>
-      <p class="ns-label">İletişim</p>
-      <a class="ns-item" href="iletisim.html"$(Cur 'iletisim.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">İletişim</span><span class="ns-s">Bana ulaşın</span></span></a>
-      <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">Hakkında</span></span></button>
+      <div class="ns-group" style="animation-delay:0s">
+        <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.035s">
+        <p class="ns-label">Neden Katoliğiz?</p>
+        <a class="ns-item" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)><span class="ns-ico">$IcoCompass</span><span class="ns-body"><span class="ns-t">Neden Katoliğiz?</span><span class="ns-s">İmanın beş adımda özeti</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.07s">
+        <p class="ns-label">Katekizm</p>
+        $sheetKatekizm
+      </div>
+      <div class="ns-group" style="animation-delay:.105s">
+        <p class="ns-label">Kaynaklar</p>
+        $sheetKaynaklar
+      </div>
+      <div class="ns-group" style="animation-delay:.14s">
+        <p class="ns-label">Dualar</p>
+        $sheetPray
+      </div>
+      <div class="ns-group" style="animation-delay:.175s">
+        <p class="ns-label">Mucizeler</p>
+        <a class="ns-item" href="mucizeler.html"$(Cur 'mucizeler.html' $current)><span class="ns-ico">$IcoRadiance</span><span class="ns-body"><span class="ns-t">Mucizeler</span><span class="ns-s">Görünmeler, kalıntılar, Efkaristiya mucizeleri</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.21s">
+        <p class="ns-label">Azizler</p>
+        <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.245s">
+        <p class="ns-label">Sorular</p>
+        <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.28s">
+        <p class="ns-label">İletişim</p>
+        <a class="ns-item" href="iletisim.html"$(Cur 'iletisim.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">İletişim</span><span class="ns-s">Bana ulaşın</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.315s">
+        <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">Hakkında</span></span></button>
+      </div>
     </nav>
   </div>
 </div>
@@ -837,17 +834,19 @@ $MoreNavEn = @(
   @{ href = 'en/miracles.html';          t = 'Miracles';           s = 'Apparitions, relics, Eucharistic miracles'; ico = $IcoRadiance },
   @{ href = 'en/anatolia.html';          t = 'Christianity in Anatolia'; s = "Paul's homeland, Nicaea, the early Church"; ico = $IcoRoots }
 )
+# Mirrors the Turkish core four (Neden Katoliğiz?, Katekizm, Kilise Bul, Sorular).
+$CoreNavEn = @(
+  @{ href = 'en/why-were-catholic.html'; t = "Why We're Catholic" },
+  @{ href = 'en/compendium.html';        t = 'Compendium' },
+  @{ href = 'en/find-a-church.html';     t = 'Find a Church' },
+  @{ href = 'en/faq.html';               t = 'FAQ' }
+)
+$CompendiumPagesEn = @('en/compendium.html') + ($TextNavEn | ForEach-Object { $_.href })
 function Header-Html-En([string]$current) {
-  $compendiumMenu = ($TextNavEn | ForEach-Object {
-    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
+  $coreMenu = ($CoreNavEn | ForEach-Object {
+    $cls = if ($_.href -eq 'en/compendium.html' -and $CompendiumPagesEn -contains $current) { 'nav-link is-section' } else { 'nav-link' }
+    "<li><a class=`"$cls`" href=`"$($_.href)`"$(Cur $_.href $current)>$($_.t)</a></li>"
   }) -join ''
-  $inCompendium = @($TextNavEn | ForEach-Object { $_.href }) + @('en/compendium.html') -contains $current
-  $compCls = if ($inCompendium) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
-  $moreMenu = ($MoreNavEn | ForEach-Object {
-    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
-  }) -join ''
-  $inMore = @($MoreNavEn | ForEach-Object { $_.href }) -contains $current
-  $moreCls = if ($inMore) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
   return @"
 $Sprite
 <a class="skip-link" href="#main">Skip to content</a>
@@ -859,22 +858,7 @@ $Sprite
         <button type="button" class="info-btn" aria-label="About this site" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
       </div>
       <nav class="mainnav" aria-label="Main menu">
-        <ul>
-          <li><a class="nav-link" href="en/becoming-catholic.html"$(Cur 'en/becoming-catholic.html' $current)>Becoming Catholic</a></li>
-          <li class="has-menu">
-            <button type="button" class="$compCls" aria-expanded="false" aria-controls="nav-compendium" aria-haspopup="true">Compendium$IcoChev</button>
-            <div class="nav-menu glass" id="nav-compendium"><ul>$compendiumMenu</ul></div>
-          </li>
-          <li><a class="nav-link" href="en/confession.html"$(Cur 'en/confession.html' $current)>Confession</a></li>
-          <li><a class="nav-link" href="en/saints.html"$(Cur 'en/saints.html' $current)>Saints</a></li>
-          <li><a class="nav-link" href="en/find-a-church.html"$(Cur 'en/find-a-church.html' $current)>Find a Church</a></li>
-          <li><a class="nav-link" href="en/faq.html"$(Cur 'en/faq.html' $current)>FAQ</a></li>
-          <li class="has-menu">
-            <button type="button" class="$moreCls" aria-expanded="false" aria-controls="nav-more" aria-haspopup="true">More$IcoChev</button>
-            <div class="nav-menu glass" id="nav-more"><ul>$moreMenu</ul></div>
-          </li>
-          <li><a class="nav-link" href="en/contact.html"$(Cur 'en/contact.html' $current)>Contact</a></li>
-        </ul>
+        <ul>$coreMenu</ul>
       </nav>
       <div class="header-tools">
         $ClockHtmlEn
@@ -889,24 +873,44 @@ $Sprite
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="ns-head">$ClockHtmlEn</div>
     <nav class="ns-nav" aria-label="Menu">
-      <a class="ns-item" href="en/index.html"$(Cur 'en/index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Home</span></span></a>
-      <p class="ns-label">Becoming Catholic</p>
-      <a class="ns-item" href="en/becoming-catholic.html"$(Cur 'en/becoming-catholic.html' $current)><span class="ns-ico">$IcoWay</span><span class="ns-body"><span class="ns-t">Becoming Catholic</span><span class="ns-s">The OCIA/RCIA process</span></span></a>
-      <p class="ns-label">Compendium</p>
-      $(($TextNavEn | ForEach-Object { "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$SmallCross</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>" }) -join '')
-      <p class="ns-label">Confession</p>
-      <a class="ns-item" href="en/confession.html"$(Cur 'en/confession.html' $current)><span class="ns-ico">$IcoKey</span><span class="ns-body"><span class="ns-t">Confession</span><span class="ns-s">Step by step, how it works</span></span></a>
-      <p class="ns-label">Saints</p>
-      <a class="ns-item" href="en/saints.html"$(Cur 'en/saints.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Saints</span></span></a>
-      <p class="ns-label">Find a Church</p>
-      <a class="ns-item" href="en/find-a-church.html"$(Cur 'en/find-a-church.html' $current)><span class="ns-ico">$IcoPin</span><span class="ns-body"><span class="ns-t">Find a Church</span><span class="ns-s">Catholic churches in Turkey</span></span></a>
-      <p class="ns-label">FAQ</p>
-      <a class="ns-item" href="en/faq.html"$(Cur 'en/faq.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">FAQ</span></span></a>
-      <p class="ns-label">More</p>
-      $(($MoreNavEn | ForEach-Object { "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($_.ico)</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>" }) -join '')
-      <p class="ns-label">Contact</p>
-      <a class="ns-item" href="en/contact.html"$(Cur 'en/contact.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">Contact</span><span class="ns-s">Get in touch</span></span></a>
-      <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">About</span></span></button>
+      <div class="ns-group" style="animation-delay:0s">
+        <a class="ns-item" href="en/index.html"$(Cur 'en/index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Home</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.035s">
+        <p class="ns-label">Becoming Catholic</p>
+        <a class="ns-item" href="en/becoming-catholic.html"$(Cur 'en/becoming-catholic.html' $current)><span class="ns-ico">$IcoWay</span><span class="ns-body"><span class="ns-t">Becoming Catholic</span><span class="ns-s">The OCIA/RCIA process</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.07s">
+        <p class="ns-label">Compendium</p>
+        $(($TextNavEn | ForEach-Object { "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$SmallCross</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>" }) -join '')
+      </div>
+      <div class="ns-group" style="animation-delay:.105s">
+        <p class="ns-label">Confession</p>
+        <a class="ns-item" href="en/confession.html"$(Cur 'en/confession.html' $current)><span class="ns-ico">$IcoKey</span><span class="ns-body"><span class="ns-t">Confession</span><span class="ns-s">Step by step, how it works</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.14s">
+        <p class="ns-label">Saints</p>
+        <a class="ns-item" href="en/saints.html"$(Cur 'en/saints.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Saints</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.175s">
+        <p class="ns-label">Find a Church</p>
+        <a class="ns-item" href="en/find-a-church.html"$(Cur 'en/find-a-church.html' $current)><span class="ns-ico">$IcoPin</span><span class="ns-body"><span class="ns-t">Find a Church</span><span class="ns-s">Catholic churches in Turkey</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.21s">
+        <p class="ns-label">FAQ</p>
+        <a class="ns-item" href="en/faq.html"$(Cur 'en/faq.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">FAQ</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.245s">
+        <p class="ns-label">More</p>
+        $(($MoreNavEn | ForEach-Object { "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($_.ico)</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>" }) -join '')
+      </div>
+      <div class="ns-group" style="animation-delay:.28s">
+        <p class="ns-label">Contact</p>
+        <a class="ns-item" href="en/contact.html"$(Cur 'en/contact.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">Contact</span><span class="ns-s">Get in touch</span></span></a>
+      </div>
+      <div class="ns-group" style="animation-delay:.315s">
+        <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">About</span></span></button>
+      </div>
     </nav>
   </div>
 </div>

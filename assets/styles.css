@@ -54,6 +54,7 @@
   --glass-hi: rgba(255, 255, 255, .75);
   --glass-menu: rgba(250, 247, 240, .9);
   --glass-strong: rgba(250, 247, 240, .95);
+  --glass-overlay: rgba(250, 247, 240, .8);
   --glass-sheen: rgba(255, 255, 255, .5);
   --glass-shadow: 0 10px 34px -12px rgba(27, 35, 54, .28);
   --scrim: rgba(40, 36, 28, .5);
@@ -85,6 +86,7 @@
   --glass-hi: rgba(180, 205, 255, .14);
   --glass-menu: rgba(15, 23, 40, .9);
   --glass-strong: rgba(15, 23, 40, .95);
+  --glass-overlay: rgba(15, 23, 40, .8);
   --glass-sheen: rgba(170, 200, 255, .10);
   --glass-shadow: 0 10px 34px -12px rgba(0, 0, 0, .7);
   --scrim: rgba(4, 8, 16, .62);
@@ -718,6 +720,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   .glass { background: var(--surface); }
 }
 
+/* The four core links (Neden Katoliğiz?, Katekizm, Kilise Bul, Sorular / their EN equivalents)
+   sit directly in the bar; every other page lives only in the hamburger's overlay below. */
 .mainnav { display: none; }
 @media (min-width: 900px) { .mainnav { display: block; margin-left: .35rem; } }
 .mainnav > ul { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem; margin: 0; padding: 0; list-style: none; }
@@ -729,33 +733,9 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 }
 .nav-link:hover { color: var(--gold-active); background: var(--gold-bg); }
 .nav-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.nav-link[aria-current="page"], .nav-trigger.is-section {
+.nav-link[aria-current="page"], .nav-link.is-section {
   color: var(--gold-active); background: var(--gold-bg); border-color: var(--glass-brd);
 }
-.nav-link .ico { width: .95rem; height: .95rem; transition: transform .22s ease; }
-.nav-trigger[aria-expanded="true"] { color: var(--gold-active); background: var(--gold-bg); }
-.nav-trigger[aria-expanded="true"] .ico { transform: rotate(180deg); }
-
-.has-menu { position: relative; }
-.nav-menu {
-  position: absolute; top: calc(100% + .5rem); left: 0; z-index: 60;
-  min-width: 23rem; padding: .35rem; border-radius: 20px;
-  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.97); transform-origin: top left;
-  transition: opacity .2s ease, transform .2s cubic-bezier(.32, .72, 0, 1), visibility .2s;
-}
-.has-menu.open .nav-menu { opacity: 1; visibility: visible; transform: none; }
-/* The EN nav's "More" trigger sits at the right edge of the header; anchoring its
-   menu at left:0 like the others would push a fixed min-width box off the right
-   edge of the viewport and force horizontal scroll even while closed. */
-#nav-more { left: auto; right: 0; transform-origin: top right; }
-.nav-menu { background: var(--glass-menu); -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px); }
-.nav-menu ul { margin: 0; padding: 0; list-style: none; }
-.nav-menu a { display: block; padding: .55rem .75rem; border-radius: 13px; text-decoration: none; color: var(--text); }
-.nav-menu a:hover, .nav-menu a:focus-visible { background: var(--gold-bg); outline: none; }
-.nav-menu a[aria-current="page"] { background: var(--gold-bg); }
-.nav-menu a[aria-current="page"] .nm-t { color: var(--gold-active); }
-.nm-t { display: block; font-size: .98rem; font-weight: 600; line-height: 1.25; }
-.nm-s { display: block; margin-top: .08rem; font-family: var(--sans); font-size: .75rem; color: var(--muted); }
 
 @media (min-width: 900px) {
   .header-row { flex-wrap: nowrap; }
@@ -766,9 +746,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 /* The clock is the first thing to go when the bar gets tight, so the site name stays whole */
 @media (max-width: 1399px) { .header-tools .clock { display: none; } }
 
-/* ---------- 13. Mobile menu overlay ---------- */
+/* ---------- 13. Full-site menu overlay (hamburger is shown at every width) ---------- */
 .menu-toggle { display: inline-grid; }
-@media (min-width: 900px) { .menu-toggle { display: none; } }
 /* Hamburger -> X: three independent lines, morphed purely off the button's own aria-expanded
    state (the same attribute initNav() already toggles), so no extra JS is needed. */
 .menu-ico line {
@@ -789,19 +768,35 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .navsheet-panel {
   position: relative; width: 100%; height: 100%; overflow-y: auto; overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 1rem 1.1rem calc(1.6rem + env(safe-area-inset-bottom));
-  opacity: 0; transform: translateY(-14px);
-  transition: opacity .28s ease, transform .3s cubic-bezier(.32, .72, 0, 1);
+  padding: 1.4rem 1.1rem calc(2rem + env(safe-area-inset-bottom));
+  opacity: 0; transform: translateY(-14px) scale(.99);
+  transition: opacity .32s ease, transform .38s cubic-bezier(.19, 1, .22, 1);
 }
 .navsheet.open .navsheet-panel { opacity: 1; transform: none; }
-.navsheet-panel { background: var(--glass-strong); }
+/* Translucent (not the near-opaque --glass-strong used elsewhere) so the .glass backdrop-filter
+   blur is actually visible -- a proper frosted-glass sheet over the page behind it. */
+.navsheet-panel { background: var(--glass-overlay); }
+.ns-head { margin-bottom: 1rem; padding-bottom: .65rem; border-bottom: 1px solid var(--border); text-align: center; }
+.ns-head .clock { font-size: .8rem; }
+.ns-nav { display: block; }
+/* Each labeled section fades and slides in on its own delay (set inline per group in
+   build.ps1) when the overlay opens, for the staggered reveal effect. */
+.ns-group { opacity: 0; transform: translateY(16px); break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: .3rem; }
+.navsheet.open .ns-group { animation: ns-reveal .5s cubic-bezier(.16, 1, .3, 1) forwards; }
+@keyframes ns-reveal { to { opacity: 1; transform: none; } }
+@media (min-width: 900px) {
+  .ns-nav { column-count: 2; column-gap: 3rem; max-width: 64rem; margin: 0 auto; }
+}
+@media (min-width: 1300px) {
+  .ns-nav { column-count: 3; max-width: 88rem; }
+}
 .ns-label { margin: .7rem .55rem .25rem; font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 .ns-item {
   display: flex; align-items: center; gap: .7rem; min-height: 2.9rem; padding: .55rem .85rem; margin-bottom: .1rem;
   border-radius: 15px; text-decoration: none; color: var(--text);
   transition: background-color .15s;
 }
-.ns-item:active { background: var(--surface-2); }
+.ns-item:hover, .ns-item:active { background: var(--surface-2); }
 .ns-item[aria-current="page"] { background: var(--gold-bg); }
 .ns-item[aria-current="page"] .ns-t { color: var(--gold-active); }
 .ns-ico { flex: none; width: 1.3rem; height: 1.3rem; color: var(--gold); }
@@ -809,8 +804,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .ns-body { min-width: 0; }
 .ns-t { display: block; font-size: 1.02rem; font-weight: 600; line-height: 1.3; }
 .ns-s { display: block; margin-top: .1rem; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
-.ns-head { margin-bottom: .5rem; padding-bottom: .65rem; border-bottom: 1px solid var(--border); text-align: center; }
-.ns-head .clock { font-size: .8rem; }
 body.sheet-open { overflow: hidden; }
 
 /* ---------- 14. Touch refinements ---------- */
@@ -826,7 +819,8 @@ body.sheet-open { overflow: hidden; }
   .qa-foot, .readbar { gap: .5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav-menu, .navsheet-panel, .nav-link .ico, .menu-ico line { transition: none; }
+  .navsheet-panel, .menu-ico line { transition: none; }
+  .ns-group { animation: none !important; opacity: 1; transform: none; }
 }
 
 /* ---------- 15. Hub, info panel, compact footer ---------- */
