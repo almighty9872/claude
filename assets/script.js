@@ -11,8 +11,11 @@
   'use strict';
 
   var THEME_KEY = 'kkio-theme';
-  /* Part number → page. Keep in sync with tools/build.ps1 ($PartMeta). */
+  /* Part number → page. Keep in sync with tools/build.ps1 ($PartMeta). The English pages use
+     their own English slugs (not a literal mirror of the Turkish filename), so a parallel list
+     is needed; keep it in sync with $PartMeta's fileEn values. */
   var PAGES = ['iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html'];
+  var PAGES_EN = ['profession-of-faith.html', 'celebration-of-christian-mystery.html', 'life-in-christ.html', 'christian-prayer.html'];
   var DATA_FILES = ['data/compendium-1.js', 'data/compendium-2.js', 'data/compendium-3.js', 'data/compendium-4.js'];
   var MAX_RESULTS = 50;
   /* Pages served at arbitrary URLs (404.html), and every /en/ page, declare <html data-root="/">
@@ -82,20 +85,21 @@
   }
 
   /* ---------------------------------------------------------------
-     2. Live clock: full Turkish date + 24-hour time with seconds
-        e.g. "Cuma, 18 Eylül 2026  14:05:09"
+     2. Live clock: full date (Turkish or English, matching the page's
+        language) + 24-hour time with seconds
+        e.g. "Cuma, 18 Eylül 2026  14:05:09" / "Fri, 18 September  14:05:09"
      --------------------------------------------------------------- */
   function initClock() {
     var clocks = $$('.clock');
     if (!clocks.length) return;
     var pad = function (n) { return (n < 10 ? '0' : '') + n; };
     var dateFmt = null;
-    try { dateFmt = new Intl.DateTimeFormat('tr-TR', { weekday: 'short', day: 'numeric', month: 'long' }); } catch (e) { /* fallback below */ }
+    try { dateFmt = new Intl.DateTimeFormat(LANG === 'en' ? 'en-US' : 'tr-TR', { weekday: 'short', day: 'numeric', month: 'long' }); } catch (e) { /* fallback below */ }
     function dateText(d) {
       if (dateFmt && dateFmt.formatToParts) {
         var p = {};
         dateFmt.formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
-        return p.weekday + '. ' + p.day + ' ' + p.month;
+        return p.weekday + (LANG === 'en' ? ',' : '.') + ' ' + p.day + ' ' + p.month;
       }
       return pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
     }
@@ -215,7 +219,7 @@
       window.COMPENDIUM.parts.forEach(function (p, pi) {
         p.items.forEach(function (it) {
           if (it.type !== 'qa') return;
-          var e = { n: it.n, page: ROOT + LANG_PREFIX + PAGES[pi], part: p.tr, q: plain(it.tr.q), a: plain(it.tr.a), qe: plain(it.en.q), ae: plain(it.en.a) };
+          var e = { n: it.n, page: ROOT + LANG_PREFIX + (LANG === 'en' ? PAGES_EN[pi] : PAGES[pi]), part: p.tr, q: plain(it.tr.q), a: plain(it.tr.a), qe: plain(it.en.q), ae: plain(it.en.a) };
           e.fq = fold(e.q); e.fa = fold(e.a); e.fe = fold(e.qe + ' ' + e.ae);
           index.push(e);
         });
@@ -803,7 +807,7 @@
     if (card) {
       card.addEventListener('click', function (e) {
         if (e.target.closest('.card-search-btn')) return;
-        location.href = ROOT + LANG_PREFIX + 'katesizm.html';
+        location.href = ROOT + LANG_PREFIX + (LANG === 'en' ? 'compendium.html' : 'katesizm.html');
       });
     }
     if (!overlay || !btn) return;

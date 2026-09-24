@@ -8,6 +8,8 @@ description: About katolikdunyasi.com: the site's purpose, sources and copyright
 
 katolikdunyasi.com was built to make the core texts and teaching of the Catholic faith accessible in Turkish: the Compendium of the Catechism, the process of becoming Catholic, a confession guide, the Mass, the parables of Jesus, prayers, a calendar of the saints and the twenty best-known among them, Catholic miracles, the roots of our faith in Anatolia, a section grounding the faith in reason, the Bible, frequently asked questions, and a directory of active Catholic churches in Turkey. This English section is a growing, partial mirror of that Turkish site; most of it is still Turkish-only for now, and pages are being translated over time.
 
+The icon in the bottom-right corner of every page opens an accessibility menu, with ready-made profiles for motor impairment, blindness, color blindness and dyslexia, plus individual settings for contrast, text size, letter spacing and a screen-reader helper (details are on the [Accessibility page](erisilebilirlik.html), Turkish only for now).
+
 ## Sources and copyright
 
 - Catechism: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html), © 2005 Libreria Editrice Vaticana. The English pages of this site reproduce that original text; the Turkish pages carry a Turkish translation, © 2026 katolikdunyasi.com.

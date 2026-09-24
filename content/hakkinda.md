@@ -8,6 +8,8 @@ description: katolikdunyasi.com hakkında: sitenin amacı, kaynakları ve telif 
 
 katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türkçe olarak erişilebilir kılmak için hazırlanmıştır: Katekizm, Katolik olma süreci, günah çıkarma rehberi, Kutsal Ayin, İsa’nın Meselleri, dualar, azizler takvimi ve en bilinen yirmi aziz, Katolik mucizeleri, imanımızın Anadolu’daki kökleri, imanı akılla temellendiren bir bölüm, Kutsal Kitap, sıkça sorulan sorular ve Türkiye’deki etkin Katolik kiliselerinin listesi. Site zamanla büyümeye devam edecektir.
 
+Site Türkçe olarak yayımlanır; üst menüdeki ve alt bilgideki bayrak simgesiyle büyümekte olan İngilizce bölüme geçebilirsiniz. Her sayfanın sağ alt köşesindeki simge, hareket kısıtlılığı, görme engeli, renk körlüğü ve disleksi için hazır profiller ile kontrast, yazı boyutu, harf aralığı ve ekran okuyucu yardımcısı gibi tek tek ayarlar sunan bir erişilebilirlik menüsü açar; ayrıntılar için [Erişilebilirlik sayfasına](erisilebilirlik.html) bakabilirsiniz.
+
 ## Kaynaklar ve telif
 
 - Katekizm: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Türkçe çeviri © 2026 katolikdunyasi.com; özgün metin © 2005 Libreria Editrice Vaticana.

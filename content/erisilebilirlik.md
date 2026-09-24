@@ -11,13 +11,14 @@ katolikdunyasi.com, ekran okuyucu kullanan görme engelli ziyaretçiler dahil, m
 
 ## Şu anda desteklenenler
 
-- **Yazı boyutu:** üst çubuktaki “Aa” düğmesi, tüm sitedeki yazı boyutunu üç kademede büyütür; tercihiniz tarayıcınızda hatırlanır.
-- **Ekran okuyucu desteği:** anlamlı başlık sırası, işaret bölgeleri (menü, ana içerik, alt bilgi) ve arama sonuçları ile “bugünün azizi” gibi kendiliğinden güncellenen alanlar için sesli duyurular.
-- **Klavye ile kullanım:** menüler, arama kutusu ve açılır panellerin tümü fare kullanmadan, yalnızca klavye ile açılıp kapatılabilir; odaklanılan öğe her zaman görsel olarak belirgindir.
+- **Erişilebilirlik menüsü:** her sayfanın sağ alt köşesindeki simgeye tıklayarak açılır. Hareket kısıtlılığı, görme engeli, renk körlüğü ve disleksi için hazır profiller sunar; ayrıca kontrastı artırma, renk doygunluğunu azaltma, yazıyı büyütme, harf ve satır aralığını genişletme, bağlantıları vurgulama, disleksi dostu bir yazı tipine geçme ve büyük imleç gibi tek tek açılıp kapatılabilen ayarlar içerir. Seçimleriniz tarayıcınızda hatırlanır, dilediğiniz an “Tüm Ayarları Sıfırla” ile eski hâline dönebilirsiniz.
+- **Ekran okuyucu yardımcısı:** erişilebilirlik menüsündeki “Ekran Okuyucu” ayarını açtığınızda, üzerine geldiğiniz ya da klavyeyle odaklandığınız metni tarayıcınızın kendi sesli okuma özelliğiyle okur. Bu, VoiceOver, NVDA ya da TalkBack gibi gerçek bir ekran okuyucunun yerini tutmaz; site zaten anlamlı başlık sırası, işaret bölgeleri (menü, ana içerik, alt bilgi) ve arama sonuçları ile “bugünün azizi” gibi kendiliğinden güncellenen alanlar için sesli duyurularla bu tür araçlarla uyumlu çalışır.
+- **Klavye ile kullanım:** menüler, arama kutusu, erişilebilirlik menüsü ve açılır panellerin tümü fare kullanmadan, yalnızca klavye ile açılıp kapatılabilir; odaklanılan öğe her zaman görsel olarak belirgindir.
 - **İçeriğe atlama bağlantısı:** her sayfanın başında, menüyü atlayıp doğrudan içeriğe geçen görünmez bir bağlantı bulunur (“İçeriğe geç”).
 - **Hareket azaltma:** işletim sisteminizde “hareketi azalt” tercihi açıksa site buna uyar ve gereksiz geçiş animasyonlarını kapatır.
 - **Koyu ve açık tema:** göz yorgunluğuna ya da ışık hassasiyetine göre seçilebilir, tercihiniz hatırlanır.
-- **Renk kontrastı:** metin renkleri, WCAG 2.1 AA standardının önerdiği kontrast oranları hedeflenerek seçilmiştir.
+- **Renk kontrastı:** metin renkleri, WCAG 2.1 AA standardının önerdiği kontrast oranları hedeflenerek seçilmiştir; erişilebilirlik menüsündeki “Kontrast Artır” ayarıyla daha da güçlendirilebilir.
+- **Dil seçimi:** site Türkçe olarak yayımlanır; üst menüdeki ve alt bilgideki bayrak simgesiyle, büyümekte olan İngilizce bölüme geçebilirsiniz.
 
 ## Bilinen sınırlamalar
 
