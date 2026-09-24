@@ -10,6 +10,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
   "title": "Meryem Ana Tesbih Duası",
   "en": "The Holy Rosary",
   "intro": "Tesbih, Mesih İsa’nın hayatındaki gizemler üzerinde Meryem Ana ile birlikte düşünmenin yoludur. Aşağıda duaların Türkçesi ve karşılaştırma için İngilizcesi, gizemler ve tesbihin nasıl dua edileceği yer alır. O günün gizemi kendiliğinden işaretlenir.",
+  "introEn": "The Rosary is a way of meditating, together with Mary, on the mysteries of Christ's life. Below are the prayers, the mysteries, and how to pray the Rosary. Today's mystery is marked automatically.",
   "prayers": [
     {
       "id": "hac-isareti",

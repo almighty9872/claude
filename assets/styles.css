@@ -1161,6 +1161,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .myst h3 { margin: 0; font-size: 1.28rem; font-weight: 600; }
 .myst .m-day { margin: .2rem 0 0; }
 .myst.is-today .m-day::after { content: ' · bugün'; color: var(--gold-active); }
+html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .myst .m-en-title { margin: .1rem 0 .7rem; font-style: italic; color: var(--muted); font-size: .92rem; }
 .myst-list { margin: 0; padding-left: 1.3rem; }
 .myst-list li { margin-bottom: .4rem; }

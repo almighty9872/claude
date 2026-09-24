@@ -11,7 +11,7 @@ Bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya
 
 ## Tarayıcınızda saklanan tercihler
 
-Açık/koyu tema seçiminiz ve yazı boyutu tercihiniz, yalnızca kendi tarayıcınızda (localStorage) saklanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
+Açık/koyu tema seçiminiz ve erişilebilirlik menüsündeki tercihleriniz (yazı boyutu, kontrast, harf aralığı gibi), yalnızca kendi tarayıcınızda (localStorage) saklanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
 
 ## Sunucu günlükleri
 
