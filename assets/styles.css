@@ -158,13 +158,6 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 .brand-name { font-size: 1.12rem; font-weight: 600; line-height: 1.15; letter-spacing: .005em; }
 @media (max-width: 520px) { .brand-name { font-size: .95rem; } .brand .logo { width: 26px; height: 26px; } }
 .header-tools { display: flex; align-items: center; gap: .45rem; flex: none; }
-.clock {
-  font-family: var(--sans); font-size: .82rem; color: var(--text-soft); white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-.clock .clock-time { color: var(--gold); font-weight: 600; margin-left: .4em; }
-/* On phones the clock lives in the menu sheet, so it costs no vertical space on every page */
-@media (max-width: 899px) { .header-tools .clock { display: none; } }
 .icon-btn {
   display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem;
   border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-soft);
@@ -743,11 +736,23 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   .brand-group { flex: none; min-width: 0; }
   .brand-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
-/* The clock is the first thing to go when the bar gets tight, so the site name stays whole */
-@media (max-width: 1399px) { .header-tools .clock { display: none; } }
-
 /* ---------- 13. Full-site menu overlay (hamburger is shown at every width) ---------- */
-.menu-toggle { display: inline-grid; }
+.menu-toggle { display: inline-grid; position: relative; }
+/* Custom tooltip (same recipe as .mass-pills): the hamburger has no visible label of its
+   own, so name it on hover/focus. Right-anchored since the button sits close to the
+   right edge of the header at every width. */
+.menu-toggle[data-tooltip]::after {
+  content: attr(data-tooltip); position: absolute; top: calc(100% + .55rem); right: 0;
+  background: var(--text); color: var(--bg); font-family: var(--sans); font-size: .72rem; font-weight: 600;
+  padding: .35rem .65rem; border-radius: 8px; white-space: nowrap; pointer-events: none; z-index: 21;
+  opacity: 0; visibility: hidden; transform: translateY(-3px); transition: opacity .15s ease, transform .15s ease;
+}
+.menu-toggle[data-tooltip]:hover::after, .menu-toggle[data-tooltip]:focus-visible::after {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+/* Once open, the icon is already showing X (= close); repeating "Tüm Menü" then would mislead. */
+.menu-toggle[aria-expanded="true"][data-tooltip]::after { display: none; }
+@media (prefers-reduced-motion: reduce) { .menu-toggle[data-tooltip]::after { transition: none; } }
 /* Hamburger -> X: three independent lines, morphed purely off the button's own aria-expanded
    state (the same attribute initNav() already toggles), so no extra JS is needed. */
 .menu-ico line {
@@ -777,8 +782,11 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
    blur is actually visible -- a proper frosted-glass sheet over the page behind it. */
 .navsheet-panel { background: var(--glass-overlay); }
 .ns-head { margin-bottom: 1rem; padding-bottom: .65rem; border-bottom: 1px solid var(--border); text-align: center; }
-.ns-head .clock { font-size: .8rem; }
-.ns-nav { display: block; }
+.ns-date { margin: 0 0 .6rem; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--text-soft); }
+.ns-time { color: var(--gold); font-variant-numeric: tabular-nums; }
+.ns-today.today-pills { margin-top: 0; }
+[data-ns-weather-ico] { font-size: 1.25rem; line-height: 1; }
+.ns-nav[hidden] { display: none; }
 /* Each labeled section fades and slides in on its own delay (set inline per group in
    build.ps1) when the overlay opens, for the staggered reveal effect. */
 .ns-group { opacity: 0; transform: translateY(16px); break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: .3rem; }
@@ -790,6 +798,33 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 @media (min-width: 1300px) {
   .ns-nav { column-count: 3; max-width: 88rem; }
 }
+/* Inline "Hakkında" view: on desktop, clicking it swaps this in for .ns-nav (see initInfo()
+   in script.js) instead of closing the overlay and opening the small popover -- there's
+   room here for the About text to breathe, styled like the Katekizm search overlay
+   (translucent, blurred). Mobile keeps the popover; see the width check in the JS. */
+.ns-about[hidden] { display: none; }
+.ns-about-back {
+  display: inline-flex; align-items: center; gap: .4rem; margin: 0 auto 1.2rem; padding: .5rem 1rem .5rem .8rem;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-soft);
+  font-family: var(--sans); font-size: .85rem; font-weight: 600; cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.ns-about-back svg { width: .85rem; height: .85rem; }
+.ns-about-back:hover { border-color: var(--gold-soft); color: var(--gold); }
+.ns-about-inner {
+  max-width: 42rem; margin: 0 auto; padding: 1.6rem 1.8rem;
+  background: var(--glass-menu); border: 1px solid var(--glass-brd); border-radius: 22px;
+  -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px);
+  max-height: min(60vh, 34rem); overflow-y: auto; scroll-behavior: smooth;
+  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
+}
+.ns-about-inner::-webkit-scrollbar { width: 6px; }
+.ns-about-inner::-webkit-scrollbar-track { background: transparent; }
+.ns-about-inner::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+/* A touch larger than the cramped small popover, since there's room to breathe here */
+.ns-about-inner .info-inner p { font-size: 1.05rem; line-height: 1.65; }
+.ns-about-inner .info-inner li { font-size: 1rem; line-height: 1.6; }
+.ns-about-inner .info-inner em { font-size: .95rem; }
 .ns-label { margin: .7rem .55rem .25rem; font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 .ns-item {
   display: flex; align-items: center; gap: .7rem; min-height: 2.9rem; padding: .55rem .85rem; margin-bottom: .1rem;

@@ -589,8 +589,6 @@ $CoreNav = @(
   @{ href = 'kiliseler.html';       t = 'Kilise Bul' },
   @{ href = 'sss.html';             t = 'Sorular' }
 )
-$ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
-$ClockHtmlEn = '<time class="clock" aria-label="Date and time"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
 $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
 $IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
@@ -749,10 +747,9 @@ $Sprite
       <nav class="mainnav" aria-label="Ana menü">
         <ul>$coreMenu</ul>
       </nav>
+      <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet" data-tooltip="Tüm Menü">$IcoMenuToggle</button>
       <div class="header-tools">
-        $ClockHtml
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
-        <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoMenuToggle</button>
       </div>
     </div>
   </div>
@@ -760,7 +757,18 @@ $Sprite
 <div class="info-panel glass" id="info-panel" role="dialog" aria-label="Site hakkında" hidden><button type="button" class="info-close" aria-label="Kapat">$IcoClose</button><div class="info-inner">$InfoHtml</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
-    <div class="ns-head">$ClockHtml</div>
+    <div class="ns-head">
+      <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
+      <div class="today-pills ns-today">
+        <div class="today-pill" data-ns-weather hidden><span class="tp-ico" data-ns-weather-ico></span><span><span class="tp-label">Hava Durumu</span><span class="tp-value" data-ns-weather-val></span></span></div>
+        <div class="today-pill"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Günün Gizemi</span><span class="tp-value hint" data-ns-mystery>Yükleniyor…</span></span></div>
+        <div class="today-pill"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" data-ns-saint>Yükleniyor…</span></span></div>
+      </div>
+    </div>
+    <div class="ns-about" id="ns-about" hidden>
+      <button type="button" class="ns-about-back">$IcoPrev<span>Menüye Dön</span></button>
+      <div class="ns-about-inner"><div class="info-inner">$InfoHtml</div></div>
+    </div>
     <nav class="ns-nav" aria-label="Menü">
       <div class="ns-group" style="animation-delay:0s">
         <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
@@ -860,10 +868,9 @@ $Sprite
       <nav class="mainnav" aria-label="Main menu">
         <ul>$coreMenu</ul>
       </nav>
+      <button type="button" class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navsheet" data-tooltip="Full Menu">$IcoMenuToggle</button>
       <div class="header-tools">
-        $ClockHtmlEn
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark theme">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
-        <button type="button" class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navsheet">$IcoMenuToggle</button>
       </div>
     </div>
   </div>
@@ -871,7 +878,18 @@ $Sprite
 <div class="info-panel glass" id="info-panel" role="dialog" aria-label="About this site" hidden><button type="button" class="info-close" aria-label="Close">$IcoClose</button><div class="info-inner">$InfoHtmlEn</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menu">
-    <div class="ns-head">$ClockHtmlEn</div>
+    <div class="ns-head">
+      <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
+      <div class="today-pills ns-today">
+        <div class="today-pill" data-ns-weather hidden><span class="tp-ico" data-ns-weather-ico></span><span><span class="tp-label">Weather</span><span class="tp-value" data-ns-weather-val></span></span></div>
+        <div class="today-pill"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Today's Mystery</span><span class="tp-value hint" data-ns-mystery>Loading…</span></span></div>
+        <div class="today-pill"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Today's Saint</span><span class="tp-value hint" data-ns-saint>Loading…</span></span></div>
+      </div>
+    </div>
+    <div class="ns-about" id="ns-about" hidden>
+      <button type="button" class="ns-about-back">$IcoPrev<span>Back to Menu</span></button>
+      <div class="ns-about-inner"><div class="info-inner">$InfoHtmlEn</div></div>
+    </div>
     <nav class="ns-nav" aria-label="Menu">
       <div class="ns-group" style="animation-delay:0s">
         <a class="ns-item" href="en/index.html"$(Cur 'en/index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Home</span></span></a>
@@ -1004,7 +1022,7 @@ function Write-Page {
 $canon
 $hreflangTags
 <meta name="theme-color" content="#f5f2ea">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.open-meteo.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="$OgType">
 <meta property="og:locale" content="$ogLocale">
