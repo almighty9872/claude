@@ -638,6 +638,7 @@ $IcoSpacing = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="c
 $IcoLink = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 14.5 14.5 9.5"/><path d="M11 7l1.3-1.3a3.5 3.5 0 0 1 4.9 4.9L15.9 12"/><path d="M13 17l-1.3 1.3a3.5 3.5 0 0 1-4.9-4.9L8.1 12"/></svg>'
 $IcoCursor = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 3.5 18 13l-5 .8 2.6 5.3-2 1-2.6-5.3L7.5 18Z"/></svg>'
 $IcoRefresh = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg>'
+$IcoCheckSquare = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></svg>'
 # Floating accessibility widget: profile presets + individual toggles, state kept in
 # localStorage (see script.js), CSS driven entirely by data-a11y-* attributes on <html> so it
 # never touches position:fixed elements via `filter` (which would break their containing block).
@@ -1836,10 +1837,31 @@ $confessionSteps = ($Confession.steps | ForEach-Object {
   $i = [array]::IndexOf(@($Confession.steps), $_) + 1
   "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(Inline $_.title)</h3><p class=`"stage-en label`" lang=`"en`">$($_.en)</p><p>$(Inline $_.text)</p></div></li>"
 }) -join "`n"
+$script:ExamenN = 0
 $examenGroups = ($Confession.examenGroups | ForEach-Object {
-  $items = ($_.items | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
-  "<article class=`"text-card`"><h3 class=`"t-title examen-title`">$(Inline $_.title)</h3><ul class=`"examen-list`">$items</ul></article>"
+  $group = $_
+  $items = ($group.items | ForEach-Object {
+    $script:ExamenN++; $eid = "examen-$($script:ExamenN)"
+    "<li><input type=`"checkbox`" id=`"$eid`" class=`"examen-check`" data-examen-item><label for=`"$eid`">$(Inline $_)</label></li>"
+  }) -join ''
+  "<article class=`"text-card examen-card`"><h3 class=`"t-title examen-title`">$(Inline $group.title)</h3><ul class=`"examen-list`">$items</ul></article>"
 }) -join "`n"
+$examenToolHtml = @"
+<div class="examen-tool">
+  <p class="faq-intro">Size uyan maddeleri işaretleyin; günah çıkarmaya girerken yanınızda götürebileceğiniz, size özel bir kontrol listesi oluşturur. Liste yalnızca bu sayfada, tarayıcınızın belleğinde tutulur; hiçbir yere gönderilmez ya da kaydedilmez, sayfayı yenilediğinizde kendiliğinden silinir.</p>
+  <div class="examen-actions">
+    <button type="button" class="btn examen-generate">$IcoCheckSquare Kontrol Listemi Oluştur</button>
+  </div>
+  <div class="examen-result" id="examen-result" hidden>
+    <div class="examen-result-head">
+      <h3>Kontrol Listeniz</h3>
+      <button type="button" class="examen-clear">$IcoRefresh Baştan Başla</button>
+    </div>
+    <div class="examen-result-body" id="examen-result-body"></div>
+    <p class="examen-result-note">Bu liste yalnızca hatırlamanıza yardımcı olmak içindir; günah çıkarma sırasında rahibinize bundan okuyabilir ya da kendi cümlelerinizle anlatabilirsiniz.</p>
+  </div>
+</div>
+"@
 $confessionFaq = ($Confession.faq | ForEach-Object {
   "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
     "<div class=`"faq-a`"><p>$(Inline $_.a)</p></div></details>"
@@ -1862,6 +1884,7 @@ $confessionSteps
   <div class="text-grid two examen-grid">
 $examenGroups
   </div>
+$examenToolHtml
   <h2 class="section-title" id="sorular-ve-korkular"><span class="label">3</span>Sık Sorulan Sorular ve Korkular</h2>
   <div class="faq-list">
 $confessionFaq
@@ -1880,9 +1903,29 @@ $confessionStepsEn = ($Confession.steps | ForEach-Object {
   "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(Inline $_.en)</h3><p>$(Inline $_.textEn)</p></div></li>"
 }) -join "`n"
 $examenGroupsEn = ($Confession.examenGroups | ForEach-Object {
-  $items = ($_.itemsEn | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
-  "<article class=`"text-card`"><h3 class=`"t-title examen-title`">$(Inline $_.titleEn)</h3><ul class=`"examen-list`">$items</ul></article>"
+  $group = $_
+  $items = ($group.itemsEn | ForEach-Object {
+    $script:ExamenN++; $eid = "examen-$($script:ExamenN)"
+    "<li><input type=`"checkbox`" id=`"$eid`" class=`"examen-check`" data-examen-item><label for=`"$eid`">$(Inline $_)</label></li>"
+  }) -join ''
+  "<article class=`"text-card examen-card`"><h3 class=`"t-title examen-title`">$(Inline $group.titleEn)</h3><ul class=`"examen-list`">$items</ul></article>"
 }) -join "`n"
+$examenToolHtmlEn = @"
+<div class="examen-tool">
+  <p class="faq-intro">Check off whatever applies to you; this builds a personal checklist you can bring with you into Confession. The list is kept only on this page, in your browser's memory; nothing is sent anywhere or saved, and it clears itself the moment you reload the page.</p>
+  <div class="examen-actions">
+    <button type="button" class="btn examen-generate">$IcoCheckSquare Build My Checklist</button>
+  </div>
+  <div class="examen-result" id="examen-result" hidden>
+    <div class="examen-result-head">
+      <h3>Your Checklist</h3>
+      <button type="button" class="examen-clear">$IcoRefresh Start Over</button>
+    </div>
+    <div class="examen-result-body" id="examen-result-body"></div>
+    <p class="examen-result-note">This list is only meant to jog your memory; during Confession you can read from it or say it in your own words.</p>
+  </div>
+</div>
+"@
 $confessionFaqEn = ($Confession.faq | ForEach-Object {
   "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(Inline $_.qEn)</span>$IcoChevLg</summary>" +
     "<div class=`"faq-a`"><p>$(Inline $_.aEn)</p></div></details>"
@@ -1905,6 +1948,7 @@ $confessionStepsEn
   <div class="text-grid two examen-grid">
 $examenGroupsEn
   </div>
+$examenToolHtmlEn
   <h2 class="section-title" id="sorular-ve-korkular"><span class="label">3</span>Frequently Asked Questions and Fears</h2>
   <div class="faq-list">
 $confessionFaqEn

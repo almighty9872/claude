@@ -449,11 +449,41 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .text-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.15rem 1.3rem .85rem; min-width: 0; scroll-margin-top: calc(var(--header-h) + 4.5rem); }
 .text-card:target { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-bg); }
 .text-card .t-title { margin: 0 0 .7rem; font-size: 1.35rem; line-height: 1.2; font-weight: 600; }
-/* Günah Çıkarma: examination-of-conscience checklist, one card per commandment */
+/* Günah Çıkarma: examination-of-conscience checklist, one card per commandment.
+   Each item is a real checkbox (see the Examination of Conscience generator
+   below): checking items and clicking "Build my checklist" collects them,
+   grouped by commandment, into a private summary kept only in page state. */
 .examen-title { font-size: 1.05rem; }
-.examen-list { margin: 0; padding-left: 1.25rem; color: var(--text-soft); }
-.examen-list li { margin-bottom: .5rem; line-height: 1.5; }
+.examen-list { margin: 0; padding: 0; list-style: none; color: var(--text-soft); }
+.examen-list li { display: flex; align-items: flex-start; gap: .55rem; margin-bottom: .5rem; line-height: 1.5; }
 .examen-list li:last-child { margin-bottom: 0; }
+.examen-check { flex: none; width: 1.05rem; height: 1.05rem; margin-top: .2rem; accent-color: var(--gold); cursor: pointer; }
+.examen-list label { cursor: pointer; }
+.examen-tool {
+  margin: 0 0 1.6rem; padding: 1.3rem 1.4rem; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface);
+}
+.examen-tool .faq-intro { margin: 0 0 1rem; }
+.examen-actions { display: flex; }
+.examen-result {
+  margin-top: 1.3rem; padding-top: 1.2rem; border-top: 1px solid var(--border);
+}
+.examen-result-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
+.examen-result-head h3 { margin: 0; font-size: 1.1rem; }
+.examen-clear {
+  display: inline-flex; align-items: center; gap: .35rem; border: 0; background: none; padding: 0;
+  color: var(--muted); font-family: var(--sans); font-size: .8rem; cursor: pointer; transition: color .15s;
+}
+.examen-clear svg { width: .85rem; height: .85rem; }
+.examen-clear:hover { color: var(--gold); }
+.examen-result-group { margin-bottom: 1rem; }
+.examen-result-group:last-child { margin-bottom: 0; }
+.examen-result-group h4 { margin: 0 0 .4rem; font-size: .9rem; color: var(--gold-active); }
+.examen-result-group ul { margin: 0; padding-left: 1.25rem; color: var(--text-soft); }
+.examen-result-group li { margin-bottom: .3rem; line-height: 1.5; }
+.examen-result-group li:last-child { margin-bottom: 0; }
+.examen-empty { margin: 0; color: var(--muted); font-style: italic; }
+.examen-result-note { margin: 1.1rem 0 0; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
 .verse p { margin: 0 0 .8em; }
 .verse ol { margin: 0 0 .7em; padding-left: 1.5rem; }
 .verse ol.plain { list-style: none; padding-left: 0; }

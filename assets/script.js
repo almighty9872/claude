@@ -721,6 +721,48 @@
   }
 
   /* ---------------------------------------------------------------
+     12b. Examination of Conscience generator (Confession page): checked
+          items become a personal checklist. Nothing is stored (no
+          localStorage, no network); it lives only in the checkbox state
+          already in the DOM, so a reload clears it on its own.
+     --------------------------------------------------------------- */
+  function initExamen() {
+    var tool = $('.examen-tool');
+    if (!tool) return;
+    var generateBtn = $('.examen-generate', tool);
+    var clearBtn = $('.examen-clear', tool);
+    var result = $('#examen-result', tool);
+    var resultBody = $('#examen-result-body', tool);
+    var emptyText = LANG === 'en' ? "You haven't checked anything yet." : 'Henüz hiçbir şey işaretlemediniz.';
+    generateBtn.addEventListener('click', function () {
+      var groups = [];
+      $$('.examen-card').forEach(function (card) {
+        var checked = $$('[data-examen-item]:checked', card);
+        if (!checked.length) return;
+        var title = $('.examen-title', card).textContent;
+        var items = checked.map(function (box) { return $('label[for="' + box.id + '"]', card).textContent; });
+        groups.push({ title: title, items: items });
+      });
+      if (!groups.length) {
+        resultBody.innerHTML = '<p class="examen-empty">' + emptyText + '</p>';
+      } else {
+        resultBody.innerHTML = groups.map(function (g) {
+          var lis = g.items.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+          return '<div class="examen-result-group"><h4>' + g.title + '</h4><ul>' + lis + '</ul></div>';
+        }).join('');
+      }
+      result.hidden = false;
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    if (clearBtn) clearBtn.addEventListener('click', function () {
+      $$('[data-examen-item]').forEach(function (box) { box.checked = false; });
+      result.hidden = true;
+      resultBody.innerHTML = '';
+      tool.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  /* ---------------------------------------------------------------
      13. Home page: today's saint, lazy-loaded from its own data file
          (same pattern as search) only when the home page actually has
          the widget to fill.
@@ -1115,7 +1157,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initClock(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
     initChurchFilter(); initLangFlag(); initMapLinks(); initA11y();
   });
 })();
