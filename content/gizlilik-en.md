@@ -13,6 +13,10 @@ This site collects no user data, uses no tracking or analytics software, and use
 
 Your light/dark theme choice and your accessibility-menu preferences (text size, contrast, letter spacing, and so on) are stored only in your own browser (localStorage). This information is never sent to any server, can't be seen by us, and stays only on your device. Clearing your browser data also clears these preferences.
 
+## Weather and location
+
+The first time you open the full menu from the header, your browser will ask for location permission so the menu can also show the local weather alongside the day's other information. This is entirely optional: if you decline the prompt or dismiss it, the rest of the menu keeps working normally and nothing breaks. If you do grant permission, your location is sent only to Open-Meteo, an independent, free weather service, purely to look up the current weather; it is never sent anywhere else, never stored on our servers, and not kept once you leave the page. See [open-meteo.com](https://open-meteo.com) for that service's own privacy approach.
+
 ## Server logs
 
 The site is hosted on GitHub Pages. Like any web server, GitHub's servers may keep standard access logs for technical purposes (security, performance). These logs are operated by GitHub, not by this site; see [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement) for details.

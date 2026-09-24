@@ -109,12 +109,22 @@
       var set = window.COMPENDIUM_ROSARY.sets.filter(function (s) { return s.days.indexOf(day) !== -1; })[0];
       val.textContent = set ? (LANG === 'en' ? set.en : set.tr) : (LANG === 'en' ? 'Unavailable' : 'Bulunamadı');
       val.classList.remove('hint');
+      var link = val.closest('a');
+      if (link && set) {
+        var file = LANG === 'en' ? 'rosary.html' : 'tesbih-duasi.html';
+        link.setAttribute('href', ROOT + LANG_PREFIX + file + '#gizem-' + set.id);
+      }
     })['catch'](function () { val.textContent = LANG === 'en' ? 'Unavailable' : 'Bulunamadı'; val.classList.remove('hint'); });
   }
   function fillTodaySaint() {
     var val = $('[data-ns-saint]');
     if (!val) return;
-    getTodaySaint().then(function (s) { val.textContent = s.text; val.classList.remove('hint'); })['catch'](function () {
+    getTodaySaint().then(function (s) {
+      val.textContent = s.text;
+      val.classList.remove('hint');
+      var link = val.closest('a');
+      if (link) link.setAttribute('href', s.href);
+    })['catch'](function () {
       val.textContent = LANG === 'en' ? 'Unavailable' : 'Bulunamadı';
       val.classList.remove('hint');
     });
@@ -767,6 +777,16 @@
       a.addEventListener('click', function () {
         var target = document.getElementById(a.getAttribute('href').slice(1));
         if (target && target.tagName === 'DETAILS') target.open = true;
+      });
+    });
+    /* All six parts start closed. Opening one (by clicking its own summary/icon, or via a
+       pill above, which also fires this same native toggle event) closes every other part,
+       so only one part's text is ever on screen at a time -- a plain accordion. */
+    var parts = $$('.mass-part');
+    parts.forEach(function (part) {
+      part.addEventListener('toggle', function () {
+        if (!part.open) return;
+        parts.forEach(function (other) { if (other !== part) other.open = false; });
       });
     });
     if (!window.IntersectionObserver) return;

@@ -1,6 +1,6 @@
 ---
 title: katolikdunyasi.com
-subtitle: Turkish Catholic Portal
+subtitle: Catholic World
 description: About katolikdunyasi.com: the site's purpose, sources and copyright information.
 ---
 
@@ -9,6 +9,8 @@ description: About katolikdunyasi.com: the site's purpose, sources and copyright
 katolikdunyasi.com was built to make the core texts and teaching of the Catholic faith accessible in Turkish: the Compendium of the Catechism, the process of becoming Catholic, a confession guide, the Mass, the parables of Jesus, prayers, a calendar of the saints and the twenty best-known among them, Catholic miracles, the roots of our faith in Anatolia, a section grounding the faith in reason, the Bible, frequently asked questions, and a directory of active Catholic churches in Turkey. This English section is a growing, partial mirror of that Turkish site; most of it is still Turkish-only for now, and pages are being translated over time.
 
 The icon in the bottom-right corner of every page opens an accessibility menu, with ready-made profiles for motor impairment, blindness, color blindness and dyslexia, plus individual settings for contrast, text size, letter spacing and a screen-reader helper (details are on the [Accessibility page](en/accessibility.html)).
+
+The full menu, opened from the menu icon, also shows the local weather alongside the day's other information; your browser will ask for location permission for this. If you decline or ignore the prompt, the rest of the menu still works normally. Your location is used only to look up the current weather and is never stored on our servers; see the [Privacy page](en/privacy.html) for details.
 
 ## Sources and copyright
 

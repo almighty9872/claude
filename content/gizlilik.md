@@ -13,6 +13,10 @@ Bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya
 
 Açık/koyu tema seçiminiz ve erişilebilirlik menüsündeki tercihleriniz (yazı boyutu, kontrast, harf aralığı gibi), yalnızca kendi tarayıcınızda (localStorage) saklanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
 
+## Hava durumu ve konum
+
+Üst menüdeki tam menüyü ilk açtığınızda, tarayıcınız o güne ait bilgilerin yanında yerel hava durumunu da göstermek için konum izni ister. Bu tamamen isteğe bağlıdır: izin vermezseniz ya da isteği kapatırsanız menünün geri kalanı olduğu gibi çalışmaya devam eder, hiçbir hata görünmez. İzin verirseniz, konumunuz yalnızca o anki hava durumunu sorgulamak üzere Open-Meteo adlı bağımsız, ücretsiz bir hava durumu servisine gönderilir; bu istek dışında konumunuz hiçbir yere iletilmez, bizim sunucularımıza kaydedilmez ve sayfadan ayrıldığınızda saklanmaz. Open-Meteo’nun kendi gizlilik yaklaşımı hakkında bilgi için [open-meteo.com](https://open-meteo.com)’a bakabilirsiniz.
+
 ## Sunucu günlükleri
 
 Site, GitHub Pages üzerinde barındırılıyor. Herhangi bir web sunucusu gibi, GitHub’ın sunucuları teknik amaçlarla (güvenlik, performans) standart erişim günlükleri tutabilir. Bu günlükler bu site tarafından değil, GitHub tarafından işletilir; ayrıntılar için [GitHub’ın Gizlilik Bildirimi](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)’ne bakabilirsiniz.

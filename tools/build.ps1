@@ -92,7 +92,7 @@ $Apos = [char]0x2019
 # The site is the brand now; the Compendium is one work published on it.
 $SiteName = 'katolikdunyasi.com'
 $SiteTag = 'Türkçe Katolik Portalı'
-$SiteTagEn = 'Turkish Catholic Portal'
+$SiteTagEn = 'Catholic World'
 $WorkName = 'Katolik Kilisesi İnanç Esasları Özeti'
 $SiteNameEn = 'Compendium of the Catechism of the Catholic Church'
 
@@ -331,15 +331,24 @@ $script:EnSeq = 0
 function En-Toggle([string]$targetId, [string]$label = 'İngilizcesi') {
   return "<button type=`"button`" class=`"en-toggle`" aria-expanded=`"false`" aria-controls=`"$targetId`">$label $IcoChev</button>"
 }
+$IcoExternal = '<svg class="ext" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>'
+# Every "CCC ..." / "CIC kan. ..." reference (Compendium Q&A pages, FAQ page) links to our
+# own Compendium overview -- see katesizm.html/en/compendium.html -- rather than guessing at
+# individual paragraph URLs on vatican.va, which this generator has no way to verify.
+function Ccc-Link([string]$text, [string]$lang) {
+  $href = if ($lang -eq 'en') { 'en/compendium.html' } else { 'katesizm.html' }
+  $label = if ($lang -eq 'en') { 'Open the Compendium' } else { 'Katekizm sayfasını aç' }
+  return "<a href=`"$href`" target=`"_blank`" rel=`"noopener`" aria-label=`"$label`">$text$IcoExternal</a>"
+}
 function Qa-Html($it, [int]$hl) {
   $n = $it.n; $tag = HTag $hl
   $note = if ($it.note) { "<p class=`"note`"><b>Not:</b> $(Inline $it.note)</p>" } else { '' }
   return "<article class=`"qa`" id=`"soru-$n`" data-n=`"$n`">" +
     "<header class=`"qa-head`"><a class=`"qa-num`" href=`"#soru-$n`" aria-label=`"Soru $n bağlantısı`">$n</a><$tag class=`"qa-q`">$(Inline $it.tr.q)</$tag></header>" +
-    "<p class=`"qa-ref`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($it.ccc)</p>" +
+    "<p class=`"qa-ref`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$(Ccc-Link $it.ccc 'tr')</p>" +
     "<div class=`"qa-a`">$(Blocks $it.tr.a)</div>$note" +
     "<footer class=`"qa-foot end`">$(En-Toggle "en-$n")</footer>" +
-    "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><p class=`"qa-ref`">$($it.ccc)</p><div class=`"qa-a`">$(Blocks $it.en.a)</div></div>" +
+    "<div class=`"en-block`" id=`"en-$n`" lang=`"en`" hidden><span class=`"label`" lang=`"tr`">İngilizce aslı</span><p class=`"qa-q`">$(Inline $it.en.q)</p><p class=`"qa-ref`">$(Ccc-Link $it.ccc 'en')</p><div class=`"qa-a`">$(Blocks $it.en.a)</div></div>" +
     "</article>"
 }
 # $tagLevel is the true HTML heading level (never skips a level in the DOM); it can
@@ -433,10 +442,10 @@ function Qa-Html-En($it, [int]$hl) {
   $note = if ($it.noteEn) { "<p class=`"note`"><b>Note:</b> $(Inline $it.noteEn)</p>" } elseif ($it.note) { "<p class=`"note`"><b>Note:</b> $(Inline $it.note)</p>" } else { '' }
   return "<article class=`"qa`" id=`"soru-$n`" data-n=`"$n`">" +
     "<header class=`"qa-head`"><a class=`"qa-num`" href=`"#soru-$n`" aria-label=`"Link to question $n`">$n</a><$tag class=`"qa-q`">$(Inline $it.en.q)</$tag></header>" +
-    "<p class=`"qa-ref`" title=`"Catechism of the Catholic Church paragraph numbers`">$($it.ccc)</p>" +
+    "<p class=`"qa-ref`" title=`"Catechism of the Catholic Church paragraph numbers`">$(Ccc-Link $it.ccc 'en')</p>" +
     "<div class=`"qa-a`">$(Blocks $it.en.a)</div>$note" +
     "<footer class=`"qa-foot end`">$(En-Toggle "tr-$n" 'Türkçesi')</footer>" +
-    "<div class=`"en-block`" id=`"tr-$n`" lang=`"tr`" hidden><span class=`"label`" lang=`"en`">Turkish translation</span><p class=`"qa-q`">$(Inline $it.tr.q)</p><p class=`"qa-ref`">$($it.ccc)</p><div class=`"qa-a`">$(Blocks $it.tr.a)</div></div>" +
+    "<div class=`"en-block`" id=`"tr-$n`" lang=`"tr`" hidden><span class=`"label`" lang=`"en`">Turkish translation</span><p class=`"qa-q`">$(Inline $it.tr.q)</p><p class=`"qa-ref`">$(Ccc-Link $it.ccc 'tr')</p><div class=`"qa-a`">$(Blocks $it.tr.a)</div></div>" +
     "</article>"
 }
 function Heading-Html-En($it, [int]$tagLevel) {
@@ -761,8 +770,8 @@ $Sprite
       <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
       <div class="today-pills ns-today">
         <div class="today-pill" data-ns-weather hidden><span class="tp-ico" data-ns-weather-ico></span><span><span class="tp-label">Hava Durumu</span><span class="tp-value" data-ns-weather-val></span></span></div>
-        <div class="today-pill"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Günün Gizemi</span><span class="tp-value hint" data-ns-mystery>Yükleniyor…</span></span></div>
-        <div class="today-pill"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" data-ns-saint>Yükleniyor…</span></span></div>
+        <a class="today-pill" href="tesbih-duasi.html"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Günün Gizemi</span><span class="tp-value hint" data-ns-mystery>Yükleniyor…</span></span></a>
+        <a class="today-pill" href="azizler.html"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" data-ns-saint>Yükleniyor…</span></span></a>
       </div>
     </div>
     <div class="ns-about" id="ns-about" hidden>
@@ -882,8 +891,8 @@ $Sprite
       <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
       <div class="today-pills ns-today">
         <div class="today-pill" data-ns-weather hidden><span class="tp-ico" data-ns-weather-ico></span><span><span class="tp-label">Weather</span><span class="tp-value" data-ns-weather-val></span></span></div>
-        <div class="today-pill"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Today's Mystery</span><span class="tp-value hint" data-ns-mystery>Loading…</span></span></div>
-        <div class="today-pill"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Today's Saint</span><span class="tp-value hint" data-ns-saint>Loading…</span></span></div>
+        <a class="today-pill" href="en/rosary.html"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Today's Mystery</span><span class="tp-value hint" data-ns-mystery>Loading…</span></span></a>
+        <a class="today-pill" href="en/saints.html"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Today's Saint</span><span class="tp-value hint" data-ns-saint>Loading…</span></span></a>
       </div>
     </div>
     <div class="ns-about" id="ns-about" hidden>
@@ -1334,7 +1343,7 @@ $homeBody = @"
     </div>
   </div>
 
-  <section class="lib-section">
+  <section class="lib-section lib-first">
     <div class="lib-head"><span class="roman">I</span><h2>Öğretiler</h2></div>
     <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: neden Katolik olduğumuzdan Katekizm$($Apos)in tam çevirisine, Katolik olma sürecinden günah çıkarmaya.</p>
     <div class="shelf cols-3">
@@ -1461,7 +1470,7 @@ $homeBodyEn = @"
     </div>
   </div>
 
-  <section class="lib-section">
+  <section class="lib-section lib-first">
     <div class="lib-head"><span class="roman">I</span><h2>Teaching</h2></div>
     <p class="lib-lead">The Church's official teaching: from why we're Catholic to the full Compendium, from becoming Catholic to confession.</p>
     <div class="shelf cols-3">
@@ -1562,7 +1571,7 @@ $webSiteLdEn = '{"@context":"https://schema.org","@type":"WebSite","name":' + (J
   ',"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
   (JStr "$SiteUrl/en/compendium.html?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
 Write-Page -File 'en/index.html' -Title "$SiteName | $SiteTagEn" `
-  -Description "Turkish Catholic Portal: the Compendium of the Catechism of the Catholic Church, becoming Catholic, the Mass, the saints, and answers to frequently asked questions about the Catholic faith." `
+  -Description "Catholic World: the Compendium of the Catechism of the Catholic Church, becoming Catholic, the Mass, the saints, and answers to frequently asked questions about the Catholic faith." `
   -Path 'en/' -Body $homeBodyEn -JsonLd @($webSiteLdEn) -Lang 'en'
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
@@ -1705,7 +1714,7 @@ $faqCats = ($FaqData.categories | ForEach-Object {
     "<details class=`"faq-item`" id=`"$($_.id)`">" +
       "<summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
       "<div class=`"faq-a`">" +
-        "<p class=`"faq-ref`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$($_.ccc)</p>" +
+        "<p class=`"faq-ref`" title=`"Katolik Kilisesi Katekizmi madde numaraları`">$(Ccc-Link $_.ccc 'tr')</p>" +
         "$(Blocks $_.a)</div>" +
     "</details>"
   }) -join "`n"
@@ -1741,7 +1750,7 @@ $faqCatsEn = ($FaqData.categories | ForEach-Object {
     "<details class=`"faq-item`" id=`"$($_.id)`">" +
       "<summary><span class=`"faq-q`">$(Inline $_.qEn)</span>$IcoChevLg</summary>" +
       "<div class=`"faq-a`">" +
-        "<p class=`"faq-ref`" title=`"Catechism of the Catholic Church paragraph numbers`">$($_.ccc)</p>" +
+        "<p class=`"faq-ref`" title=`"Catechism of the Catholic Church paragraph numbers`">$(Ccc-Link $_.ccc 'en')</p>" +
         "$(Blocks $_.aEn)</div>" +
     "</details>"
   }) -join "`n"
@@ -2048,16 +2057,19 @@ $whyParts = ($WhyCatholic.parts | ForEach-Object {
   $topicCards = ($part.topics | ForEach-Object {
     "<article class=`"text-card`"><h3 class=`"t-title`">$(Inline $_.title)</h3><div class=`"prose`">$(Blocks $_.body)</div></article>"
   }) -join "`n"
-  "<section id=`"$($part.id)`">" +
-    "<h2 class=`"section-title`"><span class=`"label`">$i</span>$(Inline $part.title)</h2>" +
-    "<div class=`"text-grid three`">$topicCards</div></section>"
+  $openAttr = if ($i -eq 1) { ' open' } else { '' }
+  "<details class=`"part-acc why-acc`" id=`"$($part.id)`"$openAttr>" +
+    "<summary><span class=`"roman`" aria-hidden=`"true`">$i</span><span class=`"p-title`">$(Inline $part.title)</span>$IcoChevLg</summary>" +
+    "<div class=`"part-body`"><div class=`"text-grid three`">$topicCards</div></div></details>"
 }) -join "`n"
 $whyCatholicBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Neden Katoliğiz?')
   <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$($WhyCatholic.title)</h1><p class="sub" lang="en">$($WhyCatholic.en)</p></header>
   <p class="faq-intro">$(Inline $WhyCatholic.intro)</p>
+  <div class="parts why-parts">
 $whyParts
+  </div>
   <p class="closing-note">$(Inline $WhyCatholic.closing)</p>
 </div>
 "@
@@ -2072,16 +2084,19 @@ $whyPartsEn = ($WhyCatholic.parts | ForEach-Object {
   $topicCards = ($part.topics | ForEach-Object {
     "<article class=`"text-card`"><h3 class=`"t-title`">$(Inline $_.en)</h3><div class=`"prose`">$(Blocks $_.bodyEn)</div></article>"
   }) -join "`n"
-  "<section id=`"$($part.id)`">" +
-    "<h2 class=`"section-title`"><span class=`"label`">$i</span>$(Inline $part.en)</h2>" +
-    "<div class=`"text-grid three`">$topicCards</div></section>"
+  $openAttr = if ($i -eq 1) { ' open' } else { '' }
+  "<details class=`"part-acc why-acc`" id=`"$($part.id)`"$openAttr>" +
+    "<summary><span class=`"roman`" aria-hidden=`"true`">$i</span><span class=`"p-title`">$(Inline $part.en)</span>$IcoChevLg</summary>" +
+    "<div class=`"part-body`"><div class=`"text-grid three`">$topicCards</div></div></details>"
 }) -join "`n"
 $whyCatholicBodyEn = @"
 <div class="wrap narrow">
   $(Crumbs-En "Why We're Catholic")
   <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$($WhyCatholic.en)</h1></header>
   <p class="faq-intro">$(Inline $WhyCatholic.introEn)</p>
+  <div class="parts why-parts">
 $whyPartsEn
+  </div>
   <p class="conventions closing-note">$(Inline $WhyCatholic.closingEn)</p>
 </div>
 "@
@@ -2282,8 +2297,7 @@ $massPartsHtml = ($Mass.parts | ForEach-Object {
   $icon = $MassIcons[$p.icon]
   $trHtml = Mass-Lines $p.lines 'tr'
   $enHtml = Mass-Lines $p.lines 'en'
-  $openAttr = if ($p.n -eq 1) { ' open' } else { '' }
-  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`"$openAttr>" +
+  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
     "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Bölüm $($p.n)</p><h2>$(Inline $p.title)</h2><p class=`"sub`" lang=`"en`">$($p.en)</p></div>$IcoChevLg</summary>" +
     "<div class=`"mass-part-body`">" +
     "<p class=`"mass-lead`">$(Inline $p.lead)</p>" +
@@ -2318,8 +2332,7 @@ $massPartsHtmlEn = ($Mass.parts | ForEach-Object {
   $icon = $MassIcons[$p.icon]
   $trHtml = Mass-Lines $p.lines 'tr'
   $enHtml = Mass-Lines $p.lines 'en'
-  $openAttr = if ($p.n -eq 1) { ' open' } else { '' }
-  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`"$openAttr>" +
+  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
     "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Part $($p.n)</p><h2>$(Inline $p.en)</h2></div>$IcoChevLg</summary>" +
     "<div class=`"mass-part-body`">" +
     "<p class=`"mass-lead`">$(Inline $p.leadEn)</p>" +
