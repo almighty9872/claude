@@ -377,8 +377,8 @@
   }
 
   /* ---------------------------------------------------------------
-     8. Main navigation: the "Ozet Metni" dropdown on wide screens and
-        the bottom sheet on phones. Both are plain DOM, no dependencies.
+     8. Main navigation: the dropdown menus on wide screens and the
+        full-screen overlay on phones. Both are plain DOM, no dependencies.
      --------------------------------------------------------------- */
   function initNav() {
     /* Every dropdown in the bar (Katesizm, Dualar, ...): $$ so a second and third
@@ -434,11 +434,7 @@
         if (sheet.classList.contains('open')) closeSheet(true); else openSheet();
       });
     });
-    /* Tapping the dimmed area outside the panel closes it */
-    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(false); });
     if (panel) panel.addEventListener('click', function (e) { if (e.target.closest('a')) closeSheet(false); });
-    var grab = $('.navsheet-grab', sheet);
-    if (grab) grab.addEventListener('click', function () { closeSheet(true); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(true); });
     /* Growing past the phone breakpoint while the sheet is open would leave the page locked */
     window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });

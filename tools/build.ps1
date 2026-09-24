@@ -301,6 +301,9 @@ $IcoSearch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $IcoSun    = '<svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>'
 $IcoMoon   = '<svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/></svg>'
 $IcoList   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>'
+# Three independent lines (not one path) so open/close can animate each into an X via CSS,
+# driven purely by the button's own aria-expanded state -- no JS beyond the existing toggle.
+$IcoMenuToggle = '<svg class="menu-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line class="mi-l1" x1="4" y1="6" x2="20" y2="6"/><line class="mi-l2" x1="4" y1="12" x2="20" y2="12"/><line class="mi-l3" x1="4" y1="18" x2="20" y2="18"/></svg>'
 $IcoTextSize = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M10.5 7.8v5.4M7.8 10.5h5.4"/></svg>'
 $IcoPrev   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>'
 $IcoNext   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>'
@@ -564,10 +567,11 @@ $PrayerNav = @(
   @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası' },
   @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller' }
 )
+# Katekizm gets its own top-level nav menu (mirrors the English site's "Compendium" dropdown):
+# the overview page plus each of its seven chapters.
+$KatekizmNav = @(@{ href = 'katesizm.html'; t = 'Genel Bakış'; s = '598 soru ve yanıtın tam listesi' }) + $TextNav
 # "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many.
-# Katekizm sits here too as a single link (no chapter submenu in the nav; katesizm.html itself is the way in).
 $KaynaklarNav = @(
-  @{ href = 'katesizm.html';       t = 'Katekizm';             s = '598 soru ve yanıt' },
   @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci';  s = 'Katolik olma süreci' },
   @{ href = 'gunah-cikarma.html';  t = 'Günah Çıkarma';        s = 'Nasıl işler, adım adım' },
   @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım' },
@@ -576,9 +580,9 @@ $KaynaklarNav = @(
   @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri" },
   @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus'tan İznik'e" }
 )
-$WorkPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
+$KatekizmPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 $PrayerPages = @($PrayerNav | ForEach-Object { $_.href })
-$KaynaklarPages = @($KaynaklarNav | ForEach-Object { $_.href }) + $WorkPages
+$KaynaklarPages = @($KaynaklarNav | ForEach-Object { $_.href })
 $ClockHtml = '<time class="clock" aria-label="Tarih ve saat"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $ClockHtmlEn = '<time class="clock" aria-label="Date and time"><span class="clock-date"></span><span class="clock-time">--:--:--</span></time>'
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
@@ -713,6 +717,14 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder, [string]$l
 }
 function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
 function Header-Html([string]$current) {
+  $inKatekizm = $KatekizmPages -contains $current
+  $katekizmCls = if ($inKatekizm) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
+  $katekizmMenu = ($KatekizmNav | ForEach-Object {
+    "<li><a href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"nm-t`">$($_.t)</span><span class=`"nm-s`">$($_.s)</span></a></li>"
+  }) -join ''
+  $sheetKatekizm = ($KatekizmNav | ForEach-Object {
+    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$SmallCross</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
+  }) -join ''
   $inPray = $PrayerPages -contains $current
   $prayCls = if ($inPray) { 'nav-link nav-trigger is-section' } else { 'nav-link nav-trigger' }
   $prayerMenu = ($PrayerNav | ForEach-Object {
@@ -743,6 +755,10 @@ $Sprite
         <ul>
           <li><a class="nav-link" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)>Neden Katoliğiz?</a></li>
           <li class="has-menu">
+            <button type="button" class="$katekizmCls" aria-expanded="false" aria-controls="nav-katekizm" aria-haspopup="true">Katekizm$IcoChev</button>
+            <div class="nav-menu glass" id="nav-katekizm"><ul>$katekizmMenu</ul></div>
+          </li>
+          <li class="has-menu">
             <button type="button" class="$kaynaklarCls" aria-expanded="false" aria-controls="nav-kaynaklar" aria-haspopup="true">Kaynaklar$IcoChev</button>
             <div class="nav-menu glass" id="nav-kaynaklar"><ul>$kaynaklarMenu</ul></div>
           </li>
@@ -759,7 +775,7 @@ $Sprite
       <div class="header-tools">
         $ClockHtml
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
-        <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
+        <button type="button" class="icon-btn menu-toggle" aria-label="Menü" aria-expanded="false" aria-controls="navsheet">$IcoMenuToggle</button>
       </div>
     </div>
   </div>
@@ -767,12 +783,13 @@ $Sprite
 <div class="info-panel glass" id="info-panel" role="dialog" aria-label="Site hakkında" hidden><button type="button" class="info-close" aria-label="Kapat">$IcoClose</button><div class="info-inner">$InfoHtml</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
-    <button type="button" class="navsheet-grab" aria-label="Menüyü kapat"><span aria-hidden="true"></span></button>
     <div class="ns-head">$ClockHtml</div>
     <nav class="ns-nav" aria-label="Menü">
       <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
       <p class="ns-label">Neden Katoliğiz?</p>
       <a class="ns-item" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)><span class="ns-ico">$IcoCompass</span><span class="ns-body"><span class="ns-t">Neden Katoliğiz?</span><span class="ns-s">İmanın beş adımda özeti</span></span></a>
+      <p class="ns-label">Katekizm</p>
+      $sheetKatekizm
       <p class="ns-label">Kaynaklar</p>
       $sheetKaynaklar
       <p class="ns-label">Dualar</p>
@@ -862,7 +879,7 @@ $Sprite
       <div class="header-tools">
         $ClockHtmlEn
         <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark theme">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
-        <button type="button" class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navsheet">$IcoList</button>
+        <button type="button" class="icon-btn menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="navsheet">$IcoMenuToggle</button>
       </div>
     </div>
   </div>
@@ -870,7 +887,6 @@ $Sprite
 <div class="info-panel glass" id="info-panel" role="dialog" aria-label="About this site" hidden><button type="button" class="info-close" aria-label="Close">$IcoClose</button><div class="info-inner">$InfoHtmlEn</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menu">
-    <button type="button" class="navsheet-grab" aria-label="Close menu"><span aria-hidden="true"></span></button>
     <div class="ns-head">$ClockHtmlEn</div>
     <nav class="ns-nav" aria-label="Menu">
       <a class="ns-item" href="en/index.html"$(Cur 'en/index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Home</span></span></a>
@@ -897,7 +913,7 @@ $Sprite
 "@
 }
 $footKatekizm = (@(@{ href = 'katesizm.html'; t = 'Katekizm' }) + $TextNav) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
-$footKaynaklar = ($KaynaklarNav | Where-Object { $_.href -ne 'katesizm.html' }) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+$footKaynaklar = $KaynaklarNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $footDualar = $PrayerNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $FooterHtml = @"
 <footer class="site-footer">
