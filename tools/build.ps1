@@ -1963,11 +1963,10 @@ $whyParts = ($WhyCatholic.parts | ForEach-Object {
   $i = [array]::IndexOf(@($WhyCatholic.parts), $_) + 1
   $part = $_
   $topicCards = ($part.topics | ForEach-Object {
-    "<article class=`"text-card`"><h3 class=`"t-title`">$(Inline $_.title)</h3><p class=`"sub`" lang=`"en`">$($_.en)</p><div class=`"prose`">$(Blocks $_.body)</div></article>"
+    "<article class=`"text-card`"><h3 class=`"t-title`">$(Inline $_.title)</h3><div class=`"prose`">$(Blocks $_.body)</div></article>"
   }) -join "`n"
   "<section id=`"$($part.id)`">" +
     "<h2 class=`"section-title`"><span class=`"label`">$i</span>$(Inline $part.title)</h2>" +
-    "<p class=`"faq-cat-en`" lang=`"en`">$($part.en)</p>" +
     "<div class=`"text-grid three`">$topicCards</div></section>"
 }) -join "`n"
 $whyCatholicBody = @"
@@ -1976,7 +1975,7 @@ $whyCatholicBody = @"
   <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$($WhyCatholic.title)</h1><p class="sub" lang="en">$($WhyCatholic.en)</p></header>
   <p class="faq-intro">$(Inline $WhyCatholic.intro)</p>
 $whyParts
-  <p class="conventions closing-note">$(Inline $WhyCatholic.closing)</p>
+  <p class="closing-note">$(Inline $WhyCatholic.closing)</p>
 </div>
 "@
 Write-Page -File 'neden-katoligiz.html' -Title "$($WhyCatholic.title) | $SiteName" `

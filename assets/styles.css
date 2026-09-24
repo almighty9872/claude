@@ -815,8 +815,9 @@ body.sheet-open { overflow: hidden; }
 .footnote-list li:last-child { margin-bottom: 0; }
 .footnote-list strong { color: var(--text-soft); }
 .closing-note {
-  font-family: var(--serif); font-size: 1.1rem; font-style: italic; text-align: center;
-  color: var(--text-soft); max-width: 40rem; margin-left: auto; margin-right: auto;
+  margin: 2.75rem auto 1rem; padding-top: 2rem; border-top: 1px solid var(--border);
+  font-family: var(--serif); font-size: 1.25rem; font-style: italic; text-align: center;
+  line-height: 1.55; color: var(--text); max-width: 40rem;
 }
 
 /* Kiliseler page footnote on receiving Communion from an Orthodox church absent a Catholic
