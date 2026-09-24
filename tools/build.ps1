@@ -131,6 +131,26 @@ Add-EnAlt 'topraklarimizda-hristiyanlik.html' 'anatolia.html'
 Add-EnAlt 'mucizeler.html' 'miracles.html'
 Add-EnAlt 'kutsal-ayin.html' 'mass.html'
 Add-EnAlt 'meseller.html' 'parables.html'
+Add-EnAlt 'meryem-ana.html' 'mary.html'
+Add-EnAlt 'aziz-yusuf.html' 'saint-joseph.html'
+Add-EnAlt 'havari-petrus.html' 'saint-peter.html'
+Add-EnAlt 'havari-pavlus.html' 'saint-paul.html'
+Add-EnAlt 'vaftizci-yahya.html' 'john-the-baptist.html'
+Add-EnAlt 'havari-yuhanna.html' 'saint-john.html'
+Add-EnAlt 'aziz-augustinus.html' 'saint-augustine.html'
+Add-EnAlt 'aziz-thomas-aquinas.html' 'thomas-aquinas.html'
+Add-EnAlt 'assisili-aziz-francis.html' 'francis-of-assisi.html'
+Add-EnAlt 'sienali-aziz-catharina.html' 'catherine-of-siena.html'
+Add-EnAlt 'avilali-aziz-teresa.html' 'teresa-of-avila.html'
+Add-EnAlt 'lisieuxlu-kucuk-teresa.html' 'therese-of-lisieux.html'
+Add-EnAlt 'aziz-ignatius-loyola.html' 'ignatius-of-loyola.html'
+Add-EnAlt 'aziz-benedictus.html' 'saint-benedict.html'
+Add-EnAlt 'aziz-patrick.html' 'saint-patrick.html'
+Add-EnAlt 'padovali-aziz-antonius.html' 'anthony-of-padua.html'
+Add-EnAlt 'kalkutali-aziz-teresa.html' 'mother-teresa.html'
+Add-EnAlt 'aziz-ii-yuhanna-pavlus.html' 'john-paul-ii.html'
+Add-EnAlt 'padre-pio.html' 'padre-pio.html'
+Add-EnAlt 'aziz-hieronymus.html' 'saint-jerome.html'
 
 # ------------------------------------------------------------------ data
 function Read-Data([string]$file) {
@@ -1389,7 +1409,10 @@ $homeBodyEn = @"
     <div class="glow"></div>
     $Logo
     <h1>$SiteTagEn</h1>
-    <p class="lead">The Compendium of the Catechism, becoming Catholic, the Mass, the parables of Jesus, daily prayers, the lives of the saints, miracles and our roots in Anatolia &mdash; this English section is growing over time; most of the site is still Turkish-only for now.</p>
+    <p class="lead">The Compendium of the Catechism, becoming Catholic, the Mass, the parables of Jesus, daily prayers, the lives of the saints, miracles, and our roots in Anatolia: the whole site, now available in English.</p>
+    <div class="today-pills">
+      <a class="today-pill today-pill-lg" href="en/saints.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Saint of the Day</span><span class="tp-value hint" aria-live="polite">Loading…</span></span></a>
+    </div>
   </section>
 
   <div class="kso" id="home-katekizm-search" hidden>
@@ -1478,7 +1501,7 @@ $homeBodyEn = @"
     <div class="shelf cols-3">
       <a class="hub-card" href="en/saints.html">
         <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Saints</span></span>
-        <span class="hub-s">About the calendar of saints. <em>(Full calendar Turkish only for now.)</em></span>
+        <span class="hub-s">A saint for every day of the year, and the twenty best-known names in Catholic tradition.</span>
         <span class="hub-go">Go to page$IcoNext</span>
       </a>
       <a class="hub-card" href="en/miracles.html">
@@ -1501,7 +1524,7 @@ $webSiteLdEn = '{"@context":"https://schema.org","@type":"WebSite","name":' + (J
   ',"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
   (JStr "$SiteUrl/en/compendium.html?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
 Write-Page -File 'en/index.html' -Title "$SiteName | $SiteTagEn" `
-  -Description "Turkish Catholic Portal: the Compendium of the Catechism of the Catholic Church and answers to frequently asked questions about the Catholic faith. English section, growing over time." `
+  -Description "Turkish Catholic Portal: the Compendium of the Catechism of the Catholic Church, becoming Catholic, the Mass, the saints, and answers to frequently asked questions about the Catholic faith." `
   -Path 'en/' -Body $homeBodyEn -JsonLd @($webSiteLdEn) -Lang 'en'
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
@@ -1990,6 +2013,14 @@ function Saint-Item($s) {
   $titlePart = if ($s.title) { "<span class=`"s-title`">$(Inline $s.title)</span>" } else { '' }
   return "<details class=`"saint-item`"><summary><span class=`"s-name`">$(Inline $s.name)</span>$titlePart$IcoChev</summary><div class=`"saint-bio`">$(Blocks $s.bio)</div></details>"
 }
+$RankLabelsEn = @{
+  'Büyük Bayram' = 'Solemnity'; 'Bayram' = 'Feast'; 'Anma Günü' = 'Memorial';
+  'İhtiyari Anma Günü' = 'Optional Memorial'; 'Roma Azizler Cetveli' = 'Roman Martyrology'
+}
+function Saint-Item-En($s) {
+  $titlePart = if ($s.titleEn) { "<span class=`"s-title`">$(Inline $s.titleEn)</span>" } else { '' }
+  return "<details class=`"saint-item`"><summary><span class=`"s-name`">$(Inline $s.nameEn)</span>$titlePart$IcoChev</summary><div class=`"saint-bio`">$(Blocks $s.bioEn)</div></details>"
+}
 $monthSectionsHtml = (1..12 | ForEach-Object {
   $mo = $_
   $monthDays = @($Saints.days | Where-Object { $_.m -eq $mo }) | Sort-Object d
@@ -2006,8 +2037,28 @@ $monthSectionsHtml = (1..12 | ForEach-Object {
   "<section class=`"month`" id=`"ay-$mo`" data-month=`"$mo`"><h2 class=`"month-title`">$($MonthNamesTr[$mo - 1])</h2><div class=`"day-grid`">$cells</div></section>"
 }) -join "`n"
 $monthPillsHtml = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=`"$_`">$($MonthNamesTr[$_ - 1].Substring(0, 3))</a>" }) -join ''
+$monthSectionsHtmlEn = (1..12 | ForEach-Object {
+  $mo = $_
+  $monthDays = @($Saints.days | Where-Object { $_.m -eq $mo }) | Sort-Object d
+  $cells = ($monthDays | ForEach-Object {
+    $day = $_
+    if ($day.genel) {
+      "<div class=`"day-cell genel`" data-m=`"$mo`" data-d=`"$($day.d)`"><span class=`"day-num`">$($day.d)</span><details class=`"saint-item genel-item`"><summary><span class=`"s-name`">$(Inline $Saints.genelTitleEn)</span>$IcoChev</summary><div class=`"saint-bio`">$(Blocks $Saints.genelBioEn)</div></details></div>"
+    } else {
+      $rc = Rank-Class $day.rank
+      $rankLabel = if ($RankLabelsEn.ContainsKey($day.rank)) { $RankLabelsEn[$day.rank] } else { $day.rank }
+      $saintsHtml = (($day.saints | ForEach-Object { Saint-Item-En $_ }) -join '')
+      "<div class=`"day-cell $rc`" data-m=`"$mo`" data-d=`"$($day.d)`"><span class=`"day-num`">$($day.d)</span><span class=`"day-rank label`">$rankLabel</span><div class=`"day-saints`">$saintsHtml</div></div>"
+    }
+  }) -join "`n"
+  "<section class=`"month`" id=`"ay-$mo`" data-month=`"$mo`"><h2 class=`"month-title`">$($MonthNamesEn[$mo - 1])</h2><div class=`"day-grid`">$cells</div></section>"
+}) -join "`n"
+$monthPillsHtmlEn = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=`"$_`">$($MonthNamesEn[$_ - 1].Substring(0, 3))</a>" }) -join ''
 $movableCardsHtml = ($Saints.movable | ForEach-Object {
   "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(Inline $_.title)</h3><p class=`"m-rank label`">$($_.rank)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(Blocks $_.bio)</div></article>"
+}) -join "`n"
+$movableCardsHtmlEn = ($Saints.movable | ForEach-Object {
+  "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(Inline $_.titleEn)</h3><p class=`"m-rank label`">$($_.rankEn)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(Blocks $_.bioEn)</div></article>"
 }) -join "`n"
 $greatSaintsCardsHtml = ($GreatSaints.saints | ForEach-Object {
   "<a class=`"text-link post-card`" href=`"$($_.id).html`"><span class=`"post-date label`">$(Inline $_.epithet) · $($_.era)</span><span class=`"t-title`">$(Inline $_.name)</span><span class=`"t-sub`" lang=`"en`">$($_.en)</span><p class=`"post-excerpt`">$(Inline $_.summary)</p></a>"
@@ -2043,22 +2094,41 @@ Write-Page -File 'azizler.html' -Title "$($Saints.title) | $SiteName" `
   -Description "Katolik ayin takviminin azizleri: bugünün azizini Türkiye saatiyle görün, yılın her günü için Türkçe aziz hayat hikayelerini keşfedin." `
   -Path 'azizler.html' -Body $azizlerBody -JsonLd @((Breadcrumb-Ld 'Azizler' 'azizler.html'))
 
-# ---------------- en/saints.html: Saints, partial hub (full calendar and biographies still Turkish-only)
+# ---------------- en/saints.html: Saints, full calendar and Top-20 biographies, in English
+$greatSaintsCardsHtmlEn = ($GreatSaints.saints | ForEach-Object {
+  $enPath = $EnAltMap["$($_.id).html"]
+  $eraTxt = if ($_.eraEn) { $_.eraEn } else { $_.era }
+  "<a class=`"text-link post-card`" href=`"$enPath`"><span class=`"post-date label`">$(Inline $_.epithetEn) · $eraTxt</span><span class=`"t-title`">$(Inline $_.en)</span><p class=`"post-excerpt`">$(Inline $_.summaryEn)</p></a>"
+}) -join "`n"
 $azizlerBodyEn = @"
 <div class="wrap narrow">
   $(Crumbs-En 'Saints')
   <header class="page-head center"><p class="label">Calendar of Saints</p><h1>Saints</h1></header>
   <p class="faq-intro">$(Inline $Saints.introEn)</p>
-  <div class="placeholder-page">
-    $IcoStar
-    <p class="placeholder-lead">Full calendar coming soon in English</p>
-    <p>The day-by-day calendar of saints (all 365 days) and the longer biographies of the twenty best-known saints are still only available in Turkish. We're translating them gradually; for now, you can browse the full Turkish calendar and read today's saint there.</p>
-    <p class="about-link"><a class="btn" href="azizler.html">View the Turkish page $IcoFlagTr</a></p>
+  <section class="today-saint glass" id="bugun-azizi" data-today>
+    <p class="label">Today <span data-today-date>...</span></p>
+    <div class="today-body" data-today-body><p class="hint">Enable JavaScript to see today's saint.</p></div>
+  </section>
+  <nav class="month-pills" aria-label="Months" data-month-pills>$monthPillsHtmlEn</nav>
+  <div class="saints-cal" data-saints-cal>
+$monthSectionsHtmlEn
   </div>
+  <h2 class="section-title" id="best-known-saints">$(Inline $GreatSaints.en)</h2>
+  <p class="faq-intro">$(Inline $GreatSaints.introEn)</p>
+  <div class="post-list saint-grid">
+$greatSaintsCardsHtmlEn
+  </div>
+  <h2 class="section-title" id="hareketli-bayramlar">Feasts That Move With the Year</h2>
+  <p class="faq-intro">Easter falls on a different date each year, and every feast tied to it (from Ash Wednesday to the Sacred Heart) shifts along with it. The dates below are calculated automatically for the year in which you open the page.</p>
+  <div class="myst-grid movable-list" data-movable-list>
+$movableCardsHtmlEn
+  </div>
+  <p class="conventions">Dates and liturgical ranks follow the General Roman Calendar; the year's movable feasts are set according to the date of Easter, calculated with the Meeus/Jones/Butcher algorithm. For dates the General Roman Calendar leaves open, a saint ranked <em>Roman Martyrology</em> has been chosen from the Roman Martyrology (Martyrologium Romanum) or the West's historical calendar tradition; this means it is not a commemoration the Church requires for that day, but additional information the site offers. The saint biographies were originally written in Turkish for this site, drawn from the author's own knowledge without internet access; small errors of date or detail are possible, especially for lesser-known saints. For a very small number of days that could not be grounded in any reliable source, the Church's own general description is used instead.</p>
 </div>
+<div class="hover-panel glass" id="saint-panel" role="tooltip" hidden></div>
 "@
 Write-Page -File 'en/saints.html' -Title "Saints | $SiteName" `
-  -Description "The Catholic calendar of saints: an introduction in English, with the full day-by-day calendar and saint biographies available on the Turkish site for now." `
+  -Description "The Catholic calendar of saints: see today's saint in Turkey time, and explore saint biographies for every day of the year." `
   -Path 'en/saints.html' -Body $azizlerBodyEn -JsonLd @((Breadcrumb-Ld 'Saints' 'en/saints.html' '' '' 'en')) -Lang 'en'
 
 # ------------------------------------------------------------------ one page per great saint
@@ -2077,6 +2147,26 @@ $GreatSaints.saints | ForEach-Object {
   Write-Page -File "$($s.id).html" -Title "$($s.name) | $SiteName" `
     -Description (Meta-Trim (Plain $s.summary)) -Path "$($s.id).html" -Body $saintBody `
     -JsonLd @($saintLd, (Breadcrumb-Ld $s.name "$($s.id).html" 'Azizler' 'azizler.html')) -OgType 'article'
+}
+
+# ------------------------------------------------------------------ one EN page per great saint
+$GreatSaints.saints | ForEach-Object {
+  $s = $_
+  $enPath = $EnAltMap["$($s.id).html"]
+  $eraTxt = if ($s.eraEn) { $s.eraEn } else { $s.era }
+  $saintBodyEn = @"
+<div class="wrap narrow">
+  $(Crumbs-En $s.en 'Saints' 'en/saints.html')
+  <article class="article" id="article">
+    <header class="page-head center"><p class="label">$(Inline $s.epithetEn) · $eraTxt</p><h1>$(Inline $s.en)</h1></header>
+    <div class="body prose">$(Convert-Markdown $s.bodyEn)</div>
+  </article>
+</div>
+"@
+  $saintLdEn = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr $s.en) + ',"inLanguage":"en","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/$enPath") + '}'
+  Write-Page -File $enPath -Title "$($s.en) | $SiteName" `
+    -Description (Meta-Trim (Plain $s.summaryEn)) -Path $enPath -Body $saintBodyEn `
+    -JsonLd @($saintLdEn, (Breadcrumb-Ld $s.en $enPath 'Saints' 'en/saints.html' 'en')) -OgType 'article' -Lang 'en'
 }
 
 # ================================================================== KUTSAL AYIN (kutsal-ayin.html)
@@ -2779,13 +2869,14 @@ $pages = @(
   @{ p = 'en/life-in-christ.html'; pr = '0.8' }, @{ p = 'en/christian-prayer.html'; pr = '0.8' },
   @{ p = 'en/motu-proprio.html'; pr = '0.5' }, @{ p = 'en/introduction.html'; pr = '0.5' }, @{ p = 'en/appendix.html'; pr = '0.7' },
   @{ p = 'en/faq.html'; pr = '0.8' }, @{ p = 'en/becoming-catholic.html'; pr = '0.8' }, @{ p = 'en/confession.html'; pr = '0.8' },
-  @{ p = 'en/saints.html'; pr = '0.6' }, @{ p = 'en/find-a-church.html'; pr = '0.6' },
+  @{ p = 'en/saints.html'; pr = '0.9' }, @{ p = 'en/find-a-church.html'; pr = '0.6' },
   @{ p = 'en/why-were-catholic.html'; pr = '0.8' }, @{ p = 'en/rosary.html'; pr = '0.8' },
   @{ p = 'en/bible.html'; pr = '0.8' }, @{ p = 'en/miracles.html'; pr = '0.6' },
   @{ p = 'en/anatolia.html'; pr = '0.6' }, @{ p = 'en/contact.html'; pr = '0.4' },
   @{ p = 'en/accessibility.html'; pr = '0.3' }, @{ p = 'en/privacy.html'; pr = '0.3' },
   @{ p = 'en/mass.html'; pr = '0.9' }, @{ p = 'en/parables.html'; pr = '0.9' }
-) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
+) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) `
+  + ($GreatSaints.saints | ForEach-Object { @{ p = $EnAltMap["$($_.id).html"]; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
   "`n</urlset>`n"

@@ -576,7 +576,9 @@
       return { m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
     }
 
-    var MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+    var MONTHS = LANG === 'en'
+      ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      : ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
     var today = istanbulParts();
     var easterThis = easter(today.year);
     var movableTodayCard = null;
@@ -766,6 +768,18 @@
     '11-21': 'meryem-ana',
     '12-8': 'meryem-ana', '12-10': 'meryem-ana', '12-12': 'meryem-ana', '12-27': 'havari-yuhanna'
   };
+  /* English slugs for the same Top-20 ids (see Add-EnAlt calls in build.ps1). */
+  var TOP20_EN_SLUGS = {
+    'meryem-ana': 'mary', 'aziz-yusuf': 'saint-joseph', 'havari-petrus': 'saint-peter',
+    'havari-pavlus': 'saint-paul', 'vaftizci-yahya': 'john-the-baptist', 'havari-yuhanna': 'saint-john',
+    'aziz-augustinus': 'saint-augustine', 'aziz-thomas-aquinas': 'thomas-aquinas',
+    'assisili-aziz-francis': 'francis-of-assisi', 'sienali-aziz-catharina': 'catherine-of-siena',
+    'avilali-aziz-teresa': 'teresa-of-avila', 'lisieuxlu-kucuk-teresa': 'therese-of-lisieux',
+    'aziz-ignatius-loyola': 'ignatius-of-loyola', 'aziz-benedictus': 'saint-benedict',
+    'aziz-patrick': 'saint-patrick', 'padovali-aziz-antonius': 'anthony-of-padua',
+    'kalkutali-aziz-teresa': 'mother-teresa', 'aziz-ii-yuhanna-pavlus': 'john-paul-ii',
+    'padre-pio': 'padre-pio', 'aziz-hieronymus': 'saint-jerome'
+  };
   function initHomeWidgets() {
     var saintPill = $('[data-home-saint-pill] .tp-value');
     if (!saintPill) return;
@@ -786,13 +800,15 @@
       var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
       var s = day && day.saints && day.saints[0];
       var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
-      var href = top20Id ? top20Id + '.html' : 'azizler.html';
-      saintPill.textContent = s ? s.name : 'Bugün için yok';
+      var slug = top20Id ? (LANG === 'en' ? TOP20_EN_SLUGS[top20Id] : top20Id) : (LANG === 'en' ? 'saints' : 'azizler');
+      var href = ROOT + LANG_PREFIX + slug + '.html';
+      var noSaintText = LANG === 'en' ? 'None for today' : 'Bugün için yok';
+      saintPill.textContent = s ? (LANG === 'en' ? s.nameEn : s.name) : noSaintText;
       saintPill.classList.remove('hint');
       var pillLink = saintPill.closest('a');
       if (pillLink) pillLink.setAttribute('href', href);
     })['catch'](function () {
-      saintPill.textContent = 'Yüklenemedi';
+      saintPill.textContent = LANG === 'en' ? 'Failed to load' : 'Yüklenemedi';
       saintPill.classList.remove('hint');
     });
   }
