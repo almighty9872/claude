@@ -1734,7 +1734,7 @@ $kkBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kutsal Kitap')
   <header class="page-head center">$(Page-Ico $IcoBible)<h1>$($KkMeta.title)</h1><p class="sub">$($KkMeta.subtitle)</p></header>
-  <div class="body prose">$(Convert-Markdown $Kk.body)</div>
+  <div class="body prose kk-body">$(Convert-Markdown $Kk.body)</div>
 </div>
 "@
 Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -Description $KkMeta.description `
@@ -1745,7 +1745,7 @@ $kkBodyEn = @"
 <div class="wrap narrow">
   $(Crumbs-En 'The Bible')
   <header class="page-head center">$(Page-Ico $IcoBible)<h1>$($KkMetaEn.title)</h1><p class="sub">$($KkMetaEn.subtitle)</p></header>
-  <div class="body prose">$(Convert-Markdown $KkEn.body)</div>
+  <div class="body prose kk-body">$(Convert-Markdown $KkEn.body)</div>
 </div>
 "@
 Write-Page -File 'en/bible.html' -Title "$($KkMetaEn.title) | $SiteName" -Description $KkMetaEn.description `

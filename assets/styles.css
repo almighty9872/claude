@@ -538,6 +538,33 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 .prose code { font-family: ui-monospace, Consolas, monospace; font-size: .85em; background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
 .prose a { color: var(--gold); }
+/* Kutsal Kitap (Bible) page: plain markdown-to-prose reads as a flat, monotone
+   wall of text with no visual rhythm. Adds numbered section markers, tinted
+   card-style bullets and highlighted terms purely via CSS so the source
+   markdown (content/kutsal-kitap*.md) stays untouched. */
+.kk-body { counter-reset: kk-section; }
+.kk-body h2 {
+  counter-increment: kk-section; display: flex; align-items: center; gap: .75rem;
+  padding-top: 1.7rem; margin-top: 1.9rem; border-top: 1px solid var(--border);
+}
+.kk-body h2:first-of-type { padding-top: 0; margin-top: 0; border-top: 0; }
+.kk-body h2::before {
+  content: counter(kk-section); flex: none; display: grid; place-items: center;
+  width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--gold-bg);
+  color: var(--gold-active); border: 1px solid var(--gold-soft);
+  font-family: var(--sans); font-size: .95rem; font-weight: 700;
+}
+.kk-body ul { list-style: none; padding-left: 0; display: grid; gap: .55rem; margin: 0 0 1.2rem; }
+.kk-body li {
+  position: relative; padding: .65rem .95rem .65rem 2.15rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 0; line-height: 1.55;
+}
+.kk-body li::before {
+  content: ''; position: absolute; left: .95rem; top: 1.15rem; width: .4rem; height: .4rem;
+  border-radius: 50%; background: var(--gold);
+}
+.kk-body strong { color: var(--gold-active); font-weight: 700; }
+@media (min-width: 720px) { .kk-body ul { grid-template-columns: 1fr 1fr; } }
 .about-link { text-align: center; margin: 1.6rem 0 0; font-family: var(--sans); font-size: .9rem; }
 .hero .label { margin: 0 0 .4rem; }
 
