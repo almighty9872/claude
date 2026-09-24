@@ -16,6 +16,7 @@ window.MASS = /*JSON-START*/{
   "title": "Kutsal Ayin",
   "en": "The Holy Mass",
   "intro": "Kutsal Ayin, Katolik Kilisesi’nin ibadetinin kalbidir: Kilise’nin cemaat olarak toplanıp Allah’a şükrettiği, Kutsal Yazı’yı dinlediği ve Mesih İsa’nın kendini haç üzerinde bir kez sunduğu kurbanı, kansız biçimde yeniden sunduğu ayindir. Aşağıda ayinin altı bölümünü sırasıyla keşfedebilir, her adımda Rahip’in (R) ve cemaatin (C) sözlerini okuyabilir, İngilizce karşılığını göstermek için tıklayabilirsiniz.",
+  "introEn": "The Holy Mass is the heart of Catholic worship: the rite in which the Church gathers as one people to give thanks to God, listen to Sacred Scripture, and renew, in an unbloody way, the one sacrifice Christ offered once for all on the cross. Below you can explore the Mass's six parts in order, read the words of the Priest (P) and the People (C) at each step, and click to reveal the Turkish text used in parishes here.",
   "roleLabels": {
     "P": "Rahip",
     "C": "Cemaat",
@@ -36,6 +37,7 @@ window.MASS = /*JSON-START*/{
       "title": "Cemaatin Toplanması",
       "en": "The Introductory Rites",
       "lead": "Ayin, Rahip’in sunağa yaklaşıp onu öpmesi ve haç işareti yapmasıyla başlar. Cemaat toplanır ve Allah’tan af diler.",
+      "leadEn": "Mass begins as the Priest approaches the altar, venerates it with a kiss, and makes the Sign of the Cross. The people gather and ask God's forgiveness.",
       "lines": [
         {
           "role": "N",
@@ -261,6 +263,7 @@ window.MASS = /*JSON-START*/{
       "title": "Kutsal Kitabın Okunması",
       "en": "The Liturgy of the Word",
       "lead": "Kutsal Yazı’dan okumalar, İncil ve vaaz ile Kilise’nin öğretisi cemaate iletilir; herkes birlikte imanını açıklar.",
+      "leadEn": "Readings from Scripture, the Gospel and the homily bring the Church's teaching to the people; together, all profess their faith.",
       "lines": [
         {
           "role": "N",
@@ -381,6 +384,7 @@ window.MASS = /*JSON-START*/{
       "title": "Ekmeğin ve Şarabın Sunulması",
       "en": "The Preparation of the Gifts",
       "lead": "Ekmek ve şarap sunağa getirilir; Rahip, bu adakları Allah’a sunarken cemaat adına dua eder.",
+      "leadEn": "Bread and wine are brought to the altar; the Priest offers these gifts to God, praying on behalf of the people.",
       "lines": [
         {
           "role": "N",
@@ -476,6 +480,7 @@ window.MASS = /*JSON-START*/{
       "title": "Şükran Duası",
       "en": "The Eucharistic Prayer",
       "lead": "Ayin’in kalbi: Rahip, cemaat adına Allah’a şükreder ve Kutsal Ruh’un kudretiyle ekmek ile şarap, Mesih İsa’nın gerçek bedeni ve kanı olur.",
+      "leadEn": "The heart of the Mass: the Priest gives thanks to God on behalf of the people, and by the power of the Holy Spirit the bread and wine become the true Body and Blood of Christ.",
       "lines": [
         {
           "role": "P",
@@ -581,6 +586,7 @@ window.MASS = /*JSON-START*/{
       "title": "Komünyon",
       "en": "The Communion Rite",
       "lead": "Cemaat, Rab’bin Duası’nı söyler, birbirine barış diler ve Mesih İsa’nın gerçek bedeni ile kanını, Kutsal Efkaristiya’yı paylaşır.",
+      "leadEn": "The people pray the Lord's Prayer, offer each other a sign of peace, and share the true Body and Blood of Christ in Holy Communion.",
       "lines": [
         {
           "role": "P",
@@ -711,6 +717,7 @@ window.MASS = /*JSON-START*/{
       "title": "Son Takdis",
       "en": "The Concluding Rites",
       "lead": "Rahip cemaati kutsar ve dünyaya, Müjde’yi yaşamak ve duyurmak üzere gönderir.",
+      "leadEn": "The Priest blesses the people and sends them out into the world to live and proclaim the Gospel.",
       "lines": [
         {
           "role": "P",

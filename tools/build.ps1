@@ -129,6 +129,8 @@ Add-EnAlt 'kutsal-kitap.html' 'bible.html'
 Add-EnAlt 'neden-katoligiz.html' 'why-were-catholic.html'
 Add-EnAlt 'topraklarimizda-hristiyanlik.html' 'anatolia.html'
 Add-EnAlt 'mucizeler.html' 'miracles.html'
+Add-EnAlt 'kutsal-ayin.html' 'mass.html'
+Add-EnAlt 'meseller.html' 'parables.html'
 
 # ------------------------------------------------------------------ data
 function Read-Data([string]$file) {
@@ -788,7 +790,9 @@ function Lang-Switch-Target([string]$current, [string]$lang) {
 }
 $MoreNavEn = @(
   @{ href = 'en/why-were-catholic.html'; t = "Why We're Catholic"; s = 'A five-step case for the faith'; ico = $IcoCompass },
+  @{ href = 'en/mass.html';              t = 'The Holy Mass';      s = 'The order of Mass, in six parts'; ico = $IcoChalice },
   @{ href = 'en/rosary.html';            t = 'The Holy Rosary';    s = 'Prayers and the mysteries'; ico = $IcoBeads },
+  @{ href = 'en/parables.html';          t = 'The Parables of Jesus'; s = 'Thirty-two parables, plainly explained'; ico = $IcoScroll },
   @{ href = 'en/bible.html';             t = 'The Bible';          s = 'Choosing a translation'; ico = $IcoBook },
   @{ href = 'en/miracles.html';          t = 'Miracles';           s = 'Apparitions, relics, Eucharistic miracles'; ico = $IcoRadiance },
   @{ href = 'en/anatolia.html';          t = 'Christianity in Anatolia'; s = "Paul's homeland, Nicaea, the early Church"; ico = $IcoRoots }
@@ -907,7 +911,7 @@ $FooterHtmlEn = @"
     </div>
     <nav class="foot-sitemap" aria-label="Sitemap">
       <div class="foot-col"><p class="foot-label">Compendium</p><ul>$($footCompendiumEn -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Other</p><ul><li><a href="en/why-were-catholic.html">Why We're Catholic</a></li><li><a href="en/becoming-catholic.html">Becoming Catholic</a></li><li><a href="en/confession.html">Confession</a></li><li><a href="en/rosary.html">The Holy Rosary</a></li><li><a href="en/bible.html">The Bible</a></li><li><a href="en/miracles.html">Miracles</a></li><li><a href="en/anatolia.html">Christianity in Anatolia</a></li><li><a href="en/saints.html">Saints</a></li><li><a href="en/find-a-church.html">Find a Church</a></li><li><a href="en/faq.html">FAQ</a></li><li><a href="en/contact.html">Contact</a></li><li><a href="en/accessibility.html">Accessibility</a></li><li><a href="en/privacy.html">Privacy Policy</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Other</p><ul><li><a href="en/why-were-catholic.html">Why We're Catholic</a></li><li><a href="en/becoming-catholic.html">Becoming Catholic</a></li><li><a href="en/confession.html">Confession</a></li><li><a href="en/mass.html">The Holy Mass</a></li><li><a href="en/rosary.html">The Holy Rosary</a></li><li><a href="en/parables.html">The Parables of Jesus</a></li><li><a href="en/bible.html">The Bible</a></li><li><a href="en/miracles.html">Miracles</a></li><li><a href="en/anatolia.html">Christianity in Anatolia</a></li><li><a href="en/saints.html">Saints</a></li><li><a href="en/find-a-church.html">Find a Church</a></li><li><a href="en/faq.html">FAQ</a></li><li><a href="en/contact.html">Contact</a></li><li><a href="en/accessibility.html">Accessibility</a></li><li><a href="en/privacy.html">Privacy Policy</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -1450,14 +1454,14 @@ $homeBodyEn = @"
         <span class="hub-s">Catholic churches you can attend Mass at in Turkey, city by city.</span>
         <span class="hub-go">Go to page$IcoNext</span>
       </a>
-      <a class="hub-card" href="kutsal-ayin.html">
+      <a class="hub-card" href="en/mass.html">
         <span class="hub-head"><span class="hub-ico">$IcoChalice</span><span class="hub-t">The Mass</span></span>
-        <span class="hub-s">The order of the Mass, in six parts. <em>(Turkish only for now.)</em></span>
+        <span class="hub-s">The order of the Mass, in six parts.</span>
         <span class="hub-go">Go to page$IcoNext</span>
       </a>
-      <a class="hub-card" href="meseller.html">
+      <a class="hub-card" href="en/parables.html">
         <span class="hub-head"><span class="hub-ico">$IcoScroll</span><span class="hub-t">The Parables of Jesus</span></span>
-        <span class="hub-s">Thirty-two parables, plainly explained. <em>(Turkish only for now.)</em></span>
+        <span class="hub-s">Thirty-two parables, plainly explained.</span>
         <span class="hub-go">Go to page$IcoNext</span>
       </a>
       <a class="hub-card" href="en/rosary.html">
@@ -2121,6 +2125,38 @@ Write-Page -File 'kutsal-ayin.html' -Title "$($Mass.title) | $SiteName" `
   -Description "Kutsal Ayin$($Apos)in sırası: cemaatin toplanmasından son takdise, Kutsal Kitabın okunmasından Efkaristiya$($Apos)nın kutsanmasına dek altı bölüm, Türkçe ve İngilizce." `
   -Path 'kutsal-ayin.html' -Body $massBody -JsonLd @((Breadcrumb-Ld 'Kutsal Ayin' 'kutsal-ayin.html'))
 
+# ---------------- en/mass.html: The Holy Mass, English primary with Turkish behind a toggle
+$massPillsHtmlEn = ($Mass.parts | ForEach-Object {
+  "<a href=`"#$($_.id)`" data-part-link=`"$($_.n)`" title=`"$(Attr $_.en)`">$($MassIcons[$_.icon])<span class=`"visually-hidden`">$($_.en)</span></a>"
+}) -join ''
+$massPartsHtmlEn = ($Mass.parts | ForEach-Object {
+  $p = $_
+  $icon = $MassIcons[$p.icon]
+  $trHtml = Mass-Lines $p.lines 'tr'
+  $enHtml = Mass-Lines $p.lines 'en'
+  "<section class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
+    "<div class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Part $($p.n)</p><h2>$(Inline $p.en)</h2></div></div>" +
+    "<p class=`"mass-lead`">$(Inline $p.leadEn)</p>" +
+    "<div class=`"mass-dialogue`" data-tr>$enHtml</div>" +
+    "<footer class=`"qa-foot end`">$(En-Toggle "tr-$($p.id)" 'Türkçesi')</footer>" +
+    "<div class=`"en-block mass-dialogue`" id=`"tr-$($p.id)`" lang=`"tr`" hidden><span class=`"label`" lang=`"en`">Turkish translation</span>$trHtml</div>" +
+  "</section>"
+}) -join "`n"
+$massBodyEn = @"
+<div class="wrap narrow">
+  $(Crumbs-En $Mass.en)
+  <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$($Mass.en)</h1></header>
+  <p class="faq-intro">$(Inline $Mass.introEn)</p>
+  <nav class="mass-pills" aria-label="Parts of the Mass" data-mass-pills>$massPillsHtmlEn</nav>
+  <div class="mass-parts" data-mass-parts>
+$massPartsHtmlEn
+  </div>
+</div>
+"@
+Write-Page -File 'en/mass.html' -Title "$($Mass.en) | $SiteName" `
+  -Description "The order of the Mass: from the Introductory Rites to the Concluding Rites, the Liturgy of the Word to the consecration of the Eucharist, in six parts, English and Turkish." `
+  -Path 'en/mass.html' -Body $massBodyEn -JsonLd @((Breadcrumb-Ld $Mass.en 'en/mass.html' '' '' 'en')) -Lang 'en'
+
 # ================================================================== ISA'NIN MESELLERI (meseller.html)
 $Parables = Read-Data 'meseller.js'
 $ParableIcons = @{
@@ -2159,6 +2195,34 @@ $meselCats
 Write-Page -File 'meseller.html' -Title "$($Parables.title) | $SiteName" `
   -Description "Mesih İsa$($Apos)nın İnciller$($Apos)deki başlıca meselleri: kısaca yeniden anlatılmış ve konularına göre bölümlere ayrılmış, düz bir dille açıklanmış otuz ikisi bir arada." `
   -Path 'meseller.html' -Body $meselBody -JsonLd @((Breadcrumb-Ld $MeselTitle 'meseller.html'))
+
+# ---------------- en/parables.html: The Parables of Jesus, in English (Scripture text behind a toggle)
+$meselTocEn = ($Parables.categories | ForEach-Object { "<li><a href=`"#$($_.id)`">$(Inline $_.en)</a></li>" }) -join ''
+$meselCatsEn = ($Parables.categories | ForEach-Object {
+  $cat = $_
+  $icon = $ParableIcons[$cat.icon]
+  $items = ($cat.items | ForEach-Object {
+    $scId = "sc-$($_.id)"
+    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.nameEn)</span><span class=`"mira-place label`">$($_.refEn)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bioEn)$(En-Toggle $scId 'Scripture text')</div><div class=`"en-block p-en`" id=`"$scId`" lang=`"en`" hidden><span class=`"label`">$($_.en.ref)</span>$(Verse $_.en.text)</div></details>"
+  }) -join "`n"
+  $n = [array]::IndexOf(@($Parables.categories), $cat) + 1
+  "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
+    "<h2 class=`"section-title`"><span class=`"label`">$n</span>$(Inline $cat.en)</h2>" +
+    "<p class=`"faq-intro`">$(Inline $cat.leadEn)</p>" +
+    "<div class=`"mira-list`">$items</div></section>"
+}) -join "`n"
+$meselBodyEn = @"
+<div class="wrap narrow">
+  $(Crumbs-En $Parables.en)
+  <header class="page-head center">$(Page-Ico $IcoBookOpen)<h1>$($Parables.en)</h1></header>
+  <p class="faq-intro">$(Inline $Parables.introEn)</p>
+  <nav class="faq-toc" aria-label="Categories"><ul>$meselTocEn</ul></nav>
+$meselCatsEn
+</div>
+"@
+Write-Page -File 'en/parables.html' -Title "$($Parables.en) | $SiteName" `
+  -Description "The main parables of Christ in the Gospels: thirty-two of them, briefly retold and explained in plain language, grouped by theme." `
+  -Path 'en/parables.html' -Body $meselBodyEn -JsonLd @((Breadcrumb-Ld $Parables.en 'en/parables.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
 # A static, numbered diagram of the bead ring (no hover/click state at all, so it works the
@@ -2719,7 +2783,8 @@ $pages = @(
   @{ p = 'en/why-were-catholic.html'; pr = '0.8' }, @{ p = 'en/rosary.html'; pr = '0.8' },
   @{ p = 'en/bible.html'; pr = '0.8' }, @{ p = 'en/miracles.html'; pr = '0.6' },
   @{ p = 'en/anatolia.html'; pr = '0.6' }, @{ p = 'en/contact.html'; pr = '0.4' },
-  @{ p = 'en/accessibility.html'; pr = '0.3' }, @{ p = 'en/privacy.html'; pr = '0.3' }
+  @{ p = 'en/accessibility.html'; pr = '0.3' }, @{ p = 'en/privacy.html'; pr = '0.3' },
+  @{ p = 'en/mass.html'; pr = '0.9' }, @{ p = 'en/parables.html'; pr = '0.9' }
 ) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
