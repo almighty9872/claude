@@ -709,7 +709,14 @@
      --------------------------------------------------------------- */
   function initMass() {
     var pills = $$('.mass-pills a');
-    if (!pills.length || !window.IntersectionObserver) return;
+    if (!pills.length) return;
+    pills.forEach(function (a) {
+      a.addEventListener('click', function () {
+        var target = document.getElementById(a.getAttribute('href').slice(1));
+        if (target && target.tagName === 'DETAILS') target.open = true;
+      });
+    });
+    if (!window.IntersectionObserver) return;
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;

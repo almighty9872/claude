@@ -639,6 +639,7 @@ $IcoLink = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="curr
 $IcoCursor = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 3.5 18 13l-5 .8 2.6 5.3-2 1-2.6-5.3L7.5 18Z"/></svg>'
 $IcoRefresh = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg>'
 $IcoCheckSquare = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></svg>'
+$IcoPlay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M10.2 8.7v6.6l5.3-3.3z" fill="currentColor" stroke="none"/></svg>'
 # Floating accessibility widget: profile presets + individual toggles, state kept in
 # localStorage (see script.js), CSS driven entirely by data-a11y-* attributes on <html> so it
 # never touches position:fixed elements via `filter` (which would break their containing block).
@@ -2236,26 +2237,30 @@ function Mass-Lines($lines, [string]$lang) {
   return $sb.ToString()
 }
 $massPillsHtml = ($Mass.parts | ForEach-Object {
-  "<a href=`"#$($_.id)`" data-part-link=`"$($_.n)`" title=`"$(Attr $_.title)`">$($MassIcons[$_.icon])<span class=`"visually-hidden`">$($_.title)</span></a>"
+  "<a href=`"#$($_.id)`" data-part-link=`"$($_.n)`" data-tooltip=`"$(Attr $_.title)`" title=`"$(Attr $_.title)`">$($MassIcons[$_.icon])<span class=`"visually-hidden`">$($_.title)</span></a>"
 }) -join ''
 $massPartsHtml = ($Mass.parts | ForEach-Object {
   $p = $_
   $icon = $MassIcons[$p.icon]
   $trHtml = Mass-Lines $p.lines 'tr'
   $enHtml = Mass-Lines $p.lines 'en'
-  "<section class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
-    "<div class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Bölüm $($p.n)</p><h2>$(Inline $p.title)</h2><p class=`"sub`" lang=`"en`">$($p.en)</p></div></div>" +
+  $openAttr = if ($p.n -eq 1) { ' open' } else { '' }
+  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`"$openAttr>" +
+    "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Bölüm $($p.n)</p><h2>$(Inline $p.title)</h2><p class=`"sub`" lang=`"en`">$($p.en)</p></div>$IcoChevLg</summary>" +
+    "<div class=`"mass-part-body`">" +
     "<p class=`"mass-lead`">$(Inline $p.lead)</p>" +
     "<div class=`"mass-dialogue`" data-tr>$trHtml</div>" +
     "<footer class=`"qa-foot end`">$(En-Toggle "en-$($p.id)")</footer>" +
     "<div class=`"en-block mass-dialogue`" id=`"en-$($p.id)`" lang=`"en`" hidden>$enHtml</div>" +
-  "</section>"
+    "</div>" +
+  "</details>"
 }) -join "`n"
 $massBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kutsal Ayin')
   <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$($Mass.title)</h1><p class="sub" lang="en">$($Mass.en)</p></header>
   <p class="faq-intro">$(Inline $Mass.intro)</p>
+  <p class="mass-video-note">$IcoPlay Ayinin akışını görsel olarak izleyerek takip etmek isterseniz, <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">bu İngilizce videoyu</a> yardımcı bulabilirsiniz.</p>
   <nav class="mass-pills" aria-label="Ayinin bölümleri" data-mass-pills>$massPillsHtml</nav>
   <div class="mass-parts" data-mass-parts>
 $massPartsHtml
@@ -2268,26 +2273,30 @@ Write-Page -File 'kutsal-ayin.html' -Title "$($Mass.title) | $SiteName" `
 
 # ---------------- en/mass.html: The Holy Mass, English primary with Turkish behind a toggle
 $massPillsHtmlEn = ($Mass.parts | ForEach-Object {
-  "<a href=`"#$($_.id)`" data-part-link=`"$($_.n)`" title=`"$(Attr $_.en)`">$($MassIcons[$_.icon])<span class=`"visually-hidden`">$($_.en)</span></a>"
+  "<a href=`"#$($_.id)`" data-part-link=`"$($_.n)`" data-tooltip=`"$(Attr $_.en)`" title=`"$(Attr $_.en)`">$($MassIcons[$_.icon])<span class=`"visually-hidden`">$($_.en)</span></a>"
 }) -join ''
 $massPartsHtmlEn = ($Mass.parts | ForEach-Object {
   $p = $_
   $icon = $MassIcons[$p.icon]
   $trHtml = Mass-Lines $p.lines 'tr'
   $enHtml = Mass-Lines $p.lines 'en'
-  "<section class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
-    "<div class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Part $($p.n)</p><h2>$(Inline $p.en)</h2></div></div>" +
+  $openAttr = if ($p.n -eq 1) { ' open' } else { '' }
+  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`"$openAttr>" +
+    "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">Part $($p.n)</p><h2>$(Inline $p.en)</h2></div>$IcoChevLg</summary>" +
+    "<div class=`"mass-part-body`">" +
     "<p class=`"mass-lead`">$(Inline $p.leadEn)</p>" +
     "<div class=`"mass-dialogue`" data-tr>$enHtml</div>" +
     "<footer class=`"qa-foot end`">$(En-Toggle "tr-$($p.id)" 'Türkçesi')</footer>" +
     "<div class=`"en-block mass-dialogue`" id=`"tr-$($p.id)`" lang=`"tr`" hidden><span class=`"label`" lang=`"en`">Turkish translation</span>$trHtml</div>" +
-  "</section>"
+    "</div>" +
+  "</details>"
 }) -join "`n"
 $massBodyEn = @"
 <div class="wrap narrow">
   $(Crumbs-En $Mass.en)
   <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$($Mass.en)</h1></header>
   <p class="faq-intro">$(Inline $Mass.introEn)</p>
+  <p class="mass-video-note">$IcoPlay If you'd like to follow along visually, you may find <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">this video</a> helpful.</p>
   <nav class="mass-pills" aria-label="Parts of the Mass" data-mass-pills>$massPillsHtmlEn</nav>
   <div class="mass-parts" data-mass-parts>
 $massPartsHtmlEn
