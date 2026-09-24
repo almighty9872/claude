@@ -84,12 +84,12 @@ window.CONFESSION = /*JSON-START*/{
   "faq": [
     { "id": "sir-saklanir-mi", "q": "Rahip söylediklerimi kimseye anlatır mı?",
       "qEn": "Will the priest tell anyone what I say?",
-      "a": "Hayır, hiçbir zaman. “Günah çıkarma mührü” dediğimiz bu gizlilik mutlaktır; rahip, günah çıkarmada duyduğu hiçbir şeyi hiçbir koşulda, hiç kimseyle paylaşamaz; kilise hukuku bunu en ağır suçlardan biri sayar ve tarih boyunca bazı rahipler bu sırrı açıklamaktansa ölümü göze almıştır. Bu, günah çıkarmayı dünyadaki en güvenli konuşmalardan biri yapar.",
-      "aEn": "No, never. What's called the \"seal of confession\" is absolute; the priest can never share anything he hears in confession, under any circumstances, with anyone. Canon law treats breaking it as one of the gravest offenses, and throughout history some priests have chosen death rather than reveal what they heard. This makes confession one of the safest conversations in the world." },
+      "a": "Hayır, hiçbir zaman. “Günah çıkarma mührü” dediğimiz bu gizlilik mutlaktır; rahip, günah çıkarmada duyduğu hiçbir şeyi hiçbir koşulda, hiç kimseyle paylaşamaz; kilise hukuku bunu en ağır suçlardan biri sayar ve tarih boyunca bazı rahipler bu sırrı açıklamaktansa ölümü göze almıştır.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a> Bu, günah çıkarmayı dünyadaki en güvenli konuşmalardan biri yapar.",
+      "aEn": "No, never. What's called the \"seal of confession\" is absolute; the priest can never share anything he hears in confession, under any circumstances, with anyone. Canon law treats breaking it as one of the gravest offenses, and throughout history some priests have chosen death rather than reveal what they heard.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a> This makes confession one of the safest conversations in the world." },
     { "id": "ne-soyleyecegimi-unutursam", "q": "Ne söyleyeceğimi unutursam ya da karıştırırsam ne olur?",
       "qEn": "What if I forget what to say or get confused?",
-      "a": "Hiçbir sorun değil. Rahipler bunun için oradadır; unutursanız hatırlatır, tökezlerseniz bekler, gerekirse sorular sorarak size yol gösterir. Kusursuz bir konuşma yapmanız beklenmez, yalnızca içten olmanız yeterlidir.",
-      "aEn": "It's not a problem at all. This is exactly what priests are there for; if you forget, they'll prompt you, if you stumble, they'll wait, and if needed, they'll guide you along with questions. You aren't expected to give a flawless speech, just to be sincere." },
+      "a": "Sorun değil. Rahipler bunun için oradadır; unutursanız hatırlatır, tökezlerseniz bekler, gerekirse sorular sorarak size yol gösterir. İsterseniz söyleyeceklerinizi önceden telefonunuza ya da bir kâğıda yazıp oradan okuyabilirsiniz; bu hiç ayıp değildir. Kendinizi nasıl rahat hissediyorsanız öyle yapın, önemli olan kusursuz konuşmak değil, içtenlikle ve inanarak söylemektir.",
+      "aEn": "It's not a problem. This is exactly what priests are there for; if you forget, they'll prompt you, if you stumble, they'll wait, and if needed, they'll guide you along with questions. If it helps, you can write down what you want to say beforehand, on your phone or on paper, and read from it; there's nothing wrong with that. Do whatever makes you comfortable. What matters isn't a flawless speech, but saying it sincerely and with faith." },
     { "id": "cok-uzun-zaman-oldu", "q": "Üzerinden yıllar geçti, nasıl başlayacağımı bile bilmiyorum.",
       "qEn": "It's been years, and I don't even know how to begin.",
       "a": "Bunu rahibe açıkça söyleyin: “Peder, uzun zaman oldu, bana yardımcı olur musunuz?” Bu, duyduğunda hiçbir rahibi şaşırtmayan, aksine sevindiren bir cümledir. Size adım adım eşlik edecektir.",
@@ -104,19 +104,37 @@ window.CONFESSION = /*JSON-START*/{
       "aEn": "It's entirely up to you; both are equally valid and common. If you prefer anonymity, choose behind the screen; if you'd rather speak with the priest directly, choose face to face." },
     { "id": "yargilanmak", "q": "Rahip beni yargılayacak mı, kızacak mı?",
       "qEn": "Will the priest judge me or get angry?",
-      "a": "Rahibin orada bulunma amacı yargılamak değil, Tanrı’nın merhametini size iletmektir. Deneyimli bir rahip için duyacağı hiçbir şey yeni ya da şok edici değildir; birçoğu, cesaretinizden dolayı içtenlikle sevinecektir.",
-      "aEn": "The priest's purpose there isn't to judge you but to convey God's mercy to you. For an experienced priest, nothing he hears is new or shocking; many of them will be genuinely glad at your courage in coming." },
+      "a": "Rahibin orada bulunma amacı yargılamak değil, Tanrı’nın merhametini size iletmektir. Günah çıkarmada rahip kendi adına değil, <em>in persona Christi</em> (Mesih’in kişiliğinde) hareket eder; duyduğunuz bağışlama sözleri gerçekte rahibin kendi yargısı değil, Mesih’in sözleridir. Deneyimli bir rahip için duyacağı hiçbir şey yeni ya da şok edici değildir; birçoğu, cesaretinizden dolayı içtenlikle sevinecektir.",
+      "aEn": "The priest's purpose there isn't to judge you but to convey God's mercy to you. In confession the priest doesn't act in his own name but <em>in persona Christi</em> (in the person of Christ); the words of absolution you hear are really Christ's words, not the priest's personal judgment. For an experienced priest, nothing he hears is new or shocking; many of them will be genuinely glad at your courage in coming." },
     { "id": "kac-dakika-surer", "q": "Ne kadar sürer, nasıl hazırlanmalıyım?",
       "qEn": "How long does it take, and how should I prepare?",
       "a": "Genellikle birkaç dakika sürer; uzun bir konuşma değildir. Vicdan muhasebenizi önceden, sakin bir anda yapmanız yeterli hazırlıktır; kilisede kuyrukta beklerken de kısaca gözden geçirebilirsiniz.",
       "aEn": "It usually takes just a few minutes; it isn't a long conversation. Doing your examination of conscience beforehand, in a quiet moment, is preparation enough; you can also review it briefly while waiting in line at church." },
     { "id": "vaftizsizsem", "q": "Henüz vaftiz olmadıysam ya da başka bir mezheptensem günah çıkarabilir miyim?",
       "qEn": "Can I go to confession if I'm not baptized yet, or belong to another denomination?",
-      "a": "Günah çıkarma, vaftiz edilmiş Katolikler için bir kutsal sırdır. Katolik olmayı düşünüyorsanız bu doğal bir merak konusudur; <a href=\"katolik-sureci.html\">Katolik Süreci</a> sayfamıza göz atabilir ya da doğrudan bir rahiple konuşabilirsiniz; sorularınızı sormaktan çekinmeyin.",
+      "a": "Günah çıkarma, vaftiz edilmiş Katolikler için bir kutsal sırdır. Katolik olmayı düşünüyorsanız bu doğal bir merak konusudur; <a href=\"katolik-sureci.html\">Katolik Olma Süreci</a> sayfamıza göz atabilir ya da doğrudan bir rahiple konuşabilirsiniz; sorularınızı sormaktan çekinmeyin.",
       "aEn": "Confession is a sacrament for baptized Catholics. If you're considering becoming Catholic, this is a natural question to have; take a look at our <a href=\"en/becoming-catholic.html\">Becoming Catholic</a> page, or speak directly with a priest, and don't hesitate to ask your questions." },
     { "id": "agir-hafif-gunah", "q": "Ağır (ölümcül) günah ile hafif günah arasındaki fark nedir?",
       "qEn": "What's the difference between mortal and venial sin?",
       "a": "Bir günahın ağır sayılması için üç şart birlikte bulunmalıdır: konusunun ciddi olması, kişinin bunun ciddiyetini bilmesi ve tam bir rızayla, özgürce işlenmesi (<a href=\"https://www.vatican.va/content/catechism/en/part_three/section_one/chapter_one/article_8/iv_the_gravity_of_sin_mortal_and_venial_sin.html\" target=\"_blank\" rel=\"noopener\">KKK 1857</a>). Bu üçünden biri eksikse günah hafif kalır. Emin değilseniz, rahibinizle konuşmaktan çekinmeyin.",
       "aEn": "For a sin to count as mortal, three conditions must be present together: grave matter, full knowledge that it's serious, and complete, free consent (<a href=\"https://www.vatican.va/content/catechism/en/part_three/section_one/chapter_one/article_8/iv_the_gravity_of_sin_mortal_and_venial_sin.html\" target=\"_blank\" rel=\"noopener\">CCC 1857</a>). If any one of the three is missing, the sin remains venial. If you're unsure, don't hesitate to talk it over with your priest." }
-  ]
+  ],
+  "sealMartyrs": {
+    "title": "Mührün şehitleri",
+    "titleEn": "Martyrs of the seal",
+    "intro": "Günah çıkarmada duyduklarını açıklamayı reddettikleri için işkenceyle öldürülen ya da idam edilen, “Günah Çıkarma Mührü Şehitleri” olarak bilinen birçok tarihî kişi vardır. Birkaç örnek:",
+    "introEn": "The Catholic Church recognizes several historical figures, known as \"Martyrs of the Seal of Confession,\" who were tortured to death or executed for refusing to reveal what they heard from penitents. A few examples:",
+    "items": [
+      { "name": "Aziz Jan Nepomucký (ö. 1393)", "detail": "Kutsal sır mührünün ilk şehidi sayılır. Bohemya Kralı IV. Wenceslaus, kraliçenin günah çıkarmalarını açıklamayı reddettiği için onun işkenceyle Prag’daki Vltava Nehri’nde boğulmasını emretti." },
+      { "name": "Aziz Mateo Correa Magallanes (ö. 1927)", "detail": "Cristero Savaşı sırasında idam edilen Meksikalı bir rahip. General Eulogio Ortiz, tutuklu Cristero isyancılarının günah çıkarmalarını dinlemesini, ardından ne söylediklerini açıklamasını istedi. Magallanes reddetti ve kurşuna dizildi." },
+      { "name": "Beatus Jan Sarkander (ö. 1620)", "detail": "Otuz Yıl Savaşları sırasında Moravya’da görev yapan bir rahip. Katolik bir soylunun günah çıkarma sırrını karşı taraftaki yetkililere açıklamayı reddettiği için günlerce çarkta işkenceyle öldürüldü." },
+      { "name": "Beatus Felipe Císcar Puig (ö. 1936)", "detail": "İspanya İç Savaşı sırasında idam edilen İspanyol bir rahip. Hapiste az önce dinlediği bir Fransisken rahibin günah çıkarmasını açıklamayı reddettiği için Cumhuriyetçi güçler tarafından kurşuna dizildi." }
+    ],
+    "itemsEn": [
+      { "name": "St. John Nepomucene (d. 1393)", "detail": "Considered the first martyr of the sacramental seal. King Wenceslaus IV of Bohemia ordered him tortured and drowned in the Vltava River in Prague after he refused to divulge the confessions of the queen." },
+      { "name": "St. Mateo Correa Magallanes (d. 1927)", "detail": "A Mexican priest executed during the Cristero War. General Eulogio Ortiz ordered him to hear the confessions of imprisoned Cristero rebels and then demanded to know what they had said. Magallanes refused and was shot." },
+      { "name": "Blessed Jan Sarkander (d. 1620)", "detail": "A priest in Moravia during the Thirty Years' War. He was tortured to death on the rack over several days for refusing to reveal the confessional secrets of a Catholic nobleman to opposing authorities." },
+      { "name": "Blessed Felipe Císcar Puig (d. 1936)", "detail": "A Spanish priest executed during the Spanish Civil War. He was shot by Republican forces after refusing to reveal the confession of a Franciscan priest he had just heard in prison." }
+    ]
+  }
 }/*JSON-END*/;

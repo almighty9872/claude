@@ -517,23 +517,15 @@
   }
 
   /* ---------------------------------------------------------------
-     10. Rosary: highlights today's set of mysteries (Istanbul time).
-         The bead diagram is a static image; the prayers are plain
-         <details> cards handled by initReveal()/the browser, no JS.
+     10. Rosary: highlights today's set of mysteries, in the visitor's
+         own local time zone. The bead diagram is a static image; the
+         prayers are plain <details> cards handled by initReveal()/the
+         browser, no JS.
      --------------------------------------------------------------- */
   function initRosary() {
     if (!$('.myst')) return;
 
-    /* The day is the one in Turkey, not the visitor's own time zone. */
-    function istanbulDay() {
-      try {
-        var name = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', weekday: 'short' }).format(new Date());
-        var i = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(name);
-        if (i !== -1) return i;
-      } catch (e) { /* fall through */ }
-      return new Date().getDay();
-    }
-    var day = istanbulDay();
+    var day = new Date().getDay();
     $$('.myst').forEach(function (m) {
       var days = (m.getAttribute('data-days') || '').split(',').map(Number);
       if (days.indexOf(day) !== -1) m.classList.add('is-today');
@@ -541,21 +533,16 @@
   }
 
   /* ---------------------------------------------------------------
-     11. Azizler: today's saint in Istanbul time, movable feasts
-         (Easter and everything computed from it) grafted onto the
-         fixed calendar, month scroll-spy, and hover panel for bios.
+     11. Azizler: today's saint in the visitor's own local time zone,
+         movable feasts (Easter and everything computed from it)
+         grafted onto the fixed calendar, month scroll-spy, and hover
+         panel for bios.
      --------------------------------------------------------------- */
   function initSaints() {
     var cal = $('.saints-cal');
     if (!cal) return;
 
-    function istanbulParts() {
-      try {
-        var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date());
-        var o = {};
-        parts.forEach(function (p) { if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
-        if (o.year && o.month && o.day) return o;
-      } catch (e) { /* fall through */ }
+    function localParts() {
       var d = new Date();
       return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
     }
@@ -579,7 +566,7 @@
     var MONTHS = LANG === 'en'
       ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
       : ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-    var today = istanbulParts();
+    var today = localParts();
     var easterThis = easter(today.year);
     var movableTodayCard = null;
 
@@ -629,7 +616,8 @@
             return { name: $('.s-name', it).innerHTML, title: t ? t.innerHTML : '', bio: $('.saint-bio', it).innerHTML };
           });
         items.forEach(function (it) {
-          var more = top20Id ? '<a class="today-more-link" href="' + top20Id + '.html">Devamını oku' +
+          var moreSlug = top20Id ? (LANG === 'en' ? TOP20_EN_SLUGS[top20Id] : top20Id) : null;
+          var more = moreSlug ? '<a class="today-more-link" href="' + ROOT + LANG_PREFIX + moreSlug + '.html">' + (LANG === 'en' ? 'Read more' : 'Devamını oku') +
             '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></a>' : '';
           pieces.push('<div class="today-more"><span class="today-name">' + it.name + '</span>' +
             (it.title ? '<span class="today-title">' + it.title + '</span>' : '') +
@@ -784,17 +772,8 @@
     var saintPill = $('[data-home-saint-pill] .tp-value');
     if (!saintPill) return;
 
-    function istanbulToday() {
-      try {
-        var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date());
-        var o = {};
-        parts.forEach(function (p) { if (p.type !== 'literal') o[p.type] = parseInt(p.value, 10); });
-        if (o.year && o.month && o.day) return o;
-      } catch (e) { /* fall through */ }
-      var d = new Date();
-      return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
-    }
-    var today = istanbulToday();
+    var todayDate = new Date();
+    var today = { year: todayDate.getFullYear(), month: todayDate.getMonth() + 1, day: todayDate.getDate() };
 
     loadDataScript('data/azizler.js', 'SAINTS').then(function () {
       var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];

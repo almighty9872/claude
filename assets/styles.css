@@ -812,6 +812,16 @@ body.sheet-open { overflow: hidden; }
   .katekizm-card .hub-go { display: inline-flex; }
 }
 .conventions { margin: 2.5rem 0 1rem; font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted); }
+.footnote-ref { text-decoration: none; color: var(--gold-active); font-weight: 700; margin-left: .1em; }
+.footnote-block {
+  margin: 2.5rem 0 0; padding: 1.1rem 1.3rem; border-left: 2px solid var(--border);
+  font-family: var(--sans); font-size: .85rem; line-height: 1.6; color: var(--muted);
+}
+.footnote-block .footnote-label { font-weight: 700; color: var(--text-soft); margin: 0 0 .5rem; }
+.footnote-list { margin: .6rem 0 0; padding-left: 1.2rem; }
+.footnote-list li { margin: 0 0 .5rem; }
+.footnote-list li:last-child { margin-bottom: 0; }
+.footnote-list strong { color: var(--text-soft); }
 .closing-note {
   font-family: var(--serif); font-size: 1.1rem; font-style: italic; text-align: center;
   color: var(--text-soft); max-width: 40rem; margin-left: auto; margin-right: auto;

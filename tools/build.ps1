@@ -568,7 +568,7 @@ $PrayerNav = @(
 # Katekizm sits here too as a single link (no chapter submenu in the nav; katesizm.html itself is the way in).
 $KaynaklarNav = @(
   @{ href = 'katesizm.html';       t = 'Katekizm';             s = '598 soru ve yanıt' },
-  @{ href = 'katolik-sureci.html'; t = 'Katolik Süreci';       s = 'Katolik olma süreci' },
+  @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci';  s = 'Katolik olma süreci' },
   @{ href = 'gunah-cikarma.html';  t = 'Günah Çıkarma';        s = 'Nasıl işler, adım adım' },
   @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım' },
   @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille' },
@@ -1314,7 +1314,7 @@ $homeBody = @"
         <a class="hub-go" href="katesizm.html">Sayfaya Git$IcoNext</a>
       </div>
       <a class="hub-card" href="katolik-sureci.html">
-        <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Süreci</span></span>
+        <span class="hub-head"><span class="hub-ico">$IcoWay</span><span class="hub-t">Katolik Olma Süreci</span></span>
         <span class="hub-s">Katolik olmak isteyenler için OCIA süreci, adım adım.</span>
         <span class="hub-go">Sayfaya Git$IcoNext</span>
       </a>
@@ -1765,7 +1765,7 @@ $sureciFaq = ($Sureci.faq | ForEach-Object {
 }) -join "`n"
 $sureciBody = @"
 <div class="wrap narrow">
-  $(Crumbs 'Katolik Süreci')
+  $(Crumbs 'Katolik Olma Süreci')
   <header class="page-head center">$(Page-Ico $IcoDoor)<h1>$($Sureci.title)</h1><p class="sub" lang="en">$($Sureci.en)</p></header>
   <p class="faq-intro">$(Inline $Sureci.intro)</p>
   <h2 class="section-title" id="iki-yol"><span class="label">1</span>İki Yol</h2>
@@ -1785,12 +1785,12 @@ $stageList
   <div class="faq-list">
 $sureciFaq
   </div>
-  <p class="conventions">Bu sayfadaki genel OCIA süreci evrensel bir Kilise düzenlemesidir (1972, Tanrısal Kült Cemaati); yukarıdaki bazı ayrıntılar (Paskalya Nöbeti dışında kabul, günah çıkarmanın zamanlaması gibi) ABD Katolik Episkoposlar Konferansı’nın Kateşümenlik İçin Ulusal Tüzüğü’nden (1986) alınmıştır. Kendi bölgenizdeki uygulama için en yakın cemaat kilisenize danışın.</p>
+  <p class="conventions">Bu sayfadaki genel OCIA süreci evrensel bir Kilise düzenlemesidir (1972, Tanrısal Kült Cemaati); yukarıdaki bazı ayrıntılar (Paskalya Nöbeti dışında kabul, günah çıkarmanın zamanlaması gibi) ABD Katolik Episkoposlar Konferansı’nın Katekümenlik İçin Ulusal Tüzüğü’nden (1986) alınmıştır. Kendi bölgenizdeki uygulama için en yakın cemaat kilisenize danışın.</p>
 </div>
 "@
 Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" `
   -Description "Katolik olmak isteyenler için: OCIA/RCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler, hangi hazırlık gerekir." `
-  -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Süreci' 'katolik-sureci.html'))
+  -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Olma Süreci' 'katolik-sureci.html'))
 
 # ---------------- en/becoming-catholic.html: Becoming Catholic (the OCIA process), in English
 $pathCardsEn = ($Sureci.paths | ForEach-Object {
@@ -1846,6 +1846,10 @@ $confessionFaq = ($Confession.faq | ForEach-Object {
   "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
     "<div class=`"faq-a`"><p>$(Inline $_.a)</p></div></details>"
 }) -join "`n"
+$sealMartyrsItems = ($Confession.sealMartyrs.items | ForEach-Object {
+  "<li><strong>$(Inline $_.name)</strong> $(Inline $_.detail)</li>"
+}) -join "`n"
+$sealMartyrsHtml = "<aside class=`"footnote-block`" id=`"muhur-sehitleri`"><p class=`"footnote-label`">* $(Inline $Confession.sealMartyrs.title)</p><p>$(Inline $Confession.sealMartyrs.intro)</p><ul class=`"footnote-list`">$sealMartyrsItems</ul></aside>"
 $confessionBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Günah Çıkarma')
@@ -1864,6 +1868,7 @@ $examenGroups
   <div class="faq-list">
 $confessionFaq
   </div>
+  $sealMartyrsHtml
   <p class="conventions">Bu sayfa, Katolik Kilisesi Katekizmi’nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (<a href="https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html" target="_blank" rel="noopener">KKK 1420-1498</a>) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href="kiliseler.html">Kilise Bul</a> sayfası size yardımcı olabilir.</p>
 </div>
 "@
@@ -1884,6 +1889,10 @@ $confessionFaqEn = ($Confession.faq | ForEach-Object {
   "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(Inline $_.qEn)</span>$IcoChevLg</summary>" +
     "<div class=`"faq-a`"><p>$(Inline $_.aEn)</p></div></details>"
 }) -join "`n"
+$sealMartyrsItemsEn = ($Confession.sealMartyrs.itemsEn | ForEach-Object {
+  "<li><strong>$(Inline $_.name)</strong> $(Inline $_.detail)</li>"
+}) -join "`n"
+$sealMartyrsHtmlEn = "<aside class=`"footnote-block`" id=`"muhur-sehitleri`"><p class=`"footnote-label`">* $(Inline $Confession.sealMartyrs.titleEn)</p><p>$(Inline $Confession.sealMartyrs.introEn)</p><ul class=`"footnote-list`">$sealMartyrsItemsEn</ul></aside>"
 $confessionBodyEn = @"
 <div class="wrap narrow">
   $(Crumbs-En 'Confession')
@@ -1902,6 +1911,7 @@ $examenGroupsEn
   <div class="faq-list">
 $confessionFaqEn
   </div>
+  $sealMartyrsHtmlEn
   <p class="conventions">This page is grounded in the Catechism of the Catholic Church's teaching on the Sacrament of Penance and Reconciliation (<a href="https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html" target="_blank" rel="noopener">CCC 1420-1498</a>) and canon law; the exact wording of the rite can vary slightly from region to region. For practical details (such as confession times), ask your nearest parish; the <a href="en/find-a-church.html">Find a Church</a> page can help.</p>
 </div>
 "@
@@ -2574,7 +2584,8 @@ $miraCatsEn = ($Miracles.categories | ForEach-Object {
   $cat = $_
   $icon = $MiracleIcons[$cat.icon]
   $items = ($cat.items | ForEach-Object {
-    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.nameEn)</span><span class=`"mira-place label`">$($_.placeEn)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bioEn)</div></details>"
+    $moreEn = if ($GreatSaintIds.ContainsKey($_.id)) { "<a class=`"today-more-link`" href=`"$($EnAltMap["$($_.id).html"])`">Read more$IcoNext</a>" } else { '' }
+    "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(Inline $_.nameEn)</span><span class=`"mira-place label`">$($_.placeEn)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(Blocks $_.bioEn)$moreEn</div></details>"
   }) -join "`n"
   $n = [array]::IndexOf(@($Miracles.categories), $cat) + 1
   "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
