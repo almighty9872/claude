@@ -37,6 +37,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -r ./*.html sitemap.xml robots.txt assets data _site/
+          if [ -d en ]; then cp -r en _site/; fi
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi
           touch _site/.nojekyll
