@@ -1,7 +1,7 @@
 ---
 title: Gizlilik Politikası
 subtitle: Kısacası, hiçbir şey toplamıyoruz
-description: katolikdunyasi.com’un gizlilik yaklaşımı: hiçbir izleme aracı ya da çerez kullanılmaz, tarayıcınızda yalnızca görünüm tercihleriniz ve tesbihte kaldığınız yer saklanır.
+description: katolikdunyasi.com’un gizlilik yaklaşımı: izleme aracı ya da çerez yok; tarayıcınızda yalnızca görünüm tercihleriniz ve tesbihte kaldığınız yer saklanır.
 short: Sitenin hangi veriyi topladığı (hiçbiri) ve tarayıcınızda ne sakladığı.
 ---
 

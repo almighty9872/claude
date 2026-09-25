@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 subtitle: In short, we don't collect anything
-description: katolikdunyasi.com's approach to privacy: no tracking tools or cookies are used, and your browser only stores your display preferences and your place in the Rosary.
+description: katolikdunyasi.com's privacy approach: no tracking or cookies; your browser only keeps your display preferences and your place in the Rosary.
 short: What data this site collects (none) and what it stores in your browser.
 ---
 

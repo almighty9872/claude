@@ -865,7 +865,7 @@ body.sheet-open { overflow: hidden; }
 .hub-t { font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
 .hub-s { color: var(--text-soft); font-size: 1.02rem; line-height: 1.5; flex: 1; }
 .hub-go {
-  display: inline-flex; align-items: center; gap: .3rem; margin-top: .3rem;
+  display: inline-flex; align-items: center; gap: .3rem; margin-top: .3rem; min-height: 24px;
   font-family: var(--sans); font-size: .78rem; font-weight: 600; color: var(--gold);
 }
 .hub-go svg { width: .95rem; height: .95rem; transition: transform .2s; }
@@ -1556,7 +1556,7 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .today-bio p:last-child { margin-bottom: 0; }
 .today-more + .today-more { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dotted var(--border); }
 .today-more-link {
-  display: inline-flex; align-items: center; gap: .3rem;
+  display: inline-flex; align-items: center; gap: .3rem; min-height: 24px;
   font-family: var(--sans); font-size: .78rem; font-weight: 600; color: var(--gold); text-decoration: none;
 }
 .today-more-link svg { width: .95rem; height: .95rem; transition: transform .2s; }
@@ -1799,7 +1799,7 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .faq-toc a.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); font-weight: 600; }
 
 /* Section links that stay pinned under the header while the page scrolls (Kilise Bul,
-   Meseller, Mucizeler). One line at every width, scrolling sideways when it doesn't fit, so
+   Meseller, Mucizeler, Sorular). One line at every width, scrolling sideways when it doesn't fit, so
    the pinned row never covers more than a sliver of the page; script.js fades whichever end
    has more links and, for a mouse, adds a small arrow there. Once pinned (.is-stuck) the
    row gets a glass band as wide as the screen, like a second header row. */
@@ -1839,6 +1839,9 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
   .faq-toc.is-sticky.fade-l .toc-arrow.prev, .faq-toc.is-sticky.fade-r .toc-arrow.next { display: grid; }
 }
 html:has(.faq-toc.is-sticky) { scroll-padding-top: calc(var(--header-h) + var(--toc-h, 3.5rem) + 1rem); }
+/* The pinned row already sets the offset above; the sections' own margins would double it */
+html:has(.faq-toc.is-sticky) .faq-cat { scroll-margin-top: 0; }
+html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5rem; }
 
 /* City cards: same language as the Mucizeler list (icon + bold name, a chevron pinned to the
    far right), collapsed to a one-line preview — city icon, name, and a grey run-in list of the
@@ -1931,7 +1934,7 @@ html:has(.faq-toc.is-sticky) { scroll-padding-top: calc(var(--header-h) + var(--
    the card's layout around; on narrow screens it just expands in place. */
 .church-hours-item { margin-top: .2rem; }
 .church-hours-item summary {
-  display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; list-style: none;
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 24px; cursor: pointer; list-style: none;
   font-family: var(--sans); font-size: .85rem; font-weight: 600; color: var(--gold);
 }
 .church-hours-item summary svg { width: 1rem; height: 1rem; }

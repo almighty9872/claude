@@ -107,6 +107,8 @@ $EnAltMap = @{}
 # English pages use their own English slugs (not a literal mirror of the Turkish filename), so
 # each pair is listed explicitly: Turkish filename -> the English file's name under en/.
 function Add-EnAlt([string]$trFile, [string]$enFile) { $EnAltMap[$trFile] = "en/$enFile"; $EnAltMap["en/$enFile"] = $trFile }
+# The public path of a page: the two homepages are served (and canonical) at / and /en/
+function Page-Path([string]$file) { if ($file -eq 'index.html') { '' } elseif ($file -eq 'en/index.html') { 'en/' } else { $file } }
 Add-EnAlt 'index.html' 'index.html'
 Add-EnAlt 'katesizm.html' 'compendium.html'
 Add-EnAlt 'giris.html' 'introduction.html'
@@ -178,13 +180,13 @@ $Mass = Read-Data 'kutsal-ayin.js'
 $PartMeta = @{
   1 = @{ file = 'iman-ikrari.html';     fileEn = 'profession-of-faith.html';               ord = 'Birinci Kısım';  roman = 'I';
          desc = "Katolik Kilisesi Katekizmi Özeti, Birinci Kısım: İnanç Beyanı. Vahiy, Kutsal Üçlü, Mesih İsa, Kilise ve ebedi hayat üzerine 1–217. sorular."
-         ordEn = 'Part One'; descEn = 'Compendium of the Catechism of the Catholic Church, Part One: The Profession of Faith. Questions 1-217 on Revelation, the Trinity, Christ, the Church and eternal life.' }
+         ordEn = 'Part One'; descEn = 'Compendium of the Catechism, Part One: The Profession of Faith. Questions 1-217 on Revelation, the Trinity, Christ, the Church and eternal life.' }
   2 = @{ file = 'kutsal-sirlar.html';   fileEn = 'celebration-of-christian-mystery.html';  ord = 'İkinci Kısım';   roman = 'II';
          desc = "Katolik Kilisesi Katekizmi Özeti, İkinci Kısım: Hristiyan Gizeminin Kutlanması. Litürji ve yedi Kutsal Sır üzerine 218–356. sorular."
-         ordEn = 'Part Two'; descEn = 'Compendium of the Catechism of the Catholic Church, Part Two: The Celebration of the Christian Mystery. Questions 218-356 on the liturgy and the seven sacraments.' }
+         ordEn = 'Part Two'; descEn = 'Compendium of the Catechism, Part Two: The Celebration of the Christian Mystery. Questions 218-356 on the liturgy and the seven sacraments.' }
   3 = @{ file = 'mesihte-yasam.html';   fileEn = 'life-in-christ.html';                    ord = 'Üçüncü Kısım';   roman = 'III';
          desc = "Katolik Kilisesi Katekizmi Özeti, Üçüncü Kısım: Mesih$($Apos)te Yaşam. İnsan onuru, vicdan, erdemler, günah, lütuf ve On Emir üzerine 357–533. sorular."
-         ordEn = 'Part Three'; descEn = 'Compendium of the Catechism of the Catholic Church, Part Three: Life in Christ. Questions 357-533 on human dignity, conscience, virtue, sin, grace and the Ten Commandments.' }
+         ordEn = 'Part Three'; descEn = 'Compendium of the Catechism, Part Three: Life in Christ. Questions 357-533 on human dignity, conscience, virtue, sin, grace and the Ten Commandments.' }
   4 = @{ file = 'hristiyan-duasi.html'; fileEn = 'christian-prayer.html';                  ord = 'Dördüncü Kısım'; roman = 'IV';
          desc = "Katolik Kilisesi Katekizmi Özeti, Dördüncü Kısım: Hristiyan Duası. Dua ve Rab$($Apos)bin Duası (Göklerdeki Pederimiz) üzerine 534–598. sorular."
          ordEn = 'Part Four'; descEn = "Compendium of the Catechism of the Catholic Church, Part Four: Christian Prayer. Questions 534-598 on prayer and the Lord's Prayer (Our Father)." }
@@ -1007,6 +1009,10 @@ function Write-Page {
         [string]$Robots = 'index,follow,max-snippet:-1,max-image-preview:large', [bool]$Canonical = $true, [bool]$RootRelative = $false,
         [string]$Lang = 'tr')
   $url = "$SiteUrl/$Path"
+  # Search results show roughly 60 characters of a title; a long page name keeps its words
+  # and drops the site-name suffix instead (og:site_name still carries it).
+  $suffix = " | $SiteName"
+  if ($Title.Length -gt 62 -and $Title.EndsWith($suffix)) { $Title = $Title.Substring(0, $Title.Length - $suffix.Length) }
   $ld = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
   $canon = if ($Canonical) { "<link rel=`"canonical`" href=`"$url`">" } else { '' }
   # Preload the latin-ext subset, not the base latin one: nearly every word of
@@ -1021,7 +1027,7 @@ function Write-Page {
   $altFile = $EnAltMap[$File]
   $hreflangTags = ''
   if ($altFile) {
-    $altUrl = "$SiteUrl/$altFile"
+    $altUrl = "$SiteUrl/$(Page-Path $altFile)"
     if ($Lang -eq 'en') {
       $hreflangTags = "<link rel=`"alternate`" hreflang=`"tr`" href=`"$altUrl`">`n<link rel=`"alternate`" hreflang=`"en`" href=`"$url`">`n<link rel=`"alternate`" hreflang=`"x-default`" href=`"$altUrl`">"
     } else {
@@ -1332,7 +1338,7 @@ $bookLdEn = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $S
   '"datePublished":"2005-06-28","publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"},' +
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.en) + ',"url":' + (JStr "$SiteUrl/en/$($PartMeta[[int]$_.part].fileEn)") + '}' }) -join ',') + ']}'
 Write-Page -File 'en/compendium.html' -Title "$SiteNameEn | $SiteName" `
-  -Description 'The Compendium of the Catechism of the Catholic Church: 598 questions and answers on faith, the sacraments, Christian morality and prayer, with a Turkish translation available for every question.' `
+  -Description 'The Compendium of the Catechism of the Catholic Church: 598 questions and answers on faith, sacraments, morality and prayer, each with a Turkish translation.' `
   -Path 'en/compendium.html' -Body $katesizmBodyEn -JsonLd @($bookLdEn, (Breadcrumb-Ld 'Compendium' 'en/compendium.html' '' '' 'en')) -Lang 'en'
 
 # ---------------- index.html: the site hub
@@ -1585,7 +1591,7 @@ $webSiteLdEn = '{"@context":"https://schema.org","@type":"WebSite","name":' + (J
   ',"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
   (JStr "$SiteUrl/en/compendium.html?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
 Write-Page -File 'en/index.html' -Title "$SiteName | $SiteTagEn" `
-  -Description "Catholic World: the Compendium of the Catechism of the Catholic Church, becoming Catholic, the Mass, the saints, and answers to frequently asked questions about the Catholic faith." `
+  -Description "Catholic World: the Compendium of the Catechism, becoming Catholic, the Mass, the saints, and answers to common questions about the Catholic faith." `
   -Path 'en/' -Body $homeBodyEn -JsonLd @($webSiteLdEn) -Lang 'en'
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
@@ -1619,7 +1625,7 @@ function Parallel-Paragraphs-En($enList, $trList) {
   }
   return $sb.ToString()
 }
-function Article-Page-En([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$bodyHtml, [string]$desc, [string]$ld) {
+function Article-Page-En([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$bodyHtml, [string]$desc, [string]$ld, [string]$title = '') {
   $body = @"
 <div class="wrap">
   $(Crumbs-En $crumb 'Compendium' 'en/compendium.html')
@@ -1630,7 +1636,8 @@ function Article-Page-En([string]$file, [string]$crumb, [string]$label, [string]
   </article>
 </div>
 "@
-  Write-Page -File "en/$file" -Title "$h1 | $SiteName" -Description $desc -Path "en/$file" -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb "en/$file" 'Compendium' 'en/compendium.html' 'en')) -OgType 'article' -Lang 'en'
+  $t = if ($title) { $title } else { $h1 }
+  Write-Page -File "en/$file" -Title "$t | $SiteName" -Description $desc -Path "en/$file" -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb "en/$file" 'Compendium' 'en/compendium.html' 'en')) -OgType 'article' -Lang 'en'
 }
 $mp = $X.motuProprio
 $mpBody = "<p class=`"address`">$($mp.tr.address)</p><div class=`"en-block en-par`" lang=`"en`" hidden><p class=`"address`">$($mp.en.address)</p></div>" +
@@ -1647,7 +1654,8 @@ $mpBodyEn = "<p class=`"address`">$($mp.en.address)</p><div class=`"en-block en-
   "<div class=`"signature`">$((($mp.en.closing | ForEach-Object { "<p>$_</p>" }) -join ''))<div class=`"en-block en-par`" lang=`"tr`" hidden>$((($mp.tr.closing | ForEach-Object { "<p>$(Inline $_)</p>" }) -join ''))</div></div>"
 $mpLdEn = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr "Motu Proprio: $($mp.en.title)") + ',"inLanguage":"en","datePublished":"2005-06-28","author":{"@type":"Person","name":"Pope Benedict XVI"},"publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"},"mainEntityOfPage":' + (JStr "$SiteUrl/en/motu-proprio.html") + '}'
 Article-Page-En 'motu-proprio.html' 'Motu Proprio' 'Motu Proprio' 'Motu Proprio: for the Approval and Publication of the Compendium of the Catechism of the Catholic Church' $mpBodyEn `
-  (Meta-Trim "Pope Benedict XVI's Motu Proprio of 28 June 2005: the approval and publication of the Compendium of the Catechism of the Catholic Church.") $mpLdEn
+  (Meta-Trim "Pope Benedict XVI's Motu Proprio of 28 June 2005: the approval and publication of the Compendium of the Catechism of the Catholic Church.") $mpLdEn `
+  -title 'Motu Proprio: Approving the Compendium'
 
 $in = $X.introduction
 $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
@@ -1714,7 +1722,7 @@ $formulasEn
 </div>
 "@
 Write-Page -File 'en/appendix.html' -Title "Appendix: Common Prayers and Formulas of Catholic Doctrine | $SiteName" `
-  -Description 'Appendix to the Compendium of the Catechism of the Catholic Church: common prayers and formulas of Catholic doctrine, in English, with the Turkish translation and Latin available on demand.' `
+  -Description 'Appendix to the Compendium of the Catechism: common Catholic prayers and formulas of doctrine in English, with Turkish and Latin texts on demand.' `
   -Path 'en/appendix.html' -Body $eklerBodyEn -JsonLd @((Breadcrumb-Ld 'Appendix' 'en/appendix.html' 'Compendium' 'en/compendium.html' 'en')) -Lang 'en'
 
 # ================================================================== SSS (sss.html): questions from non-Catholics and newcomers
@@ -1747,7 +1755,7 @@ $sssBody = @"
   $(Crumbs 'Sıkça Sorulan Sorular')
   <header class="page-head center">$(Page-Ico $IcoQuestion)<h1>$(Inline $FaqData.title)</h1><p class="sub" lang="en">$($FaqData.en)</p></header>
   <p class="faq-intro">$(Inline $FaqData.intro)</p>
-  <nav class="faq-toc" aria-label="Kategoriler"><ul>$faqToc</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Kategoriler"><ul>$faqToc</ul></nav>
 $faqCats
 </div>
 "@
@@ -1782,12 +1790,12 @@ $sssBodyEn = @"
   $(Crumbs-En 'FAQ')
   <header class="page-head center">$(Page-Ico $IcoQuestion)<h1>$($FaqData.en)</h1></header>
   <p class="faq-intro">$(Inline $FaqData.introEn)</p>
-  <nav class="faq-toc" aria-label="Categories"><ul>$faqTocEn</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Categories"><ul>$faqTocEn</ul></nav>
 $faqCatsEn
 </div>
 "@
 Write-Page -File 'en/faq.html' -Title "$($FaqData.en) | $SiteName" `
-  -Description 'Frequently asked questions about the Catholic faith, with answers grounded in the Catechism: honoring Mary and the saints, the Trinity, confession, the papacy, purgatory, evolution, and more.' `
+  -Description 'Common questions about the Catholic faith, answered from the Catechism: Mary and the saints, the Trinity, confession, the papacy, purgatory and more.' `
   -Path 'en/faq.html' -Body $sssBodyEn -JsonLd @($faqLdEn, (Breadcrumb-Ld 'FAQ' 'en/faq.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== KUTSAL KITAP (kutsal-kitap.html)
@@ -1891,7 +1899,7 @@ $sureciFaqEn
 </div>
 "@
 Write-Page -File 'en/becoming-catholic.html' -Title "Becoming Catholic | $SiteName" `
-  -Description 'For those who wish to become Catholic: what the OCIA/RCIA process is, how it works step by step for baptized and unbaptized candidates, and what preparation is required.' `
+  -Description 'How to become Catholic: what the OCIA/RCIA process is, how it works step by step for baptized and unbaptized candidates, and how to prepare.' `
   -Path 'en/becoming-catholic.html' -Body $sureciBodyEn -JsonLd @((Breadcrumb-Ld 'Becoming Catholic' 'en/becoming-catholic.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== GUNAH CIKARMA (gunah-cikarma.html)
@@ -2152,7 +2160,7 @@ $anatoliaSectionsEn
 </div>
 "@
 Write-Page -File 'en/anatolia.html' -Title "$($Anatolia.en) | $SiteName" `
-  -Description "Christianity's roots in Anatolia: Paul's hometown of Tarsus, the seven churches of Revelation, the Council of Nicaea, and the early Church Fathers of Antioch and Smyrna." `
+  -Description "Christianity's roots in Anatolia: Paul's Tarsus, the seven churches of Revelation, the Council of Nicaea, and the Church Fathers of Antioch and Smyrna." `
   -Path 'en/anatolia.html' -Body $anatoliaBodyEn -JsonLd @((Breadcrumb-Ld 'Christianity in Anatolia' 'en/anatolia.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html)
@@ -2206,7 +2214,7 @@ $whyPartsEn
 </div>
 "@
 Write-Page -File 'en/why-were-catholic.html' -Title "$($WhyCatholic.en) | $SiteName" `
-  -Description "A five-step summary of the Catholic faith that speaks to both reason and the heart: truth and God, Jesus and the Bible, the Church and sacraments, saints, morality and destiny." `
+  -Description "The Catholic faith in five steps, for reason and heart: truth and God, Jesus and the Bible, the Church and sacraments, saints, morality and destiny." `
   -Path 'en/why-were-catholic.html' -Body $whyCatholicBodyEn -JsonLd @((Breadcrumb-Ld "Why We're Catholic" 'en/why-were-catholic.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== AZIZLER (azizler.html)
@@ -2460,7 +2468,7 @@ $massPartsHtmlEn
 </div>
 "@
 Write-Page -File 'en/mass.html' -Title "$($Mass.en) | $SiteName" `
-  -Description "The order of the Mass: from the Introductory Rites to the Concluding Rites, the Liturgy of the Word to the consecration of the Eucharist, in six parts, English and Turkish." `
+  -Description "The order of the Mass step by step, from the Introductory Rites through the Liturgy of the Word and the Eucharist to the Concluding Rites, in six parts." `
   -Path 'en/mass.html' -Body $massBodyEn -JsonLd @((Breadcrumb-Ld $Mass.en 'en/mass.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== ISA'NIN MESELLERI (meseller.html)
@@ -2833,7 +2841,7 @@ $miraCatsEn
 </div>
 "@
 Write-Page -File 'en/miracles.html' -Title "Miracles | $SiteName" `
-  -Description "Well-known miracles in the Catholic Church: Marian apparitions (Fatima, Lourdes, Guadalupe, Zeitoun), the Shroud of Turin, Eucharistic miracles, and incorruptible saints." `
+  -Description "Well-known Catholic miracles: Marian apparitions (Fatima, Lourdes, Guadalupe, Zeitoun), the Shroud of Turin, Eucharistic miracles and incorrupt saints." `
   -Path 'en/miracles.html' -Body $mucizelerBodyEn -JsonLd @((Breadcrumb-Ld 'Miracles' 'en/miracles.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== KILISELER (kiliseler.html): parish locator
@@ -3103,8 +3111,19 @@ $pages = @(
   @{ p = 'en/mass.html'; pr = '0.9' }, @{ p = 'en/parables.html'; pr = '0.9' }
 ) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) `
   + ($GreatSaints.saints | ForEach-Object { @{ p = $EnAltMap["$($_.id).html"]; pr = '0.6' } })
-$sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
-  (($pages | ForEach-Object { "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>" }) -join "`n") +
+# Each TR/EN pair also lists both language versions (the same pairs as the pages' hreflang tags),
+# so search engines tie the two together even before crawling either page's <head>.
+function Sitemap-Key([string]$p) { if ($p -eq '') { 'index.html' } elseif ($p -eq 'en/') { 'en/index.html' } else { $p } }
+$sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' + "`n" +
+  (($pages | ForEach-Object {
+    $k = Sitemap-Key $_.p; $alt = $EnAltMap[$k]; $links = ''
+    if ($alt) {
+      $trP = if ($k.StartsWith('en/')) { Page-Path $alt } else { $_.p }
+      $enP = if ($k.StartsWith('en/')) { $_.p } else { Page-Path $alt }
+      $links = "<xhtml:link rel=`"alternate`" hreflang=`"tr`" href=`"$SiteUrl/$trP`"/><xhtml:link rel=`"alternate`" hreflang=`"en`" href=`"$SiteUrl/$enP`"/><xhtml:link rel=`"alternate`" hreflang=`"x-default`" href=`"$SiteUrl/$trP`"/>"
+    }
+    "  <url><loc>$SiteUrl/$($_.p)</loc>$links<lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>"
+  }) -join "`n") +
   "`n</urlset>`n"
 [IO.File]::WriteAllText((Join-Path $Root 'sitemap.xml'), $sm, $Utf8)
 # Dedicated AI-training crawlers (not the same user agent as that company's regular search

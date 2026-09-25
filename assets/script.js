@@ -1448,10 +1448,10 @@
   }
 
   /* ---------------------------------------------------------------
-     Pinned section links (Kilise Bul, Meseller, Mucizeler): the row
+     Pinned section links (Kilise Bul, Meseller, Mucizeler, Sorular): the row
      gets .is-stuck once it reaches the header (for its glass band)
      and publishes its height as --toc-h so in-page jumps land below
-     it. On Meseller and Mucizeler it also highlights the section
+     it. On the long lists it also highlights the section
      being read; Kilise Bul marks its one open city itself. When the
      row is too long for one line it scrolls sideways, keeping the
      highlighted link in view.
