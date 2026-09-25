@@ -1050,7 +1050,7 @@ $hreflangTags
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
+<script>document.documentElement.classList.add('js');document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
@@ -2426,52 +2426,117 @@ Write-Page -File 'en/parables.html' -Title "$($Parables.en) | $SiteName" `
   -Path 'en/parables.html' -Body $meselBodyEn -JsonLd @((Breadcrumb-Ld $Parables.en 'en/parables.html' '' '' 'en')) -Lang 'en'
 
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
-# A static, numbered diagram of the bead ring (no hover/click state at all, so it works the
-# same way on every device) plus the prayers as collapsible cards, grouped into the order
-# they are actually said: opening, the five decades (each ending in the Fatima Prayer), close.
-$cx = 180.0; $cy = 372.0; $rr = 138.0
-function DiagBead([double]$x, [double]$y, [string]$kind) {
-  $cls = if ($kind -eq 'lg') { 'bead lg' } else { 'bead sm' }
-  $rad = if ($kind -eq 'lg') { '8.5' } else { '5.6' }
-  return "<circle class=`"$cls`" cx=`"$x`" cy=`"$y`" r=`"$rad`"></circle>"
+# An interactive tracker (a full 59-bead rosary as inline SVG, walked prayer by prayer by
+# initRosaryTracker() in assets/script.js) followed by the prayers as collapsible cards,
+# grouped into the order they are said: opening, each decade (said five times), close.
+#
+# Bead ids are what the script keys on: #crucifix, #intro-bead-1..5 (pendant, from the
+# crucifix up), #centerpiece, #decade-N-bead-1..10, and #decade-N-our-father for decades
+# 2-5 (decade 1's Our Father is #intro-bead-5, the pendant bead next to the centerpiece).
+function Rosary-Svg([string]$label) {
+  $cx = 180.0; $cy = 200.0; $a = 150.0; $b = 178.0
+  $rS = 6.5; $rL = 10.0
+  $fmt = { param($v) ([Math]::Round($v, 1)).ToString([Globalization.CultureInfo]::InvariantCulture) }
+  # Loop items in prayer order: from the centerpiece at the bottom, counter-clockwise on screen.
+  $items = @(@{ id = 'centerpiece'; kind = 'medal'; s = 26.0 })
+  for ($d = 1; $d -le 5; $d++) {
+    if ($d -gt 1) { $items += @{ id = "decade-$d-our-father"; kind = 'lg'; s = 2 * $rL } }
+    for ($k = 1; $k -le 10; $k++) { $items += @{ id = "decade-$d-bead-$k"; kind = 'sm'; s = 2 * $rS } }
+  }
+  # Beads are spaced by arc length (an ellipse's angle parameter would bunch them at the ends).
+  $N = 3600; $arc = [double[]]::new($N + 1); $ptX = [double[]]::new($N + 1); $ptY = [double[]]::new($N + 1)
+  for ($j = 0; $j -le $N; $j++) {
+    $t = (90.0 - 360.0 * $j / $N) * [Math]::PI / 180.0
+    $ptX[$j] = $cx + $a * [Math]::Cos($t); $ptY[$j] = $cy + $b * [Math]::Sin($t)
+    if ($j -gt 0) { $arc[$j] = $arc[$j - 1] + [Math]::Sqrt([Math]::Pow($ptX[$j] - $ptX[$j - 1], 2) + [Math]::Pow($ptY[$j] - $ptY[$j - 1], 2)) }
+  }
+  $sumS = 0.0; foreach ($it in $items) { $sumS += $it.s }
+  $gap = ($arc[$N] - $sumS) / $items.Count
+  $pos = 0.0; $j = 0; $order = @{}; $seq = 0
+  # Prayer order for the staggered "complete" shimmer (--i): pendant first, then the loop.
+  foreach ($id in @('crucifix', 'intro-bead-1', 'intro-bead-2', 'intro-bead-3', 'intro-bead-4', 'intro-bead-5')) { $order[$id] = $seq; $seq++ }
+  for ($i = 1; $i -lt $items.Count; $i++) { $order[$items[$i].id] = $seq; $seq++ }
+  $order['centerpiece'] = $seq
+  $loop = New-Object Text.StringBuilder
+  for ($i = 0; $i -lt $items.Count; $i++) {
+    if ($i -gt 0) { $pos += $items[$i - 1].s / 2 + $gap + $items[$i].s / 2 }
+    while ($j -lt $N -and $arc[$j + 1] -lt $pos) { $j++ }
+    $f = if ($arc[$j + 1] -gt $arc[$j]) { ($pos - $arc[$j]) / ($arc[$j + 1] - $arc[$j]) } else { 0 }
+    $bx = & $fmt ($ptX[$j] + ($ptX[$j + 1] - $ptX[$j]) * $f); $by = & $fmt ($ptY[$j] + ($ptY[$j + 1] - $ptY[$j]) * $f)
+    $it = $items[$i]
+    if ($it.kind -eq 'medal') { continue }
+    $r = if ($it.kind -eq 'lg') { $rL } else { $rS }
+    [void]$loop.Append("<circle id=`"$($it.id)`" class=`"bead $($it.kind) unprayed`" cx=`"$bx`" cy=`"$by`" r=`"$r`" style=`"--i:$($order[$it.id])`"></circle>")
+  }
+  $my = $cy + $b
+  $pend = @(
+    @{ id = 'intro-bead-5'; kind = 'lg'; y = 413.0 }, @{ id = 'intro-bead-4'; kind = 'sm'; y = 439.5 },
+    @{ id = 'intro-bead-3'; kind = 'sm'; y = 462.5 }, @{ id = 'intro-bead-2'; kind = 'sm'; y = 485.5 },
+    @{ id = 'intro-bead-1'; kind = 'lg'; y = 512.0 }
+  ) | ForEach-Object {
+    $r = if ($_.kind -eq 'lg') { $rL } else { $rS }
+    "<circle id=`"$($_.id)`" class=`"bead $($_.kind) unprayed`" cx=`"180`" cy=`"$($_.y)`" r=`"$r`" style=`"--i:$($order[$_.id])`"></circle>"
+  }
+  return "<svg class=`"rt-svg`" viewBox=`"0 0 360 624`" role=`"img`" aria-label=`"$label`" focusable=`"false`">" +
+    "<ellipse class=`"chain`" cx=`"$cx`" cy=`"$cy`" rx=`"$a`" ry=`"$b`"></ellipse>" +
+    "<path class=`"chain`" d=`"M180 $my V 540`"></path>" +
+    "<g id=`"rt-loop`">$($loop.ToString())</g>" +
+    "<g id=`"rt-pendant`">$($pend -join '')" +
+    "<g id=`"centerpiece`" class=`"bead medal unprayed`" data-cx=`"180`" data-cy=`"$my`" data-r=`"15`" style=`"--i:$($order['centerpiece'])`">" +
+      "<ellipse cx=`"180`" cy=`"$my`" rx=`"12`" ry=`"15`"></ellipse><path class=`"medal-mark`" d=`"M173.5 384 V372.5 L180 379.5 L186.5 372.5 V384`"></path></g>" +
+    "<g id=`"crucifix`" class=`"bead cross active`" data-cx=`"180`" data-cy=`"568`" data-r=`"36`" style=`"--i:0`">" +
+      "<rect x=`"173`" y=`"532`" width=`"14`" height=`"80`" rx=`"3`"></rect><rect x=`"154`" y=`"549`" width=`"52`" height=`"14`" rx=`"3`"></rect></g>" +
+    "</g></svg>"
 }
-function Callout([double]$x, [double]$y, [int]$n) {
-  return "<g class=`"callout`"><circle cx=`"$x`" cy=`"$y`" r=`"9.5`"></circle><text x=`"$x`" y=`"$y`" dy=`".34em`" text-anchor=`"middle`">$n</text></g>"
+
+# The tracker block. The sheet is server-rendered on its first step (the Sign of the Cross)
+# so it never paints empty; the script takes over once data/tespih.js has loaded.
+function Rosary-Tracker([string]$lang) {
+  $en = $lang -eq 'en'
+  $first = $PrayerById['hac-isareti']
+  $opts = ($Rosary.sets | ForEach-Object {
+    $name = if ($en) { $_.en } else { $_.tr }
+    "<option value=`"$($_.id)`" data-days=`"$($_.days -join ',')`">$name</option>"
+  }) -join ''
+  $t = if ($en) {
+    @{ h = 'Pray the Rosary, Bead by Bead'; lead = 'Tap the glowing bead or press Next; the prayer for each bead appears in the prayer panel. Today''s mysteries are chosen for you.'
+       sel = 'Mysteries'; restart = 'Start over'; panel = 'Prayer panel'; grip = 'Hide prayer text'; prev = 'Previous'; next = 'Next'
+       svg = 'A five-decade rosary: tap a bead to move to it'; ctx = 'Opening'; title = $first.en.title; text = $first.en.text }
+  } else {
+    @{ h = 'Adım Adım Tesbih'; lead = "Parlayan taneye dokunun ya da Sonraki düğmesine basın; her tanenin duası dua panelinde görünür. Günün gizemleri kendiliğinden seçilir."
+       sel = 'Gizemler'; restart = 'Baştan başla'; panel = 'Dua paneli'; grip = 'Dua metnini gizle'; prev = 'Önceki'; next = 'Sonraki'
+       svg = 'Beş onluklu tesbih: bir taneye geçmek için dokunun'; ctx = 'Giriş'; title = $first.tr.title; text = $first.tr.text }
+  }
+  return @"
+  <section class="rt" id="tesbih-rehberi" aria-labelledby="rt-h">
+    <h2 class="section-title" id="rt-h">$($t.h)</h2>
+    <p class="rt-lead">$($t.lead)</p>
+    <div class="rt-bar">
+      <label class="rt-select"><span class="label">$($t.sel)</span><select id="rt-set">$opts</select></label>
+      <button type="button" class="rt-restart">$IcoRefresh<span>$($t.restart)</span></button>
+    </div>
+    <div class="rt-body">
+      <div class="rt-stage">
+        $(Rosary-Svg $t.svg)
+        <div class="rt-center" aria-hidden="true"><p class="rt-c-set"></p><p class="rt-c-count"></p><p class="rt-c-myst">$($t.ctx)</p></div>
+      </div>
+      <div class="rt-sheet glass" role="region" aria-label="$($t.panel)">
+        <button type="button" class="rt-grip" aria-expanded="true" aria-controls="rt-text" aria-label="$($t.grip)"><span></span></button>
+        <div class="rt-progress" aria-hidden="true"><span></span></div>
+        <p class="rt-context label">$($t.ctx)</p>
+        <p class="rt-mystery" hidden><span class="rt-m-label"></span><span class="rt-m-title"></span></p>
+        <h3 class="rt-title">$(Inline $t.title)</h3>
+        <div class="rt-text" id="rt-text">$((Verse $t.text) -replace '<br>', ' <br>')</div>
+        <div class="rt-nav">
+          <button type="button" class="rt-prev" disabled>$IcoPrev<span>$($t.prev)</span></button>
+          <button type="button" class="rt-next"><span>$($t.next)</span>$IcoNext</button>
+        </div>
+        <p class="visually-hidden rt-live" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+"@
 }
-$pend = (DiagBead 180 100 'lg') + ((175, 152, 129 | ForEach-Object { DiagBead 180 $_ 'sm' }) -join '') + (DiagBead 180 200 'lg')
-$ring = ""
-for ($i = 0; $i -lt 55; $i++) {
-  $ang = (-90.0 + (($i + 1) * 360.0 / 56.0)) * [Math]::PI / 180.0
-  $x = [Math]::Round($cx + $rr * [Math]::Cos($ang), 1)
-  $y = [Math]::Round($cy + $rr * [Math]::Sin($ang), 1)
-  $isBig = ($i % 11) -eq 0
-  $ring += DiagBead $x $y ($(if ($isBig) { 'lg' } else { 'sm' }))
-}
-# Callout 5 sits on the ring's second large bead (i=11), well clear of the medal at the top.
-$decadeAng = (-90.0 + (12 * 360.0 / 56.0)) * [Math]::PI / 180.0
-$decadeX = [Math]::Round($cx + $rr * [Math]::Cos($decadeAng), 1)
-$decadeY = [Math]::Round($cy + $rr * [Math]::Sin($decadeAng), 1)
-$diagSvg = '<svg class="rosary" viewBox="0 0 360 560" role="img" aria-label="Tesbihin duaları, numaralandırılmış şema">' +
-  '<circle class="ring-guide" cx="180" cy="372" r="138"></circle>' +
-  '<path class="ring-guide" d="M180 100 V 234"></path>' +
-  '<rect class="bead cross" x="172" y="28" width="16" height="62" rx="3"></rect>' +
-  '<rect class="bead cross" x="152" y="46" width="56" height="16" rx="3"></rect>' +
-  $pend +
-  '<circle class="bead medal" cx="180" cy="234" r="10"></circle>' +
-  $ring +
-  (Callout 180 59 1) + (Callout 180 100 2) + (Callout 180 152 3) + (Callout 180 200 4) + (Callout $decadeX $decadeY 5) + (Callout 180 234 6) +
-  '</svg>'
-$rosaryLegendText = @(
-  "Haç: Haç İşareti, ardından İman Açıklaması."
-  "İlk büyük tane: Göklerdeki Pederimiz."
-  "Üç küçük tane: Selam Sana Meryem (üç kez)."
-  "Sıradaki büyük tane: Peder$($Apos)e Şan."
-  "Halka üzerindeki her onluk (beş kez): büyük tane – Göklerdeki Pederimiz; on küçük tane – Selam Sana Meryem (on kez); ardından Peder$($Apos)e Şan ve Fatima Duası."
-  "Madalyonda: Selam Sana Kraliçe, Tesbihi Bitiren Dua ve Haç İşareti ile bitirin."
-)
-$rosaryLegendHtml = ((1..$rosaryLegendText.Count) | ForEach-Object {
-  "<li><span class=`"ln`">$_</span>$($rosaryLegendText[$_ - 1])</li>"
-}) -join ''
 
 $mysterySets = ($Rosary.sets | ForEach-Object {
   $items = ($_.items | ForEach-Object { "<li><span class=`"m-tr`">$(Inline $_.tr)</span><span class=`"m-en`" lang=`"en`">$($_.en)</span></li>" }) -join ''
@@ -2497,27 +2562,17 @@ function Pray-Card($p, [string]$idSuffix, [string]$count) {
   return "<details class=`"pray-card`" id=`"$idSuffix`"><summary><span class=`"pray-name`">$(Inline $p.tr.title)</span>$countHtml$IcoChevLg</summary>" +
     "<div class=`"pray-card-body`">$(Pray-Inner $p $idSuffix)</div></details>"
 }
-function Pray-Sub($p, [string]$idSuffix, [string]$count) {
-  $countHtml = if ($count) { "<span class=`"pray-count`">$count</span>" } else { '' }
-  return "<div class=`"pray-sub`"><h4>$(Inline $p.tr.title)$countHtml</h4>$(Pray-Inner $p $idSuffix)</div>"
-}
 $girisCards =
   (Pray-Card $PrayerById['hac-isareti'] 'giris-hac' $null) +
   (Pray-Card $PrayerById['iman-aciklamasi'] 'giris-iman' $null) +
   (Pray-Card $PrayerById['goklerdeki-pederimiz'] 'giris-pederimiz' $null) +
   (Pray-Card $PrayerById['selam-sana-meryem'] 'giris-selam' '× 3') +
   (Pray-Card $PrayerById['pedere-san'] 'giris-san' $null)
-$gizemNames = 'Birinci', 'İkinci', 'Üçüncü', 'Dördüncü', 'Beşinci'
-$gizemCards = (1..5 | ForEach-Object {
-  $n = $_; $ad = $gizemNames[$n - 1]
-  $body =
-    (Pray-Sub $PrayerById['goklerdeki-pederimiz'] "gizem-$n-pederimiz" $null) +
-    (Pray-Sub $PrayerById['selam-sana-meryem'] "gizem-$n-selam" '× 10') +
-    (Pray-Sub $PrayerById['pedere-san'] "gizem-$n-san" $null) +
-    (Pray-Sub $PrayerById['fatima-duasi'] "gizem-$n-fatima" $null)
-  "<details class=`"pray-card`" id=`"gizem-$n`"><summary><span class=`"pray-name`">$ad Gizem</span><span class=`"pray-hint`">Peder$($Apos)imiz · 10 Selam Sana Meryem · Peder$($Apos)e Şan · Fatima Duası</span>$IcoChevLg</summary>" +
-    "<div class=`"pray-card-body`">$body</div></details>"
-}) -join "`n"
+$onlukCards =
+  (Pray-Card $PrayerById['goklerdeki-pederimiz'] 'onluk-pederimiz' $null) +
+  (Pray-Card $PrayerById['selam-sana-meryem'] 'onluk-selam' '× 10') +
+  (Pray-Card $PrayerById['pedere-san'] 'onluk-san' $null) +
+  (Pray-Card $PrayerById['fatima-duasi'] 'onluk-fatima' $null)
 $kapanisCards =
   (Pray-Card $PrayerById['selam-sana-kralice'] 'kapanis-kralice' $null) +
   (Pray-Card $PrayerById['bitiris-duasi'] 'kapanis-bitiris' $null) +
@@ -2528,12 +2583,9 @@ $tespihBody = @"
   $(Crumbs 'Tesbih Duası')
   <header class="page-head center"><p class="label">Dualar</p><h1>$($Rosary.title)</h1><p class="sub" lang="en">$($Rosary.en)</p></header>
   <p class="faq-intro">$(Inline $Rosary.intro)</p>
+$(Rosary-Tracker 'tr')
   <h2 class="section-title" id="nasil">Tesbih nasıl dua edilir?</h2>
   <ol class="steps">$stepList</ol>
-  <div class="rosary-figure">
-    $diagSvg
-    <ol class="rosary-legend">$rosaryLegendHtml</ol>
-  </div>
   <h2 class="section-title" id="gizemler">Gizemler</h2>
   <div class="myst-grid">
 $mysterySets
@@ -2542,10 +2594,8 @@ $mysterySets
   <p class="faq-intro">Tesbih duasında okunan bütün dualar, okundukları sıraya göre aşağıda yer alır. Her birini açmak için üzerine dokunun.</p>
   <h3 class="rosary-sub-title">Giriş</h3>
   <div class="pray-cards">$girisCards</div>
-  <h3 class="rosary-sub-title">Gizemler (her biri için)</h3>
-  <div class="pray-cards">
-$gizemCards
-  </div>
+  <h3 class="rosary-sub-title">Her Onluk (beş gizemin her biri için)</h3>
+  <div class="pray-cards">$onlukCards</div>
   <h3 class="rosary-sub-title">Kapanış Duaları</h3>
   <div class="pray-cards">$kapanisCards</div>
   <p class="conventions">Dua metinleri, İstanbul’daki Sant’Antuan (Aziz Antuan) Bazilikası’nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir.</p>
@@ -2556,18 +2606,6 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
   -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
 
 # ---------------- en/rosary.html: The Holy Rosary, in English
-$diagSvgEn = $diagSvg -replace 'Tesbihin duaları, numaralandırılmış şema', 'Diagram of the Rosary prayers, numbered'
-$rosaryLegendTextEn = @(
-  "Crucifix: the Sign of the Cross, then the Apostles' Creed."
-  "First large bead: the Our Father."
-  "Three small beads: the Hail Mary (three times)."
-  "Next large bead: the Glory Be."
-  "Each decade around the ring (five times): large bead, the Our Father; ten small beads, the Hail Mary (ten times); then the Glory Be and the Fatima Prayer."
-  "At the medal: finish with the Hail Holy Queen, the closing prayer, and the Sign of the Cross."
-)
-$rosaryLegendHtmlEn = ((1..$rosaryLegendTextEn.Count) | ForEach-Object {
-  "<li><span class=`"ln`">$_</span>$($rosaryLegendTextEn[$_ - 1])</li>"
-}) -join ''
 $mysterySetsEn = ($Rosary.sets | ForEach-Object {
   $items = ($_.items | ForEach-Object { "<li>$(Inline $_.en)</li>" }) -join ''
   "<article class=`"myst`" data-days=`"$($_.days -join ',')`" id=`"gizem-$($_.id)`">" +
@@ -2584,27 +2622,17 @@ function Pray-CardEn($p, [string]$idSuffix, [string]$count) {
   return "<details class=`"pray-card`" id=`"$idSuffix`"><summary><span class=`"pray-name`">$(Inline $p.en.title)</span>$countHtml$IcoChevLg</summary>" +
     "<div class=`"pray-card-body`">$(Pray-InnerEn $p $idSuffix)</div></details>"
 }
-function Pray-SubEn($p, [string]$idSuffix, [string]$count) {
-  $countHtml = if ($count) { "<span class=`"pray-count`">$count</span>" } else { '' }
-  return "<div class=`"pray-sub`"><h4>$(Inline $p.en.title)$countHtml</h4>$(Pray-InnerEn $p $idSuffix)</div>"
-}
 $girisCardsEn =
   (Pray-CardEn $PrayerById['hac-isareti'] 'giris-hac-en' $null) +
   (Pray-CardEn $PrayerById['iman-aciklamasi'] 'giris-iman-en' $null) +
   (Pray-CardEn $PrayerById['goklerdeki-pederimiz'] 'giris-pederimiz-en' $null) +
   (Pray-CardEn $PrayerById['selam-sana-meryem'] 'giris-selam-en' '× 3') +
   (Pray-CardEn $PrayerById['pedere-san'] 'giris-san-en' $null)
-$gizemNamesEn = 'First', 'Second', 'Third', 'Fourth', 'Fifth'
-$gizemCardsEn = (1..5 | ForEach-Object {
-  $n = $_; $ad = $gizemNamesEn[$n - 1]
-  $body =
-    (Pray-SubEn $PrayerById['goklerdeki-pederimiz'] "gizem-$n-pederimiz-en" $null) +
-    (Pray-SubEn $PrayerById['selam-sana-meryem'] "gizem-$n-selam-en" '× 10') +
-    (Pray-SubEn $PrayerById['pedere-san'] "gizem-$n-san-en" $null) +
-    (Pray-SubEn $PrayerById['fatima-duasi'] "gizem-$n-fatima-en" $null)
-  "<details class=`"pray-card`" id=`"gizem-$n-en`"><summary><span class=`"pray-name`">$ad Mystery</span><span class=`"pray-hint`">Our Father · 10 Hail Marys · Glory Be · Fatima Prayer</span>$IcoChevLg</summary>" +
-    "<div class=`"pray-card-body`">$body</div></details>"
-}) -join "`n"
+$onlukCardsEn =
+  (Pray-CardEn $PrayerById['goklerdeki-pederimiz'] 'onluk-pederimiz-en' $null) +
+  (Pray-CardEn $PrayerById['selam-sana-meryem'] 'onluk-selam-en' '× 10') +
+  (Pray-CardEn $PrayerById['pedere-san'] 'onluk-san-en' $null) +
+  (Pray-CardEn $PrayerById['fatima-duasi'] 'onluk-fatima-en' $null)
 $kapanisCardsEn =
   (Pray-CardEn $PrayerById['selam-sana-kralice'] 'kapanis-kralice-en' $null) +
   (Pray-CardEn $PrayerById['bitiris-duasi'] 'kapanis-bitiris-en' $null) +
@@ -2615,12 +2643,9 @@ $tespihBodyEn = @"
   $(Crumbs-En 'The Holy Rosary')
   <header class="page-head center"><p class="label">Prayers</p><h1>$($Rosary.en)</h1></header>
   <p class="faq-intro">$(Inline $Rosary.introEn)</p>
+$(Rosary-Tracker 'en')
   <h2 class="section-title" id="nasil">How to Pray the Rosary</h2>
   <ol class="steps">$stepListEn</ol>
-  <div class="rosary-figure">
-    $diagSvgEn
-    <ol class="rosary-legend">$rosaryLegendHtmlEn</ol>
-  </div>
   <h2 class="section-title" id="gizemler">The Mysteries</h2>
   <div class="myst-grid">
 $mysterySetsEn
@@ -2629,10 +2654,8 @@ $mysterySetsEn
   <p class="faq-intro">Every prayer said in the Rosary appears below, in the order they're prayed. Tap each one to open it.</p>
   <h3 class="rosary-sub-title">Opening</h3>
   <div class="pray-cards">$girisCardsEn</div>
-  <h3 class="rosary-sub-title">Each Mystery</h3>
-  <div class="pray-cards">
-$gizemCardsEn
-  </div>
+  <h3 class="rosary-sub-title">Each Decade (once for each of the five mysteries)</h3>
+  <div class="pray-cards">$onlukCardsEn</div>
   <h3 class="rosary-sub-title">Closing Prayers</h3>
   <div class="pray-cards">$kapanisCardsEn</div>
   <p class="conventions">The prayer texts follow the Turkish devotional tradition used for the Rosary at St. Anthony of Padua Basilica in Istanbul; this English page shows the original English wording of each prayer as given alongside it.</p>

@@ -1198,25 +1198,161 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   .lib-first { padding-top: 2.1rem; }
 }
 
-/* Static bead diagram: a picture with numbered callouts, a legend names each number. */
-.rosary-figure {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 1.2rem 1.4rem; margin: 1.5rem 0 2rem;
+/* ---------- Rosary tracker (tesbih-duasi.html / en/rosary.html) ----------
+   Mobile first: the bead SVG full width, the prayer panel a sticky bottom sheet over it.
+   From 900px the panel moves beside the beads instead. Bead states: .unprayed / .active / .prayed. */
+html:not(.js) .rt { display: none; }
+.rt {
+  --rt-bead: var(--surface-3); --rt-bead-edge: var(--border-strong);
+  --rt-lg: #efe2c4; --rt-done: var(--gold); --rt-done-edge: var(--gold-active);
+  --rt-glow: #e0a526; --rt-glow-soft: rgba(224, 165, 38, .55);
+  margin: 1.5rem 0 1rem;
 }
-.rosary { display: block; width: 100%; max-width: 20rem; height: auto; margin: 0 auto; }
-.ring-guide { fill: none; stroke: var(--border-strong); stroke-width: 1.2; opacity: .55; }
-.bead { fill: var(--surface-3); stroke: var(--border-strong); stroke-width: 1.1; }
-.bead.lg { fill: var(--gold-soft); stroke: var(--gold); }
-.bead.medal, .bead.cross { fill: var(--gold); stroke: var(--gold); }
-.callout circle { fill: var(--gold); stroke: var(--bg); stroke-width: 2; }
-.callout text { fill: var(--bg); font-family: var(--sans); font-size: 12px; font-weight: 700; }
-.rosary-legend { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .55rem; }
-.rosary-legend li { display: flex; align-items: baseline; gap: .6rem; font-size: .92rem; line-height: 1.5; color: var(--text-soft); }
-.rosary-legend .ln {
-  flex: none; display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem;
-  border-radius: 999px; background: var(--gold); color: var(--bg);
-  font-family: var(--sans); font-size: .74rem; font-weight: 700; transform: translateY(.15em);
+:root[data-theme="dark"] .rt {
+  --rt-lg: #3a3424; --rt-done-edge: #f0d49a; --rt-glow: #ffd479; --rt-glow-soft: rgba(255, 212, 121, .5);
 }
+.rt-lead { margin: 0 auto 1rem; max-width: 40rem; text-align: center; color: var(--text-soft); font-size: 1.02rem; line-height: 1.55; }
+.rt-bar { display: flex; align-items: flex-end; justify-content: center; gap: .6rem; margin: 0 0 .9rem; }
+.rt-select { display: grid; gap: .3rem; }
+.rt-select select {
+  min-height: 2.75rem; padding: .5rem 2.2rem .5rem .8rem; max-width: min(24rem, calc(100vw - 5.5rem));
+  font: inherit; font-size: .98rem; color: var(--text); background-color: var(--surface);
+  border: 1px solid var(--border-strong); border-radius: 12px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+  background-position: calc(100% - 1.05rem) 55%, calc(100% - .75rem) 55%; background-size: .3rem .3rem; background-repeat: no-repeat;
+}
+.rt-select select:focus-visible, .rt-restart:focus-visible, .rt-nav button:focus-visible, .rt-grip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.rt-restart {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 2.75rem; padding: .5rem .95rem;
+  font-family: var(--sans); font-size: .85rem; font-weight: 600; color: var(--text-soft);
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; transition: color .18s, border-color .18s;
+}
+.rt-restart svg { width: 1rem; height: 1rem; flex: none; }
+.rt-restart:hover { color: var(--gold); border-color: var(--gold-soft); }
+@media (max-width: 480px) {
+  .rt-restart { width: 2.75rem; padding: 0; justify-content: center; }
+  .rt-restart span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+.rt-body { position: relative; }
+/* Phones: as wide as fits the whole rosary above a short sheet, never narrower than 19rem */
+.rt-stage {
+  position: relative; margin: 0 auto; aspect-ratio: 360 / 624; container-type: inline-size;
+  width: min(100%, 30rem, max(19rem, calc((100vh - var(--header-h) - 13rem) * .577)));
+  width: min(100%, 30rem, max(19rem, calc((100svh - var(--header-h) - 13rem) * .577)));
+}
+.rt-svg { display: block; width: 100%; height: 100%; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+.rt-svg .chain { fill: none; stroke: var(--border-strong); stroke-width: 1.3; opacity: .8; }
+.rt-svg .bead { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: fill .25s, stroke .25s, transform .25s; }
+.rt-svg circle.bead, .rt-svg .bead > * { stroke-width: 1.2; }
+.rt-svg .bead.unprayed { fill: var(--rt-bead); stroke: var(--rt-bead-edge); }
+.rt-svg .bead.lg.unprayed, .rt-svg .bead.medal.unprayed, .rt-svg .bead.cross.unprayed { fill: var(--rt-lg); stroke: var(--gold-soft); }
+.rt-svg .bead.prayed { fill: var(--rt-done); stroke: var(--rt-done-edge); }
+.rt-svg .bead.active { fill: var(--rt-glow); stroke: var(--rt-done-edge); animation: rt-pulse 1.6s ease-in-out infinite; }
+.rt-svg circle.bead.active { transform: scale(1.4); }
+.rt-svg .bead.cross.active, .rt-svg .bead.medal.active { transform: scale(1.08); }
+.rt-svg .medal-mark { fill: none; stroke: var(--surface); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.rt-svg .bead.medal.unprayed .medal-mark { stroke: var(--gold); }
+.rt-svg .bead.announce { animation: rt-pulse 1.6s ease-in-out infinite, rt-announce 1.1s ease-out 1; }
+@keyframes rt-pulse {
+  0%, 100% { filter: drop-shadow(0 0 2px var(--rt-glow-soft)); }
+  50% { filter: drop-shadow(0 0 7px var(--rt-glow)) drop-shadow(0 0 2px var(--rt-glow)); }
+}
+@keyframes rt-announce { 0% { stroke-width: 7; stroke: var(--rt-glow-soft); } 100% { stroke-width: 1.2; } }
+.rt-svg.is-complete .bead { animation: rt-done 1.1s ease-out both; animation-delay: calc(var(--i, 0) * 20ms); }
+@keyframes rt-done {
+  0% { filter: none; }
+  35% { filter: drop-shadow(0 0 6px var(--rt-glow)); }
+  100% { filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rt-svg .bead { transition: none; }
+  .rt-svg .bead.active, .rt-svg .bead.announce { animation: none; filter: drop-shadow(0 0 5px var(--rt-glow)); }
+  .rt-svg.is-complete .bead { animation: none; }
+}
+
+/* Text inside the oval: set, count, mystery. Sized off the stage width (cqi) so it scales with the beads. */
+.rt-center {
+  position: absolute; left: 50%; top: 32.05%; transform: translate(-50%, -50%); width: 62%;
+  display: grid; justify-items: center; gap: .25em; text-align: center; pointer-events: none;
+  font-size: .85rem; font-size: clamp(.72rem, 3.9cqi, 1rem);
+}
+.rt-center p { margin: 0; }
+.rt-c-set { font-family: var(--sans); font-size: .78em; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.rt-c-count { font-size: 3.1em; line-height: 1; font-weight: 600; color: var(--gold); font-variant-numeric: tabular-nums; }
+.rt-c-count:empty { display: none; }
+.rt-c-count small { font-size: .42em; color: var(--muted); font-weight: 500; }
+.rt-c-myst { font-size: 1.06em; line-height: 1.3; color: var(--text-soft); text-wrap: balance; }
+.rt-c-myst strong { display: block; font-family: var(--sans); font-size: .72em; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.rt-center.is-fresh .rt-c-myst { animation: rt-fade .6s ease-out; }
+@keyframes rt-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* The prayer panel: a sticky bottom sheet on phones */
+.rt-sheet {
+  position: sticky; bottom: 0; z-index: 20;
+  margin: .5rem calc(-1 * var(--gutter)) 0; padding: 0 1rem max(.7rem, env(safe-area-inset-bottom));
+  border-radius: 22px 22px 0 0; border-bottom: 0;
+  background: var(--glass-strong);
+}
+.rt-grip {
+  display: grid; place-items: center; width: 100%; height: 1.5rem; padding: 0; margin: 0;
+  background: none; border: 0; border-radius: 10px;
+}
+.rt-grip span { display: block; width: 2.6rem; height: .3rem; border-radius: 99px; background: var(--border-strong); transition: background-color .2s; }
+.rt-grip:hover span { background: var(--gold-soft); }
+.rt-progress { position: absolute; top: 0; left: 1.4rem; right: 1.4rem; height: 3px; border-radius: 0 0 99px 99px; background: var(--border); overflow: hidden; }
+.rt-progress span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--gold); transition: width .35s ease; }
+.rt-context { margin: 0; color: var(--gold); }
+.rt-mystery { margin: .3rem 0 0; padding: .35rem .65rem; border-radius: 10px; background: var(--gold-bg); font-size: .9rem; line-height: 1.3; }
+.rt-mystery .rt-m-label { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-active); }
+.rt-mystery .rt-m-label:empty { display: none; }
+.rt-mystery.is-announce { background: var(--gold); color: var(--surface); animation: rt-fade .5s ease-out; }
+.rt-mystery.is-announce .rt-m-label { color: inherit; opacity: .85; }
+.rt-title { margin: .35rem 0 .25rem; font-size: 1.2rem; line-height: 1.2; font-weight: 600; }
+.rt-text {
+  max-height: 22vh; max-height: 22svh; overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
+  font-size: 1rem; line-height: 1.45; color: var(--text-soft);
+}
+.rt-text p { margin: 0 0 .5rem; }
+.rt-text p:last-child { margin-bottom: 0; }
+.rt-sheet.is-collapsed .rt-text { display: none; }
+.rt-nav { display: grid; grid-template-columns: 1fr 1.6fr; gap: .6rem; margin-top: .6rem; }
+.rt-nav button {
+  display: inline-flex; align-items: center; justify-content: center; gap: .35rem; min-height: 3rem; padding: .5rem 1rem;
+  font-family: var(--sans); font-size: 1rem; font-weight: 600; border-radius: 14px; border: 1px solid var(--border-strong);
+  background: var(--surface); color: var(--text); transition: background-color .18s, color .18s, transform .12s;
+}
+.rt-nav button svg { width: 1.15rem; height: 1.15rem; flex: none; }
+.rt-nav .rt-next { background: var(--gold); border-color: var(--gold); color: var(--surface); }
+.rt-nav .rt-next:hover { background: var(--gold-active); }
+.rt-nav .rt-prev:hover:not(:disabled) { border-color: var(--gold-soft); color: var(--gold); }
+.rt-nav button:active:not(:disabled) { transform: scale(.97); }
+.rt-nav button:disabled { opacity: .45; cursor: default; }
+.rt-sheet.is-done .rt-title { color: var(--gold); }
+@media (max-width: 899.98px) {
+  /* Prayer lines flow as one paragraph on phones, to keep the sheet short */
+  .rt-text br { display: none; }
+  /* The floating accessibility button rides on the docked sheet's top edge (see syncDock()) */
+  html.rt-docked .a11y-toggle { bottom: var(--rt-fab-y, .7rem); }
+  html.rt-docked .a11y-panel { bottom: calc(var(--rt-fab-y, .7rem) + 3.6rem); max-height: calc(100vh - var(--rt-fab-y, 0px) - 9rem); }
+}
+
+@media (min-width: 900px) {
+  .rt-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.75rem; align-items: start; }
+  .rt-stage { max-width: none; width: min(100%, calc((100vh - var(--header-h) - 2.5rem) * .577)); }
+  .rt-sheet {
+    position: sticky; top: calc(var(--header-h) + 1.25rem); bottom: auto;
+    margin: 0; padding: 1.3rem 1.3rem 1.2rem; border-radius: var(--radius); border-bottom: 1px solid var(--glass-brd);
+  }
+  .rt-progress { left: var(--radius); right: var(--radius); }
+  .rt-title { font-size: 1.3rem; margin: .45rem 0 .35rem; }
+  .rt-grip { display: none; }
+  .rt-text { max-height: 42vh; }
+  .rt-sheet.is-collapsed .rt-text { display: block; }
+}
+@media print { .rt { display: none !important; } }
 
 .rosary-sub-title { margin: 2rem 0 .8rem; font-size: 1.15rem; font-weight: 600; }
 .pray-cards { display: grid; gap: .65rem; margin-bottom: 1rem; }
@@ -1242,8 +1378,6 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   background: var(--gold-bg); border-radius: 999px; padding: .1rem .55rem;
 }
 .pray-card-body { padding: 0 1.25rem 1.15rem; border-top: 1px solid var(--border); padding-top: .95rem; }
-.pray-sub + .pray-sub { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed var(--border); }
-.pray-sub h4 { display: flex; align-items: center; gap: .5rem; margin: 0 0 .5rem; font-size: 1rem; font-weight: 600; }
 .p-note { margin: 0 0 .6rem; font-family: var(--sans); font-size: .78rem; color: var(--gold); }
 .p-tr p { margin: 0 0 .55rem; }
 .p-tr p:last-child { margin-bottom: 0; }

@@ -581,9 +581,7 @@
 
   /* ---------------------------------------------------------------
      10. Rosary: highlights today's set of mysteries, in the visitor's
-         own local time zone. The bead diagram is a static image; the
-         prayers are plain <details> cards handled by initReveal()/the
-         browser, no JS.
+         own local time zone. The prayer cards are plain <details>.
      --------------------------------------------------------------- */
   function initRosary() {
     if (!$('.myst')) return;
@@ -592,6 +590,283 @@
     $$('.myst').forEach(function (m) {
       var days = (m.getAttribute('data-days') || '').split(',').map(Number);
       if (days.indexOf(day) !== -1) m.classList.add('is-today');
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     10b. Rosary tracker: walks a five-decade Rosary prayer by prayer
+          over the 59-bead SVG from build.ps1 (Rosary-Svg). One step is
+          one prayer, so a bead can hold several steps: the large bead
+          between two decades carries the Glory Be and Fatima Prayer
+          closing one decade, then the Our Father opening the next.
+     --------------------------------------------------------------- */
+  var RT_TEXT = {
+    tr: {
+      opening: 'Giriş', closing: 'Kapanış', today: 'bugün',
+      decade: function (d) { return d + '. Gizem'; }, endOf: function (d) { return d + '. onluğun sonu'; },
+      ord: ['Birinci Gizem', 'İkinci Gizem', 'Üçüncü Gizem', 'Dördüncü Gizem', 'Beşinci Gizem'],
+      announce: 'Gizemi anın', intentions: ['İman için', 'Umut için', 'Sevgi için'],
+      doneTitle: 'Tesbih tamamlandı', doneText: 'Beş onluğun hepsini tamamladınız. Dualarınız kabul olsun.',
+      next: 'Sonraki', finish: 'Bitir', again: 'Yeniden başla', hide: 'Dua metnini gizle', show: 'Dua metnini göster',
+      loadFail: 'Dualar yüklenemedi. Lütfen sayfayı yenileyin.'
+    },
+    en: {
+      opening: 'Opening', closing: 'Closing', today: 'today',
+      decade: function (d) { return 'Mystery ' + d; }, endOf: function (d) { return 'End of decade ' + d; },
+      ord: ['First Mystery', 'Second Mystery', 'Third Mystery', 'Fourth Mystery', 'Fifth Mystery'],
+      announce: 'Announce the mystery', intentions: ['For faith', 'For hope', 'For charity'],
+      doneTitle: 'Rosary complete', doneText: 'You have prayed all five decades. May your prayers be heard.',
+      next: 'Next', finish: 'Finish', again: 'Pray again', hide: 'Hide prayer text', show: 'Show prayer text',
+      loadFail: 'The prayers could not be loaded. Please reload the page.'
+    }
+  };
+  function rosarySteps() {
+    var s = [];
+    function add(el, p, extra) { var o = { el: el, p: p }; for (var k in extra) o[k] = extra[k]; s.push(o); }
+    add('crucifix', 'hac-isareti', { phase: 'open' });
+    add('crucifix', 'iman-aciklamasi', { phase: 'open' });
+    add('intro-bead-1', 'goklerdeki-pederimiz', { phase: 'open' });
+    for (var i = 1; i <= 3; i++) add('intro-bead-' + (i + 1), 'selam-sana-meryem', { phase: 'open', n: i, of: 3, intent: i - 1 });
+    add('intro-bead-5', 'pedere-san', { phase: 'open' });
+    for (var d = 1; d <= 5; d++) {
+      var ofBead = d === 1 ? 'intro-bead-5' : 'decade-' + d + '-our-father';
+      if (d > 1) {
+        add(ofBead, 'pedere-san', { phase: 'end', decade: d - 1 });
+        add(ofBead, 'fatima-duasi', { phase: 'end', decade: d - 1 });
+      }
+      add(ofBead, 'goklerdeki-pederimiz', { phase: 'decade', decade: d, announce: true });
+      for (var k = 1; k <= 10; k++) add('decade-' + d + '-bead-' + k, 'selam-sana-meryem', { phase: 'decade', decade: d, n: k, of: 10 });
+    }
+    add('centerpiece', 'pedere-san', { phase: 'end', decade: 5 });
+    add('centerpiece', 'fatima-duasi', { phase: 'end', decade: 5 });
+    add('centerpiece', 'selam-sana-kralice', { phase: 'close' });
+    add('centerpiece', 'bitiris-duasi', { phase: 'close' });
+    add('crucifix', 'hac-isareti', { phase: 'close' });
+    return s;
+  }
+  function initRosaryTracker() {
+    var root = $('.rt');
+    if (!root) return;
+    var T = RT_TEXT[LANG];
+    var svg = $('.rt-svg', root), sheet = $('.rt-sheet', root), select = $('#rt-set', root);
+    var ui = {
+      context: $('.rt-context', sheet), myst: $('.rt-mystery', sheet), mLabel: $('.rt-m-label', sheet), mTitle: $('.rt-m-title', sheet),
+      title: $('.rt-title', sheet), text: $('.rt-text', sheet), prev: $('.rt-prev', sheet), next: $('.rt-next', sheet),
+      nextLabel: $('.rt-next span', sheet), bar: $('.rt-progress span', sheet), live: $('.rt-live', sheet), grip: $('.rt-grip', sheet),
+      center: $('.rt-center', root), cSet: $('.rt-c-set', root), cCount: $('.rt-c-count', root), cMyst: $('.rt-c-myst', root)
+    };
+    var steps = rosarySteps(), idx = 0, done = false, prayers = {}, sets = {}, firstSet = null, lastCenter = '';
+    var beads = {}, stepsFor = {}, hits = [];
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var narrow = window.matchMedia ? window.matchMedia('(max-width: 899.98px)') : { matches: true };
+
+    $$('.bead', svg).forEach(function (b) {
+      beads[b.id] = b;
+      hits.push({
+        id: b.id,
+        x: parseFloat(b.getAttribute('cx') || b.getAttribute('data-cx')),
+        y: parseFloat(b.getAttribute('cy') || b.getAttribute('data-cy')),
+        r: parseFloat(b.getAttribute('r') || b.getAttribute('data-r'))
+      });
+    });
+    steps.forEach(function (st, i) { (stepsFor[st.el] = stepsFor[st.el] || []).push(i); });
+
+    function currentSet() { return sets[select.value] || firstSet; }
+    function setName() { var s = currentSet(); return LANG === 'en' ? s.en : s.tr; }
+    function mysteryName(d) { var it = currentSet().items[d - 1]; return plain(LANG === 'en' ? it.en : it.tr); }
+    function setText(el, text) {
+      el.textContent = '';
+      String(text || '').split(/\n{2,}/).forEach(function (para) {
+        var p = document.createElement('p');
+        /* The space before each <br> keeps words apart where CSS hides the breaks (phones) */
+        para.split('\n').forEach(function (line, i) {
+          if (i) { p.appendChild(document.createTextNode(' ')); p.appendChild(document.createElement('br')); }
+          p.appendChild(document.createTextNode(line));
+        });
+        el.appendChild(p);
+      });
+    }
+    function buzz(pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) { /* unsupported */ } }
+
+    function paintBeads(st) {
+      var visited = {}, upto = done ? steps.length : idx;
+      for (var i = 0; i < upto; i++) visited[steps[i].el] = true;
+      Object.keys(beads).forEach(function (id) {
+        var b = beads[id], state = st && st.el === id ? 'active' : (visited[id] ? 'prayed' : 'unprayed');
+        if (!b.classList.contains(state)) { b.classList.remove('unprayed', 'active', 'prayed'); b.classList.add(state); }
+        b.classList.toggle('announce', !!(st && st.el === id && st.announce));
+      });
+      svg.classList.toggle('is-complete', done);
+    }
+    function paintCenter(st) {
+      ui.cSet.textContent = setName();
+      ui.cCount.textContent = '';
+      if (st && st.n) {
+        ui.cCount.appendChild(document.createTextNode(String(st.n)));
+        var small = document.createElement('small'); small.textContent = '/' + st.of; ui.cCount.appendChild(small);
+      }
+      var key;
+      ui.cMyst.textContent = '';
+      if (done) { key = 'done'; ui.cMyst.textContent = T.doneTitle; }
+      else if (st.decade) {
+        key = setName() + st.decade;
+        var strong = document.createElement('strong'); strong.textContent = T.ord[st.decade - 1];
+        ui.cMyst.appendChild(strong); ui.cMyst.appendChild(document.createTextNode(mysteryName(st.decade)));
+      } else { key = st.phase; ui.cMyst.textContent = st.phase === 'open' ? T.opening : T.closing; }
+      if (key !== lastCenter) {
+        ui.center.classList.remove('is-fresh');
+        void ui.center.offsetWidth; // restart the fade-in for the new mystery
+        ui.center.classList.add('is-fresh');
+        lastCenter = key;
+      }
+    }
+    function render(user) {
+      var st = done ? null : steps[idx];
+      paintBeads(st);
+      paintCenter(st);
+      sheet.classList.toggle('is-done', done);
+      if (done) {
+        ui.context.textContent = T.closing;
+        ui.myst.hidden = true;
+        ui.title.textContent = T.doneTitle;
+        setText(ui.text, T.doneText);
+        ui.prev.disabled = false;
+        ui.nextLabel.textContent = T.again;
+        ui.bar.style.width = '100%';
+        ui.live.textContent = T.doneTitle;
+      } else {
+        var p = prayers[st.p][LANG], ctx;
+        if (st.phase === 'open') ctx = T.opening + (st.n ? ' · ' + T.intentions[st.intent] + ' · ' + st.n + '/' + st.of : '');
+        else if (st.phase === 'decade') ctx = T.decade(st.decade) + (st.n ? ' · ' + st.n + '/' + st.of : '');
+        else if (st.phase === 'end') ctx = T.endOf(st.decade);
+        else ctx = T.closing;
+        ui.context.textContent = ctx;
+        if (st.decade) {
+          ui.myst.hidden = false;
+          ui.myst.classList.toggle('is-announce', !!st.announce);
+          ui.mLabel.textContent = st.announce ? T.announce : '';
+          ui.mTitle.textContent = T.ord[st.decade - 1] + ': ' + mysteryName(st.decade);
+        } else {
+          ui.myst.hidden = true;
+          ui.myst.classList.remove('is-announce');
+        }
+        ui.title.textContent = p.title;
+        setText(ui.text, p.text);
+        ui.text.scrollTop = 0;
+        ui.prev.disabled = idx === 0;
+        ui.nextLabel.textContent = idx === steps.length - 1 ? T.finish : T.next;
+        ui.bar.style.width = (idx / steps.length * 100) + '%';
+        ui.live.textContent = p.title + ', ' + ctx + (st.announce ? ', ' + ui.mTitle.textContent : '');
+      }
+      syncDock();
+      if (user) keepVisible();
+    }
+
+    /* Keep the active bead on screen, between the sticky header and (on phones) the docked
+       sheet: the whole rosary when it fits there, otherwise the bead centred. */
+    function keepVisible() {
+      if (done) return;
+      var b = beads[steps[idx].el];
+      if (!b) return;
+      var r = b.getBoundingClientRect(), head = $('.site-header');
+      var top = head ? head.getBoundingClientRect().bottom : 0, bottom = window.innerHeight, pad = 14;
+      if (narrow.matches) { var sr = sheet.getBoundingClientRect(); if (sr.top > top && sr.top < bottom) bottom = sr.top; }
+      if (r.top >= top + pad && r.bottom <= bottom - pad) return;
+      var stage = svg.getBoundingClientRect();
+      var delta = stage.height <= bottom - top - 2 * pad ? stage.top - top - pad : (r.top + r.bottom) / 2 - (top + bottom) / 2;
+      window.scrollBy({ top: delta, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    /* On phones, while the sheet covers the bottom corner, the floating accessibility button
+       rides on the sheet's top edge instead of sitting on top of the Next button. */
+    function syncDock() {
+      var html = document.documentElement, on = false;
+      if (narrow.matches) {
+        var r = sheet.getBoundingClientRect(), vh = window.innerHeight;
+        on = r.top < vh - 40 && r.bottom > vh - 72;
+        if (on) html.style.setProperty('--rt-fab-y', Math.round(vh - r.top - 24) + 'px');
+      }
+      html.classList.toggle('rt-docked', on);
+    }
+
+    function goTo(i, pattern) {
+      done = false;
+      idx = Math.max(0, Math.min(steps.length - 1, i));
+      render(true);
+      buzz(steps[idx].announce ? [40, 60, 40] : pattern);
+    }
+    function next() {
+      if (done) { goTo(0, 50); return; }
+      if (idx === steps.length - 1) { done = true; render(true); buzz([60, 80, 60, 80, 120]); return; }
+      goTo(idx + 1, 50);
+    }
+    function prev() {
+      if (done) { done = false; render(true); buzz(30); return; }
+      if (idx > 0) goTo(idx - 1, 30);
+    }
+
+    function wire() {
+      ui.next.addEventListener('click', next);
+      ui.prev.addEventListener('click', prev);
+      $('.rt-restart', root).addEventListener('click', function () { goTo(0, 50); });
+      select.addEventListener('change', function () { render(false); });
+      ui.grip.addEventListener('click', function () {
+        var collapsed = sheet.classList.toggle('is-collapsed');
+        ui.grip.setAttribute('aria-expanded', String(!collapsed));
+        ui.grip.setAttribute('aria-label', collapsed ? T.show : T.hide);
+        syncDock();
+      });
+      root.addEventListener('keydown', function (e) {
+        if (e.target === select || e.altKey || e.ctrlKey || e.metaKey) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+      });
+      /* Beads sit closer together than a 44px touch target, so taps are resolved to the
+         nearest bead within reach -- and the glowing bead always wins inside its own 44px
+         circle, so the thumb can keep tapping it without precision. */
+      svg.addEventListener('click', function (e) {
+        var ctm = svg.getScreenCTM();
+        if (!ctm) return;
+        var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+        var p = pt.matrixTransform(ctm.inverse()), scale = svg.getBoundingClientRect().width / 360;
+        var activeId = done ? null : steps[idx].el, activeHit = null, best = null, bestD = Infinity;
+        hits.forEach(function (h) {
+          var d = Math.sqrt((h.x - p.x) * (h.x - p.x) + (h.y - p.y) * (h.y - p.y)) * scale;
+          if (d > Math.max(22, h.r * scale + 8)) return;
+          if (h.id === activeId) activeHit = h;
+          if (d < bestD) { best = h; bestD = d; }
+        });
+        var hit = activeHit || best;
+        if (!hit) return;
+        if (hit.id === activeId) { next(); return; }
+        var list = stepsFor[hit.id], cur = done ? steps.length : idx, pick = list[0];
+        list.forEach(function (i) { if (Math.abs(i - cur) < Math.abs(pick - cur)) pick = i; });
+        goTo(pick, 50);
+      });
+      var queued = false;
+      window.addEventListener('scroll', function () {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () { queued = false; syncDock(); });
+      }, { passive: true });
+      window.addEventListener('resize', syncDock);
+    }
+
+    loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
+      var data = window.COMPENDIUM_ROSARY;
+      data.prayers.forEach(function (p) { prayers[p.id] = p; });
+      data.sets.forEach(function (s) { sets[s.id] = s; });
+      firstSet = data.sets[0];
+      var today = new Date().getDay();
+      $$('option', select).forEach(function (o) {
+        var days = (o.getAttribute('data-days') || '').split(',').map(Number);
+        if (days.indexOf(today) !== -1) { o.textContent += ' (' + T.today + ')'; select.value = o.value; }
+      });
+      wire();
+      render(false);
+    })['catch'](function () {
+      ui.title.textContent = T.loadFail;
+      ui.text.textContent = '';
+      ui.next.disabled = true;
     });
   }
 
@@ -1223,7 +1498,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initRosaryTracker(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
     initChurchFilter(); initMapLinks(); initA11y();
   });
 })();
