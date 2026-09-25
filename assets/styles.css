@@ -117,6 +117,12 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: 
    rem-based measurement on the page grows with it, not just body text. */
 html[data-fontsize="1"] { font-size: 112%; }
 html[data-fontsize="2"] { font-size: 125%; }
+/* Desktop reads a step larger (17px base instead of 16px); the text-size levels scale from there */
+@media (min-width: 1100px) {
+  html { font-size: 106.25%; }
+  html[data-fontsize="1"] { font-size: 119%; }
+  html[data-fontsize="2"] { font-size: 133%; }
+}
 body {
   margin: 0; min-height: 100vh;
   background: radial-gradient(1200px 600px at 50% -200px, var(--bg-glow), transparent 70%) no-repeat, var(--bg);
@@ -237,7 +243,7 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .sr-snip { display: block; font-size: .93rem; color: var(--text-soft); line-height: 1.45; margin-top: .15rem; }
 .sr-meta { display: block; font-family: var(--sans); font-size: .72rem; color: var(--muted); margin-top: .2rem; letter-spacing: .02em; }
 .sr-en { font-family: var(--sans); font-size: .66rem; font-weight: 700; letter-spacing: .08em; color: var(--gold); margin-left: .35rem; }
-.sr-empty { padding: .9rem .8rem; color: var(--muted); font-style: italic; }
+.sr-empty { padding: .9rem .8rem; color: var(--muted); }
 
 /* ---------- 5. Buttons ---------- */
 .btn {
@@ -256,8 +262,8 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .hero { text-align: center; padding: clamp(2.5rem, 7vw, 4.5rem) 0 2rem; }
 .hero .logo { width: 58px; height: 58px; margin: 0 auto 1.1rem; color: var(--gold); }
 .hero h1 { font-size: clamp(2.05rem, 5.4vw, 3.35rem); line-height: 1.08; margin: 0; font-weight: 600; letter-spacing: -.005em; }
-.hero .subtitle { margin: .6rem 0 0; font-style: italic; color: var(--text-soft); font-size: clamp(1.05rem, 2.2vw, 1.3rem); }
-.hero .hint { margin: .9rem 0 0; font-style: italic; color: var(--muted); font-size: 1.05rem; }
+.hero .subtitle { margin: .6rem 0 0; color: var(--text-soft); font-size: clamp(1.05rem, 2.2vw, 1.3rem); }
+.hero .hint { margin: .9rem 0 0; color: var(--muted); font-size: 1.05rem; }
 
 .parts { display: grid; gap: 1.1rem; margin: 1.2rem auto 0; }
 .part-acc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); transition: border-color .2s; }
@@ -300,7 +306,7 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 }
 .text-link:hover { border-color: var(--gold-soft); color: var(--text); transform: translateY(-2px); }
 .text-link .t-title { display: block; font-size: 1.4rem; font-weight: 600; line-height: 1.2; margin-top: .25rem; }
-.text-link .t-sub { display: block; font-style: italic; color: var(--muted); margin-top: .25rem; font-size: 1rem; }
+.text-link .t-sub { display: block; color: var(--muted); margin-top: .25rem; font-size: 1rem; }
 .ornament { display: flex; align-items: center; gap: 1rem; color: var(--gold-soft); margin: 2.6rem 0 0; }
 .ornament::before, .ornament::after { content: ""; flex: 1; border-top: 1px solid var(--border); }
 .ornament svg { width: 18px; height: 18px; }
@@ -312,7 +318,7 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .page-head { display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 0 1.6rem; border-bottom: 1px solid var(--border); margin-bottom: 1.4rem; }
 .page-head .roman { font-size: clamp(3rem, 8vw, 4.6rem); }
 .page-head h1 { margin: .15rem 0 0; font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.1; font-weight: 600; }
-.page-head .sub { margin: .3rem 0 0; font-style: italic; color: var(--muted); }
+.page-head .sub { margin: .35rem 0 0; font-family: var(--sans); font-size: .9rem; letter-spacing: .02em; color: var(--muted); }
 .page-head.center { flex-direction: column; text-align: center; gap: .2rem; }
 .page-ico {
   display: grid; place-items: center; width: 3rem; height: 3rem; margin-bottom: .3rem;
@@ -341,7 +347,7 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .toc .t2 > a { font-family: var(--sans); font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .toc .t3 > a { font-weight: 600; color: var(--text); }
 .toc .t4 > a { padding-left: 1.3rem; font-size: .95rem; }
-.toc .t5 > a { padding-left: 2rem; font-size: .9rem; font-style: italic; }
+.toc .t5 > a { padding-left: 2rem; font-size: .9rem; }
 @media (min-width: 1040px) {
   .toc { position: sticky; top: calc(var(--header-h) + 1rem); max-height: calc(100vh - var(--header-h) - 2rem); overflow-y: auto; overscroll-behavior: contain; padding-right: .4rem; scrollbar-width: thin; }
   .toc-close, .toc-backdrop { display: none; }
@@ -367,7 +373,7 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 }
 .readbar .current {
   flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  font-size: 1.02rem; font-style: italic; color: var(--text-soft);
+  font-size: 1.02rem; color: var(--text-soft);
 }
 .readbar .toc-open { display: none; }
 @media (max-width: 1039px) { .readbar .toc-open { display: inline-flex; } }
@@ -381,14 +387,14 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .sec { scroll-margin-top: calc(var(--header-h) + 4.5rem); margin: 2.6rem 0 1.1rem; font-weight: 600; line-height: 1.2; }
 .sec .sec-label { display: block; margin-bottom: .3rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
 .sec .sec-title { display: block; }
-.sec .en { display: none; margin-top: .35rem; font-weight: 400; font-style: italic; font-size: .62em; color: var(--muted); }
+.sec .en { display: none; margin-top: .35rem; font-weight: 400; font-size: .62em; color: var(--muted); }
 .show-en .sec .en { display: block; }
 .readbar + .sec { margin-top: 1rem; }
 .sec-l2 { font-size: clamp(1.6rem, 3.6vw, 2.1rem); text-align: center; padding: 1.4rem 1rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .sec-l3 { font-size: clamp(1.45rem, 3vw, 1.8rem); padding-top: .4rem; }
 .sec-l4 { font-size: clamp(1.25rem, 2.6vw, 1.45rem); display: flex; flex-direction: column; }
 .sec-l4 .sec-title::before { content: ""; display: block; width: 2.2rem; height: 2px; background: var(--gold-soft); margin-bottom: .55rem; }
-.sec-l5 { font-size: 1.15rem; font-style: italic; color: var(--text-soft); }
+.sec-l5 { font-size: 1.15rem; color: var(--text-soft); }
 
 /* Q&A */
 .qa {
@@ -450,7 +456,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .quote { margin: 1.8rem auto; max-width: 38rem; text-align: center; }
 .quote blockquote { margin: 0; }
 .quote blockquote::before { content: "“"; display: block; font-size: 3rem; line-height: .6; color: var(--gold-soft); margin-bottom: .2rem; }
-.quote p { margin: 0; font-style: italic; font-size: clamp(1.18rem, 2.6vw, 1.36rem); line-height: 1.5; }
+.quote p { margin: 0; font-size: clamp(1.18rem, 2.6vw, 1.36rem); line-height: 1.5; }
 .quote .attr { display: block; margin-top: .55rem; font-family: var(--sans); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .quote .en-toggle { margin-top: .7rem; }
 .quote .en-block { text-align: left; }
@@ -495,7 +501,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .examen-result-group ul { margin: 0; padding-left: 1.25rem; color: var(--text-soft); }
 .examen-result-group li { margin-bottom: .3rem; line-height: 1.5; }
 .examen-result-group li:last-child { margin-bottom: 0; }
-.examen-empty { margin: 0; color: var(--muted); font-style: italic; }
+.examen-empty { margin: 0; color: var(--muted); }
 .examen-result-note { margin: 1.1rem 0 0; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
 .verse p { margin: 0 0 .8em; }
 .verse ol { margin: 0 0 .7em; padding-left: 1.5rem; }
@@ -505,7 +511,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .latin { margin-top: .7rem; }
 .latin summary { cursor: pointer; font-family: var(--sans); font-size: .8rem; color: var(--muted); padding: .3rem 0; }
 .latin summary:hover { color: var(--gold); }
-.latin .verse { padding: .7rem .9rem .2rem; margin-top: .3rem; background: var(--surface-2); border-radius: var(--radius-sm); font-style: italic; }
+.latin .verse { padding: .7rem .9rem .2rem; margin-top: .3rem; background: var(--surface-2); border-radius: var(--radius-sm); }
 
 .decalogue table { width: 100%; border-collapse: collapse; font-size: 1rem; }
 .decalogue th, .decalogue td { border-bottom: 1px solid var(--border); padding: .6rem .6rem; vertical-align: top; text-align: left; }
@@ -522,8 +528,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 /* Article pages (Motu Proprio, Introduction) */
 .article { max-width: 44rem; margin-inline: auto; padding-bottom: 3rem; }
 .article .body p { margin: 0 0 1em; }
-.article .address { font-style: italic; }
-.signature { text-align: right; font-style: italic; margin-top: 1.4rem; }
+
+.signature { text-align: right; margin-top: 1.4rem; }
 .signature p { margin: 0; }
 .footnotes { margin-top: 1.6rem; padding-top: .8rem; border-top: 1px solid var(--border); font-size: .95rem; color: var(--text-soft); }
 .footnotes p { margin: 0 0 .3rem; }
@@ -546,7 +552,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .prose ul, .prose ol { margin: 0 0 1em; padding-left: 1.4rem; }
 .prose li { margin-bottom: .3em; }
 .prose li::marker { color: var(--gold); }
-.prose blockquote { margin: 1.4rem 0; padding: .6rem 1.1rem; border-left: 3px solid var(--gold-soft); background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-style: italic; color: var(--text-soft); }
+.prose blockquote { margin: 1.4rem 0; padding: .6rem 1.1rem; border-left: 3px solid var(--gold-soft); background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-soft); }
 .prose blockquote p { margin: 0; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 .prose code { font-family: ui-monospace, Consolas, monospace; font-size: .85em; background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
@@ -694,7 +700,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 }
 .faq-toc a:hover { border-color: var(--gold-soft); color: var(--gold); }
 .faq-cat { scroll-margin-top: calc(var(--header-h) + 2rem); }
-.faq-cat-en { margin: -.55rem 0 1.1rem; text-align: center; font-style: italic; color: var(--muted); font-size: .95rem; }
+.faq-cat-en { margin: -.55rem 0 1.1rem; text-align: center; color: var(--muted); font-family: var(--sans); font-size: .85rem; letter-spacing: .02em; }
 .faq-list { display: grid; gap: .65rem; margin-bottom: 2.2rem; }
 .faq-item {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
@@ -911,7 +917,7 @@ body.sheet-open { overflow: hidden; }
 .footnote-list strong { color: var(--text-soft); }
 .closing-note {
   margin: 2.75rem auto 1rem; padding-top: 2rem; border-top: 1px solid var(--border);
-  font-family: var(--serif); font-size: 1.25rem; font-style: italic; text-align: center;
+  font-family: var(--serif); font-size: 1.25rem; text-align: center;
   line-height: 1.55; color: var(--text); max-width: 40rem;
 }
 
@@ -967,7 +973,7 @@ html.js .why-wrap.why-ready [data-why-panel]:not(.is-active) { display: none; }
 }
 .why-step-head .label { margin: .15rem 0 .1rem; }
 .why-step-head h2 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.15rem); line-height: 1.15; }
-.why-thesis { margin: .5rem 0 0; max-width: 48rem; font-size: 1.1rem; font-style: italic; line-height: 1.55; color: var(--text-soft); }
+.why-thesis { margin: .5rem 0 0; max-width: 48rem; font-size: 1.1rem; line-height: 1.55; color: var(--text-soft); }
 
 .why-grid { display: grid; gap: 1.1rem; }
 @media (min-width: 860px) {
@@ -1005,7 +1011,7 @@ html.js .why-wrap.why-ready [data-why-panel]:not(.is-active) { display: none; }
 .why-obj > summary > svg:last-child { flex: none; width: 1.1rem; height: 1.1rem; color: var(--muted); transition: transform .2s; }
 .why-obj[open] > summary > svg:last-child { transform: rotate(180deg); color: var(--gold); }
 .why-obj-label { font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
-.why-obj-q { font-style: italic; line-height: 1.4; color: var(--text); }
+.why-obj-q { line-height: 1.4; font-weight: 500; color: var(--text); }
 .why-obj > summary:hover .why-obj-q { color: var(--gold-active); }
 .why-obj-a { padding: .2rem 0 .3rem 1.95rem; }
 .why-obj-a p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--text-soft); }
@@ -1043,7 +1049,7 @@ html.js .why-end { margin-top: -1rem; }
   .why-chain li { flex-direction: row; text-align: left; padding: .7rem .9rem; }
   .why-chain li + li::before { left: 50%; top: -1rem; margin: 0 0 0 -.4rem; transform: rotate(135deg); }
 }
-.why-closing { max-width: 44rem; margin: 0 auto 2rem; font-size: 1.15rem; font-style: italic; line-height: 1.6; text-align: center; color: var(--text); }
+.why-closing { max-width: 44rem; margin: 0 auto 2rem; font-size: 1.15rem; line-height: 1.6; text-align: center; color: var(--text); }
 .why-where { margin: 0 0 .9rem; text-align: center; font-size: 1.2rem; }
 .why-ctas { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; }
 @media (max-width: 900px) { .why-ctas { grid-template-columns: repeat(2, 1fr); } }
@@ -1297,7 +1303,7 @@ html.js .why-end { margin-top: -1rem; }
 .today-pill .tp-ico svg { width: 100%; height: 100%; }
 .today-pill .tp-label { display: block; font-family: var(--sans); font-size: .64rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
 .today-pill .tp-value { display: block; font-size: .88rem; font-weight: 600; margin-top: .04rem; }
-.today-pill .tp-value.hint { font-weight: 400; font-style: italic; color: var(--muted); }
+.today-pill .tp-value.hint { font-weight: 400; color: var(--muted); }
 /* The only pill left in .today-pills now that the Rosary-mystery one is gone, so it can
    afford to read as a small card rather than a pill lost in the middle of the hero. */
 .today-pill-lg { padding: .75rem 1.4rem .75rem 1rem; gap: .8rem; border-radius: var(--radius); }
@@ -1484,7 +1490,7 @@ html:not(.js) .rt { display: none; }
 .rt-progress { position: absolute; top: 0; left: 1.4rem; right: 1.4rem; height: 3px; border-radius: 0 0 99px 99px; background: var(--border); overflow: hidden; }
 .rt-progress span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--gold); transition: width .35s ease; }
 .rt-context { margin: 0; color: var(--gold); }
-.rt-resume { margin: 0 0 .3rem; font-family: var(--sans); font-size: .8rem; font-style: italic; color: var(--muted); }
+.rt-resume { margin: 0 0 .3rem; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
 .rt-mystery { margin: .3rem 0 0; padding: .35rem .65rem; border-radius: 10px; background: var(--gold-bg); font-size: .9rem; line-height: 1.3; }
 .rt-mystery .rt-m-label { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-active); }
 .rt-mystery .rt-m-label:empty { display: none; }
@@ -1618,7 +1624,7 @@ html:not(.js) .rt { display: none; }
 .amap-pop-close:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
 .amap-pop.is-pinned .amap-pop-close { display: grid; }
 .amap-pop.is-pinned .amap-c-name { padding-right: 2rem; }
-.amap-pop-hint { margin: .7rem 0 0; font-family: var(--sans); font-size: .74rem; font-style: italic; color: var(--muted); }
+.amap-pop-hint { margin: .7rem 0 0; font-family: var(--sans); font-size: .74rem; color: var(--muted); }
 .amap-pop.is-pinned .amap-pop-hint, .amap-pop:not(.is-pinned) .amap-c-more { display: none; }
 .amap-pop.is-sheet {
   position: fixed; left: .75rem; right: .75rem; top: auto !important; bottom: 4.4rem; width: auto;
@@ -1662,7 +1668,7 @@ html:not(.js) .amap-swipe { display: none; }
 .myst .m-day { margin: .2rem 0 0; }
 .myst.is-today .m-day::after { content: ' · bugün'; color: var(--gold-active); }
 html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
-.myst .m-en-title { margin: .1rem 0 .7rem; font-style: italic; color: var(--muted); font-size: .92rem; }
+.myst .m-en-title { margin: .1rem 0 .7rem; color: var(--muted); font-size: .92rem; }
 .myst-list { margin: 0; padding-left: 1.3rem; }
 .myst-list li { margin-bottom: .4rem; }
 .m-tr { display: block; }
@@ -1762,7 +1768,7 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .saint-item > summary:hover .s-name, .saint-item > summary:focus-visible .s-name { color: var(--gold); }
 .saint-item .s-name { font-weight: 600; }
 .saint-item .s-title { display: block; font-family: var(--sans); font-size: .72rem; color: var(--muted); }
-.genel-item > summary .s-name { font-weight: 500; color: var(--muted); font-style: italic; font-size: .85rem; }
+.genel-item > summary .s-name { font-weight: 500; color: var(--muted); font-size: .85rem; }
 .saint-bio { padding: .3rem .1rem .5rem; font-size: .88rem; line-height: 1.5; color: var(--text-soft); }
 .saint-bio p { margin: 0 0 .6rem; }
 .saint-bio p:last-child { margin-bottom: 0; }
@@ -1923,8 +1929,8 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 
 /* ---------- 22. Kiliseler (parish locator) ---------- */
 /* .sub elsewhere is only ever styled nested (.page-head .sub, .mass-part-head .sub); this page
-   also uses the bare class directly, so give it the same italic/muted look on its own. */
-.sub { font-style: italic; color: var(--muted); }
+   also uses the bare class directly, so give it the same muted look on its own. */
+.sub { color: var(--muted); }
 
 /* Intro copy: centered, kept short. */
 .kiliseler-intro { max-width: 56ch; margin: 0 auto 1.6rem; color: var(--text-soft); text-align: center; }
@@ -2077,7 +2083,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 }
 .church-warn-body { padding: 0 .85rem .75rem 2.55rem; line-height: 1.5; }
 .church-warn-body p { margin: 0 0 .4rem; }
-.church-warn-body p:last-child { margin-bottom: 0; font-style: italic; opacity: .9; }
+.church-warn-body p:last-child { margin-bottom: 0; opacity: .9; }
 
 /* Mass times: a plain native <details>, click/tap to toggle, same on every device. On a
    wide screen the expanded body floats as a small popup instead of pushing the rest of
@@ -2092,7 +2098,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 .church-hours-item summary .en { margin-left: .1rem; font-weight: 400; }
 .church-hours-body p { margin: 0 0 .4rem; font-size: .92rem; }
 .church-hours-body p:last-child { margin-bottom: 0; }
-.church-hours-body .church-hours.en { font-style: italic; color: var(--muted); font-size: .86rem; }
+.church-hours-body .church-hours.en { color: var(--muted); font-size: .86rem; }
 @media (hover: hover) and (pointer: fine) {
   .church-hours-item { position: relative; }
   .church-hours-item[open] .church-hours-body {
@@ -2101,3 +2107,95 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
     background: var(--surface); border: 1px solid var(--border-strong); box-shadow: var(--shadow);
   }
 }
+
+/* ---------- Mobile: glass tab bar, its "Diğer" drawer, and the phone header ----------
+   Below 980px (where the header's own links are hidden) every page gets a floating glass
+   tab bar: the page's own sections, or the five core destinations on pages without any. */
+:root { --tabbar-h: 4rem; --tabbar-gap: .6rem; }
+.tabbar, .tb-drawer { display: none; }
+@media (max-width: 979px) {
+  :root { --tabbar-space: calc(var(--tabbar-h) + var(--tabbar-gap) + env(safe-area-inset-bottom) + .6rem); }
+  body { padding-bottom: var(--tabbar-space); }
+  .tabbar {
+    display: block; position: fixed; z-index: 45; left: .6rem; right: .6rem; max-width: 34rem; margin: 0 auto;
+    bottom: calc(var(--tabbar-gap) + env(safe-area-inset-bottom)); min-height: var(--tabbar-h); padding: .3rem;
+    border-radius: 1.6rem; border: 1px solid var(--glass-brd);
+    background: color-mix(in srgb, var(--surface) 58%, transparent);
+    -webkit-backdrop-filter: saturate(190%) blur(22px); backdrop-filter: saturate(190%) blur(22px);
+    box-shadow: inset 0 1px 0 var(--glass-hi), 0 10px 30px -8px rgba(20, 26, 44, .28), 0 2px 6px rgba(20, 26, 44, .08);
+  }
+  .tb-list { display: flex; gap: .15rem; min-height: calc(var(--tabbar-h) - .6rem - 2px); margin: 0; padding: 0; list-style: none; }
+  /* Sized by label: a long label (İnteraktif Tesbih) takes the room short ones (Dua) leave; only on
+     the narrowest phones does a label wrap to a second line, and then the bar grows to fit it */
+  .tb-list > li { flex: 1 1 auto; min-width: 0; display: flex; }
+  .tb-item {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .18rem;
+    width: 100%; padding: .3rem .4rem; border: 0; border-radius: 1.3rem; background: none; cursor: pointer;
+    font-family: var(--sans); font-size: .66rem; font-weight: 600; line-height: 1.1; letter-spacing: .005em;
+    color: var(--text-soft); text-decoration: none; text-align: center; -webkit-tap-highlight-color: transparent;
+    transition: background-color .2s, color .2s;
+  }
+  .tb-ico { display: grid; place-items: center; width: 1.5rem; height: 1.5rem; flex: none; }
+  .tb-ico svg { width: 1.45rem; height: 1.45rem; }
+  .tb-num { font-family: var(--serif); font-size: 1.12rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .tb-t { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 100%; }
+  .tb-item.is-active, .tb-more[aria-expanded="true"] { background: color-mix(in srgb, var(--gold) 16%, transparent); color: var(--gold-active); }
+  .tb-item:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .tabbar { background: var(--surface); } }
+
+  /* "Diğer": a sheet that rises above the bar */
+  .tb-drawer:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 88; }
+  .tb-backdrop { position: absolute; inset: 0; background: rgba(8, 12, 24, .32); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); animation: tb-fade .2s ease-out; }
+  .tb-sheet {
+    position: absolute; left: .6rem; right: .6rem; max-width: 34rem; margin: 0 auto; bottom: var(--tabbar-space);
+    max-height: min(72vh, calc(100vh - var(--tabbar-space) - var(--header-h) - 1rem)); overflow-y: auto; overscroll-behavior: contain;
+    padding: .9rem 1rem 1rem; border-radius: 1.5rem; border: 1px solid var(--glass-brd);
+    background: color-mix(in srgb, var(--surface) 86%, transparent);
+    -webkit-backdrop-filter: saturate(190%) blur(24px); backdrop-filter: saturate(190%) blur(24px);
+    box-shadow: inset 0 1px 0 var(--glass-hi), 0 18px 50px -12px rgba(8, 12, 24, .45);
+    animation: tb-rise .24s cubic-bezier(.2, .8, .2, 1);
+    scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--muted) 30%, transparent) transparent;
+  }
+  .tb-sheet-head { display: flex; align-items: center; justify-content: space-between; margin: 0 0 .3rem; }
+  .tb-drawer-title { margin: 0; font-size: 1.2rem; font-weight: 600; }
+  .tb-close { width: 2.2rem; height: 2.2rem; }
+  .tb-group { margin: .8rem 0 .4rem; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .tb-links { display: grid; gap: .1rem; }
+  .tb-link {
+    display: block; padding: .6rem .75rem; border-radius: .8rem; color: var(--text); text-decoration: none; line-height: 1.3;
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+  }
+  .tb-link + .tb-link { margin-top: .3rem; }
+  .tb-link:active, .tb-site:active { background: var(--gold-bg); }
+  .tb-sites { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .4rem; }
+  .tb-site {
+    display: flex; align-items: center; gap: .55rem; padding: .6rem .7rem; border: 0; border-radius: .8rem; cursor: pointer;
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent); color: var(--text); text-decoration: none; text-align: left;
+    font-family: var(--sans); font-size: .85rem; font-weight: 600; line-height: 1.2;
+  }
+  .tb-site .tb-ico { width: 1.25rem; height: 1.25rem; color: var(--gold); }
+  .tb-site .tb-ico svg { width: 1.2rem; height: 1.2rem; }
+
+  /* Everything else that sits at the bottom of the screen now sits above the bar */
+  .rt-sheet { bottom: var(--tabbar-space); border-radius: 22px; border-bottom: 1px solid var(--glass-brd); margin-bottom: .6rem; }
+  .amap-pop.is-sheet { bottom: calc(var(--tabbar-space) + .3rem); }
+
+  /* The phone header: name on the left; theme, settings and menu as plain icons on the right */
+  .header-row { flex-wrap: nowrap; gap: .1rem; }
+  .brand-group { display: contents; }
+  .brand { order: 1; margin-right: auto; }
+  .header-tools { order: 2; }
+  .settings-btn { order: 3; width: 2.5rem; height: 2.5rem; color: var(--text-soft); }
+  .settings-btn svg { width: 1.4rem; height: 1.4rem; }
+  .menu-toggle { order: 4; border-color: transparent; background: none; }
+  .menu-toggle svg { width: 1.45rem; height: 1.45rem; }
+  .theme-toggle { width: 2.5rem; height: 2.5rem; padding: 0; justify-content: center; border: 0; background: none; color: var(--text-soft); }
+  .theme-toggle .knob { display: none; }
+  .theme-toggle svg { position: absolute; width: 1.3rem; height: 1.3rem; }
+  .theme-toggle[aria-checked="false"] .ico-sun, .theme-toggle[aria-checked="true"] .ico-moon { display: none; }
+  .theme-toggle[aria-checked="false"] .ico-moon, .theme-toggle[aria-checked="true"] .ico-sun { color: var(--text-soft); }
+}
+@keyframes tb-rise { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes tb-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .tb-sheet, .tb-backdrop { animation: none; } .tb-item { transition: none; } }
+@media print { .tabbar, .tb-drawer { display: none !important; } }

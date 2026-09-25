@@ -1,82 +1,51 @@
 ---
 title: Kutsal Kitap
 subtitle: Hangi çeviriyi seçmeli?
-description: Bir Kutsal Kitap baskısını Katolik yapan nedir, çeviriler neden farklıdır ve hangisini seçmeli? Kısa sorular ve yanıtlar, onaylı çeviriler listesiyle.
+description: Bir Kutsal Kitap baskısını Katolik yapan nedir, Türkçe nereden başlanır ve hangi çeviri seçilmeli? Kısa bir rehber ve onaylı çeviriler listesi.
 short: Onaylı Türkçe çeviriler ve nereden başlamalı, kısaca.
 ---
 
-## Bir baskıyı Katolik yapan nedir?
+## Katolik baskı nasıl anlaşılır? {#katolik-baski}
 
-Katolik Kutsal Kitabı 73 kitaptan oluşur. Protestan baskılarında Eski Ahit'ten yedi kitap eksiktir: Tobit, Yudit, Bilgelik, Sirak, Baruk, 1. ve 2. Makabeler; ayrıca Ester ve Daniel kitaplarının bazı bölümleri. Bunlara *deuterokanonik* kitaplar denir ve Kilise onları en başından beri esinlenmiş Kutsal Yazı olarak kabul etmiştir.
+Katolik Kutsal Kitabı 73 kitaptır. Protestan baskılarında Eski Ahit’ten yedi kitap eksiktir: Tobit, Yudit, Bilgelik, Sirak, Baruk, 1. ve 2. Makabeler (ayrıca Ester ve Daniel’in bazı bölümleri). Kilise bu **deuterokanonik** kitapları en başından beri Kutsal Yazı olarak kabul eder.
 
-Satın alırken bakılacak iki şey vardır:
+Satın alırken iki şeye bakın:
 
-- Kapakta **“Catholic Edition”** ibaresi. Aynı çevirinin bu ibareyi taşımayan baskısı o yedi kitabı içermeyebilir.
-- İç kapakta **Nihil obstat** ve **Imprimatur**. Bunlar çevirinin kilise onayı taşıdığını gösterir.
+- Kapakta **“Catholic Edition”** ibaresi.
+- İç kapakta **Nihil obstat** ve **Imprimatur**: çevirinin kilise onayı taşıdığını gösterir.
 
-Onay yetkisi keyfi değildir: 1983 tarihli Kanonik Hukuk Kanunu, Kutsal Yazıların çevirilerini onaylama yetkisini Havarisel Makam'a ve episkoposlar konferanslarına verir (kanon 825, §1).
+## Türkçe nereden başlamalı? {#turkce}
 
-## Türkçe okumak istiyorum, nereden başlamalıyım?
+Henüz kilise onaylı, basılı bir Türkçe Katolik baskı yok. En yakın seçenek, Kitabı Mukaddes Şirketi’nin 2003 tarihli **Kutsal Kitap ve Deuterokanonik Kitaplar** çevirisidir: yedi deuterokanonik kitabı da içerir ve kolay okunur. Ücretsiz okumak için:
 
-Şu anda kilise onayı (Nihil obstat/Imprimatur) taşıyan, basılı bir Türkçe Katolik Kutsal Kitap baskısı bulunmuyor. En yakın seçenek, Kitabı Mukaddes Şirketi'nin 2003 tarihli *Ekümenik* çevirisidir: **Kutsal Kitap ve Deuterokanonik Kitaplar**. Bu baskı, Katolik ve Ortodoks kiliselerinin kullandığı yedi deuterokanonik kitabı da içerir ve çağdaş, okunması kolay bir Türkçedir.
+- [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU), Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
+- [kitabimukaddes.com](https://kitabimukaddes.com/tr/kutsal-kitap)
 
-Ücretsiz olarak okuyabileceğiniz iki yer:
+## Hangi çeviri ne için? {#hangi-ceviri}
 
-- [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU) — Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
-- [kitabimukaddes.com/tr/kutsal-kitap](https://kitabimukaddes.com/tr/kutsal-kitap)
+Çevirmenler iki yol izler: **sözel çeviri** özgün metnin sözcüklerine bağlı kalır, **dinamik çeviri** anlamı rahat bir dille aktarır.
 
-## Neden bu kadar çok çeviri var?
+- **Ciddi çalışma için** sözel bir çeviri seçin: anlamın ince ipuçlarını korur, ama okuması yorar.
+- **Günlük okuma için** dinamik ya da ortada duran bir çeviri seçin: akıcıdır, ama ayrıntı kaybolur ve çevirmenin yorumu araya karışabilir.
+- **Çeviri öğretiyi bile etkileyebilir:** “iş” anlamındaki Yunanca “ergon” tutarlı çevrilmediğinde, Allah’ın herkesi işlerine göre yargılayacağı (Romalılar 2:6-7) gözden kaçabilir.
+- **Eski çeviriler daha güvenilir değildir,** yalnızca daha eskidir. Bugün satılan Douay-Rheims bile 18. yüzyılda Episkopos Challoner’ın gözden geçirdiği bir baskıdır.
 
-Çünkü çevirmenler iki farklı yol izler.
+Katolik İngilizce baskılar, sözelden dinamiğe:
 
-**Sözel çeviri** özgün metne olabildiğince bağlı kalır; sözcükleri, çoğu zaman sözcük sırasını bile korur. **Dinamik çeviri** ise dilbilgisini değil anlamı aktarmayı amaçlar ve çevirmene daha rahat bir Türkçe ya da İngilizce kurma özgürlüğü tanır.
+- **Sözele en yakın:** Douay-Rheims (Challoner)
+- **Sözel, daha okunur:** RSV-CE ve RSV-2CE, Confraternity Bible
+- **Ortada:** NABRE, New Jerusalem Bible
+- **Dinamiğe yakın:** NRSV-CE, Good News Translation (Katolik baskısı)
 
-Fark şurada görülür: Levililer 18'deki İbranice deyimi sözel bir çeviri olan Douay-Rheims “uncover the nakedness of” (“çıplaklığını açığa çıkarma”) diye, özgün deyimi olduğu gibi koruyarak verir; daha dinamik çeviriler ise aynı ayeti “cinsel ilişkiye girme” gibi doğrudan günlük bir ifadeyle karşılar. İkisi de aynı şeyi söyler, ama biri deyimi korur, diğeri anlamı günlük dile taşır.
+Living Bible gibi serbest anlatımlar çeviri değildir ve kilise onayı taşımaz.
 
-## Ciddi çalışma için hangisi?
+## Hangisini almalıyım? {#oneri}
 
-Sözel bir çeviri. Bir ayetin anlamı çoğu zaman metindeki ince ipuçlarına bağlıdır ve bu ipuçlarını yalnızca sözel çeviriler korur. Bedeli okunurluktur: İbranice ve Yunanca üslup metne sızdığı için okuması yorar.
+Genel kullanım için **Revised Standard Version, Catholic Edition (RSV-CE)**; Ignatius Press onu **The Ignatius Bible** adıyla yayımlar. Birkaç çeviriyi yan yana okumak da çok yardımcı olur. Ama en iyi çeviri, **okuyacağınız çeviridir.**
 
-## Günlük okuma için hangisi?
+## Onaylı çeviriler {#onayli}
 
-Dinamik ya da ortada duran bir çeviri. Daha hızlı okursunuz ve metnin ana anlamını rahatça kavrarsınız. Bedeli kesinliktir: ayrıntı kaybolur ve çevirmenin kendi görüşünün metne karışma riski artar.
-
-## Çeviri öğretiyi değiştirebilir mi?
-
-Evet, değiştirebilir. Bilinen bir örnek Yunanca *ergon* (“iş, eylem”) sözcüğüdür. Kimi Protestan çevirilerinde bu sözcük Romalılar 4:2'de “işler” diye çevrilirken, aynı kökten sözcükler Romalılar 2:6-7'de farklı bir Türkçe/İngilizce karşılıkla verilir. Tutarlı çevrilseydi metin, Allah'ın herkesi *işlerine göre* yargılayacağını ve *iyilik işlemekte direnenlere* ebedi hayat vereceğini açıkça söylerdi; yani Katolik kurtuluş anlayışını.
-
-Öğretisel bir amaç olmasa bile, dinamik çevirilerde kutsal yazarın niyeti bulanıklaşabilir.
-
-## Hangi çeviri nerede duruyor?
-
-Aşağıdaki sıralama yalnızca Katolik baskıları (deuterokanonik kitapları ve kilise onayını taşıyan çevirileri) içerir:
-
-- **Sözele en yakın:** Douay-Rheims (Challoner gözden geçirmesi)
-- **Sözel, daha okunur:** Revised Standard Version, Catholic Edition (RSV-CE ve RSV-2CE), Confraternity Bible
-- **Ortada:** New American Bible, Revised Edition (NABRE), New Jerusalem Bible (NJB)
-- **Dinamiğe yakın:** New Revised Standard Version, Catholic Edition (NRSV-CE), Good News Translation (Katolik baskısı)
-
-Bir not: **NRSV-CE** bu ölçeğe zor yerleşir; temel metni sözeldir ama “cinsiyet kapsayıcı dil” kullanır, yani özgün metin “kardeşler” derken “brothers and sisters” yazıp dipnot düşer. **Serbest anlatımlar** (örneğin Living Bible'ın çevirileri) ise çeviri değildir; başka bir çevirinin yeniden anlatımıdır ve kilise onayı taşımaz.
-
-## Eski çeviriler daha mı güvenilir?
-
-Hayır, yalnızca daha eskidirler. Ağırbaşlı ve etkileyici durabilirler, ama dört yüz yıl önceki İngilizceyle yazıldıkları için okunmaları zordur.
-
-“Yalnızca Douay-Rheims doğrudur, diğerleri güvenilmez” diyenler de vardır; bu iddia yanlıştır. Kusursuz bir elyazması takımı yoktur ve bugün satılan baskıların hiçbiri 1600'lerdeki özgün metin değildir: piyasadaki Douay'ın teknik adı **Douay-Challoner**'dır, çünkü on sekizinci yüzyılda Episkopos Richard Challoner tarafından, Yunanca ve İbranice elyazmalarına da bakılarak gözden geçirilmiştir.
-
-## Peki hangisini almalıyım?
-
-Alışılmadık karşılıklar kullanan çevirilerden uzak durun; Good News Bible bu konuda bilinir (“yıkım iğrençliği” orada “the awful horror”, Ahit Sandığı ise “the covenant box” olur).
-
-Genel kullanım için **Revised Standard Version, Catholic Edition (RSV-CE)** önerilir. Ignatius Press bunu **The Ignatius Bible** adıyla yayımlar.
-
-Tek bir çeviri seçmek zorunda da değilsiniz. Birkaç baskıyı bir arada bulundurmak, bir ayette ne söylendiğini anlamanın en iyi yollarından biridir.
-
-Hangisi en iyisi? En doğru yanıt şu: **okuyacağınız olan.**
-
-## Onaylı çeviriler
-
-Amerika Birleşik Devletleri Katolik Episkoposlar Konferansı'nın (USCCB) 1983'ten bu yana onayladığı İngilizce çevirilerin tam listesi:
+ABD Katolik Episkoposlar Konferansı’nın (USCCB) 1983’ten beri onayladığı İngilizce çeviriler:
 
 - Books of the New Testament, Alba House
 - Contemporary English Version, New Testament, First Edition, American Bible Society
@@ -94,8 +63,6 @@ Amerika Birleşik Devletleri Katolik Episkoposlar Konferansı'nın (USCCB) 1983'
 - Good News Translation (Today's English Version, Second Edition), American Bible Society
 - Translation for Early Youth, A Translation of the New Testament for Children, Contemporary English Version, American Bible Society
 
-Bu liste yalnızca ABD konferansını bağlar ve yalnızca çağdaş çevirileri kapsar. **Douay-Rheims (Challoner gözden geçirmesi)** bu yüzden listede yer almaz, ama kendi tarihî kilise onayını taşır ve bugün de meşru, kullanılabilir bir Katolik çeviridir.
+Douay-Rheims bu listede yoktur, çünkü liste yalnızca çağdaş çevirileri kapsar; kendi tarihî onayını taşır ve bugün de kullanılabilir. Başka bir ülkede yaşıyorsanız kendi episkoposlar konferansınızın listesine bakın.
 
-Usulüne uygun kilise onayı almış her çeviri özel dua ve çalışma için kullanılabilir; başka bir ülkede yaşıyorsanız kendi episkoposlar konferansınızın listesine bakın.
-
-> Çeviri anlayışlarıyla ilgili bölümler Catholic Answers'ın *Bible Translations Guide* broşüründen uyarlanmıştır. Onaylı çeviriler listesi USCCB kaynaklıdır.
+> Çeviri bölümleri Catholic Answers’ın Bible Translations Guide broşüründen uyarlanmıştır; onaylı çeviriler listesi USCCB kaynaklıdır.

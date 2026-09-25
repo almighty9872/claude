@@ -297,7 +297,8 @@ function Convert-Markdown([string]$md) {
   foreach ($raw in $lines) {
     $l = $raw.TrimEnd()
     if ($l -match '^\s*$') { . $flush; continue }
-    if ($l -match '^(#{1,4})\s+(.+)$') { . $flush; $lvl = [Math]::Max(2, $Matches[1].Length); [void]$sb.Append("<h$lvl>" + (Md-Inline $Matches[2]) + "</h$lvl>"); continue }
+    # "## Heading {#some-id}" gives the heading an id (for in-page links such as the mobile tab bar)
+    if ($l -match '^(#{1,4})\s+(.+?)(?:\s+\{#([a-z0-9-]+)\})?$') { . $flush; $lvl = [Math]::Max(2, $Matches[1].Length); $hid = if ($Matches[3]) { " id=`"$($Matches[3])`"" } else { '' }; [void]$sb.Append("<h$lvl$hid>" + (Md-Inline $Matches[2]) + "</h$lvl>"); continue }
     if ($l -match '^\s*(-{3,}|\*{3,}|_{3,})\s*$') { . $flush; [void]$sb.Append('<hr>'); continue }
     if ($l -match '^>\s?(.*)$') { $q = $Matches[1]; if ($para.Count -or $items.Count) { . $flush }; [void]$quote.Add($q); continue }
     if ($l -match '^\s{0,3}[-*+]\s+(.+)$') { $v = $Matches[1]; if ($para.Count -or $quote.Count -or ($items.Count -and $listTag -ne 'ul')) { . $flush }; $listTag = 'ul'; [void]$items.Add($v); continue }
@@ -589,31 +590,31 @@ $GzMetaEn = $GzEn.meta
 # Top bar: brand, the settings gear (language + accessibility), the five core links and the
 # hamburger that opens the full menu.
 $TextNav = @(
-  @{ href = 'motu-proprio.html';    t = 'Motu Proprio';                       s = 'XVI. Benediktus, 2005' },
-  @{ href = 'giris.html';           t = 'Giriş';                              s = 'Kardinal Ratzinger, 2005' },
-  @{ href = 'iman-ikrari.html';     t = 'I. İnanç Beyanı';                    s = 'Sorular 1–217' },
-  @{ href = 'kutsal-sirlar.html';   t = 'II. Hristiyan Gizeminin Kutlanması'; s = 'Sorular 218–356' },
-  @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam";         s = 'Sorular 357–533' },
-  @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası';                s = 'Sorular 534–598' },
-  @{ href = 'ekler.html';           t = 'Ekler';                              s = 'Dualar ve formüller' }
+  @{ href = 'motu-proprio.html';    t = 'Motu Proprio';                       s = 'XVI. Benediktus, 2005';    te = 'Motu Proprio'; se = 'Benedict XVI, 2005' },
+  @{ href = 'giris.html';           t = 'Giriş';                              s = 'Kardinal Ratzinger, 2005'; te = 'Introduction'; se = 'Cardinal Ratzinger, 2005' },
+  @{ href = 'iman-ikrari.html';     t = 'I. İnanç Beyanı';                    s = 'Sorular 1–217';            te = 'I. The Profession of Faith'; se = 'Questions 1–217' },
+  @{ href = 'kutsal-sirlar.html';   t = 'II. Hristiyan Gizeminin Kutlanması'; s = 'Sorular 218–356';          te = 'II. The Celebration of the Christian Mystery'; se = 'Questions 218–356' },
+  @{ href = 'mesihte-yasam.html';   t = "III. Mesih$($Apos)te Yaşam";         s = 'Sorular 357–533';          te = 'III. Life in Christ'; se = 'Questions 357–533' },
+  @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası';                s = 'Sorular 534–598';          te = 'IV. Christian Prayer'; se = 'Questions 534–598' },
+  @{ href = 'ekler.html';           t = 'Ekler';                              s = 'Dualar ve formüller';      te = 'Appendix'; se = 'Prayers and formulas' }
 )
 # Every page that belongs to the Compendium, for the 'is-section' state and the breadcrumb
 $PrayerNav = @(
-  @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası' },
-  @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller' }
+  @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası';    te = 'The Holy Rosary'; se = 'Prayers and the mysteries' },
+  @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller'; te = 'Common Prayers'; se = 'Everyday prayers and formulas' }
 )
 # Katekizm gets its own top-level nav menu (mirrors the English site's "Compendium" dropdown):
 # the overview page plus each of its seven chapters.
-$KatekizmNav = @(@{ href = 'katesizm.html'; t = 'Genel Bakış'; s = '598 soru ve yanıtın tam listesi' }) + $TextNav
+$KatekizmNav = @(@{ href = 'katesizm.html'; t = 'Genel Bakış'; s = '598 soru ve yanıtın tam listesi'; te = 'Overview'; se = 'All 598 questions and answers' }) + $TextNav
 # "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many.
 $KaynaklarNav = @(
-  @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci';  s = 'Katolik olma süreci' },
-  @{ href = 'gunah-cikarma.html';  t = 'Günah Çıkarma';        s = 'Nasıl işler, adım adım' },
-  @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım' },
-  @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille' },
-  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler' },
-  @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri" },
-  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e" }
+  @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci';  s = 'Katolik olma süreci';           te = 'Becoming Catholic'; se = 'The OCIA/RCIA process' },
+  @{ href = 'gunah-cikarma.html';  t = 'Günah Çıkarma';        s = 'Nasıl işler, adım adım';        te = 'Confession'; se = 'Step by step, how it works' },
+  @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım';      te = 'The Holy Mass'; se = 'The order of Mass, step by step' },
+  @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille'; te = 'The Parables of Jesus'; se = 'Thirty-two parables, plainly explained' },
+  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler';              te = 'The Bible'; se = 'Approved translations' },
+  @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri"; te = 'Find a Church'; se = 'Catholic churches in Turkey' },
+  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e"; te = 'Christianity in Anatolia'; se = 'From Paul to Nicaea' }
 )
 $KatekizmPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
 # The five links shown directly in the bar at all times; everything else (including these
@@ -659,6 +660,202 @@ $NavIcons = @{
   'kiliseler.html'       = $IcoPin
   'topraklarimizda-hristiyanlik.html' = $IcoRoots
   'iletisim.html'        = $IcoMail
+}
+# The full-screen menu's groups, for both languages: each entry's English page comes from
+# $EnAltMap, its English wording from te/se. One list, so the two menus can't drift apart.
+$SheetNav = @(
+  @{ items = @(@{ href = 'index.html'; t = 'Ana Sayfa'; te = 'Home' }) },
+  @{ label = 'Neden Katoliğiz?'; le = "Why We're Catholic"; items = @(@{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?'; s = 'İmanın beş adımda özeti'; te = "Why We're Catholic"; se = 'The faith in five steps'; ico = $IcoCompass }) },
+  @{ label = 'Katekizm'; le = 'Compendium'; sub = $true; ico = $SmallCross; items = $KatekizmNav },
+  @{ label = 'Kaynaklar'; le = 'Resources'; sub = $true; items = $KaynaklarNav },
+  @{ label = 'Dualar'; le = 'Prayers'; sub = $true; items = $PrayerNav },
+  @{ label = 'Mucizeler'; le = 'Miracles'; items = @(@{ href = 'mucizeler.html'; t = 'Mucizeler'; s = 'Görünmeler, kalıntılar, Efkaristiya mucizeleri'; te = 'Miracles'; se = 'Apparitions, relics, Eucharistic miracles' }) },
+  @{ label = 'Azizler'; le = 'Saints'; items = @(@{ href = 'azizler.html'; t = 'Azizler'; s = 'Ayin takviminin azizleri'; te = 'Saints'; se = 'Saints of the liturgical calendar' }) },
+  @{ label = 'Sorular'; le = 'FAQ'; items = @(@{ href = 'sss.html'; t = 'Sorular'; s = 'Sıkça sorulan sorular'; te = 'FAQ'; se = 'Frequently asked questions' }) },
+  @{ label = 'İletişim'; le = 'Contact'; items = @(@{ href = 'iletisim.html'; t = 'İletişim'; s = 'Bize ulaşın'; te = 'Contact'; se = 'Get in touch' }) }
+)
+function Nav-Sheet([string]$lang, [string]$current) {
+  $en = $lang -eq 'en'; $i = 0
+  return (($SheetNav | ForEach-Object {
+    $g = $_
+    $links = ($g.items | ForEach-Object {
+      $h = if ($en) { $EnAltMap[$_.href] } else { $_.href }
+      $t = if ($en) { $_.te } else { $_.t }; $sub = if ($en) { $_.se } else { $_.s }
+      $ico = if ($_.ico) { $_.ico } elseif ($g.ico) { $g.ico } else { $NavIcons[$_.href] }
+      $cls = if ($g.sub) { 'ns-item ns-sub' } else { 'ns-item' }
+      $sHtml = if ($sub) { "<span class=`"ns-s`">$sub</span>" } else { '' }
+      "<a class=`"$cls`" href=`"$h`"$(Cur $h $current)><span class=`"ns-ico`">$ico</span><span class=`"ns-body`"><span class=`"ns-t`">$t</span>$sHtml</span></a>"
+    }) -join ''
+    $lbl = if ($g.label) { "<p class=`"ns-label`">$(if ($en) { $g.le } else { $g.label })</p>" } else { '' }
+    $delay = ([double]$i * 0.035).ToString([Globalization.CultureInfo]::InvariantCulture); $i++
+    "      <div class=`"ns-group`" style=`"animation-delay:$($delay)s`">$lbl$links</div>"
+  }) -join "`n")
+}
+# ------------------------------------------------------------------ mobile tab bar
+# Phones and small tablets get a glass tab bar pinned to the bottom of every page. Pages with
+# sections of their own show those (four, plus "Diğer" for the rest in a drawer); every other
+# page shows the five core destinations. Entries with an '#' href are in-page anchors, the same
+# id on both languages' pages; page hrefs are Turkish and mapped through $EnAltMap for English.
+$TbSvg = { param($d, $extra = '') "<svg viewBox=`"0 0 24 24`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"1.7`" stroke-linecap=`"round`" stroke-linejoin=`"round`"$extra>$d</svg>" }
+$TbWhy    = & $TbSvg '<circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.3a2.8 2.8 0 0 1 5.4 1c0 2-2.7 2.4-2.7 4.2"/><path d="M12 17.4h.01"/>'
+$TbMap    = & $TbSvg '<path d="M9 4.2 3.6 6.1v13.7L9 17.9l6 1.9 5.4-1.9V4.2L15 6.1z"/><path d="M9 4.2v13.7M15 6.1v13.7"/>'
+$TbChurch = & $TbSvg '<path d="M12 2.4v4.2M10.1 4.3h3.8"/><path d="M5.6 21v-9.3L12 6.9l6.4 4.8V21"/><path d="M3.4 21h17.2"/><path d="M10.1 21v-4a1.9 1.9 0 0 1 3.8 0v4"/>'
+$TbChat   = & $TbSvg '<path d="M4.8 3.2h7.9a1.8 1.8 0 0 1 1.8 1.8v6.3a1.8 1.8 0 0 1-1.8 1.8H8.2l-3.6 3v-3h.2A1.8 1.8 0 0 1 3 11.3V5a1.8 1.8 0 0 1 1.8-1.8z"/><path d="M17.3 8.4h1.9A1.8 1.8 0 0 1 21 10.2v6a1.8 1.8 0 0 1-1.8 1.8H19v2.9L15.6 18H12.8a1.8 1.8 0 0 1-1.8-1.8v-.6"/><path d="M7.4 6.4a1.4 1.4 0 0 1 2.7.5c0 1-1.3 1.1-1.3 2M8.8 10.6h.01"/>'
+$TbMore   = & $TbSvg '<circle cx="12" cy="12" r="9.2"/><circle cx="7.9" cy="12" r=".9" fill="currentColor"/><circle cx="12" cy="12" r=".9" fill="currentColor"/><circle cx="16.1" cy="12" r=".9" fill="currentColor"/>'
+$TbSteps  = & $TbSvg '<path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="M4.2 5.6 5.4 4.8v3.4M4 12.6c0-.8.6-1.3 1.2-1.3s1.1.4 1.1 1c0 .9-2.3 1.7-2.3 2.4h2.4M4.1 16.3h2l-1 1.2c.7 0 1.2.4 1.2 1s-.5 1-1.1 1c-.5 0-.9-.2-1.1-.5"/>'
+$TbCal    = & $TbSvg '<rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'
+$TbToday  = & $TbSvg '<rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15.2" r="2" fill="currentColor" stroke="none"/>'
+$TbFeast  = & $TbSvg '<path d="M12 3.2 14.3 8l5.2.6-3.9 3.6 1.1 5.1L12 14.8l-4.7 2.5 1.1-5.1-3.9-3.6L9.7 8z"/>'
+$TbHome   = & $TbSvg '<path d="M4 10.8 12 4l8 6.8"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/>'
+$TbMenu   = & $TbSvg '<path d="M4 7h16M4 12h16M4 17h16"/>'
+$TbSets = @{
+  main = @{ main = $true; items = @(
+    @{ h = 'neden-katoligiz.html'; t = 'Neden?'; te = 'Why?'; ico = $TbWhy },
+    @{ h = 'topraklarimizda-hristiyanlik.html'; t = 'Tarih'; te = 'History'; ico = $TbMap },
+    @{ h = 'katesizm.html'; t = 'Katekizm'; te = 'Catechism'; ico = $SmallCross },
+    @{ h = 'kiliseler.html'; t = 'Kiliseler'; te = 'Churches'; ico = $TbChurch },
+    @{ h = 'sss.html'; t = 'Sorular'; te = 'FAQ'; ico = $TbChat }) }
+  katekizm = @{ items = @(
+    @{ h = 'iman-ikrari.html'; t = 'İnanç'; te = 'Creed'; n = 'I' },
+    @{ h = 'kutsal-sirlar.html'; t = 'Kutlama'; te = 'Celebration'; n = 'II' },
+    @{ h = 'mesihte-yasam.html'; t = 'Yaşam'; te = 'Life'; n = 'III' },
+    @{ h = 'hristiyan-duasi.html'; t = 'Dua'; te = 'Prayer'; n = 'IV' })
+    more = @(
+    @{ h = 'katesizm.html'; t = 'Genel Bakış'; te = 'Overview' },
+    @{ h = 'motu-proprio.html'; t = 'Motu Proprio'; te = 'Motu Proprio' },
+    @{ h = 'giris.html'; t = 'Giriş'; te = 'Introduction' },
+    @{ h = 'ekler.html'; t = 'Ekler'; te = 'Appendix' }) }
+  tesbih = @{ items = @(
+    @{ h = '#nasil'; t = 'Nasıl Edilir?'; te = 'How to Pray'; ico = $TbSteps },
+    @{ h = '#gizemler'; t = 'Gizemler'; te = 'Mysteries'; ico = $IcoSparkle },
+    @{ h = '#tesbih-rehberi'; t = 'İnteraktif Tesbih'; te = 'Interactive Rosary'; ico = $IcoBeads })
+    more = @(@{ h = 'ekler.html#ek-a'; t = 'Sık Kullanılan Dualar'; te = 'Common Prayers' }) }
+  neden = @{ attr = 'data-why-go'; items = @(
+    @{ h = '#hakikat-ve-tanri'; t = 'Hakikat'; te = 'Truth'; n = '1' },
+    @{ h = '#isa-ve-kutsal-kitap'; t = 'İsa'; te = 'Jesus'; n = '2' },
+    @{ h = '#kilise-ve-kutsal-sirlar'; t = 'Kilise'; te = 'Church'; n = '3' },
+    @{ h = '#azizler-ve-gunahkarlar'; t = 'Azizler'; te = 'Saints'; n = '4' })
+    more = @(
+    @{ h = '#ahlak-ve-sonsuz-yazgi'; t = '5. Ahlak ve Sonsuz Yazgı'; te = '5. Morality and Destiny' },
+    @{ h = '#sonuc'; t = 'Hepsi bir arada'; te = 'Putting it together' }) }
+  tarih = @{ items = @(
+    @{ h = '#harita'; t = 'Harita'; te = 'Map'; ico = $TbMap },
+    @{ h = '#pavlus'; t = 'Pavlus'; te = 'Paul'; n = '1' },
+    @{ h = '#yedi-kilise'; t = '7 Kilise'; te = '7 Churches'; n = '2' },
+    @{ h = '#iznik'; t = 'İznik'; te = 'Nicaea'; n = '3' })
+    more = @(@{ h = '#kilise-babalari'; t = '4. Bu Topraklarda Yazan Kilise Babaları'; te = '4. The Church Fathers of Anatolia' }) }
+  kiliseler = @{ attr = 'data-city-link'; items = @(
+    @{ h = '#istanbul'; t = 'İstanbul'; te = 'Istanbul'; ico = $IcoPin },
+    @{ h = '#izmir'; t = 'İzmir'; te = 'Izmir'; ico = $IcoPin },
+    @{ h = '#ankara'; t = 'Ankara'; te = 'Ankara'; ico = $IcoPin },
+    @{ h = '#bursa'; t = 'Bursa'; te = 'Bursa'; ico = $IcoPin })
+    more = @(
+    @{ h = '#mersin'; t = 'Mersin'; te = 'Mersin' }, @{ h = '#adana'; t = 'Adana'; te = 'Adana' },
+    @{ h = '#antakya'; t = 'Antakya (Hatay)'; te = 'Antakya (Hatay)' }, @{ h = '#antalya'; t = 'Antalya'; te = 'Antalya' },
+    @{ h = '#diyarbakir'; t = 'Diyarbakır'; te = 'Diyarbakır' }, @{ h = '#mardin'; t = 'Mardin'; te = 'Mardin' },
+    @{ h = '#katolik-bulunamadiginda'; t = 'Yakında Katolik kilisesi yoksa'; te = 'If there is no Catholic church nearby'; he = '#no-catholic-church-nearby'; plain = $true }) }
+  meseller = @{ items = @(
+    @{ h = '#hukumdarlik'; t = 'Hükümdarlık'; te = 'Kingdom'; n = '1' },
+    @{ h = '#merhamet'; t = 'Merhamet'; te = 'Mercy'; n = '2' },
+    @{ h = '#dua'; t = 'Dua'; te = 'Prayer'; n = '3' },
+    @{ h = '#uyaniklik'; t = 'Uyanıklık'; te = 'Watchfulness'; n = '4' })
+    more = @(
+    @{ h = '#sorumluluk'; t = '5. Sorumluluk ve Yönetim Meselleri'; te = '5. Parables of Stewardship' },
+    @{ h = '#cagri'; t = '6. Hükümdarlığa Çağrı ve Hesap Verme Meselleri'; te = '6. Parables of the Call and the Reckoning' }) }
+  mucizeler = @{ items = @(
+    @{ h = '#gorunmeler'; t = 'Görünmeler'; te = 'Apparitions'; n = '1' },
+    @{ h = '#kalintilar'; t = 'Kalıntılar'; te = 'Relics'; n = '2' },
+    @{ h = '#efkaristiya'; t = 'Efkaristiya'; te = 'Eucharist'; n = '3' },
+    @{ h = '#curumeyen-azizler'; t = 'Çürümeyenler'; te = 'Incorrupt'; n = '4' }) }
+  sss = @{ items = @(
+    @{ h = '#teolojik-yanilgilar'; t = 'Yanılgılar'; te = 'Misconceptions'; n = '1' },
+    @{ h = '#kutsal-sirlar-uygulamalar'; t = 'Kutsal Sırlar'; te = 'Sacraments'; n = '2' },
+    @{ h = '#otorite-ogretiler'; t = 'Otorite'; te = 'Authority'; n = '3' },
+    @{ h = '#akla-gelen-itirazlar'; t = 'İtirazlar'; te = 'Objections'; n = '4' })
+    more = @(@{ h = '#savunma-ve-guncel-sorular'; t = '5. Kilise Savunması ve Güncel Sorular'; te = '5. Church Apologetics and Questions from Today' }) }
+  gunah = @{ items = @(
+    @{ h = '#adim-adim'; t = 'Adımlar'; te = 'Steps'; n = '1' },
+    @{ h = '#vicdan-muhasebesi'; t = 'Vicdan'; te = 'Examen'; n = '2' },
+    @{ h = '#sorular-ve-korkular'; t = 'Sorular'; te = 'Questions'; n = '3' })
+    more = @(@{ h = 'katolik-sureci.html'; t = 'Katolik Olma Süreci'; te = 'Becoming Catholic' }, @{ h = 'kutsal-ayin.html'; t = 'Kutsal Ayin'; te = 'The Holy Mass' }) }
+  surec = @{ items = @(
+    @{ h = '#iki-yol'; t = 'İki Yol'; te = 'Two Paths'; n = '1' },
+    @{ h = '#surec'; t = 'Süreç'; te = 'Process'; n = '2' },
+    @{ h = '#zaten-hristiyan'; t = 'Vaftizliler'; te = 'Baptized'; n = '3' },
+    @{ h = '#pratik-sorular'; t = 'Sorular'; te = 'Questions'; n = '6' })
+    more = @(
+    @{ h = '#sartli-vaftiz'; t = '4. Vaftizin geçerliliğinden kuşku duyuluyorsa'; te = '4. If a baptism is in doubt' },
+    @{ h = '#beklerken'; t = '5. Bekleme süresi'; te = '5. The waiting time' },
+    @{ h = 'gunah-cikarma.html'; t = 'Günah Çıkarma'; te = 'Confession' }) }
+  ayin = @{ items = @(
+    @{ h = '#toplanma'; t = 'Toplanma'; te = 'Gathering'; n = '1' },
+    @{ h = '#soz-liturjisi'; t = 'Söz'; te = 'Word'; n = '2' },
+    @{ h = '#sunus'; t = 'Sunuş'; te = 'Gifts'; n = '3' },
+    @{ h = '#sukran-duasi'; t = 'Şükran'; te = 'Eucharist'; n = '4' })
+    more = @(
+    @{ h = '#komunyon'; t = '5. Komünyon'; te = '5. The Communion Rite' },
+    @{ h = '#son-takdis'; t = '6. Son Takdis'; te = '6. The Concluding Rites' }) }
+  kitap = @{ items = @(
+    @{ h = '#katolik-baski'; t = 'Katolik Baskı'; te = 'Catholic Edition'; ico = $SmallCross },
+    @{ h = '#turkce'; t = 'Türkçe'; te = 'In Turkish'; ico = $IcoBook },
+    @{ h = '#hangi-ceviri'; t = 'Hangi Çeviri?'; te = 'Which One?'; ico = $TbSteps },
+    @{ h = '#oneri'; t = 'Önerimiz'; te = 'Our Pick'; ico = $IcoStar })
+    more = @(@{ h = '#onayli'; t = 'Onaylı çeviriler'; te = 'Approved translations' }) }
+  azizler = @{ items = @(
+    @{ h = '#bugun-azizi'; t = 'Bugün'; te = 'Today'; ico = $TbToday },
+    @{ h = '#takvim'; t = 'Takvim'; te = 'Calendar'; ico = $TbCal },
+    @{ h = '#buyuk-azizler'; he = '#best-known-saints'; t = '20 Aziz'; te = 'Top 20'; ico = $IcoStar },
+    @{ h = '#hareketli-bayramlar'; t = 'Bayramlar'; te = 'Feasts'; ico = $TbFeast }) }
+}
+$TbPages = @{
+  'katesizm.html' = 'katekizm'; 'motu-proprio.html' = 'katekizm'; 'giris.html' = 'katekizm'; 'iman-ikrari.html' = 'katekizm'
+  'kutsal-sirlar.html' = 'katekizm'; 'mesihte-yasam.html' = 'katekizm'; 'hristiyan-duasi.html' = 'katekizm'; 'ekler.html' = 'katekizm'
+  'tesbih-duasi.html' = 'tesbih'; 'neden-katoligiz.html' = 'neden'; 'topraklarimizda-hristiyanlik.html' = 'tarih'
+  'kiliseler.html' = 'kiliseler'; 'meseller.html' = 'meseller'; 'mucizeler.html' = 'mucizeler'; 'sss.html' = 'sss'
+  'gunah-cikarma.html' = 'gunah'; 'katolik-sureci.html' = 'surec'; 'kutsal-ayin.html' = 'ayin'; 'azizler.html' = 'azizler'; 'kutsal-kitap.html' = 'kitap'
+}
+function Tb-Href([string]$h, [bool]$en, [string]$he = '') {
+  if ($en -and $he) { return $he }
+  if ($h.StartsWith('#') -or -not $en) { return $h }
+  $parts = $h -split '#', 2
+  $p = $EnAltMap[$parts[0]]
+  if ($parts.Count -gt 1) { return "$p#$($parts[1])" } else { return $p }
+}
+function Tab-Bar([string]$trFile, [string]$lang) {
+  $en = $lang -eq 'en'
+  $key = $TbPages[$trFile]; if (-not $key) { $key = 'main' }
+  $set = $TbSets[$key]
+  $tx = if ($en) { @{ nav = 'Page menu'; more = 'More'; here = 'On this page'; site = 'Site'; all = 'Full menu'; close = 'Close'; home = 'Home' } }
+        else { @{ nav = 'Sayfa menüsü'; more = 'Diğer'; here = 'Bu sayfada'; site = 'Site'; all = 'Tüm menü'; close = 'Kapat'; home = 'Ana Sayfa' } }
+  $attrName = $set.attr
+  $lis = ($set.items | ForEach-Object {
+    $href = Tb-Href $_.h $en $_.he
+    $label = if ($en) { $_.te } else { $_.t }
+    $ico = if ($_.n) { "<span class=`"tb-num`">$($_.n)</span>" } else { $_.ico }
+    $isPage = -not $_.h.StartsWith('#')
+    $active = if ($isPage -and $_.h -eq $trFile) { ' is-active" aria-current="page' } else { '' }
+    $extra = if ($attrName -and -not $isPage) { " $attrName=`"$($href.Substring(1))`"" } else { '' }
+    "<li><a class=`"tb-item$active`" href=`"$href`"$extra><span class=`"tb-ico`">$ico</span><span class=`"tb-t`">$label</span></a></li>"
+  }) -join ''
+  if ($set.main) { return "<nav class=`"tabbar`" aria-label=`"$($tx.nav)`"><ul class=`"tb-list`">$lis</ul></nav>" }
+  $lis += "<li><button type=`"button`" class=`"tb-item tb-more`" aria-expanded=`"false`" aria-controls=`"tb-drawer`"><span class=`"tb-ico`">$TbMore</span><span class=`"tb-t`">$($tx.more)</span></button></li>"
+  # The drawer: the rest of this page's sections, then the core destinations of the site
+  $moreLinks = ($set.more | Where-Object { $_ } | ForEach-Object {
+    $href = Tb-Href $_.h $en $_.he
+    $extra = if ($attrName -and $_.h.StartsWith('#') -and -not $_.plain) { " $attrName=`"$($_.h.Substring(1))`"" } else { '' }
+    "<a class=`"tb-link`" href=`"$href`"$extra>$(if ($en) { $_.te } else { $_.t })</a>"
+  }) -join ''
+  $hereBlock = if ($moreLinks) { "<p class=`"tb-group`">$($tx.here)</p><div class=`"tb-links`">$moreLinks</div>" } else { '' }
+  $homeHref = if ($en) { 'en/index.html' } else { 'index.html' }
+  $siteLinks = "<a class=`"tb-site`" href=`"$homeHref`"><span class=`"tb-ico`">$TbHome</span><span>$($tx.home)</span></a>" + (($TbSets.main.items | ForEach-Object {
+    "<a class=`"tb-site`" href=`"$(Tb-Href $_.h $en)`"><span class=`"tb-ico`">$($_.ico)</span><span>$(if ($en) { $_.te } else { $_.t })</span></a>"
+  }) -join '') + "<button type=`"button`" class=`"tb-site`" data-tb-allmenu><span class=`"tb-ico`">$TbMenu</span><span>$($tx.all)</span></button>"
+  return "<nav class=`"tabbar`" aria-label=`"$($tx.nav)`"><ul class=`"tb-list`">$lis</ul></nav>" +
+    "<div class=`"tb-drawer`" id=`"tb-drawer`" hidden><div class=`"tb-backdrop`" data-tb-close></div>" +
+    "<div class=`"tb-sheet`" role=`"dialog`" aria-modal=`"true`" aria-labelledby=`"tb-drawer-title`">" +
+      "<div class=`"tb-sheet-head`"><p class=`"tb-drawer-title`" id=`"tb-drawer-title`">$($tx.more)</p><button type=`"button`" class=`"tb-close icon-btn`" data-tb-close aria-label=`"$($tx.close)`">$IcoClose</button></div>" +
+      "$hereBlock<p class=`"tb-group`">$($tx.site)</p><div class=`"tb-sites`">$siteLinks</div>" +
+    "</div></div>"
 }
 $MassIcons = @{
   gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
@@ -761,15 +958,6 @@ function Header-Html([string]$current) {
     $cls = if ($_.href -eq 'katesizm.html' -and $KatekizmPages -contains $current) { 'nav-link is-section' } else { 'nav-link' }
     "<li><a class=`"$cls`" href=`"$($_.href)`"$(Cur $_.href $current)>$($_.t)</a></li>"
   }) -join ''
-  $sheetKatekizm = ($KatekizmNav | ForEach-Object {
-    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$SmallCross</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
-  }) -join ''
-  $sheetPray = ($PrayerNav | ForEach-Object {
-    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($NavIcons[$_.href])</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
-  }) -join ''
-  $sheetKaynaklar = ($KaynaklarNav | ForEach-Object {
-    "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($NavIcons[$_.href])</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>"
-  }) -join ''
   return @"
 $Sprite
 <a class="skip-link" href="#main">İçeriğe geç</a>
@@ -801,41 +989,7 @@ $Sprite
       </div>
     </div>
     <nav class="ns-nav" aria-label="Menü">
-      <div class="ns-group" style="animation-delay:0s">
-        <a class="ns-item" href="index.html"$(Cur 'index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Ana Sayfa</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.035s">
-        <p class="ns-label">Neden Katoliğiz?</p>
-        <a class="ns-item" href="neden-katoligiz.html"$(Cur 'neden-katoligiz.html' $current)><span class="ns-ico">$IcoCompass</span><span class="ns-body"><span class="ns-t">Neden Katoliğiz?</span><span class="ns-s">İmanın beş adımda özeti</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.07s">
-        <p class="ns-label">Katekizm</p>
-        $sheetKatekizm
-      </div>
-      <div class="ns-group" style="animation-delay:.105s">
-        <p class="ns-label">Kaynaklar</p>
-        $sheetKaynaklar
-      </div>
-      <div class="ns-group" style="animation-delay:.14s">
-        <p class="ns-label">Dualar</p>
-        $sheetPray
-      </div>
-      <div class="ns-group" style="animation-delay:.175s">
-        <p class="ns-label">Mucizeler</p>
-        <a class="ns-item" href="mucizeler.html"$(Cur 'mucizeler.html' $current)><span class="ns-ico">$IcoRadiance</span><span class="ns-body"><span class="ns-t">Mucizeler</span><span class="ns-s">Görünmeler, kalıntılar, Efkaristiya mucizeleri</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.21s">
-        <p class="ns-label">Azizler</p>
-        <a class="ns-item" href="azizler.html"$(Cur 'azizler.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Azizler</span><span class="ns-s">Ayin takviminin azizleri</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.245s">
-        <p class="ns-label">Sorular</p>
-        <a class="ns-item" href="sss.html"$(Cur 'sss.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">Sorular</span><span class="ns-s">Sıkça sorulan sorular</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.28s">
-        <p class="ns-label">İletişim</p>
-        <a class="ns-item" href="iletisim.html"$(Cur 'iletisim.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">İletişim</span><span class="ns-s">Bana ulaşın</span></span></a>
-      </div>
+$(Nav-Sheet 'tr' $current)
     </nav>
   </div>
 </div>
@@ -861,15 +1015,6 @@ function Lang-Switch-Target([string]$current, [string]$lang) {
   if ($lang -eq 'en') { return 'index.html' }
   return 'en/index.html'
 }
-$MoreNavEn = @(
-  @{ href = 'en/why-were-catholic.html'; t = "Why We're Catholic"; s = 'A five-step case for the faith'; ico = $IcoCompass },
-  @{ href = 'en/mass.html';              t = 'The Holy Mass';      s = 'The order of Mass, in six parts'; ico = $IcoChalice },
-  @{ href = 'en/rosary.html';            t = 'The Holy Rosary';    s = 'Prayers and the mysteries'; ico = $IcoBeads },
-  @{ href = 'en/parables.html';          t = 'The Parables of Jesus'; s = 'Thirty-two parables, plainly explained'; ico = $IcoScroll },
-  @{ href = 'en/bible.html';             t = 'The Bible';          s = 'Choosing a translation'; ico = $IcoBook },
-  @{ href = 'en/miracles.html';          t = 'Miracles';           s = 'Apparitions, relics, Eucharistic miracles'; ico = $IcoRadiance },
-  @{ href = 'en/anatolia.html';          t = 'Christianity in Anatolia'; s = "Paul's homeland, Nicaea, the early Church"; ico = $IcoRoots }
-)
 # Mirrors the Turkish core four (Neden Katoliğiz?, Katekizm, Kilise Bul, Sorular).
 $CoreNavEn = @(
   @{ href = 'en/why-were-catholic.html'; t = "Why We're Catholic" },
@@ -915,41 +1060,7 @@ $Sprite
       </div>
     </div>
     <nav class="ns-nav" aria-label="Menu">
-      <div class="ns-group" style="animation-delay:0s">
-        <a class="ns-item" href="en/index.html"$(Cur 'en/index.html' $current)><span class="ns-ico">$IcoHome</span><span class="ns-body"><span class="ns-t">Home</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.035s">
-        <p class="ns-label">Becoming Catholic</p>
-        <a class="ns-item" href="en/becoming-catholic.html"$(Cur 'en/becoming-catholic.html' $current)><span class="ns-ico">$IcoWay</span><span class="ns-body"><span class="ns-t">Becoming Catholic</span><span class="ns-s">The OCIA/RCIA process</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.07s">
-        <p class="ns-label">Compendium</p>
-        $(($TextNavEn | ForEach-Object { "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$SmallCross</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>" }) -join '')
-      </div>
-      <div class="ns-group" style="animation-delay:.105s">
-        <p class="ns-label">Confession</p>
-        <a class="ns-item" href="en/confession.html"$(Cur 'en/confession.html' $current)><span class="ns-ico">$IcoKey</span><span class="ns-body"><span class="ns-t">Confession</span><span class="ns-s">Step by step, how it works</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.14s">
-        <p class="ns-label">Saints</p>
-        <a class="ns-item" href="en/saints.html"$(Cur 'en/saints.html' $current)><span class="ns-ico">$IcoStar</span><span class="ns-body"><span class="ns-t">Saints</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.175s">
-        <p class="ns-label">Find a Church</p>
-        <a class="ns-item" href="en/find-a-church.html"$(Cur 'en/find-a-church.html' $current)><span class="ns-ico">$IcoPin</span><span class="ns-body"><span class="ns-t">Find a Church</span><span class="ns-s">Catholic churches in Turkey</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.21s">
-        <p class="ns-label">FAQ</p>
-        <a class="ns-item" href="en/faq.html"$(Cur 'en/faq.html' $current)><span class="ns-ico">$IcoAsk</span><span class="ns-body"><span class="ns-t">FAQ</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.245s">
-        <p class="ns-label">More</p>
-        $(($MoreNavEn | ForEach-Object { "<a class=`"ns-item ns-sub`" href=`"$($_.href)`"$(Cur $_.href $current)><span class=`"ns-ico`">$($_.ico)</span><span class=`"ns-body`"><span class=`"ns-t`">$($_.t)</span><span class=`"ns-s`">$($_.s)</span></span></a>" }) -join '')
-      </div>
-      <div class="ns-group" style="animation-delay:.28s">
-        <p class="ns-label">Contact</p>
-        <a class="ns-item" href="en/contact.html"$(Cur 'en/contact.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">Contact</span><span class="ns-s">Get in touch</span></span></a>
-      </div>
+$(Nav-Sheet 'en' $current)
     </nav>
   </div>
 </div>
@@ -1065,7 +1176,7 @@ function Write-Page {
 <html lang="$Lang"$rootAttr>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>$(Attr $Title)</title>
 <meta name="description" content="$(Attr $Description)">
 <meta name="robots" content="$Robots">
@@ -1101,6 +1212,7 @@ $headerHtml
 $Body
 </main>
 $footerHtml
+$(Tab-Bar $(if ($Lang -eq 'en') { $EnAltMap[$File] } else { $File }) $Lang)
 $a11yHtml
 </body>
 </html>
@@ -1371,7 +1483,7 @@ $homeBody = @"
     <div class="glow"></div>
     $Logo
     <h1>$SiteTag</h1>
-    <p class="lead">Katekizm, Katolik olma süreci, Kutsal Ayin, İsa$($Apos)nın meselleri, günlük dualar, azizlerin hayat hikâyeleri, mucizeler ve Anadolu$($Apos)daki köklerimiz: hepsi Türkçe, tek bir sitede.</p>
+    <p class="lead">Katolik inancı Türkçe: öğretisi, duaları, azizleri ve bu topraklardaki kökleri.</p>
     <div class="today-pills">
       <a class="today-pill today-pill-lg" href="azizler.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" aria-live="polite">Yükleniyor…</span></span></a>
     </div>
@@ -1387,7 +1499,7 @@ $homeBody = @"
 
   <section class="lib-section lib-first">
     <div class="lib-head"><span class="roman">I</span><h2>Öğretiler</h2></div>
-    <p class="lib-lead">Kilise$($Apos)nin resmî öğretisi: neden Katolik olduğumuzdan Katekizm$($Apos)in tam çevirisine, Katolik olma sürecinden günah çıkarmaya.</p>
+    <p class="lib-lead">Kilise$($Apos)nin öğrettikleri ve Katolik olmanın yolu.</p>
     <div class="shelf cols-3">
       <a class="hub-card" href="neden-katoligiz.html">
         <span class="hub-head"><span class="hub-ico">$IcoCompass</span><span class="hub-t">Neden Katoliğiz?</span></span>
@@ -1427,7 +1539,7 @@ $homeBody = @"
 
   <section class="lib-section">
     <div class="lib-head"><span class="roman">II</span><h2>Yaşam ve Dua</h2></div>
-    <p class="lib-lead">Ayine katılmaktan Meryem Ana Tesbihi$($Apos)ne, Mesih İsa$($Apos)nın mesellerinden günlük dualara: imanın günlük pratiği.</p>
+    <p class="lib-lead">İmanın günlük pratiği: Ayin, Tesbih, meseller ve dualar.</p>
     <div class="shelf cols-3">
       <a class="hub-card" href="kutsal-ayin.html">
         <span class="hub-head"><span class="hub-ico">$IcoChalice</span><span class="hub-t">Kutsal Ayin</span></span>
@@ -1459,7 +1571,7 @@ $homeBody = @"
 
   <section class="lib-section">
     <div class="lib-head"><span class="roman">III</span><h2>Azizler, Mucizeler ve Tarihimiz</h2></div>
-    <p class="lib-lead">Yılın her günü için bir aziz, Kilise tarihinin görünmeleri ve mucizeleri, imanımızın bu topraklardaki kökleri.</p>
+    <p class="lib-lead">Her günün azizi, mucizeler ve imanımızın bu topraklardaki kökleri.</p>
     <div class="shelf cols-3">
       <a class="hub-card" href="azizler.html">
         <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Azizler</span></span>
@@ -1498,7 +1610,7 @@ $homeBodyEn = @"
     <div class="glow"></div>
     $Logo
     <h1>$SiteTagEn</h1>
-    <p class="lead">The Compendium of the Catechism, becoming Catholic, the Mass, the parables of Jesus, daily prayers, the lives of the saints, miracles, and our roots in Anatolia: the whole site, now available in English.</p>
+    <p class="lead">The Catholic faith: its teaching, its prayers, its saints and its roots in Anatolia.</p>
     <div class="today-pills">
       <a class="today-pill today-pill-lg" href="en/saints.html" data-home-saint-pill><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Saint of the Day</span><span class="tp-value hint" aria-live="polite">Loading…</span></span></a>
     </div>
@@ -1514,7 +1626,7 @@ $homeBodyEn = @"
 
   <section class="lib-section lib-first">
     <div class="lib-head"><span class="roman">I</span><h2>Teaching</h2></div>
-    <p class="lib-lead">The Church's official teaching: from why we're Catholic to the full Compendium, from becoming Catholic to confession.</p>
+    <p class="lib-lead">What the Church teaches, and how to become Catholic.</p>
     <div class="shelf cols-3">
       <a class="hub-card" href="en/why-were-catholic.html">
         <span class="hub-head"><span class="hub-ico">$IcoCompass</span><span class="hub-t">Why We're Catholic</span></span>
@@ -1554,7 +1666,7 @@ $homeBodyEn = @"
 
   <section class="lib-section">
     <div class="lib-head"><span class="roman">II</span><h2>Life and Prayer</h2></div>
-    <p class="lib-lead">From the Mass to the Rosary, from the parables of Jesus to daily prayers: the daily practice of the faith.</p>
+    <p class="lib-lead">The faith day to day: the Mass, the Rosary, the parables and prayers.</p>
     <div class="shelf cols-3">
       <a class="hub-card" href="en/appendix.html">
         <span class="hub-head"><span class="hub-ico">$IcoPrayers</span><span class="hub-t">Common Prayers</span></span>
@@ -1586,7 +1698,7 @@ $homeBodyEn = @"
 
   <section class="lib-section">
     <div class="lib-head"><span class="roman">III</span><h2>Saints, Miracles and Our History</h2></div>
-    <p class="lib-lead">A saint for every day of the year, the Church's apparitions and miracles, and our faith's roots in this land.</p>
+    <p class="lib-lead">A saint for every day, miracles, and our faith's roots in this land.</p>
     <div class="shelf cols-3">
       <a class="hub-card" href="en/saints.html">
         <span class="hub-head"><span class="hub-ico">$IcoStar</span><span class="hub-t">Saints</span></span>
@@ -2191,7 +2303,7 @@ Write-Page -File 'en/anatolia.html' -Title "$($Anatolia.en) | $SiteName" `
 # a one-line answer, the key points as a list, and the strongest objection folded under it.
 $IcoArrowR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 $IcoArrowL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
-$IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.8 9.6a2.3 2.3 0 0 1 4.4.8c0 1.6-2.2 2-2.2 3.3"/><path d="M12 16.4h.01"/></svg>'
+$IcoSkeptic = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.8 9.6a2.3 2.3 0 0 1 4.4.8c0 1.6-2.2 2-2.2 3.3"/><path d="M12 16.4h.01"/></svg>'
 function Why-Page([string]$lang) {
   $en = $lang -eq 'en'
   $W = $WhyCatholic
@@ -2218,7 +2330,7 @@ function Why-Page([string]$lang) {
         "<h3 class=`"why-q`">$(Inline (F $tp 'q'))</h3>" +
         "<p class=`"why-lede`">$(Inline (F $tp 'lede'))</p>" +
         "<ul class=`"why-points`">$pts</ul>" +
-        "<details class=`"why-obj`"><summary>$IcoAsk<span><span class=`"why-obj-label`">$($L.ask)</span><span class=`"why-obj-q`">$(Inline (F $tp 'objection'))</span></span>$IcoChevDown</summary>" +
+        "<details class=`"why-obj`"><summary>$IcoSkeptic<span><span class=`"why-obj-label`">$($L.ask)</span><span class=`"why-obj-q`">$(Inline (F $tp 'objection'))</span></span>$IcoChevDown</summary>" +
           "<div class=`"why-obj-a`"><p><strong>$($L.answer):</strong> $(Inline (F $tp 'reply'))</p></div></details>" +
       "</article>"
     }) -join "`n"
@@ -2355,7 +2467,7 @@ $azizlerBody = @"
     <p class="label">Bugün <span data-today-date>...</span></p>
     <div class="today-body" data-today-body><p class="hint">Bugünün azizini görmek için JavaScript$($Apos)i etkinleştirin.</p></div>
   </section>
-  <nav class="month-pills" aria-label="Aylar" data-month-pills>$monthPillsHtml</nav>
+  <nav class="month-pills" id="takvim" aria-label="Aylar" data-month-pills>$monthPillsHtml</nav>
   <div class="saints-cal" data-saints-cal>
 $monthSectionsHtml
   </div>
@@ -2392,7 +2504,7 @@ $azizlerBodyEn = @"
     <p class="label">Today <span data-today-date>...</span></p>
     <div class="today-body" data-today-body><p class="hint">Enable JavaScript to see today's saint.</p></div>
   </section>
-  <nav class="month-pills" aria-label="Months" data-month-pills>$monthPillsHtmlEn</nav>
+  <nav class="month-pills" id="takvim" aria-label="Months" data-month-pills>$monthPillsHtmlEn</nav>
   <div class="saints-cal" data-saints-cal>
 $monthSectionsHtmlEn
   </div>

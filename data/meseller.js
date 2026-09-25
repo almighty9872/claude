@@ -10,389 +10,486 @@
  *     tools/build.ps1 calistirin. JSON-START / JSON-END isaretlerini silmeyin.
  * ===================================================================== */
 window.PARABLES = /*JSON-START*/{
-  "title": "İsa’nın Meselleri",
-  "en": "The Parables of Jesus",
-  "intro": "Mesel (Yunanca “parabolē”, yan yana koymak ya da karşılaştırmak anlamına gelir), günlük hayattan alınan basit bir öykü aracılığıyla derin bir ruhsal ya da ahlaki gerçeği anlatma yöntemidir. Mesih İsa, halka öğretirken sıkça bu yöntemi kullanmıştır: bir çiftçi, bir çoban, bir düğün, kaybolan bir para. Dinleyicilerin günlük hayattan tanıdığı bu sahneler, aslında Allah’ın Hükümdarlığı’na dair bir gerçeği içinde taşır.\nÖğrencileri neden mesellerle konuştuğunu sorduğunda Mesih İsa şöyle yanıt verir: gerçeği içtenlikle arayan bir yürek için mesel, düşünmeye ve sorgulamaya davet eden bir kapıdır; ama duymak istemeyen bir yürek için aynı öykü yalnızca sıradan bir hikâye olarak kalır (Matta 13:10–17). Bu yüzden meseller bazen ilk bakışta şaşırtıcı, hatta anlaşılması güç gelebilir: bağdaki işçilerin eşit ücret alması, adaletsiz bir kahyanın övülmesi gibi ayrıntılar düşünmeye zorlar. Aşağıda Mesih İsa’nın İnciller’de anlatılan başlıca meselleri, kısaca yeniden anlatılmış ve anlamlarıyla birlikte, konularına göre bölümlere ayrılmıştır.",
-  "categories": [
+ "title": "İsa’nın Meselleri",
+ "en": "The Parables of Jesus",
+ "intro": "Mesel, günlük hayattan basit bir öyküyle derin bir gerçeği anlatır: bir çiftçi, bir çoban, kaybolan bir para. İsa, gerçeği arayan yüreğe bir düşünme kapısı açmak için mesellerle konuştu (Matta 13:10-17). Aşağıda başlıca meseller, anlamlarıyla birlikte konularına göre sıralanmıştır.",
+ "categories": [
+  {
+   "id": "hukumdarlik",
+   "icon": "sprout",
+   "title": "Hükümdarlık Meselleri",
+   "en": "Parables of the Kingdom",
+   "lead": "Allah’ın Hükümdarlığı küçük başlar, sessizce büyür ve her şeyden değerlidir.",
+   "leadEn": "God's Kingdom starts small, grows quietly and is worth more than anything.",
+   "items": [
     {
-      "id": "hukumdarlik",
-      "icon": "sprout",
-      "title": "Hükümdarlık Meselleri",
-      "en": "Parables of the Kingdom",
-      "lead": "Mesih İsa, Allah’ın Hükümdarlığı’nın ne olduğunu ve nasıl büyüdüğünü anlatmak için çoğu zaman tarım ve büyüme benzetmeleri kullanmıştır. Aşağıdaki meseller, Hükümdarlık’ın küçük başlangıçlardan büyük bir gerçekliğe nasıl dönüştüğünü, iyi ile kötünün bu dünyada nasıl bir arada bulunduğunu ve Hükümdarlık’a sahip olmanın değerini anlatır.",
-      "leadEn": "Christ often used images of farming and growth to explain what the Kingdom of God is and how it grows. The parables below describe how the Kingdom grows from small beginnings into something vast, how good and evil coexist in this world for a time, and the worth of possessing the Kingdom.",
-      "items": [
-        {
-          "id": "ekinci",
-          "name": "Ekinci",
-          "nameEn": "The Sower",
-          "ref": "Matta 13:1–23 · Markos 4:1–20 · Luka 8:4–15",
-          "refEn": "Matthew 13:1–23 · Mark 4:1–20 · Luke 8:4–15",
-          "bio": "Bir çiftçi tarlasına tohum eker. Tohumların bir kısmı yol kenarına düşer ve kuşlar hemen yer; bir kısmı taşlık yere düşer, çabuk filizlenir ama kök salamadığı için güneş altında kurur; bir kısmı dikenli yere düşer ve dikenler filizi boğar; bir kısmıysa iyi toprağa düşer ve otuz, altmış, hatta yüz kat ürün verir.\nMesih İsa bu meseli kendisi açıklamıştır: tohum Allah’ın sözüdür, farklı topraklar ise sözü duyan farklı insan yürekleridir. Yol kenarı sözü hemen unutan kayıtsız bir yüreği, taşlık toprak sıkıntı karşısında imanını çabuk bırakan yüzeysel bir bağlılığı, dikenli toprak dünya kaygılarının imanı boğduğu bir yüreği, iyi toprak ise sözü dinleyip anlayan ve ona göre yaşayan bir yüreği temsil eder. Mesel, sözü duymanın yetmediğini, onu nasıl karşıladığımızın belirleyici olduğunu öğretir.",
-          "bioEn": "A farmer sows seed in his field. Some falls on the path and is eaten by birds; some falls on rocky ground, sprouts quickly but withers for lack of root; some falls among thorns and is choked; and some falls on good soil and yields thirty, sixty, even a hundredfold.\nChrist himself explained this parable: the seed is the word of God, and the different soils are the different hearts that hear it. The path represents an indifferent heart that forgets the word at once; the rocky ground, a shallow commitment that gives up under pressure; the thorny ground, a heart choked by worldly cares; and the good soil, a heart that hears the word, understands it, and lives by it. The parable teaches that hearing the word is not enough: how we receive it is what matters.",
-          "en": { "ref": "Matthew 13:3–9 (Douay-Rheims)", "text": "Behold the sower went forth to sow.\nAnd whilst he soweth, some fell by the way side, and the birds of the air came and ate them up. And other some fell upon stony ground, where they had not much earth: and they sprung up immediately, because they had no deepness of earth. And when the sun was up they were scorched: and because they had not root, they withered away. And others fell among thorns: and the thorns grew up and choked them. And other some fell upon good ground: and they brought forth fruit, some an hundredfold, some sixtyfold, and some thirtyfold.\nHe that hath ears to hear, let him hear." }
-        },
-        {
-          "id": "bugday-ve-delice",
-          "name": "Buğday ve Delice",
-          "nameEn": "The Wheat and the Weeds",
-          "ref": "Matta 13:24–30, 36–43",
-          "refEn": "Matthew 13:24–30, 36–43",
-          "bio": "Bir adam tarlasına iyi tohum eker, ama o uyurken bir düşman gelip buğdayın arasına delice (yabani ot) tohumu serper. İkisi birlikte büyüyünce hizmetkârlar deliceyi hemen ayıklamak ister, ama adam buğdayla birlikte sökülmesin diye buna izin vermez; biçim zamanına kadar ikisinin birlikte büyümesine izin verilir, sonra ayrılıp delice yakılır, buğday ambara toplanır.\nMesih İsa bu meseli de açıklamıştır: tarla dünyadır, iyi tohum Hükümdarlık’ın çocukları, delice ise kötünün çocuklarıdır; biçim zamanı ise çağın sonudur. Mesel, iyi ile kötünün bu dünyada bir arada bulunmasına neden izin verildiğini açıklar: nihai ayrım ve yargı Allah’a aittir, insan eliyle acele bir ayıklama masum olanı da yok edebilir.",
-          "bioEn": "A man sows good seed in his field, but while he sleeps an enemy comes and scatters weeds among the wheat. When both grow up together, the servants want to pull out the weeds at once, but the man forbids it, lest the wheat be uprooted with them; both are left to grow until the harvest, when the weeds are separated out and burned, and the wheat is gathered into the barn.\nChrist also explained this parable: the field is the world, the good seed the children of the Kingdom, the weeds the children of the evil one, and the harvest the end of the age. The parable explains why good and evil are allowed to coexist in this world: the final separation and judgment belong to God, and a hasty human effort to root out evil risks destroying the innocent along with it.",
-          "en": { "ref": "Matthew 13:24–30 (Douay-Rheims)", "text": "The kingdom of heaven is likened to a man that sowed good seed in his field. But while men were asleep, his enemy came and oversowed cockle among the wheat and went his way. And when the blade was sprung up, and had brought forth fruit, then appeared also the cockle.\nAnd the servants of the goodman of the house coming said to him: Sir, didst thou not sow good seed in thy field? whence then hath it cockle? And he said to them: An enemy hath done this. And the servants said to him: Wilt thou that we go and gather it up? And he said: No, lest perhaps gathering up the cockle, you root up the wheat also together with it. Suffer both to grow until the harvest, and in the time of the harvest I will say to the reapers: Gather up first the cockle, and bind it into bundles to burn, but the wheat gather ye into my barn." }
-        },
-        {
-          "id": "hardal-tanesi",
-          "name": "Hardal Tanesi",
-          "nameEn": "The Mustard Seed",
-          "ref": "Matta 13:31–32 · Markos 4:30–32 · Luka 13:18–19",
-          "refEn": "Matthew 13:31–32 · Mark 4:30–32 · Luke 13:18–19",
-          "bio": "Hardal tanesi bütün tohumların en küçüğüdür; ama toprağa ekilince büyüyüp bahçedeki bütün bitkilerden daha iri bir dal haline gelir, öyle ki kuşlar gelip dallarında yuva yapar.\nAllah’ın Hükümdarlığı da böyle başlar: göze çarpmayan, küçük ve önemsiz görünen bir başlangıçla. Mesih İsa’nın birkaç öğrencisi ve mütevazı vaazıyla başlayan bu Hükümdarlık, zamanla bütün milletleri içine alacak kadar büyümüştür. Mesel, küçük bir imanın ya da küçük bir iyiliğin bile Allah’ın elinde büyük bir etkiye dönüşebileceğini hatırlatır.",
-          "bioEn": "The mustard seed is the smallest of all seeds, yet once planted it grows into the largest of garden plants, so that the birds come and nest in its branches.\nThe Kingdom of God begins the same way: with an inconspicuous, small and seemingly unimportant start. Beginning with a handful of Christ's disciples and a humble preaching, this Kingdom has grown over time to embrace every nation. The parable reminds us that even a small faith, or a small act of goodness, can become, in God's hands, something with a vast effect.",
-          "en": { "ref": "Matthew 13:31–32 (Douay-Rheims)", "text": "The kingdom of heaven is like to a grain of mustard seed, which a man took and sowed in his field. Which is the least indeed of all seeds; but when it is grown up, it is greater than all herbs, and becometh a tree, so that the birds of the air come, and dwell in the branches thereof." }
-        },
-        {
-          "id": "maya",
-          "name": "Maya",
-          "nameEn": "The Leaven",
-          "ref": "Matta 13:33 · Luka 13:20–21",
-          "refEn": "Matthew 13:33 · Luke 13:20–21",
-          "bio": "Bir kadın az miktarda mayayı büyük bir un yığınına karıştırır ve mayanın etkisiyle hamurun tamamı kabarır.\nHardal tanesi meseli gibi bu mesel de Hükümdarlık’ın görünmez ama etkili büyümesini anlatır. Maya hamurun içinde gözle görülmez, ama onu içten değiştirir. Allah’ın Hükümdarlığı da dünyada böyle çalışır: her zaman gösterişli biçimde değil, sessizce, içeriden, insan yüreklerini ve toplumları dönüştürerek.",
-          "bioEn": "A woman mixes a small amount of yeast into a large batch of flour, and the yeast works through the whole dough until it rises.\nLike the parable of the mustard seed, this parable describes the Kingdom's growth as hidden but effective. The yeast is invisible within the dough, yet it transforms it from within. God's Kingdom works the same way in the world: not always in dramatic, visible ways, but quietly, from within, transforming human hearts and societies.",
-          "en": { "ref": "Matthew 13:33 (Douay-Rheims)", "text": "The kingdom of heaven is like to leaven, which a woman took and hid in three measures of meal, till the whole was leavened." }
-        },
-        {
-          "id": "tarladaki-hazine",
-          "name": "Tarladaki Hazine",
-          "nameEn": "The Hidden Treasure",
-          "ref": "Matta 13:44",
-          "refEn": "Matthew 13:44",
-          "bio": "Bir adam bir tarlada gömülü hazine bulur; sevinçle gidip her şeyini satar ve o tarlayı satın alır.\nAllah’ın Hükümdarlığı, bulan kişi için her şeyden daha değerli bir hazinedir. Mesel, Hükümdarlık’ı bulan bir insanın tepkisinin zorunlu bir fedakârlık değil, sevinçle verilen bir karşılık olduğunu vurgular: adam hazineyi bulduğu için üzülerek değil, sevinerek her şeyini satar. İman uğruna verilen her şey, kaybedilen değil kazanılan bir şeydir.",
-          "bioEn": "A man finds treasure buried in a field; overjoyed, he goes and sells everything he owns to buy that field.\nThe Kingdom of God is a treasure more precious than anything else to the one who finds it. The parable stresses that the response of someone who finds the Kingdom is not a forced sacrifice but a joyful exchange: the man sells everything not with regret but with joy at having found the treasure. Whatever is given up for the sake of faith is not something lost, but something gained.",
-          "en": { "ref": "Matthew 13:44 (Douay-Rheims)", "text": "The kingdom of heaven is like unto a treasure hidden in a field. Which a man having found, hid it, and for joy thereof goeth, and selleth all that he hath, and buyeth that field." }
-        },
-        {
-          "id": "degerli-inci",
-          "name": "Değerli İnci",
-          "nameEn": "The Pearl of Great Price",
-          "ref": "Matta 13:45–46",
-          "refEn": "Matthew 13:45–46",
-          "bio": "Güzel inciler arayan bir tüccar, son derece değerli tek bir inci bulunca gidip her şeyini satar ve o inciyi satın alır.\nBu mesel, bir önceki hazine meseliyle neredeyse aynı dersi verir, ama farklı bir açıdan: hazineyi bulan adam onu ararken bulmamıştı, tüccar ise bilerek ve arayarak bulur. Allah’ın Hükümdarlığı hem beklenmedik bir armağan olarak hem de bilinçli bir arayışın sonunda bulunabilir; her iki durumda da bulunca verilecek tek karşılık, her şeyi bırakıp onu sahiplenmektir.",
-          "bioEn": "A merchant searching for fine pearls finds one of great value; he goes and sells everything he has to buy it.\nThis parable teaches almost the same lesson as the previous one, but from a different angle: the man who found the treasure was not looking for it, while the merchant finds it through deliberate searching. The Kingdom of God can be found both as an unexpected gift and as the fruit of a conscious search; either way, the only fitting response, once it is found, is to give up everything else to possess it.",
-          "en": { "ref": "Matthew 13:45–46 (Douay-Rheims)", "text": "Again the kingdom of heaven is like to a merchant seeking good pearls. Who when he had found one pearl of great price, went his way, and sold all that he had, and bought it." }
-        },
-        {
-          "id": "balik-agi",
-          "name": "Balık Ağı",
-          "nameEn": "The Net",
-          "ref": "Matta 13:47–50",
-          "refEn": "Matthew 13:47–50",
-          "bio": "Denize atılan bir ağ her türden balığı toplar; ağ dolunca balıkçılar onu kıyıya çeker, iyi balıkları kaplara ayırır, işe yaramazları atarlar.\nMesih İsa bu meseli, buğday ve delice meseliyle aynı şekilde açıklar: çağın sonunda melekler kötüleri doğrulardan ayıracaktır. Mesel, Kilise’nin ve dünyanın bu çağda hem iyi hem kötü insanları içinde barındırdığını, ama nihai ayrımın kaçınılmaz olduğunu hatırlatır.",
-          "bioEn": "A net cast into the sea gathers fish of every kind; when it is full, the fishermen haul it to shore, collect the good fish into baskets, and throw away the worthless ones.\nChrist explains this parable the same way as the parable of the wheat and the weeds: at the end of the age, angels will separate the wicked from the righteous. The parable reminds us that the Church and the world, in this age, hold both good and bad people together, but that the final separation is certain.",
-          "en": { "ref": "Matthew 13:47–50 (Douay-Rheims)", "text": "Again the kingdom of heaven is like to a net cast into the sea, and gathering together of all kind of fishes. Which, when it was filled, they drew out, and sitting by the shore, they chose out the good into vessels, but the bad they cast forth.\nSo shall it be at the end of the world. The angels shall go out, and shall separate the wicked from among the just. And shall cast them into the furnace of fire: there shall be weeping and gnashing of teeth." }
-        },
-        {
-          "id": "buyuyen-tohum",
-          "name": "Kendiliğinden Büyüyen Tohum",
-          "nameEn": "The Growing Seed",
-          "ref": "Markos 4:26–29",
-          "refEn": "Mark 4:26–29",
-          "bio": "Bir adam toprağa tohum eker; sonra gece uyusun gündüz kalksın, tohum onun bilmediği bir şekilde filizlenip büyür. Toprak kendiliğinden önce sapı, sonra başağı, sonra başaktaki dolgun taneyi verir; ürün olgunlaşınca adam orağını vurur.\nBu kısa mesel yalnızca Markos’un İncili’nde bulunur ve Hükümdarlık’ın büyümesinde insan çabasının sınırlı olduğunu öğretir. Çiftçi tohumu eker, ama büyümeyi sağlayan kendisi değildir. Allah’ın işi de insanların göremediği, çoğu zaman anlayamadığı bir biçimde, kendi zamanında olgunlaşır.",
-          "bioEn": "A man scatters seed on the ground; whether he sleeps or rises, night or day, the seed sprouts and grows without his knowing how. The earth produces on its own, first the stalk, then the head, then the full grain in the head; and when the crop is ripe, the man puts in the sickle.\nFound only in Mark's Gospel, this brief parable teaches that human effort has its limits in the growth of the Kingdom. The farmer plants the seed, but it is not he who makes it grow. God's work, too, ripens in its own time, in a way people often cannot see or fully understand.",
-          "en": { "ref": "Mark 4:26–29 (Douay-Rheims)", "text": "So is the kingdom of God, as if a man should cast seed into the earth, And should sleep, and rise, night and day, and the seed should spring, and grow up whilst he knoweth not. For the earth of itself bringeth forth fruit, first the blade, then the ear, afterwards the full corn in the ear. And when the fruit is brought forth, immediately he putteth in the sickle, because the harvest is come." }
-        }
-      ]
+     "id": "ekinci",
+     "name": "Ekinci",
+     "nameEn": "The Sower",
+     "ref": "Matta 13:1–23 · Markos 4:1–20 · Luka 8:4–15",
+     "refEn": "Matthew 13:1–23 · Mark 4:1–20 · Luke 8:4–15",
+     "bio": "Bir çiftçinin ektiği tohumun bir kısmını kuşlar yer, bir kısmı taşlıkta kurur, bir kısmını dikenler boğar; iyi toprağa düşenler ise otuz, altmış, yüz kat ürün verir.\nİsa meseli kendisi açıklar: tohum Allah’ın sözüdür, topraklar da onu duyan yüreklerdir. Sözü duymak yetmez; onu nasıl karşıladığımız her şeyi belirler.",
+     "bioEn": "A farmer's seed is eaten by birds, withers on rocky ground and is choked by thorns; the seed that falls on good soil yields thirty, sixty and a hundredfold.\nJesus explains it himself: the seed is God's word, and the soils are the hearts that hear it. Hearing isn't enough; what counts is how we receive it.",
+     "en": {
+      "ref": "Matthew 13:3–9 (Douay-Rheims)",
+      "text": "Behold the sower went forth to sow.\nAnd whilst he soweth, some fell by the way side, and the birds of the air came and ate them up. And other some fell upon stony ground, where they had not much earth: and they sprung up immediately, because they had no deepness of earth. And when the sun was up they were scorched: and because they had not root, they withered away. And others fell among thorns: and the thorns grew up and choked them. And other some fell upon good ground: and they brought forth fruit, some an hundredfold, some sixtyfold, and some thirtyfold.\nHe that hath ears to hear, let him hear."
+     }
     },
     {
-      "id": "merhamet",
-      "icon": "heart",
-      "title": "Merhamet ve Bağışlama Meselleri",
-      "en": "Parables of Mercy and Forgiveness",
-      "lead": "Bu meseller, Allah’ın günahkârlara duyduğu sınırsız merhameti ve insanın da aynı merhameti başkalarına göstermesi gerektiğini anlatır.",
-      "leadEn": "These parables describe God's boundless mercy toward sinners, and teach that we must show that same mercy to others.",
-      "items": [
-        {
-          "id": "kayip-koyun",
-          "name": "Kayıp Koyun",
-          "nameEn": "The Lost Sheep",
-          "ref": "Luka 15:3–7 · Matta 18:12–14",
-          "refEn": "Luke 15:3–7 · Matthew 18:12–14",
-          "bio": "Yüz koyunu olan bir çoban, bunlardan biri kaybolunca doksan dokuzunu kırda bırakır ve kaybolanı bulana dek arar; bulunca onu sevinçle omuzlarına alır, eve döner ve komşularını sevincine ortak eder.\nMesih İsa bu meseli, günahkârlarla birlikte yemek yediği için kendisini eleştiren dindarlara yanıt olarak anlatmıştır. Mesel, Allah’ın tek bir günahkârın tövbesine, güvende olan doksan dokuz kişiden daha çok sevindiğini öğretir; bu, doksan dokuzun değersiz olduğu anlamına gelmez, kaybolanın Allah’ın gözünde asla vazgeçilecek biri olmadığı anlamına gelir.",
-          "bioEn": "A shepherd with a hundred sheep, when one goes missing, leaves the ninety-nine in the wilderness and searches until he finds it; when he does, he joyfully carries it home on his shoulders and calls his neighbors to share his joy.\nChrist told this parable in answer to the religious leaders who criticized him for eating with sinners. It teaches that God rejoices more over the repentance of a single sinner than over ninety-nine righteous people who need no repentance, not because the ninety-nine are worth less, but because the one who was lost is never someone God is willing to give up on.",
-          "en": { "ref": "Luke 15:3–7 (Douay-Rheims)", "text": "What man is there of you, that hath an hundred sheep: and if he shall lose one of them, doth he not leave the ninety-nine in the desert, and go after that which was lost, until he find it?\nAnd when he hath found it, lay it upon his shoulders, rejoicing: And coming home, call together his friends and neighbours, saying to them: Rejoice with me, because I have found my sheep that was lost? I say to you, that even so there shall be joy in heaven upon one sinner that doth penance, more than upon ninety-nine just who need not penance." }
-        },
-        {
-          "id": "kayip-para",
-          "name": "Kayıp Para",
-          "nameEn": "The Lost Coin",
-          "ref": "Luka 15:8–10",
-          "refEn": "Luke 15:8–10",
-          "bio": "On gümüş parası olan bir kadın, bunlardan birini kaybedince kandil yakıp evi süpürerek parayı bulana dek dikkatle arar; bulunca komşularını çağırıp onlarla birlikte sevinir.\nKayıp koyun meseliyle aynı bağlamda anlatılan bu mesel aynı dersi pekiştirir: Allah kaybolanı bulmak için etkin biçimde arar ve bulduğunda büyük bir sevinç duyar. Kadının parayı ararken gösterdiği özen, Allah’ın her bir insana verdiği değeri ve önemi simgeler.",
-          "bioEn": "A woman with ten silver coins, upon losing one, lights a lamp, sweeps the house, and searches carefully until she finds it; when she does, she calls her neighbors together to rejoice with her.\nTold in the same context as the parable of the lost sheep, this parable reinforces the same lesson: God actively searches for what is lost and rejoices greatly when it is found. The care the woman takes in searching for the coin is a picture of the value and importance God places on every single person.",
-          "en": { "ref": "Luke 15:8–10 (Douay-Rheims)", "text": "What woman having ten groats, if she lose one groat, doth not light a candle, and sweep the house, and seek diligently until she find it? And when she hath found it, call together her friends and neighbours, saying: Rejoice with me, because I have found the groat which I had lost.\nSo I say to you, there shall be joy before the angels of God upon one sinner doing penance." }
-        },
-        {
-          "id": "musrif-ogul",
-          "name": "Müsrif Oğul",
-          "nameEn": "The Prodigal Son",
-          "ref": "Luka 15:11–32",
-          "refEn": "Luke 15:11–32",
-          "bio": "Bir adamın iki oğlu vardır. Küçük oğul mirasından düşen payı erkenden ister, uzak bir ülkeye gidip her şeyini sefih bir yaşamla harcar ve açlıktan domuz çobanlığına düşer. Kendine gelip babasının evine, artık oğul değil işçi olarak dönmeye karar verir; ama babası onu uzaktan görüp koşarak karşılar, sarılıp öper, en güzel kaftanı giydirir ve şölen düzenler. Tarladan dönen büyük oğulsa kardeşinin bu karşılanışına öfkelenir ve şölene katılmayı reddeder; babası ona da dışarı çıkıp yalvarır.\nBu, belki de Mesih İsa’nın en tanınan meselidir ve Allah’ın merhametini bir baba figürüyle anlatır: baba, oğlunu cezalandırmak yerine koşarak karşılar, hesap sormadan kabul eder. Büyük oğulun tepkisi, kendini hep sadık gören ama kardeşinin bağışlanmasına içerleyen dindar insanların tutumunu yansıtır; babanın ona da çıkıp yalvarması, Allah’ın kendini doğru sayanları da aynı sevgiyle çağırdığını gösterir. Mesel açık uçlu biter: büyük oğulun içeri girip girmeyeceği söylenmez, çünkü karar dinleyene bırakılmıştır.",
-          "bioEn": "A man has two sons. The younger asks for his share of the inheritance early, travels to a distant country, squanders everything in reckless living, and ends up feeding pigs out of hunger. Coming to his senses, he decides to return to his father's house, no longer as a son but as a hired servant; but his father sees him from far off, runs to meet him, embraces and kisses him, dresses him in the finest robe, and holds a feast. The elder son, returning from the field, is angered by this welcome and refuses to join the feast; his father goes out and pleads with him too.\nThis is perhaps Christ's best-known parable, and it portrays God's mercy through the figure of a father: rather than punishing his son, the father runs to meet him and receives him without demanding an accounting. The elder son's reaction reflects the attitude of religious people who see themselves as always faithful, yet resent their brother's forgiveness; the father going out to plead with him too shows that God calls those who consider themselves righteous with the very same love. The parable ends open-ended: we are never told whether the elder son goes in, because the decision is left to the listener.",
-          "en": { "ref": "Luke 15:11–32 (Douay-Rheims)", "text": "A certain man had two sons: And the younger of them said to his father: Father, give me the portion of substance that falleth to me. And he divided unto them his substance. And not many days after, the younger son, gathering all together, went abroad into a far country: and there wasted his substance, living riotously.\nAnd after he had spent all, there came a mighty famine in that country; and he began to be in want. And he went and cleaved to one of the citizens of that country. And he sent him into his farm to feed swine. And he would fain have filled his belly with the husks the swine did eat; and no man gave unto him. And returning to himself, he said: How many hired servants in my father’s house abound with bread, and I here perish with hunger? I will arise, and will go to my father, and say to him: Father, I have sinned against heaven, and before thee: I am not worthy to be called thy son, make me as one of thy hired servants.\nAnd rising up he came to his father. And when he was yet a great way off, his father saw him, and was moved with compassion, and running to him fell upon his neck, and kissed him. And the son said to him: Father, I have sinned against heaven, and before thee, I am not now worthy to be called thy son. And the father said to his servants: Bring forth quickly the first robe, and put it on him, and put a ring on his hand, and shoes on his feet: And bring hither the fatted calf, and kill it, and let us eat and make merry: Because this my son was dead, and is come to life again: was lost, and is found. And they began to be merry.\nNow his elder son was in the field, and when he came and drew nigh to the house, he heard music and dancing: And he called one of the servants, and asked what these things meant. And he said to him: Thy brother is come, and thy father hath killed the fatted calf, because he hath received him safe. And he was angry, and would not go in. His father therefore coming out began to entreat him. And he answering, said to his father: Behold, for so many years do I serve thee, and I have never transgressed thy commandment, and yet thou hast never given me a kid to make merry with my friends: But as soon as this thy son is come, who hath devoured his substance with harlots, thou hast killed for him the fatted calf.\nBut he said to him: Son, thou art always with me, and all I have is thine. But it was fit that we should make merry and be glad, for this thy brother was dead, and is come to life again; he was lost, and is found." }
-        },
-        {
-          "id": "acimasiz-hizmetkar",
-          "name": "Acımasız Hizmetkâr",
-          "nameEn": "The Unforgiving Servant",
-          "ref": "Matta 18:23–35",
-          "refEn": "Matthew 18:23–35",
-          "bio": "Bir kral, kendisine on bin talant (ömür boyu ödenemeyecek denli büyük bir meblağ) borcu olan bir hizmetkârını hesaba çeker; hizmetkâr yalvarınca kral borcun tamamını bağışlar. Ama aynı hizmetkâr, kendisine yüz dinar (çok küçük bir meblağ) borcu olan bir başka hizmetkârı yakasından tutup zindana attırır. Bunu duyan kral öfkelenir, bağışladığı borcu geri ister ve hizmetkârı cezalandırır.\nMesih İsa bu meseli, Petrus’un “kardeşimi kaç kez bağışlamalıyım” sorusuna yanıt olarak anlatmıştır. Mesel, Allah’tan aldığımız bağışlamanın büyüklüğü ile bizim başkalarını bağışlamamız gereken küçük şeyler arasındaki orantısızlığı çarpıcı bir abartıyla gösterir: Allah’ın bizi bağışlaması, bizim de başkalarını bağışlamamızı gerektirir.",
-          "bioEn": "A king settles accounts with a servant who owes him ten thousand talents (a debt no lifetime could repay); when the servant begs for mercy, the king forgives the entire debt. But that same servant then seizes a fellow servant who owes him a hundred denarii, a very small sum, and has him thrown into prison. When the king hears of this, he is furious, revokes the forgiven debt, and punishes the servant.\nChrist told this parable in answer to Peter's question, 'how often must I forgive my brother?' It uses a striking exaggeration to show the disproportion between the enormous forgiveness we receive from God and the small things we are asked to forgive in others: God's forgiveness of us requires that we, too, forgive others.",
-          "en": { "ref": "Matthew 18:23–35 (Douay-Rheims)", "text": "The kingdom of heaven is likened to a king, who would take an account of his servants. And when he had begun to take the account, one was brought to him, that owed him ten thousand talents. And as he had not wherewith to pay it, his lord commanded that he should be sold, and his wife and children, and all that he had, and payment to be made. But that servant falling down, besought him, saying: Have patience with me, and I will pay thee all. And the lord of that servant being moved with pity, let him go, and forgave him the debt.\nBut when that servant was gone out, he found one of his fellow servants that owed him an hundred pence: and laying hold of him, he throttled him, saying: Pay what thou owest. And his fellow servant falling down, besought him, saying: Have patience with me, and I will pay thee all. And he would not: but went and cast him into prison, till he paid the debt.\nNow his fellow servants seeing what was done, were very much grieved, and they came and told their lord all that was done. Then his lord called him; and said to him: Thou wicked servant, I forgave thee all the debt, because thou besoughtest me: Shouldst not thou then have had compassion also on thy fellow servant, even as I had compassion on thee? And his lord being angry, delivered him to the torturers until he paid all the debt.\nSo also shall my heavenly Father do to you, if you forgive not every one his brother from your hearts." }
-        },
-        {
-          "id": "ferisi-ve-vergi-gorevlisi",
-          "name": "Ferisi ve Vergi Görevlisi",
-          "nameEn": "The Pharisee and the Tax Collector",
-          "ref": "Luka 18:9–14",
-          "refEn": "Luke 18:9–14",
-          "bio": "İki adam tapınağa dua etmeye çıkar. Ferisi ayakta durup kendi doğruluğunu sayar ve diğer insanlardan, özellikle de yanındaki vergi görevlisinden üstün olduğu için Allah’a şükreder. Vergi görevlisiyse uzakta durur, gözlerini göğe kaldırmaya bile cesaret edemez, göğsünü döverek yalnızca “Allah’ım, ben günahkâra merhamet et” der.\nMesih İsa, tapınaktan aklanmış olarak evine dönenin Ferisi değil vergi görevlisi olduğunu söyler. Mesel, kendini dindarlığıyla övmenin Allah katında bir değeri olmadığını, ama alçakgönüllülükle merhamet dileyen bir yüreğin karşılık bulduğunu öğretir: kendini yücelten alçaltılacak, kendini alçaltan yüceltilecektir.",
-          "bioEn": "Two men go up to the temple to pray. The Pharisee stands and recounts his own righteousness, thanking God that he is better than other people, especially the tax collector nearby. The tax collector, by contrast, stands at a distance, not even daring to lift his eyes to heaven, and beating his breast says only, 'God, have mercy on me, a sinner.'\nChrist says that it was the tax collector, not the Pharisee, who went home justified. The parable teaches that boasting of one's own piety has no worth before God, but a heart that humbly asks for mercy is answered: whoever exalts himself will be humbled, and whoever humbles himself will be exalted.",
-          "en": { "ref": "Luke 18:9–14 (Douay-Rheims)", "text": "Two men went up into the temple to pray: the one a Pharisee, and the other a publican. The Pharisee standing, prayed thus with himself: O God, I give thee thanks that I am not as the rest of men, extortioners, unjust, adulterers, as also is this publican. I fast twice in a week: I give tithes of all that I possess.\nAnd the publican, standing afar off, would not so much as lift up his eyes towards heaven; but struck his breast, saying: O God, be merciful to me a sinner. I say to you, this man went down into his house justified rather than the other: because every one that exalteth himself, shall be humbled: and he that humbleth himself, shall be exalted." }
-        },
-        {
-          "id": "iki-borclu",
-          "name": "İki Borçlu",
-          "nameEn": "The Two Debtors",
-          "ref": "Luka 7:41–43",
-          "refEn": "Luke 7:41–43",
-          "bio": "Bir alacaklının iki borçlusu vardır; biri beş yüz, öbürü elli dinar borçludur. İkisinin de borcunu ödeyecek gücü olmadığı için alacaklı ikisini de bağışlar. Mesih İsa, kendisini hor gören bir Ferisi olan Simun’a sorar: bu ikisinden hangisi alacaklıyı daha çok sever?\nBu kısa mesel, İsa’nın ayaklarını gözyaşlarıyla yıkayan ve günahkâr olarak tanınan bir kadını hor gören Simun’a yöneltilmiştir. Cevap açıktır: daha çok bağışlanan daha çok sever. Mesel, kendi günahının büyüklüğünü fark eden bir kalbin, Allah’a duyduğu sevgi ve şükranın da o ölçüde büyük olacağını öğretir.",
-          "bioEn": "A moneylender has two debtors; one owes five hundred denarii, the other fifty. Since neither can pay, he forgives them both. Christ asks Simon, a Pharisee who looked down on him: which of the two will love the moneylender more?\nThis short parable is addressed to Simon, who looked with contempt on a woman known as a sinner who washed Jesus's feet with her tears. The answer is obvious: the one who is forgiven more loves more. The parable teaches that a heart aware of the depth of its own sin will love and thank God in equal measure.",
-          "en": { "ref": "Luke 7:41–43 (Douay-Rheims)", "text": "A certain creditor had two debtors, the one owed five hundred pence, and the other fifty. And whereas they had not wherewith to pay, he forgave them both. Which of the two loveth him most? Simon answering, said: I suppose that he to whom he forgave most. And he said to him: Thou hast judged rightly." }
-        },
-        {
-          "id": "meyvesiz-incir-agaci",
-          "name": "Meyvesiz İncir Ağacı",
-          "nameEn": "The Barren Fig Tree",
-          "ref": "Luka 13:6–9",
-          "refEn": "Luke 13:6–9",
-          "bio": "Bir adamın bağında diktiği bir incir ağacı üç yıldır meyve vermez. Adam bağcısına ağacı kesmesini söyler, ama bağcı bir yıl daha beklemesini, o süre içinde ağacın dibini kazıp gübreleyeceğini, yine meyve vermezse kesilebileceğini söyler.\nMesih İsa bu meseli, o dönemde yaşanan bazı trajik olaylar üzerine “tövbe etmezseniz hepiniz böyle mahvolacaksınız” uyarısının hemen ardından anlatır. Mesel, Allah’ın sabrını ve insana tövbe için verdiği ek zamanı, ama bu sabrın sonsuz olmadığını birlikte öğretir: meyvesiz kalan bir yaşam er ya da geç hesap vermek zorundadır.",
-          "bioEn": "A fig tree planted in a man's vineyard has borne no fruit for three years. The man tells his gardener to cut it down, but the gardener asks for one more year, during which he will dig around it and fertilize it; if it still bears no fruit, it can then be cut down.\nChrist tells this parable immediately after warning, in response to some tragic events of the time, that all will likewise perish unless they repent. It teaches both God's patience and the extra time he grants for repentance, and that this patience is not unlimited: a fruitless life must sooner or later give an account.",
-          "en": { "ref": "Luke 13:6–9 (Douay-Rheims)", "text": "A certain man had a fig tree planted in his vineyard, and he came seeking fruit on it, and found none. And he said to the dresser of the vineyard: Behold, for these three years I come seeking fruit on this fig tree, and I find none. Cut it down therefore: why cumbereth it the ground? But he answering, said to him: Lord, let it alone this year also, until I dig about it, and dung it. And if happily it bear fruit: but if not, then after that thou shalt cut it down." }
-        },
-        {
-          "id": "iyi-samiriyeli",
-          "name": "İyi Samiriyeli",
-          "nameEn": "The Good Samaritan",
-          "ref": "Luka 10:25–37",
-          "refEn": "Luke 10:25–37",
-          "bio": "Yeruşalim’den Eriha’ya inen bir adam haydutların saldırısına uğrar, soyulur, dövülür ve yarı ölü bırakılır. Yoldan geçen bir rahip ve bir Levili, onu görüp öbür yandan geçip giderler. Ama yolculuk eden bir Samiriyeli, o zamanlar Yahudilerce hor görülen bir halktan olmasına karşın, adamı görünce ona acır; yaralarını sarar, kendi hayvanına bindirip bir hana götürür ve masraflarını üstlenir.\nMesih İsa bu meseli, “komşum kimdir?” sorusuna yanıt olarak anlatır. Rahip ve Levili, dinî görevleriyle ya da temizlik kurallarıyla meşgul olduğu için ihtiyaç sahibinden kaçınmıştır; hor görülen yabancı Samiriyeliyse gerçek merhameti göstermiştir. Mesel, komşuluğun kan bağı ya da din ile değil, ihtiyacı gören ve ona karşılık veren bir yürekle tanımlandığını öğretir: git, sen de öyle yap.",
-          "bioEn": "A man traveling down from Jerusalem to Jericho is attacked by robbers, stripped, beaten, and left half dead. A priest and then a Levite pass by on the other side of the road. But a Samaritan, a member of a people despised by Jews at the time, sees the man on his journey and is moved with compassion; he bandages his wounds, carries him on his own animal to an inn, and pays for his care.\nChrist tells this parable in answer to the question, 'who is my neighbor?' The priest and the Levite avoided the man in need, perhaps preoccupied with religious duties or purity laws; the despised foreigner, the Samaritan, showed true mercy. The parable teaches that being a neighbor is defined not by bloodline or religion, but by a heart that sees a need and responds to it: go, and do likewise.",
-          "en": { "ref": "Luke 10:30–35 (Douay-Rheims)", "text": "A certain man went down from Jerusalem to Jericho, and fell among robbers, who also stripped him, and having wounded him went away, leaving him half dead. And it chanced, that a certain priest went down the same way: and seeing him, passed by. In like manner also a Levite, when he was near the place and saw him, passed by.\nBut a certain Samaritan being on his journey, came near him; and seeing him, was moved with compassion. And going up to him, bound up his wounds, pouring in oil and wine: and setting him upon his own beast, brought him to an inn, and took care of him. And the next day he took out two pence, and gave to the host, and said: Take care of him; and whatsoever thou shalt spend over and above, I, at my return, will repay thee." }
-        }
-      ]
+     "id": "bugday-ve-delice",
+     "name": "Buğday ve Delice",
+     "nameEn": "The Wheat and the Weeds",
+     "ref": "Matta 13:24–30, 36–43",
+     "refEn": "Matthew 13:24–30, 36–43",
+     "bio": "Bir adamın tarlasına, o uyurken bir düşman delice serper. Adam deliceyi hemen sökmeye izin vermez, buğday da zarar görmesin diye; ayrım biçim zamanında yapılır.\nTarla dünyadır, biçim zamanı çağın sonu. İyi ve kötü bu dünyada bir arada yaşar; son yargı insana değil, Allah’a aittir.",
+     "bioEn": "While a man sleeps, an enemy sows weeds among his wheat. He won't let his servants pull them up, lest the wheat be uprooted too; the sorting waits for the harvest.\nThe field is the world, and the harvest is the end of the age. Good and evil live side by side here; the final judgment belongs to God, not to us.",
+     "en": {
+      "ref": "Matthew 13:24–30 (Douay-Rheims)",
+      "text": "The kingdom of heaven is likened to a man that sowed good seed in his field. But while men were asleep, his enemy came and oversowed cockle among the wheat and went his way. And when the blade was sprung up, and had brought forth fruit, then appeared also the cockle.\nAnd the servants of the goodman of the house coming said to him: Sir, didst thou not sow good seed in thy field? whence then hath it cockle? And he said to them: An enemy hath done this. And the servants said to him: Wilt thou that we go and gather it up? And he said: No, lest perhaps gathering up the cockle, you root up the wheat also together with it. Suffer both to grow until the harvest, and in the time of the harvest I will say to the reapers: Gather up first the cockle, and bind it into bundles to burn, but the wheat gather ye into my barn."
+     }
     },
     {
-      "id": "dua",
-      "icon": "prayer",
-      "title": "Dua ve Sebat Meselleri",
-      "en": "Parables of Prayer and Perseverance",
-      "lead": "Bu iki kısa mesel, Allah’a güvenerek ve sebatla dua etmeyi öğretir.",
-      "leadEn": "These two short parables teach us to pray with trust in God and to persevere.",
-      "items": [
-        {
-          "id": "israrci-dul-kadin",
-          "name": "Israrcı Dul Kadın",
-          "nameEn": "The Persistent Widow",
-          "ref": "Luka 18:1–8",
-          "refEn": "Luke 18:1–8",
-          "bio": "Ne Allah’tan korkan ne insana saygı duyan bir yargıç, kendisinden adalet isteyen bir dul kadını başta duymazlıktan gelir. Ama kadın durmadan gelip ısrar edince, yargıç yalnızca kendisini rahatsız etmesin diye kadına hakkını verir.\nMesih İsa bu meseli, her zaman dua etmek ve gevşememek gerektiğini öğretmek için anlatır. Adaletsiz yargıç bile ısrar karşısında hakkı verirse, adil ve merhametli olan Allah’ın kendisine gece gündüz yakaran çocuklarının duasını çok daha güvenle karşılayacağı sonucuna varılır. Mesel, duada karşılaşılan sessizliğin Allah’ın ilgisizliği değil, sebat için bir çağrı olduğunu öğretir.",
-          "bioEn": "A judge who fears neither God nor man at first ignores a widow who comes seeking justice against her adversary. But because she keeps coming and pleading, the judge finally grants her request, if only to stop being bothered.\nChrist tells this parable to teach that we ought always to pray and never lose heart. If even an unjust judge yields to persistence, how much more will a just and merciful God answer the prayers of his children who cry out to him day and night. The parable teaches that silence in prayer is not God's indifference, but an invitation to persevere.",
-          "en": { "ref": "Luke 18:2–5 (Douay-Rheims)", "text": "There was a judge in a certain city, who feared not God, nor regarded man. And there was a certain widow in that city, and she came to him, saying: Avenge me of my adversary. And he would not for a long time. But afterwards he said within himself: Although I fear not God, nor regard man, Yet because this widow is troublesome to me, I will avenge her, lest continually coming she weary me." }
-        },
-        {
-          "id": "gece-yarisi-gelen-dost",
-          "name": "Gece Yarısı Gelen Dost",
-          "nameEn": "The Friend at Midnight",
-          "ref": "Luka 11:5–8",
-          "refEn": "Luke 11:5–8",
-          "bio": "Bir adam, gece yarısı eve gelen bir misafire ikram edecek ekmeği olmadığı için komşusunun kapısını çalar. Komşu önce, kapı kilitli ve çocuklar uyurken kalkmak istemediğini söyler; ama adamın ısrarlı çalması karşısında sonunda kalkıp istediğini verir.\nMesih İsa bu meseli, “isteyin, size verilecek; arayın, bulacaksınız” öğretisinin hemen öncesinde anlatır. Mesel, ısrarlı ve cesur bir duanın Allah katında değersiz olmadığını, tersine Allah’ın çocuklarının kendisine gösterdiği güveni ve sebatı sevdiğini öğretir.",
-          "bioEn": "A man, having nothing to offer a guest who arrives at midnight, knocks on his neighbor's door. The neighbor at first refuses, since the door is locked and the children are asleep; but because of the man's persistent knocking, he finally gets up and gives him what he needs.\nChrist tells this parable immediately before teaching, 'ask, and it will be given to you; seek, and you will find.' It teaches that persistent, bold prayer is not without value before God; on the contrary, God delights in the trust and perseverance his children show him.",
-          "en": { "ref": "Luke 11:5–8 (Douay-Rheims)", "text": "Which of you shall have a friend, and shall go to him at midnight, and shall say to him: Friend, lend me three loaves, Because a friend of mine is come off his journey to me, and I have not what to set before him. And he from within should answer, and say: Trouble me not, the door is now shut, and my children are with me in bed; I cannot rise and give thee.\nYet if he shall continue knocking, I say to you, although he will not rise and give him, because he is his friend; yet, because of his importunity, he will rise, and give him as many as he needeth." }
-        }
-      ]
+     "id": "hardal-tanesi",
+     "name": "Hardal Tanesi",
+     "nameEn": "The Mustard Seed",
+     "ref": "Matta 13:31–32 · Markos 4:30–32 · Luka 13:18–19",
+     "refEn": "Matthew 13:31–32 · Mark 4:30–32 · Luke 13:18–19",
+     "bio": "Tohumların en küçüğü olan hardal tanesi büyüyüp kuşların dallarında yuva yaptığı bir ağaca dönüşür.\nAllah’ın Hükümdarlığı da birkaç öğrenciyle, küçük başladı ve bütün uluslara yayıldı. Küçük bir iman bile Allah’ın elinde büyük bir şeye dönüşür.",
+     "bioEn": "The mustard seed, the smallest of seeds, grows into a tree where birds build their nests.\nGod's Kingdom began small too, with a handful of disciples, and spread to every nation. Even a small faith becomes something great in God's hands.",
+     "en": {
+      "ref": "Matthew 13:31–32 (Douay-Rheims)",
+      "text": "The kingdom of heaven is like to a grain of mustard seed, which a man took and sowed in his field. Which is the least indeed of all seeds; but when it is grown up, it is greater than all herbs, and becometh a tree, so that the birds of the air come, and dwell in the branches thereof."
+     }
     },
     {
-      "id": "uyaniklik",
-      "icon": "lamp",
-      "title": "Uyanıklık, Hazırlık ve Bilgelik Meselleri",
-      "en": "Parables of Watchfulness and Wisdom",
-      "lead": "Bu meseller, Mesih İsa’nın geri dönüşüne ve yaşamın sınavlarına hazırlıklı olmayı, gerçek bilgeliğin ne olduğunu anlatır.",
-      "leadEn": "These parables teach readiness for Christ's return and for life's trials, and what true wisdom looks like.",
-      "items": [
-        {
-          "id": "on-kiz",
-          "name": "On Kız",
-          "nameEn": "The Ten Virgins",
-          "ref": "Matta 25:1–13",
-          "refEn": "Matthew 25:1–13",
-          "bio": "Bir düğünde güveyi karşılamaya çıkan on kızdan beşi akıllı, beşi akılsızdır. Akıllı olanlar kandilleriyle birlikte yedek yağ da alır; akılsız olanlarsa yalnızca kandillerini alır. Güvey gecikince hepsi uyuyakalır; gece yarısı geldiğinde akılsız kızların yağı biter, yağ almaya gittikleri sırada güvey gelir ve hazır olan beş kız onunla birlikte düğün şölenine girer; kapı kapanır, geç kalanlar dışarıda bırakılır.\nMesel, Mesih İsa’nın ne zaman geri döneceğinin bilinmediğini ve bu yüzden her an hazır olmak gerektiğini öğretir. Yağ, burada son anda ödünç alınamayan, önceden biriktirilmesi gereken bir hazırlığı, yani sadık bir yaşamı temsil eder. Mesel, imanın son ana ertelenemeyeceğini hatırlatır.",
-          "bioEn": "Of ten bridesmaids who go out to meet the bridegroom at a wedding, five are wise and five are foolish. The wise ones bring extra oil along with their lamps; the foolish bring only their lamps. When the bridegroom is delayed, all of them fall asleep; at midnight, the foolish ones run out of oil, and while they go to buy more, the bridegroom arrives, and the five who are ready go in with him to the wedding feast; the door is shut, and those who are late are left outside.\nThe parable teaches that no one knows when Christ will return, and so everyone must be ready at all times. The oil represents a preparedness, a life of faithfulness, that cannot be borrowed at the last moment, but must be stored up beforehand. The parable reminds us that faith cannot be put off until the end.",
-          "en": { "ref": "Matthew 25:1–13 (Douay-Rheims)", "text": "Then shall the kingdom of heaven be like to ten virgins, who taking their lamps went out to meet the bridegroom and the bride. And five of them were foolish, and five wise. But the five foolish, having taken their lamps, did not take oil with them: But the wise took oil in their vessels with the lamps. And the bridegroom tarrying, they all slumbered and slept.\nAnd at midnight there was a cry made: Behold the bridegroom cometh, go ye forth to meet him. Then all those virgins arose and trimmed their lamps. And the foolish said to the wise: Give us of your oil, for our lamps are going out. The wise answered, saying: Lest perhaps there be not enough for us and for you, go ye rather to them that sell, and buy for yourselves.\nNow whilst they went to buy, the bridegroom came: and they that were ready, went in with him to the marriage, and the door was shut. But at last came also the other virgins, saying: Lord, Lord, open to us. But he answering said: Amen I say to you, I know you not. Watch ye therefore, because you know not the day nor the hour." }
-        },
-        {
-          "id": "zengin-ahmak",
-          "name": "Zengin Ahmak",
-          "nameEn": "The Rich Fool",
-          "ref": "Luka 12:16–21",
-          "refEn": "Luke 12:16–21",
-          "bio": "Toprağı bol ürün veren zengin bir adam, ürünlerini nereye koyacağını düşünür; eski ambarlarını yıkıp daha büyüklerini yapmaya, canına “yıllarca yetecek kadar malın var, rahatına bak, ye, iç, sefa sür” demeye karar verir. Ama Allah ona, “ey akılsız, canın bu gece senden istenecek, hazırladıkların kime kalacak?” der.\nMesih İsa bu meseli, bir miras tartışmasına karışması istendiğinde, “açgözlülükten sakının, çünkü kişinin yaşamı malının çokluğuna bağlı değildir” uyarısıyla anlatır. Mesel, yalnızca bu dünya için biriktirmenin ve Allah’a karşı zengin olmamanın büyük bir akılsızlık olduğunu öğretir.",
-          "bioEn": "A rich man whose land produces abundant crops wonders where to store it all; he decides to tear down his old barns, build bigger ones, and tell himself, 'you have plenty of goods laid up for years; relax, eat, drink, be merry.' But God says to him, 'you fool, this very night your life will be demanded of you; and then whose will all this be?'\nChrist tells this parable when asked to settle a dispute over an inheritance, with the warning, 'watch out for greed, for life does not consist in an abundance of possessions.' The parable teaches that storing up treasure only for this life, without being rich toward God, is great foolishness.",
-          "en": { "ref": "Luke 12:16–21 (Douay-Rheims)", "text": "The land of a certain rich man brought forth plenty of fruits. And he thought within himself, saying: What shall I do, because I have no room where to bestow my fruits? And he said: This will I do: I will pull down my barns, and will build greater; and into them will I gather all things that are grown to me, and my goods. And I will say to my soul: Soul, thou hast much goods laid up for many years, take thy rest; eat, drink, make good cheer.\nBut God said to him: Thou fool, this night do they require thy soul of thee: and whose shall those things be which thou hast provided? So is he that layeth up treasure for himself, and is not rich towards God." }
-        },
-        {
-          "id": "uyanik-hizmetkarlar",
-          "name": "Uyanık Hizmetkârlar",
-          "nameEn": "The Watchful Servants",
-          "ref": "Luka 12:35–40",
-          "refEn": "Luke 12:35–40",
-          "bio": "Efendisinin düğünden ne zaman döneceğini bilmeyen hizmetkârlar, kuşaklarını bağlamış, kandillerini yakmış halde, kapıyı hemen açmaya hazır beklemelidir. Efendisi gece yarısı ya da sabaha karşı gelse bile, uyanık bulduğu hizmetkârları ne mutludur; efendi onları sofraya oturtup kendisi hizmet edecek kadar onlardan hoşnut kalacaktır.\nMesel, Mesih İsa’nın gelişinin beklenmedik bir anda olacağını, bu yüzden inananların sürekli hazır ve uyanık olması gerektiğini öğretir. Sadakat, efendi görmese de değişmeyen bir tutumdur.",
-          "bioEn": "Servants who do not know when their master will return from a wedding feast must keep their belts fastened and their lamps lit, ready to open the door the moment he arrives. Whether the master comes at midnight or just before dawn, blessed are the servants he finds awake; he will be so pleased that he will seat them at table and wait on them himself.\nThe parable teaches that Christ's coming will happen at an unexpected hour, and so believers must remain constantly ready and watchful. Faithfulness is an attitude that does not change even when the master is not watching.",
-          "en": { "ref": "Luke 12:35–40 (Douay-Rheims)", "text": "Let your loins be girt, and lamps burning in your hands. And you yourselves like to men who wait for their lord, when he shall return from the wedding; that when he cometh and knocketh, they may open to him immediately. Blessed are those servants, whom the lord when he cometh, shall find watching.\nAmen I say to you, that he will gird himself, and make them sit down to meat, and passing will minister unto them. And if he shall come in the second watch, or come in the third watch, and find them so, blessed are those servants.\nBut this know ye, that if the householder did know at what hour the thief would come, he would surely watch, and would not suffer his house to be broken open. Be you then also ready: for at what hour you think not, the Son of man will come." }
-        },
-        {
-          "id": "sadik-ve-akilsiz-kahya",
-          "name": "Sadık ve Akılsız Kahya",
-          "nameEn": "The Faithful and the Foolish Steward",
-          "ref": "Luka 12:42–48 · Matta 24:45–51",
-          "refEn": "Luke 12:42–48 · Matthew 24:45–51",
-          "bio": "Efendisi onu diğer hizmetkârların başına kahya olarak atayan bir hizmetkâr, efendisi dönene dek onlara vaktinde yiyecek dağıtmakla görevlidir. Efendisi geldiğinde onu bu görevi yaparken bulursa hizmetkâr mutlu olacaktır. Ama kahya, efendisinin gecikeceğini düşünüp diğer hizmetkârları dövmeye, yiyip içip sarhoş olmaya başlarsa, efendisi beklemediği bir anda gelip onu cezalandıracaktır.\nMesel, özellikle Kilise’de önderlik ve sorumluluk üstlenenlere yöneliktir: verilen yetki bir imtiyaz değil, hesabı sorulacak bir emanettir. Mesih İsa, “kime çok verilmişse ondan çok istenecek” diyerek sorumluluğun büyüklüğünün verilenle orantılı olduğunu ekler.",
-          "bioEn": "A servant whom his master has put in charge of the household is responsible for giving the other servants their food at the proper time. If his master returns and finds him doing this faithfully, the servant will be blessed. But if the steward decides his master is delayed, and begins to beat the other servants and to eat, drink, and get drunk, his master will arrive when he least expects it and punish him.\nThis parable is addressed especially to those who hold leadership and responsibility within the Church: authority is not a privilege but a trust that will be accounted for. Christ adds that 'from everyone who has been given much, much will be demanded,' meaning that the weight of responsibility is proportional to what has been given.",
-          "en": { "ref": "Luke 12:42–48 (Douay-Rheims)", "text": "Who, thinkest thou, is the faithful and wise steward, whom his lord setteth over his family, to give them their measure of wheat in due season? Blessed is that servant, whom when his lord shall come, he shall find so doing. Verily I say to you, he will set him over all that he possesseth.\nBut if that servant shall say in his heart: My lord is long a coming; and shall begin to strike the men servants and maidservants, and to eat and to drink and to be drunk: The lord of that servant will come in the day that he hopeth not, and at the hour that he knoweth not, and shall separate him, and shall appoint him his portion with unbelievers.\nAnd that servant who knew the will of his lord, and prepared not himself, and did not according to his will, shall be beaten with many stripes. But he that knew not, and did things worthy of stripes, shall be beaten with few stripes. And unto whomsoever much is given, of him much shall be required." }
-        },
-        {
-          "id": "bilge-ve-akilsiz-yapi-ustalari",
-          "name": "Bilge ve Akılsız Yapı Ustaları",
-          "nameEn": "The Wise and Foolish Builders",
-          "ref": "Matta 7:24–27 · Luka 6:46–49",
-          "refEn": "Matthew 7:24–27 · Luke 6:46–49",
-          "bio": "Mesih İsa’nın sözlerini duyup uygulayan kişi, evini kayanın üzerine kuran bilge bir adama benzer; yağmur yağıp seller gelse, rüzgâr essin, ev sarsılmaz, çünkü temeli kayadır. Sözleri duyup uygulamayan kişiyse, evini kumun üzerine kuran akılsız adama benzer; aynı fırtına gelince ev çöker ve yıkımı büyük olur.\nDağdaki Vaaz’ın kapanışı olan bu mesel, dinlemekle uygulamak arasındaki farkı vurgular. İki adam da aynı sözleri duymuştur; aradaki fark sözü yaşama geçirip geçirmemektir. Mesel, sağlam bir yaşamın temelinin yalnızca doğru şeyler bilmek değil, onları uygulamak olduğunu öğretir.",
-          "bioEn": "Whoever hears Christ's words and puts them into practice is like a wise man who builds his house on rock; when the rain falls, the floods rise, and the winds blow and beat against that house, it does not fall, because its foundation is rock. But whoever hears these words and does not put them into practice is like a foolish man who builds his house on sand; when the same storm comes, the house collapses, and great is its fall.\nClosing the Sermon on the Mount, this parable stresses the difference between hearing and doing. Both men hear the same words; the difference lies in whether they put them into practice. The parable teaches that the foundation of a sound life is not merely knowing the right things, but living by them.",
-          "en": { "ref": "Matthew 7:24–27 (Douay-Rheims)", "text": "Every one therefore that heareth these my words, and doth them, shall be likened to a wise man that built his house upon a rock, And the rain fell, and the floods came, and the winds blew, and they beat upon that house, and it fell not, for it was founded on a rock.\nAnd every one that heareth these my words, and doth them not, shall be like a foolish man that built his house upon the sand, And the rain fell, and the floods came, and the winds blew, and they beat upon that house, and it fell, and great was the fall thereof." }
-        }
-      ]
+     "id": "maya",
+     "name": "Maya",
+     "nameEn": "The Leaven",
+     "ref": "Matta 13:33 · Luka 13:20–21",
+     "refEn": "Matthew 13:33 · Luke 13:20–21",
+     "bio": "Bir kadın biraz mayayı büyük bir un yığınına karıştırır ve bütün hamur kabarır.\nMaya görünmez ama hamuru içten değiştirir. Hükümdarlık da dünyada gösterişsizce, içeriden, yürekleri dönüştürerek çalışır.",
+     "bioEn": "A woman mixes a little yeast into a large batch of flour, and the whole dough rises.\nYeast is invisible, yet it changes the dough from within. The Kingdom works the same way in the world: quietly, from the inside, transforming hearts.",
+     "en": {
+      "ref": "Matthew 13:33 (Douay-Rheims)",
+      "text": "The kingdom of heaven is like to leaven, which a woman took and hid in three measures of meal, till the whole was leavened."
+     }
     },
     {
-      "id": "sorumluluk",
-      "icon": "coins",
-      "title": "Sorumluluk ve Yönetim Meselleri",
-      "en": "Parables of Stewardship",
-      "lead": "Bu meseller, Allah’ın insana emanet ettiği yetenek, zaman ve kaynakların nasıl kullanılması gerektiğini ve Allah’ın lütfunun insan adaletinden farklı işlediğini anlatır.",
-      "leadEn": "These parables describe how we are to use the talents, time and resources God entrusts to us, and how God's grace works differently from human fairness.",
-      "items": [
-        {
-          "id": "yetenekler",
-          "name": "Yetenekler",
-          "nameEn": "The Talents",
-          "ref": "Matta 25:14–30",
-          "refEn": "Matthew 25:14–30",
-          "bio": "Yolculuğa çıkan bir efendi, üç hizmetkârına yeteneklerine göre para (talant) emanet eder: birine beş, birine iki, birine bir talant. Beş ve iki talant alanlar bu parayı işletip katlarken, bir talant alan hizmetkâr korkudan parayı toprağa gömer. Efendi dönünce ilk ikisini övüp ödüllendirir, ama tek talantı saklayan hizmetkârı tembelliğinden dolayı azarlar ve elindekini bile alır.\nMesel, Allah’ın her insana farklı ölçüde yetenek, zaman ve fırsat emanet ettiğini, bunların büyütülmek ve başkalarının yararına kullanılmak üzere verildiğini öğretir. Hizmetkârın hatası az verilmiş olması değil, korkudan hiçbir şey yapmamasıdır.",
-          "bioEn": "A master going on a journey entrusts his property to three servants according to their ability: to one he gives five talents, to another two, and to another one. The servants who received five and two talents put the money to work and double it, but the servant who received one, out of fear, buries it in the ground. When the master returns, he praises and rewards the first two, but rebukes the servant who hid his one talent for his laziness, and takes away even what he had.\nThe parable teaches that God entrusts each person with a different measure of ability, time, and opportunity, meant to be developed and used for the good of others. The servant's failure was not that he was given less, but that fear led him to do nothing at all.",
-          "en": { "ref": "Matthew 25:14–30 (Douay-Rheims)", "text": "For even as a man going into a far country, called his servants, and delivered to them his goods. And to one he gave five talents, and to another two, and to another one, to every one according to his proper ability: and immediately he took his journey. And he that had received the five talents, went his way, and traded with the same, and gained other five. And in like manner he that had received the two, gained other two. But he that had received the one, going his way, digged into the earth, and hid his lord’s money.\nBut after a long time the lord of those servants came, and reckoned with them. And he that had received the five talents coming, brought other five talents, saying: Lord, thou didst deliver to me five talents, behold I have gained other five over and above. His lord said to him: Well done, good and faithful servant, because thou hast been faithful over a few things, I will place thee over many things: enter thou into the joy of thy lord.\nAnd he also that had received the two talents came and said: Lord, thou deliveredst two talents to me: behold I have gained other two. His lord said to him: Well done, good and faithful servant: because thou hast been faithful over a few things, I will place thee over many things: enter thou into the joy of thy lord.\nBut he that had received the one talent, came and said: Lord, I know that thou art a hard man, thou reapest where thou hast not sown, and gatherest where thou hast not strewed. And being afraid I went and hid thy talent in the earth: behold here thou hast that which is thine. And his lord answering, said to him: Wicked and slothful servant, thou knewest that I reap where I sow not, and gather where I have not strewed: Thou oughtest therefore to have committed my money to the bankers, and at my coming I should have received my own with usury.\nTake ye away therefore the talent from him, and give it to him that hath ten talents. For to every one that hath shall be given, and he shall abound: but from him that hath not, that also which he seemeth to have shall be taken away. And the unprofitable servant cast ye out into the exterior darkness. There shall be weeping and gnashing of teeth." }
-        },
-        {
-          "id": "minalar",
-          "name": "Minalar",
-          "nameEn": "The Ten Minas",
-          "ref": "Luka 19:11–27",
-          "refEn": "Luke 19:11–27",
-          "bio": "Yetenekler meseline benzer biçimde, uzak bir ülkeye giden soylu bir adam on hizmetkârına birer mina (daha küçük bir para birimi) verip “ben dönene dek bu parayla alışveriş yapın” der. Dönüşünde, on katına çıkaran hizmetkâra on kent, beş katına çıkarana beş kent yönetimini verir; parayı bir bezin içine sarıp sakladığı için hiç kazanmayan hizmetkârınsa elindekini alır.\nBu mesel Yetenekler meseliyle aynı temel dersi taşır, ama soylu adamın aynı zamanda kral olmak için gittiği bir ayrıntı eklenir. Mesih İsa bu meseli, Yeruşalim’e yaklaşırken, Hükümdarlığın hemen görünmeyeceğini ama kesin olarak geleceğini, o zamana dek sadakatle çalışmak gerektiğini öğretmek için anlatmıştır.",
-          "bioEn": "Similar to the parable of the talents, a nobleman going to a distant country to be made king gives ten servants a mina each, a smaller sum of money, saying, 'put this money to work until I come back.' On his return, he gives cities to govern to the servants who multiplied the money tenfold and fivefold; but the servant who wrapped his mina in a cloth and hid it, earning nothing, has even what he has taken away.\nThis parable carries the same basic lesson as the parable of the talents, but adds the detail that the nobleman has also gone to be made king. Christ tells it as he approaches Jerusalem, to teach that the Kingdom will not appear immediately but is certain to come, and that faithful work is required in the meantime.",
-          "en": { "ref": "Luke 19:12–27 (Douay-Rheims)", "text": "A certain nobleman went into a far country, to receive for himself a kingdom, and to return. And calling his ten servants, he gave them ten pounds, and said to them: Trade till I come. But his citizens hated him: and they sent an embassage after him, saying: We will not have this man to reign over us.\nAnd it came to pass, that he returned, having received the kingdom: and he commanded his servants to be called, to whom he had given the money, that he might know how much every man had gained by trading. And the first came saying: Lord, thy pound hath gained ten pounds. And he said to him: Well done, thou good servant, because thou hast been faithful in a little, thou shalt have power over ten cities. And the second came, saying: Lord, thy pound hath gained five pounds. And he said to him: Be thou also over five cities.\nAnd another came, saying: Lord, behold here is thy pound, which I have kept laid up in a napkin. For I feared thee, because thou art an austere man: thou takest up what thou didst not lay down, and thou reapest that which thou didst not sow. He saith to him: Out of thy own mouth I judge thee, thou wicked servant. Thou knewest that I was an austere man, taking up what I laid not down, and reaping that which I did not sow: And why then didst thou not give my money into the bank, that at my coming I might have exacted it with usury?\nAnd he said to them that stood by: Take the pound away from him, and give it to him that hath ten pounds. And they said to him: Lord, he hath ten pounds. But I say to you, that to every one that hath shall be given, and he shall abound: and from him that hath not, that also which he hath shall be taken from him." }
-        },
-        {
-          "id": "adaletsiz-kahya",
-          "name": "Adaletsiz Kahya",
-          "nameEn": "The Dishonest Manager",
-          "ref": "Luka 16:1–13",
-          "refEn": "Luke 16:1–13",
-          "bio": "Malını çarçur ettiği gerekçesiyle işten çıkarılacağını öğrenen bir kahya, işini kaybetmeden önce efendisinin borçlularını tek tek çağırıp borçlarını önemli ölçüde azaltır; böylece kendine, işten sonra sığınabileceği dostlar edinmeyi umar. Efendisi, dürüst olmayan bu hareketine rağmen kahyanın kurnazlığını övgüyle anar.\nBu, Mesih İsa’nın anlaşılması en zor meseli sayılır: burada onaylanan kahyanın sahtekârlığı değil, geleceği için akıllıca ve kararlı davranmasıdır. Mesih İsa, “bu çağın insanları kendi kuşaklarıyla ilişkilerinde ışık çocuklarından daha akıllı davranıyor” der ve inananları da ebedi geleceklerini düşünürken aynı ciddiyetle davranmaya çağırır. Mesel, hem Allah’a hem paraya kulluk edilemeyeceği uyarısıyla sona erer.",
-          "bioEn": "A manager, learning he is about to be dismissed for squandering his master's property, calls in his master's debtors one by one before losing his position and significantly reduces what each of them owes, hoping to make friends who will take him in afterward. His master, though the act was dishonest, commends the manager for his shrewdness.\nThis is considered one of Christ's most difficult parables to understand: what is commended is not the manager's dishonesty, but his shrewd and decisive action for his own future. Christ observes that 'the people of this world are more shrewd in dealing with their own kind than the children of light,' and calls believers to show the same seriousness in view of their eternal future. The parable closes with the warning that no one can serve both God and money.",
-          "en": { "ref": "Luke 16:1–9 (Douay-Rheims)", "text": "There was a certain rich man who had a steward: and the same was accused unto him, that he had wasted his goods. And he called him, and said to him: How is it that I hear this of thee? give an account of thy stewardship: for now thou canst be steward no longer.\nAnd the steward said within himself: What shall I do, because my lord taketh away from me the stewardship? To dig I am not able; to beg I am ashamed. I know what I will do, that when I shall be removed from the stewardship, they may receive me into their houses.\nTherefore calling together every one of his lord’s debtors, he said to the first: How much dost thou owe my lord? But he said: An hundred barrels of oil. And he said to him: Take thy bill, and sit down quickly, and write fifty. Then he said to another: And how much dost thou owe? Who said: An hundred quarters of wheat. He said to him: Take thy bill, and write eighty.\nAnd the lord commended the unjust steward, forasmuch as he had done wisely: for the children of this world are wiser in their generation than the children of light." }
-        },
-        {
-          "id": "bagdaki-isciler",
-          "name": "Bağdaki İşçiler",
-          "nameEn": "The Workers in the Vineyard",
-          "ref": "Matta 20:1–16",
-          "refEn": "Matthew 20:1–16",
-          "bio": "Bir bağ sahibi sabah erkenden işçi tutmaya çıkar ve günlük bir dinara anlaşır; günün farklı saatlerinde, hatta akşama bir saat kala işe aldığı işçilere de aynı ücreti önerir. Akşam ücretler ödenirken, son gelenler de sabahtan çalışanlarla aynı bir dinarı alınca, sabahtan beri çalışanlar haksızlığa uğradıklarını düşünüp söylenirler. Bağ sahibi, kendi malıyla dilediğini yapma hakkı olduğunu, kimseye haksızlık etmediğini, anlaştıkları ücreti verdiğini söyler.\nBu mesel, insan adaletiyle Allah’ın lütfu arasındaki farkı anlatır: insan adaleti emeğe göre öder, Allah’ın lütfuysa ihtiyaca göre, cömertçe verilir. Mesel, geç gelenin (örneğin ömrünün sonunda tövbe edenin) de erken gelenle aynı kurtuluşa kavuşabileceğini ve bunun kimseye haksızlık olmadığını öğretir; bağ sahibinin son sözü tam da bunu sorar: cömertliğim seni neden kıskandırsın?",
-          "bioEn": "A landowner goes out early in the morning to hire workers for his vineyard and agrees to pay them a denarius for the day; at various hours through the day, even one hour before evening, he hires more workers and offers them the same wage. When evening comes and the wages are paid, the workers hired first grumble on seeing that those hired last receive the same denarius they do. The landowner replies that he has the right to do as he wishes with what is his, that he has wronged no one, and that he has paid exactly what was agreed.\nThis parable describes the difference between human fairness and God's grace: human fairness pays according to labor, while God's grace is given according to need, and generously. It teaches that someone who comes late, someone, say, who repents at the very end of life, can receive the very same salvation as someone who came early, and that this is no injustice to anyone; the landowner's closing question makes the point directly: why should my generosity make you envious?",
-          "en": { "ref": "Matthew 20:1–16 (Douay-Rheims)", "text": "The kingdom of heaven is like to an householder, who went out early in the morning to hire labourers into his vineyard. And having agreed with the labourers for a penny a day, he sent them into his vineyard. And going out about the third hour, he saw others standing in the market place idle. And he said to them: Go you also into my vineyard, and I will give you what shall be just. And they went their way.\nAnd again he went out about the sixth and the ninth hour, and did in like manner. But about the eleventh hour he went out and found others standing, and he saith to them: Why stand you here all the day idle? They say to him: Because no man hath hired us. He saith to them: Go you also into my vineyard.\nAnd when evening was come, the lord of the vineyard saith to his steward: Call the labourers and pay them their hire, beginning from the last even to the first. When therefore they were come, that came about the eleventh hour, they received every man a penny. But when the first also came, they thought that they should receive more: and they also received every man a penny.\nAnd receiving it they murmured against the master of the house, Saying: These last have worked but one hour, and thou hast made them equal to us, that have borne the burden of the day and the heats. But he answering said to one of them: Friend, I do thee no wrong: didst thou not agree with me for a penny? Take what is thine, and go thy way: I will also give to this last even as to thee.\nOr, is it not lawful for me to do what I will? is thy eye evil, because I am good? So shall the last be first, and the first last." }
-        },
-        {
-          "id": "iki-ogul",
-          "name": "İki Oğul",
-          "nameEn": "The Two Sons",
-          "ref": "Matta 21:28–32",
-          "refEn": "Matthew 21:28–32",
-          "bio": "Bir adam iki oğlundan birincisine bağda çalışmasını söyler; oğul önce “istemiyorum” der ama sonra pişman olup gider. İkinci oğluna aynı şeyi söylediğinde “olur efendim” der ama gitmez. Mesih İsa, dinleyicilere hangisinin babasının isteğini yerine getirdiğini sorar; cevap açıktır: sözünü tutmayan ama sonunda giden birincisi.\nMesih İsa bu meseli, kendisini dinlemeyen din önderlerine karşı anlatır: vergi görevlileri ve fahişeler gibi başta Allah’a sırt çeviren ama sonradan tövbe edenler, sözde dindar görünüp gerçekte itaat etmeyenlerden önce Hükümdarlığa girecektir. Mesel, sözlerin değil eylemlerin gerçek itaati gösterdiğini öğretir.",
-          "bioEn": "A man tells the first of his two sons to go work in the vineyard; the son first says 'I will not,' but later changes his mind and goes. He tells the second son the same thing; this son says 'I will, sir,' but does not go. Christ asks his listeners which of the two did his father's will; the answer is obvious: the first, who broke his word but went in the end.\nChrist tells this parable against the religious leaders who would not listen to him: tax collectors and prostitutes, those who at first turned their backs on God but later repented, will enter the Kingdom ahead of those who appear pious in word but do not actually obey. The parable teaches that it is actions, not words, that show true obedience.",
-          "en": { "ref": "Matthew 21:28–32 (Douay-Rheims)", "text": "But what think you? A certain man had two sons; and coming to the first, he said: Son, go work to day in my vineyard. And he answering, said: I will not. But afterwards, being moved with repentance, he went. And coming to the other, he said in like manner. And he answering, said: I go, Sir; and he went not.\nWhich of the two did the father’s will? They say to him: The first. Jesus saith to them: Amen I say to you, that the publicans and the harlots shall go into the kingdom of God before you." }
-        },
-        {
-          "id": "kotu-bagcilar",
-          "name": "Kötü Bağcılar",
-          "nameEn": "The Wicked Tenants",
-          "ref": "Matta 21:33–46 · Markos 12:1–12 · Luka 20:9–19",
-          "refEn": "Matthew 21:33–46 · Mark 12:1–12 · Luke 20:9–19",
-          "bio": "Bir bağ sahibi bağını bağcılara kiraya verip uzağa gider. Ürün zamanı geldiğinde hakkını almak için gönderdiği hizmetkârları bağcılar döver, hatta öldürür. Sonunda sahibi, “oğlumu sayarlar” diyerek öz oğlunu gönderir; ama bağcılar, mirası kendilerine kalsın diye oğulu da öldürüp bağdan dışarı atarlar. Mesih İsa, bağ sahibinin bu bağcıları yok edip bağı başkalarına vereceğini söyler.\nBu mesel, İsrail’in tarihindeki peygamberlerin reddedilişine ve Mesih İsa’nın kendi ölümüne açık bir göndermedir: bağ Allah’ın halkı, bağcılar önderleri, hizmetkârlar peygamberler, oğul ise Mesih İsa’nın kendisidir. Mesel, Allah’ın sabrının kötüye kullanılmasının ağır bir sonucu olduğunu, ama Hükümdarlık’ın reddedilse bile başkalarına açılacağını öğretir.",
-          "bioEn": "A landowner leases his vineyard to tenants and goes away. When harvest time comes, he sends servants to collect his share, but the tenants beat them, and even kill some. Finally the owner sends his own son, thinking, 'they will respect my son'; but the tenants, wanting the inheritance for themselves, kill the son too and throw him out of the vineyard. Christ says the owner will destroy those tenants and give the vineyard to others.\nThis parable is a clear reference to the rejection of the prophets throughout Israel's history and to Christ's own death: the vineyard is God's people, the tenants their leaders, the servants the prophets, and the son Christ himself. It teaches that abusing God's patience carries a grave consequence, but that even when the Kingdom is rejected, it will be opened to others.",
-          "en": { "ref": "Matthew 21:33–41 (Douay-Rheims)", "text": "Hear ye another parable. There was a man an householder, who planted a vineyard, and made a hedge round about it, and dug in it a press, and built a tower, and let it out to husbandmen: and went into a strange country. And when the time of the fruits drew nigh, he sent his servants to the husbandmen that they might receive the fruits thereof.\nAnd the husbandmen laying hands on his servants, beat one, and killed another, and stoned another. Again he sent other servants more than the former; and they did to them in like manner. And last of all he sent to them his son, saying: They will reverence my son.\nBut the husbandmen seeing the son, said among themselves: This is the heir: come, let us kill him, and we shall have his inheritance. And taking him, they cast him forth out of the vineyard, and killed him. When therefore the lord of the vineyard shall come, what will he do to those husbandmen? They say to him: He will bring those evil men to an evil end; and will let out his vineyard to other husbandmen, that shall render him the fruit in due season." }
-        }
-      ]
+     "id": "tarladaki-hazine",
+     "name": "Tarladaki Hazine",
+     "nameEn": "The Hidden Treasure",
+     "ref": "Matta 13:44",
+     "refEn": "Matthew 13:44",
+     "bio": "Bir adam tarlada gömülü bir hazine bulur, sevinçle her şeyini satıp o tarlayı alır.\nHükümdarlık, her şeyden değerli bir hazinedir. Adam bir şeyi kaybettiği için değil, sevindiği için her şeyini verir: iman uğruna verilen hiçbir şey kayıp değildir.",
+     "bioEn": "A man finds treasure buried in a field and, full of joy, sells everything to buy that field.\nThe Kingdom is worth more than anything. He gives up everything not out of loss but out of joy: nothing given for faith is really lost.",
+     "en": {
+      "ref": "Matthew 13:44 (Douay-Rheims)",
+      "text": "The kingdom of heaven is like unto a treasure hidden in a field. Which a man having found, hid it, and for joy thereof goeth, and selleth all that he hath, and buyeth that field."
+     }
     },
     {
-      "id": "cagri",
-      "icon": "door",
-      "title": "Hükümdarlığa Çağrı ve Hesap Verme Meselleri",
-      "en": "Parables of Invitation and Judgment",
-      "lead": "Bu meseller, Allah’ın Hükümdarlığı’na davetin genişliğini ve yaşamın sonunda verilecek hesabı anlatır.",
-      "leadEn": "These parables describe the breadth of the invitation to God's Kingdom, and the account each of us will give at the end of life.",
-      "items": [
-        {
-          "id": "buyuk-solen",
-          "name": "Büyük Şölen",
-          "nameEn": "The Great Banquet",
-          "ref": "Matta 22:1–14 · Luka 14:15–24",
-          "refEn": "Matthew 22:1–14 · Luke 14:15–24",
-          "bio": "Büyük bir şölen (Matta’da bir kralın oğlu için düzenlediği düğün şöleni) hazırlayan bir ev sahibi davetlilerini çağırır; ama davetliler türlü bahanelerle gelmeyi reddeder, hatta Matta’nın anlatımında kralın hizmetkârlarını öldürürler. Öfkelenen ev sahibi, hizmetkârlarını yollara ve sokak başlarına gönderip bulduğu herkesi, yoksulu, sakatı, kör ve topalı şölene çağırır; şölen salonu dolar.\nMesel, Allah’ın Hükümdarlığı’na ilk çağrılan İsrail’in dinî önderlerinin bu çağrıyı reddetmesini ve davetin bunun üzerine herkese, özellikle toplumun dışladığı insanlara açılmasını anlatır. Matta’nın anlatımındaki ek bölümde, düğün giysisi olmayan bir davetlinin dışarı atılması, Hükümdarlığa girmenin yalnızca davete icabet etmekle değil, ona uygun bir yaşamla da mümkün olduğunu ekler.",
-          "bioEn": "A host preparing a great banquet (in Matthew's telling, a king celebrating his son's wedding feast) invites his guests, but they refuse to come, offering all kinds of excuses; in Matthew's version, some even kill the king's servants. Enraged, the host sends his servants out into the roads and streets to bring in anyone they find: the poor, the crippled, the blind and the lame; and the banquet hall is filled.\nThe parable describes how Israel's religious leaders, first invited into God's Kingdom, rejected that invitation, and how the invitation was then opened to everyone, especially those whom society had cast aside. In Matthew's additional detail, a guest without wedding clothes is thrown out, adding that entering the Kingdom requires not only accepting the invitation but living in a way worthy of it.",
-          "en": { "ref": "Matthew 22:2–14 (Douay-Rheims)", "text": "The kingdom of heaven is likened to a king, who made a marriage for his son. And he sent his servants, to call them that were invited to the marriage; and they would not come. Again he sent other servants, saying: Tell them that were invited, Behold, I have prepared my dinner; my beeves and fatlings are killed, and all things are ready: come ye to the marriage.\nBut they neglected, and went their ways, one to his farm, and another to his merchandise. And the rest laid hands on his servants, and having treated them contumeliously, put them to death. But when the king had heard of it, he was angry, and sending his armies, he destroyed those murderers, and burnt their city.\nThen he saith to his servants: The marriage indeed is ready; but they that were invited, were not worthy. Go ye therefore into the highways; and as many as you shall find, call to the marriage. And his servants going forth into the ways, gathered together all that they found, both bad and good: and the marriage was filled with guests.\nAnd the king went in to see the guests: and he saw there a man who had not on a wedding garment. And he saith to him: Friend, how camest thou in hither not having a wedding garment? But he was silent. Then the king said to the waiters: Bind his hands and feet, and cast him into the exterior darkness: there shall be weeping and gnashing of teeth. For many are called, but few are chosen." }
-        },
-        {
-          "id": "zengin-adam-ve-lazar",
-          "name": "Zengin Adam ve Lazar",
-          "nameEn": "The Rich Man and Lazarus",
-          "ref": "Luka 16:19–31",
-          "refEn": "Luke 16:19–31",
-          "bio": "Her gün şahane ziyafetler veren zengin bir adamın kapısının önünde, Lazar adlı yoksul ve hasta bir dilenci yatar, zengin adamın sofrasından düşen kırıntılarla karnını doyurmaya çalışır. İkisi de ölür; Lazar Avraam’ın koynuna, zengin adamsa ölüler diyarına, azap içine düşer. Zengin adam uzaktan Avraam’ı ve Lazar’ı görüp yardım ister, ama aralarında geçilmez bir uçurum olduğu söylenir. Zengin adam bu kez kardeşlerini uyarması için Lazar’ın diriltilip gönderilmesini ister, ama Avraam, Musa ile peygamberleri dinlemeyenlerin ölümden dirilen biri gelse bile ikna olmayacağını söyler.\nMesel, bu dünyadaki zenginlik ve yoksulluğun öbür dünyadaki durumu doğrudan belirlemediğini, ama zenginliğin insanı yoksulun ihtiyacına karşı duyarsızlaştırma tehlikesini taşıdığını öğretir. Zengin adamın günahı servetinin kendisi değil, kapısının önündeki Lazar’ı görmezden gelmesidir.",
-          "bioEn": "A rich man who feasts sumptuously every day has, at his gate, a poor and sick beggar named Lazarus, who longs to satisfy his hunger with the scraps that fall from the rich man's table. Both men die; Lazarus is carried to Abraham's side, while the rich man goes to the place of the dead, in torment. Seeing Abraham and Lazarus from afar, the rich man begs for relief, but is told a great chasm separates them. He then asks that Lazarus be sent to warn his brothers, but Abraham replies that if they will not listen to Moses and the prophets, they will not be convinced even if someone rises from the dead.\nThe parable teaches that wealth and poverty in this life do not directly determine one's fate in the next, but that wealth carries the danger of making a person indifferent to the needs of the poor. The rich man's sin was not his wealth itself, but his failure to see Lazarus at his own gate.",
-          "en": { "ref": "Luke 16:19–31 (Douay-Rheims)", "text": "There was a certain rich man, who was clothed in purple and fine linen; and feasted sumptuously every day. And there was a certain beggar, named Lazarus, who lay at his gate, full of sores, Desiring to be filled with the crumbs that fell from the rich man’s table, and no one did give him; moreover the dogs came, and licked his sores.\nAnd it came to pass, that the beggar died, and was carried by the angels into Abraham’s bosom. And the rich man also died: and he was buried in hell. And lifting up his eyes when he was in torments, he saw Abraham afar off, and Lazarus in his bosom: And he cried, and said: Father Abraham, have mercy on me, and send Lazarus, that he may dip the tip of his finger in water, to cool my tongue: for I am tormented in this flame.\nAnd Abraham said to him: Son, remember that thou didst receive good things in thy lifetime, and likewise Lazarus evil things, but now he is comforted, and thou art tormented. And besides all this, between us and you, there is fixed a great chaos: so that they who would pass from hence to you, cannot, nor from thence come hither.\nAnd he said: Then, father, I beseech thee, that thou wouldst send him to my father’s house, for I have five brethren, That he may testify unto them, lest they also come into this place of torments. And Abraham said to him: They have Moses and the prophets; let them hear them. But he said: No, father Abraham: but if one went to them from the dead, they will do penance. And he said to him: If they hear not Moses and the prophets, neither will they believe, if one rise again from the dead." }
-        },
-        {
-          "id": "koyunlar-ve-keciler",
-          "name": "Koyunlar ve Keçiler",
-          "nameEn": "The Sheep and the Goats",
-          "ref": "Matta 25:31–46",
-          "refEn": "Matthew 25:31–46",
-          "bio": "İnsanoğlu görkem içinde geldiğinde bütün ulusları önünde toplayacak ve bir çobanın koyunları keçilerden ayırması gibi onları ikiye ayıracaktır. Sağındakilere, acıkınca doyurdukları, susayınca içirdikleri, yabancıyken barındırdıkları, çıplakken giydirdikleri, hastayken ve zindandayken ziyaret ettikleri için Hükümdarlığı miras bırakacaktır; onlar ne zaman yaptıklarını sorunca, “bu en küçük konumdaki kardeşlerimden birine yaptığınızı, bana yapmış oldunuz” yanıtını alırlar. Solundakiler ise tam tersini yapmadıkları için aynı sözlerle, ama ters yönde yargılanır.\nBu, kesin anlamda bir mesel olmaktan çok Mesih İsa’nın son yargı üzerine bir öğretisidir, ama meseller arasında sık anılır çünkü benzer bir benzetme diliyle anlatılır. Öğretinin can alıcı noktası, Mesih İsa’nın kendisini en muhtaç, en küçük, en göz ardı edilen insanla özdeşleştirmesidir: ona yapılan iyilik ya da kötülük, doğrudan Mesih İsa’ya yapılmış sayılır.",
-          "bioEn": "When the Son of Man comes in his glory, he will gather all the nations before him and separate them, as a shepherd separates the sheep from the goats. To those on his right, he will give the Kingdom as their inheritance, because they fed him when he was hungry, gave him drink when he was thirsty, welcomed him when he was a stranger, clothed him when he was naked, and visited him when he was sick or in prison; when they ask when they ever did these things, they hear: 'whatever you did for one of the very least of these brothers and sisters of mine, you did for me.' Those on his left are judged with the same words, in reverse, for failing to do these things.\nThis is less a parable in the strict sense than a teaching of Christ's on the Last Judgment, though it is often counted among the parables because of its similar, image-driven language. Its central point is that Christ identifies himself with the neediest, the smallest, the most overlooked person: whatever is done to them, for good or ill, is counted as done to Christ himself.",
-          "en": { "ref": "Matthew 25:31–46 (Douay-Rheims)", "text": "And when the Son of man shall come in his majesty, and all the angels with him, then shall he sit upon the seat of his majesty. And all nations shall be gathered together before him, and he shall separate them one from another, as the shepherd separateth the sheep from the goats: And he shall set the sheep on his right hand, but the goats on his left.\nThen shall the king say to them that shall be on his right hand: Come, ye blessed of my Father, possess you the kingdom prepared for you from the foundation of the world. For I was hungry, and you gave me to eat; I was thirsty, and you gave me to drink; I was a stranger, and you took me in: Naked, and you covered me: sick, and you visited me: I was in prison, and you came to me.\nThen shall the just answer him, saying: Lord, when did we see thee hungry, and fed thee; thirsty, and gave thee drink? And when did we see thee a stranger, and took thee in? or naked, and covered thee? Or when did we see thee sick or in prison, and came to thee? And the king answering, shall say to them: Amen I say to you, as long as you did it to one of these my least brethren, you did it to me.\nThen he shall say to them also that shall be on his left hand: Depart from me, you cursed, into everlasting fire which was prepared for the devil and his angels. For I was hungry, and you gave me not to eat: I was thirsty, and you gave me not to drink. I was a stranger, and you took me not in: naked, and you covered me not: sick and in prison, and you did not visit me.\nThen they also shall answer him, saying: Lord, when did we see thee hungry, or thirsty, or a stranger, or naked, or sick, or in prison, and did not minister to thee? Then he shall answer them, saying: Amen I say to you, as long as you did it not to one of these least, neither did you do it to me. And these shall go into everlasting punishment: but the just, into life everlasting." }
-        }
-      ]
+     "id": "degerli-inci",
+     "name": "Değerli İnci",
+     "nameEn": "The Pearl of Great Price",
+     "ref": "Matta 13:45–46",
+     "refEn": "Matthew 13:45–46",
+     "bio": "Güzel inciler arayan bir tüccar çok değerli bir inci bulunca her şeyini satıp onu alır.\nHazineyi bulan adam onu aramıyordu, tüccar ise arıyordu. Hükümdarlık hem beklenmedik bir armağan hem de bir arayışın sonu olabilir; ikisinde de karşılığı aynıdır: her şeyi bırakıp onu seçmek.",
+     "bioEn": "A merchant looking for fine pearls finds one of great value and sells everything to buy it.\nThe man with the treasure wasn't looking; the merchant was. The Kingdom can come as an unexpected gift or as the end of a search, and either way the response is the same: leave everything and choose it.",
+     "en": {
+      "ref": "Matthew 13:45–46 (Douay-Rheims)",
+      "text": "Again the kingdom of heaven is like to a merchant seeking good pearls. Who when he had found one pearl of great price, went his way, and sold all that he had, and bought it."
+     }
+    },
+    {
+     "id": "balik-agi",
+     "name": "Balık Ağı",
+     "nameEn": "The Net",
+     "ref": "Matta 13:47–50",
+     "refEn": "Matthew 13:47–50",
+     "bio": "Denize atılan bir ağ her türden balığı toplar; balıkçılar iyileri kaplara ayırır, işe yaramazları atar.\nÇağın sonunda melekler kötüleri doğrulardan ayıracaktır. Bu dünya iyiyi de kötüyü de barındırır, ama son ayrım kaçınılmazdır.",
+     "bioEn": "A net thrown into the sea gathers fish of every kind; the fishermen keep the good ones and throw the bad away.\nAt the end of the age the angels will separate the evil from the righteous. This world holds both, but the final sorting will come.",
+     "en": {
+      "ref": "Matthew 13:47–50 (Douay-Rheims)",
+      "text": "Again the kingdom of heaven is like to a net cast into the sea, and gathering together of all kind of fishes. Which, when it was filled, they drew out, and sitting by the shore, they chose out the good into vessels, but the bad they cast forth.\nSo shall it be at the end of the world. The angels shall go out, and shall separate the wicked from among the just. And shall cast them into the furnace of fire: there shall be weeping and gnashing of teeth."
+     }
+    },
+    {
+     "id": "buyuyen-tohum",
+     "name": "Kendiliğinden Büyüyen Tohum",
+     "nameEn": "The Growing Seed",
+     "ref": "Markos 4:26–29",
+     "refEn": "Mark 4:26–29",
+     "bio": "Bir adam toprağa tohum eker; o uyurken de uyanıkken de tohum, nasıl olduğunu bilmeden filizlenir ve ürün verir.\nYalnızca Markos’ta geçen bu mesel, büyümeyi sağlayanın insan değil Allah olduğunu hatırlatır. Biz ekeriz; Allah’ın işi kendi zamanında olgunlaşır.",
+     "bioEn": "A man scatters seed; whether he sleeps or wakes, it sprouts and grows, though he doesn't know how.\nFound only in Mark, this parable reminds us that it is God, not we, who makes things grow. We sow; God's work ripens in its own time.",
+     "en": {
+      "ref": "Mark 4:26–29 (Douay-Rheims)",
+      "text": "So is the kingdom of God, as if a man should cast seed into the earth, And should sleep, and rise, night and day, and the seed should spring, and grow up whilst he knoweth not. For the earth of itself bringeth forth fruit, first the blade, then the ear, afterwards the full corn in the ear. And when the fruit is brought forth, immediately he putteth in the sickle, because the harvest is come."
+     }
     }
-  ]
+   ]
+  },
+  {
+   "id": "merhamet",
+   "icon": "heart",
+   "title": "Merhamet ve Bağışlama Meselleri",
+   "en": "Parables of Mercy and Forgiveness",
+   "lead": "Bu meseller, Allah’ın günahkârlara duyduğu sınırsız merhameti ve insanın da aynı merhameti başkalarına göstermesi gerektiğini anlatır.",
+   "leadEn": "These parables describe God's boundless mercy toward sinners, and teach that we must show that same mercy to others.",
+   "items": [
+    {
+     "id": "kayip-koyun",
+     "name": "Kayıp Koyun",
+     "nameEn": "The Lost Sheep",
+     "ref": "Luka 15:3–7 · Matta 18:12–14",
+     "refEn": "Luke 15:3–7 · Matthew 18:12–14",
+     "bio": "Yüz koyunu olan bir çoban, biri kaybolunca doksan dokuzunu bırakıp onu bulana dek arar; bulunca sevinçle omuzlarına alır.\nİsa bu meseli, günahkârlarla yemek yediği için onu eleştirenlere anlattı. Allah hiçbir kaybolanı gözden çıkarmaz ve tövbe eden tek bir günahkâr için büyük bir sevinç duyar.",
+     "bioEn": "A shepherd with a hundred sheep leaves the ninety-nine to search for the one that is lost, and carries it home on his shoulders with joy.\nJesus told it to those who criticized him for eating with sinners. God never writes off anyone who is lost, and rejoices over a single sinner who repents.",
+     "en": {
+      "ref": "Luke 15:3–7 (Douay-Rheims)",
+      "text": "What man is there of you, that hath an hundred sheep: and if he shall lose one of them, doth he not leave the ninety-nine in the desert, and go after that which was lost, until he find it?\nAnd when he hath found it, lay it upon his shoulders, rejoicing: And coming home, call together his friends and neighbours, saying to them: Rejoice with me, because I have found my sheep that was lost? I say to you, that even so there shall be joy in heaven upon one sinner that doth penance, more than upon ninety-nine just who need not penance."
+     }
+    },
+    {
+     "id": "kayip-para",
+     "name": "Kayıp Para",
+     "nameEn": "The Lost Coin",
+     "ref": "Luka 15:8–10",
+     "refEn": "Luke 15:8–10",
+     "bio": "On gümüş parası olan bir kadın birini kaybedince kandil yakıp evi süpürür, bulana dek arar; bulunca komşularıyla sevinir.\nKayıp Koyun’un eşi olan bu mesel aynı şeyi söyler: Allah kaybolanı etkin biçimde arar, çünkü her insan onun gözünde değerlidir.",
+     "bioEn": "A woman with ten silver coins loses one, lights a lamp and sweeps the house until she finds it, then celebrates with her neighbors.\nA twin of the Lost Sheep, it says the same thing: God actively searches for the lost, because every person is precious to him.",
+     "en": {
+      "ref": "Luke 15:8–10 (Douay-Rheims)",
+      "text": "What woman having ten groats, if she lose one groat, doth not light a candle, and sweep the house, and seek diligently until she find it? And when she hath found it, call together her friends and neighbours, saying: Rejoice with me, because I have found the groat which I had lost.\nSo I say to you, there shall be joy before the angels of God upon one sinner doing penance."
+     }
+    },
+    {
+     "id": "musrif-ogul",
+     "name": "Müsrif Oğul",
+     "nameEn": "The Prodigal Son",
+     "ref": "Luka 15:11–32",
+     "refEn": "Luke 15:11–32",
+     "bio": "Küçük oğul mirasını alıp uzaklarda har vurup harman savurur ve domuz çobanı olur. İşçi olarak dönmeye karar verdiğinde babası onu uzaktan görüp koşarak karşılar, sarılır ve şölen verir. Büyük oğul ise öfkelenip içeri girmez; babası onu da çağırmaya çıkar.\nİsa’nın belki de en bilinen meseli, Allah’ın merhametini hesap sormadan koşan bir babayla anlatır. Büyük oğul, kardeşinin bağışlanmasına içerleyen dindarları temsil eder. Mesel açık uçlu biter: onun içeri girip girmeyeceğine dinleyen karar verir.",
+     "bioEn": "The younger son takes his inheritance, squanders it far away and ends up feeding pigs. When he decides to come home as a hired hand, his father sees him from afar, runs to him, embraces him and throws a feast. The elder son is angry and won't go in, and the father comes out to plead with him too.\nPerhaps Jesus' best-known parable, it shows God's mercy as a father who runs without asking for an account. The elder son stands for the devout who resent a brother's forgiveness. The story is left open: whether he goes in is for the listener to decide.",
+     "en": {
+      "ref": "Luke 15:11–32 (Douay-Rheims)",
+      "text": "A certain man had two sons: And the younger of them said to his father: Father, give me the portion of substance that falleth to me. And he divided unto them his substance. And not many days after, the younger son, gathering all together, went abroad into a far country: and there wasted his substance, living riotously.\nAnd after he had spent all, there came a mighty famine in that country; and he began to be in want. And he went and cleaved to one of the citizens of that country. And he sent him into his farm to feed swine. And he would fain have filled his belly with the husks the swine did eat; and no man gave unto him. And returning to himself, he said: How many hired servants in my father’s house abound with bread, and I here perish with hunger? I will arise, and will go to my father, and say to him: Father, I have sinned against heaven, and before thee: I am not worthy to be called thy son, make me as one of thy hired servants.\nAnd rising up he came to his father. And when he was yet a great way off, his father saw him, and was moved with compassion, and running to him fell upon his neck, and kissed him. And the son said to him: Father, I have sinned against heaven, and before thee, I am not now worthy to be called thy son. And the father said to his servants: Bring forth quickly the first robe, and put it on him, and put a ring on his hand, and shoes on his feet: And bring hither the fatted calf, and kill it, and let us eat and make merry: Because this my son was dead, and is come to life again: was lost, and is found. And they began to be merry.\nNow his elder son was in the field, and when he came and drew nigh to the house, he heard music and dancing: And he called one of the servants, and asked what these things meant. And he said to him: Thy brother is come, and thy father hath killed the fatted calf, because he hath received him safe. And he was angry, and would not go in. His father therefore coming out began to entreat him. And he answering, said to his father: Behold, for so many years do I serve thee, and I have never transgressed thy commandment, and yet thou hast never given me a kid to make merry with my friends: But as soon as this thy son is come, who hath devoured his substance with harlots, thou hast killed for him the fatted calf.\nBut he said to him: Son, thou art always with me, and all I have is thine. But it was fit that we should make merry and be glad, for this thy brother was dead, and is come to life again; he was lost, and is found."
+     }
+    },
+    {
+     "id": "acimasiz-hizmetkar",
+     "name": "Acımasız Hizmetkâr",
+     "nameEn": "The Unforgiving Servant",
+     "ref": "Matta 18:23–35",
+     "refEn": "Matthew 18:23–35",
+     "bio": "Bir kral, ödenemeyecek kadar büyük borcu olan hizmetkârını bağışlar. Aynı hizmetkâr, kendisine küçük bir borcu olan arkadaşını zindana attırır; bunu duyan kral bağışını geri alır.\nİsa bunu, Petrus’un “kardeşimi kaç kez bağışlamalıyım?” sorusuna cevap olarak anlattı. Allah’tan aldığımız bağışlama o kadar büyüktür ki, başkalarını bağışlamamak için hiçbir gerekçemiz kalmaz.",
+     "bioEn": "A king forgives a servant a debt too great ever to repay. That same servant has a fellow servant thrown into prison over a small debt, and the king takes back his pardon.\nJesus told it in answer to Peter's question, \"How often must I forgive my brother?\" The forgiveness we receive from God is so great that we have no excuse not to forgive others.",
+     "en": {
+      "ref": "Matthew 18:23–35 (Douay-Rheims)",
+      "text": "The kingdom of heaven is likened to a king, who would take an account of his servants. And when he had begun to take the account, one was brought to him, that owed him ten thousand talents. And as he had not wherewith to pay it, his lord commanded that he should be sold, and his wife and children, and all that he had, and payment to be made. But that servant falling down, besought him, saying: Have patience with me, and I will pay thee all. And the lord of that servant being moved with pity, let him go, and forgave him the debt.\nBut when that servant was gone out, he found one of his fellow servants that owed him an hundred pence: and laying hold of him, he throttled him, saying: Pay what thou owest. And his fellow servant falling down, besought him, saying: Have patience with me, and I will pay thee all. And he would not: but went and cast him into prison, till he paid the debt.\nNow his fellow servants seeing what was done, were very much grieved, and they came and told their lord all that was done. Then his lord called him; and said to him: Thou wicked servant, I forgave thee all the debt, because thou besoughtest me: Shouldst not thou then have had compassion also on thy fellow servant, even as I had compassion on thee? And his lord being angry, delivered him to the torturers until he paid all the debt.\nSo also shall my heavenly Father do to you, if you forgive not every one his brother from your hearts."
+     }
+    },
+    {
+     "id": "ferisi-ve-vergi-gorevlisi",
+     "name": "Ferisi ve Vergi Görevlisi",
+     "nameEn": "The Pharisee and the Tax Collector",
+     "ref": "Luka 18:9–14",
+     "refEn": "Luke 18:9–14",
+     "bio": "Tapınakta bir Ferisi kendi doğruluğunu sayıp başkalarından üstün olduğu için şükreder. Vergi görevlisi ise gözlerini kaldıramadan göğsünü döver: “Allah’ım, ben günahkâra merhamet et.”\nİsa, aklanmış olarak evine dönenin vergi görevlisi olduğunu söyler. Allah, kendini övene değil, alçakgönüllülükle merhamet dileyene karşılık verir.",
+     "bioEn": "In the Temple a Pharisee lists his virtues and thanks God he isn't like others. A tax collector, not daring to look up, beats his breast: \"God, be merciful to me, a sinner.\"\nJesus says it was the tax collector who went home justified. God answers not the one who praises himself but the one who humbly asks for mercy.",
+     "en": {
+      "ref": "Luke 18:9–14 (Douay-Rheims)",
+      "text": "Two men went up into the temple to pray: the one a Pharisee, and the other a publican. The Pharisee standing, prayed thus with himself: O God, I give thee thanks that I am not as the rest of men, extortioners, unjust, adulterers, as also is this publican. I fast twice in a week: I give tithes of all that I possess.\nAnd the publican, standing afar off, would not so much as lift up his eyes towards heaven; but struck his breast, saying: O God, be merciful to me a sinner. I say to you, this man went down into his house justified rather than the other: because every one that exalteth himself, shall be humbled: and he that humbleth himself, shall be exalted."
+     }
+    },
+    {
+     "id": "iki-borclu",
+     "name": "İki Borçlu",
+     "nameEn": "The Two Debtors",
+     "ref": "Luka 7:41–43",
+     "refEn": "Luke 7:41–43",
+     "bio": "Bir alacaklı, biri beş yüz, öbürü elli dinar borçlu iki kişinin borcunu bağışlar. İsa, ev sahibi Ferisi Simun’a sorar: hangisi onu daha çok sever?\nİsa bunu, ayaklarını gözyaşlarıyla yıkayan günahkâr kadını hor gören Simun’a anlattı. Daha çok bağışlanan daha çok sever: günahının büyüklüğünü gören yürek, Allah’a en çok şükredendir.",
+     "bioEn": "A creditor cancels the debts of two men, one owing five hundred denarii, the other fifty. Jesus asks his host, Simon the Pharisee: which will love him more?\nHe told it to Simon, who looked down on the sinful woman washing Jesus' feet with her tears. The one forgiven more loves more: a heart that sees how much it has been forgiven is the most grateful.",
+     "en": {
+      "ref": "Luke 7:41–43 (Douay-Rheims)",
+      "text": "A certain creditor had two debtors, the one owed five hundred pence, and the other fifty. And whereas they had not wherewith to pay, he forgave them both. Which of the two loveth him most? Simon answering, said: I suppose that he to whom he forgave most. And he said to him: Thou hast judged rightly."
+     }
+    },
+    {
+     "id": "meyvesiz-incir-agaci",
+     "name": "Meyvesiz İncir Ağacı",
+     "nameEn": "The Barren Fig Tree",
+     "ref": "Luka 13:6–9",
+     "refEn": "Luke 13:6–9",
+     "bio": "Üç yıldır meyve vermeyen bir incir ağacı kesilecektir; bağcı bir yıl daha ister, dibini kazıp gübreleyecektir.\nİsa bunu “tövbe etmezseniz hepiniz mahvolacaksınız” uyarısının hemen ardından anlattı. Allah sabırlıdır ve tövbe için zaman tanır, ama bu zaman sonsuz değildir.",
+     "bioEn": "A fig tree that has borne no fruit for three years is about to be cut down; the gardener asks for one more year to dig around it and fertilize it.\nJesus told it right after warning, \"unless you repent, you will all perish.\" God is patient and gives time to repent, but that time isn't endless.",
+     "en": {
+      "ref": "Luke 13:6–9 (Douay-Rheims)",
+      "text": "A certain man had a fig tree planted in his vineyard, and he came seeking fruit on it, and found none. And he said to the dresser of the vineyard: Behold, for these three years I come seeking fruit on this fig tree, and I find none. Cut it down therefore: why cumbereth it the ground? But he answering, said to him: Lord, let it alone this year also, until I dig about it, and dung it. And if happily it bear fruit: but if not, then after that thou shalt cut it down."
+     }
+    },
+    {
+     "id": "iyi-samiriyeli",
+     "name": "İyi Samiriyeli",
+     "nameEn": "The Good Samaritan",
+     "ref": "Luka 10:25–37",
+     "refEn": "Luke 10:25–37",
+     "bio": "Soyulup dövülen ve yol kenarında yarı ölü bırakılan bir adamın yanından bir rahip ve bir Levili geçip gider. Yahudilerin hor gördüğü bir Samiriyeli ise yaralarını sarar, onu bir hana götürür ve masrafını üstlenir.\nİsa bunu “Komşum kim?” sorusuna cevap olarak anlattı. Komşuluk kan ya da din bağıyla değil, ihtiyacı görüp karşılık veren bir yürekle tanımlanır: “Git, sen de öyle yap.”",
+     "bioEn": "A man is robbed, beaten and left half dead by the road. A priest and a Levite pass by on the other side; a Samaritan, from a people the Jews despised, binds his wounds, takes him to an inn and pays for his care.\nJesus told it in answer to \"Who is my neighbor?\" A neighbor isn't defined by blood or religion but by a heart that sees a need and responds: \"Go and do likewise.\"",
+     "en": {
+      "ref": "Luke 10:30–35 (Douay-Rheims)",
+      "text": "A certain man went down from Jerusalem to Jericho, and fell among robbers, who also stripped him, and having wounded him went away, leaving him half dead. And it chanced, that a certain priest went down the same way: and seeing him, passed by. In like manner also a Levite, when he was near the place and saw him, passed by.\nBut a certain Samaritan being on his journey, came near him; and seeing him, was moved with compassion. And going up to him, bound up his wounds, pouring in oil and wine: and setting him upon his own beast, brought him to an inn, and took care of him. And the next day he took out two pence, and gave to the host, and said: Take care of him; and whatsoever thou shalt spend over and above, I, at my return, will repay thee."
+     }
+    }
+   ]
+  },
+  {
+   "id": "dua",
+   "icon": "prayer",
+   "title": "Dua ve Sebat Meselleri",
+   "en": "Parables of Prayer and Perseverance",
+   "lead": "Bu iki kısa mesel, Allah’a güvenerek ve sebatla dua etmeyi öğretir.",
+   "leadEn": "These two short parables teach us to pray with trust in God and to persevere.",
+   "items": [
+    {
+     "id": "israrci-dul-kadin",
+     "name": "Israrcı Dul Kadın",
+     "nameEn": "The Persistent Widow",
+     "ref": "Luka 18:1–8",
+     "refEn": "Luke 18:1–8",
+     "bio": "Ne Allah’tan korkan ne insandan utanan bir yargıç, durmadan gelip hakkını isteyen dul kadına sonunda, sırf rahatsız etmesin diye hakkını verir.\nİsa bunu, her zaman dua edip gevşememek gerektiğini öğretmek için anlattı. Adaletsiz bir yargıç bile ısrara boyun eğiyorsa, adil ve seven Allah çocuklarını çok daha çabuk duyar.",
+     "bioEn": "A judge who neither fears God nor respects people finally gives a persistent widow her rights, just so she'll stop bothering him.\nJesus told it to teach us to pray always and not lose heart. If even an unjust judge gives in to persistence, the just and loving God will hear his children all the sooner.",
+     "en": {
+      "ref": "Luke 18:2–5 (Douay-Rheims)",
+      "text": "There was a judge in a certain city, who feared not God, nor regarded man. And there was a certain widow in that city, and she came to him, saying: Avenge me of my adversary. And he would not for a long time. But afterwards he said within himself: Although I fear not God, nor regard man, Yet because this widow is troublesome to me, I will avenge her, lest continually coming she weary me."
+     }
+    },
+    {
+     "id": "gece-yarisi-gelen-dost",
+     "name": "Gece Yarısı Gelen Dost",
+     "nameEn": "The Friend at Midnight",
+     "ref": "Luka 11:5–8",
+     "refEn": "Luke 11:5–8",
+     "bio": "Gece yarısı misafiri gelen bir adam, ekmek istemek için komşusunun kapısını çalar. Komşu önce kalkmak istemez, ama ısrar karşısında istediğini verir.\nİsa bunu “İsteyin, size verilecek” sözünden hemen önce anlattı. Allah, çocuklarının ona güvenle ve ısrarla dua etmesini sever.",
+     "bioEn": "A man with an unexpected midnight guest knocks on his neighbor's door to borrow bread. The neighbor doesn't want to get up, but gives him what he needs because he keeps knocking.\nJesus told it just before saying, \"Ask, and it will be given you.\" God loves his children to pray to him with trust and persistence.",
+     "en": {
+      "ref": "Luke 11:5–8 (Douay-Rheims)",
+      "text": "Which of you shall have a friend, and shall go to him at midnight, and shall say to him: Friend, lend me three loaves, Because a friend of mine is come off his journey to me, and I have not what to set before him. And he from within should answer, and say: Trouble me not, the door is now shut, and my children are with me in bed; I cannot rise and give thee.\nYet if he shall continue knocking, I say to you, although he will not rise and give him, because he is his friend; yet, because of his importunity, he will rise, and give him as many as he needeth."
+     }
+    }
+   ]
+  },
+  {
+   "id": "uyaniklik",
+   "icon": "lamp",
+   "title": "Uyanıklık, Hazırlık ve Bilgelik Meselleri",
+   "en": "Parables of Watchfulness and Wisdom",
+   "lead": "Bu meseller, Mesih İsa’nın geri dönüşüne ve yaşamın sınavlarına hazırlıklı olmayı, gerçek bilgeliğin ne olduğunu anlatır.",
+   "leadEn": "These parables teach readiness for Christ's return and for life's trials, and what true wisdom looks like.",
+   "items": [
+    {
+     "id": "on-kiz",
+     "name": "On Kız",
+     "nameEn": "The Ten Virgins",
+     "ref": "Matta 25:1–13",
+     "refEn": "Matthew 25:1–13",
+     "bio": "Güveyi bekleyen on kızdan beşi yedek yağ alır, beşi almaz. Güvey gece yarısı geldiğinde yağı biten kızlar yağ almaya gitmişken kapı kapanır.\nİsa’nın ne zaman döneceği bilinmez; bu yüzden her an hazır olmak gerekir. Yağ, son anda ödünç alınamayan hazırlığı, yani sadık bir yaşamı temsil eder.",
+     "bioEn": "Of ten virgins waiting for the bridegroom, five bring extra oil and five don't. When he arrives at midnight, the ones who ran out have gone to buy more, and the door is shut.\nNo one knows when Christ will return, so we must be ready at all times. The oil stands for what can't be borrowed at the last minute: a faithful life.",
+     "en": {
+      "ref": "Matthew 25:1–13 (Douay-Rheims)",
+      "text": "Then shall the kingdom of heaven be like to ten virgins, who taking their lamps went out to meet the bridegroom and the bride. And five of them were foolish, and five wise. But the five foolish, having taken their lamps, did not take oil with them: But the wise took oil in their vessels with the lamps. And the bridegroom tarrying, they all slumbered and slept.\nAnd at midnight there was a cry made: Behold the bridegroom cometh, go ye forth to meet him. Then all those virgins arose and trimmed their lamps. And the foolish said to the wise: Give us of your oil, for our lamps are going out. The wise answered, saying: Lest perhaps there be not enough for us and for you, go ye rather to them that sell, and buy for yourselves.\nNow whilst they went to buy, the bridegroom came: and they that were ready, went in with him to the marriage, and the door was shut. But at last came also the other virgins, saying: Lord, Lord, open to us. But he answering said: Amen I say to you, I know you not. Watch ye therefore, because you know not the day nor the hour."
+     }
+    },
+    {
+     "id": "zengin-ahmak",
+     "name": "Zengin Ahmak",
+     "nameEn": "The Rich Fool",
+     "ref": "Luka 12:16–21",
+     "refEn": "Luke 12:16–21",
+     "bio": "Bol ürün alan zengin bir adam daha büyük ambarlar yapıp keyfine bakmaya karar verir. Allah ona der ki: “Ey akılsız, canın bu gece senden istenecek; biriktirdiklerin kime kalacak?”\nİsa bunu “Açgözlülükten sakının” uyarısıyla anlattı. Yalnızca bu dünya için biriktirip Allah katında yoksul kalmak, en büyük akılsızlıktır.",
+     "bioEn": "A rich man with a bumper harvest decides to build bigger barns and take life easy. God tells him: \"Fool! This night your soul is required of you; and the things you have prepared, whose will they be?\"\nJesus told it with a warning against greed. Storing up only for this world while staying poor before God is the height of folly.",
+     "en": {
+      "ref": "Luke 12:16–21 (Douay-Rheims)",
+      "text": "The land of a certain rich man brought forth plenty of fruits. And he thought within himself, saying: What shall I do, because I have no room where to bestow my fruits? And he said: This will I do: I will pull down my barns, and will build greater; and into them will I gather all things that are grown to me, and my goods. And I will say to my soul: Soul, thou hast much goods laid up for many years, take thy rest; eat, drink, make good cheer.\nBut God said to him: Thou fool, this night do they require thy soul of thee: and whose shall those things be which thou hast provided? So is he that layeth up treasure for himself, and is not rich towards God."
+     }
+    },
+    {
+     "id": "uyanik-hizmetkarlar",
+     "name": "Uyanık Hizmetkârlar",
+     "nameEn": "The Watchful Servants",
+     "ref": "Luka 12:35–40",
+     "refEn": "Luke 12:35–40",
+     "bio": "Efendisinin düğünden ne zaman döneceğini bilmeyen hizmetkârlar, kapıyı hemen açmaya hazır bekler. Onları uyanık bulan efendi, kendisi onlara hizmet eder.\nMesih beklenmedik bir anda gelecektir; bu yüzden inananlar hep uyanık kalmalıdır. Sadakat, efendi görmese de değişmez.",
+     "bioEn": "Servants who don't know when their master will return from the wedding wait ready to open the door at once. Finding them awake, the master serves them himself.\nChrist will come at an unexpected hour, so believers must stay awake. Faithfulness doesn't change when the master isn't watching.",
+     "en": {
+      "ref": "Luke 12:35–40 (Douay-Rheims)",
+      "text": "Let your loins be girt, and lamps burning in your hands. And you yourselves like to men who wait for their lord, when he shall return from the wedding; that when he cometh and knocketh, they may open to him immediately. Blessed are those servants, whom the lord when he cometh, shall find watching.\nAmen I say to you, that he will gird himself, and make them sit down to meat, and passing will minister unto them. And if he shall come in the second watch, or come in the third watch, and find them so, blessed are those servants.\nBut this know ye, that if the householder did know at what hour the thief would come, he would surely watch, and would not suffer his house to be broken open. Be you then also ready: for at what hour you think not, the Son of man will come."
+     }
+    },
+    {
+     "id": "sadik-ve-akilsiz-kahya",
+     "name": "Sadık ve Akılsız Kahya",
+     "nameEn": "The Faithful and the Foolish Steward",
+     "ref": "Luka 12:42–48 · Matta 24:45–51",
+     "refEn": "Luke 12:42–48 · Matthew 24:45–51",
+     "bio": "Diğer hizmetkârlara yiyecek dağıtmakla görevli bir kahya, efendisi dönünce onu görevinin başında bulursa mutlu olur. Efendim gecikiyor deyip hizmetkârları döver ve sarhoş olursa, efendi beklemediği bir anda gelir.\nMesel özellikle sorumluluk taşıyanlara seslenir: yetki bir ayrıcalık değil, hesabı sorulacak bir emanettir. “Kime çok verildiyse ondan çok istenecek.”",
+     "bioEn": "A steward put in charge of feeding the other servants is blessed if his master finds him doing his job. If he thinks the master is delayed and starts beating the servants and getting drunk, the master will come when he least expects it.\nIt speaks especially to those who carry responsibility: authority isn't a privilege but a trust to be accounted for. \"To whom much is given, much will be required.\"",
+     "en": {
+      "ref": "Luke 12:42–48 (Douay-Rheims)",
+      "text": "Who, thinkest thou, is the faithful and wise steward, whom his lord setteth over his family, to give them their measure of wheat in due season? Blessed is that servant, whom when his lord shall come, he shall find so doing. Verily I say to you, he will set him over all that he possesseth.\nBut if that servant shall say in his heart: My lord is long a coming; and shall begin to strike the men servants and maidservants, and to eat and to drink and to be drunk: The lord of that servant will come in the day that he hopeth not, and at the hour that he knoweth not, and shall separate him, and shall appoint him his portion with unbelievers.\nAnd that servant who knew the will of his lord, and prepared not himself, and did not according to his will, shall be beaten with many stripes. But he that knew not, and did things worthy of stripes, shall be beaten with few stripes. And unto whomsoever much is given, of him much shall be required."
+     }
+    },
+    {
+     "id": "bilge-ve-akilsiz-yapi-ustalari",
+     "name": "Bilge ve Akılsız Yapı Ustaları",
+     "nameEn": "The Wise and Foolish Builders",
+     "ref": "Matta 7:24–27 · Luka 6:46–49",
+     "refEn": "Matthew 7:24–27 · Luke 6:46–49",
+     "bio": "İsa’nın sözlerini dinleyip uygulayan, evini kaya üzerine kuran bilge adama benzer; fırtına gelince ev yıkılmaz. Dinleyip uygulamayan ise evini kum üzerine kurar ve evi çöker.\nDağdaki Vaaz’ın bu kapanışı, iki adamın da aynı sözleri duyduğunu hatırlatır. Fark, sözü yaşayıp yaşamamaktır.",
+     "bioEn": "Whoever hears Jesus' words and acts on them is like a wise man who built his house on rock; when the storm comes, it stands. Whoever hears and doesn't act built on sand, and the house falls.\nThis close of the Sermon on the Mount reminds us that both men heard the same words. The difference is whether they lived them.",
+     "en": {
+      "ref": "Matthew 7:24–27 (Douay-Rheims)",
+      "text": "Every one therefore that heareth these my words, and doth them, shall be likened to a wise man that built his house upon a rock, And the rain fell, and the floods came, and the winds blew, and they beat upon that house, and it fell not, for it was founded on a rock.\nAnd every one that heareth these my words, and doth them not, shall be like a foolish man that built his house upon the sand, And the rain fell, and the floods came, and the winds blew, and they beat upon that house, and it fell, and great was the fall thereof."
+     }
+    }
+   ]
+  },
+  {
+   "id": "sorumluluk",
+   "icon": "coins",
+   "title": "Sorumluluk ve Yönetim Meselleri",
+   "en": "Parables of Stewardship",
+   "lead": "Bu meseller, Allah’ın insana emanet ettiği yetenek, zaman ve kaynakların nasıl kullanılması gerektiğini ve Allah’ın lütfunun insan adaletinden farklı işlediğini anlatır.",
+   "leadEn": "These parables describe how we are to use the talents, time and resources God entrusts to us, and how God's grace works differently from human fairness.",
+   "items": [
+    {
+     "id": "yetenekler",
+     "name": "Yetenekler",
+     "nameEn": "The Talents",
+     "ref": "Matta 25:14–30",
+     "refEn": "Matthew 25:14–30",
+     "bio": "Yolculuğa çıkan bir efendi üç hizmetkârına beş, iki ve bir talant emanet eder. İlk ikisi parayı katlar; üçüncüsü korkup toprağa gömer. Efendi ilk ikisini ödüllendirir, üçüncüsünü azarlar.\nAllah her insana farklı ölçüde yetenek, zaman ve fırsat emanet eder. Hizmetkârın hatası az almış olması değil, korkudan hiçbir şey yapmamasıdır.",
+     "bioEn": "A master going on a journey entrusts five, two and one talents to three servants. The first two double the money; the third, afraid, buries it. The master rewards the first two and rebukes the third.\nGod entrusts each of us with different gifts, time and opportunities. The third servant's fault isn't that he received little, but that fear kept him from doing anything.",
+     "en": {
+      "ref": "Matthew 25:14–30 (Douay-Rheims)",
+      "text": "For even as a man going into a far country, called his servants, and delivered to them his goods. And to one he gave five talents, and to another two, and to another one, to every one according to his proper ability: and immediately he took his journey. And he that had received the five talents, went his way, and traded with the same, and gained other five. And in like manner he that had received the two, gained other two. But he that had received the one, going his way, digged into the earth, and hid his lord’s money.\nBut after a long time the lord of those servants came, and reckoned with them. And he that had received the five talents coming, brought other five talents, saying: Lord, thou didst deliver to me five talents, behold I have gained other five over and above. His lord said to him: Well done, good and faithful servant, because thou hast been faithful over a few things, I will place thee over many things: enter thou into the joy of thy lord.\nAnd he also that had received the two talents came and said: Lord, thou deliveredst two talents to me: behold I have gained other two. His lord said to him: Well done, good and faithful servant: because thou hast been faithful over a few things, I will place thee over many things: enter thou into the joy of thy lord.\nBut he that had received the one talent, came and said: Lord, I know that thou art a hard man, thou reapest where thou hast not sown, and gatherest where thou hast not strewed. And being afraid I went and hid thy talent in the earth: behold here thou hast that which is thine. And his lord answering, said to him: Wicked and slothful servant, thou knewest that I reap where I sow not, and gather where I have not strewed: Thou oughtest therefore to have committed my money to the bankers, and at my coming I should have received my own with usury.\nTake ye away therefore the talent from him, and give it to him that hath ten talents. For to every one that hath shall be given, and he shall abound: but from him that hath not, that also which he seemeth to have shall be taken away. And the unprofitable servant cast ye out into the exterior darkness. There shall be weeping and gnashing of teeth."
+     }
+    },
+    {
+     "id": "minalar",
+     "name": "Minalar",
+     "nameEn": "The Ten Minas",
+     "ref": "Luka 19:11–27",
+     "refEn": "Luke 19:11–27",
+     "bio": "Kral olmak için uzak bir ülkeye giden soylu bir adam on hizmetkârına birer mina verir. Dönüşünde parayı katlayanlara kentler verir, parayı bezine sarıp saklayanın elindekini alır.\nYetenekler’e benzeyen bu meseli İsa, Kudüs’e yaklaşırken anlattı: Hükümdarlık hemen görünmeyecek ama kesinlikle gelecek; o zamana dek sadakatle çalışmak gerekir.",
+     "bioEn": "A nobleman going to a far country to receive a kingdom gives each of ten servants a mina. On his return he gives cities to those who made it grow, and takes the coin from the one who kept it wrapped in a cloth.\nSimilar to the Talents, it was told as Jesus neared Jerusalem: the Kingdom won't appear at once, but it will surely come, and until then we must work faithfully.",
+     "en": {
+      "ref": "Luke 19:12–27 (Douay-Rheims)",
+      "text": "A certain nobleman went into a far country, to receive for himself a kingdom, and to return. And calling his ten servants, he gave them ten pounds, and said to them: Trade till I come. But his citizens hated him: and they sent an embassage after him, saying: We will not have this man to reign over us.\nAnd it came to pass, that he returned, having received the kingdom: and he commanded his servants to be called, to whom he had given the money, that he might know how much every man had gained by trading. And the first came saying: Lord, thy pound hath gained ten pounds. And he said to him: Well done, thou good servant, because thou hast been faithful in a little, thou shalt have power over ten cities. And the second came, saying: Lord, thy pound hath gained five pounds. And he said to him: Be thou also over five cities.\nAnd another came, saying: Lord, behold here is thy pound, which I have kept laid up in a napkin. For I feared thee, because thou art an austere man: thou takest up what thou didst not lay down, and thou reapest that which thou didst not sow. He saith to him: Out of thy own mouth I judge thee, thou wicked servant. Thou knewest that I was an austere man, taking up what I laid not down, and reaping that which I did not sow: And why then didst thou not give my money into the bank, that at my coming I might have exacted it with usury?\nAnd he said to them that stood by: Take the pound away from him, and give it to him that hath ten pounds. And they said to him: Lord, he hath ten pounds. But I say to you, that to every one that hath shall be given, and he shall abound: and from him that hath not, that also which he hath shall be taken from him."
+     }
+    },
+    {
+     "id": "adaletsiz-kahya",
+     "name": "Adaletsiz Kahya",
+     "nameEn": "The Dishonest Manager",
+     "ref": "Luka 16:1–13",
+     "refEn": "Luke 16:1–13",
+     "bio": "İşten çıkarılacağını öğrenen bir kahya, efendisinin borçlularının borçlarını azaltarak kendine dostlar edinir. Efendisi, dürüst olmasa da bu kurnazlığını över.\nİsa’nın anlaşılması en zor meseli sayılır: övülen sahtekârlık değil, gelecek için gösterilen akıllı kararlılıktır. İnananlar da sonsuz geleceklerini aynı ciddiyetle düşünmelidir; çünkü hem Allah’a hem paraya kulluk edilemez.",
+     "bioEn": "A steward about to be fired reduces the debts of his master's debtors to win friends for later. His master, though the move is dishonest, praises his shrewdness.\nOften called Jesus' hardest parable, it praises not the dishonesty but the shrewd resolve for the future. Believers should plan for their eternal future just as seriously, for no one can serve both God and money.",
+     "en": {
+      "ref": "Luke 16:1–9 (Douay-Rheims)",
+      "text": "There was a certain rich man who had a steward: and the same was accused unto him, that he had wasted his goods. And he called him, and said to him: How is it that I hear this of thee? give an account of thy stewardship: for now thou canst be steward no longer.\nAnd the steward said within himself: What shall I do, because my lord taketh away from me the stewardship? To dig I am not able; to beg I am ashamed. I know what I will do, that when I shall be removed from the stewardship, they may receive me into their houses.\nTherefore calling together every one of his lord’s debtors, he said to the first: How much dost thou owe my lord? But he said: An hundred barrels of oil. And he said to him: Take thy bill, and sit down quickly, and write fifty. Then he said to another: And how much dost thou owe? Who said: An hundred quarters of wheat. He said to him: Take thy bill, and write eighty.\nAnd the lord commended the unjust steward, forasmuch as he had done wisely: for the children of this world are wiser in their generation than the children of light."
+     }
+    },
+    {
+     "id": "bagdaki-isciler",
+     "name": "Bağdaki İşçiler",
+     "nameEn": "The Workers in the Vineyard",
+     "ref": "Matta 20:1–16",
+     "refEn": "Matthew 20:1–16",
+     "bio": "Bir bağ sahibi sabahtan akşama kadar farklı saatlerde işçi tutar ve akşam hepsine aynı ücreti, bir dinar öder. Sabahtan çalışanlar söylenince, anlaştıkları ücreti aldıklarını hatırlatır.\nİnsan adaleti emeğe göre öder, Allah’ın lütfu ise cömertçe verir. Hayatının sonunda tövbe eden de aynı kurtuluşa kavuşabilir ve bu kimseye haksızlık değildir. Bağ sahibinin sorusu bunu özetler: cömertliğim seni neden kıskandırsın?",
+     "bioEn": "A landowner hires workers at different hours from morning to evening, and pays them all the same wage, one denarius. When those hired first complain, he reminds them they got what was agreed.\nHuman fairness pays by the hour; God's grace gives generously. Someone who repents at the end of life can receive the same salvation, and that wrongs no one. The landowner's question says it all: why should my generosity make you envious?",
+     "en": {
+      "ref": "Matthew 20:1–16 (Douay-Rheims)",
+      "text": "The kingdom of heaven is like to an householder, who went out early in the morning to hire labourers into his vineyard. And having agreed with the labourers for a penny a day, he sent them into his vineyard. And going out about the third hour, he saw others standing in the market place idle. And he said to them: Go you also into my vineyard, and I will give you what shall be just. And they went their way.\nAnd again he went out about the sixth and the ninth hour, and did in like manner. But about the eleventh hour he went out and found others standing, and he saith to them: Why stand you here all the day idle? They say to him: Because no man hath hired us. He saith to them: Go you also into my vineyard.\nAnd when evening was come, the lord of the vineyard saith to his steward: Call the labourers and pay them their hire, beginning from the last even to the first. When therefore they were come, that came about the eleventh hour, they received every man a penny. But when the first also came, they thought that they should receive more: and they also received every man a penny.\nAnd receiving it they murmured against the master of the house, Saying: These last have worked but one hour, and thou hast made them equal to us, that have borne the burden of the day and the heats. But he answering said to one of them: Friend, I do thee no wrong: didst thou not agree with me for a penny? Take what is thine, and go thy way: I will also give to this last even as to thee.\nOr, is it not lawful for me to do what I will? is thy eye evil, because I am good? So shall the last be first, and the first last."
+     }
+    },
+    {
+     "id": "iki-ogul",
+     "name": "İki Oğul",
+     "nameEn": "The Two Sons",
+     "ref": "Matta 21:28–32",
+     "refEn": "Matthew 21:28–32",
+     "bio": "Bir baba iki oğlunu bağda çalışmaya çağırır. Biri önce “istemiyorum” der ama sonra gider; öbürü “olur” der ama gitmez. Babasının isteğini yapan hangisidir?\nİsa bunu, onu dinlemeyen din önderlerine anlattı: tövbe eden vergi görevlileri ve fahişeler, dindar görünüp itaat etmeyenlerden önce Hükümdarlığa girecek. Gerçek itaati sözler değil, eylemler gösterir.",
+     "bioEn": "A father asks his two sons to work in the vineyard. One says \"I won't\" but later goes; the other says \"I will\" but doesn't. Which one did his father's will?\nJesus told it to religious leaders who wouldn't listen to him: tax collectors and prostitutes who repent will enter the Kingdom ahead of those who look devout but don't obey. Real obedience shows in deeds, not words.",
+     "en": {
+      "ref": "Matthew 21:28–32 (Douay-Rheims)",
+      "text": "But what think you? A certain man had two sons; and coming to the first, he said: Son, go work to day in my vineyard. And he answering, said: I will not. But afterwards, being moved with repentance, he went. And coming to the other, he said in like manner. And he answering, said: I go, Sir; and he went not.\nWhich of the two did the father’s will? They say to him: The first. Jesus saith to them: Amen I say to you, that the publicans and the harlots shall go into the kingdom of God before you."
+     }
+    },
+    {
+     "id": "kotu-bagcilar",
+     "name": "Kötü Bağcılar",
+     "nameEn": "The Wicked Tenants",
+     "ref": "Matta 21:33–46 · Markos 12:1–12 · Luka 20:9–19",
+     "refEn": "Matthew 21:33–46 · Mark 12:1–12 · Luke 20:9–19",
+     "bio": "Bir bağ sahibinin ürün almak için gönderdiği hizmetkârları kiracı bağcılar döver, öldürür. Sonunda gönderdiği oğlunu da mirasa konmak için öldürürler.\nBağ Allah’ın halkı, hizmetkârlar peygamberler, oğul da İsa’nın kendisidir. Mesel, reddedilen peygamberlere ve İsa’nın kendi ölümüne işaret eder: Allah’ın sabrını kötüye kullananı ağır bir sonuç bekler.",
+     "bioEn": "The tenants of a vineyard beat and kill the servants the owner sends to collect his share. At last they kill his son as well, to seize the inheritance.\nThe vineyard is God's people, the servants are the prophets, and the son is Jesus himself. The parable points to the rejected prophets and to Jesus' own death: abusing God's patience brings a heavy reckoning.",
+     "en": {
+      "ref": "Matthew 21:33–41 (Douay-Rheims)",
+      "text": "Hear ye another parable. There was a man an householder, who planted a vineyard, and made a hedge round about it, and dug in it a press, and built a tower, and let it out to husbandmen: and went into a strange country. And when the time of the fruits drew nigh, he sent his servants to the husbandmen that they might receive the fruits thereof.\nAnd the husbandmen laying hands on his servants, beat one, and killed another, and stoned another. Again he sent other servants more than the former; and they did to them in like manner. And last of all he sent to them his son, saying: They will reverence my son.\nBut the husbandmen seeing the son, said among themselves: This is the heir: come, let us kill him, and we shall have his inheritance. And taking him, they cast him forth out of the vineyard, and killed him. When therefore the lord of the vineyard shall come, what will he do to those husbandmen? They say to him: He will bring those evil men to an evil end; and will let out his vineyard to other husbandmen, that shall render him the fruit in due season."
+     }
+    }
+   ]
+  },
+  {
+   "id": "cagri",
+   "icon": "door",
+   "title": "Hükümdarlığa Çağrı ve Hesap Verme Meselleri",
+   "en": "Parables of Invitation and Judgment",
+   "lead": "Bu meseller, Allah’ın Hükümdarlığı’na davetin genişliğini ve yaşamın sonunda verilecek hesabı anlatır.",
+   "leadEn": "These parables describe the breadth of the invitation to God's Kingdom, and the account each of us will give at the end of life.",
+   "items": [
+    {
+     "id": "buyuk-solen",
+     "name": "Büyük Şölen",
+     "nameEn": "The Great Banquet",
+     "ref": "Matta 22:1–14 · Luka 14:15–24",
+     "refEn": "Matthew 22:1–14 · Luke 14:15–24",
+     "bio": "Büyük bir şölen hazırlayan ev sahibinin davetlileri türlü bahanelerle gelmez. Ev sahibi hizmetkârlarını sokaklara gönderip yoksulları, sakatları, körleri çağırır ve salon dolar.\nİlk davetliler çağrıyı reddedince davet herkese, özellikle dışlananlara açıldı. Matta’daki devamında düğün giysisi olmayan konuk dışarı çıkarılır: davete gelmek yetmez, ona yaraşır bir hayat da gerekir.",
+     "bioEn": "A host prepares a great banquet, but his guests make excuses and don't come. He sends his servants into the streets to bring in the poor, the crippled and the blind, and the hall fills up.\nWhen the first guests refused, the invitation was opened to everyone, especially the outcasts. In Matthew's version, a guest without a wedding garment is thrown out: accepting the invitation isn't enough without a life to match it.",
+     "en": {
+      "ref": "Matthew 22:2–14 (Douay-Rheims)",
+      "text": "The kingdom of heaven is likened to a king, who made a marriage for his son. And he sent his servants, to call them that were invited to the marriage; and they would not come. Again he sent other servants, saying: Tell them that were invited, Behold, I have prepared my dinner; my beeves and fatlings are killed, and all things are ready: come ye to the marriage.\nBut they neglected, and went their ways, one to his farm, and another to his merchandise. And the rest laid hands on his servants, and having treated them contumeliously, put them to death. But when the king had heard of it, he was angry, and sending his armies, he destroyed those murderers, and burnt their city.\nThen he saith to his servants: The marriage indeed is ready; but they that were invited, were not worthy. Go ye therefore into the highways; and as many as you shall find, call to the marriage. And his servants going forth into the ways, gathered together all that they found, both bad and good: and the marriage was filled with guests.\nAnd the king went in to see the guests: and he saw there a man who had not on a wedding garment. And he saith to him: Friend, how camest thou in hither not having a wedding garment? But he was silent. Then the king said to the waiters: Bind his hands and feet, and cast him into the exterior darkness: there shall be weeping and gnashing of teeth. For many are called, but few are chosen."
+     }
+    },
+    {
+     "id": "zengin-adam-ve-lazar",
+     "name": "Zengin Adam ve Lazar",
+     "nameEn": "The Rich Man and Lazarus",
+     "ref": "Luka 16:19–31",
+     "refEn": "Luke 16:19–31",
+     "bio": "Her gün ziyafet veren zengin bir adamın kapısında yoksul Lazar aç yatar. İkisi de ölür; Lazar Avraam’ın yanına, zengin adam azaba gider. Kardeşlerini uyarmak için Lazar’ın gönderilmesini ister, ama Musa’yı ve peygamberleri dinlemeyenlerin ölüden dirilen birine de inanmayacağı söylenir.\nZengin adamın günahı serveti değil, kapısındaki Lazar’ı görmezden gelmesidir. Zenginlik, insanı yoksulun ihtiyacına kör etme tehlikesi taşır.",
+     "bioEn": "A rich man feasts every day while poor Lazarus lies hungry at his gate. Both die; Lazarus goes to Abraham's side, the rich man to torment. He asks that Lazarus be sent to warn his brothers, but is told that those who won't listen to Moses and the prophets won't be convinced even by someone rising from the dead.\nThe rich man's sin isn't his wealth but ignoring Lazarus at his door. Wealth carries the danger of blinding us to the needs of the poor.",
+     "en": {
+      "ref": "Luke 16:19–31 (Douay-Rheims)",
+      "text": "There was a certain rich man, who was clothed in purple and fine linen; and feasted sumptuously every day. And there was a certain beggar, named Lazarus, who lay at his gate, full of sores, Desiring to be filled with the crumbs that fell from the rich man’s table, and no one did give him; moreover the dogs came, and licked his sores.\nAnd it came to pass, that the beggar died, and was carried by the angels into Abraham’s bosom. And the rich man also died: and he was buried in hell. And lifting up his eyes when he was in torments, he saw Abraham afar off, and Lazarus in his bosom: And he cried, and said: Father Abraham, have mercy on me, and send Lazarus, that he may dip the tip of his finger in water, to cool my tongue: for I am tormented in this flame.\nAnd Abraham said to him: Son, remember that thou didst receive good things in thy lifetime, and likewise Lazarus evil things, but now he is comforted, and thou art tormented. And besides all this, between us and you, there is fixed a great chaos: so that they who would pass from hence to you, cannot, nor from thence come hither.\nAnd he said: Then, father, I beseech thee, that thou wouldst send him to my father’s house, for I have five brethren, That he may testify unto them, lest they also come into this place of torments. And Abraham said to him: They have Moses and the prophets; let them hear them. But he said: No, father Abraham: but if one went to them from the dead, they will do penance. And he said to him: If they hear not Moses and the prophets, neither will they believe, if one rise again from the dead."
+     }
+    },
+    {
+     "id": "koyunlar-ve-keciler",
+     "name": "Koyunlar ve Keçiler",
+     "nameEn": "The Sheep and the Goats",
+     "ref": "Matta 25:31–46",
+     "refEn": "Matthew 25:31–46",
+     "bio": "İnsanoğlu görkemiyle geldiğinde, çobanın koyunları keçilerden ayırdığı gibi ulusları ikiye ayıracak. Sağındakilere, aç olanı doyurdukları, yabancıyı barındırdıkları, hastayı ve tutsağı ziyaret ettikleri için Hükümdarlığı verecek: “Bu en küçük konumdaki kardeşlerimden birine yaptığınızı, bana yapmış oldunuz.” Bunu yapmayanlar aynı sözlerle yargılanır.\nBu, bir meselden çok son yargı üzerine bir öğretidir. Can alıcı noktası şudur: Mesih kendini en muhtaç, en göz ardı edilen insanla özdeşleştirir.",
+     "bioEn": "When the Son of Man comes in glory, he will separate the nations as a shepherd separates sheep from goats. To those on his right he gives the Kingdom, because they fed the hungry, welcomed the stranger and visited the sick and imprisoned: \"Whatever you did for one of the very least of these brothers and sisters of mine, you did for me.\" Those who didn't are judged by the same words.\nIt's less a parable than a teaching on the Last Judgment. Its heart: Christ identifies himself with the neediest, most overlooked person.",
+     "en": {
+      "ref": "Matthew 25:31–46 (Douay-Rheims)",
+      "text": "And when the Son of man shall come in his majesty, and all the angels with him, then shall he sit upon the seat of his majesty. And all nations shall be gathered together before him, and he shall separate them one from another, as the shepherd separateth the sheep from the goats: And he shall set the sheep on his right hand, but the goats on his left.\nThen shall the king say to them that shall be on his right hand: Come, ye blessed of my Father, possess you the kingdom prepared for you from the foundation of the world. For I was hungry, and you gave me to eat; I was thirsty, and you gave me to drink; I was a stranger, and you took me in: Naked, and you covered me: sick, and you visited me: I was in prison, and you came to me.\nThen shall the just answer him, saying: Lord, when did we see thee hungry, and fed thee; thirsty, and gave thee drink? And when did we see thee a stranger, and took thee in? or naked, and covered thee? Or when did we see thee sick or in prison, and came to thee? And the king answering, shall say to them: Amen I say to you, as long as you did it to one of these my least brethren, you did it to me.\nThen he shall say to them also that shall be on his left hand: Depart from me, you cursed, into everlasting fire which was prepared for the devil and his angels. For I was hungry, and you gave me not to eat: I was thirsty, and you gave me not to drink. I was a stranger, and you took me not in: naked, and you covered me not: sick and in prison, and you did not visit me.\nThen they also shall answer him, saying: Lord, when did we see thee hungry, or thirsty, or a stranger, or naked, or sick, or in prison, and did not minister to thee? Then he shall answer them, saying: Amen I say to you, as long as you did it not to one of these least, neither did you do it to me. And these shall go into everlasting punishment: but the just, into life everlasting."
+     }
+    }
+   ]
+  }
+ ],
+ "introEn": "A parable tells a deep truth through a simple story from everyday life: a farmer, a shepherd, a lost coin. Jesus spoke in parables to open a door for the heart that is searching (Matthew 13:10-17). Below are his main parables with their meaning, grouped by theme."
 }/*JSON-END*/;

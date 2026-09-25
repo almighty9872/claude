@@ -99,6 +99,10 @@ Search reads the data files at runtime, so edits show up in search results immed
 
 **Domain:** the build reads your domain from the `CNAME` file (one line, e.g. `ornekalan.com`) and uses `https://<that domain>` for canonical, Open Graph and sitemap URLs. The file currently holds the placeholder `alanadiniz.com`, so the build prints a warning and falls back to `https://www.example.com` until you replace it.
 
+## Mobile tab bar
+
+Below 980px wide, every page has a glass tab bar pinned to the bottom of the screen. Pages with sections of their own show four of them plus "Diğer" (a drawer with the rest of the page and the site's core pages); every other page shows the five core destinations (Neden?, Tarih, Katekizm, Kiliseler, Sorular). Which page gets which items is set in `tools/build.ps1`, in `$TbSets` (the item lists, Turkish and English labels, icons) and `$TbPages` (which Turkish page uses which set; English pages follow through `$EnAltMap`). An in-page item is an `#id` that exists on both languages' pages; `he` overrides it for English when the ids differ. In Markdown content, `## Heading {#id}` gives a heading that id.
+
 ## Editing the sources and copyright text
 
 Edit `content/hakkinda.md` (and `content/hakkinda-en.md` for the English pages). On github.com, open the file, click the pencil icon and commit. The workflow rebuilds every page in about a minute, since the text appears in each page's footer. In the top block (between the `---` lines), `title` is the footer link and dialog heading, and `about` is the one-line sentence under the site name in the footer. The rest is Markdown, shown in the "Kaynaklar ve telif" dialog:

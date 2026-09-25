@@ -1499,16 +1499,19 @@
     function go(id, focus) {
       var step = stepFor(id); if (!step) return false;
       show(step);
+      /* Scroll so the step (or the linked card) starts just below the pinned stepper. Measure the
+         step itself, never the stepper: once pinned, the stepper's own position is where it is
+         stuck on screen, not where it sits in the page, and scrolling to it would go nowhere. */
       var target = document.getElementById(id);
-      if (target === step) target = navBox; // a whole step: bring the stepper and the step's heading into view
       var top = target.getBoundingClientRect().top + window.pageYOffset;
-      var offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
-      if (target !== navBox) offset += (navBox ? navBox.offsetHeight : 0) + 24; else offset += 8;
+      var pinned = navBox && getComputedStyle(navBox).position === 'sticky' && navBox.offsetParent;
+      var offset = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) +
+        (pinned ? navBox.offsetHeight + 8 : 0) + 16;
       window.scrollTo({ top: Math.max(0, top - offset), behavior: smooth ? 'smooth' : 'auto' });
       if (focus) { var h = step.querySelector('h2'); if (id === 'sonuc' && end) h = end.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }
       return true;
     }
-    wrap.addEventListener('click', function (e) {
+    document.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('[data-why-tab], [data-why-go]');
       if (!a) return;
       var id = a.getAttribute('data-why-tab') || a.getAttribute('data-why-go');
@@ -1522,6 +1525,54 @@
     show(start || steps[0]);
     wrap.classList.add('why-ready');
     if (start) requestAnimationFrame(function () { go(decodeURIComponent(location.hash.slice(1)), false); });
+  }
+
+  /* ---------------------------------------------------------------
+     Mobile tab bar (below 980px): "Diğer" opens a drawer with the
+     rest of the page's sections and the site's core pages; in-page
+     items light up for the section being read. The Neden Katoliğiz
+     steps and Kilise Bul cities are handled by their own scripts
+     through the same data-why-go / data-city-link attributes.
+     --------------------------------------------------------------- */
+  function initTabBar() {
+    var bar = $('.tabbar');
+    if (!bar) return;
+    var moreBtn = $('.tb-more', bar), drawer = $('#tb-drawer');
+    function openDrawer(on) {
+      if (!drawer || !moreBtn) return;
+      drawer.hidden = !on;
+      moreBtn.setAttribute('aria-expanded', String(on));
+      if (on) { var first = $('.tb-link, .tb-site', drawer); if (first) first.focus({ preventScroll: true }); }
+      else moreBtn.focus({ preventScroll: true });
+    }
+    if (moreBtn && drawer) {
+      moreBtn.addEventListener('click', function () { openDrawer(drawer.hidden); });
+      drawer.addEventListener('click', function (e) {
+        if (e.target.closest('[data-tb-close]')) { openDrawer(false); return; }
+        if (e.target.closest('[data-tb-allmenu]')) {
+          drawer.hidden = true; moreBtn.setAttribute('aria-expanded', 'false');
+          var menu = $('.menu-toggle'); if (menu) menu.click();
+          return;
+        }
+        if (e.target.closest('a')) { drawer.hidden = true; moreBtn.setAttribute('aria-expanded', 'false'); }
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) openDrawer(false); });
+    }
+    /* Section spy for in-page items: the last visible section whose top has passed below the header */
+    var links = $$('a.tb-item[href^="#"]', bar);
+    if (!links.length) return;
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var ticking = false;
+    function spy() {
+      ticking = false;
+      if (getComputedStyle(bar).display === 'none') return;
+      var line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + 140, pick = -1;
+      targets.forEach(function (t, i) { if (t && t.offsetParent !== null && t.getBoundingClientRect().top <= line) pick = i; });
+      links.forEach(function (a, i) { a.classList.toggle('is-active', i === pick); });
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+    window.addEventListener('resize', function () { requestAnimationFrame(spy); });
+    requestAnimationFrame(spy);
   }
 
   /* ---------------------------------------------------------------
@@ -1787,6 +1838,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initTabBar(); initMapLinks(); initA11y();
   });
 })();
