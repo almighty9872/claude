@@ -17,6 +17,10 @@
   var PAGES = ['iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html'];
   var PAGES_EN = ['profession-of-faith.html', 'celebration-of-christian-mystery.html', 'life-in-christ.html', 'christian-prayer.html'];
   var DATA_FILES = ['data/compendium-1.js', 'data/compendium-2.js', 'data/compendium-3.js', 'data/compendium-4.js'];
+  /* A content hash per data file, written in by tools/build.ps1, so every data file URL
+     changes whenever its content does (and so can be cached for a long time) */
+  var DATA_VER = {"__DATA_VER__": 1};
+  function dataUrl(src) { return ROOT + src + (DATA_VER[src] ? '?v=' + DATA_VER[src] : ''); }
   var MAX_RESULTS = 50;
   /* Pages served at arbitrary URLs (404.html), and every /en/ page, declare <html data-root="/">
      so data and links resolve from the site root */
@@ -324,7 +328,7 @@
       return new Promise(function (resolve, reject) {
         if (window.COMPENDIUM && window.COMPENDIUM.parts && window.COMPENDIUM.parts[i]) return resolve();
         var s = document.createElement('script');
-        s.src = ROOT + src; s.onload = resolve; s.onerror = reject;
+        s.src = dataUrl(src); s.onload = resolve; s.onerror = reject;
         document.head.appendChild(s);
       });
     })).then(function () {
@@ -780,6 +784,7 @@
     if (!root) return;
     var T = RT_TEXT[LANG];
     var svg = $('.rt-svg', root), sheet = $('.rt-sheet', root), select = $('#rt-set', root);
+    var halo = $('.rt-halo', root);
     var ui = {
       context: $('.rt-context', sheet), myst: $('.rt-mystery', sheet), mLabel: $('.rt-m-label', sheet), mTitle: $('.rt-m-title', sheet),
       title: $('.rt-title', sheet), text: $('.rt-text', sheet), prev: $('.rt-prev', sheet), next: $('.rt-next', sheet),
@@ -844,6 +849,17 @@
         b.classList.toggle('announce', !!(st && st.el === id && st.announce));
       });
       svg.classList.toggle('is-complete', done);
+      if (halo) {
+        var on = st && !done && beads[st.el];
+        halo.style.display = on ? '' : 'none';
+        if (on) {
+          var b = beads[st.el], g = b.tagName.toLowerCase() === 'g';
+          var r = parseFloat(b.getAttribute(g ? 'data-r' : 'r'));
+          halo.setAttribute('cx', b.getAttribute(g ? 'data-cx' : 'cx'));
+          halo.setAttribute('cy', b.getAttribute(g ? 'data-cy' : 'cy'));
+          halo.setAttribute('r', String(Math.round(r * (g ? 1.35 : 2.9))));
+        }
+      }
     }
     function paintCenter(st) {
       ui.cSet.textContent = setName();
@@ -1249,7 +1265,7 @@
     return new Promise(function (resolve, reject) {
       if (window[globalName]) return resolve();
       var s = document.createElement('script');
-      s.src = ROOT + src; s.onload = resolve; s.onerror = reject;
+      s.src = dataUrl(src); s.onload = resolve; s.onerror = reject;
       document.head.appendChild(s);
     });
   }
@@ -1292,9 +1308,11 @@
   function getTodaySaint() {
     var todayDate = new Date();
     var today = { year: todayDate.getFullYear(), month: todayDate.getMonth() + 1, day: todayDate.getDate() };
-    return loadDataScript('data/azizler.js', 'SAINTS').then(function () {
-      var day = window.SAINTS.days.filter(function (d) { return d.m === today.month && d.d === today.day; })[0];
-      var s = day && day.saints && day.saints[0];
+    /* Just the names (data/azizler-adlar.js, a few KB written by the build), not the whole
+       calendar with its biographies: this runs on the home page and in every page's menu */
+    return loadDataScript('data/azizler-adlar.js', 'SAINT_NAMES').then(function () {
+      var s = window.SAINT_NAMES[today.month + '-' + today.day];
+      if (s) s = { name: s[0], nameEn: s[1] };
       var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
       var slug = top20Id ? (LANG === 'en' ? TOP20_EN_SLUGS[top20Id] : top20Id) : (LANG === 'en' ? 'saints' : 'azizler');
       var href = ROOT + LANG_PREFIX + slug + '.html';
@@ -1448,6 +1466,65 @@
   }
 
   /* ---------------------------------------------------------------
+     Neden Katoliğiz? / Why We're Catholic: one step of the five on
+     screen at a time. The stepper links and the Previous / Next links
+     under each step switch panels; the closing summary shows with the
+     last step. A link to a step or to a single topic card (#ince-ayar,
+     say) opens the step that holds it. Without JavaScript nothing is
+     hidden and every link is a plain in-page anchor.
+     --------------------------------------------------------------- */
+  function initWhySteps() {
+    var wrap = $('.why-wrap');
+    if (!wrap) return;
+    var tabs = $$('[data-why-tab]', wrap), steps = $$('.why-step', wrap), end = $('.why-end', wrap);
+    var navBox = $('.why-tabs', wrap), last = steps[steps.length - 1];
+    var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    function stepFor(id) {
+      var el = id && document.getElementById(id);
+      if (!el || !wrap.contains(el)) return null;
+      if (el === end) return last;
+      return el.closest('.why-step');
+    }
+    function show(step) {
+      var k = steps.indexOf(step);
+      steps.forEach(function (s) { s.classList.toggle('is-active', s === step); });
+      if (end) end.classList.toggle('is-active', step === last);
+      tabs.forEach(function (t, i) {
+        if (i === k) t.setAttribute('aria-current', 'step'); else t.removeAttribute('aria-current');
+        t.classList.toggle('is-done', i < k);
+      });
+      var cur = tabs[k], list = cur && cur.closest('ol');
+      if (list && list.scrollWidth > list.clientWidth) list.scrollTo({ left: Math.max(0, cur.offsetLeft - 16), behavior: smooth ? 'smooth' : 'auto' });
+    }
+    function go(id, focus) {
+      var step = stepFor(id); if (!step) return false;
+      show(step);
+      var target = document.getElementById(id);
+      if (target === step) target = navBox; // a whole step: bring the stepper and the step's heading into view
+      var top = target.getBoundingClientRect().top + window.pageYOffset;
+      var offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
+      if (target !== navBox) offset += (navBox ? navBox.offsetHeight : 0) + 24; else offset += 8;
+      window.scrollTo({ top: Math.max(0, top - offset), behavior: smooth ? 'smooth' : 'auto' });
+      if (focus) { var h = step.querySelector('h2'); if (id === 'sonuc' && end) h = end.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }
+      return true;
+    }
+    wrap.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-why-tab], [data-why-go]');
+      if (!a) return;
+      var id = a.getAttribute('data-why-tab') || a.getAttribute('data-why-go');
+      if (go(id, a.hasAttribute('data-why-go'))) {
+        e.preventDefault();
+        try { history.replaceState(null, '', '#' + id); } catch (err) { /* file:// */ }
+      }
+    });
+    window.addEventListener('hashchange', function () { go(location.hash.slice(1), false); });
+    var start = location.hash && stepFor(decodeURIComponent(location.hash.slice(1)));
+    show(start || steps[0]);
+    wrap.classList.add('why-ready');
+    if (start) requestAnimationFrame(function () { go(decodeURIComponent(location.hash.slice(1)), false); });
+  }
+
+  /* ---------------------------------------------------------------
      Pinned section links (Kilise Bul, Meseller, Mucizeler, Sorular): the row
      gets .is-stuck once it reaches the header (for its glass band)
      and publishes its height as --toc-h so in-page jumps land below
@@ -1507,10 +1584,11 @@
     });
     list.addEventListener('scroll', ends, { passive: true });
 
-    measure(); update(); ends();
+    // First measurement: from the observer once the page has laid itself out, not synchronously here
+    if (window.ResizeObserver) new ResizeObserver(function () { measure(); ends(); queue(); }).observe(nav);
+    else requestAnimationFrame(function () { measure(); ends(); update(); });
     window.addEventListener('scroll', queue, { passive: true });
     window.addEventListener('resize', function () { measure(); ends(); queue(); });
-    if (window.ResizeObserver) new ResizeObserver(function () { measure(); ends(); queue(); }).observe(nav);
     links.forEach(function (a) { a.addEventListener('click', function () { reveal(a); }); });
   }
 
@@ -1691,15 +1769,24 @@
   function initHeaderHeight() {
     var header = $('.site-header');
     if (!header) return;
-    function set() { document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px'); }
-    set();
-    if (window.ResizeObserver) new ResizeObserver(set).observe(header); else window.addEventListener('resize', set);
+    function set(h) { document.documentElement.style.setProperty('--header-h', Math.round(h) + 'px'); }
+    /* The observer reports the header's size right after the browser's own first layout, so
+       nothing here makes it lay the page out early (reading offsetHeight at startup did) */
+    if (window.ResizeObserver) {
+      new ResizeObserver(function (entries) {
+        var e = entries[0], box = e.borderBoxSize && (e.borderBoxSize[0] || e.borderBoxSize);
+        set(box && box.blockSize ? box.blockSize : header.offsetHeight);
+      }).observe(header);
+    } else {
+      var old = function () { set(header.offsetHeight); };
+      requestAnimationFrame(old); window.addEventListener('resize', old);
+    }
   }
 
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initMapLinks(); initA11y();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y();
   });
 })();

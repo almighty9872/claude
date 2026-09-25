@@ -27,6 +27,18 @@
   src: url("fonts/eb-garamond-italic-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* Lexend (SIL OFL 1.1, see fonts/OFL-Lexend.txt), a typeface designed for reading fluency,
+   for the Settings panel's dyslexia-friendly text. Nothing downloads unless that setting is on. */
+@font-face {
+  font-family: "Lexend"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("fonts/lexend-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Lexend"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("fonts/lexend-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* ---------- 1. Theme tokens ---------- */
 :root {
@@ -903,6 +915,162 @@ body.sheet-open { overflow: hidden; }
   line-height: 1.55; color: var(--text); max-width: 40rem;
 }
 
+/* ---------- Neden Katoliğiz? / Why We're Catholic: a guided case in five steps ----------
+   A stepper pinned under the header; one step shown at a time (script.js; without it all five
+   follow each other); each topic a card that reads top to bottom in a few seconds: the question,
+   a one-line answer, the key points, and the objection folded away until wanted. */
+.why-wrap { max-width: 1120px; }
+.why-intro { max-width: 44rem; margin: 0 auto 1.6rem; text-align: center; font-size: 1.12rem; line-height: 1.6; color: var(--text-soft); }
+.why-tabs {
+  position: sticky; top: calc(var(--header-h) + .5rem); z-index: 25; margin: 0 0 1.8rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); box-shadow: var(--shadow);
+}
+.why-tabs ol {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: .25rem; margin: 0; padding: .4rem; list-style: none;
+  overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.why-tabs ol::-webkit-scrollbar { display: none; }
+.why-tab {
+  display: flex; align-items: center; gap: .55rem; height: 100%; padding: .55rem .7rem; border-radius: var(--radius);
+  font-family: var(--sans); font-size: .82rem; font-weight: 600; line-height: 1.25; color: var(--text-soft); text-decoration: none;
+  transition: background-color .18s, color .18s;
+}
+.why-tab:hover { background: var(--gold-bg); color: var(--gold-active); }
+.why-tab-n {
+  flex: none; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%;
+  border: 1.5px solid var(--gold-soft); color: var(--gold); font-size: .8rem; font-weight: 700;
+}
+.why-tab[aria-current="step"] { background: var(--gold-bg); color: var(--gold-active); }
+.why-tab[aria-current="step"] .why-tab-n { background: var(--gold); border-color: var(--gold); color: var(--surface); }
+.why-tab.is-done .why-tab-n { background: var(--gold-bg); }
+@media (max-width: 900px) {
+  .why-tabs { border-radius: 999px; }
+  .why-tabs ol {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: max-content; border-radius: 999px;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent);
+  }
+  .why-tabs ol:has(li:last-child [aria-current]) { -webkit-mask-image: none; mask-image: none; }
+  .why-tab { white-space: nowrap; border-radius: 999px; padding: .4rem .75rem .4rem .45rem; }
+  .why-tab-n { width: 1.55rem; height: 1.55rem; }
+}
+
+.why-step, .why-end { scroll-margin-top: calc(var(--header-h) + 5.5rem); }
+.why-step { margin-bottom: 2.5rem; }
+/* Before script.js runs, CSS alone already shows only the first step (html.js is set in <head>),
+   so hiding the others never shifts the page after it first paints */
+html.js .why-wrap:not(.why-ready) :is(.why-step ~ .why-step, .why-end),
+html.js .why-wrap.why-ready [data-why-panel]:not(.is-active) { display: none; }
+.why-step-head { display: flex; align-items: flex-start; gap: 1.1rem; margin: 0 0 1.4rem; }
+.why-num {
+  flex: none; display: grid; place-items: center; width: 3.4rem; height: 3.4rem; border-radius: 50%;
+  background: var(--gold-bg); border: 1px solid var(--gold-soft); color: var(--gold); font-size: 1.7rem; font-weight: 600;
+}
+.why-step-head .label { margin: .15rem 0 .1rem; }
+.why-step-head h2 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.15rem); line-height: 1.15; }
+.why-thesis { margin: .5rem 0 0; max-width: 48rem; font-size: 1.1rem; font-style: italic; line-height: 1.55; color: var(--text-soft); }
+
+.why-grid { display: grid; gap: 1.1rem; }
+@media (min-width: 860px) {
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  /* An odd last card takes the full row, its points in two columns so lines stay short */
+  .why-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .why-card:last-child:nth-child(odd) .why-points { columns: 2; column-gap: 2.2rem; }
+  .why-card:last-child:nth-child(odd) .why-points li { break-inside: avoid; }
+}
+.why-card {
+  display: flex; flex-direction: column; min-width: 0; padding: 1.35rem 1.5rem 1.1rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+  scroll-margin-top: calc(var(--header-h) + 5.5rem);
+}
+.why-card:target { border-color: var(--gold-soft); }
+.why-kicker { margin: 0 0 .35rem; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+.why-q { margin: 0 0 .6rem; font-size: 1.32rem; line-height: 1.3; font-weight: 600; }
+.why-q::before { content: "“"; color: var(--gold-soft); margin-right: .05em; }
+.why-q::after { content: "”"; color: var(--gold-soft); margin-left: .05em; }
+.why-lede { margin: 0 0 .9rem; padding-left: .85rem; border-left: 3px solid var(--gold); font-size: 1.08rem; line-height: 1.5; font-weight: 500; color: var(--text); }
+.why-points { margin: 0 0 1rem; padding: 0; list-style: none; }
+.why-points li { position: relative; margin: 0 0 .6rem; padding-left: 1.35rem; font-size: 1rem; line-height: 1.55; color: var(--text-soft); }
+.why-points li::before {
+  content: ""; position: absolute; left: .15rem; top: .62em; width: .45rem; height: .45rem; border-radius: 50%;
+  background: var(--gold-soft);
+}
+.why-obj { margin-top: auto; border-top: 1px solid var(--border); padding-top: .15rem; }
+.why-obj > summary {
+  display: flex; align-items: center; gap: .65rem; padding: .7rem 0 .45rem; cursor: pointer; list-style: none;
+}
+.why-obj > summary::-webkit-details-marker { display: none; }
+.why-obj > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.why-obj > summary > svg:first-child { flex: none; width: 1.3rem; height: 1.3rem; color: var(--gold); }
+.why-obj > summary > span { flex: 1; min-width: 0; display: grid; gap: .1rem; }
+.why-obj > summary > svg:last-child { flex: none; width: 1.1rem; height: 1.1rem; color: var(--muted); transition: transform .2s; }
+.why-obj[open] > summary > svg:last-child { transform: rotate(180deg); color: var(--gold); }
+.why-obj-label { font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.why-obj-q { font-style: italic; line-height: 1.4; color: var(--text); }
+.why-obj > summary:hover .why-obj-q { color: var(--gold-active); }
+.why-obj-a { padding: .2rem 0 .3rem 1.95rem; }
+.why-obj-a p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--text-soft); }
+.why-obj-a strong { color: var(--gold-active); font-weight: 600; }
+
+.why-pager { display: flex; justify-content: space-between; gap: 1rem; margin: 1.6rem 0 0; }
+.why-go {
+  display: inline-flex; align-items: center; gap: .7rem; max-width: 48%; padding: .75rem 1rem; border-radius: var(--radius);
+  border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); text-decoration: none; font-weight: 600; line-height: 1.25;
+  transition: border-color .18s, background-color .18s;
+}
+.why-go small { display: block; margin-bottom: .1rem; font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.why-go svg { flex: none; width: 1.15rem; height: 1.15rem; color: var(--gold); }
+.why-go:hover { border-color: var(--gold-soft); background: var(--gold-bg); }
+.why-go.next { margin-left: auto; text-align: right; background: var(--gold-bg); border-color: var(--gold-soft); }
+.why-go.next:hover { background: var(--gold); color: var(--surface); }
+.why-go.next:hover svg, .why-go.next:hover small { color: var(--surface); }
+
+.why-end { margin: 0 0 2rem; }
+.why-end > h2 { margin: 2.2rem 0 1.2rem; text-align: center; font-size: clamp(1.6rem, 3.6vw, 2.1rem); }
+html.js .why-end { margin-top: -1rem; }
+.why-chain { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6rem; margin: 0 0 1.6rem; padding: 0; list-style: none; counter-reset: none; }
+.why-chain li {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: .5rem; padding: 1rem .8rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-align: center;
+  font-size: 1rem; line-height: 1.35; font-weight: 600;
+}
+.why-chain li + li::before {
+  content: ""; position: absolute; left: -1.25rem; top: 50%; width: .8rem; height: .8rem; margin-top: -.4rem;
+  border-top: 2px solid var(--gold-soft); border-right: 2px solid var(--gold-soft); transform: rotate(45deg);
+}
+.why-chain-n { display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--gold); color: var(--surface); font-family: var(--sans); font-size: .8rem; font-weight: 700; }
+@media (max-width: 760px) {
+  .why-chain { grid-template-columns: 1fr; gap: 1.2rem; }
+  .why-chain li { flex-direction: row; text-align: left; padding: .7rem .9rem; }
+  .why-chain li + li::before { left: 50%; top: -1rem; margin: 0 0 0 -.4rem; transform: rotate(135deg); }
+}
+.why-closing { max-width: 44rem; margin: 0 auto 2rem; font-size: 1.15rem; font-style: italic; line-height: 1.6; text-align: center; color: var(--text); }
+.why-where { margin: 0 0 .9rem; text-align: center; font-size: 1.2rem; }
+.why-ctas { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; }
+@media (max-width: 900px) { .why-ctas { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .why-ctas { grid-template-columns: 1fr; } }
+.why-cta {
+  position: relative; display: grid; gap: .2rem; padding: .95rem 2.4rem .95rem 1.05rem; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: border-color .18s, transform .18s;
+}
+.why-cta:hover { border-color: var(--gold-soft); transform: translateY(-2px); }
+.why-cta-t { font-weight: 600; }
+.why-cta-s { font-family: var(--sans); font-size: .8rem; color: var(--muted); line-height: 1.35; }
+.why-cta svg { position: absolute; right: .9rem; top: 50%; width: 1.1rem; height: 1.1rem; margin-top: -.55rem; color: var(--gold); }
+@media (max-width: 560px) {
+  .why-step-head { gap: .8rem; }
+  .why-num { width: 2.6rem; height: 2.6rem; font-size: 1.3rem; }
+  .why-card { padding: 1.1rem 1.1rem .9rem; }
+  .why-q { font-size: 1.18rem; }
+  .why-obj-a { padding-left: 0; }
+  .why-go { max-width: none; flex: 1; padding: .65rem .8rem; font-size: .95rem; }
+}
+@media print {
+  .why-tabs, .why-pager { display: none !important; }
+  html.js .why-wrap [data-why-panel] { display: block !important; }
+  .why-obj:not([open]) > .why-obj-a { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .why-cta, .why-obj > summary > svg:last-child { transition: none; } }
+
 /* The gear beside the brand at every width: opens the settings panel (language + accessibility) */
 .settings-btn {
   display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; flex: none;
@@ -1019,8 +1187,18 @@ body.sheet-open { overflow: hidden; }
 [data-a11y-links="1"] main a:not(.btn):not(.nav-link):not(.hub-card):not(.text-link):not(.hub-go) {
   text-decoration: underline; text-decoration-thickness: .12em; text-underline-offset: .15em;
 }
-:root[data-a11y-dyslexia="1"] { --serif: Verdana, Tahoma, "Trebuchet MS", Arial, sans-serif; }
-[data-a11y-dyslexia="1"] body { letter-spacing: .01em; }
+:root[data-a11y-dyslexia="1"] {
+  --serif: "Lexend", Verdana, Tahoma, sans-serif; --sans: "Lexend", Verdana, Tahoma, sans-serif;
+}
+/* The header and the Settings panel keep the usual fonts: Lexend's wider letters would push the
+   bar onto two lines and the panel past the screen */
+:root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) {
+  --serif: "EB Garamond", Garamond, "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--serif); letter-spacing: normal;
+}
+/* Lexend runs larger than EB Garamond; a slightly smaller size keeps lines at a similar length */
+[data-a11y-dyslexia="1"] body { font-size: calc(1.1875rem * .9); line-height: 1.75; }
 [data-a11y-cursor="1"], [data-a11y-cursor="1"] a, [data-a11y-cursor="1"] button {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path d="M6 3.5 18 13l-5 .8 2.6 5.3-2 1-2.6-5.3L7.5 18Z" fill="black" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg>') 4 4, auto;
 }
@@ -1248,16 +1426,19 @@ html:not(.js) .rt { display: none; }
 .rt-svg .bead.unprayed { fill: var(--rt-bead); stroke: var(--rt-bead-edge); }
 .rt-svg .bead.lg.unprayed, .rt-svg .bead.medal.unprayed, .rt-svg .bead.cross.unprayed { fill: var(--rt-lg); stroke: var(--gold-soft); }
 .rt-svg .bead.prayed { fill: var(--rt-done); stroke: var(--rt-done-edge); }
-.rt-svg .bead.active { fill: var(--rt-glow); stroke: var(--rt-done-edge); animation: rt-pulse 1.6s ease-in-out infinite; }
+.rt-svg .bead.active { fill: var(--rt-glow); stroke: var(--rt-done-edge); }
+/* The glow: a disc behind the active bead, pulsing by opacity and scale (both animate in every
+   browser, including iOS Safari, which ignores CSS filters on SVG shapes) */
+.rt-halo { pointer-events: none; transform-box: fill-box; transform-origin: center; animation: rt-halo 1.6s ease-in-out infinite; }
+.rt-halo-in { stop-color: var(--rt-glow); stop-opacity: .95; }
+.rt-halo-mid { stop-color: var(--rt-glow); stop-opacity: .38; }
+.rt-halo-out { stop-color: var(--rt-glow); stop-opacity: 0; }
+@keyframes rt-halo { 0%, 100% { opacity: .45; transform: scale(.82); } 50% { opacity: 1; transform: scale(1.08); } }
 .rt-svg circle.bead.active { transform: scale(1.4); }
 .rt-svg .bead.cross.active, .rt-svg .bead.medal.active { transform: scale(1.08); }
 .rt-svg .medal-mark { fill: none; stroke: var(--surface); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .rt-svg .bead.medal.unprayed .medal-mark { stroke: var(--gold); }
-.rt-svg .bead.announce { animation: rt-pulse 1.6s ease-in-out infinite, rt-announce 1.1s ease-out 1; }
-@keyframes rt-pulse {
-  0%, 100% { filter: drop-shadow(0 0 2px var(--rt-glow-soft)); }
-  50% { filter: drop-shadow(0 0 7px var(--rt-glow)) drop-shadow(0 0 2px var(--rt-glow)); }
-}
+.rt-svg .bead.announce { animation: rt-announce 1.1s ease-out 1; }
 @keyframes rt-announce { 0% { stroke-width: 7; stroke: var(--rt-glow-soft); } 100% { stroke-width: 1.2; } }
 .rt-svg.is-complete .bead { animation: rt-done 1.1s ease-out both; animation-delay: calc(var(--i, 0) * 20ms); }
 @keyframes rt-done {
@@ -1267,7 +1448,7 @@ html:not(.js) .rt { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .rt-svg .bead { transition: none; }
-  .rt-svg .bead.active, .rt-svg .bead.announce { animation: none; filter: drop-shadow(0 0 5px var(--rt-glow)); }
+  .rt-svg .bead.announce, .rt-halo { animation: none; }
   .rt-svg.is-complete .bead { animation: none; }
 }
 
@@ -1467,39 +1648,8 @@ html:not(.js) .amap-card[hidden] {
 html:not(.js) .amap-swipe { display: none; }
 @media print { .amap-frame, .amap-index { display: none !important; } .amap-cards { display: grid !important; gap: .6rem; } .amap-card[hidden] { display: block !important; } }
 
-.rosary-sub-title { margin: 2rem 0 .8rem; font-size: 1.15rem; font-weight: 600; }
-.pray-cards { display: grid; gap: .65rem; margin-bottom: 1rem; }
-.pray-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow); transition: border-color .2s;
-  scroll-margin-top: calc(var(--header-h) + 1.5rem);
-}
-.pray-card:hover, .pray-card[open] { border-color: var(--border-strong); }
-.pray-card > summary {
-  display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
-  padding: 1rem 1.25rem; cursor: pointer; list-style: none;
-}
-.pray-card > summary::-webkit-details-marker { display: none; }
-.pray-card > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius); }
-.pray-card > summary .chev { flex: none; margin-left: auto; color: var(--muted); }
-.pray-card[open] > summary .chev { transform: rotate(180deg); color: var(--gold); }
-.pray-name { font-size: 1.08rem; font-weight: 600; }
-.pray-card[open] > summary .pray-name { color: var(--gold); }
-.pray-hint { flex-basis: 100%; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
-.pray-count {
-  font-family: var(--sans); font-size: .72rem; font-weight: 700; color: var(--gold-active);
-  background: var(--gold-bg); border-radius: 999px; padding: .1rem .55rem;
-}
-.pray-card-body { padding: 0 1.25rem 1.15rem; border-top: 1px solid var(--border); padding-top: .95rem; }
-.p-note { margin: 0 0 .6rem; font-family: var(--sans); font-size: .78rem; color: var(--gold); }
-.p-tr p { margin: 0 0 .55rem; }
-.p-tr p:last-child { margin-bottom: 0; }
 .p-en p { margin: 0 0 .45rem; font-family: var(--sans); font-size: .85rem; color: var(--muted); line-height: 1.45; }
 .p-en p:last-child { margin-bottom: 0; }
-@media (max-width: 560px) {
-  .pray-card > summary { padding: .9rem 1rem; }
-  .pray-card-body { padding: 0 1rem 1rem; padding-top: .85rem; }
-}
 
 .myst-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
 @media (min-width: 760px) { .myst-grid { grid-template-columns: 1fr 1fr; } }
