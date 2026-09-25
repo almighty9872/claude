@@ -2078,7 +2078,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 /* ---------- Mobile: glass tab bar, its "Diğer" drawer, and the phone header ----------
    Below 980px (where the header's own links are hidden) every page gets a glass tab bar along
    the bottom edge: the page's own sections, or the five core destinations on pages without any. */
-:root { --tabbar-h: 4rem; --tb-under: 120px; }
+:root { --tabbar-h: 5rem; --tb-under: 120px; }
 .tabbar, .tb-drawer { display: none; }
 @media (max-width: 979px) {
   :root { --tabbar-space: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
@@ -2094,23 +2094,26 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
     -webkit-backdrop-filter: saturate(180%) blur(22px); backdrop-filter: saturate(180%) blur(22px);
     box-shadow: inset 0 1px 0 var(--glass-hi), 0 -8px 24px -16px rgba(20, 26, 44, .22);
   }
-  .tb-list { display: flex; gap: .15rem; max-width: 34rem; min-height: calc(var(--tabbar-h) - .6rem - 1px); margin: 0 auto; padding: 0; list-style: none; }
+  .tb-list { display: flex; gap: .1rem; max-width: 36rem; min-height: calc(var(--tabbar-h) - .6rem - 1px); margin: 0 auto; padding: 0; list-style: none; }
   /* Sized by label: a long label (İnteraktif Tesbih) takes the room short ones (Dua) leave; only on
      the narrowest phones does a label wrap to a second line, and then the bar grows to fit it */
   .tb-list > li { flex: 1 1 auto; min-width: 0; display: flex; }
   .tb-item {
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .18rem;
-    width: 100%; padding: .3rem .4rem; border: 0; border-radius: 1.3rem; background: none; cursor: pointer;
-    font-family: var(--sans); font-size: .66rem; font-weight: 600; line-height: 1.1; letter-spacing: .005em;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem;
+    width: 100%; padding: .35rem .25rem; border: 0; border-radius: 1.3rem; background: none; cursor: pointer;
+    font-family: var(--sans); font-size: .875rem; font-weight: 600; line-height: 1.1; letter-spacing: 0;
     color: var(--text-soft); text-decoration: none; text-align: center; -webkit-tap-highlight-color: transparent;
     transition: background-color .2s, color .2s;
   }
-  .tb-ico { display: grid; place-items: center; width: 1.5rem; height: 1.5rem; flex: none; }
-  .tb-ico svg { width: 1.45rem; height: 1.45rem; }
-  .tb-num { font-family: var(--serif); font-size: 1.12rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .tb-ico { display: grid; place-items: center; width: 1.65rem; height: 1.65rem; flex: none; }
+  .tb-ico svg { width: 1.6rem; height: 1.6rem; }
+  .tb-num { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
   .tb-t { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 100%; }
   .tb-item.is-active, .tb-more[aria-expanded="true"] { background: color-mix(in srgb, var(--gold) 16%, transparent); color: var(--gold-active); }
   .tb-item:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  /* The narrowest phones: labels a size down so five of them still sit on one line */
+  @media (max-width: 399px) { .tb-item { font-size: .8rem; } }
+  @media (max-width: 370px) { .tb-item { font-size: .74rem; } }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .tabbar { background: var(--glass-strong); } }
 
   /* "Diğer": a sheet that rises above the bar */
