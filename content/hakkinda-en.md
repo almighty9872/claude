@@ -20,6 +20,7 @@ The full menu, opened from the menu icon, also shows the local weather alongside
 - Miracles: based on apparitions, relics and extraordinary events that have been examined and recorded by the Church; the text is original writing for this site.
 - Find a Church: the list of parishes in Turkey and their contact details are compiled from what each community publishes; Mass times may change.
 - The Becoming Catholic, Confession, Why We're Catholic, Christianity in Our Land, and FAQ sections are original writing for this site, grounded in the Catechism and reliable Catholic sources.
+- Anatolian Roots Map: the coastlines and lakes are drawn from [Natural Earth](https://www.naturalearthdata.com)'s public-domain data.
 - This site is not an official Church publication; it is a personal project.
 
 ## Contact

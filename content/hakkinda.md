@@ -20,6 +20,7 @@ Menü simgesine tıkladığınızda açılan tam menüde, o güne ait bilgilerin
 - Mucizeler: Kilise’nin incelemesinden geçmiş, kayıt altına alınmış görünmeler, kalıntılar ve olağanüstü olaylar esas alınır; metinler bu site için özgün olarak Türkçe kaleme alınmıştır.
 - Kilise Bul: Türkiye’deki cemaatlerin listesi ve iletişim bilgileri, cemaatlerin kendi yayımladıkları bilgilerden derlenmiştir; ayin saatleri değişebilir.
 - Katolik Süreci, Günah Çıkarma, Neden Katoliğiz?, Topraklarımızda Hristiyanlık ve Sorular bölümlerindeki metinler, Katekizm’e ve güvenilir Katolik kaynaklarına dayanılarak bu site için özgün olarak yazılmıştır.
+- Anadolu’daki Kökler Haritası: kıyı çizgileri ve göller, kamu malı olan [Natural Earth](https://www.naturalearthdata.com) verilerinden çizilmiştir.
 - Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir.
 
 ## İletişim

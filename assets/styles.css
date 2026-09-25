@@ -1355,6 +1355,122 @@ html:not(.js) .rt { display: none; }
 }
 @media print { .rt { display: none !important; } }
 
+/* ---------- Anatolian Roots map (topraklarimizda-hristiyanlik.html / en/anatolia.html) ----------
+   Hover a place for a card that follows the pointer; click (or tap, or Enter) to pin it.
+   Phones: the map scrolls sideways and a pinned card docks to the bottom of the screen. */
+.amap {
+  --c-pavlus: #8a6720; --c-kilise: #9b2f3a; --c-konsil: #2c5a8c; --c-gelenek: #3f7a4f; --c-eski: #744b87;
+  --amap-sea: #dce7ec; --amap-land: #e9e2d3; --amap-tr: var(--surface);
+  margin: 1.5rem 0 1rem;
+}
+:root[data-theme="dark"] .amap {
+  --c-pavlus: #d6b16b; --c-kilise: #e58b95; --c-konsil: #86b6ea; --c-gelenek: #8ccb9b; --c-eski: #c9a2dc;
+  --amap-sea: #0e1a2e; --amap-land: #1a2439; --amap-tr: #22304d;
+}
+.amap .c-pavlus { --cat: var(--c-pavlus); } .amap .c-kilise { --cat: var(--c-kilise); } .amap .c-konsil { --cat: var(--c-konsil); }
+.amap .c-gelenek { --cat: var(--c-gelenek); } .amap .c-eski { --cat: var(--c-eski); }
+.amap-lead { margin: 0 auto 1rem; max-width: 42rem; text-align: center; color: var(--text-soft); font-size: 1.02rem; line-height: 1.55; }
+.amap-frame { position: relative; }
+.amap-scroll {
+  overflow-x: auto; overscroll-behavior-x: contain; border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); background: var(--amap-sea); scrollbar-width: thin;
+}
+.amap-svg { display: block; width: 100%; height: auto; min-width: 46rem; -webkit-tap-highlight-color: transparent; }
+.amap-sea, .amap-lake { fill: var(--amap-sea); }
+.amap-land { fill: var(--amap-land); stroke: var(--border-strong); stroke-width: .6; stroke-linejoin: round; }
+.amap-tr { fill: var(--amap-tr); stroke: var(--gold-soft); stroke-width: 1.2; stroke-linejoin: round; }
+.amap-lake { stroke: var(--border-strong); stroke-width: .5; }
+.amap-seas text { fill: var(--muted); font-size: 15px; font-style: italic; letter-spacing: .18em; text-anchor: middle; opacity: .8; }
+.amap-site { cursor: pointer; outline: none; }
+.amap-hit { fill: transparent; }
+.amap-dot {
+  fill: var(--cat); stroke: var(--amap-tr); stroke-width: 2;
+  transform-box: fill-box; transform-origin: center; transition: transform .18s ease;
+}
+.amap-label {
+  font-family: var(--sans); font-size: 12.5px; font-weight: 600; fill: var(--text);
+  paint-order: stroke; stroke: var(--amap-tr); stroke-width: 3.5px; stroke-linejoin: round; pointer-events: none;
+}
+.amap-site:hover .amap-dot, .amap-site.is-active .amap-dot, .amap-site:focus-visible .amap-dot { transform: scale(1.45); }
+.amap-site.is-active .amap-dot { stroke: var(--cat); stroke-width: 4; stroke-opacity: .35; }
+.amap-site.is-active .amap-label, .amap-site:hover .amap-label { fill: var(--cat); }
+.amap-site:focus-visible .amap-hit { stroke: var(--focus); stroke-width: 2; }
+@media (prefers-reduced-motion: reduce) { .amap-dot { transition: none; } }
+.amap-swipe { display: none; margin: .45rem 0 0; text-align: center; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
+@media (max-width: 760px) {
+  .amap-swipe { display: block; }
+  .amap-label { font-size: 15px; }
+}
+
+/* The shared card: the popup's content, and the plain list when JavaScript is off */
+.amap-c-cat {
+  display: flex; align-items: center; gap: .45rem; margin: 0;
+  font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cat);
+}
+.amap-key { flex: none; width: .65rem; height: .65rem; border-radius: 99px; background: var(--cat); }
+.amap-c-name { margin: .3rem 0 0; font-size: 1.28rem; line-height: 1.2; font-weight: 600; }
+.amap-c-old { font-weight: 400; color: var(--muted); font-size: .9em; }
+.amap-c-place { margin: .15rem 0 0; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
+.amap-c-text { margin: .55rem 0 0; font-size: .98rem; line-height: 1.5; color: var(--text-soft); }
+.amap-c-refs { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .35rem; margin: .7rem 0 0; }
+.amap-c-refs .label { margin-right: .15rem; }
+.amap-ref {
+  font-family: var(--sans); font-size: .76rem; font-weight: 600; color: var(--gold-active);
+  background: var(--gold-bg); border-radius: 99px; padding: .15rem .55rem;
+}
+.amap-c-more {
+  display: inline-flex; align-items: center; gap: .25rem; margin-top: .75rem;
+  font-family: var(--sans); font-size: .85rem; font-weight: 600; color: var(--gold); text-decoration: none;
+}
+.amap-c-more svg { width: 1rem; height: 1rem; }
+.amap-c-more:hover { text-decoration: underline; }
+
+.amap-pop {
+  position: absolute; z-index: 30; left: 0; top: 0; width: min(23rem, calc(100vw - 2rem));
+  padding: 1rem 1.15rem 1.05rem; border-radius: var(--radius); border: 1px solid var(--glass-brd); border-top: 3px solid var(--cat, var(--gold));
+  background: var(--glass-strong); -webkit-backdrop-filter: saturate(160%) blur(18px); backdrop-filter: saturate(160%) blur(18px);
+  box-shadow: var(--glass-shadow); pointer-events: none;
+}
+.amap-pop.is-pinned { pointer-events: auto; }
+.amap-pop-close {
+  position: absolute; top: .45rem; right: .45rem; display: none; place-items: center; width: 2.25rem; height: 2.25rem; padding: 0;
+  border: 0; border-radius: 99px; background: transparent; color: var(--muted);
+}
+.amap-pop-close svg { width: 1.1rem; height: 1.1rem; }
+.amap-pop-close:hover { background: var(--gold-bg); color: var(--text); }
+.amap-pop-close:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.amap-pop.is-pinned .amap-pop-close { display: grid; }
+.amap-pop.is-pinned .amap-c-name { padding-right: 2rem; }
+.amap-pop-hint { margin: .7rem 0 0; font-family: var(--sans); font-size: .74rem; font-style: italic; color: var(--muted); }
+.amap-pop.is-pinned .amap-pop-hint, .amap-pop:not(.is-pinned) .amap-c-more { display: none; }
+.amap-pop.is-sheet {
+  position: fixed; left: .75rem; right: .75rem; top: auto !important; bottom: 4.4rem; width: auto;
+  max-height: 62vh; overflow-y: auto; overscroll-behavior: contain;
+}
+
+.amap-index { display: grid; gap: 1rem 1.5rem; margin: 1.4rem 0 0; }
+@media (min-width: 720px) { .amap-index { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); } }
+.amap-cat-h { display: flex; align-items: center; gap: .5rem; margin: 0 0 .45rem; font-family: var(--sans); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cat); }
+.amap-cat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.amap-chip {
+  display: inline-block; padding: .35rem .75rem; min-height: 2.25rem; line-height: 1.5; border-radius: 99px;
+  font-family: var(--sans); font-size: .85rem; color: var(--text); text-decoration: none;
+  background: var(--surface); border: 1px solid var(--border-strong); transition: border-color .18s, background-color .18s;
+}
+.amap-chip:hover { border-color: var(--cat); }
+.amap-chip[aria-current="true"] { background: var(--cat); border-color: var(--cat); color: var(--surface); }
+.amap-chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Without JavaScript the cards are simply listed under the map */
+.amap-cards { display: none; }
+html:not(.js) .amap-cards { display: grid; gap: 1rem; margin-top: 1.5rem; }
+html:not(.js) .amap-card[hidden] {
+  display: block; padding: 1rem 1.15rem; border: 1px solid var(--border); border-top: 3px solid var(--cat);
+  border-radius: var(--radius); background: var(--surface); scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+html:not(.js) .amap-swipe { display: none; }
+@media print { .amap-frame, .amap-index { display: none !important; } .amap-cards { display: grid !important; gap: .6rem; } .amap-card[hidden] { display: block !important; } }
+
 .rosary-sub-title { margin: 2rem 0 .8rem; font-size: 1.15rem; font-weight: 600; }
 .pray-cards { display: grid; gap: .65rem; margin-bottom: 1rem; }
 .pray-card {

@@ -2009,6 +2009,87 @@ Write-Page -File 'en/confession.html' -Title "Confession | $SiteName" `
   -Description 'How Confession works, step by step: a practical guide, an examination-of-conscience checklist, and frequently asked questions for first-time penitents.' `
   -Path 'en/confession.html' -Body $confessionBodyEn -JsonLd @((Breadcrumb-Ld 'Confession' 'en/confession.html' '' '' 'en')) -Lang 'en'
 
+# ================================================================== ANADOLU'DAKI KOKLER HARITASI (on the page below)
+# The places come from data/anadolu-haritasi.js, the outline from data/anadolu-harita-sekli.js
+# (generated, see tools/anadolu-harita-sekli.mjs). Every place also gets a server-rendered card:
+# initAnatoliaMap() in assets/script.js shows it in the popup, and without JavaScript the cards
+# simply stay visible as a list under the map.
+$AnMap = Read-Data 'anadolu-haritasi.js'
+$AnShape = Read-Data 'anadolu-harita-sekli.js'
+function Map-Num([double]$v) { return ([Math]::Round($v, 1)).ToString([Globalization.CultureInfo]::InvariantCulture) }
+function Map-XY([double]$lat, [double]$lon) {
+  $x = $AnShape.tx + $AnShape.k * $lon * [Math]::PI / 180
+  $y = $AnShape.ty - $AnShape.k * [Math]::Log([Math]::Tan([Math]::PI / 4 + $lat * [Math]::PI / 360))
+  return @((Map-Num $x), (Map-Num $y))
+}
+function Anatolia-Map([string]$lang) {
+  $en = $lang -eq 'en'
+  $catName = @{}; foreach ($c in $AnMap.cats) { $catName[$c.id] = $(if ($en) { $c.en } else { $c.tr }) }
+  $t = if ($en) {
+    @{ title = $AnMap.en; lead = $AnMap.leadEn; aria = 'Map of Turkey with places from the early history of Christianity'; refs = 'In Scripture'
+       more = 'Read more on this page'; close = 'Close'; hint = 'Click to keep this card open'; swipe = 'Swipe the map sideways to see all of it'
+       index = 'All places on the map'
+       seas = @(@{ n = 'Black Sea'; lat = 42.55; lon = 34.6 }, @{ n = 'Mediterranean Sea'; lat = 35.25; lon = 31.2 }, @{ n = 'Aegean Sea'; lat = 36.0; lon = 26.22 }) }
+  } else {
+    @{ title = $AnMap.title; lead = $AnMap.lead; aria = 'Hristiyanlığın ilk tarihinden yerlerle Türkiye haritası'; refs = "Kutsal Kitap$($Apos)ta"
+       more = 'Bu sayfada devamını okuyun'; close = 'Kapat'; hint = 'Kartı açık tutmak için tıklayın'; swipe = 'Haritanın tamamını görmek için yana kaydırın'
+       index = 'Haritadaki bütün yerler'
+       seas = @(@{ n = 'Karadeniz'; lat = 42.55; lon = 34.6 }, @{ n = 'Akdeniz'; lat = 35.25; lon = 31.2 }, @{ n = 'Ege Denizi'; lat = 36.0; lon = 26.22 }) }
+  }
+  $seaText = ($t.seas | ForEach-Object { $p = Map-XY $_.lat $_.lon; "<text x=`"$($p[0])`" y=`"$($p[1])`">$($_.n)</text>" }) -join ''
+  $markers = New-Object Text.StringBuilder
+  $cards = New-Object Text.StringBuilder
+  foreach ($s in $AnMap.sites) {
+    $c = if ($en) { $s.en } else { $s.tr }
+    $p = Map-XY $s.lat $s.lon
+    $label = if ($c.label) { $c.label } else { $c.name }
+    [void]$markers.Append("<g class=`"amap-site c-$($s.cat)`" data-site=`"$($s.id)`" transform=`"translate($($p[0]) $($p[1]))`" tabindex=`"0`" role=`"button`" aria-label=`"$(Attr $c.name)`" aria-controls=`"amap-pop`">" +
+      "<circle class=`"amap-hit`" r=`"11`"></circle><circle class=`"amap-dot`" r=`"6`"></circle>" +
+      "<text class=`"amap-label`" x=`"$(if ($null -ne $c.lx) { $c.lx } else { $s.lx })`" y=`"$(if ($null -ne $c.ly) { $c.ly } else { $s.ly })`" text-anchor=`"$(if ($c.la) { $c.la } else { $s.la })`">$label</text></g>")
+    $old = if ($c.old) { " <span class=`"amap-c-old`">($($c.old))</span>" } else { '' }
+    $refs = if (@($c.refs).Count) { "<p class=`"amap-c-refs`"><span class=`"label`">$($t.refs)</span>" + ((@($c.refs) | ForEach-Object { "<span class=`"amap-ref`">$_</span>" }) -join '') + '</p>' } else { '' }
+    $more = if ($s.section) { "<a class=`"amap-c-more`" href=`"#$($s.section)`">$($t.more)$IcoChevDown</a>" } else { '' }
+    [void]$cards.Append("<article class=`"amap-card c-$($s.cat)`" id=`"yer-$($s.id)`" data-site=`"$($s.id)`" hidden>" +
+      "<p class=`"amap-c-cat`"><span class=`"amap-key`"></span>$($catName[$s.cat])</p>" +
+      "<h3 class=`"amap-c-name`">$($c.name)$old</h3><p class=`"amap-c-place`">$($c.place)</p>" +
+      "<p class=`"amap-c-text`">$(Inline $c.text)</p>$refs$more</article>")
+  }
+  $index = ($AnMap.cats | ForEach-Object {
+    $cid = $_.id
+    $chips = ($AnMap.sites | Where-Object { $_.cat -eq $cid } | ForEach-Object {
+      $c = if ($en) { $_.en } else { $_.tr }
+      "<li><a class=`"amap-chip`" href=`"#yer-$($_.id)`" data-site=`"$($_.id)`">$($c.name)</a></li>"
+    }) -join ''
+    "<div class=`"amap-cat c-$cid`"><h3 class=`"amap-cat-h`"><span class=`"amap-key`"></span>$($catName[$cid])</h3><ul>$chips</ul></div>"
+  }) -join ''
+  return @"
+<section class="amap" id="harita" aria-labelledby="amap-h">
+  <h2 class="section-title" id="amap-h">$($t.title)</h2>
+  <p class="amap-lead">$($t.lead)</p>
+  <div class="amap-frame">
+    <div class="amap-scroll">
+      <svg class="amap-svg" viewBox="0 0 $($AnShape.W) $($AnShape.H)" role="group" aria-label="$($t.aria)">
+        <rect class="amap-sea" width="$($AnShape.W)" height="$($AnShape.H)"></rect>
+        <path class="amap-land" d="$($AnShape.land)"></path>
+        <path class="amap-tr" d="$($AnShape.turkey)"></path>
+        <path class="amap-lake" d="$($AnShape.lakes)"></path>
+        <g class="amap-seas" aria-hidden="true">$seaText</g>
+        <g class="amap-sites">$($markers.ToString())</g>
+      </svg>
+    </div>
+    <p class="amap-swipe">$($t.swipe)</p>
+    <div class="amap-pop" id="amap-pop" role="dialog" aria-labelledby="amap-pop-h" hidden>
+      <button type="button" class="amap-pop-close" aria-label="$($t.close)">$IcoClose</button>
+      <div class="amap-pop-body"></div>
+      <p class="amap-pop-hint">$($t.hint)</p>
+    </div>
+  </div>
+  <nav class="amap-index" aria-label="$($t.index)">$index</nav>
+  <div class="amap-cards">$($cards.ToString())</div>
+</section>
+"@
+}
+
 # ================================================================== TOPRAKLARIMIZDA HRISTIYANLIK (topraklarimizda-hristiyanlik.html)
 $anatoliaSections = ($Anatolia.sections | ForEach-Object {
   $i = [array]::IndexOf(@($Anatolia.sections), $_) + 1
@@ -2022,6 +2103,11 @@ $anatoliaBody = @"
   $(Crumbs 'Topraklarımızda Hristiyanlık')
   <header class="page-head center">$(Page-Ico $IcoRoots)<h1>$($Anatolia.title)</h1><p class="sub" lang="en">$($Anatolia.en)</p></header>
   <p class="faq-intro">$(Inline $Anatolia.intro)</p>
+</div>
+<div class="wrap">
+$(Anatolia-Map 'tr')
+</div>
+<div class="wrap narrow">
 $anatoliaSections
   <p class="conventions closing-note">$(Inline $Anatolia.closing)</p>
 </div>
@@ -2042,6 +2128,11 @@ $anatoliaBodyEn = @"
   $(Crumbs-En 'Christianity in Anatolia')
   <header class="page-head center">$(Page-Ico $IcoRoots)<h1>$($Anatolia.en)</h1></header>
   <p class="faq-intro">$(Inline $Anatolia.introEn)</p>
+</div>
+<div class="wrap">
+$(Anatolia-Map 'en')
+</div>
+<div class="wrap narrow">
 $anatoliaSectionsEn
   <p class="conventions closing-note">$(Inline $Anatolia.closingEn)</p>
 </div>

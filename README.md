@@ -36,8 +36,9 @@ azizler.html            Calendar of the saints (current month shown, other month
                         a long original Turkish biography
 kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)
 mucizeler.html          Catholic miracles: apparitions, relics, Eucharistic miracles, incorrupt saints
-topraklarimizda-hristiyanlik.html  Christianity's roots in Anatolia: Paul's homeland, the Seven
-                        Churches of Revelation, Nicaea, the early Church Fathers
+topraklarimizda-hristiyanlik.html  Christianity's roots in Anatolia: an interactive SVG map of 24
+                        places (hover for a card that follows the pointer, click to pin it),
+                        then Paul's homeland, the Seven Churches, Nicaea, the Church Fathers
 sss.html                Frequently asked questions, grouped by topic
 kiliseler.html          Parish locator: active Catholic churches in Turkey, grouped by city
 iletisim.html           Contact page (email, based in Toronto)
@@ -61,11 +62,14 @@ data/buyuk-azizler.js   ← The 20 best-known saints: long original biography pe
 data/sss.js             ← FAQ content
 data/mucizeler.js       ← Catholic miracles (four thematic categories)
 data/topraklarimizda-hristiyanlik.js ← Christianity's roots in Anatolia content
+data/anadolu-haritasi.js  ← The Anatolian Roots map's places: coordinates, history, Scripture references
+data/anadolu-harita-sekli.js ← The map's outline (generated from Natural Earth, public domain; don't edit)
 data/neden-katoligiz.js ← "Why we're Catholic" content
 data/kiliseler.js       ← Parish locator: churches in Turkey by city and rite
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← "About this site" text shown in the (i) panel (Markdown)
 tools/build.ps1         Regenerates the static pages from data/ and content/
+tools/anadolu-harita-sekli.mjs  Regenerates the map outline (Node; only if the map frame should change)
 .github/workflows/deploy.yml  Builds and publishes the site on every push to main
 CNAME                   Your domain (one line). Also used for canonical/sitemap URLs
 ```
