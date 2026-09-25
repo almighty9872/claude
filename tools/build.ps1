@@ -2523,6 +2523,7 @@ function Rosary-Tracker([string]$lang) {
       <div class="rt-sheet glass" role="region" aria-label="$($t.panel)">
         <button type="button" class="rt-grip" aria-expanded="true" aria-controls="rt-text" aria-label="$($t.grip)"><span></span></button>
         <div class="rt-progress" aria-hidden="true"><span></span></div>
+        <p class="rt-resume" hidden></p>
         <p class="rt-context label">$($t.ctx)</p>
         <p class="rt-mystery" hidden><span class="rt-m-label"></span><span class="rt-m-title"></span></p>
         <h3 class="rt-title">$(Inline $t.title)</h3>

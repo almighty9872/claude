@@ -1,7 +1,7 @@
 ---
 title: Gizlilik Politikası
 subtitle: Kısacası, hiçbir şey toplamıyoruz
-description: katolikdunyasi.com’un gizlilik yaklaşımı: hiçbir izleme aracı ya da çerez kullanılmaz, tarayıcınızda yalnızca tema ve yazı boyutu tercihiniz saklanır.
+description: katolikdunyasi.com’un gizlilik yaklaşımı: hiçbir izleme aracı ya da çerez kullanılmaz, tarayıcınızda yalnızca görünüm tercihleriniz ve tesbihte kaldığınız yer saklanır.
 short: Sitenin hangi veriyi topladığı (hiçbiri) ve tarayıcınızda ne sakladığı.
 ---
 
@@ -11,7 +11,7 @@ Bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya
 
 ## Tarayıcınızda saklanan tercihler
 
-Açık/koyu tema seçiminiz ve erişilebilirlik menüsündeki tercihleriniz (yazı boyutu, kontrast, harf aralığı gibi), yalnızca kendi tarayıcınızda (localStorage) saklanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
+Açık/koyu tema seçiminiz, erişilebilirlik menüsündeki tercihleriniz (yazı boyutu, kontrast, harf aralığı gibi) ve Tesbih Duası sayfasındaki etkileşimli tesbihte o gün kaldığınız yer, yalnızca kendi tarayıcınızda (localStorage) saklanır. Tesbihteki yer ertesi gün kendiliğinden sıfırlanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
 
 ## Hava durumu ve konum
 

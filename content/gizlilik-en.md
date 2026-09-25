@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 subtitle: In short, we don't collect anything
-description: katolikdunyasi.com's approach to privacy: no tracking tools or cookies are used, and your browser only stores your theme and accessibility preferences.
+description: katolikdunyasi.com's approach to privacy: no tracking tools or cookies are used, and your browser only stores your display preferences and your place in the Rosary.
 short: What data this site collects (none) and what it stores in your browser.
 ---
 
@@ -11,7 +11,7 @@ This site collects no user data, uses no tracking or analytics software, and use
 
 ## Preferences stored in your browser
 
-Your light/dark theme choice and your accessibility-menu preferences (text size, contrast, letter spacing, and so on) are stored only in your own browser (localStorage). This information is never sent to any server, can't be seen by us, and stays only on your device. Clearing your browser data also clears these preferences.
+Your light/dark theme choice, your accessibility-menu preferences (text size, contrast, letter spacing, and so on) and, on the Rosary page, where you are in the interactive rosary that day are stored only in your own browser (localStorage). Your place in the rosary resets on its own the next day. This information is never sent to any server, can't be seen by us, and stays only on your device. Clearing your browser data also clears these preferences.
 
 ## Weather and location
 

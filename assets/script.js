@@ -608,6 +608,7 @@
       announce: 'Gizemi anın', intentions: ['İman için', 'Umut için', 'Sevgi için'],
       doneTitle: 'Tesbih tamamlandı', doneText: 'Beş onluğun hepsini tamamladınız. Dualarınız kabul olsun.',
       next: 'Sonraki', finish: 'Bitir', again: 'Yeniden başla', hide: 'Dua metnini gizle', show: 'Dua metnini göster',
+      resumed: 'Kaldığınız yerden devam ediyorsunuz.',
       loadFail: 'Dualar yüklenemedi. Lütfen sayfayı yenileyin.'
     },
     en: {
@@ -617,6 +618,7 @@
       announce: 'Announce the mystery', intentions: ['For faith', 'For hope', 'For charity'],
       doneTitle: 'Rosary complete', doneText: 'You have prayed all five decades. May your prayers be heard.',
       next: 'Next', finish: 'Finish', again: 'Pray again', hide: 'Hide prayer text', show: 'Show prayer text',
+      resumed: 'Picking up where you left off.',
       loadFail: 'The prayers could not be loaded. Please reload the page.'
     }
   };
@@ -653,6 +655,7 @@
       context: $('.rt-context', sheet), myst: $('.rt-mystery', sheet), mLabel: $('.rt-m-label', sheet), mTitle: $('.rt-m-title', sheet),
       title: $('.rt-title', sheet), text: $('.rt-text', sheet), prev: $('.rt-prev', sheet), next: $('.rt-next', sheet),
       nextLabel: $('.rt-next span', sheet), bar: $('.rt-progress span', sheet), live: $('.rt-live', sheet), grip: $('.rt-grip', sheet),
+      resume: $('.rt-resume', sheet),
       center: $('.rt-center', root), cSet: $('.rt-c-set', root), cCount: $('.rt-c-count', root), cMyst: $('.rt-c-myst', root)
     };
     var steps = rosarySteps(), idx = 0, done = false, prayers = {}, sets = {}, firstSet = null, lastCenter = '';
@@ -670,6 +673,21 @@
       });
     });
     steps.forEach(function (st, i) { (stepsFor[st.el] = stepsFor[st.el] || []).push(i); });
+
+    /* Progress is kept in this browser only (localStorage), and only for the day it was
+       prayed on: a new day starts fresh on that day's mysteries. */
+    var SAVE_KEY = 'kkio-rosary';
+    function dayStamp() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+    function saveProgress() {
+      try { localStorage.setItem(SAVE_KEY, JSON.stringify({ day: dayStamp(), set: select.value, idx: idx, done: done })); } catch (e) { /* private mode */ }
+    }
+    function savedProgress() {
+      try {
+        var s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+        if (s && s.day === dayStamp() && sets[s.set] && s.idx >= 0 && s.idx < steps.length) return s;
+      } catch (e) { /* private mode or bad data */ }
+      return null;
+    }
 
     function currentSet() { return sets[select.value] || firstSet; }
     function setName() { var s = currentSet(); return LANG === 'en' ? s.en : s.tr; }
@@ -758,6 +776,8 @@
         ui.bar.style.width = (idx / steps.length * 100) + '%';
         ui.live.textContent = p.title + ', ' + ctx + (st.announce ? ', ' + ui.mTitle.textContent : '');
       }
+      if (user) ui.resume.hidden = true;
+      saveProgress();
       syncDock();
       if (user) keepVisible();
     }
@@ -861,6 +881,11 @@
         var days = (o.getAttribute('data-days') || '').split(',').map(Number);
         if (days.indexOf(today) !== -1) { o.textContent += ' (' + T.today + ')'; select.value = o.value; }
       });
+      var saved = savedProgress();
+      if (saved) {
+        select.value = saved.set; idx = saved.idx; done = !!saved.done;
+        if (idx > 0 && !done) { ui.resume.textContent = T.resumed; ui.resume.hidden = false; }
+      }
       wire();
       render(false);
     })['catch'](function () {
