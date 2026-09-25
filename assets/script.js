@@ -46,6 +46,12 @@
       b.setAttribute('aria-label', isDark() ? 'Açık temaya geç' : 'Koyu temaya geç');
     });
   }
+  /* The browser's own bars follow the theme too: through the theme-color meta (Safari up to
+     iOS 18, Chrome on Android); Safari 26 reads the solid header and tab bar instead. */
+  function syncChrome() {
+    var meta = $('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || (isDark() ? '#0f1728' : '#f8f5ee'));
+  }
   function initTheme() {
     /* Light is the default: the site does not follow the OS setting, only an explicit choice. */
     var saved = storedTheme();
@@ -57,6 +63,7 @@
         document.documentElement.setAttribute('data-theme', next);
         try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private mode */ }
         syncTheme();
+        syncChrome();
       });
     });
   }
