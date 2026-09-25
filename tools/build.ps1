@@ -248,8 +248,8 @@ function Split-Heading([string]$s) {
 }
 function Split-Attr([string]$s) { $m = [regex]::Match($s, '^([\s\S]*?)\s*\(([^()]*)\)\s*$'); if ($m.Success) { return @($m.Groups[1].Value, $m.Groups[2].Value) }; return @($s, '') }
 
-# ---------------- minimal Markdown (content/hakkinda.md feeds the info panel)
-# Defined here rather than further down because Header-Html renders the panel on every page.
+# ---------------- minimal Markdown (content/hakkinda.md feeds the footer's sources dialog)
+# Defined here rather than further down because the footer renders the dialog on every page.
 function Md-Inline([string]$s) {
   $s = $s -replace '&', '&amp;' -replace '<', '&lt;' -replace '>', '&gt;'
   $s = [regex]::Replace($s, '`([^`]+)`', '<code>$1</code>')
@@ -524,8 +524,8 @@ function Read-Md([string]$name) {
   return @{ meta = $meta; body = $md }
 }
 
-# ---------------- info panel (the old hakkinda.html, now a hover panel in the bar)
-# content/hakkinda.md stays the editable source; only its rendering moved.
+# ---------------- "Kaynaklar ve telif": content/hakkinda.md (+ -en) is the list shown in the footer's
+# sources dialog; its front-matter "about" line is the one-sentence description under the footer tagline.
 $aboutFile = Join-Path (Join-Path $Root 'content') 'hakkinda.md'
 $aboutMd = if (Test-Path $aboutFile) { [IO.File]::ReadAllText($aboutFile, [Text.Encoding]::UTF8) } else { '' }
 $aboutMd = $aboutMd -replace '\{\{TARIH\}\}', $BuildDateTr
@@ -543,7 +543,11 @@ $aboutFileEn = Join-Path (Join-Path $Root 'content') 'hakkinda-en.md'
 $aboutMdEn = if (Test-Path $aboutFileEn) { [IO.File]::ReadAllText($aboutFileEn, [Text.Encoding]::UTF8) } else { '' }
 $aboutMdEn = $aboutMdEn -replace '\{\{TARIH\}\}', $BuildDateEn
 $fmMatchEn = [regex]::Match($aboutMdEn, '^﻿?\s*---\s*\r?\n([\s\S]*?)\r?\n---\s*(\r?\n|$)')
-if ($fmMatchEn.Success) { $aboutMdEn = $aboutMdEn.Substring($fmMatchEn.Length) }
+$fmEn = @{}
+if ($fmMatchEn.Success) {
+  foreach ($line in ($fmMatchEn.Groups[1].Value -split "`n")) { $kv = [regex]::Match($line, '^\s*([A-Za-z_]+)\s*:\s*(.*?)\s*$'); if ($kv.Success) { $fmEn[$kv.Groups[1].Value.ToLower()] = $kv.Groups[2].Value.Trim('"', "'") } }
+  $aboutMdEn = $aboutMdEn.Substring($fmMatchEn.Length)
+}
 $h1mEn = [regex]::Match($aboutMdEn, '(?m)^#\s+(.+?)\s*$')
 if ($h1mEn.Success) { $aboutMdEn = $aboutMdEn.Remove($h1mEn.Index, $h1mEn.Length) }
 $InfoHtmlEn = Convert-Markdown $aboutMdEn
@@ -560,8 +564,8 @@ $GzMeta = $Gz.meta
 $GzEn = Read-Md 'gizlilik-en.md'
 $GzMetaEn = $GzEn.meta
 
-# Top bar: brand, Katesizm (a link that also opens a dropdown of the seven texts),
-# Sorular, and an (i) that reveals content/hakkinda.md on hover.
+# Top bar: brand, the settings gear (language + accessibility), the five core links and the
+# hamburger that opens the full menu.
 $TextNav = @(
   @{ href = 'motu-proprio.html';    t = 'Motu Proprio';                       s = 'XVI. Benediktus, 2005' },
   @{ href = 'giris.html';           t = 'Giriş';                              s = 'Kardinal Ratzinger, 2005' },
@@ -587,14 +591,15 @@ $KaynaklarNav = @(
   @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille' },
   @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler' },
   @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri" },
-  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus'tan İznik'e" }
+  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e" }
 )
 $KatekizmPages = @('katesizm.html') + ($TextNav | ForEach-Object { $_.href })
-# The four links shown directly in the bar at all times; everything else (including these
-# four again, for completeness) lives in the hamburger's full-screen overlay only.
+# The five links shown directly in the bar at all times; everything else (including these
+# five again, for completeness) lives in the hamburger's full-screen overlay only.
 $CoreNav = @(
   @{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?' },
   @{ href = 'katesizm.html';        t = 'Katekizm' },
+  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık' },
   @{ href = 'kiliseler.html';       t = 'Kilise Bul' },
   @{ href = 'sss.html';             t = 'Sorular' }
 )
@@ -641,10 +646,9 @@ $MassIcons = @{
   host     = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2.4 3 5.6 4.4 8 4.4s5.6-1.4 8-4.4"/><circle cx="12" cy="7.6" r="3.4"/><path d="M12 5.6v.01M10.2 8.3h3.6"/></svg>'
   blessing = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2M6.5 6.5 5 5M19 5l-1.5 1.5M6.5 17.5 5 19M19 19l-1.5-1.5"/><circle cx="12" cy="12" r="3.4"/></svg>'
 }
-$IcoInfo = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11.2v5.4"/><circle cx="12" cy="7.6" r="1.15" fill="currentColor" stroke="none"/></svg>'
+$IcoGear = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.11 4.95 L10.50 2.52 L13.50 2.52 L13.89 4.95 A7.3 7.3 0 0 1 15.65 5.68 L17.64 4.23 L19.77 6.36 L18.32 8.35 A7.3 7.3 0 0 1 19.05 10.11 L21.48 10.50 L21.48 13.50 L19.05 13.89 A7.3 7.3 0 0 1 18.32 15.65 L19.77 17.64 L17.64 19.77 L15.65 18.32 A7.3 7.3 0 0 1 13.89 19.05 L13.50 21.48 L10.50 21.48 L10.11 19.05 A7.3 7.3 0 0 1 8.35 18.32 L6.36 19.77 L4.23 17.64 L5.68 15.65 A7.3 7.3 0 0 1 4.95 13.89 L2.52 13.50 L2.52 10.50 L4.95 10.11 A7.3 7.3 0 0 1 5.68 8.35 L4.23 6.36 L6.36 4.23 L8.35 5.68 A7.3 7.3 0 0 1 10.11 4.95Z"/><circle cx="12" cy="12" r="3"/></svg>'
 
 # ---------------------------------------------------------------- accessibility widget icons
-$IcoA11y = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="7.6" r="1.5" fill="currentColor" stroke="none"/><path d="M12 10.2v4.4M8.4 11.6h7.2M9.4 19l2.6-4.4 2.6 4.4"/></svg>'
 $IcoWheelchair = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.2" cy="5" r="1.5" fill="currentColor" stroke="none"/><path d="M11.4 8v5.2l4.4 4.4"/><path d="M11.4 13.2h5"/><path d="M7.8 13.2a5 5 0 1 0 4.9 6"/></svg>'
 $IcoEyeOff = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5l17 17"/><path d="M10.6 5.4A10.6 10.6 0 0 1 12 5.3c5 0 8.7 3.4 10 6.7-.5 1.3-1.4 2.7-2.6 3.9M6.6 6.6C4.6 8 3 9.9 2 12c1.3 3.3 5 6.7 10 6.7 1.4 0 2.7-.3 3.9-.7"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/></svg>'
 $IcoDroplet = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3 4 6 7.4 6 10.8a6 6 0 0 1-12 0c0-3.4 3-6.8 6-10.8Z"/></svg>'
@@ -657,24 +661,25 @@ $IcoCursor = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $IcoRefresh = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg>'
 $IcoCheckSquare = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></svg>'
 $IcoPlay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M10.2 8.7v6.6l5.3-3.3z" fill="currentColor" stroke="none"/></svg>'
-# Floating accessibility widget: profile presets + individual toggles, state kept in
-# localStorage (see script.js), CSS driven entirely by data-a11y-* attributes on <html> so it
-# never touches position:fixed elements via `filter` (which would break their containing block).
-# Defined here (before the first Write-Page call) and included on every page via Write-Page.
+# Settings panel, opened by the gear beside the logo: the language switch, then accessibility
+# profile presets + individual toggles, state kept in localStorage (see script.js), CSS driven
+# entirely by data-a11y-* attributes on <html> so it never touches position:fixed elements via
+# `filter` (which would break their containing block). Defined here (before the first
+# Write-Page call) and included on every page via Write-Page.
 $A11yWidgetHtml = @"
-<button type="button" class="a11y-toggle" aria-label="Erişilebilirlik menüsü" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-panel">$IcoA11y</button>
-<div class="a11y-panel glass" id="a11y-panel" role="dialog" aria-modal="false" aria-label="Erişilebilirlik ayarları" hidden>
-  <div class="a11y-head"><p class="a11y-title">$IcoA11y Erişilebilirlik</p><button type="button" class="a11y-close icon-btn" aria-label="Kapat">$IcoClose</button></div>
+<div class="a11y-panel glass" id="settings-panel" role="dialog" aria-modal="false" aria-labelledby="settings-title" hidden>
+  <div class="a11y-head"><p class="a11y-title" id="settings-title">$IcoGear Ayarlar</p><button type="button" class="a11y-close icon-btn" aria-label="Kapat">$IcoClose</button></div>
   <div class="a11y-body">
-    <a class="a11y-lang-switch" href="{{LANG_TARGET}}" aria-label="Switch to English">$IcoFlagEn<span>English</span></a>
-    <p class="a11y-group-label">Profiller</p>
+    <p class="a11y-group-label">Dil</p>
+    <a class="a11y-lang-switch" href="{{LANG_TARGET}}" lang="en" hreflang="en" aria-label="Switch to English">$IcoFlagEn<span>English</span></a>
+    <p class="a11y-group-label">Erişilebilirlik Profilleri</p>
     <div class="a11y-profiles">
       <button type="button" class="a11y-profile" data-a11y-profile="motor" aria-pressed="false">$IcoWheelchair<span>Hareket Kısıtlılığı</span></button>
       <button type="button" class="a11y-profile" data-a11y-profile="blind" aria-pressed="false">$IcoEyeOff<span>Görme Engelli</span></button>
       <button type="button" class="a11y-profile" data-a11y-profile="colorblind" aria-pressed="false">$IcoDroplet<span>Renk Körlüğü</span></button>
       <button type="button" class="a11y-profile" data-a11y-profile="dyslexia" aria-pressed="false">$IcoBookOpen<span>Disleksi</span></button>
     </div>
-    <p class="a11y-group-label">Ayarlar</p>
+    <p class="a11y-group-label">Erişilebilirlik Ayarları</p>
     <div class="a11y-toggles">
       <button type="button" class="a11y-tile" data-a11y-toggle="reader" aria-pressed="false">$IcoSpeaker<span>Ekran Okuyucu</span></button>
       <button type="button" class="a11y-tile" data-a11y-toggle="contrast" aria-pressed="false">$IcoContrast<span>Kontrast Artır</span></button>
@@ -691,19 +696,19 @@ $A11yWidgetHtml = @"
 </div>
 "@
 $A11yWidgetHtmlEn = @"
-<button type="button" class="a11y-toggle" aria-label="Accessibility menu" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-panel">$IcoA11y</button>
-<div class="a11y-panel glass" id="a11y-panel" role="dialog" aria-modal="false" aria-label="Accessibility settings" hidden>
-  <div class="a11y-head"><p class="a11y-title">$IcoA11y Accessibility</p><button type="button" class="a11y-close icon-btn" aria-label="Close">$IcoClose</button></div>
+<div class="a11y-panel glass" id="settings-panel" role="dialog" aria-modal="false" aria-labelledby="settings-title" hidden>
+  <div class="a11y-head"><p class="a11y-title" id="settings-title">$IcoGear Settings</p><button type="button" class="a11y-close icon-btn" aria-label="Close">$IcoClose</button></div>
   <div class="a11y-body">
-    <a class="a11y-lang-switch" href="{{LANG_TARGET}}" aria-label="Türkçeye geç">$IcoFlagTr<span>Türkçe</span></a>
-    <p class="a11y-group-label">Profiles</p>
+    <p class="a11y-group-label">Language</p>
+    <a class="a11y-lang-switch" href="{{LANG_TARGET}}" lang="tr" hreflang="tr" aria-label="Türkçeye geç">$IcoFlagTr<span>Türkçe</span></a>
+    <p class="a11y-group-label">Accessibility Profiles</p>
     <div class="a11y-profiles">
       <button type="button" class="a11y-profile" data-a11y-profile="motor" aria-pressed="false">$IcoWheelchair<span>Motor Impaired</span></button>
       <button type="button" class="a11y-profile" data-a11y-profile="blind" aria-pressed="false">$IcoEyeOff<span>Blind</span></button>
       <button type="button" class="a11y-profile" data-a11y-profile="colorblind" aria-pressed="false">$IcoDroplet<span>Color Blind</span></button>
       <button type="button" class="a11y-profile" data-a11y-profile="dyslexia" aria-pressed="false">$IcoBookOpen<span>Dyslexia</span></button>
     </div>
-    <p class="a11y-group-label">Settings</p>
+    <p class="a11y-group-label">Accessibility Settings</p>
     <div class="a11y-toggles">
       <button type="button" class="a11y-tile" data-a11y-toggle="reader" aria-pressed="false">$IcoSpeaker<span>Screen Reader</span></button>
       <button type="button" class="a11y-tile" data-a11y-toggle="contrast" aria-pressed="false">$IcoContrast<span>Increase Contrast</span></button>
@@ -751,7 +756,7 @@ $Sprite
     <div class="header-row">
       <div class="brand-group">
         <a class="brand" href="index.html"$(Cur 'index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
-        <button type="button" class="info-btn" aria-label="Bu site hakkında" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
+        <button type="button" class="settings-btn" aria-label="Ayarlar: dil ve erişilebilirlik" aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-panel">$IcoGear</button>
       </div>
       <nav class="mainnav" aria-label="Ana menü">
         <ul>$coreMenu</ul>
@@ -763,20 +768,15 @@ $Sprite
     </div>
   </div>
 </header>
-<div class="info-panel glass" id="info-panel" role="dialog" aria-label="Site hakkında" hidden><button type="button" class="info-close" aria-label="Kapat">$IcoClose</button><div class="info-inner">$InfoHtml</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menü">
     <div class="ns-head">
       <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
       <div class="today-pills ns-today">
-        <div class="today-pill" data-ns-weather hidden><span class="tp-ico" data-ns-weather-ico></span><span><span class="tp-label">Hava Durumu</span><span class="tp-value" data-ns-weather-val></span></span></div>
+        <div class="today-pill"><span class="tp-ico"><span class="lit-dot" data-ns-season-dot></span></span><span><span class="tp-label">Litürjik Dönem</span><span class="tp-value hint" data-ns-season>Yükleniyor…</span></span></div>
         <a class="today-pill" href="tesbih-duasi.html"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Günün Gizemi</span><span class="tp-value hint" data-ns-mystery>Yükleniyor…</span></span></a>
         <a class="today-pill" href="azizler.html"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Bugünün Azizi</span><span class="tp-value hint" data-ns-saint>Yükleniyor…</span></span></a>
       </div>
-    </div>
-    <div class="ns-about" id="ns-about" hidden>
-      <button type="button" class="ns-about-back">$IcoPrev<span>Menüye Dön</span></button>
-      <div class="ns-about-inner"><div class="info-inner">$InfoHtml</div></div>
     </div>
     <nav class="ns-nav" aria-label="Menü">
       <div class="ns-group" style="animation-delay:0s">
@@ -813,9 +813,6 @@ $Sprite
       <div class="ns-group" style="animation-delay:.28s">
         <p class="ns-label">İletişim</p>
         <a class="ns-item" href="iletisim.html"$(Cur 'iletisim.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">İletişim</span><span class="ns-s">Bana ulaşın</span></span></a>
-      </div>
-      <div class="ns-group" style="animation-delay:.315s">
-        <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">Hakkında</span></span></button>
       </div>
     </nav>
   </div>
@@ -855,6 +852,7 @@ $MoreNavEn = @(
 $CoreNavEn = @(
   @{ href = 'en/why-were-catholic.html'; t = "Why We're Catholic" },
   @{ href = 'en/compendium.html';        t = 'Compendium' },
+  @{ href = 'en/anatolia.html';          t = 'Christianity in Anatolia' },
   @{ href = 'en/find-a-church.html';     t = 'Find a Church' },
   @{ href = 'en/faq.html';               t = 'FAQ' }
 )
@@ -872,7 +870,7 @@ $Sprite
     <div class="header-row">
       <div class="brand-group">
         <a class="brand" href="en/index.html"$(Cur 'en/index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
-        <button type="button" class="info-btn" aria-label="About this site" aria-expanded="false" aria-controls="info-panel">$IcoInfo</button>
+        <button type="button" class="settings-btn" aria-label="Settings: language and accessibility" aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-panel">$IcoGear</button>
       </div>
       <nav class="mainnav" aria-label="Main menu">
         <ul>$coreMenu</ul>
@@ -884,20 +882,15 @@ $Sprite
     </div>
   </div>
 </header>
-<div class="info-panel glass" id="info-panel" role="dialog" aria-label="About this site" hidden><button type="button" class="info-close" aria-label="Close">$IcoClose</button><div class="info-inner">$InfoHtmlEn</div></div>
 <div class="navsheet" id="navsheet" hidden>
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="ns-head">
       <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
       <div class="today-pills ns-today">
-        <div class="today-pill" data-ns-weather hidden><span class="tp-ico" data-ns-weather-ico></span><span><span class="tp-label">Weather</span><span class="tp-value" data-ns-weather-val></span></span></div>
+        <div class="today-pill"><span class="tp-ico"><span class="lit-dot" data-ns-season-dot></span></span><span><span class="tp-label">Liturgical Season</span><span class="tp-value hint" data-ns-season>Loading…</span></span></div>
         <a class="today-pill" href="en/rosary.html"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">Today's Mystery</span><span class="tp-value hint" data-ns-mystery>Loading…</span></span></a>
         <a class="today-pill" href="en/saints.html"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">Today's Saint</span><span class="tp-value hint" data-ns-saint>Loading…</span></span></a>
       </div>
-    </div>
-    <div class="ns-about" id="ns-about" hidden>
-      <button type="button" class="ns-about-back">$IcoPrev<span>Back to Menu</span></button>
-      <div class="ns-about-inner"><div class="info-inner">$InfoHtmlEn</div></div>
     </div>
     <nav class="ns-nav" aria-label="Menu">
       <div class="ns-group" style="animation-delay:0s">
@@ -935,9 +928,6 @@ $Sprite
         <p class="ns-label">Contact</p>
         <a class="ns-item" href="en/contact.html"$(Cur 'en/contact.html' $current)><span class="ns-ico">$IcoMail</span><span class="ns-body"><span class="ns-t">Contact</span><span class="ns-s">Get in touch</span></span></a>
       </div>
-      <div class="ns-group" style="animation-delay:.315s">
-        <button type="button" class="ns-item info-open" aria-controls="info-panel" aria-expanded="false"><span class="ns-ico">$IcoInfo</span><span class="ns-body"><span class="ns-t">About</span></span></button>
-      </div>
     </nav>
   </div>
 </div>
@@ -952,7 +942,9 @@ $FooterHtml = @"
     <div class="foot-about">
       <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
       <p class="foot-tag">$SiteTag</p>
+      <p class="foot-desc">$($fm['about'])</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
+      <p class="foot-copy"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$($fm['title'])</button></p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">
@@ -963,30 +955,51 @@ $FooterHtml = @"
     </nav>
   </div>
 </footer>
+<dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
+  <button type="button" class="sources-close" aria-label="Kapat">$IcoClose</button>
+  <h2 class="sources-title" id="sources-title">$($fm['title'])</h2>
+  <div class="info-inner">$InfoHtml</div>
+</dialog>
 "@
-# Only lists links to pages that actually have an English version; see $EnAltMap.
+# Same four columns as the Turkish footer; each only lists pages that have an English version.
 $footCompendiumEn = (@(@{ href = 'en/compendium.html'; t = 'Compendium' }) + $TextNavEn) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+$footResourcesEn = @(
+  @{ href = 'en/becoming-catholic.html'; t = 'Becoming Catholic' }, @{ href = 'en/confession.html'; t = 'Confession' },
+  @{ href = 'en/mass.html'; t = 'The Holy Mass' }, @{ href = 'en/parables.html'; t = 'The Parables of Jesus' },
+  @{ href = 'en/bible.html'; t = 'The Bible' }, @{ href = 'en/find-a-church.html'; t = 'Find a Church' },
+  @{ href = 'en/anatolia.html'; t = 'Christianity in Anatolia' }
+) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+$footPrayersEn = @(@{ href = 'en/rosary.html'; t = 'The Holy Rosary' }, @{ href = 'en/appendix.html'; t = 'Common Prayers' }) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $FooterHtmlEn = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-about">
       <a class="foot-brand" href="en/index.html">$Logo<span>$SiteName</span></a>
       <p class="foot-tag">$SiteTagEn</p>
+      <p class="foot-desc">$($fmEn['about'])</p>
       <p class="foot-copy">English pages © 2026 $SiteName</p>
+      <p class="foot-copy"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$($fmEn['title'])</button></p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" aria-label="Sitemap">
       <div class="foot-col"><p class="foot-label">Compendium</p><ul>$($footCompendiumEn -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Other</p><ul><li><a href="en/why-were-catholic.html">Why We're Catholic</a></li><li><a href="en/becoming-catholic.html">Becoming Catholic</a></li><li><a href="en/confession.html">Confession</a></li><li><a href="en/mass.html">The Holy Mass</a></li><li><a href="en/rosary.html">The Holy Rosary</a></li><li><a href="en/parables.html">The Parables of Jesus</a></li><li><a href="en/bible.html">The Bible</a></li><li><a href="en/miracles.html">Miracles</a></li><li><a href="en/anatolia.html">Christianity in Anatolia</a></li><li><a href="en/saints.html">Saints</a></li><li><a href="en/find-a-church.html">Find a Church</a></li><li><a href="en/faq.html">FAQ</a></li><li><a href="en/contact.html">Contact</a></li><li><a href="en/accessibility.html">Accessibility</a></li><li><a href="en/privacy.html">Privacy Policy</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Resources</p><ul>$($footResourcesEn -join '')</ul></div>
+      <div class="foot-col"><p class="foot-label">Prayers</p><ul>$($footPrayersEn -join '')</ul></div>
+      <div class="foot-col"><p class="foot-label">Other</p><ul><li><a href="en/why-were-catholic.html">Why We're Catholic</a></li><li><a href="en/miracles.html">Miracles</a></li><li><a href="en/saints.html">Saints</a></li><li><a href="en/faq.html">FAQ</a></li><li><a href="en/contact.html">Contact</a></li><li><a href="en/accessibility.html">Accessibility</a></li><li><a href="en/privacy.html">Privacy Policy</a></li></ul></div>
     </nav>
   </div>
 </footer>
+<dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
+  <button type="button" class="sources-close" aria-label="Close">$IcoClose</button>
+  <h2 class="sources-title" id="sources-title">$($fmEn['title'])</h2>
+  <div class="info-inner">$InfoHtmlEn</div>
+</dialog>
 "@
 $EmailObfEval = [System.Text.RegularExpressions.MatchEvaluator]{
   param($m)
   $classMatch = [regex]::Match($m.Groups[1].Value, 'class="([^"]*)"')
   $cls = if ($classMatch.Success) { "$($classMatch.Groups[1].Value) email-link" } else { 'email-link' }
-  "<a class=`"$cls`" data-u=`"david`" data-d=`"katolikdunyasi.com`" href=`"#`">(e-posta için JavaScript gerekli)</a>"
+  "<a class=`"$cls`" data-u=`"david`" data-d=`"katolikdunyasi.com`" href=`"#`">$($script:EmailFallback)</a>"
 }
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
@@ -1031,7 +1044,7 @@ function Write-Page {
 $canon
 $hreflangTags
 <meta name="theme-color" content="#f5f2ea">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.open-meteo.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="$OgType">
 <meta property="og:locale" content="$ogLocale">
@@ -1071,6 +1084,7 @@ $a11yHtml
   # panel, Erişilebilirlik, Gizlilik); catching it here once, after every page is assembled,
   # keeps it out of the raw HTML for basic scrapers without touching the markdown/build source
   # that writes it in plainly. JS reassembles the real mailto link on page load (see initEmail).
+  $script:EmailFallback = if ($Lang -eq 'en') { '(email needs JavaScript)' } else { '(e-posta için JavaScript gerekli)' }
   $html = [regex]::Replace($html, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
   Write-Host "  + $File"
@@ -2480,7 +2494,7 @@ $meselBody = @"
   $(Crumbs $MeselTitle)
   <header class="page-head center">$(Page-Ico $IcoBookOpen)<h1>$($Parables.title)</h1><p class="sub" lang="en">$($Parables.en)</p></header>
   <p class="faq-intro">$(Inline $Parables.intro)</p>
-  <nav class="faq-toc" aria-label="Kategoriler"><ul>$meselToc</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Kategoriler"><ul>$meselToc</ul></nav>
 $meselCats
 </div>
 "@
@@ -2508,7 +2522,7 @@ $meselBodyEn = @"
   $(Crumbs-En $Parables.en)
   <header class="page-head center">$(Page-Ico $IcoBookOpen)<h1>$($Parables.en)</h1></header>
   <p class="faq-intro">$(Inline $Parables.introEn)</p>
-  <nav class="faq-toc" aria-label="Categories"><ul>$meselTocEn</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Categories"><ul>$meselTocEn</ul></nav>
 $meselCatsEn
 </div>
 "@
@@ -2786,7 +2800,7 @@ $mucizelerBody = @"
   $(Crumbs 'Mucizeler')
   <header class="page-head center">$(Page-Ico $IcoSparkle)<h1>$($Miracles.title)</h1><p class="sub" lang="en">$($Miracles.en)</p></header>
   <p class="faq-intro">$(Inline $Miracles.intro)</p>
-  <nav class="faq-toc" aria-label="Kategoriler"><ul>$miraToc</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Kategoriler"><ul>$miraToc</ul></nav>
 $miraCats
 </div>
 "@
@@ -2814,7 +2828,7 @@ $mucizelerBodyEn = @"
   $(Crumbs-En 'Miracles')
   <header class="page-head center">$(Page-Ico $IcoSparkle)<h1>$($Miracles.en)</h1></header>
   <p class="faq-intro">$(Inline $Miracles.introEn)</p>
-  <nav class="faq-toc" aria-label="Categories"><ul>$miraTocEn</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Categories"><ul>$miraTocEn</ul></nav>
 $miraCatsEn
 </div>
 "@
@@ -2890,7 +2904,7 @@ $kiliselerBody = @"
     <p>$(Inline $Churches.intro)</p>
     <p>$(Inline $Churches.touristNote)</p>
   </div>
-  <nav class="faq-toc" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
   $riteFilterHtml
 $kiliselerCities
   <p class="conventions">$(Inline $Churches.note)</p>
@@ -2953,7 +2967,7 @@ $kiliselerBodyEn = @"
     <p>$(Inline $Churches.introEn)</p>
     <p>$(Inline $Churches.touristNoteEn)</p>
   </div>
-  <nav class="faq-toc" aria-label="Cities"><ul>$kiliselerTocEn</ul></nav>
+  <nav class="faq-toc is-sticky" aria-label="Cities"><ul>$kiliselerTocEn</ul></nav>
   $riteFilterHtmlEn
 $kiliselerCitiesEn
   <p class="conventions">$(Inline $Churches.noteEn)</p>
@@ -2975,7 +2989,7 @@ $iletisimBody = @"
   <div class="placeholder-page contact-page">
     $IcoMail
     <p class="placeholder-lead">Bize ulaşın</p>
-    <p>Bu site, Toronto, Kanada$($Apos)da yaşayan David Erduran tarafından hazırlanıyor ve tek başına yürütülüyor. Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa, ya da sadece merhaba demek isterseniz, aşağıdaki adresten yazabilirsiniz.</p>
+    <p>Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa, ya da sadece merhaba demek isterseniz, aşağıdaki adresten yazabilirsiniz.</p>
     <p class="contact-email"><a class="btn" href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     <p>Her mesajı okuyorum. Yoğunluğa göre yanıtım biraz gecikebilir, ama her geri bildirim için şimdiden teşekkür ederim.</p>
   </div>
@@ -2993,7 +3007,7 @@ $iletisimBodyEn = @"
   <div class="placeholder-page contact-page">
     $IcoMail
     <p class="placeholder-lead">Get in touch</p>
-    <p>This site is written and run single-handedly by David Erduran, who lives in Toronto, Canada. If you've spotted a translation error, have a topic, saint or miracle you'd like added, or just want to say hello, you can write to the address below.</p>
+    <p>If you've spotted a translation error, have a topic, saint or miracle you'd like added, or just want to say hello, you can write to the address below.</p>
     <p class="contact-email"><a class="btn" href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     <p>I read every message. My reply might be a little slow depending on how busy things are, but thank you in advance for any feedback.</p>
   </div>
@@ -3069,7 +3083,7 @@ $pages = @(
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
-  @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.8' },
+  @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' },
   @{ p = 'neden-katoligiz.html'; pr = '0.9' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
@@ -3084,7 +3098,7 @@ $pages = @(
   @{ p = 'en/saints.html'; pr = '0.9' }, @{ p = 'en/find-a-church.html'; pr = '0.6' },
   @{ p = 'en/why-were-catholic.html'; pr = '0.8' }, @{ p = 'en/rosary.html'; pr = '0.8' },
   @{ p = 'en/bible.html'; pr = '0.8' }, @{ p = 'en/miracles.html'; pr = '0.6' },
-  @{ p = 'en/anatolia.html'; pr = '0.6' }, @{ p = 'en/contact.html'; pr = '0.4' },
+  @{ p = 'en/anatolia.html'; pr = '0.8' }, @{ p = 'en/contact.html'; pr = '0.4' },
   @{ p = 'en/accessibility.html'; pr = '0.3' }, @{ p = 'en/privacy.html'; pr = '0.3' },
   @{ p = 'en/mass.html'; pr = '0.9' }, @{ p = 'en/parables.html'; pr = '0.9' }
 ) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) `

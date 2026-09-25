@@ -1,16 +1,8 @@
 ---
-title: katolikdunyasi.com
-subtitle: Türkçe Katolik Portalı
-description: katolikdunyasi.com hakkında: sitenin amacı, kaynakları ve telif bilgileri.
+title: Kaynaklar ve telif
+about: katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türkçe olarak erişilebilir kılmak için hazırlanmıştır.
+description: katolikdunyasi.com’un kaynakları ve telif bilgileri.
 ---
-
-## Site Hakkında
-
-katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türkçe olarak erişilebilir kılmak için hazırlanmıştır.
-
-Menü simgesine tıkladığınızda açılan tam menüde, o güne ait bilgilerin yanında yerel hava durumu da gösterilir; bunun için tarayıcınız konum izni ister. İzin vermezseniz ya da isteği reddederseniz menünün geri kalanı normal şekilde çalışmaya devam eder. Konumunuz yalnızca o anki hava durumunu sorgulamak için kullanılır, sunucularımıza kaydedilmez; ayrıntılar için [Gizlilik sayfasına](gizlilik.html) bakabilirsiniz.
-
-## Kaynaklar ve telif
 
 - Katekizm: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Türkçe çeviri © 2026 katolikdunyasi.com; özgün metin © 2005 Libreria Editrice Vaticana.
 - Tesbih Duası: İstanbul’daki Sant’Antuan (Aziz Antuan) Bazilikası’nda kullanılan Türkçe dua kartı esas alınmıştır.
@@ -22,10 +14,6 @@ Menü simgesine tıkladığınızda açılan tam menüde, o güne ait bilgilerin
 - Katolik Süreci, Günah Çıkarma, Neden Katoliğiz?, Topraklarımızda Hristiyanlık ve Sorular bölümlerindeki metinler, Katekizm’e ve güvenilir Katolik kaynaklarına dayanılarak bu site için özgün olarak yazılmıştır.
 - Anadolu’daki Kökler Haritası: kıyı çizgileri ve göller, kamu malı olan [Natural Earth](https://www.naturalearthdata.com) verilerinden çizilmiştir.
 - Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir.
-
-## İletişim
-
-Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu varsa ya da sadece merhaba demek isterseniz: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com). Ayrıntılar için [İletişim sayfasını](iletisim.html) ziyaret edebilirsiniz.
 
 Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
 

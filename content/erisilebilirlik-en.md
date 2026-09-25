@@ -11,14 +11,14 @@ katolikdunyasi.com is designed to be usable comfortably by as wide an audience a
 
 ## Currently supported
 
-- **Accessibility menu:** opens from the icon in the bottom-right corner of every page. It offers ready-made profiles for motor impairment, blindness, color blindness and dyslexia, plus individually switchable settings such as increasing contrast, reducing color saturation, enlarging text, widening letter and line spacing, highlighting links, switching to a dyslexia-friendly font, and a bigger cursor. Your choices are remembered in your browser, and you can return to the defaults at any time with "Reset All Settings."
-- **Screen reader helper:** when you turn on the "Screen Reader" setting in the accessibility menu, it reads aloud whatever text you point at or focus with the keyboard, using your browser's own speech feature. This isn't a substitute for a real screen reader (VoiceOver, NVDA or TalkBack); the site already works with those on its own, through a meaningful heading order, landmark regions (menu, main content, footer), and spoken announcements for search results and self-updating areas like "today's saint."
-- **Keyboard use:** menus, the search box, the accessibility menu, and every popup panel can be opened and closed with the keyboard alone, with no mouse required; the focused element is always visible.
+- **Accessibility settings:** open from the gear (Settings) icon next to the logo at the top of every page. It offers ready-made profiles for motor impairment, blindness, color blindness and dyslexia, plus individually switchable settings such as increasing contrast, reducing color saturation, enlarging text, widening letter and line spacing, highlighting links, switching to a dyslexia-friendly font, and a bigger cursor. Your choices are remembered in your browser, and you can return to the defaults at any time with "Reset All Settings."
+- **Screen reader helper:** when you turn on the "Screen Reader" setting in the Settings panel, it reads aloud whatever text you point at or focus with the keyboard, using your browser's own speech feature. This isn't a substitute for a real screen reader (VoiceOver, NVDA or TalkBack); the site already works with those on its own, through a meaningful heading order, landmark regions (menu, main content, footer), and spoken announcements for search results and self-updating areas like "today's saint."
+- **Keyboard use:** menus, the search box, the Settings panel, and every popup panel can be opened and closed with the keyboard alone, with no mouse required; the focused element is always visible.
 - **Skip-to-content link:** every page begins with an invisible link that skips the menu and jumps straight to the content ("Skip to content").
 - **Reduced motion:** if your operating system's "reduce motion" preference is on, the site respects it and turns off unnecessary transition animations.
 - **Dark and light theme:** selectable for eye strain or light sensitivity, and your choice is remembered.
-- **Color contrast:** text colors were chosen to target the contrast ratios recommended by the WCAG 2.1 AA standard, and can be strengthened further with the "Increase Contrast" setting in the accessibility menu.
-- **Language choice:** the main site is published in Turkish; the flag icon in the top menu and in the footer switches to the site's growing English section.
+- **Color contrast:** text colors were chosen to target the contrast ratios recommended by the WCAG 2.1 AA standard, and can be strengthened further with the "Increase Contrast" setting in the Settings panel.
+- **Language choice:** the main site is published in Turkish; the flag icon at the top of the Settings panel switches between the Turkish site and its growing English section.
 
 ## Known limitations
 

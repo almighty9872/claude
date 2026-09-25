@@ -4,7 +4,7 @@ A static, primarily Turkish-language Catholic resource site, with a growing Engl
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
-The one outside network call is optional: the full-menu overlay (opened from the header's hamburger icon) offers the local weather alongside the day's Rosary mystery and saint. This asks the browser for geolocation permission only when the menu is first opened, not on page load, and only queries `api.open-meteo.com` (a free, keyless weather API) if permission is granted; declining leaves the rest of the menu working normally. `assets/script.js`'s `fillTodayWeather()` handles this, and the page's CSP `connect-src` allowlists that one domain.
+The site makes no outside network calls and never asks for the visitor's location. The full-menu overlay (opened from the header's hamburger icon) shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
 
 ## English section (`/en/`)
 
@@ -41,7 +41,7 @@ topraklarimizda-hristiyanlik.html  Christianity's roots in Anatolia: an interact
                         then Paul's homeland, the Seven Churches, Nicaea, the Church Fathers
 sss.html                Frequently asked questions, grouped by topic
 kiliseler.html          Parish locator: active Catholic churches in Turkey, grouped by city
-iletisim.html           Contact page (email, based in Toronto)
+iletisim.html           Contact page (email)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
 sitemap.xml, robots.txt
 assets/styles.css       All styling, hand-edited. Theme tokens at the top: dark = navy/gold, light = ivory/gold
@@ -67,7 +67,7 @@ data/anadolu-harita-sekli.js ← The map's outline (generated from Natural Earth
 data/neden-katoligiz.js ← "Why we're Catholic" content
 data/kiliseler.js       ← Parish locator: churches in Turkey by city and rite
 content/kutsal-kitap.md ← Bible guide text (Markdown)
-content/hakkinda.md     ← "About this site" text shown in the (i) panel (Markdown)
+content/hakkinda.md     ← Footer text: the one-line "about" sentence and the "Kaynaklar ve telif" (sources and copyright) dialog (Markdown; -en.md for English)
 tools/build.ps1         Regenerates the static pages from data/ and content/
 tools/anadolu-harita-sekli.mjs  Regenerates the map outline (Node; only if the map frame should change)
 .github/workflows/deploy.yml  Builds and publishes the site on every push to main
@@ -97,9 +97,9 @@ Search reads the data files at runtime, so edits show up in search results immed
 
 **Domain:** the build reads your domain from the `CNAME` file (one line, e.g. `ornekalan.com`) and uses `https://<that domain>` for canonical, Open Graph and sitemap URLs. The file currently holds the placeholder `alanadiniz.com`, so the build prints a warning and falls back to `https://www.example.com` until you replace it.
 
-## Editing the About page
+## Editing the sources and copyright text
 
-Edit `content/hakkinda.md`. On github.com, open the file, click the pencil icon and commit. The workflow rebuilds `hakkinda.html` in about a minute. The top block (between the `---` lines) sets the title, subtitle and search-engine description. The rest is Markdown:
+Edit `content/hakkinda.md` (and `content/hakkinda-en.md` for the English pages). On github.com, open the file, click the pencil icon and commit. The workflow rebuilds every page in about a minute, since the text appears in each page's footer. In the top block (between the `---` lines), `title` is the footer link and dialog heading, and `about` is the one-line sentence under the site name in the footer. The rest is Markdown, shown in the "Kaynaklar ve telif" dialog:
 
 | Write | Result |
 |---|---|
@@ -152,4 +152,4 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 
 ## Contact
 
-The site is written and maintained by David Erduran (Toronto, Canada): **david@katolikdunyasi.com**. Translation corrections, content suggestions and general feedback are welcome there, or through the site's own [İletişim page](https://katolikdunyasi.com/iletisim.html).
+Translation corrections, content suggestions and general feedback are welcome at **david@katolikdunyasi.com**, or through the site's own [İletişim page](https://katolikdunyasi.com/iletisim.html).

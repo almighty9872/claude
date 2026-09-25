@@ -85,11 +85,90 @@
   }
 
   /* ---------------------------------------------------------------
-     2. Full-site menu overlay header: today's full date (no clock any
-        more -- see .ns-head in build.ps1), plus three at-a-glance pills
-        -- local weather, today's rosary mystery, today's saint -- filled
-        in lazily the first time the overlay is opened (initNavOpened()).
+     2. Full-site menu overlay header: today's full date and a live
+        clock, plus three at-a-glance pills: the liturgical season (with
+        its vestment colour), today's rosary mystery and today's saint.
      --------------------------------------------------------------- */
+  /* Gregorian Easter (Meeus/Jones/Butcher), shared by the saints calendar and the season pill */
+  function easterMD(year) {
+    var a = year % 19, b = Math.floor(year / 100), c = year % 100;
+    var d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+    var g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+    var i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+    var m = Math.floor((a + 11 * h + 22 * l) / 451);
+    return { m: Math.floor((h + l - 7 * m + 114) / 31), d: ((h + l - 7 * m + 114) % 31) + 1 };
+  }
+  /* Where today falls in the Roman liturgical year, in the visitor's own time zone: the season
+     (with its week) and the colour the priest wears. Special days of the Proper of Time that
+     change the colour are included: rose on Gaudete and Laetare Sundays, red on Palm Sunday,
+     Good Friday and Pentecost, white through the Triduum's feasts, Trinity Sunday and Christ
+     the King. Feasts of individual saints are left out: this is the season's colour. */
+  var LIT_TEXT = {
+    tr: {
+      advent: 'Advent', christmas: 'Noel Dönemi', ordinary: 'Olağan Zaman', lent: 'Büyük Perhiz', easter: 'Paskalya Dönemi',
+      week: function (n) { return n + '. Hafta'; }, ash: 'Kül Çarşambası', palm: 'Hurma Pazarı', holyWeek: 'Kutsal Hafta',
+      thu: 'Kutsal Perşembe', fri: 'Kutsal Cuma', sat: 'Kutsal Cumartesi', easterDay: 'Paskalya', pentecost: 'Pentekost',
+      trinity: 'Kutsal Üçlü Birlik', king: 'Evrenin Kralı Mesih', colour: 'Litürjik renk',
+      colours: { green: 'yeşil', violet: 'mor', white: 'beyaz', red: 'kırmızı', rose: 'pembe' }
+    },
+    en: {
+      advent: 'Advent', christmas: 'Christmas Season', ordinary: 'Ordinary Time', lent: 'Lent', easter: 'Easter Season',
+      week: function (n) { return 'Week ' + n; }, ash: 'Ash Wednesday', palm: 'Palm Sunday', holyWeek: 'Holy Week',
+      thu: 'Holy Thursday', fri: 'Good Friday', sat: 'Holy Saturday', easterDay: 'Easter Sunday', pentecost: 'Pentecost',
+      trinity: 'The Holy Trinity', king: 'Christ the King', colour: 'Liturgical colour',
+      colours: { green: 'green', violet: 'violet', white: 'white', red: 'red', rose: 'rose' }
+    }
+  };
+  function liturgicalDay(now) {
+    var L = LIT_TEXT[LANG], y = now.getFullYear();
+    var today = new Date(y, now.getMonth(), now.getDate());
+    function date(m, d) { return new Date(y, m - 1, d); }
+    function add(dt, n) { var x = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()); x.setDate(x.getDate() + n); return x; }
+    function days(a, b) { return Math.round((a - b) / 86400000); }
+    function same(a, b) { return days(a, b) === 0; }
+    function res(name, week, colour) { return { name: name + (week ? ' · ' + L.week(week) : ''), colour: colour }; }
+    var e = easterMD(y), easter = date(e.m, e.d), ash = add(easter, -46), palm = add(easter, -7);
+    var pentecost = add(easter, 49), christmas = date(12, 25);
+    var advent = add(christmas, -(christmas.getDay() || 7) - 21), king = add(advent, -7);
+    var epiphany = date(1, 6), baptism = add(epiphany, 7 - epiphany.getDay());
+
+    if (today >= christmas || today <= baptism) return res(L.christmas, 0, 'white');
+    if (today >= advent) {
+      var aw = Math.floor(days(today, advent) / 7) + 1;
+      return res(L.advent, aw, same(today, add(advent, 14)) ? 'rose' : 'violet');
+    }
+    if (today < ash) return res(L.ordinary, Math.floor(days(today, baptism) / 7) + 1, 'green');
+    if (same(today, ash)) return res(L.ash, 0, 'violet');
+    if (today < palm) {
+      var lentSun = add(ash, 4), lw = today < lentSun ? 0 : Math.floor(days(today, lentSun) / 7) + 1;
+      return res(L.lent, lw, same(today, add(lentSun, 21)) ? 'rose' : 'violet');
+    }
+    if (same(today, palm)) return res(L.palm, 0, 'red');
+    if (today < add(easter, -3)) return res(L.holyWeek, 0, 'violet');
+    if (same(today, add(easter, -3))) return res(L.thu, 0, 'white');
+    if (same(today, add(easter, -2))) return res(L.fri, 0, 'red');
+    if (same(today, add(easter, -1))) return res(L.sat, 0, 'white');
+    if (same(today, easter)) return res(L.easterDay, 0, 'white');
+    if (today < pentecost) return res(L.easter, Math.floor(days(today, easter) / 7) + 1, 'white');
+    if (same(today, pentecost)) return res(L.pentecost, 0, 'red');
+    if (same(today, add(pentecost, 7))) return res(L.trinity, 0, 'white');
+    if (same(today, king)) return res(L.king, 0, 'white');
+    var sunday = add(today, -today.getDay());
+    return res(L.ordinary, 34 - Math.round(days(king, sunday) / 7), 'green');
+  }
+  function fillTodaySeason() {
+    var val = $('[data-ns-season]'), dot = $('[data-ns-season-dot]');
+    if (!val) return;
+    var lit = liturgicalDay(new Date()), L = LIT_TEXT[LANG], label = L.colour + ': ' + L.colours[lit.colour];
+    val.textContent = lit.name;
+    val.classList.remove('hint');
+    if (dot) {
+      dot.className = 'lit-dot lit-' + lit.colour;
+      dot.setAttribute('role', 'img');
+      dot.setAttribute('aria-label', label);
+      dot.title = label;
+    }
+  }
   function todayDateText() {
     var d = new Date();
     try {
@@ -129,35 +208,6 @@
       val.classList.remove('hint');
     });
   }
-  var WEATHER_ICONS = { clear: '☀️', partly: '⛅', overcast: '☁️', fog: '🌫️', rain: '🌧️', snow: '❄️', storm: '⛈️' };
-  function weatherIcon(code) {
-    if (code === 0) return WEATHER_ICONS.clear;
-    if (code <= 2) return WEATHER_ICONS.partly;
-    if (code === 3) return WEATHER_ICONS.overcast;
-    if (code === 45 || code === 48) return WEATHER_ICONS.fog;
-    if (code >= 51 && code <= 67) return WEATHER_ICONS.rain;
-    if (code >= 71 && code <= 86) return WEATHER_ICONS.snow;
-    if (code >= 95) return WEATHER_ICONS.storm;
-    return WEATHER_ICONS.partly;
-  }
-  var weatherTried = false;
-  function fillTodayWeather() {
-    if (weatherTried || !navigator.geolocation || typeof fetch !== 'function') return;
-    weatherTried = true;
-    var item = $('[data-ns-weather]'), ico = $('[data-ns-weather-ico]'), val = $('[data-ns-weather-val]');
-    if (!item) return;
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + pos.coords.latitude +
-        '&longitude=' + pos.coords.longitude + '&current=temperature_2m,weather_code&timezone=auto';
-      fetch(url).then(function (r) { return r.json(); }).then(function (data) {
-        var cur = data && data.current;
-        if (!cur || typeof cur.temperature_2m !== 'number') return;
-        ico.textContent = weatherIcon(cur.weather_code);
-        val.textContent = Math.round(cur.temperature_2m) + '°C';
-        item.hidden = false;
-      })['catch'](function () {});
-    }, function () {}, { timeout: 6000, maximumAge: 600000 });
-  }
   function tickNavTime() {
     var timeEl = $('[data-ns-time]');
     if (!timeEl) return;
@@ -175,12 +225,10 @@
     var dateEl = $('[data-ns-date]');
     if (dateEl) dateEl.textContent = todayDateText();
     tickNavTime();
+    fillTodaySeason();
     fillTodayMystery();
     fillTodaySaint();
   }
-  /* Weather needs a permission prompt, so it only runs once the visitor actually opens
-     the menu -- not proactively on every page load. Called from initNav()'s openSheet(). */
-  function initNavWeatherOnDemand() { fillTodayWeather(); }
 
   /* ---------------------------------------------------------------
      3. English original: per-item reveal (toggles the [hidden] block;
@@ -450,19 +498,14 @@
     var sheet = $('#navsheet');
     if (!sheet) return;
     var toggles = $$('.menu-toggle'), panel = $('.navsheet-panel', sheet), hideTimer = null;
-    var about = $('#ns-about', sheet), navList = $('.ns-nav', sheet);
     function openSheet() {
       if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
       sheet.hidden = false;
       nextFrame(function () { sheet.classList.add('open'); });
       document.body.classList.add('sheet-open');
       toggles.forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
-      /* Always reopen on the menu view, never stuck on a previous "Hakkında" view */
-      if (about) about.hidden = true;
-      if (navList) navList.hidden = false;
       var first = $('.ns-item[aria-current="page"]', sheet) || $('.ns-item', sheet);
       if (first) first.focus();
-      initNavWeatherOnDemand();
     }
     function closeSheet(refocus) {
       if (!sheet.classList.contains('open')) return;
@@ -483,8 +526,7 @@
     window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });
   }
 
-  /* Offset from the cursor, flipping near an edge rather than clamping. Shared
-     by the (i) panel and the rosary prayer list. */
+  /* Offset from the cursor, flipping near an edge rather than clamping (the saints' bio panel). */
   function placePanel(panel, x, y) {
     panel.classList.remove('centered');
     var w = panel.offsetWidth, h = panel.offsetHeight, m = 12, gap = 18;
@@ -499,84 +541,24 @@
   var FINE = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------------------------------------------------------------
-     9. The (i) panel: content/hakkinda.md. A plain click-to-open
-        popover anchored under the button (centred on touch), so it
-        never depends on the pointer staying put — the panel's own
-        content scrolls normally once it's open.
+     9. Footer "Kaynaklar ve telif": a native modal <dialog> (focus
+        trap, Esc and focus return come from the browser); a click on
+        the blurred backdrop closes it too.
      --------------------------------------------------------------- */
-  function initInfo() {
-    var panel = $('#info-panel');
-    if (!panel) return;
-    var btn = $('.info-btn'), sheetBtns = $$('.info-open'), closeBtn = $('.info-close', panel);
-    var open = false;
-
-    function mark(v) {
-      [btn].concat(sheetBtns).forEach(function (b) { if (b) b.setAttribute('aria-expanded', String(v)); });
-    }
-    function show(anchor) {
-      open = true;
-      panel.hidden = false;
-      nextFrame(function () { panel.classList.add('open', 'pinned'); });
-      mark(true);
-      if (anchor && FINE) {
-        panel.classList.remove('centered');
-        var r = anchor.getBoundingClientRect();
-        placePanel(panel, r.left, r.bottom + 10);
-      } else {
-        panel.classList.add('centered');
-        panel.style.left = ''; panel.style.top = '';
-      }
-    }
-    function hide() {
-      open = false;
-      panel.classList.remove('open', 'pinned');
-      mark(false);
-      setTimeout(function () { if (!open) panel.hidden = true; }, 220);
-    }
-
-    if (btn) btn.addEventListener('click', function (e) {
-      e.preventDefault(); e.stopPropagation();
-      if (open) hide(); else show(btn);
-    });
-    sheetBtns.forEach(function (sheetBtn) {
-      sheetBtn.addEventListener('click', function () {
-        var navsheet = $('#navsheet'), inSheet = sheetBtn.closest('#navsheet');
-        /* Desktop: there's room to show the About text inline, in its own translucent panel,
-           without losing the rest of the open menu underneath it (see .ns-about in
-           build.ps1). Mobile stays on the small popover -- not enough room for both. */
-        if (inSheet && window.innerWidth >= 900) {
-          var about = $('#ns-about', navsheet), navList = $('.ns-nav', navsheet);
-          if (about && navList) {
-            navList.hidden = true;
-            about.hidden = false;
-            mark(true);
-            var backBtn = $('.ns-about-back', about);
-            if (backBtn) backBtn.focus();
-          }
-          return;
-        }
-        var toggle = $('.menu-toggle');
-        if (toggle && navsheet && navsheet.classList.contains('open') && inSheet) toggle.click();
-        setTimeout(function () { show(null); }, 60);
+  function initSources() {
+    var dlg = $('#sources-dialog');
+    if (!dlg) return;
+    $$('.foot-sources').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
       });
     });
-    var aboutBack = $('.ns-about-back');
-    if (aboutBack) aboutBack.addEventListener('click', function () {
-      var navsheet = $('#navsheet'), about = $('#ns-about', navsheet), navList = $('.ns-nav', navsheet);
-      if (about) about.hidden = true;
-      if (navList) navList.hidden = false;
-      mark(false);
-      var infoOpenBtn = $('.info-open', navsheet);
-      if (infoOpenBtn) infoOpenBtn.focus();
+    function close() { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+    $('.sources-close', dlg).addEventListener('click', close);
+    dlg.addEventListener('click', function (e) {
+      var r = dlg.getBoundingClientRect();
+      if (e.target === dlg && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) close();
     });
-    if (closeBtn) closeBtn.addEventListener('click', hide);
-    document.addEventListener('click', function (e) {
-      if (open && !panel.contains(e.target) && e.target !== btn && sheetBtns.indexOf(e.target) === -1) hide();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && open) { hide(); if (btn) btn.blur(); }
-    });
-    window.addEventListener('resize', function () { if (open) hide(); });
   }
 
   /* ---------------------------------------------------------------
@@ -925,7 +907,6 @@
       }
       if (user) ui.resume.hidden = true;
       saveProgress();
-      syncDock();
       if (user) keepVisible();
     }
 
@@ -942,17 +923,6 @@
       var stage = svg.getBoundingClientRect();
       var delta = stage.height <= bottom - top - 2 * pad ? stage.top - top - pad : (r.top + r.bottom) / 2 - (top + bottom) / 2;
       window.scrollBy({ top: delta, behavior: reduceMotion ? 'auto' : 'smooth' });
-    }
-    /* On phones, while the sheet covers the bottom corner, the floating accessibility button
-       rides on the sheet's top edge instead of sitting on top of the Next button. */
-    function syncDock() {
-      var html = document.documentElement, on = false;
-      if (narrow.matches) {
-        var r = sheet.getBoundingClientRect(), vh = window.innerHeight;
-        on = r.top < vh - 40 && r.bottom > vh - 72;
-        if (on) html.style.setProperty('--rt-fab-y', Math.round(vh - r.top - 24) + 'px');
-      }
-      html.classList.toggle('rt-docked', on);
     }
 
     function goTo(i, pattern) {
@@ -980,7 +950,6 @@
         var collapsed = sheet.classList.toggle('is-collapsed');
         ui.grip.setAttribute('aria-expanded', String(!collapsed));
         ui.grip.setAttribute('aria-label', collapsed ? T.show : T.hide);
-        syncDock();
       });
       root.addEventListener('keydown', function (e) {
         if (e.target === select || e.altKey || e.ctrlKey || e.metaKey) return;
@@ -1009,13 +978,6 @@
         list.forEach(function (i) { if (Math.abs(i - cur) < Math.abs(pick - cur)) pick = i; });
         goTo(pick, 50);
       });
-      var queued = false;
-      window.addEventListener('scroll', function () {
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () { queued = false; syncDock(); });
-      }, { passive: true });
-      window.addEventListener('resize', syncDock);
     }
 
     loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
@@ -1056,17 +1018,6 @@
       var d = new Date();
       return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
     }
-    /* Meeus/Jones/Butcher Gregorian Easter algorithm (public domain method) */
-    function easter(year) {
-      var a = year % 19, b = Math.floor(year / 100), c = year % 100;
-      var d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
-      var g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
-      var i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
-      var m = Math.floor((a + 11 * h + 22 * l) / 451);
-      var month = Math.floor((h + l - 7 * m + 114) / 31);
-      var day = ((h + l - 7 * m + 114) % 31) + 1;
-      return { m: month, d: day };
-    }
     function addDays(base, year, n) {
       var dt = new Date(Date.UTC(year, base.m - 1, base.d));
       dt.setUTCDate(dt.getUTCDate() + n);
@@ -1077,7 +1028,7 @@
       ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
       : ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
     var today = localParts();
-    var easterThis = easter(today.year);
+    var easterThis = easterMD(today.year);
     var movableTodayCard = null;
 
     /* Resolve this year's movable feasts and graft each onto its fixed-calendar day */
@@ -1496,10 +1447,78 @@
     markCurrentCity('istanbul');
   }
 
+  /* ---------------------------------------------------------------
+     Pinned section links (Kilise Bul, Meseller, Mucizeler): the row
+     gets .is-stuck once it reaches the header (for its glass band)
+     and publishes its height as --toc-h so in-page jumps land below
+     it. On Meseller and Mucizeler it also highlights the section
+     being read; Kilise Bul marks its one open city itself. When the
+     row is too long for one line it scrolls sideways, keeping the
+     highlighted link in view.
+     --------------------------------------------------------------- */
+  function initStickyToc() {
+    var nav = $('.faq-toc.is-sticky');
+    if (!nav) return;
+    var root = document.documentElement, list = $('ul', nav);
+    var links = $$('a[href^="#"]', nav);
+    var spy = !links.some(function (a) { return a.hasAttribute('data-city-link'); });
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var top = 64, current, ticking = false;
+
+    function measure() {
+      root.style.setProperty('--toc-h', nav.offsetHeight + 'px');
+      top = parseFloat(getComputedStyle(nav).top) || 64;
+    }
+    function reveal(a) {
+      if (!a || list.scrollWidth <= list.clientWidth) return;
+      var left = a.offsetLeft - (list.clientWidth - a.offsetWidth) / 2;
+      list.scrollTo({ left: Math.max(0, left), behavior: smooth ? 'smooth' : 'auto' });
+    }
+    function update() {
+      ticking = false;
+      nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top + 1);
+      if (!spy) return;
+      var line = top + nav.offsetHeight + 24, pick = null;
+      targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) pick = links[i]; });
+      if (pick === current) return;
+      current = pick;
+      links.forEach(function (a) {
+        a.classList.toggle('is-current', a === pick);
+        if (a === pick) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+      });
+      reveal(pick);
+    }
+    function queue() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
+    // Fade (and, for a mouse, an arrow on) whichever end of the row has links out of view
+    function ends() {
+      var max = list.scrollWidth - list.clientWidth;
+      nav.classList.toggle('fade-l', max > 1 && list.scrollLeft > 1);
+      nav.classList.toggle('fade-r', max > 1 && list.scrollLeft < max - 1);
+    }
+    var chev = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + d + '"/></svg>'; };
+    [['prev', 'm15 18-6-6 6-6', -1], ['next', 'm9 18 6-6-6-6', 1]].forEach(function (x) {
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'toc-arrow ' + x[0]; btn.tabIndex = -1; btn.setAttribute('aria-hidden', 'true');
+      btn.innerHTML = chev(x[1]);
+      btn.addEventListener('click', function () { list.scrollBy({ left: x[2] * list.clientWidth * 0.7, behavior: smooth ? 'smooth' : 'auto' }); });
+      nav.appendChild(btn);
+    });
+    list.addEventListener('scroll', ends, { passive: true });
+
+    measure(); update(); ends();
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', function () { measure(); ends(); queue(); });
+    if (window.ResizeObserver) new ResizeObserver(function () { measure(); ends(); queue(); }).observe(nav);
+    links.forEach(function (a) { a.addEventListener('click', function () { reveal(a); }); });
+  }
+
 
   /* ---------------------------------------------------------------
-     11. Accessibility widget: floating button opens a panel of profile
-         presets and individual settings (contrast, text spacing, a
+     11. Settings panel (the gear beside the logo): the language switch,
+         then accessibility profile presets and individual settings
+         (contrast, text spacing, a
          hover-to-read "screen reader" using the Web Speech API, etc.).
          All visual effects are CSS driven by data-a11y-* attributes on
          <html> (see styles.css) rather than a `filter`, which would
@@ -1509,7 +1528,7 @@
          instead of keeping its own separate state.
      --------------------------------------------------------------- */
   function initA11y() {
-    var toggleBtn = $('.a11y-toggle'), panel = $('#a11y-panel');
+    var toggleBtn = $('.settings-btn'), panel = $('#settings-panel');
     if (!toggleBtn || !panel) return;
     var closeBtn = $('.a11y-close', panel);
     var A11Y_KEY = 'kkio-a11y';
@@ -1607,11 +1626,20 @@
     });
 
     var open = false;
+    /* Drops down under the gear beside the logo; on phones (CSS) it spans the width instead */
+    function position() {
+      if (window.innerWidth <= 480) { panel.style.left = ''; return; }
+      var r = toggleBtn.getBoundingClientRect(), w = panel.offsetWidth;
+      panel.style.left = Math.max(12, Math.min(r.left - 16, window.innerWidth - w - 12)) + 'px';
+    }
     function show() {
       open = true;
       panel.hidden = false;
+      position();
       nextFrame(function () { panel.classList.add('open'); });
       toggleBtn.setAttribute('aria-expanded', 'true');
+      var first = $('.a11y-lang-switch', panel);
+      if (first) first.focus({ preventScroll: true });
     }
     function hide() {
       open = false;
@@ -1630,6 +1658,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && open) { hide(); toggleBtn.focus(); }
     });
+    window.addEventListener('resize', function () { if (open) position(); });
 
     var READ_SEL = 'h1,h2,h3,h4,p,a,li,button,summary,figcaption';
     document.addEventListener('mouseover', function (e) {
@@ -1670,7 +1699,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initInfo(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
-    initChurchFilter(); initMapLinks(); initA11y();
+    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
+    initChurchFilter(); initStickyToc(); initMapLinks(); initA11y();
   });
 })();

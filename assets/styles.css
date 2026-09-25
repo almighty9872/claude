@@ -150,8 +150,8 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
   .site-header { background: var(--surface); }
 }
 .header-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; min-height: 64px; }
-/* Brand and the (i) info button are one visual cluster, closer to each other than to the
-   nav/search/tools that follow, so (i) reads as "about this name" rather than a nav item. */
+/* Brand and the settings gear are one visual cluster, closer to each other than to the
+   nav and tools that follow, so the gear reads as site settings rather than a nav item. */
 .brand-group { display: flex; align-items: center; gap: .3rem; flex: 1 1 0; min-width: 0; margin-right: auto; }
 .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; min-width: 0; }
 .brand .logo { width: 30px; height: 30px; color: var(--gold); flex: none; }
@@ -596,7 +596,7 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
    it only ever runs when the reader chooses to print, on the page they were
    already reading. */
 @media print {
-  .site-header, .navsheet, .info-panel, .skip-link,
+  .site-header, .navsheet, .a11y-panel, .sources-dialog, .skip-link,
   .readbar, .toc, .toc-backdrop, .pager, .site-footer,
   .en-toggle, .article-tools, [data-en-all], .gloss,
   .search, .home-katekizm-search, .today-pills, .hub-go,
@@ -719,10 +719,16 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   .glass { background: var(--surface); }
 }
 
-/* The four core links (Neden Katoliğiz?, Katekizm, Kilise Bul, Sorular / their EN equivalents)
-   sit directly in the bar; every other page lives only in the hamburger's overlay below. */
+/* The five core links (Neden Katoliğiz?, Katekizm, Topraklarımızda Hristiyanlık, Kilise Bul,
+   Sorular / their EN equivalents) sit directly in the bar; every other page lives only in the
+   hamburger's overlay below. Below 1100px they tighten up so the bar stays one line. */
 .mainnav { display: none; }
-@media (min-width: 900px) { .mainnav { display: block; margin-left: .35rem; } }
+@media (min-width: 980px) { .mainnav { display: block; margin-left: .35rem; } }
+@media (min-width: 980px) and (max-width: 1099px) {
+  .header-row { gap: .5rem; }
+  .mainnav { margin-left: 0; }
+  .mainnav .nav-link { padding-inline: .38rem; font-size: .85rem; }
+}
 .mainnav > ul { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem; margin: 0; padding: 0; list-style: none; }
 .nav-link {
   display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; cursor: pointer;
@@ -791,7 +797,13 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .ns-date { margin: 0 0 .6rem; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--text-soft); }
 .ns-time { color: var(--gold); font-variant-numeric: tabular-nums; }
 .ns-today.today-pills { margin-top: 0; }
-[data-ns-weather-ico] { font-size: 1.25rem; line-height: 1; }
+/* Liturgical season pill: a disc in the colour the priest wears in this season */
+.lit-dot {
+  display: block; width: 1.05rem; height: 1.05rem; margin: .22rem; border-radius: 50%;
+  background: var(--border); box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--border-strong);
+}
+.lit-green { background: #2f7d3a; } .lit-violet { background: #6b3fa0; } .lit-white { background: #fdfcf7; }
+.lit-red { background: #c0392b; } .lit-rose { background: #e39bb6; }
 .ns-nav[hidden] { display: none; }
 /* Each labeled section fades and slides in on its own delay (set inline per group in
    build.ps1) when the overlay opens, for the staggered reveal effect. */
@@ -804,33 +816,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 @media (min-width: 1300px) {
   .ns-nav { column-count: 3; max-width: 88rem; }
 }
-/* Inline "Hakkında" view: on desktop, clicking it swaps this in for .ns-nav (see initInfo()
-   in script.js) instead of closing the overlay and opening the small popover -- there's
-   room here for the About text to breathe, styled like the Katekizm search overlay
-   (translucent, blurred). Mobile keeps the popover; see the width check in the JS. */
-.ns-about[hidden] { display: none; }
-.ns-about-back {
-  display: inline-flex; align-items: center; gap: .4rem; margin: 0 auto 1.2rem; padding: .5rem 1rem .5rem .8rem;
-  border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-soft);
-  font-family: var(--sans); font-size: .85rem; font-weight: 600; cursor: pointer;
-  transition: border-color .15s, color .15s;
-}
-.ns-about-back svg { width: .85rem; height: .85rem; }
-.ns-about-back:hover { border-color: var(--gold-soft); color: var(--gold); }
-.ns-about-inner {
-  max-width: 42rem; margin: 0 auto; padding: 1.6rem 1.8rem;
-  background: var(--glass-menu); border: 1px solid var(--glass-brd); border-radius: 22px;
-  -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px);
-  max-height: min(60vh, 34rem); overflow-y: auto; scroll-behavior: smooth;
-  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
-}
-.ns-about-inner::-webkit-scrollbar { width: 6px; }
-.ns-about-inner::-webkit-scrollbar-track { background: transparent; }
-.ns-about-inner::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
-/* A touch larger than the cramped small popover, since there's room to breathe here */
-.ns-about-inner .info-inner p { font-size: 1.05rem; line-height: 1.65; }
-.ns-about-inner .info-inner li { font-size: 1rem; line-height: 1.6; }
-.ns-about-inner .info-inner em { font-size: .95rem; }
 .ns-label { margin: .7rem .55rem .25rem; font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 .ns-item {
   display: flex; align-items: center; gap: .7rem; min-height: 2.9rem; padding: .55rem .85rem; margin-bottom: .1rem;
@@ -918,17 +903,18 @@ body.sheet-open { overflow: hidden; }
   line-height: 1.55; color: var(--text); max-width: 40rem;
 }
 
-/* (i) beside the brand at every width: reveals content/hakkinda.md, anchored under the button
-   on a mouse (fine pointer), centered like a small dialog on touch (coarse pointer). */
-.info-btn {
+/* The gear beside the brand at every width: opens the settings panel (language + accessibility) */
+.settings-btn {
   display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; flex: none;
   border: 1px solid transparent; border-radius: 999px; background: none; color: var(--muted); cursor: pointer;
   transition: color .18s, background-color .18s, border-color .18s;
 }
-.info-btn svg { width: 1.15rem; height: 1.15rem; }
-.info-btn:hover, .info-btn[aria-expanded="true"] { color: var(--gold); background: var(--gold-bg); border-color: var(--glass-brd); }
-.info-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.info-panel, .hover-panel {
+.settings-btn svg { width: 1.2rem; height: 1.2rem; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
+.settings-btn:hover, .settings-btn[aria-expanded="true"] { color: var(--gold); background: var(--gold-bg); border-color: var(--glass-brd); }
+.settings-btn[aria-expanded="true"] svg { transform: rotate(60deg); }
+.settings-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .settings-btn svg { transition: none; } }
+.hover-panel {
   position: fixed; left: 0; top: 0; z-index: 95;
   width: min(25rem, calc(100vw - 2rem)); max-height: min(70vh, 34rem); overflow-y: auto;
   padding: 1.1rem 1.25rem; border-radius: 20px;
@@ -937,51 +923,26 @@ body.sheet-open { overflow: hidden; }
   opacity: 0; transform: translateY(-6px); pointer-events: none;
   transition: opacity .18s ease, transform .18s ease;
 }
-.info-panel[hidden], .hover-panel[hidden] { display: none; }
-.info-panel.open, .hover-panel.open { opacity: 1; transform: none; }
-.info-panel.pinned, .hover-panel.pinned { pointer-events: auto; }
-.info-panel.centered, .hover-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
-.info-panel.centered.open, .hover-panel.centered.open { transform: translate(-50%, -50%); }
-.info-close {
-  position: absolute; top: .7rem; right: .7rem; z-index: 1;
-  display: grid; place-items: center; width: 1.8rem; height: 1.8rem;
-  border: 0; border-radius: 999px; background: var(--surface-2); color: var(--muted); cursor: pointer;
-  transition: color .15s, background-color .15s;
-}
-.info-close svg { width: .85rem; height: .85rem; }
-.info-close:hover { color: var(--gold); background: var(--gold-bg); }
-.info-inner { padding-right: 1.6rem; }
-.info-inner > :first-child { margin-top: 0; }
-.info-inner > :last-child { margin-bottom: 0; }
-.info-inner h2 { margin: 1.1rem 0 .35rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-family: var(--sans); }
-.info-inner h2:first-child { margin-top: 0; }
-.info-inner p { margin: 0 0 .7rem; font-size: .97rem; line-height: 1.55; color: var(--text-soft); }
-.info-inner ul { margin: 0 0 .7rem; padding-left: 1.1rem; }
-.info-inner li { font-size: .93rem; line-height: 1.5; color: var(--text-soft); margin-bottom: .2rem; }
-.info-inner em { color: var(--muted); font-size: .88rem; }
-.info-inner a { color: var(--gold); }
+.hover-panel[hidden] { display: none; }
+.hover-panel.open { opacity: 1; transform: none; }
+.hover-panel.pinned { pointer-events: auto; }
+.hover-panel.centered { left: 50%; top: 50%; transform: translate(-50%, -48%); }
+.hover-panel.centered.open { transform: translate(-50%, -50%); }
 
-/* ---------- accessibility widget: floating toggle + panel of profiles/settings ---------- */
-.a11y-toggle {
-  position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 96;
-  display: grid; place-items: center; width: 3rem; height: 3rem; flex: none;
-  border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--gold); cursor: pointer;
-  box-shadow: var(--shadow); transition: color .18s, background-color .18s, transform .15s;
-}
-.a11y-toggle svg { width: 1.5rem; height: 1.5rem; }
-.a11y-toggle:hover { background: var(--gold-bg); transform: translateY(-1px); }
-.a11y-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.a11y-toggle[aria-expanded="true"] { color: var(--surface); background: var(--gold); }
+/* ---------- settings panel (gear beside the logo): language + accessibility profiles/settings ---------- */
 .a11y-panel {
-  position: fixed; right: 1.1rem; bottom: 4.6rem; z-index: 96;
-  width: min(22rem, calc(100vw - 2.2rem)); max-height: min(78vh, 38rem); overflow-y: auto;
+  position: fixed; left: 1rem; top: calc(var(--header-h) + .5rem); z-index: 96;
+  width: min(23rem, calc(100vw - 2rem)); max-height: calc(100vh - var(--header-h) - 1.5rem); overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: rgba(128, 128, 128, .22) transparent;
   padding: 1rem 1.1rem 1.2rem; border-radius: 20px;
   background: var(--glass-menu);
   -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px);
   box-shadow: var(--glass-shadow);
-  opacity: 0; transform: translateY(6px); pointer-events: none;
+  opacity: 0; transform: translateY(-6px); pointer-events: none;
   transition: opacity .18s ease, transform .18s ease;
 }
+.a11y-panel::-webkit-scrollbar { width: 6px; }
+.a11y-panel::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, .22); border-radius: 99px; }
 .a11y-panel[hidden] { display: none; }
 .a11y-panel.open { opacity: 1; transform: none; pointer-events: auto; }
 .a11y-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .7rem; }
@@ -1011,12 +972,12 @@ body.sheet-open { overflow: hidden; }
 .a11y-group-label:first-of-type { margin-top: 0; }
 .a11y-profiles, .a11y-toggles { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
 .a11y-profile, .a11y-tile {
-  display: flex; flex-direction: column; align-items: center; gap: .35rem; text-align: center;
-  padding: .7rem .5rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
-  color: var(--text-soft); font-family: var(--sans); font-size: .74rem; line-height: 1.25; cursor: pointer;
+  display: flex; align-items: center; gap: .5rem; text-align: left; min-height: 2.6rem;
+  padding: .45rem .6rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+  color: var(--text-soft); font-family: var(--sans); font-size: .76rem; line-height: 1.2; cursor: pointer;
   transition: color .15s, background-color .15s, border-color .15s;
 }
-.a11y-profile svg, .a11y-tile svg { width: 1.35rem; height: 1.35rem; color: var(--gold); }
+.a11y-profile svg, .a11y-tile svg { flex: none; width: 1.15rem; height: 1.15rem; color: var(--gold); }
 .a11y-profile:hover, .a11y-tile:hover { border-color: var(--gold-soft); }
 .a11y-profile[aria-pressed="true"], .a11y-tile[aria-pressed="true"] {
   background: var(--gold-bg); border-color: var(--gold); color: var(--text);
@@ -1030,8 +991,7 @@ body.sheet-open { overflow: hidden; }
 .a11y-reset:hover { color: var(--gold); border-color: var(--gold-soft); }
 .a11y-note { margin: .8rem 0 0; font-family: var(--sans); font-size: .7rem; line-height: 1.5; color: var(--muted); }
 @media (max-width: 480px) {
-  .a11y-toggle { right: .7rem; bottom: .7rem; }
-  .a11y-panel { left: .7rem; right: .7rem; width: auto; bottom: 4.3rem; }
+  .a11y-panel { left: .7rem; right: .7rem; width: auto; }
 }
 
 /* ---------- accessibility widget: effect of each setting, driven by data-a11y-* on <html> ---------- */
@@ -1069,7 +1029,6 @@ body.sheet-open { overflow: hidden; }
 /* sheet: the Compendium texts are nested under the Kateşizm heading */
 .ns-sub { padding-left: 1.6rem; }
 .ns-sub .ns-t { font-size: .97rem; }
-button.ns-item { width: 100%; text-align: left; border: 0; background: none; font: inherit; cursor: pointer; }
 
 .foot-grid {
   display: grid; grid-template-columns: 1.1fr 2fr; column-gap: 2.5rem; row-gap: 1.8rem; align-items: start;
@@ -1082,6 +1041,46 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
 .foot-copy a { color: var(--muted); text-decoration: none; }
 .foot-copy a:hover { color: var(--gold); }
 .foot-about .foot-copy + .foot-copy { margin-top: .2rem; }
+.foot-desc { margin: 0 0 .6rem; max-width: 22rem; font-family: var(--sans); font-size: .8rem; line-height: 1.5; color: var(--text-soft); }
+.foot-sources {
+  padding: 0; border: 0; background: none; font: inherit; color: var(--muted); cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: .2em;
+}
+.foot-sources:hover { color: var(--gold); text-decoration-color: currentColor; }
+.foot-sources:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+/* "Kaynaklar ve telif": a centred modal over a blurred page. Two columns on wide screens so
+   the list fits without a scrollbar; where it can't (phones), the scrollbar is barely there. */
+.sources-dialog {
+  width: min(52rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); margin: auto; padding: 1.6rem 1.8rem 1.4rem;
+  border: 1px solid var(--glass-brd); border-radius: 22px; color: var(--text);
+  background: var(--glass-strong); box-shadow: var(--glass-shadow);
+  overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: rgba(128, 128, 128, .15) transparent;
+}
+.sources-dialog::-webkit-scrollbar { width: 6px; }
+.sources-dialog::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, .15); border-radius: 99px; }
+.sources-dialog::backdrop {
+  background: rgba(12, 19, 34, .28);
+  -webkit-backdrop-filter: blur(8px) saturate(120%); backdrop-filter: blur(8px) saturate(120%);
+}
+.sources-dialog[open] { animation: sources-in .22s ease-out; }
+@keyframes sources-in { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .sources-dialog[open] { animation: none; } }
+.sources-title { margin: 0 2.5rem .9rem 0; font-size: 1.45rem; font-weight: 600; }
+.sources-close {
+  position: absolute; top: .9rem; right: .9rem; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; padding: 0;
+  border: 0; border-radius: 99px; background: var(--surface-2); color: var(--muted); cursor: pointer; transition: color .15s, background-color .15s;
+}
+.sources-close svg { width: .9rem; height: .9rem; }
+.sources-close:hover { color: var(--gold); background: var(--gold-bg); }
+.sources-close:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sources-dialog .info-inner ul { margin: 0 0 .9rem; padding-left: 1.1rem; }
+@media (min-width: 760px) { .sources-dialog .info-inner ul { columns: 2; column-gap: 2.2rem; } }
+.sources-dialog .info-inner li { break-inside: avoid; margin-bottom: .45rem; font-size: .9rem; line-height: 1.5; color: var(--text-soft); }
+.sources-dialog .info-inner p { margin: 0 0 .3rem; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
+.sources-dialog .info-inner a { color: var(--gold); }
+@media (max-width: 560px) { .sources-dialog { padding: 1.3rem 1.2rem 1.1rem; } }
 .foot-sitemap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .foot-label {
   margin: 0 0 .6rem; font-family: var(--sans); font-size: .7rem; font-weight: 700;
@@ -1096,7 +1095,7 @@ button.ns-item { width: 100%; text-align: left; border: 0; background: none; fon
   .foot-sitemap { grid-template-columns: repeat(2, 1fr); text-align: left; }
 }
 @media (max-width: 440px) { .foot-sitemap { grid-template-columns: 1fr 1fr; gap: 1.2rem 1rem; } }
-@media (prefers-reduced-motion: reduce) { .info-panel, .hub-card, .hub-go svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .a11y-panel, .hub-card, .hub-go svg { transition: none; } }
 
 /* ---------- 16. Home hero + library shelves ---------- */
 .home-hero { text-align: center; padding: clamp(1.6rem, 5vw, 3.6rem) 0 .4rem; position: relative; overflow: hidden; }
@@ -1335,9 +1334,6 @@ html:not(.js) .rt { display: none; }
 @media (max-width: 899.98px) {
   /* Prayer lines flow as one paragraph on phones, to keep the sheet short */
   .rt-text br { display: none; }
-  /* The floating accessibility button rides on the docked sheet's top edge (see syncDock()) */
-  html.rt-docked .a11y-toggle { bottom: var(--rt-fab-y, .7rem); }
-  html.rt-docked .a11y-panel { bottom: calc(var(--rt-fab-y, .7rem) + 3.6rem); max-height: calc(100vh - var(--rt-fab-y, 0px) - 9rem); }
 }
 
 @media (min-width: 900px) {
@@ -1802,6 +1798,48 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
    currently the one being browsed. */
 .faq-toc a.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); font-weight: 600; }
 
+/* Section links that stay pinned under the header while the page scrolls (Kilise Bul,
+   Meseller, Mucizeler). One line at every width, scrolling sideways when it doesn't fit, so
+   the pinned row never covers more than a sliver of the page; script.js fades whichever end
+   has more links and, for a mouse, adds a small arrow there. Once pinned (.is-stuck) the
+   row gets a glass band as wide as the screen, like a second header row. */
+.faq-toc.is-sticky { position: sticky; top: var(--header-h); z-index: 25; margin: 0 0 1rem; padding: .55rem 0; }
+.faq-toc.is-sticky::before {
+  content: ""; position: absolute; z-index: -1; inset: 0 calc(50% - 50vw); opacity: 0; transition: opacity .2s;
+  background: var(--glass); border-bottom: 1px solid var(--glass-brd);
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+}
+.faq-toc.is-sticky.is-stuck::before { opacity: 1; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .faq-toc.is-sticky::before { background: var(--bg); }
+}
+.faq-toc.is-sticky ul {
+  --fl: 0px; --fr: 0px;
+  position: relative; flex-wrap: nowrap; justify-content: flex-start; margin: 0 calc(var(--gutter) * -1); padding: 1px var(--gutter);
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent);
+}
+.faq-toc.is-sticky ul::-webkit-scrollbar { display: none; }
+.faq-toc.is-sticky.fade-l ul { --fl: 3rem; }
+.faq-toc.is-sticky.fade-r ul { --fr: 3rem; }
+.faq-toc.is-sticky li { flex: none; }
+.faq-toc.is-sticky li:first-child { margin-left: auto; }
+.faq-toc.is-sticky li:last-child { margin-right: auto; }
+.faq-toc.is-sticky a { white-space: nowrap; }
+.toc-arrow {
+  position: absolute; top: 50%; z-index: 1; display: none; place-items: center; width: 2rem; height: 2rem; margin-top: -1rem; padding: 0;
+  border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text-soft); cursor: pointer; box-shadow: var(--shadow);
+}
+.toc-arrow svg { width: 1rem; height: 1rem; }
+.toc-arrow:hover { border-color: var(--gold-soft); color: var(--gold); }
+.toc-arrow.prev { left: calc(var(--gutter) * -1 + .15rem); }
+.toc-arrow.next { right: calc(var(--gutter) * -1 + .15rem); }
+@media (hover: hover) and (pointer: fine) {
+  .faq-toc.is-sticky.fade-l .toc-arrow.prev, .faq-toc.is-sticky.fade-r .toc-arrow.next { display: grid; }
+}
+html:has(.faq-toc.is-sticky) { scroll-padding-top: calc(var(--header-h) + var(--toc-h, 3.5rem) + 1rem); }
+
 /* City cards: same language as the Mucizeler list (icon + bold name, a chevron pinned to the
    far right), collapsed to a one-line preview — city icon, name, and a grey run-in list of the
    churches inside it — until opened. */
@@ -1813,8 +1851,6 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .church-city:hover, .church-city[open] { border-color: var(--border-strong); }
 .church-city-head {
   display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none;
-  position: sticky; top: var(--header-h); z-index: 2; background: var(--surface);
-  border-radius: var(--radius) var(--radius) 0 0;
 }
 .church-city-head::-webkit-details-marker { display: none; }
 .church-city-head:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius); }
