@@ -21,8 +21,8 @@
 window.MIRACLES = /*JSON-START*/{
  "title": "Mucizeler",
  "en": "Miracles",
- "intro": "Buradaki görünmeler ve olağanüstü olaylar “özel vahiy” sayılır: imana bir şey eklemezler, ama Kilise uzun incelemelerden sonra onları inanılmaya değer bulmuştur. Aşağıda tarihleri ve dikkat çekici bilimsel bulgularıyla yer alıyorlar.",
- "introEn": "The apparitions and extraordinary events here count as \"private revelation\": they add nothing to the faith, but after long investigation the Church has found them worthy of belief. Below are their stories and the striking scientific findings behind them.",
+ "intro": "Burada yer alan görünümler ve olağanüstü olaylar “özel vahiy” kabul edilir. İman esaslarına yeni bir şey katmazlar, fakat Kilise titiz incelemeler sonucunda bunları inanılmaya değer bulmuştur. Aşağıda bu olayları tarih sırasıyla ve öne çıkan bilimsel bulgularıyla birlikte bulabilirsiniz.",
+ "introEn": "The apparitions and extraordinary events here are considered \"private revelation\". They add nothing new to the articles of faith, but after careful investigation the Church has found them worthy of belief. Below you will find these events in chronological order, together with their most notable scientific findings.",
  "categories": [
   {
    "id": "gorunmeler",

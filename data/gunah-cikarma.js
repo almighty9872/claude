@@ -13,8 +13,8 @@
 window.CONFESSION = /*JSON-START*/{
  "title": "Günah Çıkarma",
  "en": "Confession",
- "intro": "Günah çıkarma, Katolik inancının en çok çekinilen ama en özgürleştirici kutsal sırrıdır. İsa onu Diriliş akşamı kurdu: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip aracılık eder; karşılaştığınız ise Tanrı’nın kendisidir.",
- "introEn": "Confession is the sacrament people fear most, and the one that frees them most. Jesus instituted it on the evening of the Resurrection: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is the go-between; the one you meet is God himself.",
+ "intro": "Günah çıkarma, Katolik inancının en çok çekinilen fakat en özgürleştirici kutsal sırrıdır. İsa bu sırrı Diriliş akşamı şu sözlerle başlatmıştır: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip sadece bir aracıdır, asıl karşılaştığınız Tanrı’nın kendisidir.",
+ "introEn": "Confession is the most dreaded yet the most freeing sacrament of the Catholic faith. Jesus instituted it on the evening of the Resurrection with these words: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is only an instrument; the one you truly meet is God himself.",
  "steps": [
   {
    "title": "Vicdan Muhasebesi",

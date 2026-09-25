@@ -53,6 +53,6 @@ window.ANATOLIA = /*JSON-START*/{
    "bodyEn": "The first person to use the phrase \"Catholic Church\" was St. Ignatius, bishop of Antioch, around AD 107, on his way to be thrown to wild beasts in Rome. In his letter to the Smyrnaeans he writes: \"Wherever the bishop appears, let the people be there; just as wherever Jesus Christ is, there is the Catholic Church.\"\nPolycarp, bishop of Smyrna and another recipient of his letters, was a disciple of the Apostle John. Around AD 155, told to curse Christ, he replied: \"Eighty-six years I have served him, and he has done me no wrong; how can I blaspheme my King and my Savior?\" He was burned alive soon after."
   }
  ],
- "closing": "Türkiye’de Katolik olmak yabancı bir şeye bağlanmak değil, eve dönmektir: bu iman bu topraklarda doğdu, netleşti ve kanla mühürlendi.",
- "closingEn": "Being Catholic in Turkey isn't joining something foreign; it's coming home. This faith was born, clarified and sealed with blood on this land."
+ "closing": "Türkiye topraklarında Katolik olmak yabancı bir şeye bağlanmak değil, eve dönmektir: bu iman bu topraklarda doğdu, netleşti ve kanla mühürlendi.",
+ "closingEn": "Being Catholic on Turkish soil isn't joining something foreign; it's coming home. This faith was born, clarified and sealed with blood on this land."
 }/*JSON-END*/;

@@ -15,8 +15,8 @@
 window.MASS = /*JSON-START*/{
  "title": "Kutsal Ayin",
  "en": "The Holy Mass",
- "intro": "Kutsal Ayin, Katolik ibadetinin kalbidir: Mesih’in haç üzerindeki tek kurbanı burada kansız biçimde yeniden sunulur. Aşağıda ayinin altı bölümü, Rahip’in (R) ve cemaatin (C) sözleriyle sırasıyla yer alır; her bölümün İngilizcesini de açabilirsiniz.",
- "introEn": "The Mass is the heart of Catholic worship: Christ's one sacrifice on the cross made present again, without bloodshed. Below are its six parts in order, with the words of the Priest (P) and the People (C); each part can also show the Turkish text used in parishes here.",
+ "intro": "Kutsal Ayin, Katolik ibadetinin kalbidir. Mesih’in çarmıhta sunduğu eşsiz kurban, bu ayinde kansız bir biçimde yeniden sunulur. Aşağıda ayinin altı bölümünü Rahip (R) ve cemaat (C) diyaloglarıyla sırasıyla bulabilir, dilerseniz her bölümün İngilizcesini de açabilirsiniz.",
+ "introEn": "The Mass is the heart of Catholic worship. The one sacrifice Christ offered on the cross is made present again in it, in an unbloody manner. Below you will find the six parts of the Mass in order, with the dialogue of the Priest (P) and the People (C), and you can open the Turkish text of each part if you wish.",
  "roleLabels": {
   "P": "Rahip",
   "C": "Cemaat",

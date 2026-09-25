@@ -12,7 +12,7 @@
 window.PARABLES = /*JSON-START*/{
  "title": "İsa’nın Meselleri",
  "en": "The Parables of Jesus",
- "intro": "Mesel, günlük hayattan basit bir öyküyle derin bir gerçeği anlatır: bir çiftçi, bir çoban, kaybolan bir para. İsa, gerçeği arayan yüreğe bir düşünme kapısı açmak için mesellerle konuştu (Matta 13:10-17). Aşağıda başlıca meseller, anlamlarıyla birlikte konularına göre sıralanmıştır.",
+ "intro": "Meseller, günlük hayattan basit hikayeler kullanarak derin gerçekleri anlatan anlatımlardır. İsa, gerçeği arayan kalplerde bir düşünce kapısı açmak için meselleri kullanmıştır (Matta 13:10-17).",
  "categories": [
   {
    "id": "hukumdarlik",
@@ -491,5 +491,5 @@ window.PARABLES = /*JSON-START*/{
    ]
   }
  ],
- "introEn": "A parable tells a deep truth through a simple story from everyday life: a farmer, a shepherd, a lost coin. Jesus spoke in parables to open a door for the heart that is searching (Matthew 13:10-17). Below are his main parables with their meaning, grouped by theme."
+ "introEn": "Parables are simple stories from everyday life that tell deep truths. Jesus used parables to open a door to reflection in hearts that seek the truth (Matthew 13:10-17)."
 }/*JSON-END*/;

@@ -422,6 +422,19 @@
   function initReader() {
     var content = $('.content[data-reader]');
     if (!content) return;
+    /* Search button (phones): opens the question search under the reading bar */
+    var rbBtn = $('.rb-search-btn', content), rbBox = $('#rb-search');
+    if (rbBtn && rbBox) {
+      rbBtn.addEventListener('click', function () {
+        var on = rbBox.hidden;
+        rbBox.hidden = !on;
+        rbBtn.setAttribute('aria-expanded', String(on));
+        if (on) { var inp = $('input', rbBox); if (inp) inp.focus({ preventScroll: true }); }
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !rbBox.hidden && rbBox.contains(document.activeElement)) { rbBox.hidden = true; rbBtn.setAttribute('aria-expanded', 'false'); rbBtn.focus(); }
+      });
+    }
     var heads = $$('.sec', content);
     var stops = heads.filter(function (h) { return h.classList.contains('sec-l2') || h.classList.contains('sec-l3'); });
     var current = $('.readbar .current');
@@ -1215,48 +1228,6 @@
   }
 
   /* ---------------------------------------------------------------
-     12b. Examination of Conscience generator (Confession page): checked
-          items become a personal checklist. Nothing is stored (no
-          localStorage, no network); it lives only in the checkbox state
-          already in the DOM, so a reload clears it on its own.
-     --------------------------------------------------------------- */
-  function initExamen() {
-    var tool = $('.examen-tool');
-    if (!tool) return;
-    var generateBtn = $('.examen-generate', tool);
-    var clearBtn = $('.examen-clear', tool);
-    var result = $('#examen-result', tool);
-    var resultBody = $('#examen-result-body', tool);
-    var emptyText = LANG === 'en' ? "You haven't checked anything yet." : 'Henüz hiçbir şey işaretlemediniz.';
-    generateBtn.addEventListener('click', function () {
-      var groups = [];
-      $$('.examen-card').forEach(function (card) {
-        var checked = $$('[data-examen-item]:checked', card);
-        if (!checked.length) return;
-        var title = $('.examen-title', card).textContent;
-        var items = checked.map(function (box) { return $('label[for="' + box.id + '"]', card).textContent; });
-        groups.push({ title: title, items: items });
-      });
-      if (!groups.length) {
-        resultBody.innerHTML = '<p class="examen-empty">' + emptyText + '</p>';
-      } else {
-        resultBody.innerHTML = groups.map(function (g) {
-          var lis = g.items.map(function (t) { return '<li>' + t + '</li>'; }).join('');
-          return '<div class="examen-result-group"><h4>' + g.title + '</h4><ul>' + lis + '</ul></div>';
-        }).join('');
-      }
-      result.hidden = false;
-      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    if (clearBtn) clearBtn.addEventListener('click', function () {
-      $$('[data-examen-item]').forEach(function (box) { box.checked = false; });
-      result.hidden = true;
-      resultBody.innerHTML = '';
-      tool.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  /* ---------------------------------------------------------------
      13. Home page: today's saint, lazy-loaded from its own data file
          (same pattern as search) only when the home page actually has
          the widget to fill.
@@ -1427,6 +1398,12 @@
     var cityLinks = $$('[data-city-link]');
     var cities = $$('.church-city');
     var cards = $$('.church-card');
+    /* Mobile tab bar: a button per rite, and "Şehirler" for the city drawer */
+    var riteBtns = $$('.tabbar [data-tb-rite]'), citiesBtn = $('.tabbar .tb-more');
+    function markBar(rite) {
+      riteBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-tb-rite') === rite); });
+      if (citiesBtn) citiesBtn.classList.toggle('is-active', !rite);
+    }
 
     function showOnlyCity(id) { cities.forEach(function (sec) { sec.hidden = sec.id !== id; }); }
     function showAllCities() { cities.forEach(function (sec) { sec.hidden = false; }); }
@@ -1447,6 +1424,8 @@
         cities.forEach(function (sec) { sec.open = true; });
       }
       markCurrentCity(null);
+      select.value = rite;
+      markBar(rite === 'all' ? null : rite);
     }
 
     function goToCity(id) {
@@ -1456,13 +1435,26 @@
       var sec = document.getElementById(id);
       if (sec) sec.open = true;
       markCurrentCity(id);
+      markBar(null);
     }
 
+    $$('[data-tb-rite]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        applyRite(b.getAttribute('data-tb-rite'), true);
+        var first = cities.filter(function (sec) { return !sec.hidden; })[0];
+        if (first) {
+          var top = first.getBoundingClientRect().top + window.pageYOffset -
+            (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) - 12;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+        }
+      });
+    });
     select.addEventListener('change', function () { applyRite(select.value, select.value === 'all'); });
     cityLinks.forEach(function (a) { a.addEventListener('click', function () { goToCity(a.getAttribute('data-city-link')); }); });
 
     showOnlyCity('istanbul');
     markCurrentCity('istanbul');
+    markBar(null);
   }
 
   /* ---------------------------------------------------------------
@@ -1495,6 +1487,7 @@
       });
       var cur = tabs[k], list = cur && cur.closest('ol');
       if (list && list.scrollWidth > list.clientWidth) list.scrollTo({ left: Math.max(0, cur.offsetLeft - 16), behavior: smooth ? 'smooth' : 'auto' });
+      document.dispatchEvent(new Event('why:step'));
     }
     function go(id, focus) {
       var step = stepFor(id); if (!step) return false;
@@ -1529,49 +1522,81 @@
 
   /* ---------------------------------------------------------------
      Mobile tab bar (below 980px): "Diğer" opens a drawer with the
-     rest of the page's sections and the site's core pages; in-page
-     items light up for the section being read. The Neden Katoliğiz
-     steps and Kilise Bul cities are handled by their own scripts
-     through the same data-why-go / data-city-link attributes.
+     rest of the page's own sections. The item for the section being
+     read lights up; while that section is one of the drawer's, "Diğer"
+     lights up instead. The Neden Katoliğiz steps and the Kilise Bul
+     rites and cities are switched by their own scripts, which the bar
+     reaches through data-why-go, data-tb-rite and data-city-link.
      --------------------------------------------------------------- */
   function initTabBar() {
     var bar = $('.tabbar');
     if (!bar) return;
     var moreBtn = $('.tb-more', bar), drawer = $('#tb-drawer');
-    function openDrawer(on) {
+    function openDrawer(on, keepFocus) {
       if (!drawer || !moreBtn) return;
       drawer.hidden = !on;
       moreBtn.setAttribute('aria-expanded', String(on));
-      if (on) { var first = $('.tb-link, .tb-site', drawer); if (first) first.focus({ preventScroll: true }); }
-      else moreBtn.focus({ preventScroll: true });
+      if (on) { var first = $('.tb-link, .tb-chip', drawer); if (first) first.focus({ preventScroll: true }); }
+      else if (!keepFocus) moreBtn.focus({ preventScroll: true });
     }
     if (moreBtn && drawer) {
       moreBtn.addEventListener('click', function () { openDrawer(drawer.hidden); });
       drawer.addEventListener('click', function (e) {
         if (e.target.closest('[data-tb-close]')) { openDrawer(false); return; }
-        if (e.target.closest('[data-tb-allmenu]')) {
-          drawer.hidden = true; moreBtn.setAttribute('aria-expanded', 'false');
-          var menu = $('.menu-toggle'); if (menu) menu.click();
-          return;
-        }
-        if (e.target.closest('a')) { drawer.hidden = true; moreBtn.setAttribute('aria-expanded', 'false'); }
+        if (e.target.closest('a, [data-tb-rite]')) openDrawer(false, true);
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) openDrawer(false); });
     }
-    /* Section spy for in-page items: the last visible section whose top has passed below the header */
-    var links = $$('a.tb-item[href^="#"]', bar);
+    /* Tesbih: "Baştan Başla" presses the rosary's own restart button */
+    $$('[data-tb-action]', bar).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var target = $('.' + b.getAttribute('data-tb-action'));
+        if (target) target.click();
+      });
+    });
+    /* Section spy over the bar's and the drawer's in-page links */
+    var links = $$('a.tb-item[href^="#"]', bar).concat(drawer ? $$('a.tb-link[href^="#"]', drawer) : []);
     if (!links.length) return;
+    var items = links.map(function (a) { return a.classList.contains('tb-link') ? moreBtn : a; });
     var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
-    var ticking = false;
+    var whyWrap = $('.why-wrap'), ticking = false, tapped = -1;
+    links.forEach(function (a, i) { a.addEventListener('click', function () { tapped = i; }); });
+    ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { tapped = -1; }, { passive: true }); });
     function spy() {
       ticking = false;
       if (getComputedStyle(bar).display === 'none') return;
-      var line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + 140, pick = -1;
-      targets.forEach(function (t, i) { if (t && t.offsetParent !== null && t.getBoundingClientRect().top <= line) pick = i; });
-      links.forEach(function (a, i) { a.classList.toggle('is-active', i === pick); });
+      var pick = -1;
+      if (whyWrap) {
+        /* One step on screen at a time: the lit item is the step being shown */
+        var step = $('.why-step.is-active', whyWrap), end = $('.why-end.is-active', whyWrap);
+        var line0 = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + 140;
+        targets.forEach(function (t, i) {
+          if (!t) return;
+          if (t.classList.contains('why-end')) { if (end && end.getBoundingClientRect().top <= line0) pick = i; }
+          else if (pick === -1 && t.closest('.why-step') === step) pick = i;
+        });
+      } else {
+        /* The section whose top most recently passed the reading line (in page order, which
+           need not be the bar's order: the rosary sits above its how-to, say) */
+        var line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + Math.max(140, window.innerHeight / 3), best = -Infinity;
+        /* At the foot of the page the last sections can't scroll up to the line: then the one
+           just tapped wins, or else the lowest one that is on screen */
+        var atEnd = window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4;
+        if (atEnd) line = window.innerHeight - 80;
+        targets.forEach(function (t, i) {
+          if (!t || t.offsetParent === null) return;
+          var top = t.getBoundingClientRect().top;
+          if (top <= line && top > best) { best = top; pick = i; }
+        });
+        if (atEnd && tapped > -1 && targets[tapped] && targets[tapped].getBoundingClientRect().top < window.innerHeight) pick = tapped;
+      }
+      var on = pick === -1 ? null : items[pick];
+      items.forEach(function (it) { if (it) it.classList.toggle('is-active', it === on); });
     }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
-    window.addEventListener('resize', function () { requestAnimationFrame(spy); });
+    function queue() { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    document.addEventListener('why:step', queue);
     requestAnimationFrame(spy);
   }
 
@@ -1837,7 +1862,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initExamen(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhySteps(); initTabBar(); initMapLinks(); initA11y();
   });
 })();

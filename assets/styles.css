@@ -312,9 +312,6 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 .ornament svg { width: 18px; height: 18px; }
 
 /* ---------- 7. Reading pages ---------- */
-.crumbs { font-family: var(--sans); font-size: .8rem; color: var(--muted); padding-top: 1.2rem; }
-.crumbs a { display: inline-block; padding: .3rem 0; text-decoration: none; }
-.crumbs span[aria-hidden] { margin: 0 .4rem; }
 .page-head { display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 0 1.6rem; border-bottom: 1px solid var(--border); margin-bottom: 1.4rem; }
 .page-head .roman { font-size: clamp(3rem, 8vw, 4.6rem); }
 .page-head h1 { margin: .15rem 0 0; font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.1; font-weight: 600; }
@@ -379,6 +376,16 @@ html[data-fontsize="1"] .fontsize-toggle, html[data-fontsize="2"] .fontsize-togg
 @media (max-width: 1039px) { .readbar .toc-open { display: inline-flex; } }
 .readbar .icon-btn { width: 2.3rem; height: 2.3rem; }
 @media (max-width: 560px) { .readbar .btn .btn-text { display: none; } .readbar .btn { padding: .3rem .7rem; } }
+/* Phones and tablets: a search button in the reading bar takes the English toggle's place */
+.readbar { flex-wrap: wrap; }
+.rb-search-btn, .rb-search { display: none; }
+@media (max-width: 979px) {
+  .readbar [data-en-all] { display: none; }
+  .readbar .rb-search-btn { display: inline-flex; }
+  .readbar .rb-search-btn[aria-expanded="true"] { color: var(--gold); background: var(--gold-bg); }
+  .rb-search:not([hidden]) { display: block; flex: 1 0 100%; }
+  .rb-search .search { margin: 0; }
+}
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .readbar { background: var(--bg); }
 }
@@ -474,35 +481,9 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
    grouped by commandment, into a private summary kept only in page state. */
 .examen-title { font-size: 1.05rem; }
 .examen-list { margin: 0; padding: 0; list-style: none; color: var(--text-soft); }
-.examen-list li { display: flex; align-items: flex-start; gap: .55rem; margin-bottom: .5rem; line-height: 1.5; }
+.examen-list li { position: relative; padding-left: 1rem; margin-bottom: .5rem; line-height: 1.5; }
+.examen-list li::before { content: ""; position: absolute; left: .1rem; top: .65em; width: .32rem; height: .32rem; border-radius: 50%; background: var(--gold); }
 .examen-list li:last-child { margin-bottom: 0; }
-.examen-check { flex: none; width: 1.05rem; height: 1.05rem; margin-top: .2rem; accent-color: var(--gold); cursor: pointer; }
-.examen-list label { cursor: pointer; }
-.examen-tool {
-  margin: 0 0 1.6rem; padding: 1.3rem 1.4rem; border: 1px solid var(--border); border-radius: var(--radius);
-  background: var(--surface);
-}
-.examen-tool .faq-intro { margin: 0 0 1rem; }
-.examen-actions { display: flex; }
-.examen-result {
-  margin-top: 1.3rem; padding-top: 1.2rem; border-top: 1px solid var(--border);
-}
-.examen-result-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
-.examen-result-head h3 { margin: 0; font-size: 1.1rem; }
-.examen-clear {
-  display: inline-flex; align-items: center; gap: .35rem; border: 0; background: none; padding: 0;
-  color: var(--muted); font-family: var(--sans); font-size: .8rem; cursor: pointer; transition: color .15s;
-}
-.examen-clear svg { width: .85rem; height: .85rem; }
-.examen-clear:hover { color: var(--gold); }
-.examen-result-group { margin-bottom: 1rem; }
-.examen-result-group:last-child { margin-bottom: 0; }
-.examen-result-group h4 { margin: 0 0 .4rem; font-size: .9rem; color: var(--gold-active); }
-.examen-result-group ul { margin: 0; padding-left: 1.25rem; color: var(--text-soft); }
-.examen-result-group li { margin-bottom: .3rem; line-height: 1.5; }
-.examen-result-group li:last-child { margin-bottom: 0; }
-.examen-empty { margin: 0; color: var(--muted); }
-.examen-result-note { margin: 1.1rem 0 0; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
 .verse p { margin: 0 0 .8em; }
 .verse ol { margin: 0 0 .7em; padding-left: 1.5rem; }
 .verse ol.plain { list-style: none; padding-left: 0; }
@@ -1000,22 +981,11 @@ html.js .why-wrap.why-ready [data-why-panel]:not(.is-active) { display: none; }
   content: ""; position: absolute; left: .15rem; top: .62em; width: .45rem; height: .45rem; border-radius: 50%;
   background: var(--gold-soft);
 }
-.why-obj { margin-top: auto; border-top: 1px solid var(--border); padding-top: .15rem; }
-.why-obj > summary {
-  display: flex; align-items: center; gap: .65rem; padding: .7rem 0 .45rem; cursor: pointer; list-style: none;
-}
-.why-obj > summary::-webkit-details-marker { display: none; }
-.why-obj > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
-.why-obj > summary > svg:first-child { flex: none; width: 1.3rem; height: 1.3rem; color: var(--gold); }
-.why-obj > summary > span { flex: 1; min-width: 0; display: grid; gap: .1rem; }
-.why-obj > summary > svg:last-child { flex: none; width: 1.1rem; height: 1.1rem; color: var(--muted); transition: transform .2s; }
-.why-obj[open] > summary > svg:last-child { transform: rotate(180deg); color: var(--gold); }
-.why-obj-label { font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
-.why-obj-q { line-height: 1.4; font-weight: 500; color: var(--text); }
-.why-obj > summary:hover .why-obj-q { color: var(--gold-active); }
-.why-obj-a { padding: .2rem 0 .3rem 1.95rem; }
-.why-obj-a p { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--text-soft); }
-.why-obj-a strong { color: var(--gold-active); font-weight: 600; }
+.why-obj { display: flex; gap: .65rem; align-items: flex-start; margin-top: auto; padding-top: .8rem; border-top: 1px solid var(--border); }
+.why-obj > svg { flex: none; width: 1.3rem; height: 1.3rem; margin-top: .1rem; color: var(--gold); }
+.why-obj p { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--text-soft); }
+.why-obj-label { display: block; font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.why-obj-q { font-weight: 600; color: var(--text); }
 
 .why-pager { display: flex; justify-content: space-between; gap: 1rem; margin: 1.6rem 0 0; }
 .why-go {
@@ -1067,15 +1037,13 @@ html.js .why-end { margin-top: -1rem; }
   .why-num { width: 2.6rem; height: 2.6rem; font-size: 1.3rem; }
   .why-card { padding: 1.1rem 1.1rem .9rem; }
   .why-q { font-size: 1.18rem; }
-  .why-obj-a { padding-left: 0; }
   .why-go { max-width: none; flex: 1; padding: .65rem .8rem; font-size: .95rem; }
 }
 @media print {
   .why-tabs, .why-pager { display: none !important; }
   html.js .why-wrap [data-why-panel] { display: block !important; }
-  .why-obj:not([open]) > .why-obj-a { display: block; }
 }
-@media (prefers-reduced-motion: reduce) { .why-cta, .why-obj > summary > svg:last-child { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .why-cta { transition: none; } }
 
 /* The gear beside the brand at every width: opens the settings panel (language + accessibility) */
 .settings-btn {
@@ -1794,10 +1762,9 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 
 /* ---------- 19. Kutsal Ayin (the Mass) ---------- */
 .mass-video-note {
-  display: flex; align-items: center; justify-content: center; gap: .5rem; margin: 0 0 1.3rem;
-  font-family: var(--sans); font-size: .85rem; color: var(--muted); text-align: center;
+  max-width: 34rem; margin: 0 auto 1.3rem; font-family: var(--sans); font-size: .85rem; line-height: 1.5; color: var(--muted); text-align: center;
 }
-.mass-video-note svg { width: 1.1rem; height: 1.1rem; flex: none; color: var(--gold); }
+.mass-video-note svg { display: inline-block; width: 1.1rem; height: 1.1rem; margin-right: .3rem; vertical-align: -.25em; color: var(--gold); }
 .mass-pills {
   position: sticky; top: calc(var(--header-h) + .5rem); z-index: 20; background: var(--bg);
   display: flex; justify-content: center; gap: .5rem; margin: 0 0 1.8rem; padding: .4rem 0; flex-wrap: wrap;
@@ -2159,22 +2126,29 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
   .tb-sheet-head { display: flex; align-items: center; justify-content: space-between; margin: 0 0 .3rem; }
   .tb-drawer-title { margin: 0; font-size: 1.2rem; font-weight: 600; }
   .tb-close { width: 2.2rem; height: 2.2rem; }
-  .tb-group { margin: .8rem 0 .4rem; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .tb-links { display: grid; gap: .1rem; }
+  .tb-links { display: grid; gap: .3rem; }
   .tb-link {
-    display: block; padding: .6rem .75rem; border-radius: .8rem; color: var(--text); text-decoration: none; line-height: 1.3;
+    display: block; width: 100%; padding: .6rem .75rem; border: 0; border-radius: .8rem; color: var(--text); text-decoration: none; line-height: 1.3;
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent); font: inherit; text-align: left; cursor: pointer;
+  }
+  .tb-link[aria-current] { color: var(--gold); font-weight: 600; }
+  .tb-link:active, .tb-chip:active { background: var(--gold-bg); }
+  .tb-all { font-family: var(--sans); font-weight: 600; font-size: .92rem; }
+  .tb-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; }
+  .tb-chip {
+    padding: .5rem .8rem; border-radius: 999px; color: var(--text); text-decoration: none;
+    font-family: var(--sans); font-size: .85rem; font-weight: 600; line-height: 1.2;
     background: color-mix(in srgb, var(--surface-2) 70%, transparent);
   }
-  .tb-link + .tb-link { margin-top: .3rem; }
-  .tb-link:active, .tb-site:active { background: var(--gold-bg); }
-  .tb-sites { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .4rem; }
-  .tb-site {
-    display: flex; align-items: center; gap: .55rem; padding: .6rem .7rem; border: 0; border-radius: .8rem; cursor: pointer;
-    background: color-mix(in srgb, var(--surface-2) 70%, transparent); color: var(--text); text-decoration: none; text-align: left;
-    font-family: var(--sans); font-size: .85rem; font-weight: 600; line-height: 1.2;
-  }
-  .tb-site .tb-ico { width: 1.25rem; height: 1.25rem; color: var(--gold); }
-  .tb-site .tb-ico svg { width: 1.2rem; height: 1.2rem; }
+  .tb-chip.is-current { background: var(--gold-bg); color: var(--gold); }
+
+  /* The bar takes over from the pinned section rows and the rite menu */
+  .faq-toc.is-sticky, .rite-filter, .mass-pills { display: none; }
+
+  /* The phone footer: the name, and the sources and copyright notice */
+  .foot-tag, .foot-desc, .foot-sitemap, .foot-about .foot-copy:not(.foot-src) { display: none; }
+  .foot-grid { gap: 0; }
+  .foot-about .foot-src { margin-top: .5rem; }
 
   /* Everything else that sits at the bottom of the screen now sits above the bar */
   .rt-sheet { bottom: var(--tabbar-space); border-radius: 22px; border-bottom: 1px solid var(--glass-brd); margin-bottom: .6rem; }
