@@ -53,6 +53,7 @@
     radial-gradient(55% 42% at 4% 78%, rgba(124, 182, 146, .17), transparent 72%);
   /* The home screen's app icons, and each page's icon on phones: one gold throughout */
   --app-gold: linear-gradient(160deg, #dcb35a, #8a6414);
+  --tap: rgba(116, 116, 128, .18);   /* iOS's grey tap feedback on list rows */
   --app-ara: var(--app-gold); --app-ogren: var(--app-gold); --app-dua: var(--app-gold); --app-kesfet: var(--app-gold);
   --surface: #fbf9f4;
   --surface-2: #f1ece1;
@@ -110,6 +111,7 @@
   --header-bg: rgba(12, 19, 34, .82);
   --glass: rgba(16, 25, 43, .66);
   --chrome: #0f1728;
+  --tap: rgba(255, 255, 255, .1);
   --glass-brd: rgba(63, 82, 124, .55);
   --glass-hi: rgba(180, 205, 255, .14);
   --glass-menu: rgba(15, 23, 40, .9);
@@ -2125,19 +2127,34 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 .hm-date[data-lit="red"] { background: linear-gradient(155deg, #b8463b, #621b15); }
 .hm-date[data-lit="rose"] { background: linear-gradient(155deg, #cf8aa3, #8b4a63); }
 a.hm-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+/* The site's link hover (gold text) would turn these white cards' words dark: they lift a little instead */
+a.hm-card:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 16px 32px -16px rgba(20, 20, 40, .65); }
+a.hm-card { transition: transform .2s, box-shadow .2s; }
+.hm-time { font-family: var(--sans); font-size: .82rem; font-weight: 600; letter-spacing: .04em; opacity: .9; font-variant-numeric: tabular-nums; }
+.hm-about { margin: 1.6rem .3rem .4rem; text-align: center; }
+.hm-about-t { margin: 0; font-size: 1.35rem; font-weight: 600; line-height: 1.2; }
+.hm-about-s { margin: .4rem auto 0; max-width: 30rem; font-family: var(--sans); font-size: .88rem; line-height: 1.5; color: var(--text-soft); }
 
-.hm-apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin: 1.6rem 0 .4rem; }
+.hm-apps {
+  position: fixed; z-index: 45; left: .6rem; right: .6rem; bottom: calc(.6rem + env(safe-area-inset-bottom)); max-width: 30rem; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: .3rem; padding: .7rem .5rem .55rem; border-radius: 2rem;
+  background: color-mix(in srgb, var(--surface) 55%, transparent); border: 1px solid var(--glass-brd);
+  -webkit-backdrop-filter: saturate(180%) blur(24px); backdrop-filter: saturate(180%) blur(24px);
+  box-shadow: inset 0 1px 0 var(--glass-hi), 0 12px 30px -12px rgba(20, 26, 44, .35);
+}
+/* Below the dock, the page's wallpaper runs on under Safari's own bar (as the tab bar does elsewhere) */
+body:has(.hm-apps) { padding-bottom: calc(7.5rem + env(safe-area-inset-bottom)); }
 .hm-app { display: flex; flex-direction: column; align-items: center; gap: .45rem; padding: 0; border: 0; background: none; color: var(--text); cursor: pointer; font: inherit; -webkit-tap-highlight-color: transparent; }
 .hm-icon {
-  position: relative; overflow: hidden; display: grid; place-items: center; width: 4rem; height: 4rem; border-radius: 22%; color: #fff;
+  position: relative; overflow: hidden; display: grid; place-items: center; width: 3.6rem; height: 3.6rem; border-radius: 22%; color: #fff;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 -1px 0 rgba(0, 0, 0, .12), 0 8px 18px -10px rgba(20, 20, 40, .6);
   transition: transform .15s, filter .15s;
 }
 .hm-icon::before { content: ""; position: absolute; inset: 0 0 50% 0; background: linear-gradient(rgba(255, 255, 255, .18), rgba(255, 255, 255, 0)); }
-.hm-icon svg { position: relative; width: 2rem; height: 2rem; }
+.hm-icon svg { position: relative; width: 1.85rem; height: 1.85rem; }
 .hm-app:active .hm-icon { transform: scale(.92); filter: brightness(.9); }
 .hm-app:focus-visible { outline: none; } .hm-app:focus-visible .hm-icon { outline: 3px solid var(--focus); outline-offset: 3px; }
-.hm-app-t { font-family: var(--sans); font-size: .8rem; font-weight: 600; white-space: nowrap; }
+.hm-app-t { font-family: var(--sans); font-size: .74rem; font-weight: 600; white-space: nowrap; }
 .app-ara { background: var(--app-ara); } .app-ogren { background: var(--app-ogren); } .app-dua { background: var(--app-dua); } .app-kesfet { background: var(--app-kesfet); }
 .hm-search, .hm-lists { display: none; }
 
@@ -2159,14 +2176,23 @@ html.app-open { overflow: hidden; }
 .ios-page.is-current, .ios-page.is-behind { visibility: visible; transition: transform .45s cubic-bezier(.32, .72, 0, 1), filter .45s, visibility 0s; }
 .ios-page.is-current { transform: none; }
 .ios-page.is-behind { transform: translateX(-28%); filter: brightness(.94); }
-.ios-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 3.2rem; padding: calc(env(safe-area-inset-top) + .2rem) .6rem .2rem; background: var(--chrome); border-bottom: 1px solid transparent; transition: border-color .2s; z-index: 2; }
+.ios-nav { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: .4rem; align-items: center; min-height: 3.2rem; padding: calc(env(safe-area-inset-top) + .2rem) .6rem .2rem; background: var(--chrome); border-bottom: 1px solid transparent; transition: border-color .2s; z-index: 2; }
 .ios-page.is-scrolled .ios-nav { border-bottom-color: var(--border); }
-.ios-nt { font-family: var(--sans); font-size: 1rem; font-weight: 700; opacity: 0; transition: opacity .2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 12rem; }
-.ios-page.is-scrolled .ios-nt { opacity: 1; }
+.ios-nt { font-family: var(--sans); font-size: 1rem; font-weight: 700; opacity: 0; transition: opacity .2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 44vw; justify-self: center; }
+.ios-page.is-scrolled .ios-nt, .ios-page.is-deep .ios-nt { opacity: 1; }
+/* The bar is glass over the page: the page scrolls on under it, blurred */
+.ios-page > .ios-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+  background: color-mix(in srgb, var(--chrome) 70%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+}
+.ios-back { font-weight: 600; }
 .ios-back, .ios-done { padding: .4rem; border: 0; background: none; color: var(--gold-active); font-family: var(--sans); font-size: 1rem; cursor: pointer; }
-.ios-back { justify-self: start; display: inline-flex; align-items: center; gap: .05rem; } .ios-back svg { width: 1.35rem; height: 1.35rem; }
+.ios-back { justify-self: start; display: inline-flex; align-items: center; gap: .05rem; max-width: 100%; min-width: 0; } .ios-back svg { flex: none; width: 1.35rem; height: 1.35rem; }
+.ios-back span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .ios-done { justify-self: end; font-weight: 700; }
-.ios-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: 0 1rem calc(2rem + env(safe-area-inset-bottom)); }
+.ios-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: calc(env(safe-area-inset-top) + 3.9rem) 1rem calc(2rem + env(safe-area-inset-bottom)); }
+.ios-app, .ios-app *, .ios-spot, .ios-spot *, .hm-app { -webkit-tap-highlight-color: transparent; }
 .ios-large { margin: .2rem 0; font-size: 2.1rem; line-height: 1.1; }
 .ios-lead { margin: 0 0 1.1rem; font-family: var(--sans); font-size: .88rem; color: var(--muted); }
 .ios-hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: .6rem 0 .2rem; }
@@ -2176,7 +2202,7 @@ html.app-open { overflow: hidden; }
 .ios-row { position: relative; display: flex; align-items: center; gap: .85rem; width: 100%; min-height: 3.1rem; padding: .6rem .9rem; border: 0; background: none; color: var(--text); font: inherit; text-align: left; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .ios-row + .ios-row::before { content: ""; position: absolute; top: 0; right: 0; left: .9rem; height: 1px; background: var(--border); }
 .ios-row:has(.ios-ri) + .ios-row::before { left: 3.7rem; }
-.ios-row:active { background: var(--surface-2); }
+.ios-row:active { background: var(--tap); }
 .ios-row > svg { flex: none; width: 1.05rem; height: 1.05rem; color: var(--muted); opacity: .7; }
 .ios-row:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
 .ios-ri { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .55rem; color: #fff; }
@@ -2189,6 +2215,77 @@ html.app-open { overflow: hidden; }
 .ios-t { font-size: 1.05rem; line-height: 1.25; }
 .ios-s { font-family: var(--sans); font-size: .75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ios-accent .ios-t, .ios-accent > svg { color: var(--gold-active); opacity: 1; font-weight: 600; }
+/* Bölümler: the levels of a page's content slide under the heading; the page's icon, title and
+   Sayfayı Aç above stay where they are */
+.ios-tree { position: relative; overflow: hidden; margin: 0 -1rem; padding: 0 1rem; }
+.tree-level { position: relative; }
+.tree-level.is-leaving { position: absolute; top: 0; left: 1rem; right: 1rem; }
+.tree-level.is-hidden { display: none; }
+.tree-text { margin: 0 .2rem 1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text); }
+.tree-text p { margin: 0 0 .75rem; }
+.tree-text ul, .tree-text ol { margin: 0 0 .75rem; padding-left: 1.3rem; }
+.tree-text li { margin-bottom: .35rem; }
+.tree-text strong { font-weight: 600; }
+.tree-text a { color: var(--gold-active); }
+.tree-text .tree-note { font-family: var(--sans); font-size: .8rem; color: var(--muted); }
+.tree-wait { margin: .4rem .9rem; font-family: var(--sans); font-size: .85rem; color: var(--muted); }
+.ios-gh { overflow-wrap: anywhere; }
+.tree-gh { margin-top: 1.5rem; }
+.tree-level > .ios-gh.tree-gh:first-child { margin-top: .2rem; }
+.tree-gnote { margin: 0 .9rem .6rem; font-size: .95rem; font-style: italic; color: var(--text-soft); }
+
+/* The Katekizm's question reader */
+.kq { position: relative; touch-action: pan-y; }
+.kq-count { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; margin: 0 .2rem .5rem; font-family: var(--sans); font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-active); }
+.kq-hint { font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.kq-q { margin: 0 .2rem .8rem; font-size: 1.45rem; font-weight: 600; line-height: 1.25; }
+.kq-a { margin-bottom: 1.2rem; }
+.kq-pager { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin: 0 0 1rem; }
+.kq-btn {
+  display: flex; align-items: center; justify-content: center; gap: .3rem; min-height: 3rem; padding: .5rem .8rem;
+  border: 0; border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: .95rem; font-weight: 600; cursor: pointer;
+}
+.kq-btn svg { width: 1.1rem; height: 1.1rem; }
+.kq-btn:active { background: var(--tap); }
+.kq-btn.kq-next { background: var(--app-gold); color: #fff; }
+.kq-btn.kq-next:active { filter: brightness(.92); }
+.kq-btn[disabled] { opacity: .35; cursor: default; }
+.kq-btn:focus-visible, .kq-fab:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.ios-page.has-reader .ios-scroll { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
+/* The contents button, where the thumb is */
+.ios-page > .kq-fab {
+  position: absolute; right: 1rem; bottom: calc(1.1rem + env(safe-area-inset-bottom)); z-index: 4; display: none;
+  place-items: center; width: 3.4rem; height: 3.4rem; border: 0; border-radius: 50%; background: var(--app-gold); color: #fff; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 10px 24px -10px rgba(20, 20, 40, .6);
+}
+.ios-page.has-reader > .kq-fab { display: grid; }
+.kq-fab svg { width: 1.45rem; height: 1.45rem; }
+.kq-fab:active { transform: scale(.94); }
+/* ... and the sheet it opens: a slider over all the questions, and those of this section */
+.ios-page > .kq-sheet { position: absolute; inset: 0; z-index: 6; }
+.kq-sheet[hidden] { display: none; }
+.kq-sheet-bg { position: absolute; inset: 0; background: rgba(8, 12, 24, .32); opacity: 0; transition: opacity .25s; }
+.kq-sheet-panel {
+  position: absolute; left: 0; right: 0; bottom: 0; max-height: 78%; display: flex; flex-direction: column;
+  padding: .5rem 1rem 0; border-radius: 1.4rem 1.4rem 0 0;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(24px); backdrop-filter: saturate(180%) blur(24px);
+  box-shadow: 0 -12px 40px -16px rgba(8, 12, 24, .45);
+  transform: translateY(100%); transition: transform .3s cubic-bezier(.32, .72, 0, 1);
+}
+.kq-sheet.is-open .kq-sheet-bg { opacity: 1; }
+.kq-sheet.is-open .kq-sheet-panel { transform: none; }
+.kq-sheet-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin: 0 -1rem; padding: 0 1rem calc(1.2rem + env(safe-area-inset-bottom)); }
+.kq-grab { width: 2.4rem; height: .3rem; margin: 0 auto .5rem; border-radius: 999px; background: var(--border-strong); }
+.kq-sheet-head { display: flex; align-items: center; justify-content: space-between; }
+.kq-sheet-t { margin: 0; font-size: 1.25rem; font-weight: 600; }
+.kq-slider { margin: .6rem 0 .2rem; padding: .8rem .9rem .9rem; border-radius: 14px; background: var(--surface); }
+.kq-slider-l { margin: 0 0 .4rem; font-family: var(--sans); font-size: .8rem; font-weight: 700; color: var(--gold-active); }
+.kq-slider input { width: 100%; accent-color: var(--gold); }
+.kq-slider-q { margin: .35rem 0 0; min-height: 1.4em; font-size: .98rem; line-height: 1.35; color: var(--text-soft); }
+.kq-sheet-list .ios-row.is-here .ios-t { color: var(--gold-active); font-weight: 600; }
+.kq-sheet-list .ios-row > svg { color: var(--gold-active); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .kq-sheet-bg, .kq-sheet-panel { transition: none; } }
 
 /* Ara: the search, Spotlight-style, over the blurred home screen */
 .ios-spot { position: fixed; inset: 0; z-index: 300; }
@@ -2203,6 +2300,8 @@ html.app-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .ios-page, .ios-splash, .ios-spot-bg { transition: none; } }
 
 @media (min-width: 980px) {
+  .hm-about { display: none; }
+  body:has(.hm-apps) { padding-bottom: 0; }
   .home-v2 { max-width: 62rem; padding-top: 1.4rem; }
   .hm-today { grid-template-columns: 1.6fr 1fr 1fr; gap: 1rem; }
   .hm-card { min-height: 11rem; }
@@ -2231,3 +2330,13 @@ html.app-open { overflow: hidden; }
   .hm-row > svg { flex: none; width: 1.1rem; height: 1.1rem; color: var(--muted); }
 }
 @media print { .hm-apps, .ios-app, .ios-spot { display: none !important; } }
+
+/* Desktop header: the name on the left, then the links, then theme, settings and the menu */
+@media (min-width: 980px) {
+  .brand-group { display: contents; }
+  .brand { order: 1; margin-right: auto; }
+  .mainnav { order: 2; }
+  .header-tools { order: 3; }
+  .settings-btn { order: 4; }
+  .menu-toggle { order: 5; }
+}

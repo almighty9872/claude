@@ -2133,7 +2133,6 @@ function Why-Page([string]$lang) {
 <div class="wrap why-wrap">
   $crumb
   <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$h1</h1>$sub</header>
-  <p class="why-intro">$(Inline (F $W 'intro'))</p>
   <nav class="why-tabs" aria-label="$($L.steps)"><ol>$tabs</ol></nav>
 $panels
   <section class="why-end" id="sonuc" aria-labelledby="h-sonuc" data-why-panel>
@@ -2966,7 +2965,8 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -Description 
 # Katekizm search over the blurred screen, and Öğren, Dua Et and Keşfet open Settings-style pages
 # listing their pages, with each page's own sections one level further in (see initHome).
 # Desktop: the same three cards in a row, a search bar, and the three lists side by side.
-# The home page is built last, because the section lists are read from the pages already written.
+# Each page's own content, down to single questions and prayers, is laid out in the browser from
+# the site's data files once a page is opened in its app (initHomeTree in assets/script.js).
 $HomeApps = @(
   @{ id = 'ogren'; t = 'Öğren'; te = 'Learn'; s = 'İnancın ne olduğu ve nedeni'; se = 'What the faith is, and why'; ico = $SmallCross; pages = @(
     @{ f = 'neden-katoligiz.html'; ico = $IcoCompass; t = 'Neden Katoliğiz?'; te = "Why We're Catholic"
@@ -2980,7 +2980,7 @@ $HomeApps = @(
        s = 'Katolik olmak isteyenler için OCIA süreci, adım adım.'; se = 'The OCIA process for those who want to become Catholic, step by step.' },
     @{ f = 'meseller.html'; ico = $IcoScroll; t = "İsa$($Apos)nın Meselleri"; te = 'The Parables of Jesus'
        s = 'Otuz iki mesel, düz bir dille açıklanmış.'; se = 'Thirty-two parables, plainly explained.' }) },
-  @{ id = 'dua'; t = 'Dua Et'; te = 'Pray'; s = 'Ayin, tesbih ve günlük dualar'; se = 'The Mass, the Rosary and daily prayers'; ico = $IcoPrayers; pages = @(
+  @{ id = 'dua'; t = 'Dua Et'; te = 'Pray'; s = 'Ayin, tesbih ve günlük dualar'; se = 'The Mass, the Rosary and daily prayers'; ico = $TbChurch; pages = @(
     @{ f = 'kutsal-ayin.html'; ico = $IcoChalice; t = 'Kutsal Ayin'; te = 'The Mass'
        s = 'Ayinin sırası, toplanmadan son takdise altı bölüm.'; se = 'The order of the Mass, in six parts.' },
     @{ f = 'tesbih-duasi.html'; ico = $IcoBeads; t = 'Tesbih Duası'; te = 'The Rosary'
@@ -3000,54 +3000,6 @@ $HomeApps = @(
        s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches you can attend Mass at in Turkey, city by city.' }) }
 )
 
-# The sections of a page already written, for the second level of the home screen's apps:
-# its bar's and drawer's in-page links, each under the heading it points to.
-function Clean-Heading([string]$h) {
-  $h = [regex]::Replace($h, '<span class="label">.*?</span>', '', 'Singleline')
-  $h = [regex]::Replace($h, '<span[^>]*(lang="en"|class="(sub|en|stage-en)[^"]*")[^>]*>.*?</span>', '', 'Singleline')
-  $h = [regex]::Replace($h, '<p[^>]*>.*?</p>', '', 'Singleline')
-  return ([regex]::Replace([regex]::Replace($h, '<[^>]+>', ''), '\s+', ' ')).Trim()
-}
-function Home-Sections([string]$trFile, [bool]$en) {
-  $file = if ($en) { $EnAltMap[$trFile] } else { $trFile }
-  if ($trFile -eq 'katesizm.html') {
-    $first = if ($en) { @{ u = 'en/compendium.html'; t = 'Overview' } } else { @{ u = 'katesizm.html'; t = 'Genel Bakış' } }
-    return @($first) + @($TextNav | ForEach-Object { if ($en) { @{ u = $EnAltMap[$_.href]; t = $_.te } } else { @{ u = $_.href; t = $_.t } } })
-  }
-  $html = [IO.File]::ReadAllText((Join-Path $Root $file))
-  $out = @()
-  if ($trFile -eq 'ekler.html') {
-    $a = $html.IndexOf('id="ek-a"'); $b = $html.IndexOf('id="ek-b"')
-    foreach ($m in [regex]::Matches($html.Substring($a, $b - $a), '<article class="text-card" id="([^"]+)"><h3[^>]*>(.*?)</h3>')) {
-      $out += @{ u = "$file#$($m.Groups[1].Value)"; t = (Clean-Heading $m.Groups[2].Value) }
-    }
-    return $out
-  }
-  if ($trFile -eq 'kiliseler.html') {
-    foreach ($m in [regex]::Matches($html, '<a class="tb-chip" href="(?:/?[^"#]*)(#[^"]+)"[^>]*>([^<]+)</a>')) { $out += @{ u = "$file$($m.Groups[1].Value)"; t = $m.Groups[2].Value } }
-    return $out
-  }
-  $bar = $html.Substring($html.IndexOf('<nav class="tabbar"'))
-  $fixed = @{ 'bugun-azizi' = $(if ($en) { 'Saint of the Day' } else { 'Bugünün Azizi' })
-              'muhur-sehitleri' = $(if ($en) { 'Martyrs of the Seal' } else { 'Mührün Şehitleri' }) }
-  foreach ($m in [regex]::Matches($bar, '<a class="tb-(?:item|link)[^"]*" href="([^"]+)"[^>]*>(.*?)</a>', 'Singleline')) {
-    $href = $m.Groups[1].Value.TrimStart('/'); $label = Clean-Heading $m.Groups[2].Value
-    if (-not $href.StartsWith('#')) { $out += @{ u = $href; t = $label }; continue }
-    $id = $href.Substring(1); $t = $fixed[$id]
-    if (-not $t) {
-      $em = [regex]::Match($html, '<(\w+)[^>]*\bid="' + [regex]::Escape($id) + '"[^>]*>')
-      if ($em.Success) {
-        $tag = $em.Groups[1].Value
-        if ($tag -match '^h[1-4]$') { $t = Clean-Heading $html.Substring($em.Index + $em.Length, $html.IndexOf("</$tag>", $em.Index) - $em.Index - $em.Length) }
-        else { $hm = [regex]::Match($html.Substring($em.Index + $em.Length), '<(h[1-4])[^>]*>(.*?)</\1>', 'Singleline'); if ($hm.Success) { $t = Clean-Heading $hm.Groups[2].Value } }
-      }
-    }
-    if (-not $t) { $t = $label }
-    $out += @{ u = "$file$href"; t = $t }
-  }
-  return $out
-}
-
 $IcoBack = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>'
 $IcoChevR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
 $IcoOpenPage = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>'
@@ -3065,12 +3017,12 @@ function Home-Page([string]$lang) {
     </a>
     <div class="hm-card hm-date" data-home-lit>
       <span class="hm-label">$(L 'Bugün' 'Today')</span>
-      <span class="hm-day" data-hd-day>$loading</span><span class="hm-year" data-hd-year></span>
+      <span class="hm-day" data-hd-day>$loading</span><span class="hm-year" data-hd-year></span><time class="hm-time" data-hd-time></time>
       <span class="hm-season" data-hd-season></span><span class="hm-sub" data-hd-colour></span>
     </div>
     <a class="hm-card hm-myst" href="$(F 'tesbih-duasi.html')" data-home-mystery>
       <span class="hm-label">$IcoBeads $(L 'Günün Gizemi' 'Mysteries')</span>
-      <span class="hm-mn" data-hm-name>$loading</span><span class="hm-sub">$(L 'Beş gizem, elli tane' 'Five mysteries, fifty beads')</span>
+      <span class="hm-mn" data-hm-name>$loading</span><span class="hm-sub" data-hm-days></span>
       <span class="hm-go">$(L 'Tesbihe başla' 'Pray the Rosary') $IcoChevR</span>
     </a>
   </div>
@@ -3102,21 +3054,23 @@ function Home-Page([string]$lang) {
     $i = 0
     foreach ($pg in $app.pages) {
       $pt = L $pg.t $pg.te
-      $secs = ((Home-Sections $pg.f $en) | ForEach-Object { "<a class=`"ios-row`" href=`"$($_.u)`"><span class=`"ios-rt`"><span class=`"ios-t`">$($_.t)</span></span>$IcoChevR</a>" }) -join ''
-      $pagesHtml += "<section class=`"ios-page`" data-page=`"$($app.id)-$i`"><header class=`"ios-nav`"><button type=`"button`" class=`"ios-back`" data-pop>$IcoBack<span>$appT</span></button><span class=`"ios-nt`">$pt</span><button type=`"button`" class=`"ios-done`" data-app-close>$close</button></header>" +
+      $pagesHtml += "<section class=`"ios-page`" data-page=`"$($app.id)-$i`"><header class=`"ios-nav`"><button type=`"button`" class=`"ios-back`" data-pop>$IcoBack<span data-back-label>$appT</span></button><span class=`"ios-nt`">$pt</span><button type=`"button`" class=`"ios-done`" data-app-close>$close</button></header>" +
         "<div class=`"ios-scroll`"><div class=`"ios-hero`"><span class=`"ios-ri ios-ri-lg`">$($pg.ico)</span><h3 class=`"ios-large`">$pt</h3><p class=`"ios-lead`">$(L $pg.s $pg.se)</p></div>" +
-        "<div class=`"ios-group`"><a class=`"ios-row ios-accent`" href=`"$(F $pg.f)`"><span class=`"ios-rt`"><span class=`"ios-t`">$(L 'Sayfayı Aç' 'Open the page')</span></span>$IcoOpenPage</a></div>" +
-        "<p class=`"ios-gh`">$(L 'Bölümler' 'Sections')</p><div class=`"ios-group`">$secs</div></div></section>"
+        "<div class=`"ios-group`"><a class=`"ios-row ios-accent`" href=`"$(F $pg.f)`" data-open-page><span class=`"ios-rt`"><span class=`"ios-t`">$(L 'Bütün içeriği göster' 'Show all content')</span></span>$IcoOpenPage</a></div>" +
+        "<p class=`"ios-gh`" data-tree-head>$(L 'Bölümler' 'Sections')</p><div class=`"ios-tree`" data-tree=`"$($pg.f)`" data-title=`"$(Attr $pt)`"></div></div></section>"
       $i++
     }
     "<div class=`"ios-app`" id=`"app-$($app.id)`" data-app=`"$($app.id)`" role=`"dialog`" aria-modal=`"true`" aria-label=`"$appT`" hidden><div class=`"ios-splash app-$($app.id)`">$($app.ico)</div><div class=`"ios-stack`">$pagesHtml</div></div>"
   }) -join "`n"
   $tag = if ($en) { $SiteTagEn } else { $SiteTag }
+  # The English file for each Turkish page, for the apps' links (built in the browser)
+  $pageMap = if ($en) { " data-pages=`"$(Attr (ConvertTo-Json -InputObject $EnAltMap -Compress))`"" } else { '' }
   $body = @"
-<div class="wrap home-v2">
+<div class="wrap home-v2"$pageMap>
   <h1 class="visually-hidden">$tag</h1>
 $cards
   $searchDesk
+  <div class="hm-about"><p class="hm-about-t">$tag</p><p class="hm-about-s">$(if ($en) { $fmEn['about'] } else { $fm['about'] })</p></div>
   <nav class="hm-apps" aria-label="$(L 'Bölümler' 'Sections')">$icons</nav>
   $lists
 </div>
