@@ -1,4 +1,4 @@
 Contact: mailto:david@katolikdunyasi.com
 Expires: 2027-09-26T00:00:00.000Z
-Preferred-Languages: tr, en
+Preferred-Languages: tr
 Canonical: https://katolikdunyasi.com/.well-known/security.txt
