@@ -66,6 +66,23 @@
         syncChrome();
       });
     });
+    /* Back to a page the browser kept in memory (Safari's swipe back, the back button): it comes
+       back as it was left, so a theme, text size or accessibility setting changed on a later page
+       would not show. Read the saved choices again. */
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted) return;
+      var H = document.documentElement;
+      H.setAttribute('data-theme', storedTheme() === 'dark' ? 'dark' : 'light');
+      syncTheme(); syncChrome();
+      try {
+        var fs = localStorage.getItem('kkio-fontsize');
+        if (fs === '1' || fs === '2') H.setAttribute('data-fontsize', fs); else H.removeAttribute('data-fontsize');
+        var a11y = JSON.parse(localStorage.getItem('kkio-a11y') || '{}');
+        ['reader', 'contrast', 'saturation', 'spacing', 'links', 'dyslexia', 'cursor'].forEach(function (k) {
+          if (a11y[k]) H.setAttribute('data-a11y-' + k, '1'); else H.removeAttribute('data-a11y-' + k);
+        });
+      } catch (err) { /* private mode */ }
+    });
   }
 
   /* ---------------------------------------------------------------
