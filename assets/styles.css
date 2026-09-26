@@ -2325,7 +2325,17 @@ html.av.av-sub .av-hero .page-ico, html.av.av-sub .av-hero .roman { width: 2.6re
 html.av.av-sub .av-hero .page-ico svg { width: 1.45rem; height: 1.45rem; }
 html.av.av-sub .av-hero .logo { width: 2.3rem; height: 2.3rem; margin-bottom: .35rem; }
 html.av.av-sub .av-hero h1 { font-size: 1.2rem; }
-html.av.av-sub .av-hero :is(.sub, .subtitle, .hint, .label, .search) { display: none; }
+html.av.av-sub .av-hero :is(.sub, .subtitle, .hint, .label, .search) { max-height: 0; margin-top: 0; opacity: 0; visibility: hidden; }
+/* The resize runs as a plain transition, so it plays on every level change: a tap, the back
+   button, and the phone's own swipe back and forward */
+html.av .av-hero { transition: padding .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1); }
+html.av .av-hero :is(.page-ico, .roman, .logo) { transition: width .4s cubic-bezier(.32, .72, 0, 1), height .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1), font-size .4s cubic-bezier(.32, .72, 0, 1); }
+html.av .av-hero .page-ico svg { transition: width .4s cubic-bezier(.32, .72, 0, 1), height .4s cubic-bezier(.32, .72, 0, 1); }
+html.av .av-hero h1 { transition: font-size .4s cubic-bezier(.32, .72, 0, 1); }
+html.av .av-hero :is(.sub, .subtitle, .hint, .label, .search) { max-height: 12rem; overflow: hidden; transition: max-height .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1), opacity .25s, visibility 0s; }
+html.av.av-sub .av-hero :is(.sub, .subtitle, .hint, .label, .search) { transition: max-height .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1), opacity .2s, visibility 0s .4s; }
+html.av.av-still .av-hero, html.av.av-still .av-hero * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { html.av .av-hero, html.av .av-hero * { transition: none !important; } }
 
 /* Lists, as in Settings */
 .av-gh { margin: 1.3rem .9rem .45rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); overflow-wrap: anywhere; }
@@ -2412,7 +2422,9 @@ html.av.av-sub .site-footer { display: none; }
   html[data-av-dir="next"]::view-transition-new(av-main) { animation: avInR2 .34s cubic-bezier(.2, .8, .2, 1) both; }
   html[data-av-dir="prev"]::view-transition-old(av-main) { animation: avOutR2 .34s cubic-bezier(.2, .8, .2, 1) both; }
   html[data-av-dir="prev"]::view-transition-new(av-main) { animation: avInL .34s cubic-bezier(.2, .8, .2, 1) both; }
-  html[data-av-dir]::view-transition-group(av-hero) { animation-duration: .42s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); }
+  /* the hero stays put while the level slides; its own transitions do the resizing, live */
+  ::view-transition-group(av-hero), ::view-transition-new(av-hero) { animation: none; }
+  ::view-transition-old(av-hero) { display: none; }
 }
 @keyframes avInR { from { transform: translateX(100%); } }
 @keyframes avOutL { to { transform: translateX(-28%); opacity: 0; } }

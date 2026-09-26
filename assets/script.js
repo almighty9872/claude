@@ -2019,6 +2019,9 @@
 
     /* ----- start: at the level the address points to */
     var start = byId(decodeURIComponent(location.hash.slice(1)));
+    /* the hero takes its size at once on load; after that every change of level resizes it */
+    H.classList.add('av-still');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { H.classList.remove('av-still'); }); });
     place(null);
     if (start) {
       var sn = start.hasAttribute('data-av-node') ? start : nodeOf(start);
