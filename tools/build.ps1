@@ -709,143 +709,10 @@ function Nav-Sheet([string]$lang, [string]$current) {
     "      <div class=`"ns-group`" style=`"animation-delay:$($delay)s`">$lbl$links</div>"
   }) -join "`n")
 }
-# ------------------------------------------------------------------ mobile tab bar
-# Phones and small tablets get a glass tab bar pinned to the bottom of every page. Pages with
-# sections of their own show those (four, plus "Diğer" for the rest in a drawer); every other
-# page shows the five core destinations. Entries with an '#' href are in-page anchors, the same
-# id on both languages' pages; page hrefs are Turkish and mapped through $EnAltMap for English.
+# ------------------------------------------------------------------ phones: apps and app screens
+# The church icon of the home screen's Dua Et app
 $TbSvg = { param($d, $extra = '') "<svg viewBox=`"0 0 24 24`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"1.7`" stroke-linecap=`"round`" stroke-linejoin=`"round`"$extra>$d</svg>" }
-$TbWhy    = & $TbSvg '<circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.3a2.8 2.8 0 0 1 5.4 1c0 2-2.7 2.4-2.7 4.2"/><path d="M12 17.4h.01"/>'
-$TbMap    = & $TbSvg '<path d="M9 4.2 3.6 6.1v13.7L9 17.9l6 1.9 5.4-1.9V4.2L15 6.1z"/><path d="M9 4.2v13.7M15 6.1v13.7"/>'
 $TbChurch = & $TbSvg '<path d="M12 2.4v4.2M10.1 4.3h3.8"/><path d="M5.6 21v-9.3L12 6.9l6.4 4.8V21"/><path d="M3.4 21h17.2"/><path d="M10.1 21v-4a1.9 1.9 0 0 1 3.8 0v4"/>'
-$TbChat   = & $TbSvg '<path d="M4.8 3.2h7.9a1.8 1.8 0 0 1 1.8 1.8v6.3a1.8 1.8 0 0 1-1.8 1.8H8.2l-3.6 3v-3h.2A1.8 1.8 0 0 1 3 11.3V5a1.8 1.8 0 0 1 1.8-1.8z"/><path d="M17.3 8.4h1.9A1.8 1.8 0 0 1 21 10.2v6a1.8 1.8 0 0 1-1.8 1.8H19v2.9L15.6 18H12.8a1.8 1.8 0 0 1-1.8-1.8v-.6"/><path d="M7.4 6.4a1.4 1.4 0 0 1 2.7.5c0 1-1.3 1.1-1.3 2M8.8 10.6h.01"/>'
-$TbMore   = & $TbSvg '<circle cx="12" cy="12" r="9.2"/><circle cx="7.9" cy="12" r=".9" fill="currentColor"/><circle cx="12" cy="12" r=".9" fill="currentColor"/><circle cx="16.1" cy="12" r=".9" fill="currentColor"/>'
-$TbSteps  = & $TbSvg '<path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="M4.2 5.6 5.4 4.8v3.4M4 12.6c0-.8.6-1.3 1.2-1.3s1.1.4 1.1 1c0 .9-2.3 1.7-2.3 2.4h2.4M4.1 16.3h2l-1 1.2c.7 0 1.2.4 1.2 1s-.5 1-1.1 1c-.5 0-.9-.2-1.1-.5"/>'
-$TbCal    = & $TbSvg '<rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'
-$TbToday  = & $TbSvg '<rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15.2" r="2" fill="currentColor" stroke="none"/>'
-$TbFeast  = & $TbSvg '<path d="M12 3.2 14.3 8l5.2.6-3.9 3.6 1.1 5.1L12 14.8l-4.7 2.5 1.1-5.1-3.9-3.6L9.7 8z"/>'
-$TbHome   = & $TbSvg '<path d="M4 10.8 12 4l8 6.8"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/>'
-$TbMenu   = & $TbSvg '<path d="M4 7h16M4 12h16M4 17h16"/>'
-# Topic icons for the bars (more come from the page's own icon sets, named as 'ParableIcons.heart'
-# and resolved when the page is built, since those sets are defined further down this script)
-$TbBulb    = & $TbSvg '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.6.5.8 1.1.8 1.9v.5h6v-.5c0-.8.3-1.4.8-1.9A6 6 0 0 0 12 3z"/>'
-$TbScale   = & $TbSvg '<path d="M12 3.5v17M7.5 20.5h9M5 7h14"/><path d="M5 7 2.5 12.5a2.6 2.6 0 0 0 5 0zM19 7l-2.5 5.5a2.6 2.6 0 0 0 5 0z"/>'
-$TbCross   = & $TbSvg '<path d="M12 2.5v19M6.5 8h11"/>'
-$TbTablets = & $TbSvg '<path d="M3.5 20V8.5a4.25 4.25 0 0 1 8.5 0V20z"/><path d="M12 20V8.5a4.25 4.25 0 0 1 8.5 0V20z"/><path d="M6.2 11h3M6.2 14h3M6.2 17h3M14.7 11h3M14.7 14h3M14.7 17h3"/>'
-$TbArmenian = & $TbSvg '<path d="M12 5v14M5 12h14"/><circle cx="12" cy="3.6" r="1.4"/><circle cx="12" cy="20.4" r="1.4"/><circle cx="3.6" cy="12" r="1.4"/><circle cx="20.4" cy="12" r="1.4"/>'
-$TbSyriac  = & $TbSvg '<path d="M12 6.5v11M6.5 12h11"/><path d="M12 6.5 9.6 3h4.8zM12 17.5 9.6 21h4.8zM6.5 12 3 9.6v4.8zM17.5 12 21 9.6v4.8z"/>'
-$TbChaldean = & $TbSvg '<circle cx="12" cy="12" r="9"/><path d="M12 5.5v13M5.5 12h13"/><path d="M10.3 6.8 12 5.5l1.7 1.3M10.3 17.2l1.7 1.3 1.7-1.3M6.8 10.3 5.5 12l1.3 1.7M17.2 10.3l1.3 1.7-1.3 1.7"/>'
-$TbCity    = & $TbSvg '<path d="M3 21h18"/><path d="M5 21V10l5-3v14"/><path d="M10 21V4.5l9 4V21"/><path d="M13.5 10h2.5M13.5 13h2.5M13.5 16h2.5M7 13.5h1M7 16.5h1"/>'
-$TbLetter  = & $TbSvg '<path d="M6 3.5h9l3 3V20.5H6z"/><path d="M15 3.5v3h3M9 10h6M9 13h6M9 16h4"/>'
-$TbCouncil = & $TbSvg '<path d="M4 20h16M5.5 20v-8M9.8 20v-8M14.2 20v-8M18.5 20v-8"/><path d="M3.5 12h17L12 5z"/>'
-$TbReset   = & $TbSvg '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4.5V11h-6.5"/>'
-function Tb-Ico($x) {
-  if (-not $x) { return '' }
-  if ($x -like '*<svg*') { return $x }
-  $parts = $x -split '\.', 2
-  $v = (Get-Variable -Name $parts[0] -ValueOnly -ErrorAction SilentlyContinue)
-  if ($parts.Count -gt 1) { return $v[$parts[1]] } else { return $v }
-}
-$TbSets = @{
-  main = @{ main = $true; items = @(
-    @{ h = 'neden-katoligiz.html'; t = 'Neden?'; te = 'Why?'; ico = $TbWhy },
-    @{ h = 'topraklarimizda-hristiyanlik.html'; t = 'Tarih'; te = 'History'; ico = $TbMap },
-    @{ h = 'katesizm.html'; t = 'Katekizm'; te = 'Catechism'; ico = $SmallCross },
-    @{ h = 'kiliseler.html'; t = 'Kiliseler'; te = 'Churches'; ico = $TbChurch },
-    @{ h = 'sss.html'; t = 'Sorular'; te = 'FAQ'; ico = $TbChat }) }
-  katekizm = @{ items = @(
-    @{ h = 'iman-ikrari.html'; t = 'İnanç'; te = 'Creed'; n = 'I' },
-    @{ h = 'kutsal-sirlar.html'; t = 'Kutlama'; te = 'Celebration'; n = 'II' },
-    @{ h = 'mesihte-yasam.html'; t = 'Yaşam'; te = 'Life'; n = 'III' },
-    @{ h = 'hristiyan-duasi.html'; t = 'Dua'; te = 'Prayer'; n = 'IV' })
-    more = @(
-    @{ h = 'katesizm.html'; t = 'Genel Bakış'; te = 'Overview' },
-    @{ h = 'motu-proprio.html'; t = 'Motu Proprio'; te = 'Motu Proprio' },
-    @{ h = 'giris.html'; t = 'Giriş'; te = 'Introduction' },
-    @{ h = 'ekler.html'; t = 'Ekler'; te = 'Appendix' }) }
-  tesbih = @{ items = @(
-    @{ h = '#nasil'; t = 'Nasıl?'; te = 'How To'; ico = $TbSteps },
-    @{ h = '#gizemler'; t = 'Gizemler'; te = 'Mysteries'; ico = $IcoSparkle },
-    @{ h = '#tesbih-rehberi'; t = 'Tesbih'; te = 'Rosary'; ico = $IcoBeads },
-    @{ h = 'ekler.html#ek-a'; t = 'Dualar'; te = 'Prayers'; ico = $IcoPrayers },
-    @{ action = 'rt-restart'; t = 'Baştan Başla'; te = 'Start Over'; ico = $TbReset }) }
-  neden = @{ attr = 'data-why-go'; items = @(
-    @{ h = '#hakikat-ve-tanri'; t = 'Hakikat'; te = 'Truth'; ico = $IcoCompass },
-    @{ h = '#isa-ve-kutsal-kitap'; t = 'İsa'; te = 'Jesus'; ico = $TbCross },
-    @{ h = '#kilise-ve-kutsal-sirlar'; t = 'Kilise'; te = 'Church'; ico = $TbChurch },
-    @{ h = '#azizler-ve-gunahkarlar'; t = 'Azizler'; te = 'Saints'; ico = $IcoStar })
-    more = @(
-    @{ h = '#ahlak-ve-sonsuz-yazgi'; t = 'Ahlak ve Sonsuz Yazgı'; te = 'Morality and Destiny' },
-    @{ h = '#sonuc'; t = 'Hepsi bir arada'; te = 'Putting it together' }) }
-  tarih = @{ items = @(
-    @{ h = '#pavlus'; t = 'Pavlus'; te = 'Paul'; ico = $TbLetter },
-    @{ h = '#yedi-kilise'; t = '7 Kilise'; te = '7 Churches'; ico = $TbChurch },
-    @{ h = '#iznik'; t = 'İznik'; te = 'Nicaea'; ico = $TbCouncil })
-    more = @(@{ h = '#kilise-babalari'; t = 'Bu Topraklarda Yazan Kilise Babaları'; te = 'The Church Fathers of Anatolia' }) }
-  kiliseler = @{ moreLabel = 'Şehirler'; moreLabelEn = 'Cities'; moreIco = $TbCity; cities = $true; items = @(
-    @{ rite = 'latin'; t = 'Latin'; te = 'Latin'; ico = $TbCross },
-    @{ rite = 'ermeni'; t = 'Ermeni'; te = 'Armenian'; ico = $TbArmenian },
-    @{ rite = 'suryani'; t = 'Süryani'; te = 'Syriac'; ico = $TbSyriac },
-    @{ rite = 'keldani'; t = 'Keldani'; te = 'Chaldean'; ico = $TbChaldean }) }
-  meseller = @{ items = @(
-    @{ h = '#hukumdarlik'; t = 'Hükümdarlık'; te = 'Kingdom'; ico = 'ParableIcons.sprout' },
-    @{ h = '#merhamet'; t = 'Merhamet'; te = 'Mercy'; ico = 'ParableIcons.heart' },
-    @{ h = '#dua'; t = 'Dua'; te = 'Prayer'; ico = 'ParableIcons.prayer' },
-    @{ h = '#uyaniklik'; t = 'Uyanıklık'; te = 'Watchfulness'; ico = 'ParableIcons.lamp' })
-    more = @(
-    @{ h = '#sorumluluk'; t = 'Sorumluluk ve Yönetim Meselleri'; te = 'Parables of Stewardship' },
-    @{ h = '#cagri'; t = 'Hükümdarlığa Çağrı ve Hesap Verme Meselleri'; te = 'Parables of the Call and the Reckoning' }) }
-  mucizeler = @{ items = @(
-    @{ h = '#gorunmeler'; t = 'Görünmeler'; te = 'Apparitions'; ico = 'MiracleIcons.apparition' },
-    @{ h = '#kalintilar'; t = 'Kalıntılar'; te = 'Relics'; ico = 'MiracleIcons.relic' },
-    @{ h = '#efkaristiya'; t = 'Efkaristiya'; te = 'Eucharist'; ico = 'MiracleIcons.eucharist' },
-    @{ h = '#curumeyen-azizler'; t = 'Çürümeyenler'; te = 'Incorrupt'; ico = 'MiracleIcons.incorrupt' }) }
-  sss = @{ items = @(
-    @{ h = '#teolojik-yanilgilar'; t = 'Yanılgılar'; te = 'Misconceptions'; ico = $TbBulb },
-    @{ h = '#kutsal-sirlar-uygulamalar'; t = 'Kutsal Sırlar'; te = 'Sacraments'; ico = $IcoChalice },
-    @{ h = '#otorite-ogretiler'; t = 'Otorite'; te = 'Authority'; ico = $IcoKey },
-    @{ h = '#akla-gelen-itirazlar'; t = 'İtirazlar'; te = 'Objections'; ico = $TbScale })
-    more = @(@{ h = '#savunma-ve-guncel-sorular'; t = 'Kilise Savunması ve Güncel Sorular'; te = 'Church Apologetics and Questions from Today' }) }
-  gunah = @{ items = @(
-    @{ h = '#adim-adim'; t = 'Adımlar'; te = 'Steps'; ico = $TbSteps },
-    @{ h = '#vicdan-muhasebesi'; t = '10 Emir'; te = '10 Commandments'; ico = $TbTablets },
-    @{ h = '#sorular-ve-korkular'; t = 'Sorular'; te = 'Questions'; ico = $TbChat })
-    more = @(@{ h = '#muhur-sehitleri'; t = 'Mührün şehitleri'; te = 'Martyrs of the seal' }) }
-  surec = @{ items = @(
-    @{ h = '#iki-yol'; t = 'İki Yol'; te = 'Two Paths'; ico = $IcoWay },
-    @{ h = '#surec'; t = 'Süreç'; te = 'Process'; ico = $TbSteps },
-    @{ h = '#zaten-hristiyan'; t = 'Vaftizliler'; te = 'Baptized'; ico = 'IcoDroplet' },
-    @{ h = '#pratik-sorular'; t = 'Sorular'; te = 'Questions'; ico = $TbChat })
-    more = @(
-    @{ h = '#sartli-vaftiz'; t = 'Vaftizin geçerliliğinden kuşku duyuluyorsa'; te = 'If a baptism is in doubt' },
-    @{ h = '#beklerken'; t = 'Bekleme süresi'; te = 'The waiting time' }) }
-  ayin = @{ items = @(
-    @{ h = '#toplanma'; t = 'Toplanma'; te = 'Gathering'; ico = 'MassIcons.gather' },
-    @{ h = '#soz-liturjisi'; t = 'Söz'; te = 'Word'; ico = $IcoBook },
-    @{ h = '#sunus'; t = 'Sunuş'; te = 'Gifts'; ico = 'MassIcons.gifts' },
-    @{ h = '#sukran-duasi'; t = 'Şükran'; te = 'Eucharist'; ico = 'MassIcons.chalice' })
-    more = @(
-    @{ h = '#komunyon'; t = 'Komünyon'; te = 'The Communion Rite' },
-    @{ h = '#son-takdis'; t = 'Son Takdis'; te = 'The Concluding Rites' }) }
-  kitap = @{ items = @(
-    @{ h = '#katolik-baski'; t = 'Katolik Baskı'; te = 'Catholic Edition'; ico = $SmallCross },
-    @{ h = '#turkce'; t = 'Türkçe'; te = 'In Turkish'; ico = $IcoBook },
-    @{ h = '#hangi-ceviri'; t = 'Hangi Çeviri?'; te = 'Which One?'; ico = $TbSteps },
-    @{ h = '#oneri'; t = 'Önerimiz'; te = 'Our Pick'; ico = $IcoStar })
-    more = @(@{ h = '#onayli'; t = 'Onaylı çeviriler'; te = 'Approved translations' }) }
-  azizler = @{ items = @(
-    @{ h = '#bugun-azizi'; t = 'Bugün'; te = 'Today'; ico = $TbToday },
-    @{ h = '#takvim'; t = 'Takvim'; te = 'Calendar'; ico = $TbCal },
-    @{ h = '#buyuk-azizler'; he = '#best-known-saints'; t = '20 Aziz'; te = 'Top 20'; ico = $IcoStar },
-    @{ h = '#hareketli-bayramlar'; t = 'Bayramlar'; te = 'Feasts'; ico = $TbFeast }) }
-}
-$TbPages = @{
-  'katesizm.html' = 'katekizm'; 'motu-proprio.html' = 'katekizm'; 'giris.html' = 'katekizm'; 'iman-ikrari.html' = 'katekizm'
-  'kutsal-sirlar.html' = 'katekizm'; 'mesihte-yasam.html' = 'katekizm'; 'hristiyan-duasi.html' = 'katekizm'; 'ekler.html' = 'katekizm'
-  'tesbih-duasi.html' = 'tesbih'; 'neden-katoligiz.html' = 'neden'; 'topraklarimizda-hristiyanlik.html' = 'tarih'
-  'kiliseler.html' = 'kiliseler'; 'meseller.html' = 'meseller'; 'mucizeler.html' = 'mucizeler'; 'sss.html' = 'sss'
-  'gunah-cikarma.html' = 'gunah'; 'katolik-sureci.html' = 'surec'; 'kutsal-ayin.html' = 'ayin'; 'azizler.html' = 'azizler'; 'kutsal-kitap.html' = 'kitap'
-}
 # The home screen app each page belongs to (Öğren, Dua Et, Keşfet): its colour on phones, set as
 # data-app on the page's body by Write-Page; the home page's own lists follow the same grouping.
 $AppOf = @{}
@@ -854,61 +721,31 @@ foreach ($f in @('neden-katoligiz.html', 'katesizm.html', 'kutsal-kitap.html', '
 foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'ekler.html', 'gunah-cikarma.html')) { $AppOf[$f] = 'dua' }
 foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
 foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
-function Tb-Href([string]$h, [bool]$en, [string]$he = '') {
-  if ($en -and $he) { return $he }
-  if ($h.StartsWith('#') -or -not $en) { return $h }
-  $parts = $h -split '#', 2
-  $p = $EnAltMap[$parts[0]]
-  if ($parts.Count -gt 1) { return "$p#$($parts[1])" } else { return $p }
+
+# ---- Phones: every page but the home screen is shown as an app screen (script.js, initAppView).
+# All of the page's text stays in its HTML, as on a computer; the phone shows it one level at a
+# time. The bar at the top leads back to where the page belongs: its app on the home screen, or
+# the page it is part of.
+$AppNames = @{ ogren = @('Öğren', 'Learn'); dua = @('Dua Et', 'Pray'); kesfet = @('Keşfet', 'Explore') }
+$KatekizmSub = @('motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html')
+function Av-Parent([string]$trFile, [bool]$en) {
+  $i = if ($en) { 1 } else { 0 }
+  $homeF = if ($en) { 'en/index.html' } else { 'index.html' }
+  if ($KatekizmSub -contains $trFile) { return @{ href = $(if ($en) { 'en/compendium.html' } else { 'katesizm.html' }); t = @('Katekizm', 'Compendium')[$i] } }
+  if ($GreatSaints.saints | Where-Object { "$($_.id).html" -eq $trFile }) { return @{ href = "$(if ($en) { 'en/saints.html#best-known-saints' } else { 'azizler.html#buyuk-azizler' })"; t = @('Azizler', 'Saints')[$i] } }
+  $app = $AppOf[$trFile]
+  if ($app) { return @{ href = "$homeF#app-$app"; t = $AppNames[$app][$i] } }
+  return @{ href = $homeF; t = @('Ana Sayfa', 'Home')[$i] }
 }
-function Tab-Bar([string]$trFile, [string]$lang) {
-  # The home page's own app icons do this job there
-  if ($trFile -eq 'index.html') { return '' }
-  $en = $lang -eq 'en'
-  $key = $TbPages[$trFile]; if (-not $key) { $key = 'main' }
-  $set = $TbSets[$key]
-  $navLabel = if ($en) { 'Page menu' } else { 'Sayfa menüsü' }
-  $closeLabel = if ($en) { 'Close' } else { 'Kapat' }
-  $moreLabel = if ($en) { if ($set.moreLabelEn) { $set.moreLabelEn } else { 'More' } } else { if ($set.moreLabel) { $set.moreLabel } else { 'Diğer' } }
-  $attrName = $set.attr
-  $lis = ($set.items | ForEach-Object {
-    $label = if ($en) { $_.te } else { $_.t }
-    $ico = if ($_.n) { "<span class=`"tb-num`">$($_.n)</span>" } else { Tb-Ico $_.ico }
-    $inner = "<span class=`"tb-ico`">$ico</span><span class=`"tb-t`">$label</span>"
-    if ($_.rite) { "<li><button type=`"button`" class=`"tb-item`" data-tb-rite=`"$($_.rite)`">$inner</button></li>" }
-    elseif ($_.action) { "<li><button type=`"button`" class=`"tb-item`" data-tb-action=`"$($_.action)`">$inner</button></li>" }
-    else {
-      $href = Tb-Href $_.h $en $_.he
-      $isPage = -not $_.h.StartsWith('#')
-      $active = if ($isPage -and $_.h -eq $trFile) { ' is-active" aria-current="page' } else { '' }
-      $extra = if ($attrName -and -not $isPage) { " $attrName=`"$($href.Substring(1))`"" } else { '' }
-      "<li><a class=`"tb-item$active`" href=`"$href`"$extra>$inner</a></li>"
-    }
-  }) -join ''
-  $more = @($set.more | Where-Object { $_ })
-  if (-not $set.cities -and $more.Count -eq 0) { return "<nav class=`"tabbar`" aria-label=`"$navLabel`"><ul class=`"tb-list`">$lis</ul></nav>" }
-  # "Diğer": this page's remaining sections, nothing else. It lights up while one of them is the
-  # page being read (build time, for page links) or the section on screen (script.js, for anchors).
-  $moreActive = if ($more | Where-Object { $_.h -eq $trFile }) { ' is-active' } else { '' }
-  $moreIco = if ($set.moreIco) { $set.moreIco } else { $TbMore }
-  $lis += "<li><button type=`"button`" class=`"tb-item tb-more$moreActive`" aria-expanded=`"false`" aria-controls=`"tb-drawer`"><span class=`"tb-ico`">$moreIco</span><span class=`"tb-t`">$moreLabel</span></button></li>"
-  if ($set.cities) {
-    $allLabel = if ($en) { 'All Churches' } else { 'Tüm Kiliseler' }
-    $body = "<button type=`"button`" class=`"tb-link tb-all`" data-tb-rite=`"all`">$allLabel</button><div class=`"tb-chips`">" +
-      (($Churches.cities | ForEach-Object { "<a class=`"tb-chip`" href=`"#$($_.id)`" data-city-link=`"$($_.id)`">$($_.name)</a>" }) -join '') + "</div>"
-  } else {
-    $body = "<div class=`"tb-links`">" + (($more | ForEach-Object {
-      $href = Tb-Href $_.h $en $_.he
-      $extra = if ($attrName -and $_.h.StartsWith('#')) { " $attrName=`"$($href.Substring(1))`"" } else { '' }
-      $cur = if ($_.h -eq $trFile) { ' aria-current="page"' } else { '' }
-      "<a class=`"tb-link`" href=`"$href`"$extra$cur>$(if ($en) { $_.te } else { $_.t })</a>"
-    }) -join '') + "</div>"
-  }
-  return "<nav class=`"tabbar`" aria-label=`"$navLabel`"><ul class=`"tb-list`">$lis</ul></nav>" +
-    "<div class=`"tb-drawer`" id=`"tb-drawer`" hidden><div class=`"tb-backdrop`" data-tb-close></div>" +
-    "<div class=`"tb-sheet`" role=`"dialog`" aria-modal=`"true`" aria-labelledby=`"tb-drawer-title`">" +
-      "<div class=`"tb-sheet-head`"><p class=`"tb-drawer-title`" id=`"tb-drawer-title`">$moreLabel</p><button type=`"button`" class=`"tb-close icon-btn`" data-tb-close aria-label=`"$closeLabel`">$IcoClose</button></div>" +
-      $body + "</div></div>"
+$IcoAvBack = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>'
+function Av-Nav([string]$trFile, [bool]$en) {
+  $p = Av-Parent $trFile $en
+  $navL = if ($en) { 'Page navigation' } else { 'Sayfa gezintisi' }
+  $setL = if ($en) { 'Settings: language and accessibility' } else { 'Ayarlar: dil ve erişilebilirlik' }
+  $thL = if ($en) { 'Switch to dark theme' } else { 'Koyu temaya geç' }
+  return "<nav class=`"av-nav`" aria-label=`"$navL`"><a class=`"av-back`" href=`"$($p.href)`" data-av-back>$IcoAvBack<span data-av-back-label>$($p.t)</span></a>" +
+    "<span class=`"av-title`" aria-hidden=`"true`"></span><span class=`"av-tools`"><button type=`"button`" class=`"theme-toggle av-theme`" role=`"switch`" aria-checked=`"false`" aria-label=`"$thL`">$IcoSun$IcoMoon</button>" +
+    "<button type=`"button`" class=`"av-gear`" aria-label=`"$setL`" aria-haspopup=`"dialog`" aria-controls=`"settings-panel`">$IcoGear</button></span></nav>"
 }
 $MassIcons = @{
   gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
@@ -1226,6 +1063,12 @@ function Write-Page {
   # The home screen app a page belongs to (Öğren, Dua Et, Keşfet), for its colour on phones
   $trOf = if ($Lang -eq 'en') { $EnAltMap[$File] } else { $File }
   $appAttr = if ($AppOf -and $AppOf[$trOf]) { " data-app=`"$($AppOf[$trOf])`"" } else { '' }
+  # Every page but the home screen becomes an app screen on phones (see Av-Nav); the class is set
+  # before the first paint so the page doesn't jump
+  $isHome = $File -match '(^|/)index\.html$'
+  $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches)document.documentElement.classList.add('av');" }
+  $avNav = if ($isHome) { '' } else { Av-Nav $(if ($trOf) { $trOf } else { $File }) ($Lang -eq 'en') }
+  $appAttr += if ($isHome) { '' } else { " data-avp=`"$(if ($trOf) { $trOf } else { $File })`"" }
   $a11yHtml = ($(if ($Lang -eq 'en') { $A11yWidgetHtmlEn } else { $A11yWidgetHtml })) -replace '\{\{LANG_TARGET\}\}', $a11yLangTarget
   $html = @"
 <!DOCTYPE html>
@@ -1258,17 +1101,17 @@ $hreflangTags
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>document.documentElement.classList.add('js');document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#0f1728')}var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
+<script>document.documentElement.classList.add('js');$($avJs)document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#0f1728')}var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
 <body$appAttr>
 $headerHtml
+$avNav
 <main id="main">
 $Body
 </main>
 $footerHtml
-$(Tab-Bar $(if ($Lang -eq 'en') { $EnAltMap[$File] } else { $File }) $Lang)
 $a11yHtml
 </body>
 </html>
@@ -3000,9 +2843,7 @@ $HomeApps = @(
        s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches you can attend Mass at in Turkey, city by city.' }) }
 )
 
-$IcoBack = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>'
 $IcoChevR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
-$IcoOpenPage = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>'
 function Home-Page([string]$lang) {
   $en = $lang -eq 'en'
   function L([string]$tr, [string]$enText) { if ($en) { $enText } else { $tr } }
@@ -3046,28 +2887,17 @@ function Home-Page([string]$lang) {
     "<button type=`"button`" class=`"ios-spot-x`" data-app-close>$(L 'Aramayı kapat' 'Close search')</button></div></div>"
   $apps = ($HomeApps | ForEach-Object {
     $app = $_; $appT = L $app.t $app.te; $i = 0
+    # Each row opens the page itself, which a phone shows as the next screen of this app
     $rows = ($app.pages | ForEach-Object {
-      "<button type=`"button`" class=`"ios-row`" data-push=`"$($app.id)-$i`"><span class=`"ios-ri`">$($_.ico)</span><span class=`"ios-rt`"><span class=`"ios-t`">$(L $_.t $_.te)</span><span class=`"ios-s`">$(L $_.s $_.se)</span></span>$IcoChevR</button>"
-      $i++
+      "<a class=`"ios-row`" href=`"$(F $_.f)`" data-app-page><span class=`"ios-ri`">$($_.ico)</span><span class=`"ios-rt`"><span class=`"ios-t`">$(L $_.t $_.te)</span><span class=`"ios-s`">$(L $_.s $_.se)</span></span>$IcoChevR</a>"
     }) -join ''
     $pagesHtml = "<section class=`"ios-page is-current`" data-page=`"root`"><header class=`"ios-nav`"><span></span><span class=`"ios-nt`">$appT</span><button type=`"button`" class=`"ios-done`" data-app-close>$close</button></header>" +
       "<div class=`"ios-scroll`"><h2 class=`"ios-large`">$appT</h2><p class=`"ios-lead`">$(L $app.s $app.se)</p><div class=`"ios-group`">$rows</div></div></section>"
-    $i = 0
-    foreach ($pg in $app.pages) {
-      $pt = L $pg.t $pg.te
-      $pagesHtml += "<section class=`"ios-page`" data-page=`"$($app.id)-$i`"><header class=`"ios-nav`"><button type=`"button`" class=`"ios-back`" data-pop>$IcoBack<span data-back-label>$appT</span></button><span class=`"ios-nt`">$pt</span><button type=`"button`" class=`"ios-done`" data-app-close>$close</button></header>" +
-        "<div class=`"ios-scroll`"><div class=`"ios-hero`"><span class=`"ios-ri ios-ri-lg`">$($pg.ico)</span><h3 class=`"ios-large`">$pt</h3><p class=`"ios-lead`">$(L $pg.s $pg.se)</p></div>" +
-        "<p class=`"ios-gh`" data-tree-head>$(L 'Bölümler' 'Sections')</p><div class=`"ios-tree`" data-tree=`"$($pg.f)`" data-title=`"$(Attr $pt)`"></div>" +
-        "<p class=`"ios-more`"><a class=`"ios-open`" href=`"$(F $pg.f)`" data-open-page>$(L 'Bütün içeriği göster' 'Show all content')$IcoOpenPage</a></p></div></section>"
-      $i++
-    }
     "<div class=`"ios-app`" id=`"app-$($app.id)`" data-app=`"$($app.id)`" role=`"dialog`" aria-modal=`"true`" aria-label=`"$appT`" hidden><div class=`"ios-splash app-$($app.id)`">$($app.ico)</div><div class=`"ios-stack`">$pagesHtml</div></div>"
   }) -join "`n"
   $tag = if ($en) { $SiteTagEn } else { $SiteTag }
-  # The English file for each Turkish page, for the apps' links (built in the browser)
-  $pageMap = if ($en) { " data-pages=`"$(Attr (ConvertTo-Json -InputObject $EnAltMap -Compress))`"" } else { '' }
   $body = @"
-<div class="wrap home-v2"$pageMap>
+<div class="wrap home-v2">
   <h1 class="visually-hidden">$tag</h1>
 $cards
   $searchDesk

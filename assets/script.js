@@ -428,7 +428,8 @@
      --------------------------------------------------------------- */
   function initReader() {
     var content = $('.content[data-reader]');
-    if (!content) return;
+    /* phones' app view shows the questions level by level instead of the reading bar */
+    if (!content || document.documentElement.classList.contains('av')) return;
     /* Search button (phones): opens the question search under the reading bar */
     var rbBtn = $('.rb-search-btn', content), rbBox = $('#rb-search');
     if (rbBtn && rbBox) {
@@ -631,7 +632,7 @@
     function place(x, y) {
       if (pop.classList.contains('is-sheet')) return;
       var fr = frame.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight, gap = 16, m = 8;
-      var head = $('.site-header'), topLimit = (head ? head.getBoundingClientRect().bottom : 0) + m;
+      var head = topBar(), topLimit = (head ? head.getBoundingClientRect().bottom : 0) + m;
       var left = x + gap;
       if (left + w > window.innerWidth - m) left = x - w - gap;
       left = Math.max(m, Math.min(left, window.innerWidth - w - m));
@@ -666,7 +667,7 @@
     /* Phones: the docked card covers the lower part of the screen, so scroll the chosen place above it */
     function keepAboveSheet(id) {
       var r = sites[id].querySelector('.amap-dot').getBoundingClientRect(), sheetTop = pop.getBoundingClientRect().top;
-      var head = $('.site-header'), top = head ? head.getBoundingClientRect().bottom : 0;
+      var head = topBar(), top = head ? head.getBoundingClientRect().bottom : 0;
       if (r.top > top + 12 && r.bottom < sheetTop - 12) return;
       window.scrollBy({ top: (r.top + r.bottom) / 2 - (top + sheetTop) / 2, behavior: 'auto' });
     }
@@ -952,7 +953,7 @@
       if (done) return;
       var b = beads[steps[idx].el];
       if (!b) return;
-      var r = b.getBoundingClientRect(), head = $('.site-header');
+      var r = b.getBoundingClientRect(), head = topBar();
       var top = head ? head.getBoundingClientRect().bottom : 0, bottom = window.innerHeight, pad = 14;
       if (narrow.matches) { var sr = sheet.getBoundingClientRect(); if (sr.top > top && sr.top < bottom) bottom = sr.top; }
       if (r.top >= top + pad && r.bottom <= bottom - pad) return;
@@ -1360,12 +1361,10 @@
     /* the apps */
     var EASE = 'cubic-bezier(.2,.9,.22,1)', openApp = null, fromIcon = null, fromBtn = null;
     var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var TREES = homeTrees(home);
-    /* Each level of an open app, down to the content levels under Bölümler, is a history
-       entry, so the browser's own back (Safari's swipe from the left edge, Android's back
-       gesture, the back button) steps back one level, as in an iPhone app. depth counts the
-       entries this page has added. */
-    var depth = 0, skipPop = 0, edgeAt = 0, viaButton = false, swipeAborts = [];
+    /* An open app is a history entry, so the browser's own back (Safari's swipe from the left
+       edge, Android's back gesture) closes it. Its rows open the pages themselves, which a phone
+       shows as the app's next screens (initAppView); their back button returns here. */
+    var marked = false, skipPop = 0;
     function iconTransform(icon, box) {
       var r = icon.getBoundingClientRect(), b = box.getBoundingClientRect();
       var sx = r.width / b.width, sy = r.height / b.height;
@@ -1389,12 +1388,7 @@
       if (window.visualViewport) { window.visualViewport.addEventListener('resize', placeSpot); window.visualViewport.addEventListener('scroll', placeSpot); }
       window.addEventListener('resize', placeSpot);
     }
-    function currentPage(app) { return $('.ios-page.is-current', app); }
-    function stateOf(app) {
-      var pg = currentPage(app), t = pg && pg._tree;
-      return { homeApp: app.id.slice(4), page: pg ? pg.getAttribute('data-page') : 'root', tree: t ? t.stack.slice(1).map(function (l) { return l.k; }) : [] };
-    }
-    function mark(app) { try { history.pushState(stateOf(app), ''); depth++; } catch (e) { /* file:// */ } }
+    function mark(app) { try { history.pushState({ homeApp: app.id.slice(4) }, ''); marked = true; } catch (e) { /* file:// */ } }
     function open(btn, instant) {
       var id = btn.getAttribute('data-app-open'), app = document.getElementById('app-' + id);
       if (!app || openApp) return;
@@ -1415,7 +1409,7 @@
         app.classList.add('is-open');
       });
       if (!instant) mark(app);
-      var focusTo = spot ? $('input', app) : $('.ios-page.is-current .ios-done', app);
+      var focusTo = spot ? $('input', app) : $('.ios-done', app);
       if (focusTo && !instant) setTimeout(function () { focusTo.focus({ preventScroll: true }); }, spot ? 60 : 350);
     }
     function finishClose(app) {
@@ -1424,10 +1418,7 @@
       box.style.transition = 'none'; box.style.transform = ''; box.style.borderRadius = ''; box.style.opacity = '';
       /* Ara opens empty next time, in the middle again */
       if (box !== app) { var q = $('input', app), rs = $('.search-results', app); if (q) q.value = ''; if (rs) { rs.hidden = true; rs.innerHTML = ''; } }
-      $$('.ios-page', app).forEach(function (p) {
-        p.classList.toggle('is-current', p.getAttribute('data-page') === 'root'); p.classList.remove('is-behind', 'is-scrolled'); p.style.transform = ''; p.style.transition = '';
-        if (p._tree) treeReset(p);
-      });
+      var sc = $('.ios-scroll', app); if (sc) sc.scrollTop = 0;
       document.documentElement.classList.remove('app-open');
       openApp = null;
     }
@@ -1443,748 +1434,589 @@
         if (spot) box.style.opacity = '0';
       }
       setTimeout(function () { finishClose(app); if (fromBtn) fromBtn.focus({ preventScroll: true }); }, still ? 0 : 390);
-      /* Kapat from deep inside: take all of this app's entries off the history at once */
-      if (!fromHistory && depth) { skipPop++; var n = depth; depth = 0; history.go(-n); }
-      else depth = 0;
-    }
-    function push(app, id, instant) {
-      var cur = currentPage(app), next = $('[data-page="' + id + '"]', app);
-      if (!next) return;
-      if (instant) { cur.style.transition = next.style.transition = 'none'; }
-      cur.classList.remove('is-current'); cur.classList.add('is-behind');
-      next.classList.remove('is-scrolled'); $('.ios-scroll', next).scrollTop = 0;
-      next.classList.add('is-current');
-      if (instant) requestAnimationFrame(function () { cur.style.transition = ''; next.style.transition = ''; });
-      treeStart(next);
-      if (!instant) {
-        mark(app);
-        var bk = $('.ios-back', next); if (bk) setTimeout(function () { bk.focus({ preventScroll: true }); }, 350);
-      }
-    }
-    /* One level back. instant: the page is already where it should be (a finished swipe, or
-       the browser's own swipe, which has animated it with its snapshot) */
-    function popDom(app, instant) {
-      var cur = currentPage(app), prev = $$('.ios-page.is-behind', app).pop();
-      if (!prev) return false;
-      if (instant) { cur.style.transition = prev.style.transition = 'none'; }
-      cur.classList.remove('is-current'); prev.classList.remove('is-behind'); prev.classList.add('is-current');
-      cur.style.transform = ''; prev.style.transform = '';
-      if (instant) requestAnimationFrame(function () { cur.style.transition = ''; prev.style.transition = ''; });
-      return true;
-    }
-    /* Back one level, whichever kind: a content level under Bölümler, then the page itself */
-    function stepBack(app, instant) {
-      var pg = currentPage(app);
-      if (pg && pg._kq && !pg._kq.sheet.hidden) kqSheet(pg, false);
-      if (pg && pg._tree && pg._tree.stack.length > 1) { treePop(pg, instant); return true; }
-      return popDom(app, instant);
-    }
-    function back() {
-      if (!openApp) return;
-      if (depth) { viaButton = true; history.back(); }
-      else if (!stepBack(openApp)) close();
+      if (!fromHistory && marked) { marked = false; skipPop++; history.back(); }
+      else marked = false;
+      if (location.hash && /^#app-(ogren|dua|kesfet)$/.test(location.hash)) { try { history.replaceState(history.state, '', location.pathname); } catch (e) { /* file:// */ } }
     }
     window.addEventListener('popstate', function () {
       if (skipPop) { skipPop--; return; }
-      if (!openApp) return;
-      depth = Math.max(0, depth - 1);
-      /* a back that began with a touch at the left edge is the browser's own swipe, which has
-         already shown the level underneath: put it in place at once. The < button and Esc are
-         not, even though the button sits at that edge too */
-      var nativeSwipe = !viaButton && Date.now() - edgeAt < 2500;
-      viaButton = false;
-      /* my own swipe of the same touch, if it had begun, stands down */
-      swipeAborts.forEach(function (f) { f(); });
-      if (!stepBack(openApp, nativeSwipe)) close(true);
-      /* a question's next / previous may have moved on to another section since this entry was
-         made: record where the reader really is now */
-      else { try { history.replaceState(stateOf(openApp), ''); } catch (e) { /* file:// */ } }
+      if (openApp) close(true);
     });
-
-    /* ----- Bölümler: the page's content, one level at a time. The page's icon and title
-       stay put (smaller inside a section) while the levels slide under the heading. */
-    var L = LANG === 'en'
-      ? { sections: 'Sections', loading: 'Loading…', failed: 'Could not load this. Please try again.', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done' }
-      : { sections: 'Bölümler', loading: 'Yükleniyor…', failed: 'Yüklenemedi. Lütfen tekrar deneyin.', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti' };
-    var chevR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
-    var openI = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
-    function escH(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-    function resolveNode(node) {
-      if (!node.load) return Promise.resolve(node);
-      if (!node._loading) node._loading = node.load().then(function (more) { for (var k in more) node[k] = more[k]; node.load = null; return node; });
-      return node._loading;
-    }
-    function levelEl(node) {
-      var el = document.createElement('div');
-      el.className = 'tree-level';
-      if (node.qn) { el.innerHTML = kqHtml(node); return el; }
-      var html = node.html ? '<div class="tree-text">' + node.html + '</div>' : '';
-      if (node.kids && node.kids.length) {
-        var out = [], openG = false;
-        node.kids.forEach(function (kid, i) {
-          if (kid.group) {
-            if (openG) out.push('</div>');
-            out.push('<p class="ios-gh tree-gh">' + escH(plainT(kid.group)) + '</p>' + (kid.note ? '<div class="tree-text tree-gnote">' + kid.note + '</div>' : '') + '<div class="ios-group">');
-            openG = true; return;
-          }
-          if (!openG) { out.push('<div class="ios-group">'); openG = true; }
-          var inner = '<span class="ios-rt"><span class="ios-t">' + escH(plainT(kid.t)) + '</span>' + (kid.s ? '<span class="ios-s">' + escH(kid.s) + '</span>' : '') + '</span>';
-          out.push(kid.go ? '<a class="ios-row" href="' + escH(kid.go) + '">' + inner + openI + '</a>'
-                          : '<button type="button" class="ios-row" data-tree-k="' + i + '">' + inner + chevR + '</button>');
-        });
-        if (openG) out.push('</div>');
-        html += out.join('');
-      }
-      el.innerHTML = html;
-      return el;
-    }
-
-    /* ----- The Katekizm's questions: one at a time, with Previous / Next under the answer,
-       a swipe left or right for the next or previous question, and a contents button at the
-       bottom right (a slider over all 598, and the questions around this one) */
-    var KQ_TOTAL = 598, KQ_STARTS = [1, 218, 357, 534];
-    var chevL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>';
-    var listI = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor" stroke="none"/></svg>';
-    var checkI = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
-    function kqHtml(q) {
-      return '<div class="kq" data-qn="' + q.qn + '">' +
-        '<p class="kq-count"><span>' + L.q + ' ' + q.qn + ' / ' + KQ_TOTAL + '</span><span class="kq-hint">' + L.swipe + '</span></p>' +
-        '<h4 class="kq-q">' + escH(plainT(q.q)) + '</h4>' +
-        '<div class="tree-text kq-a">' + q.html + '</div>' +
-        '<div class="kq-pager">' +
-          '<button type="button" class="kq-btn" data-kq="-1"' + (q.qn <= 1 ? ' disabled' : '') + '>' + chevL + '<span>' + L.prev + '</span></button>' +
-          '<button type="button" class="kq-btn kq-next" data-kq="1"' + (q.qn >= KQ_TOTAL ? ' disabled' : '') + '><span>' + L.next + '</span>' + chevR + '</button>' +
-        '</div></div>';
-    }
-    function navH(pg) { var n = $('.ios-nav', pg); return n ? n.offsetHeight : 0; }
-    function kqPartOf(n) { var pi = 0; KQ_STARTS.forEach(function (st, i) { if (n >= st) pi = i; }); return pi; }
-    function qIndex(pn) {
-      if (pn._q) return pn._q;
-      var m = {};
-      (function walk(node, path) {
-        (node.kids || []).forEach(function (kd, i) { if (kd.qn) m[kd.qn] = path.concat(i); else if (kd.kids) walk(kd, path.concat(i)); });
-      })(pn, []);
-      return (pn._q = m);
-    }
-    function kqTop(pg) { var t = pg._tree; return t && t.stack.length ? t.stack[t.stack.length - 1] : null; }
-    function kqSwap(pg, lvl, q, dir) {
-      var old = $('.kq', lvl), holder = document.createElement('div');
-      holder.innerHTML = kqHtml(q);
-      var nu = holder.firstChild;
-      if (still || !old) { if (old) lvl.removeChild(old); lvl.appendChild(nu); }
-      else {
-        old.style.position = 'absolute'; old.style.top = '0'; old.style.left = '0'; old.style.right = '0';
-        nu.style.transform = 'translateX(' + (dir > 0 ? 45 : -45) + '%)'; nu.style.opacity = '0';
-        lvl.appendChild(nu);
-        nu.getBoundingClientRect();
-        old.style.transition = nu.style.transition = 'transform .32s cubic-bezier(.2,.8,.2,1), opacity .24s';
-        old.style.transform = 'translateX(' + (dir > 0 ? -45 : 45) + '%)'; old.style.opacity = '0';
-        nu.style.transform = ''; nu.style.opacity = '';
-        setTimeout(function () { if (old.parentNode) old.parentNode.removeChild(old); nu.style.transition = ''; }, 340);
-      }
-      var scroller = $('.ios-scroll', pg), head = $('[data-tree-head]', pg), limit = head.offsetTop - navH(pg) - 8;
-      if (scroller.scrollTop > limit) scroller.scrollTop = limit;
-    }
-    /* Go to question n: load its part if need be, and set the levels under it (its section and
-       chapter) to the ones it belongs to, so that back always leads to its own list */
-    function kqGo(pg, n, dir) {
-      var t = pg._tree;
-      if (!t || t.busy || n < 1 || n > KQ_TOTAL) return Promise.resolve(false);
-      var root = t.stack[0].node, pi = kqPartOf(n), pk = -1;
-      root.kids.forEach(function (kd, i) { if (kd.part === pi) pk = i; });
-      if (pk < 0) return Promise.resolve(false);
-      t.busy = true;
-      return resolveNode(root.kids[pk]).then(function (partNode) {
-        var rel = qIndex(partNode)[n];
-        if (!rel) throw 0;
-        var path = [pk].concat(rel), nodes = [], cur = root;
-        path.forEach(function (k) { cur = cur.kids[k]; nodes.push(cur); });
-        var q = nodes[nodes.length - 1], top = kqTop(pg);
-        var same = t.stack.length === nodes.length + 1 && nodes.slice(0, -1).every(function (nd, i) { return t.stack[i + 1].node === nd; });
-        if (!same) {
-          t.stack.slice(1, -1).forEach(function (l) { if (l.el.parentNode) l.el.parentNode.removeChild(l.el); });
-          var mids = nodes.slice(0, -1).map(function (nd, i) {
-            var el = levelEl(nd); el.classList.add('is-hidden'); t.box.insertBefore(el, top.el);
-            return { node: nd, el: el, k: path[i] };
-          });
-          t.stack = [t.stack[0]].concat(mids, [top]);
-        }
-        top.node = q; top.k = path[path.length - 1];
-        kqSwap(pg, top.el, q, dir);
-        treeChrome(pg);
-        try { history.replaceState(stateOf(openApp), ''); } catch (e) { /* file:// */ }
-        t.busy = false;
-        return true;
-      })['catch'](function () { t.busy = false; return false; });
-    }
-    function kqTools(pg) {
-      if (pg._kq) return pg._kq;
-      var fab = document.createElement('button');
-      fab.type = 'button'; fab.className = 'kq-fab'; fab.setAttribute('aria-label', L.toc); fab.setAttribute('aria-haspopup', 'dialog');
-      fab.innerHTML = listI;
-      var sh = document.createElement('div');
-      sh.className = 'kq-sheet'; sh.hidden = true;
-      sh.innerHTML = '<div class="kq-sheet-bg" data-kq-close></div>' +
-        '<div class="kq-sheet-panel" role="dialog" aria-modal="true" aria-label="' + L.toc + '">' +
-          '<div class="kq-grab" aria-hidden="true"></div>' +
-          '<div class="kq-sheet-head"><p class="kq-sheet-t">' + L.toc + '</p><button type="button" class="ios-done" data-kq-close>' + L.done + '</button></div>' +
-          '<div class="kq-slider"><p class="kq-slider-l"></p><input type="range" min="1" max="' + KQ_TOTAL + '" step="1" aria-label="' + L.q + '"><p class="kq-slider-q"></p></div>' +
-          '<div class="kq-sheet-scroll"><p class="ios-gh kq-sheet-gh"></p><div class="ios-group kq-sheet-list"></div></div>' +
-        '</div>';
-      pg.appendChild(fab); pg.appendChild(sh);
-      var range = $('input', sh), lab = $('.kq-slider-l', sh), prev = $('.kq-slider-q', sh);
-      function lookup(n) {
-        var root = pg._tree.stack[0].node, pi = kqPartOf(n), pn = null;
-        root.kids.forEach(function (kd) { if (kd.part === pi && kd.kids) pn = kd; });
-        if (!pn) return null;
-        var rel = qIndex(pn)[n], cur = pn;
-        if (!rel) return null;
-        rel.forEach(function (k) { cur = cur.kids[k]; });
-        return cur;
-      }
-      function label() {
-        var n = +range.value, q = lookup(n);
-        lab.textContent = L.q + ' ' + n + ' / ' + KQ_TOTAL;
-        prev.textContent = q ? plainT(q.q) : '';
-      }
-      range.addEventListener('input', label);
-      range.addEventListener('change', function () {
-        var n = +range.value, cur = kqTop(pg).node.qn;
-        kqSheet(pg, false);
-        if (n !== cur) kqGo(pg, n, n > cur ? 1 : -1);
-      });
-      pg._kq = { fab: fab, sheet: sh, range: range, label: label };
-      return pg._kq;
-    }
-    function kqSheet(pg, on) {
-      var k = pg._kq; if (!k) return;
-      if (!on) { k.sheet.classList.remove('is-open'); setTimeout(function () { if (!k.sheet.classList.contains('is-open')) k.sheet.hidden = true; }, 260); k.fab.focus({ preventScroll: true }); return; }
-      var st = pg._tree.stack, q = st[st.length - 1].node, par = st[st.length - 2].node;
-      k.range.value = q.qn; k.label();
-      $('.kq-sheet-gh', k.sheet).textContent = plainT(par.t);
-      $('.kq-sheet-list', k.sheet).innerHTML = par.kids.filter(function (kd) { return kd.qn; }).map(function (kd) {
-        var here = kd.qn === q.qn;
-        return '<button type="button" class="ios-row' + (here ? ' is-here' : '') + '" data-kq-go="' + kd.qn + '"' + (here ? ' aria-current="true"' : '') + '><span class="ios-rt"><span class="ios-t">' + escH(plainT(kd.t)) + '</span></span>' + (here ? checkI : '') + '</button>';
-      }).join('');
-      k.sheet.hidden = false;
-      requestAnimationFrame(function () {
-        k.sheet.classList.add('is-open');
-        var sc = $('.kq-sheet-scroll', k.sheet), cur = $('.is-here', k.sheet);
-        if (cur) sc.scrollTop = Math.max(0, cur.offsetTop - sc.clientHeight / 2 + cur.offsetHeight / 2);
-      });
-      setTimeout(function () { k.range.focus({ preventScroll: true }); }, 60);
-    }
-    function treeStart(pg) {
-      var box = $('.ios-tree', pg);
-      if (!box || pg._tree) return pg._tree && pg._tree.ready;
-      var build = TREES[box.getAttribute('data-tree')];
-      var t = pg._tree = { box: box, stack: [], title: box.getAttribute('data-title') };
-      box.innerHTML = '<p class="tree-wait">' + L.loading + '</p>';
-      t.ready = (build ? build() : Promise.reject()).then(function (kids) {
-        var root = { t: t.title, kids: kids };
-        var el = levelEl(root);
-        box.innerHTML = ''; box.appendChild(el);
-        t.stack = [{ node: root, el: el, k: -1 }];
-        treeChrome(pg);
-      })['catch'](function () { box.innerHTML = '<p class="tree-wait">' + L.failed + '</p>'; pg._tree = null; });
-      return t.ready;
-    }
-    function treeReset(pg) {
-      var t = pg._tree; if (!t || !t.stack.length) return;
-      t.stack.slice(1).forEach(function (l) { if (l.el.parentNode) l.el.parentNode.removeChild(l.el); });
-      t.stack.length = 1;
-      var el = t.stack[0].el; el.className = 'tree-level'; el.style.transform = el.style.transition = el.style.opacity = '';
-      treeChrome(pg);
-      setSub(pg, false, false, 0);
-    }
-    /* The heading above the levels, the back button and the centre title, and Bütün içeriği
-       göster: it opens the page at the deepest section that has its own place on the page */
-    function treeChrome(pg) {
-      var t = pg._tree, st = t.stack, top = st[st.length - 1];
-      var head = $('[data-tree-head]', pg), backL = $('[data-back-label]', pg), nt = $('.ios-nt', pg), openA = $('[data-open-page]', pg);
-      if (!pg._base) pg._base = { back: backL.textContent, href: openA.getAttribute('href'), page: t.box.getAttribute('data-tree') };
-      var reader = !!top.node.qn;
-      head.textContent = plainT(reader ? st[st.length - 2].node.t : st.length > 1 ? top.node.t : L.sections);
-      backL.textContent = plainT(st.length > 2 ? st[st.length - 2].node.t : st.length > 1 ? t.title : pg._base.back);
-      nt.textContent = plainT(reader ? L.q + ' ' + top.node.qn : st.length > 1 ? top.node.t : t.title);
-      /* the Katekizm keeps the current section's title in its bar once past the first level */
-      pg.classList.toggle('is-deep', t.box.getAttribute('data-tree') === 'katesizm.html' && st.length > 1);
-      pg.classList.toggle('has-reader', reader);
-      if (reader) kqTools(pg);
-      var page = null, anchor = '';
-      st.slice(1).forEach(function (l) { if (l.node.page) { page = l.node.page; anchor = ''; } if (l.node.u) anchor = l.node.u; });
-      openA.setAttribute('href', (page ? pageUrl(page) : pg._base.href) + (anchor ? '#' + anchor : ''));
-    }
-    function slide(inEl, outEl, forward, instant, done) {
-      var dur = instant || still ? 0 : 450;
-      /* the level coming in is the one in the flow of the page (a swipe cut short by the
-         browser's own may have left it marked as leaving: out of the flow, so out of sight) */
-      inEl.classList.remove('is-leaving', 'is-hidden');
-      inEl.style.opacity = ''; inEl.style.filter = '';
-      outEl.classList.add('is-leaving');
-      inEl.style.transition = outEl.style.transition = 'none';
-      /* the level that goes underneath fades as it goes: the levels have no background of
-         their own (the wallpaper shows through), so the two must not show through each other */
-      var under = forward ? outEl : inEl;
-      inEl.style.transform = forward ? 'translateX(100%)' : 'translateX(-28%)';
-      outEl.style.transform = 'translateX(0)';
-      under.style.opacity = forward ? '1' : '0';
-      inEl.getBoundingClientRect();
-      if (dur) inEl.style.transition = outEl.style.transition = 'transform .45s cubic-bezier(.32,.72,0,1), opacity .3s';
-      inEl.style.transform = 'translateX(0)';
-      outEl.style.transform = forward ? 'translateX(-28%)' : 'translateX(100%)';
-      under.style.opacity = forward ? '0' : '1';
-      setTimeout(function () {
-        outEl.classList.remove('is-leaving');
-        inEl.style.transition = outEl.style.transition = ''; inEl.style.transform = ''; under.style.opacity = '';
-        done();
-      }, dur);
-    }
-    /* The page's icon and title: smaller inside a section, with the description gone, and full
-       size again at the page's own list. It grows or shrinks in view only when the new scroll
-       position (y) shows it; otherwise it just changes, out of sight. */
-    function setSub(pg, on, anim, y) {
-      var sc = $('.ios-scroll', pg), hero = $('.ios-hero', pg);
-      if (!hero || pg.classList.contains('is-sub') === on) { sc.scrollTop = y; return; }
-      pg.classList.add('no-anim');
-      pg.classList.toggle('is-sub', on);
-      var bottom = hero.offsetTop + hero.offsetHeight;
-      sc.scrollTop = y;
-      if (anim && !still && sc.scrollTop < bottom - navH(pg)) {
-        pg.classList.toggle('is-sub', !on);
-        pg.offsetHeight;
-        pg.classList.remove('no-anim');
-        pg.classList.toggle('is-sub', on);
-      } else { pg.offsetHeight; pg.classList.remove('no-anim'); }
-    }
-    function treePush(pg, k, instant) {
-      var t = pg._tree, top = t.stack[t.stack.length - 1], node = top.node.kids[k];
-      if (!node || t.busy) return Promise.resolve();
-      t.busy = true;
-      var scroller = $('.ios-scroll', pg);
-      top.scroll = scroller.scrollTop;
-      return resolveNode(node).then(function () {
-        var el = levelEl(node);
-        t.box.appendChild(el);
-        t.stack.push({ node: node, el: el, k: k });
-        treeChrome(pg);
-        /* a new level starts at the top, under the page's (now small) icon and title */
-        setSub(pg, true, !instant, 0);
-        if (!instant) mark(openApp);
-        return new Promise(function (res) {
-          slide(el, top.el, true, instant, function () { top.el.classList.add('is-hidden'); t.busy = false; res(); });
-        });
-      }, function () { t.busy = false; });
-    }
-    /* instant: the level is already in place (the browser's own back swipe, or mine); grow: the
-       icon and title may still grow back in view (after my swipe, not the browser's, whose
-       picture of the page already had them full size) */
-    function treePop(pg, instant, grow) {
-      var t = pg._tree; if (t.stack.length < 2) return;
-      var top = t.stack.pop(), prev = t.stack[t.stack.length - 1];
-      prev.el.classList.remove('is-hidden', 'is-leaving');
-      treeChrome(pg);
-      slide(prev.el, top.el, false, instant, function () { if (top.el.parentNode) top.el.parentNode.removeChild(top.el); });
-      setSub(pg, t.stack.length > 1, !instant || !!grow, prev.scroll || 0);
-    }
-
     document.addEventListener('click', function (e) {
       var t = e.target.closest ? e.target : e.target.parentNode;
       var o = t.closest('[data-app-open]'); if (o) { open(o); return; }
-      if (!openApp) return;
-      if (t.closest('[data-app-close]')) { close(); return; }
-      var kb = t.closest('[data-kq]');
-      if (kb) { var pk2 = kb.closest('.ios-page'), d = +kb.getAttribute('data-kq'); kqGo(pk2, kqTop(pk2).node.qn + d, d); return; }
-      if (t.closest('.kq-fab')) { kqSheet(t.closest('.ios-page'), true); return; }
-      if (t.closest('[data-kq-close]')) { kqSheet(t.closest('.ios-page'), false); return; }
-      var kg = t.closest('[data-kq-go]');
-      if (kg) { var pk3 = kg.closest('.ios-page'), n3 = +kg.getAttribute('data-kq-go'), c3 = kqTop(pk3).node.qn; kqSheet(pk3, false); if (n3 !== c3) kqGo(pk3, n3, n3 > c3 ? 1 : -1); return; }
-      var tk = t.closest('[data-tree-k]');
-      if (tk) { var pg = tk.closest('.ios-page'); if (pg._tree) treePush(pg, +tk.getAttribute('data-tree-k')); return; }
-      var ps = t.closest('[data-push]'); if (ps) { push(openApp, ps.getAttribute('data-push')); return; }
-      if (t.closest('[data-pop]')) back();
+      if (openApp && t.closest('[data-app-close]')) close();
     });
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape' || !openApp) return;
-      var sh = $('.ios-page.is-current .kq-sheet.is-open', openApp);
-      if (sh) kqSheet(sh.closest('.ios-page'), false); else back();
-    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openApp) close(); });
     $$('.ios-scroll').forEach(function (sc) {
       sc.addEventListener('scroll', function () { sc.parentNode.classList.toggle('is-scrolled', sc.scrollTop > 40); }, { passive: true });
     });
-    /* Swipe in from the left edge: what is on top (a content level, or else the page) follows
-       the finger and what is under it slides back into place; let go past a third of the way,
-       or with a flick, to go back */
-    $$('.ios-app').forEach(function (app) {
-      var x0 = null, y0 = 0, t0 = 0, dx = 0, live = false, cur = null, prev = null, w = 1, isTree = false, pg = null;
-      /* Put both back as they were. If the browser's own back has meanwhile taken the top level
-         off, the one under it is the page's content now and must stay in view */
-      function reset() {
-        var gone = cur && !stillOnTop();
-        if (cur) { cur.style.transition = ''; cur.style.transform = ''; }
-        if (prev) {
-          prev.style.transition = ''; prev.style.transform = ''; prev.style.filter = ''; prev.style.opacity = '';
-          if (isTree && !gone) prev.classList.add('is-hidden');
-          prev.classList.remove('is-leaving');
-        }
-      }
-      swipeAborts.push(function () { if (x0 !== null && live) { x0 = null; reset(); } else x0 = null; });
-      app.addEventListener('touchstart', function (e) {
-        var t = e.touches[0];
-        if (t.clientX < 40) edgeAt = Date.now();
-        x0 = null;
-        if (t.clientX >= 40) return;
-        pg = currentPage(app);
-        var tr = pg && pg._tree;
-        isTree = !!(tr && tr.stack.length > 1 && !tr.busy);
-        if (isTree) { cur = tr.stack[tr.stack.length - 1].el; prev = tr.stack[tr.stack.length - 2].el; }
-        else { cur = pg; prev = $$('.ios-page.is-behind', app).pop(); }
-        if (!prev) return;
-        x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); dx = 0; live = false; w = app.clientWidth;
-      }, { passive: true });
-      function stillOnTop() { return isTree ? (pg._tree && pg._tree.stack.length > 1 && pg._tree.stack[pg._tree.stack.length - 1].el === cur) : cur.classList.contains('is-current'); }
-      app.addEventListener('touchmove', function (e) {
-        if (x0 === null) return;
-        /* the browser's own back swipe got there first (see popstate): leave it to that */
-        if (!stillOnTop()) { x0 = null; reset(); return; }
-        var t = e.touches[0], mx = t.clientX - x0, my = t.clientY - y0;
-        if (!live) {
-          if (Math.abs(my) > 12 && Math.abs(my) > Math.abs(mx)) { x0 = null; return; }
-          if (mx < 8) return;
-          live = true;
-          if (isTree) { prev.classList.remove('is-hidden'); prev.classList.add('is-leaving'); }
-        }
-        dx = Math.max(0, mx);
-        var f = dx / w;
-        cur.style.transition = prev.style.transition = 'none';
-        cur.style.transform = 'translateX(' + dx + 'px)';
-        prev.style.transform = 'translateX(' + (-28 + 28 * f) + '%)';
-        if (isTree) prev.style.opacity = String(f);
-        if (!isTree) prev.style.filter = 'brightness(' + (0.94 + 0.06 * f) + ')';
-      }, { passive: true });
-      function end() {
-        if (x0 === null || !live) { x0 = null; return; }
-        x0 = null;
-        if (!stillOnTop()) { reset(); return; }
-        var fast = dx / Math.max(1, Date.now() - t0) > 0.5;
-        var go = dx > w * 0.33 || (fast && dx > 30);
-        cur.style.transition = prev.style.transition = 'transform .3s cubic-bezier(.2,.8,.2,1), filter .3s, opacity .3s';
-        cur.style.transform = go ? 'translateX(100%)' : 'translateX(0)';
-        prev.style.transform = go ? 'translateX(0)' : 'translateX(-28%)';
-        if (isTree) prev.style.opacity = go ? '1' : '0';
-        if (!isTree) prev.style.filter = go ? 'brightness(1)' : 'brightness(.94)';
-        var c = cur, p = prev, tree = isTree, page = pg;
-        setTimeout(function () {
-          /* only if the browser's own back hasn't already taken this level off meanwhile; if it
-             has, the level under it is on top now and stays in view */
-          var onTop = tree ? (page._tree && page._tree.stack[page._tree.stack.length - 1].el === c) : c.classList.contains('is-current');
-          if (go && onTop) {
-            if (tree) treePop(page, true, true); else popDom(app, true);
-            if (depth) { skipPop++; depth--; history.back(); }
-          } else if (tree && onTop) { p.classList.add('is-hidden'); }
-          p.classList.remove('is-leaving');
-          c.style.transform = ''; p.style.transform = ''; p.style.filter = ''; p.style.opacity = '';
-          requestAnimationFrame(function () { c.style.transition = ''; p.style.transition = ''; });
-        }, 300);
-      }
-      app.addEventListener('touchend', end);
-      app.addEventListener('touchcancel', function () { if (x0 !== null && live) reset(); x0 = null; });
-    });
-    /* A swipe across a question (not from the edge, which is back): left for the next one,
-       right for the one before; the question follows the finger a little on the way */
-    $$('.ios-app').forEach(function (app) {
-      var rs = null;
-      app.addEventListener('touchstart', function (e) {
-        rs = null;
-        var t = e.touches[0];
-        if (t.clientX < 40 || e.touches.length > 1) return;
-        var kq = e.target.closest && e.target.closest('.kq'), lvl = kq && kq.closest('.tree-level');
-        if (!lvl || lvl.classList.contains('is-hidden') || lvl.classList.contains('is-leaving')) return;
-        rs = { x: t.clientX, y: t.clientY, kq: kq, live: false, dx: 0, t0: Date.now() };
-      }, { passive: true });
-      app.addEventListener('touchmove', function (e) {
-        if (!rs) return;
-        var t = e.touches[0], dx = t.clientX - rs.x, dy = t.clientY - rs.y;
-        if (!rs.live) {
-          if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) { rs = null; return; }
-          if (Math.abs(dx) < 12) return;
-          rs.live = true;
-        }
-        rs.dx = dx;
-        rs.kq.style.transition = 'none';
-        rs.kq.style.transform = 'translateX(' + dx * 0.5 + 'px)';
-        rs.kq.style.opacity = String(1 - Math.min(0.4, Math.abs(dx) / 800));
-      }, { passive: true });
-      function done() {
-        var r0 = rs; rs = null;
-        if (!r0 || !r0.live) return;
-        var pg = r0.kq.closest('.ios-page'), top = kqTop(pg), n = top && top.node.qn, dir = r0.dx < 0 ? 1 : -1;
-        var fast = Math.abs(r0.dx) / Math.max(1, Date.now() - r0.t0) > 0.45;
-        if (n && (Math.abs(r0.dx) > 70 || (fast && Math.abs(r0.dx) > 30)) && n + dir >= 1 && n + dir <= KQ_TOTAL) {
-          kqGo(pg, n + dir, dir).then(function (ok) { if (!ok) snap(r0.kq); });
-        } else snap(r0.kq);
-      }
-      function snap(kq) { kq.style.transition = 'transform .25s, opacity .25s'; kq.style.transform = ''; kq.style.opacity = ''; }
-      app.addEventListener('touchend', done);
-      app.addEventListener('touchcancel', function () { if (rs && rs.live) snap(rs.kq); rs = null; });
-    });
 
-    /* Back on this page from a page opened inside an app, when the browser reloaded it rather
-       than keeping it in memory: the history entry says which app, page and content level */
-    var st = history.state;
-    if (st && st.homeApp) {
-      var btn = $('[data-app-open="' + st.homeApp + '"]');
-      if (btn && st.homeApp !== 'ara') {
-        open(btn, true);
-        var app0 = openApp;
-        depth = 1;
-        if (st.page && st.page !== 'root' && $('[data-page="' + st.page + '"]', app0)) {
-          push(app0, st.page, true); depth = 2;
-          var pg0 = currentPage(app0), path = st.tree || [];
-          (treeStart(pg0) || Promise.resolve()).then(function () {
-            return path.reduce(function (pr, k) { return pr.then(function () { return treePush(pg0, k, true).then(function () { depth++; }); }); }, Promise.resolve());
-          });
-        }
-      } else { try { history.replaceState(null, ''); } catch (e) { /* file:// */ } }
-    }
+    /* Back here from one of an app's pages (its back button, or the browser's back when the page
+       was not kept in memory): the history entry says which app was open. A page opened without
+       coming from here (from a search engine, say) links back to its app as #app-ogren, #app-dua or #app-kesfet. */
+    var st = history.state, want = st && st.homeApp ? st.homeApp : (location.hash || '').replace(/^#app-/, '');
+    var btn0 = /^(ogren|dua|kesfet)$/.test(want) && $('[data-app-open="' + want + '"]');
+    if (btn0) { open(btn0, true); marked = !!(st && st.homeApp); }
+    else if (st && st.homeApp) { try { history.replaceState(null, ''); } catch (e) { /* file:// */ } }
   }
 
   /* ---------------------------------------------------------------
-     The home screen apps' content trees: for each page, its sections,
-     their parts and the text itself, from the site's data files (loaded
-     only once a page is opened). A node: t title, s a subtitle, u its
-     anchor on the page, page another page it lives on, go a link to
-     follow instead, html its text, kids the next level, load a promise
-     for the rest of the node.
+     Phones: each page as a screen of an app (html.av, set in the page's
+     head before the first paint). Every word of the page stays in its
+     HTML, just as on a computer: search engines read the phone's page
+     and must find all of it there, and they do not tap. The phone shows
+     it one level at a time, like the Settings app: the page's sections
+     as a list; a section's text, with its items as a list; an item on
+     its own. Each level is a history entry at its own #anchor, so the
+     browser's back (Safari's swipe from the left edge too) steps back a
+     level, and any link to #something opens the level that holds it.
      --------------------------------------------------------------- */
-  var PAGE_MAP = null;
-  /* [[Türkçe|English]]: a term with its English original, as on the pages; as plain text in
-     titles and rows */
-  var GLOSS = /\[\[([^|\]]+)\|([^\]]+)\]\]/g;
-  function plainT(x) { return String(x == null ? '' : x).replace(GLOSS, '$1 ($2)').replace(/<[^>]+>/g, ''); }
-  function pageUrl(f) { return ROOT + (LANG === 'en' ? ((PAGE_MAP && PAGE_MAP[f]) || f) : f); }
-  function homeTrees(home) {
-    try { PAGE_MAP = JSON.parse(home.getAttribute('data-pages') || 'null'); } catch (e) { PAGE_MAP = null; }
-    var EN = LANG === 'en';
-    function tx(o, k) { return EN && o[k + 'En'] != null ? o[k + 'En'] : o[k]; }
-    function esc(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-    function inl(x) {
-      return String(x == null ? '' : x).replace(GLOSS, '$1<span class="gloss" lang="en"> ($2)</span>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-        .replace(/\n/g, '<br>');
-    }
-    function P(x) { return x ? '<p>' + inl(x) + '</p>' : ''; }
-    function paras(x) { return x ? String(x).split(/\n\s*\n/).map(P).join('') : ''; }
-    function note(x) { return x ? '<p class="tree-note">' + inl(x) + '</p>' : ''; }
-    function list(items, ordered) { var tag = ordered ? 'ol' : 'ul'; return '<' + tag + '>' + items.map(function (i) { return '<li>' + inl(i) + '</li>'; }).join('') + '</' + tag + '>'; }
-    function data(src, name) { return loadDataScript(src, name).then(function () { return window[name]; }); }
-    function part(i) {
-      return new Promise(function (resolve, reject) {
-        var have = function () { return window.COMPENDIUM && window.COMPENDIUM.parts && window.COMPENDIUM.parts[i]; };
-        if (have()) return resolve(have());
-        var sc = document.createElement('script');
-        sc.src = dataUrl('data/compendium-' + (i + 1) + '.js');
-        sc.onload = function () { have() ? resolve(have()) : reject(); }; sc.onerror = reject;
-        document.head.appendChild(sc);
-      });
-    }
-    var T = function (tr, en) { return EN ? en : tr; };
-    var ccc = T('KKK ', 'CCC ');
-    function partTree(pt) {
-      var root = { kids: [] }, stack = [{ level: 1, node: root }];
-      pt.items.forEach(function (it) {
-        var top = stack[stack.length - 1].node;
-        if (it.type === 'heading') {
-          var lv = +it.level; if (lv < 2) return;
-          /* the smaller headings head groups of rows within their section, as in Settings,
-             rather than adding another level to tap through */
-          if (lv >= 4) { if (top !== root) top.kids.push({ group: EN ? it.en : it.tr, u: it.id }); return; }
-          while (stack.length > 1 && stack[stack.length - 1].level >= lv) stack.pop();
-          var n = { t: EN ? it.en : it.tr, u: it.id, kids: [] };
-          stack[stack.length - 1].node.kids.push(n);
-          stack.push({ level: lv, node: n });
-        } else if (it.type === 'qa') {
-          var qa = EN ? it.en : it.tr;
-          top.kids.push({ t: it.n + '. ' + qa.q, qn: +it.n, q: qa.q, u: it.id, html: paras(qa.a) + (it.ccc ? note(ccc + it.ccc) : '') });
-        } else if (it.type === 'quote' && top !== root) {
-          var last = top.kids[top.kids.length - 1];
-          if (last && last.group) last.note = (last.note || '') + P(EN ? it.en : it.tr);
-          else top.html = (top.html || '') + P(EN ? it.en : it.tr);
-        }
-      });
-      return root.kids;
-    }
-    function prayer(pr) { var x = EN ? pr.en : pr.tr; return { t: x.title, u: pr.id, html: P(x.text) }; }
-    function formula(fm) { var x = EN ? fm.en : fm.tr; return { t: x.title, u: fm.id, html: list(x.items) }; }
-    function prayersAndFormulas(X) {
-      return X.appendix.prayers.map(prayer).concat([{ t: T('Katolik Öğretinin Formülleri', 'Formulas of Catholic Doctrine'), u: 'ek-b', kids: X.appendix.formulas.map(formula) }]);
-    }
-    var MONTHS = EN ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-                    : ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-    function dayDate(d) { return EN ? MONTHS[d.m - 1] + ' ' + d.d : d.d + ' ' + MONTHS[d.m - 1]; }
-    function dayHtml(S, d) {
-      if (!d.saints || !d.saints.length) return P(tx(S, 'genelTitle')) + paras(tx(S, 'genelBio'));
-      return (d.rank ? note(EN && d.rankEn ? d.rankEn : d.rank) : '') + d.saints.map(function (sn) {
-        return '<p><strong>' + inl(tx(sn, 'name')) + '</strong>' + (tx(sn, 'title') ? ' · ' + inl(tx(sn, 'title')) : '') + '</p>' + paras(tx(sn, 'bio'));
-      }).join('');
-    }
-    return {
-      'neden-katoligiz.html': function () {
-        return data('data/neden-katoligiz.js', 'WHY_CATHOLIC').then(function (W) {
-          var ask = T('Bir şüpheci sorabilir:', 'A skeptic might ask:');
-          return W.parts.map(function (pt) {
-            return { t: EN ? pt.en : pt.title, u: pt.id, html: P(tx(pt, 'thesis')), kids: pt.topics.map(function (tp) {
-              return { t: EN ? tp.en : tp.title, u: tp.id, html: '<p><strong>' + inl(tx(tp, 'q')) + '</strong></p>' + P(tx(tp, 'lede')) +
-                tx(tp, 'points').map(P).join('') + '<p><strong>' + ask + '</strong> ' + inl(tx(tp, 'objection')) + '</p>' + P(tx(tp, 'reply')) };
-            }) };
-          }).concat([{ t: T('Hepsi bir arada', 'Putting it together'), u: 'sonuc', html: list(tx(W, 'chain'), true) + P(tx(W, 'closing')) }]);
-        });
-      },
-      'katesizm.html': function () {
-        var X = function () { return data('data/extras.js', 'COMPENDIUM_EXTRAS'); };
-        function letter(k) { return function () { return X().then(function (x) { var d = EN ? x[k].en : x[k].tr; return { html: (d.address ? P(d.address) : '') + d.paragraphs.map(P).join('') + (d.closing || []).map(P).join('') }; }); }; }
-        var names = EN ? ['I. The Profession of Faith', 'II. The Celebration of the Christian Mystery', 'III. Life in Christ', 'IV. Christian Prayer']
-                       : ['I. İnanç Beyanı', 'II. Hristiyan Gizeminin Kutlanması', 'III. Mesih’te Yaşam', 'IV. Hristiyan Duası'];
-        var ranges = EN ? ['Questions 1–217', 'Questions 218–356', 'Questions 357–533', 'Questions 534–598'] : ['Sorular 1–217', 'Sorular 218–356', 'Sorular 357–533', 'Sorular 534–598'];
-        return Promise.resolve([
-          { t: 'Motu Proprio', s: T('XVI. Benediktus, 2005', 'Benedict XVI, 2005'), page: 'motu-proprio.html', load: letter('motuProprio') },
-          { t: T('Giriş', 'Introduction'), s: T('Kardinal Ratzinger, 2005', 'Cardinal Ratzinger, 2005'), page: 'giris.html', load: letter('introduction') }
-        ].concat(names.map(function (nm, i) {
-          return { t: nm, s: ranges[i], page: PAGES[i], part: i, load: function () { return part(i).then(function (pt) { return { kids: partTree(pt) }; }); } };
-        })).concat([{ t: T('Ekler', 'Appendix'), s: T('Dualar ve formüller', 'Prayers and formulas'), page: 'ekler.html', load: function () { return X().then(function (x) { return { kids: prayersAndFormulas(x) }; }); } }]));
-      },
-      'kutsal-kitap.html': function () {
-        return fetch(pageUrl('kutsal-kitap.html')).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (h) {
-          var doc = new DOMParser().parseFromString(h, 'text/html'), out = [], cur = null;
-          var prose = doc.querySelector('main .prose') || doc.querySelector('main');
-          Array.prototype.forEach.call(prose.children, function (el) {
-            if (el.tagName === 'H2') { cur = { t: el.textContent.trim(), u: el.id, html: '' }; out.push(cur); return; }
-            if (!cur || !/^(P|UL|OL)$/.test(el.tagName)) return;
-            var c = el.cloneNode(true);
-            Array.prototype.forEach.call(c.querySelectorAll('[class]'), function (x) { x.removeAttribute('class'); });
-            c.removeAttribute('class');
-            cur.html += c.outerHTML;
-          });
-          return out;
-        });
-      },
-      'sss.html': function () {
-        return data('data/sss.js', 'COMPENDIUM_FAQ').then(function (F) {
-          return F.categories.map(function (c) {
-            return { t: EN ? c.en : c.title, u: c.id, kids: c.items.map(function (it) { return { t: tx(it, 'q'), u: it.id, html: paras(tx(it, 'a')) + (it.ccc ? note(ccc + it.ccc) : '') }; }) };
-          });
-        });
-      },
-      'katolik-sureci.html': function () {
-        return data('data/katolik-sureci.js', 'COMPENDIUM_SURECI').then(function (S) {
-          function box(o, u) { return { t: tx(o, 'title'), u: u, html: paras(tx(o, 'body')) }; }
-          return [
-            { t: T('İki Yol', 'Two Paths'), u: 'iki-yol', kids: S.paths.map(function (p) { return { t: tx(p, 'title'), html: paras(tx(p, 'text')) }; }) },
-            { t: T('Süreç Adım Adım', 'The Process, Step by Step'), u: 'surec', html: P(tx(S, 'processIntro')), kids: S.steps.map(function (st, i) { return { t: (i + 1) + '. ' + (EN ? st.en : st.title), html: paras(tx(st, 'text')) }; }) },
-            box(S.already, 'zaten-hristiyan'), box(S.conditional, 'sartli-vaftiz'), box(S.waiting, 'beklerken'),
-            { t: T('Pratik Sorular', 'Practical Questions'), u: 'pratik-sorular', kids: S.faq.map(function (f) { return { t: tx(f, 'q'), u: f.id, html: paras(tx(f, 'a')) }; }) }
-          ];
-        });
-      },
-      'meseller.html': function () {
-        return data('data/meseller.js', 'PARABLES').then(function (M) {
-          return M.categories.map(function (c) {
-            return { t: EN ? c.en : c.title, u: c.id, html: P(tx(c, 'lead')), kids: c.items.map(function (it) { return { t: tx(it, 'name'), u: it.id, html: note(tx(it, 'ref')) + paras(tx(it, 'bio')) }; }) };
-          });
-        });
-      },
-      'kutsal-ayin.html': function () {
-        return data('data/kutsal-ayin.js', 'MASS').then(function (M) {
-          var roles = EN ? M.roleLabelsEn : M.roleLabels;
-          return M.parts.map(function (pt) {
-            return { t: (EN ? pt.en : pt.title), u: pt.id, html: P(tx(pt, 'lead')) + pt.lines.map(function (ln) {
-              var who = roles[ln.role];
-              return '<p' + (ln.role === 'N' ? ' class="tree-note"' : '') + '>' + (who ? '<strong>' + esc(who) + ':</strong> ' : '') + inl(EN ? ln.en : ln.tr) + '</p>';
-            }).join('') };
-          });
-        });
-      },
-      'tesbih-duasi.html': function () {
-        return data('data/tespih.js', 'COMPENDIUM_ROSARY').then(function (R) {
-          return [
-            { t: T('Tesbih nasıl dua edilir?', 'How to Pray the Rosary'), u: 'nasil', html: list(R.steps.map(function (st) { return EN ? st.en : st.tr; }), true) },
-            { t: T('Gizemler', 'The Mysteries'), u: 'gizemler', kids: R.sets.map(function (set) {
-              return { t: EN ? set.en : set.tr, s: EN ? set.dayEn : set.dayTr, u: 'gizem-' + set.id, html: list(set.items.map(function (it) { return EN ? it.en : it.tr; }), true) };
-            }) },
-            { t: T('Adım Adım Tesbih', 'Pray the Rosary, Bead by Bead'), go: pageUrl('tesbih-duasi.html') + '#tesbih-rehberi' },
-            { t: T('Dualar', 'Prayers'), kids: R.prayers.map(function (pr) { var x = EN ? pr.en : pr.tr; return { t: x.title, html: P(x.text) }; }) }
-          ];
-        });
-      },
-      'ekler.html': function () {
-        return data('data/extras.js', 'COMPENDIUM_EXTRAS').then(prayersAndFormulas);
-      },
-      'gunah-cikarma.html': function () {
-        return data('data/gunah-cikarma.js', 'CONFESSION').then(function (C) {
-          var sm = C.sealMartyrs;
-          return [
-            { t: T('Nasıl İşler? Adım Adım', 'How It Works, Step by Step'), u: 'adim-adim', kids: C.steps.map(function (st, i) { return { t: (i + 1) + '. ' + (EN ? st.en : st.title), html: paras(tx(st, 'text')) }; }) },
-            { t: T('Vicdan Muhasebesi', 'Examination of Conscience'), u: 'vicdan-muhasebesi', html: P(tx(C, 'examenIntro')), kids: C.examenGroups.map(function (g) { return { t: tx(g, 'title'), html: list(EN ? g.itemsEn : g.items) }; }) },
-            { t: T('Sık Sorulan Sorular ve Korkular', 'Frequently Asked Questions and Fears'), u: 'sorular-ve-korkular', kids: C.faq.map(function (f) { return { t: tx(f, 'q'), u: f.id, html: paras(tx(f, 'a')) }; }) },
-            { t: tx(sm, 'title'), u: 'muhur-sehitleri', html: P(tx(sm, 'intro')) + (EN ? sm.itemsEn : sm.items).map(function (m) { return '<p><strong>' + inl(m.name) + '</strong> ' + inl(m.detail) + '</p>'; }).join('') }
-          ];
-        });
-      },
-      'azizler.html': function () {
-        var S = function () { return data('data/azizler.js', 'SAINTS'); };
-        var now = new Date();
-        return Promise.resolve([
-          { t: T('Bugünün Azizi', 'Saint of the Day'), s: dayDate({ m: now.getMonth() + 1, d: now.getDate() }), u: 'bugun-azizi', load: function () {
-            return S().then(function (sa) { var d = sa.days.filter(function (x) { return x.m === now.getMonth() + 1 && x.d === now.getDate(); })[0]; return { html: d ? dayHtml(sa, d) : '' }; });
-          } },
-          { t: T('Takvim', 'Calendar'), u: 'takvim', load: function () {
-            return S().then(function (sa) {
-              return { kids: MONTHS.map(function (mn, mi) {
-                return { t: mn, u: 'ay-' + (mi + 1), kids: sa.days.filter(function (x) { return x.m === mi + 1; }).map(function (d) {
-                  return { t: dayDate(d), s: (d.saints || []).map(function (sn) { return tx(sn, 'name'); }).join(', '), html: dayHtml(sa, d) };
-                }) };
-              }) };
-            });
-          } },
-          { t: T('En Çok Bilinen 20 Aziz', "20 of the Church's Best-Known Saints"), u: EN ? 'best-known-saints' : 'buyuk-azizler', load: function () {
-            return data('data/buyuk-azizler.js', 'BUYUK_AZIZLER').then(function (B) {
-              return { kids: B.saints.map(function (sn) {
-                return { t: EN ? sn.en : sn.name, s: tx(sn, 'epithet'), page: sn.id + '.html', html: note(tx(sn, 'era')) + P(tx(sn, 'summary')) + paras(tx(sn, 'body')) };
-              }) };
-            });
-          } },
-          { t: T('Yıla Göre Değişen Bayramlar', 'Feasts That Move With the Year'), u: 'hareketli-bayramlar', load: function () {
-            return S().then(function (sa) { return { kids: sa.movable.map(function (f) { return { t: tx(f, 'title'), s: tx(f, 'rank'), html: paras(tx(f, 'bio')) }; }) }; });
-          } }
-        ]);
-      },
-      'mucizeler.html': function () {
-        return data('data/mucizeler.js', 'MIRACLES').then(function (M) {
-          return M.categories.map(function (c) {
-            return { t: EN ? c.en : c.title, u: c.id, html: P(tx(c, 'lead')), kids: c.items.map(function (it) { return { t: tx(it, 'name'), u: it.id, html: note(tx(it, 'place')) + paras(tx(it, 'bio')) }; }) };
-          });
-        });
-      },
-      'topraklarimizda-hristiyanlik.html': function () {
-        return data('data/topraklarimizda-hristiyanlik.js', 'ANATOLIA').then(function (A) {
-          return A.sections.map(function (sc) { return { t: EN ? sc.en : sc.title, u: sc.id, html: paras(tx(sc, 'body')) }; })
-            .concat([{ t: T('Anadolu’daki Kökler Haritası', 'Map of Our Anatolian Roots'), go: pageUrl('topraklarimizda-hristiyanlik.html') + '#amap-h' }]);
-        });
-      },
-      'kiliseler.html': function () {
-        return data('data/kiliseler.js', 'CHURCHES').then(function (C) {
-          var rites = {}; C.rites.forEach(function (r) { rites[r.id] = EN ? r.en : r.tr; });
-          var hoursL = T('Ayin saatleri:', 'Mass times:'), siteL = T('Resmi site', 'Official website'), closedL = T('Şu anda kapalı.', 'Currently closed.');
-          return C.cities.map(function (city) {
-            return { t: city.name, s: city.churches.length + ' ' + T('kilise', city.churches.length === 1 ? 'church' : 'churches'), u: city.id, kids: city.churches.map(function (ch) {
-              return { t: tx(ch, 'name'), s: rites[ch.rite], html: (ch.inactive ? '<p><strong>' + closedL + '</strong> ' + inl(tx(ch, 'inactiveNote')) + '</p>' : '') +
-                P(rites[ch.rite] + ' · ' + ch.district + ', ' + city.name) + P(ch.address) + (ch.phone ? P(ch.phone) : '') +
-                '<p><strong>' + hoursL + '</strong> ' + inl(tx(ch, 'hours')) + '</p>' + (ch.website ? '<p><a href="' + esc(ch.website) + '" target="_blank" rel="noopener">' + siteL + '</a></p>' : '') };
-            }) };
-          }).concat([{ t: T('Yakınımda Katolik kilisesi yoksa', 'If there is no Catholic church near me'), u: EN ? 'no-catholic-church-nearby' : 'katolik-bulunamadiginda', html: paras(tx(C, 'orthodoxNote')) }]);
-        });
+  var AV_TX = {
+    tr: { sections: 'Bölümler', share: 'Paylaş', copied: 'Bağlantı kopyalandı', text: 'Metin', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti', today: 'Bugünün Azizi', calendar: 'Takvim', church: 'kilise', churches: 'kilise' },
+    en: { sections: 'Sections', share: 'Share', copied: 'Link copied', text: 'Text', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done', today: 'Saint of the Day', calendar: 'Calendar', church: 'church', churches: 'churches' }
+  };
+  var AV_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
+  var AV_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
+  var AV_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M8 11H6.5A1.5 1.5 0 0 0 5 12.5v7A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>';
+  function avText(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+  /* A heading's text without its small label or English gloss */
+  function avHead(h) {
+    if (!h) return '';
+    var c = h.cloneNode(true);
+    $$('.label, .en, .gloss, .sec-label, svg', c).forEach(function (x) { x.remove(); });
+    return avText(c);
+  }
+  function avNode(el, t, s, norow) {
+    if (!el) return;
+    el.setAttribute('data-av-node', '');
+    if (t) el.setAttribute('data-av-t', t);
+    if (s) el.setAttribute('data-av-s', s);
+    if (norow) el.setAttribute('data-av-norow', '');
+  }
+  function avLink(el, t, s) { if (!el) return; el.setAttribute('data-av-link', ''); if (t) el.setAttribute('data-av-t', t); if (s) el.setAttribute('data-av-s', s); }
+  /* A flat run of "heading, then its text" into one box per heading, so a section is one element */
+  function avWrap(box, headSel, stopSel) {
+    var cur = null, out = [];
+    if (!box) return out;
+    Array.prototype.slice.call(box.children).forEach(function (el) {
+      if (el.matches(headSel)) {
+        cur = document.createElement('div'); cur.className = 'av-sec'; cur.setAttribute('data-av-id', el.id);
+        box.insertBefore(cur, el); cur.appendChild(el); out.push(cur); return;
       }
-    };
+      if (stopSel && el.matches(stopSel)) { cur = null; return; }
+      if (cur) cur.appendChild(el);
+    });
+    return out;
+  }
+  /* The Katekizm's parts: sections (h2) holding chapters (h3) holding the questions, with the
+     smaller headings left in place as the headings of groups of questions */
+  function avNest(box) {
+    var stack = [{ lv: 1, el: box }];
+    Array.prototype.slice.call(box.children).forEach(function (el) {
+      var m = / sec-l([23])( |$)/.exec(' ' + el.className + ' ');
+      if (m) {
+        var lv = +m[1];
+        while (stack[stack.length - 1].lv >= lv) stack.pop();
+        var w = document.createElement('div'); w.className = 'av-sec'; w.setAttribute('data-av-id', el.id);
+        var parent = stack[stack.length - 1].el;
+        if (parent === box) box.insertBefore(w, el); else parent.appendChild(w);
+        w.appendChild(el);
+        avNode(w, avText($('.sec-title', el)) || avHead(el), avText($('.sec-label', el)));
+        stack.push({ lv: lv, el: w });
+        return;
+      }
+      var top = stack[stack.length - 1].el;
+      if (top !== box) top.appendChild(el);
+    });
+  }
+  var AV_PAGES = {
+    'neden-katoligiz.html': function (m) {
+      $$('.why-step', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.why-step-head .label', s))); });
+      avNode($('.why-end', m), avHead($('h2', $('.why-end', m))));
+      $$('.why-card', m).forEach(function (c) { avNode(c, avText($('.why-kicker', c)), avText($('.why-q', c))); });
+    },
+    'sss.html': function (m) {
+      $$('.faq-cat', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.faq-cat-en', s))); });
+      $$('.faq-item', m).forEach(function (d) { avNode(d, avText($('.faq-q', d)) || avText($('summary', d))); });
+    },
+    'meseller.html': function (m) { AV_PAGES['mucizeler.html'](m); },
+    'mucizeler.html': function (m) {
+      $$('.mira-cat', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.faq-cat-en', s))); });
+      $$('.mira-item', m).forEach(function (d) { avNode(d, avText($('.mira-name', d)), avText($('.mira-place', d))); });
+    },
+    'kutsal-ayin.html': function (m) {
+      $$('.mass-part', m).forEach(function (d) { avNode(d, avText($('h2', d)), avText($('.mass-part-n', d))); });
+    },
+    'katolik-sureci.html': function (m) {
+      avWrap($('.wrap', m), 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
+    },
+    'gunah-cikarma.html': function (m) {
+      avWrap($('.wrap', m), 'h2.section-title[id]', 'aside, p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      var a = $('#muhur-sehitleri', m); if (a) avNode(a, avText($('.footnote-label', a)).replace(/^\*\s*/, ''));
+      $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
+    },
+    'ekler.html': function (m) {
+      avWrap($('.wrap', m), 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      $$('.text-card[id]', m).forEach(function (c) { avNode(c, avText($('.t-title', c))); });
+    },
+    'tesbih-duasi.html': function (m) {
+      var rt = $('#tesbih-rehberi', m); avNode(rt, avHead($('h2', rt)));
+      avWrap($('.wrap', m), 'h2.section-title[id]:not(#rt-h)', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      $$('.myst[id]', m).forEach(function (a) { avNode(a, avText($('h3', a)), avText($('.m-day', a))); });
+    },
+    'kutsal-kitap.html': function (m) {
+      avWrap($('.kk-body', m) || $('.prose', m), 'h2[id]').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+    },
+    'azizler.html': function (m, T) {
+      var wrap = $('.wrap', m), today = $('#bugun-azizi', m);
+      avNode(today, T.today, avText($('[data-today-date]', today)));
+      /* the calendar: the month links and the months into one box */
+      var pills = $('#takvim', m), cal = $('.saints-cal', m);
+      if (pills && cal) {
+        var box = document.createElement('div'); box.className = 'av-sec'; box.setAttribute('data-av-id', 'takvim');
+        pills.parentNode.insertBefore(box, pills); box.appendChild(pills); box.appendChild(cal);
+        avNode(box, T.calendar);
+      }
+      avWrap(wrap, 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      $$('.saints-cal .month', m).forEach(function (mo) {
+        var mn = avText($('.month-title', mo));
+        avNode(mo, mn);
+        $$('.day-cell', mo).forEach(function (c) {
+          var d = c.getAttribute('data-d'), mm = c.getAttribute('data-m');
+          c.setAttribute('data-av-id', 'gun-' + mm + '-' + d);
+          var names = $$('.s-name', c).map(avText).join(', ');
+          avNode(c, LANG === 'en' ? mn + ' ' + d : d + ' ' + mn, names || avText($('.day-rank', c)));
+        });
+      });
+      $$('.saint-grid .post-card', m).forEach(function (a) { avLink(a, avText($('.t-title', a)), avText($('.post-date', a))); });
+      $$('.movable-card', m).forEach(function (a) {
+        a.setAttribute('data-av-id', 'bayram-' + a.getAttribute('data-movable'));
+        avNode(a, avText($('h3', a)), avText($('.m-rank', a)));
+      });
+    },
+    'topraklarimizda-hristiyanlik.html': function (m) {
+      var map = $('#harita', m), first = $('.wrap.narrow > section[id]', m);
+      if (map && first) first.parentNode.insertBefore(map, first);
+      $$('main > .wrap > section[id]', document).forEach(function (s) { avNode(s, avHead($('h2', s))); });
+      $$('.amap-card[id]', m).forEach(function (c) { avNode(c, avText($('.amap-c-name', c)), avText($('.amap-c-place', c)), true); });
+    },
+    'kiliseler.html': function (m, T) {
+      $$('.church-city', m).forEach(function (d) {
+        var n = $$('.church-card', d).length;
+        avNode(d, avText($('.church-city-name', d)), n + ' ' + (n === 1 ? T.church : T.churches));
+      });
+      $$('.church-card', m).forEach(function (c) { avNode(c, avText($('.t-title', c)), avText($('.church-rite', c))); });
+      $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
+    },
+    'katesizm.html': function (m) {
+      $$('.part-acc', m).forEach(function (d) {
+        avNode(d, avText($('.p-title', d)), avText($('.p-meta', d)));
+        /* its sections and chapters as lists of links */
+        $$('.acc-section', d).forEach(function (sec) {
+          var head = $(':scope > a', sec), list = $('.acc-list', sec), rows = document.createElement('div');
+          rows.className = 'av-rows';
+          $$('a', list).forEach(function (a) {
+            var r = document.createElement('a'), lab = avText($('.c-label', a)), rng = avText($('.rng', a));
+            r.className = 'av-row' + (a.parentNode.classList.contains('lv4') ? ' av-row-sub' : ''); r.href = a.getAttribute('href');
+            r.innerHTML = '<span class="av-rt"><span class="av-t"></span><span class="av-s"></span></span>' + AV_CHEV;
+            $('.av-t', r).textContent = avHead($('span', a)).replace(lab, '').trim() || avText(a);
+            $('.av-s', r).textContent = [lab, rng].filter(Boolean).join(' · ');
+            rows.appendChild(r);
+          });
+          if (head) { var g = document.createElement('a'); g.className = 'av-gh av-gh-link'; g.href = head.getAttribute('href'); g.textContent = [avText($('.label', head)), avText($('.s-title', head))].filter(Boolean).join(': '); sec.insertBefore(g, sec.firstChild); }
+          sec.appendChild(rows);
+        });
+      });
+      $$('.more-texts .text-link', m).forEach(function (a) { avLink(a, avText($('.t-title', a)), avText($('.t-sub', a))); });
+    },
+    'katekizm-part': function (m) {
+      var c = $('#content', m);
+      if (!c) return;
+      avNest(c);
+      $$('article.qa', c).forEach(function (a) { a.setAttribute('data-av-qn', a.id.replace('soru-', '')); avNode(a, avText($('.qa-num', a)) + '. ' + avText($('.qa-q', a))); });
+    }
+  };
+  ['iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html'].forEach(function (f) { AV_PAGES[f] = AV_PAGES['katekizm-part']; });
+
+  function initAppView() {
+    var H = document.documentElement, main = $('#main'), nav = $('.av-nav');
+    if (!H.classList.contains('av')) return;
+    if (!main || !nav) { H.classList.remove('av'); return; }
+    var T = AV_TX[LANG], key = document.body.getAttribute('data-avp') || '';
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try { history.scrollRestoration = 'manual'; } catch (e) { /* old browsers */ }
+
+    /* the page's icon, name and description: its hero, first in the page */
+    var hero = $('.work-hero', main) || $('.page-head', main);
+    if (hero) { hero.classList.add('av-hero'); main.insertBefore(hero, main.firstChild); }
+    var pageT = avText($('h1', hero || main)) || document.title;
+    var prep = AV_PAGES[key];
+    if (prep) prep(main, T);
+
+    /* the language of the originals: Türkçe, English or Latina, where a level has them */
+    var seg = document.createElement('div');
+    seg.className = 'av-lang av-fixed'; seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', T.text);
+    if (hero) hero.parentNode.insertBefore(seg, hero.nextSibling); else main.insertBefore(seg, main.firstChild);
+    /* the page's own list heading, and the button to share the level being read */
+    var foot = document.createElement('div');
+    foot.className = 'av-foot';
+    foot.innerHTML = '<button type="button" class="av-share">' + AV_SHARE + '<span>' + T.share + '</span></button><p class="av-toast" role="status" aria-live="polite"></p>';
+    main.parentNode.insertBefore(foot, main.nextSibling);
+
+    var navTitle = $('.av-title', nav), backA = $('[data-av-back]', nav), backL = $('[data-av-back-label]', nav);
+    var homeBack = { href: backA.getAttribute('href'), label: backL.textContent };
+    /* Came here from another of the site's pages: back goes there, under its name */
+    var ref = null;
+    try { if (document.referrer && new URL(document.referrer).origin === location.origin) ref = new URL(document.referrer); } catch (e) { /* no URL() */ }
+    try { sessionStorage.setItem('avt:' + location.pathname, pageT); } catch (e) { /* private mode */ }
+    if (ref && ref.pathname !== location.pathname) {
+      var refT = null; try { refT = sessionStorage.getItem('avt:' + ref.pathname); } catch (e) { /* private mode */ }
+      if (refT) homeBack.label = refT;
+      homeBack.history = window.history.length > 1;
+    }
+
+    function nodeOf(el) { var n = el && el.closest ? el.closest('[data-av-node]') : null; return n && main.contains(n) ? n : null; }
+    function parentOf(n) { return n ? nodeOf(n.parentElement) : null; }
+    function idOf(n) {
+      if (!n.id && !n.getAttribute('data-av-id')) n.setAttribute('data-av-id', 'av-' + (++idOf.k));
+      return n.id || n.getAttribute('data-av-id');
+    }
+    idOf.k = 0;
+    function titleOf(n) { return n ? (n.getAttribute('data-av-t') || avHead($('h2, h3, summary', n)) || pageT) : pageT; }
+    function depthOf(n) { var d = 0; while (n) { d++; n = parentOf(n); } return d; }
+    function byId(id) {
+      if (!id) return null;
+      var el = document.getElementById(id) || $('[data-av-id="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]', main);
+      return el && main.contains(el) ? el : null;
+    }
+
+    /* A level's list: a row for each of its items, in their place in the text */
+    function rowsFor(level) {
+      if (level._avRows) return;
+      level._avRows = true;
+      var kids = $$('[data-av-node], [data-av-link]', level).filter(function (k) { return nodeOf(k.parentElement) === (level === main ? null : level) && !k.hasAttribute('data-av-norow'); });
+      var runs = [], last = null;
+      kids.forEach(function (k) {
+        if (last && last.end.nextElementSibling === k) last.list.push(k);
+        else { last = { list: [k] }; runs.push(last); }
+        last.end = k;
+      });
+      runs.forEach(function (r, i) {
+        var box = document.createElement('div');
+        box.className = 'av-rows';
+        r.list.forEach(function (k) {
+          var a = document.createElement('a'), s = k.getAttribute('data-av-s'), out = k.hasAttribute('data-av-link');
+          a.className = 'av-row';
+          a.href = out ? k.getAttribute('href') : '#' + idOf(k);
+          a.innerHTML = '<span class="av-rt"><span class="av-t"></span>' + (s ? '<span class="av-s"></span>' : '') + '</span>' + AV_CHEV;
+          $('.av-t', a).textContent = titleOf(k);
+          if (s) $('.av-s', a).textContent = s;
+          a._avSrc = k;
+          if (k.hidden) a.hidden = true;
+          box.appendChild(a);
+        });
+        if (level === main && i === 0) {
+          var gh = document.createElement('p'); gh.className = 'av-gh'; gh.textContent = T.sections;
+          r.list[0].parentNode.insertBefore(gh, r.list[0]);
+        }
+        r.list[0].parentNode.insertBefore(box, r.list[0]);
+      });
+    }
+    /* a filter elsewhere on the page (the churches' rite) hides some items: so do their rows */
+    function syncRows() {
+      $$('.av-row', main).forEach(function (a) {
+        var k = a._avSrc; if (!k) return;
+        a.hidden = !!k.hidden;
+        if (k.classList.contains('church-city')) { var n = $$('.church-card', k).filter(function (c) { return !c.hidden; }).length, sEl = $('.av-s', a); if (sEl) sEl.textContent = n + ' ' + (n === 1 ? T.church : T.churches); }
+      });
+    }
+    var rite = $('#rite-select'); if (rite) rite.addEventListener('change', function () { setTimeout(syncRows, 0); });
+
+    /* ----- which level is on screen */
+    var cur = null, scrolls = {};
+    function place(n) {
+      $$('.av-cur, .av-path', main.parentNode).forEach(function (e) { e.classList.remove('av-cur', 'av-path'); });
+      var target = n || main;
+      target.classList.add('av-cur');
+      if (n) for (var p = n.parentElement; p && p !== main.parentElement; p = p.parentElement) p.classList.add('av-path');
+      rowsFor(target);
+      if (n && n.tagName === 'DETAILS') n.open = true;
+      /* collapsed parts inside the level (a church's Mass times, a day's saints) open */
+      $$('details:not([data-av-node]):not(.latin)', target).forEach(function (d) { if (nodeOf(d.parentElement) === n) d.open = true; });
+      H.classList.toggle('av-sub', !!n);
+      H.classList.toggle('av-reader', !!(n && n.hasAttribute('data-av-qn')));
+      cur = n;
+      var par = parentOf(n);
+      navTitle.textContent = n ? titleOf(n) : pageT;
+      backL.textContent = n ? (par ? titleOf(par) : pageT) : homeBack.label;
+      backA.setAttribute('href', n ? '#' + (par ? idOf(par) : '') : homeBack.href);
+      langFor(target);
+      if (n && n.hasAttribute('data-av-qn')) reader(n);
+      document.title = n ? titleOf(n) + ' | ' + pageT : pageT0;
+    }
+    var pageT0 = document.title;
+    function keyOf(n) { return n ? idOf(n) : ''; }
+    /* Slide the new level in (forward) or back, with the page's icon and title shrinking or
+       growing between them; the browser's own back swipe has already shown its picture of the
+       level underneath, so that one is put in place at once */
+    function swap(fn, dir) {
+      if (still || !dir || !document.startViewTransition) { fn(); return; }
+      H.setAttribute('data-av-dir', dir);
+      var vt = document.startViewTransition(fn);
+      var off = function () { H.removeAttribute('data-av-dir'); };
+      vt.finished.then(off, off);
+    }
+    function show(n, how, scrollTo) {
+      var from = cur;
+      scrolls[keyOf(from)] = window.pageYOffset;
+      var dir = how === 'none' ? null : (depthOf(n) >= depthOf(from) ? 'fwd' : 'back');
+      swap(function () {
+        place(n);
+        var y = scrollTo != null ? scrollTo : (dir === 'back' || how === 'none' ? (scrolls[keyOf(n)] || 0) : 0);
+        window.scrollTo(0, y);
+        onScroll();
+        /* a screen reader carries on from the new level's heading (the page's, back at its list) */
+        var h = n ? $('h2, h3, h4, summary, .day-num', n) : $('h1', hero || main);
+        if (h && how !== 'none') { if (!h.hasAttribute('tabindex') && h.tagName !== 'SUMMARY') h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+      }, dir);
+    }
+    function urlFor(n) { return n ? '#' + idOf(n) : location.pathname + location.search; }
+    function go(n, how) {
+      if (n === cur) return;
+      try {
+        if (how === 'replace') history.replaceState({ av: 1, pushed: !!(history.state && history.state.pushed) }, '', urlFor(n));
+        else history.pushState({ av: 1, pushed: true }, '', urlFor(n));
+      } catch (e) { /* file:// */ }
+      show(n, how === 'replace' ? 'back' : 'push');
+    }
+    /* an element anywhere on the page: open the level that holds it, then bring it into view */
+    function reveal(el, how) {
+      var n = el.hasAttribute('data-av-node') ? el : nodeOf(el);
+      /* a section's own heading carries its anchor: that is the section itself */
+      if (n && el.id && n.getAttribute('data-av-id') === el.id) el = n;
+      if (n !== cur) go(n, how);
+      if (el !== n) requestAnimationFrame(function () { requestAnimationFrame(function () {
+        var y = el.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight - 12;
+        window.scrollTo(0, Math.max(0, y));
+      }); });
+    }
+
+    /* the browser's back and forward */
+    var edgeAt = 0, viaButton = false;
+    document.addEventListener('touchstart', function (e) { if (e.touches[0].clientX < 40) edgeAt = Date.now(); }, { passive: true });
+    window.addEventListener('popstate', function () {
+      var n = nodeOf(byId(decodeURIComponent(location.hash.slice(1))));
+      var native = !viaButton && Date.now() - edgeAt < 2500;
+      viaButton = false;
+      show(n, native ? 'none' : 'pop');
+    });
+    /* links to a place on this page */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || a.target === '_blank') return;
+      if (a === backA) { e.preventDefault(); back(); return; }
+      var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
+      if (u.origin !== location.origin || u.pathname !== location.pathname || !u.hash) return;
+      var el = byId(decodeURIComponent(u.hash.slice(1)));
+      if (!el) return;
+      e.preventDefault();
+      reveal(el, 'push');
+    });
+    /* a level's collapsed title is its heading here, not a switch */
+    document.addEventListener('click', function (e) {
+      var s = e.target.closest && e.target.closest('summary');
+      if (s && s.parentNode.hasAttribute('data-av-node') && main.contains(s)) e.preventDefault();
+    }, true);
+    function back() {
+      if (cur) {
+        if (history.state && history.state.pushed) { viaButton = true; history.back(); }
+        else go(parentOf(cur), 'replace');
+        return;
+      }
+      if (homeBack.history) history.back(); else location.href = homeBack.href;
+    }
+    /* the settings are the header's: opened once this tap has finished, so the panel's own
+       "tap outside closes it" doesn't take this tap for one */
+    $('.av-gear', nav).addEventListener('click', function () { var g = $('.site-header .settings-btn'); if (g) setTimeout(function () { g.click(); }, 0); });
+
+    /* the title in the bar once the page's own has scrolled away */
+    function onScroll() {
+      var lim = hero ? hero.offsetTop + hero.offsetHeight - nav.offsetHeight : 40;
+      H.classList.toggle('av-scrolled', window.pageYOffset > Math.max(8, lim));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ----- Share: the address of the level being read */
+    var toast = $('.av-toast', foot), toastT = null;
+    $('.av-share', foot).addEventListener('click', function () {
+      var url = location.href, title = document.title;
+      if (navigator.share) { navigator.share({ title: title, url: url })['catch'](function () { /* dismissed */ }); return; }
+      var done = function () { toast.textContent = T.copied; clearTimeout(toastT); toastT = setTimeout(function () { toast.textContent = ''; }, 2200); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { /* blocked */ }); else done();
+    });
+
+    /* ----- Türkçe / English / Latina: the originals where a level has them, in place of the
+       Turkish, remembered from page to page */
+    var ORIG_KEY = 'kkio-orig', pref = 'tr';
+    try { pref = localStorage.getItem(ORIG_KEY) || 'tr'; } catch (e) { /* private mode */ }
+    var LABELS = { tr: 'Türkçe', en: 'English', la: 'Latina' };
+    function mine(el, target) { return nodeOf(el) === (target === main ? null : target); }
+    function langFor(target) {
+      var has = { en: $$('.en-block, .en-par', target).some(function (x) { return mine(x, target); }), la: $$('details.latin', target).some(function (x) { return mine(x, target); }) };
+      var opts = ['tr'].concat(has.en ? ['en'] : [], has.la ? ['la'] : []);
+      H.classList.toggle('av-orig', LANG === 'tr' && opts.length > 1);
+      if (LANG !== 'tr' || opts.length < 2) { H.removeAttribute('data-orig'); return; }
+      var eff = opts.indexOf(pref) >= 0 ? pref : 'tr';
+      seg.innerHTML = opts.map(function (o) { return '<button type="button" data-orig="' + o + '" aria-pressed="' + (o === eff) + '"' + (o === 'tr' ? '' : ' lang="' + o + '"') + '>' + LABELS[o] + '</button>'; }).join('');
+      setOrig(eff, target);
+    }
+    function setOrig(o, target) {
+      if (o === 'tr') H.removeAttribute('data-orig'); else H.setAttribute('data-orig', o);
+      if (o === 'la') $$('details.latin', target).forEach(function (d) { d.open = true; });
+      $$('button', seg).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-orig') === o)); });
+    }
+    seg.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-orig]'); if (!b) return;
+      pref = b.getAttribute('data-orig');
+      try { localStorage.setItem(ORIG_KEY, pref); } catch (err) { /* private mode */ }
+      var target = cur || main;
+      main.classList.remove('av-fade'); void main.offsetWidth; main.classList.add('av-fade');
+      setOrig(pref, target);
+    });
+
+    /* ----- The Katekizm: a question on its own, with Previous / Next under it, a swipe left or
+       right for the next or the one before, and a contents button at the bottom right: a slider
+       over all 598 and the questions of this chapter. Past the first or the last question of a
+       part, the next part's page opens at that question. */
+    var KQ_TOTAL = 598, KQ_STARTS = [1, 218, 357, 534];
+    var kqPages = LANG === 'en' ? PAGES_EN : PAGES;
+    function kqUrl(n) { var pi = 0; KQ_STARTS.forEach(function (s, i) { if (n >= s) pi = i; }); return ROOT + LANG_PREFIX + kqPages[pi] + '#soru-' + n; }
+    function kqGo(n, dir) {
+      if (n < 1 || n > KQ_TOTAL) return;
+      var el = document.getElementById('soru-' + n);
+      if (!el) { location.href = kqUrl(n); return; }
+      var same = parentOf(el) === parentOf(cur);
+      try { history.replaceState({ av: 1, pushed: same && !!(history.state && history.state.pushed) }, '', '#soru-' + n); } catch (e) { /* file:// */ }
+      scrolls[keyOf(cur)] = 0;
+      swap(function () { place(el); window.scrollTo(0, 0); onScroll(); }, dir > 0 ? 'next' : 'prev');
+    }
+    function reader(a) {
+      if (!a._avKq) {
+        a._avKq = true;
+        var n = +a.getAttribute('data-av-qn');
+        var top = document.createElement('p'); top.className = 'kq-count av-keepl';
+        top.innerHTML = '<span>' + T.q + ' ' + n + ' / ' + KQ_TOTAL + '</span><span class="kq-hint">' + T.swipe + '</span>';
+        a.insertBefore(top, a.firstChild);
+        var pager = document.createElement('div'); pager.className = 'kq-pager av-keepl';
+        pager.innerHTML = '<button type="button" class="kq-btn" data-kq="-1"' + (n <= 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg><span>' + T.prev + '</span></button>' +
+          '<button type="button" class="kq-btn kq-next" data-kq="1"' + (n >= KQ_TOTAL ? ' disabled' : '') + '><span>' + T.next + '</span>' + AV_CHEV + '</button>';
+        a.appendChild(pager);
+      }
+      kqTools();
+    }
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-kq]');
+      if (!b || !cur) return;
+      var d = +b.getAttribute('data-kq');
+      kqGo(+cur.getAttribute('data-av-qn') + d, d);
+    });
+    /* a swipe across the question (not from the edge, which is the browser's back) */
+    var rs = null;
+    document.addEventListener('touchstart', function (e) {
+      rs = null;
+      var t = e.touches[0];
+      if (!cur || !cur.hasAttribute('data-av-qn') || t.clientX < 40 || e.touches.length > 1 || !cur.contains(e.target)) return;
+      rs = { x: t.clientX, y: t.clientY, t0: Date.now(), live: false, dx: 0 };
+    }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (!rs) return;
+      var t = e.touches[0], dx = t.clientX - rs.x, dy = t.clientY - rs.y;
+      if (!rs.live) { if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) { rs = null; return; } if (Math.abs(dx) < 12) return; rs.live = true; }
+      rs.dx = dx;
+      cur.style.transition = 'none'; cur.style.transform = 'translateX(' + dx * 0.5 + 'px)'; cur.style.opacity = String(1 - Math.min(0.4, Math.abs(dx) / 800));
+    }, { passive: true });
+    document.addEventListener('touchend', function () {
+      var r0 = rs; rs = null;
+      if (!r0 || !r0.live || !cur) return;
+      var el = cur, n = +el.getAttribute('data-av-qn'), dir = r0.dx < 0 ? 1 : -1;
+      var fast = Math.abs(r0.dx) / Math.max(1, Date.now() - r0.t0) > 0.45;
+      el.style.transition = 'transform .25s, opacity .25s'; el.style.transform = ''; el.style.opacity = '';
+      setTimeout(function () { el.style.transition = ''; }, 260);
+      if ((Math.abs(r0.dx) > 70 || (fast && Math.abs(r0.dx) > 30)) && n + dir >= 1 && n + dir <= KQ_TOTAL) kqGo(n + dir, dir);
+    });
+    var kq = null;
+    function kqTools() {
+      if (kq) return;
+      var fab = document.createElement('button');
+      fab.type = 'button'; fab.className = 'kq-fab av-kq-fab'; fab.setAttribute('aria-label', T.toc); fab.setAttribute('aria-haspopup', 'dialog');
+      fab.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor" stroke="none"/></svg>';
+      var sh = document.createElement('div');
+      sh.className = 'kq-sheet av-kq-sheet'; sh.hidden = true;
+      sh.innerHTML = '<div class="kq-sheet-bg" data-kq-close></div><div class="kq-sheet-panel" role="dialog" aria-modal="true" aria-label="' + T.toc + '">' +
+        '<div class="kq-grab" aria-hidden="true"></div><div class="kq-sheet-head"><p class="kq-sheet-t">' + T.toc + '</p><button type="button" class="ios-done" data-kq-close>' + T.done + '</button></div>' +
+        '<div class="kq-slider"><p class="kq-slider-l"></p><input type="range" min="1" max="' + KQ_TOTAL + '" step="1" aria-label="' + T.q + '"><p class="kq-slider-q"></p></div>' +
+        '<div class="kq-sheet-scroll"><p class="av-gh kq-sheet-gh"></p><div class="av-rows kq-sheet-list"></div></div></div>';
+      document.body.appendChild(fab); document.body.appendChild(sh);
+      var range = $('input', sh), lab = $('.kq-slider-l', sh), qt = $('.kq-slider-q', sh);
+      function label() {
+        var n = +range.value, el = document.getElementById('soru-' + n);
+        lab.textContent = T.q + ' ' + n + ' / ' + KQ_TOTAL;
+        qt.textContent = el ? avText($('.qa-q', el)) : '';
+      }
+      function openSheet(on) {
+        if (!on) { sh.classList.remove('is-open'); setTimeout(function () { if (!sh.classList.contains('is-open')) sh.hidden = true; }, 260); fab.focus({ preventScroll: true }); return; }
+        var n = +cur.getAttribute('data-av-qn'), par = parentOf(cur);
+        range.value = n; label();
+        $('.kq-sheet-gh', sh).textContent = par ? titleOf(par) : pageT;
+        var list = $('.kq-sheet-list', sh);
+        list.innerHTML = '';
+        $$('[data-av-qn]', par || main).filter(function (q) { return parentOf(q) === par; }).forEach(function (q) {
+          var b = document.createElement('button'), here = q === cur;
+          b.type = 'button'; b.className = 'av-row' + (here ? ' is-here' : ''); b.setAttribute('data-kq-go', q.getAttribute('data-av-qn'));
+          if (here) b.setAttribute('aria-current', 'true');
+          b.innerHTML = '<span class="av-rt"><span class="av-t"></span></span>';
+          $('.av-t', b).textContent = titleOf(q);
+          list.appendChild(b);
+        });
+        sh.hidden = false;
+        requestAnimationFrame(function () {
+          sh.classList.add('is-open');
+          var sc = $('.kq-sheet-scroll', sh), h = $('.is-here', sh);
+          if (h) sc.scrollTop = Math.max(0, h.offsetTop - sc.clientHeight / 2 + h.offsetHeight / 2);
+        });
+        setTimeout(function () { range.focus({ preventScroll: true }); }, 60);
+      }
+      range.addEventListener('input', label);
+      range.addEventListener('change', function () { var n = +range.value, c = +cur.getAttribute('data-av-qn'); openSheet(false); if (n !== c) kqGo(n, n > c ? 1 : -1); });
+      fab.addEventListener('click', function () { openSheet(true); });
+      sh.addEventListener('click', function (e) {
+        if (e.target.closest('[data-kq-close]')) { openSheet(false); return; }
+        var g = e.target.closest('[data-kq-go]');
+        if (g) { var n = +g.getAttribute('data-kq-go'), c = +cur.getAttribute('data-av-qn'); openSheet(false); if (n !== c) kqGo(n, n > c ? 1 : -1); }
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sh.hidden) openSheet(false); });
+      kq = { fab: fab, sheet: sh };
+    }
+
+    /* ----- start: at the level the address points to */
+    var start = byId(decodeURIComponent(location.hash.slice(1)));
+    place(null);
+    if (start) {
+      var sn = start.hasAttribute('data-av-node') ? start : nodeOf(start);
+      if (sn && start.id && sn.getAttribute('data-av-id') === start.id) start = sn;
+      place(sn);
+      try { history.replaceState({ av: 1, pushed: false }, '', location.href); } catch (e) { /* file:// */ }
+      /* the browser jumps to the #anchor itself as the page finishes loading: after that, put
+         the level at its top (or the linked element under the bar) */
+      var settle = function () { if (start !== sn) reveal(start, 'none'); else window.scrollTo(0, 0); onScroll(); };
+      settle();
+      if (document.readyState !== 'complete') window.addEventListener('load', function () { requestAnimationFrame(settle); }, { once: true });
+      else requestAnimationFrame(settle);
+    }
+    onScroll();
+    H.classList.add('av-ready');
   }
 
   /* GitHub Pages doesn't send an X-Frame-Options/frame-ancestors header, and that CSP
@@ -2245,12 +2077,6 @@
     var cityLinks = $$('[data-city-link]');
     var cities = $$('.church-city');
     var cards = $$('.church-card');
-    /* Mobile tab bar: a button per rite, and "Şehirler" for the city drawer */
-    var riteBtns = $$('.tabbar [data-tb-rite]'), citiesBtn = $('.tabbar .tb-more');
-    function markBar(rite) {
-      riteBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-tb-rite') === rite); });
-      if (citiesBtn) citiesBtn.classList.toggle('is-active', !rite);
-    }
 
     function showOnlyCity(id) { cities.forEach(function (sec) { sec.hidden = sec.id !== id; }); }
     function showAllCities() { cities.forEach(function (sec) { sec.hidden = false; }); }
@@ -2272,7 +2098,6 @@
       }
       markCurrentCity(null);
       select.value = rite;
-      markBar(rite === 'all' ? null : rite);
     }
 
     function goToCity(id) {
@@ -2282,26 +2107,15 @@
       var sec = document.getElementById(id);
       if (sec) sec.open = true;
       markCurrentCity(id);
-      markBar(null);
     }
 
-    $$('[data-tb-rite]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        applyRite(b.getAttribute('data-tb-rite'), true);
-        var first = cities.filter(function (sec) { return !sec.hidden; })[0];
-        if (first) {
-          var top = first.getBoundingClientRect().top + window.pageYOffset -
-            (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) - 12;
-          window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
-        }
-      });
-    });
     select.addEventListener('change', function () { applyRite(select.value, select.value === 'all'); });
     cityLinks.forEach(function (a) { a.addEventListener('click', function () { goToCity(a.getAttribute('data-city-link')); }); });
 
+    /* Phones' app view lists every city, and opens the one an address points to by itself */
+    if (document.documentElement.classList.contains('av')) return;
     showOnlyCity('istanbul');
     markCurrentCity('istanbul');
-    markBar(null);
     /* Arriving at a city or a church (from the home screen's Kilise Bul, say): open that city */
     var hashEl = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
     var hashCity = hashEl && (hashEl.classList.contains('church-city') ? hashEl : hashEl.closest && hashEl.closest('.church-city'));
@@ -2318,7 +2132,7 @@
      --------------------------------------------------------------- */
   function initWhySteps() {
     var wrap = $('.why-wrap');
-    if (!wrap) return;
+    if (!wrap || document.documentElement.classList.contains('av')) return;
     var tabs = $$('[data-why-tab]', wrap), steps = $$('.why-step', wrap), end = $('.why-end', wrap);
     var navBox = $('.why-tabs', wrap), last = steps[steps.length - 1];
     var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -2369,104 +2183,6 @@
     show(start || steps[0]);
     wrap.classList.add('why-ready');
     if (start) requestAnimationFrame(function () { go(decodeURIComponent(location.hash.slice(1)), false); });
-  }
-
-  /* ---------------------------------------------------------------
-     Mobile tab bar (below 980px): "Diğer" opens a drawer with the
-     rest of the page's own sections. The item for the section being
-     read lights up; while that section is one of the drawer's, "Diğer"
-     lights up instead. The Neden Katoliğiz steps and the Kilise Bul
-     rites and cities are switched by their own scripts, which the bar
-     reaches through data-why-go, data-tb-rite and data-city-link.
-     --------------------------------------------------------------- */
-  function initTabBar() {
-    var bar = $('.tabbar');
-    if (!bar) return;
-    var moreBtn = $('.tb-more', bar), drawer = $('#tb-drawer');
-    function openDrawer(on, keepFocus) {
-      if (!drawer || !moreBtn) return;
-      drawer.hidden = !on;
-      moreBtn.setAttribute('aria-expanded', String(on));
-      if (on) { var first = $('.tb-link, .tb-chip', drawer); if (first) first.focus({ preventScroll: true }); }
-      else if (!keepFocus) moreBtn.focus({ preventScroll: true });
-    }
-    if (moreBtn && drawer) {
-      moreBtn.addEventListener('click', function () { openDrawer(drawer.hidden); });
-      drawer.addEventListener('click', function (e) {
-        if (e.target.closest('[data-tb-close]')) { openDrawer(false); return; }
-        if (e.target.closest('a, [data-tb-rite]')) openDrawer(false, true);
-      });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) openDrawer(false); });
-    }
-    /* Labels that would be cut off (a long word on a narrow phone) take the bar's text down a
-       half-point at a time until every one fits */
-    var labels = $$('.tb-t', bar), items = $$('.tb-item', bar);
-    function fitLabels() {
-      items.forEach(function (it) { it.style.fontSize = ''; });
-      if (getComputedStyle(bar).display === 'none' || !items.length) return;
-      var size = parseFloat(getComputedStyle(items[0]).fontSize);
-      function over() { return labels.some(function (l) { return l.scrollWidth > l.clientWidth + 1; }); }
-      while (over() && size > 10.5) {
-        size -= .5;
-        items.forEach(function (it) { it.style.fontSize = size + 'px'; });
-      }
-    }
-    fitLabels();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
-    var fitTimer; window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitLabels, 120); });
-    /* Tesbih: "Baştan Başla" presses the rosary's own restart button */
-    $$('[data-tb-action]', bar).forEach(function (b) {
-      b.addEventListener('click', function () {
-        var target = $('.' + b.getAttribute('data-tb-action'));
-        if (target) target.click();
-      });
-    });
-    /* Section spy over the bar's and the drawer's in-page links */
-    var links = $$('a.tb-item[href^="#"]', bar).concat(drawer ? $$('a.tb-link[href^="#"]', drawer) : []);
-    if (!links.length) return;
-    var items = links.map(function (a) { return a.classList.contains('tb-link') ? moreBtn : a; });
-    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
-    var whyWrap = $('.why-wrap'), ticking = false, tapped = -1;
-    links.forEach(function (a, i) { a.addEventListener('click', function () { tapped = i; queue(); }); });
-    ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { tapped = -1; }, { passive: true }); });
-    function spy() {
-      ticking = false;
-      if (getComputedStyle(bar).display === 'none') return;
-      var pick = -1;
-      if (whyWrap) {
-        /* One step on screen at a time: the lit item is the step being shown */
-        var step = $('.why-step.is-active', whyWrap), end = $('.why-end.is-active', whyWrap);
-        var line0 = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + 140;
-        targets.forEach(function (t, i) {
-          if (!t) return;
-          if (t.classList.contains('why-end')) { if (end && end.getBoundingClientRect().top <= line0) pick = i; }
-          else if (pick === -1 && t.closest('.why-step') === step) pick = i;
-        });
-      } else {
-        /* The section whose top most recently passed the reading line (in page order, which
-           need not be the bar's order: the rosary sits above its how-to, say) */
-        var line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + Math.max(140, window.innerHeight / 3), best = -Infinity;
-        /* At the foot of the page the last sections can't scroll up to the line: then the
-           lowest one that is on screen */
-        var atEnd = window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4;
-        if (atEnd) line = window.innerHeight - 80;
-        targets.forEach(function (t, i) {
-          if (!t || t.offsetParent === null) return;
-          var top = t.getBoundingClientRect().top;
-          if (top <= line && top > best) { best = top; pick = i; }
-        });
-      }
-      /* The item just tapped stays lit until the reader scrolls on their own: a short section
-         (a search box, say) never reaches the reading line before the next one does */
-      if (tapped > -1 && targets[tapped]) pick = tapped;
-      var on = pick === -1 ? null : items[pick];
-      items.forEach(function (it) { if (it) it.classList.toggle('is-active', it === on); });
-    }
-    function queue() { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }
-    window.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', queue);
-    document.addEventListener('why:step', queue);
-    requestAnimationFrame(spy);
   }
 
   /* ---------------------------------------------------------------
@@ -2712,7 +2428,7 @@
   }
 
   function initHeaderHeight() {
-    var header = $('.site-header');
+    var header = topBar();
     if (!header) return;
     function set(h) { document.documentElement.style.setProperty('--header-h', Math.round(h) + 'px'); }
     /* The observer reports the header's size right after the browser's own first layout, so
@@ -2728,10 +2444,12 @@
     }
   }
 
+  /* The bar at the top of the screen: the site's header, or on phones the app view's own bar */
+  function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initTabBar(); initMapLinks(); initA11y();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView();
   });
 })();
