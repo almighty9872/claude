@@ -785,6 +785,9 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 }
 /* Once open, the icon is already showing X (= close); repeating "Tüm Menü" then would mislead. */
 .menu-toggle[aria-expanded="true"][data-tooltip]::after { display: none; }
+/* A touch screen has no hover: a tap leaves the button "hovered" until the next tap elsewhere, so
+   the name would stay on screen after the menu closed (the button's aria-label names it anyway) */
+@media (hover: none) { .menu-toggle[data-tooltip]::after { display: none; } }
 @media (prefers-reduced-motion: reduce) { .menu-toggle[data-tooltip]::after { transition: none; } }
 /* Hamburger -> X: three independent lines, morphed purely off the button's own aria-expanded
    state (the same attribute initNav() already toggles), so no extra JS is needed. */
@@ -2214,9 +2217,32 @@ html.app-open { overflow: hidden; }
 .ios-rt { flex: 1; min-width: 0; display: grid; gap: .05rem; }
 .ios-t { font-size: 1.05rem; line-height: 1.25; }
 .ios-s { font-family: var(--sans); font-size: .75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ios-accent .ios-t, .ios-accent > svg { color: var(--gold-active); opacity: 1; font-weight: 600; }
-/* Bölümler: the levels of a page's content slide under the heading; the page's icon, title and
-   Sayfayı Aç above stay where they are */
+/* Inside a section, the page's icon and title shrink and its description gives way; back at the
+   page's own list they grow back */
+.ios-hero .ios-ri-lg { transition: width .4s cubic-bezier(.32, .72, 0, 1), height .4s cubic-bezier(.32, .72, 0, 1); }
+.ios-hero .ios-ri-lg svg { transition: width .4s cubic-bezier(.32, .72, 0, 1), height .4s cubic-bezier(.32, .72, 0, 1); }
+.ios-hero .ios-large { transition: font-size .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1); }
+.ios-hero .ios-lead { max-height: 6rem; overflow: hidden; transition: max-height .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1), opacity .3s ease .1s, visibility 0s; }
+.ios-page.is-sub .ios-hero .ios-ri-lg { width: 2.6rem; height: 2.6rem; }
+.ios-page.is-sub .ios-hero .ios-ri-lg svg { width: 1.45rem; height: 1.45rem; }
+.ios-page.is-sub .ios-hero .ios-large { margin-top: .45rem; font-size: 1.2rem; }
+.ios-page.is-sub .ios-hero .ios-lead { max-height: 0; margin-bottom: 0; opacity: 0; visibility: hidden; transition: max-height .4s cubic-bezier(.32, .72, 0, 1), margin .4s cubic-bezier(.32, .72, 0, 1), opacity .15s, visibility 0s .4s; }
+.ios-page.is-sub .ios-hero + .ios-gh { margin-top: 1rem; }
+.ios-page.no-anim .ios-hero *, .ios-page.no-anim .ios-hero + .ios-gh { transition: none !important; }
+.ios-gh { transition: margin .4s cubic-bezier(.32, .72, 0, 1); }
+@media (prefers-reduced-motion: reduce) { .ios-hero *, .ios-gh { transition: none !important; } }
+/* The whole page, at the end of the page's content */
+.ios-more { margin: 1.8rem 0 .4rem; text-align: center; }
+.ios-open {
+  display: inline-flex; align-items: center; gap: .35rem; min-height: 2.75rem; padding: 0 .9rem;
+  font-family: var(--sans); font-size: .875rem; font-weight: 600; color: var(--gold-active);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; -webkit-tap-highlight-color: transparent;
+}
+.ios-open svg { flex: none; width: 1rem; height: 1rem; }
+.ios-open:active { opacity: .6; }
+.ios-open:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
+/* Bölümler: the levels of a page's content slide under the heading; the page's icon and title
+   above stay where they are */
 .ios-tree { position: relative; overflow: hidden; margin: 0 -1rem; padding: 0 1rem; }
 .tree-level { position: relative; }
 .tree-level.is-leaving { position: absolute; top: 0; left: 1rem; right: 1rem; }
@@ -2291,13 +2317,18 @@ html.app-open { overflow: hidden; }
 .ios-spot { position: fixed; inset: 0; z-index: 300; }
 .ios-spot-bg { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 35%, transparent); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%); opacity: 0; transition: opacity .3s; }
 .ios-spot.is-open .ios-spot-bg { opacity: 1; }
-.ios-spot-panel { position: absolute; top: 24vh; left: 1rem; right: 1rem; transform-origin: 50% 50%; }
-.ios-spot-row { display: flex; align-items: flex-start; gap: .6rem; }
+/* The field sits in the middle of what can be seen (script.js keeps it there as the keyboard comes
+   and goes); once there are results it moves up, so they have the room below it */
+.ios-spot-panel { position: absolute; top: calc(50% - 1.6rem); left: 1rem; right: 1rem; transform-origin: 50% 50%; transition: top .45s cubic-bezier(.32, .72, 0, 1); }
 .ios-spot-row .search { flex: 1; min-width: 0; margin: 0; }
 .ios-spot-row .search-field { min-height: 3.2rem; border-radius: 14px; background: var(--surface); box-shadow: 0 16px 40px -18px rgba(0, 0, 0, .45); }
-.ios-spot-row .search-results { max-height: 55vh; overflow-y: auto; }
-.ios-cancel { flex: none; height: 3.2rem; padding: 0 .2rem; border: 0; background: none; color: var(--gold-active); font-family: var(--sans); font-size: 1rem; font-weight: 700; cursor: pointer; }
-@media (prefers-reduced-motion: reduce) { .ios-page, .ios-splash, .ios-spot-bg { transition: none; } }
+.ios-spot-row .search-results { max-height: var(--spot-room, 40vh); overflow-y: auto; }
+/* A tap anywhere around the field closes the search; this button is the same for the keyboard and
+   screen readers, and shows itself only when it has the keyboard's focus */
+.ios-spot-x { position: absolute; left: 50%; bottom: calc(100% + .7rem); transform: translateX(-50%); padding: .55rem 1rem; border: 0; border-radius: 999px; background: var(--surface); color: var(--gold-active); font-family: var(--sans); font-size: .95rem; font-weight: 700; white-space: nowrap; cursor: pointer; }
+.ios-spot-x:not(:focus-visible) { width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+.ios-spot-x:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .ios-page, .ios-splash, .ios-spot-bg, .ios-spot-panel { transition: none; } }
 
 @media (min-width: 980px) {
   .hm-about { display: none; }

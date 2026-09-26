@@ -1365,13 +1365,30 @@
        entry, so the browser's own back (Safari's swipe from the left edge, Android's back
        gesture, the back button) steps back one level, as in an iPhone app. depth counts the
        entries this page has added. */
-    var depth = 0, skipPop = 0, edgeAt = 0;
+    var depth = 0, skipPop = 0, edgeAt = 0, viaButton = false, swipeAborts = [];
     function iconTransform(icon, box) {
       var r = icon.getBoundingClientRect(), b = box.getBoundingClientRect();
       var sx = r.width / b.width, sy = r.height / b.height;
       return { t: 'translate(' + ((r.left + r.width / 2) - (b.left + b.width / 2)) + 'px,' + ((r.top + r.height / 2) - (b.top + b.height / 2)) + 'px) scale(' + sx + ',' + sy + ')', rad: (18 / sx) + 'px ' + (18 / sy) + 'px' };
     }
     function boxOf(app) { return app.classList.contains('ios-spot') ? $('.ios-spot-panel', app) : app; }
+    /* Ara: the field in the middle of what can be seen (above the keyboard, when it is up), or
+       near the top once there are results, with the room under it for them */
+    var spotEl = document.getElementById('app-ara'), spotBox = spotEl && $('.ios-spot-panel', spotEl);
+    function placeSpot() {
+      if (!spotEl || spotEl.hidden) return;
+      var vv = window.visualViewport, vh = vv ? vv.height : window.innerHeight, vt = vv ? vv.offsetTop : 0;
+      var field = $('.search-field', spotBox), res = $('.search-results', spotBox), fh = field.offsetHeight;
+      var top = res && !res.hidden ? vt + Math.max(16, Math.round(vh * 0.07)) : vt + Math.round((vh - fh) / 2);
+      spotBox.style.top = top + 'px';
+      spotBox.style.setProperty('--spot-room', Math.max(140, vt + vh - top - fh - 30) + 'px');
+    }
+    if (spotEl) {
+      var spotRes = $('.search-results', spotEl);
+      if (spotRes && window.MutationObserver) new MutationObserver(placeSpot).observe(spotRes, { attributes: true, attributeFilter: ['hidden'] });
+      if (window.visualViewport) { window.visualViewport.addEventListener('resize', placeSpot); window.visualViewport.addEventListener('scroll', placeSpot); }
+      window.addEventListener('resize', placeSpot);
+    }
     function currentPage(app) { return $('.ios-page.is-current', app); }
     function stateOf(app) {
       var pg = currentPage(app), t = pg && pg._tree;
@@ -1385,12 +1402,13 @@
       app.hidden = false;
       document.documentElement.classList.add('app-open');
       var box = boxOf(app), spot = box !== app;
+      if (spot) { box.style.transition = 'none'; placeSpot(); }
       if (!still && !instant) {
         var tf = iconTransform(fromIcon, box);
         box.style.transition = 'none'; box.style.transform = tf.t; box.style.borderRadius = tf.rad;
         if (spot) box.style.opacity = '0';
         box.getBoundingClientRect();
-        box.style.transition = 'transform .5s ' + EASE + ', border-radius .5s ' + EASE + ', opacity .25s';
+        box.style.transition = 'transform .5s ' + EASE + ', border-radius .5s ' + EASE + ', opacity .25s, top .45s ' + EASE;
       }
       requestAnimationFrame(function () {
         box.style.transform = ''; box.style.borderRadius = ''; box.style.opacity = '';
@@ -1404,6 +1422,8 @@
       var box = boxOf(app);
       app.hidden = true;
       box.style.transition = 'none'; box.style.transform = ''; box.style.borderRadius = ''; box.style.opacity = '';
+      /* Ara opens empty next time, in the middle again */
+      if (box !== app) { var q = $('input', app), rs = $('.search-results', app); if (q) q.value = ''; if (rs) { rs.hidden = true; rs.innerHTML = ''; } }
       $$('.ios-page', app).forEach(function (p) {
         p.classList.toggle('is-current', p.getAttribute('data-page') === 'root'); p.classList.remove('is-behind', 'is-scrolled'); p.style.transform = ''; p.style.transition = '';
         if (p._tree) treeReset(p);
@@ -1461,22 +1481,28 @@
     }
     function back() {
       if (!openApp) return;
-      if (depth) history.back();
+      if (depth) { viaButton = true; history.back(); }
       else if (!stepBack(openApp)) close();
     }
     window.addEventListener('popstate', function () {
       if (skipPop) { skipPop--; return; }
       if (!openApp) return;
       depth = Math.max(0, depth - 1);
-      var nativeSwipe = Date.now() - edgeAt < 900;
+      /* a back that began with a touch at the left edge is the browser's own swipe, which has
+         already shown the level underneath: put it in place at once. The < button and Esc are
+         not, even though the button sits at that edge too */
+      var nativeSwipe = !viaButton && Date.now() - edgeAt < 2500;
+      viaButton = false;
+      /* my own swipe of the same touch, if it had begun, stands down */
+      swipeAborts.forEach(function (f) { f(); });
       if (!stepBack(openApp, nativeSwipe)) close(true);
       /* a question's next / previous may have moved on to another section since this entry was
          made: record where the reader really is now */
       else { try { history.replaceState(stateOf(openApp), ''); } catch (e) { /* file:// */ } }
     });
 
-    /* ----- Bölümler: the page's content, one level at a time. The page's icon, title,
-       description and Sayfayı Aç stay put while the levels slide under the heading. */
+    /* ----- Bölümler: the page's content, one level at a time. The page's icon and title
+       stay put (smaller inside a section) while the levels slide under the heading. */
     var L = LANG === 'en'
       ? { sections: 'Sections', loading: 'Loading…', failed: 'Could not load this. Please try again.', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done' }
       : { sections: 'Bölümler', loading: 'Yükleniyor…', failed: 'Yüklenemedi. Lütfen tekrar deneyin.', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti' };
@@ -1667,11 +1693,12 @@
       var t = pg._tree; if (!t || !t.stack.length) return;
       t.stack.slice(1).forEach(function (l) { if (l.el.parentNode) l.el.parentNode.removeChild(l.el); });
       t.stack.length = 1;
-      var el = t.stack[0].el; el.className = 'tree-level'; el.style.transform = el.style.transition = '';
+      var el = t.stack[0].el; el.className = 'tree-level'; el.style.transform = el.style.transition = el.style.opacity = '';
       treeChrome(pg);
+      setSub(pg, false, false, 0);
     }
-    /* The heading above the levels, the back button and the centre title, and Sayfayı Aç:
-       it opens the page at the deepest section that has its own place on the page */
+    /* The heading above the levels, the back button and the centre title, and Bütün içeriği
+       göster: it opens the page at the deepest section that has its own place on the page */
     function treeChrome(pg) {
       var t = pg._tree, st = t.stack, top = st[st.length - 1];
       var head = $('[data-tree-head]', pg), backL = $('[data-back-label]', pg), nt = $('.ios-nt', pg), openA = $('[data-open-page]', pg);
@@ -1690,6 +1717,10 @@
     }
     function slide(inEl, outEl, forward, instant, done) {
       var dur = instant || still ? 0 : 450;
+      /* the level coming in is the one in the flow of the page (a swipe cut short by the
+         browser's own may have left it marked as leaving: out of the flow, so out of sight) */
+      inEl.classList.remove('is-leaving', 'is-hidden');
+      inEl.style.opacity = ''; inEl.style.filter = '';
       outEl.classList.add('is-leaving');
       inEl.style.transition = outEl.style.transition = 'none';
       /* the level that goes underneath fades as it goes: the levels have no background of
@@ -1709,6 +1740,23 @@
         done();
       }, dur);
     }
+    /* The page's icon and title: smaller inside a section, with the description gone, and full
+       size again at the page's own list. It grows or shrinks in view only when the new scroll
+       position (y) shows it; otherwise it just changes, out of sight. */
+    function setSub(pg, on, anim, y) {
+      var sc = $('.ios-scroll', pg), hero = $('.ios-hero', pg);
+      if (!hero || pg.classList.contains('is-sub') === on) { sc.scrollTop = y; return; }
+      pg.classList.add('no-anim');
+      pg.classList.toggle('is-sub', on);
+      var bottom = hero.offsetTop + hero.offsetHeight;
+      sc.scrollTop = y;
+      if (anim && !still && sc.scrollTop < bottom - navH(pg)) {
+        pg.classList.toggle('is-sub', !on);
+        pg.offsetHeight;
+        pg.classList.remove('no-anim');
+        pg.classList.toggle('is-sub', on);
+      } else { pg.offsetHeight; pg.classList.remove('no-anim'); }
+    }
     function treePush(pg, k, instant) {
       var t = pg._tree, top = t.stack[t.stack.length - 1], node = top.node.kids[k];
       if (!node || t.busy) return Promise.resolve();
@@ -1719,22 +1767,25 @@
         var el = levelEl(node);
         t.box.appendChild(el);
         t.stack.push({ node: node, el: el, k: k });
-        var head = $('[data-tree-head]', pg), limit = head.offsetTop - navH(pg) - 8;
-        if (scroller.scrollTop > limit) scroller.scrollTop = limit;
         treeChrome(pg);
+        /* a new level starts at the top, under the page's (now small) icon and title */
+        setSub(pg, true, !instant, 0);
         if (!instant) mark(openApp);
         return new Promise(function (res) {
           slide(el, top.el, true, instant, function () { top.el.classList.add('is-hidden'); t.busy = false; res(); });
         });
       }, function () { t.busy = false; });
     }
-    function treePop(pg, instant) {
+    /* instant: the level is already in place (the browser's own back swipe, or mine); grow: the
+       icon and title may still grow back in view (after my swipe, not the browser's, whose
+       picture of the page already had them full size) */
+    function treePop(pg, instant, grow) {
       var t = pg._tree; if (t.stack.length < 2) return;
       var top = t.stack.pop(), prev = t.stack[t.stack.length - 1];
-      prev.el.classList.remove('is-hidden');
+      prev.el.classList.remove('is-hidden', 'is-leaving');
       treeChrome(pg);
       slide(prev.el, top.el, false, instant, function () { if (top.el.parentNode) top.el.parentNode.removeChild(top.el); });
-      $('.ios-scroll', pg).scrollTop = prev.scroll || 0;
+      setSub(pg, t.stack.length > 1, !instant || !!grow, prev.scroll || 0);
     }
 
     document.addEventListener('click', function (e) {
@@ -1766,10 +1817,18 @@
        or with a flick, to go back */
     $$('.ios-app').forEach(function (app) {
       var x0 = null, y0 = 0, t0 = 0, dx = 0, live = false, cur = null, prev = null, w = 1, isTree = false, pg = null;
+      /* Put both back as they were. If the browser's own back has meanwhile taken the top level
+         off, the one under it is the page's content now and must stay in view */
       function reset() {
+        var gone = cur && !stillOnTop();
         if (cur) { cur.style.transition = ''; cur.style.transform = ''; }
-        if (prev) { prev.style.transition = ''; prev.style.transform = ''; prev.style.filter = ''; prev.style.opacity = ''; if (isTree) prev.classList.add('is-hidden'); prev.classList.remove('is-leaving'); }
+        if (prev) {
+          prev.style.transition = ''; prev.style.transform = ''; prev.style.filter = ''; prev.style.opacity = '';
+          if (isTree && !gone) prev.classList.add('is-hidden');
+          prev.classList.remove('is-leaving');
+        }
       }
+      swipeAborts.push(function () { if (x0 !== null && live) { x0 = null; reset(); } else x0 = null; });
       app.addEventListener('touchstart', function (e) {
         var t = e.touches[0];
         if (t.clientX < 40) edgeAt = Date.now();
@@ -1816,19 +1875,20 @@
         if (!isTree) prev.style.filter = go ? 'brightness(1)' : 'brightness(.94)';
         var c = cur, p = prev, tree = isTree, page = pg;
         setTimeout(function () {
-          /* only if the browser's own back hasn't already taken this level off meanwhile */
+          /* only if the browser's own back hasn't already taken this level off meanwhile; if it
+             has, the level under it is on top now and stays in view */
           var onTop = tree ? (page._tree && page._tree.stack[page._tree.stack.length - 1].el === c) : c.classList.contains('is-current');
           if (go && onTop) {
-            if (tree) treePop(page, true); else popDom(app, true);
+            if (tree) treePop(page, true, true); else popDom(app, true);
             if (depth) { skipPop++; depth--; history.back(); }
-          } else if (tree) { p.classList.add('is-hidden'); }
+          } else if (tree && onTop) { p.classList.add('is-hidden'); }
           p.classList.remove('is-leaving');
           c.style.transform = ''; p.style.transform = ''; p.style.filter = ''; p.style.opacity = '';
           requestAnimationFrame(function () { c.style.transition = ''; p.style.transition = ''; });
         }, 300);
       }
       app.addEventListener('touchend', end);
-      app.addEventListener('touchcancel', function () { x0 = null; reset(); });
+      app.addEventListener('touchcancel', function () { if (x0 !== null && live) reset(); x0 = null; });
     });
     /* A swipe across a question (not from the edge, which is back): left for the next one,
        right for the one before; the question follows the finger a little on the way */

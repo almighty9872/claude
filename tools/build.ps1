@@ -3042,7 +3042,8 @@ function Home-Page([string]$lang) {
     (($HomeApps | ForEach-Object { "<button type=`"button`" class=`"hm-app`" data-app-open=`"$($_.id)`" aria-haspopup=`"dialog`" aria-controls=`"app-$($_.id)`"><span class=`"hm-icon app-$($_.id)`">$($_.ico)</span><span class=`"hm-app-t`">$(L $_.t $_.te)</span></button>" }) -join '')
   $close = L 'Kapat' 'Close'
   $spot = "<div class=`"ios-spot`" id=`"app-ara`" role=`"dialog`" aria-modal=`"true`" aria-label=`"$araLabel`" hidden><div class=`"ios-spot-bg`" data-app-close></div>" +
-    "<div class=`"ios-spot-panel`"><div class=`"ios-spot-row`">$(Search-Form 'spot-search' 'q-spot' $placeholder $lang)<button type=`"button`" class=`"ios-cancel`" data-app-close>$(L 'İptal' 'Cancel')</button></div></div></div>"
+    "<div class=`"ios-spot-panel`"><div class=`"ios-spot-row`">$(Search-Form 'spot-search' 'q-spot' $placeholder $lang)</div>" +
+    "<button type=`"button`" class=`"ios-spot-x`" data-app-close>$(L 'Aramayı kapat' 'Close search')</button></div></div>"
   $apps = ($HomeApps | ForEach-Object {
     $app = $_; $appT = L $app.t $app.te; $i = 0
     $rows = ($app.pages | ForEach-Object {
@@ -3056,8 +3057,8 @@ function Home-Page([string]$lang) {
       $pt = L $pg.t $pg.te
       $pagesHtml += "<section class=`"ios-page`" data-page=`"$($app.id)-$i`"><header class=`"ios-nav`"><button type=`"button`" class=`"ios-back`" data-pop>$IcoBack<span data-back-label>$appT</span></button><span class=`"ios-nt`">$pt</span><button type=`"button`" class=`"ios-done`" data-app-close>$close</button></header>" +
         "<div class=`"ios-scroll`"><div class=`"ios-hero`"><span class=`"ios-ri ios-ri-lg`">$($pg.ico)</span><h3 class=`"ios-large`">$pt</h3><p class=`"ios-lead`">$(L $pg.s $pg.se)</p></div>" +
-        "<div class=`"ios-group`"><a class=`"ios-row ios-accent`" href=`"$(F $pg.f)`" data-open-page><span class=`"ios-rt`"><span class=`"ios-t`">$(L 'Bütün içeriği göster' 'Show all content')</span></span>$IcoOpenPage</a></div>" +
-        "<p class=`"ios-gh`" data-tree-head>$(L 'Bölümler' 'Sections')</p><div class=`"ios-tree`" data-tree=`"$($pg.f)`" data-title=`"$(Attr $pt)`"></div></div></section>"
+        "<p class=`"ios-gh`" data-tree-head>$(L 'Bölümler' 'Sections')</p><div class=`"ios-tree`" data-tree=`"$($pg.f)`" data-title=`"$(Attr $pt)`"></div>" +
+        "<p class=`"ios-more`"><a class=`"ios-open`" href=`"$(F $pg.f)`" data-open-page>$(L 'Bütün içeriği göster' 'Show all content')$IcoOpenPage</a></p></div></section>"
       $i++
     }
     "<div class=`"ios-app`" id=`"app-$($app.id)`" data-app=`"$($app.id)`" role=`"dialog`" aria-modal=`"true`" aria-label=`"$appT`" hidden><div class=`"ios-splash app-$($app.id)`">$($app.ico)</div><div class=`"ios-stack`">$pagesHtml</div></div>"
