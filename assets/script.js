@@ -1298,53 +1298,221 @@
       return { text: s ? (LANG === 'en' ? s.nameEn : s.name) : noSaintText, href: href };
     });
   }
-  function initHomeWidgets() {
-    var saintPill = $('[data-home-saint-pill] .tp-value');
-    if (!saintPill) return;
-    getTodaySaint().then(function (s) {
-      saintPill.textContent = s.text;
-      saintPill.classList.remove('hint');
-      var pillLink = saintPill.closest('a');
-      if (pillLink) pillLink.setAttribute('href', s.href);
-    })['catch'](function () {
-      saintPill.textContent = LANG === 'en' ? 'Failed to load' : 'Yüklenemedi';
-      saintPill.classList.remove('hint');
-    });
-  }
+  /* ---------------------------------------------------------------
+     Home page. Three cards for today: the saint (with the opening of
+     their life, from a small file per month), the date with the
+     liturgical season (the card takes the season's colour) and the
+     day's rosary mysteries. On phones, four app icons below them:
+     Ara opens the Katekizm search over the blurred screen, and the
+     others open Settings-style pages that grow out of their icon,
+     slide further in to a page's sections, and shrink back into the
+     icon on Kapat. A swipe in from the left edge goes back a level.
+     --------------------------------------------------------------- */
+  function initHome() {
+    var home = $('.home-v2');
+    if (!home) return;
+    var now = new Date(), en = LANG === 'en';
+    /* the date and the season */
+    var dayEl = $('[data-hd-day]'), yearEl = $('[data-hd-year]'), litCard = $('[data-home-lit]');
+    try {
+      var loc = en ? 'en-US' : 'tr-TR';
+      dayEl.textContent = new Intl.DateTimeFormat(loc, en ? { month: 'long', day: 'numeric' } : { day: 'numeric', month: 'long' }).format(now);
+      yearEl.textContent = now.getFullYear() + ' · ' + new Intl.DateTimeFormat(loc, { weekday: 'long' }).format(now);
+    } catch (e) { dayEl.textContent = now.toDateString(); }
+    var lit = liturgicalDay(now), LT = LIT_TEXT[LANG];
+    $('[data-hd-season]').textContent = lit.name;
+    $('[data-hd-colour]').textContent = LT.colour + ': ' + LT.colours[lit.colour];
+    litCard.setAttribute('data-lit', lit.colour);
+    /* the saint */
+    var saintCard = $('[data-home-saint]'), m = now.getMonth() + 1, key = m + '-' + now.getDate();
+    getTodaySaint().then(function (sn) {
+      $('[data-hs-name]', saintCard).textContent = sn.text;
+      saintCard.setAttribute('href', sn.href);
+      return loadDataScript('data/azizler-ozet-' + m + '.js', 'SAINT_SUMMARY_' + m);
+    }).then(function () {
+      var x = (window['SAINT_SUMMARY_' + m] || {})[key];
+      if (!x) return;
+      $('[data-hs-title]', saintCard).textContent = en ? x[1] : x[0];
+      $('[data-hs-bio]', saintCard).textContent = en ? x[3] : x[2];
+    })['catch'](function () { $('[data-hs-name]', saintCard).textContent = en ? 'Saints of the year' : 'Yılın azizleri'; });
+    /* the mysteries */
+    var myst = $('[data-home-mystery]');
+    loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
+      var set = window.COMPENDIUM_ROSARY.sets.filter(function (x) { return x.days.indexOf(now.getDay()) !== -1; })[0];
+      if (!set) return;
+      $('[data-hm-name]', myst).textContent = en ? set.en : set.tr;
+      myst.setAttribute('href', ROOT + LANG_PREFIX + (en ? 'rosary.html' : 'tesbih-duasi.html') + '#gizem-' + set.id);
+    })['catch'](function () { $('[data-hm-name]', myst).textContent = en ? 'The Rosary' : 'Tesbih'; });
 
-  /* Home page only: the Katekizm card's search icon pops out a large, backdrop-blurred
-     search dialog instead of the old always-visible hero search box. The button is hidden
-     on mobile by CSS, so this never wires up there; the card itself still needs a plain
-     click-to-navigate handler since (unlike its siblings) it is a <div>, not one big <a>,
-     to give the search button its own valid, separately clickable target. */
-  function initHomeSearch() {
-    var overlay = $('#home-katekizm-search'), btn = $('.card-search-btn'), card = $('.katekizm-card');
-    if (card) {
-      card.addEventListener('click', function (e) {
-        if (e.target.closest('.card-search-btn')) return;
-        location.href = ROOT + LANG_PREFIX + (LANG === 'en' ? 'compendium.html' : 'katesizm.html');
+    /* the apps */
+    var EASE = 'cubic-bezier(.2,.9,.22,1)', openApp = null, fromIcon = null, fromBtn = null;
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* Each level of an open app is a history entry, so the browser's own back (Safari's swipe
+       from the left edge, Android's back gesture, the back button) steps back one level, as in
+       an iPhone app. depth counts the entries this page has added. */
+    var depth = 0, skipPop = 0, edgeAt = 0;
+    function iconTransform(icon, box) {
+      var r = icon.getBoundingClientRect(), b = box.getBoundingClientRect();
+      var sx = r.width / b.width, sy = r.height / b.height;
+      return { t: 'translate(' + ((r.left + r.width / 2) - (b.left + b.width / 2)) + 'px,' + ((r.top + r.height / 2) - (b.top + b.height / 2)) + 'px) scale(' + sx + ',' + sy + ')', rad: (18 / sx) + 'px ' + (18 / sy) + 'px' };
+    }
+    function boxOf(app) { return app.classList.contains('ios-spot') ? $('.ios-spot-panel', app) : app; }
+    function mark(state) { try { history.pushState(state, ''); depth++; } catch (e) { /* file:// */ } }
+    function currentPage(app) { return $('.ios-page.is-current', app); }
+    function open(btn, instant) {
+      var id = btn.getAttribute('data-app-open'), app = document.getElementById('app-' + id);
+      if (!app || openApp) return;
+      openApp = app; fromBtn = btn; fromIcon = $('.hm-icon', btn);
+      app.hidden = false;
+      document.documentElement.classList.add('app-open');
+      var box = boxOf(app), spot = box !== app;
+      if (!still && !instant) {
+        var tf = iconTransform(fromIcon, box);
+        box.style.transition = 'none'; box.style.transform = tf.t; box.style.borderRadius = tf.rad;
+        if (spot) box.style.opacity = '0';
+        box.getBoundingClientRect();
+        box.style.transition = 'transform .5s ' + EASE + ', border-radius .5s ' + EASE + ', opacity .25s';
+      }
+      requestAnimationFrame(function () {
+        box.style.transform = ''; box.style.borderRadius = ''; box.style.opacity = '';
+        app.classList.add('is-open');
       });
+      if (!instant) mark({ homeApp: id, page: 'root' });
+      var focusTo = spot ? $('input', app) : $('.ios-page.is-current .ios-done', app);
+      if (focusTo && !instant) setTimeout(function () { focusTo.focus({ preventScroll: true }); }, spot ? 60 : 350);
     }
-    if (!overlay || !btn) return;
-    var open = false;
-    function show() {
-      open = true;
-      overlay.hidden = false;
-      nextFrame(function () { overlay.classList.add('open'); });
-      btn.setAttribute('aria-expanded', 'true');
-      var input = $('input', overlay);
-      if (input) input.focus();
+    function finishClose(app) {
+      var box = boxOf(app);
+      app.hidden = true;
+      box.style.transition = 'none'; box.style.transform = ''; box.style.borderRadius = ''; box.style.opacity = '';
+      $$('.ios-page', app).forEach(function (p) { p.classList.toggle('is-current', p.getAttribute('data-page') === 'root'); p.classList.remove('is-behind', 'is-scrolled'); p.style.transform = ''; p.style.transition = ''; });
+      document.documentElement.classList.remove('app-open');
+      openApp = null;
     }
-    function hide() {
-      open = false;
-      overlay.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-      setTimeout(function () { if (!open) overlay.hidden = true; }, 220);
-      btn.focus();
+    function close(fromHistory) {
+      var app = openApp;
+      if (!app) return;
+      var box = boxOf(app), spot = box !== app;
+      app.classList.remove('is-open');
+      if (!still) {
+        var tf = iconTransform(fromIcon, box);
+        box.style.transition = 'transform .38s ' + EASE + ', border-radius .38s ' + EASE + ', opacity .3s';
+        box.style.transform = tf.t; box.style.borderRadius = tf.rad;
+        if (spot) box.style.opacity = '0';
+      }
+      setTimeout(function () { finishClose(app); if (fromBtn) fromBtn.focus({ preventScroll: true }); }, still ? 0 : 390);
+      /* Kapat from deep inside: take all of this app's entries off the history at once */
+      if (!fromHistory && depth) { skipPop++; var n = depth; depth = 0; history.go(-n); }
+      else depth = 0;
     }
-    btn.addEventListener('click', function (e) { e.stopPropagation(); show(); });
-    $$('[data-kso-close]', overlay).forEach(function (el) { el.addEventListener('click', hide); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) hide(); });
+    function push(app, id) {
+      var cur = currentPage(app), next = $('[data-page="' + id + '"]', app);
+      if (!next) return;
+      cur.classList.remove('is-current'); cur.classList.add('is-behind');
+      next.classList.remove('is-scrolled'); $('.ios-scroll', next).scrollTop = 0;
+      next.classList.add('is-current');
+      mark({ homeApp: app.getAttribute('data-app'), page: id });
+      var bk = $('.ios-back', next); if (bk) setTimeout(function () { bk.focus({ preventScroll: true }); }, 350);
+    }
+    /* One level back. instant: the page is already where it should be (a finished swipe, or
+       the browser's own swipe, which has animated it with its snapshot) */
+    function popDom(app, instant) {
+      var cur = currentPage(app), prev = $$('.ios-page.is-behind', app).pop();
+      if (!prev) return false;
+      if (instant) { cur.style.transition = prev.style.transition = 'none'; }
+      cur.classList.remove('is-current'); prev.classList.remove('is-behind'); prev.classList.add('is-current');
+      cur.style.transform = ''; prev.style.transform = '';
+      if (instant) requestAnimationFrame(function () { cur.style.transition = ''; prev.style.transition = ''; });
+      return true;
+    }
+    function back() {
+      if (!openApp) return;
+      if (depth) history.back();
+      else if (!popDom(openApp)) close();
+    }
+    window.addEventListener('popstate', function () {
+      if (skipPop) { skipPop--; return; }
+      if (!openApp) return;
+      depth = Math.max(0, depth - 1);
+      var nativeSwipe = Date.now() - edgeAt < 900;
+      if (!popDom(openApp, nativeSwipe)) close(true);
+    });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target : e.target.parentNode;
+      var o = t.closest('[data-app-open]'); if (o) { open(o); return; }
+      if (!openApp) return;
+      if (t.closest('[data-app-close]')) { close(); return; }
+      var ps = t.closest('[data-push]'); if (ps) { push(openApp, ps.getAttribute('data-push')); return; }
+      if (t.closest('[data-pop]')) back();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openApp) back(); });
+    $$('.ios-scroll').forEach(function (sc) {
+      sc.addEventListener('scroll', function () { sc.parentNode.classList.toggle('is-scrolled', sc.scrollTop > 40); }, { passive: true });
+    });
+    /* Swipe in from the left edge: the page follows the finger and the one behind it slides
+       back into place under it; let go past a third of the way (or with a flick) to go back */
+    $$('.ios-app').forEach(function (app) {
+      var x0 = null, y0 = 0, t0 = 0, dx = 0, live = false, cur = null, prev = null, w = 1;
+      function reset() { if (cur) { cur.style.transition = ''; cur.style.transform = ''; } if (prev) { prev.style.transition = ''; prev.style.transform = ''; prev.style.filter = ''; } }
+      app.addEventListener('touchstart', function (e) {
+        var t = e.touches[0];
+        if (t.clientX < 40) edgeAt = Date.now();
+        cur = currentPage(app); prev = $$('.ios-page.is-behind', app).pop();
+        x0 = (t.clientX < 40 && prev) ? t.clientX : null; y0 = t.clientY; t0 = Date.now(); dx = 0; live = false; w = app.clientWidth;
+      }, { passive: true });
+      app.addEventListener('touchmove', function (e) {
+        if (x0 === null) return;
+        /* the browser's own back swipe got there first (see popstate): leave it to that */
+        if (!cur.classList.contains('is-current')) { x0 = null; reset(); return; }
+        var t = e.touches[0], mx = t.clientX - x0, my = t.clientY - y0;
+        if (!live) {
+          if (Math.abs(my) > 12 && Math.abs(my) > Math.abs(mx)) { x0 = null; return; }
+          if (mx < 8) return;
+          live = true;
+        }
+        dx = Math.max(0, mx);
+        var f = dx / w;
+        cur.style.transition = prev.style.transition = 'none';
+        cur.style.transform = 'translateX(' + dx + 'px)';
+        prev.style.transform = 'translateX(' + (-28 + 28 * f) + '%)';
+        prev.style.filter = 'brightness(' + (0.94 + 0.06 * f) + ')';
+      }, { passive: true });
+      function end() {
+        if (x0 === null || !live) { x0 = null; return; }
+        x0 = null;
+        if (!cur.classList.contains('is-current')) { reset(); return; }
+        var fast = dx / Math.max(1, Date.now() - t0) > 0.5;
+        var go = dx > w * 0.33 || (fast && dx > 30);
+        cur.style.transition = prev.style.transition = 'transform .3s cubic-bezier(.2,.8,.2,1), filter .3s';
+        cur.style.transform = go ? 'translateX(100%)' : 'translateX(0)';
+        prev.style.transform = go ? 'translateX(0)' : 'translateX(-28%)';
+        prev.style.filter = go ? 'brightness(1)' : 'brightness(.94)';
+        var c = cur, p = prev;
+        setTimeout(function () {
+          /* only if the browser's own back hasn't already taken this level off meanwhile */
+          if (go && c.classList.contains('is-current')) {
+            popDom(app, true);
+            if (depth) { skipPop++; depth--; history.back(); }
+          }
+          c.style.transform = ''; p.style.transform = ''; p.style.filter = '';
+          requestAnimationFrame(function () { c.style.transition = ''; p.style.transition = ''; });
+        }, 300);
+      }
+      app.addEventListener('touchend', end);
+      app.addEventListener('touchcancel', function () { x0 = null; reset(); });
+    });
+    /* Back on this page from a page opened inside an app, when the browser reloaded it rather
+       than keeping it in memory: the history entry says which app and level it was */
+    var st = history.state;
+    if (st && st.homeApp) {
+      var btn = $('[data-app-open="' + st.homeApp + '"]');
+      if (btn && st.homeApp !== 'ara') {
+        open(btn, true);
+        var app0 = openApp, target = st.page && st.page !== 'root' && $('[data-page="' + st.page + '"]', app0);
+        if (target) { var root0 = currentPage(app0); root0.classList.remove('is-current'); root0.classList.add('is-behind'); target.classList.add('is-current'); }
+        depth = target ? 2 : 1;
+      } else { try { history.replaceState(null, ''); } catch (e) { /* file:// */ } }
+    }
   }
 
   /* GitHub Pages doesn't send an X-Frame-Options/frame-ancestors header, and that CSP
@@ -1554,6 +1722,22 @@
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) openDrawer(false); });
     }
+    /* Labels that would be cut off (a long word on a narrow phone) take the bar's text down a
+       half-point at a time until every one fits */
+    var labels = $$('.tb-t', bar), items = $$('.tb-item', bar);
+    function fitLabels() {
+      items.forEach(function (it) { it.style.fontSize = ''; });
+      if (getComputedStyle(bar).display === 'none' || !items.length) return;
+      var size = parseFloat(getComputedStyle(items[0]).fontSize);
+      function over() { return labels.some(function (l) { return l.scrollWidth > l.clientWidth + 1; }); }
+      while (over() && size > 10.5) {
+        size -= .5;
+        items.forEach(function (it) { it.style.fontSize = size + 'px'; });
+      }
+    }
+    fitLabels();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
+    var fitTimer; window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitLabels, 120); });
     /* Tesbih: "Baştan Başla" presses the rosary's own restart button */
     $$('[data-tb-action]', bar).forEach(function (b) {
       b.addEventListener('click', function () {
@@ -1567,7 +1751,7 @@
     var items = links.map(function (a) { return a.classList.contains('tb-link') ? moreBtn : a; });
     var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
     var whyWrap = $('.why-wrap'), ticking = false, tapped = -1;
-    links.forEach(function (a, i) { a.addEventListener('click', function () { tapped = i; }); });
+    links.forEach(function (a, i) { a.addEventListener('click', function () { tapped = i; queue(); }); });
     ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { tapped = -1; }, { passive: true }); });
     function spy() {
       ticking = false;
@@ -1586,8 +1770,8 @@
         /* The section whose top most recently passed the reading line (in page order, which
            need not be the bar's order: the rosary sits above its how-to, say) */
         var line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + Math.max(140, window.innerHeight / 3), best = -Infinity;
-        /* At the foot of the page the last sections can't scroll up to the line: then the one
-           just tapped wins, or else the lowest one that is on screen */
+        /* At the foot of the page the last sections can't scroll up to the line: then the
+           lowest one that is on screen */
         var atEnd = window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4;
         if (atEnd) line = window.innerHeight - 80;
         targets.forEach(function (t, i) {
@@ -1595,8 +1779,10 @@
           var top = t.getBoundingClientRect().top;
           if (top <= line && top > best) { best = top; pick = i; }
         });
-        if (atEnd && tapped > -1 && targets[tapped] && targets[tapped].getBoundingClientRect().top < window.innerHeight) pick = tapped;
       }
+      /* The item just tapped stays lit until the reader scrolls on their own: a short section
+         (a search box, say) never reaches the reading line before the next one does */
+      if (tapped > -1 && targets[tapped]) pick = tapped;
       var on = pick === -1 ? null : items[pick];
       items.forEach(function (it) { if (it) it.classList.toggle('is-active', it === on); });
     }
@@ -1869,7 +2055,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
-    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHomeWidgets(); initHomeSearch(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhySteps(); initTabBar(); initMapLinks(); initA11y();
   });
 })();
