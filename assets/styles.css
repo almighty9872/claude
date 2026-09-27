@@ -2551,19 +2551,6 @@ html.av .av-kq-fab { bottom: calc(var(--dock-h) + .5rem); }
 html.av .rt-sheet { bottom: var(--dock-h); }
 html.av .amap-pop.is-sheet { bottom: calc(var(--dock-h) + .4rem); }
 @media print { .av-dock { display: none !important; } }
-/* On the home screen an open app keeps the icons too, small, over it */
-@media (max-width: 979px) {
-  html.app-open .hm-apps {
-    z-index: 320; grid-template-columns: repeat(4, 3.6rem); gap: .15rem; left: 50%; right: auto; transform: translateX(-50%);
-    bottom: calc(.45rem + env(safe-area-inset-bottom)); padding: .4rem .5rem .3rem; border-radius: 1.4rem;
-    background: color-mix(in srgb, var(--surface) 62%, transparent);
-  }
-  html.app-open .hm-apps .hm-app { gap: .2rem; }
-  html.app-open .hm-apps .hm-icon { width: 2.35rem; height: 2.35rem; border-radius: 24%; }
-  html.app-open .hm-apps .hm-icon svg { width: 1.25rem; height: 1.25rem; }
-  html.app-open .hm-apps .hm-app-t { font-size: .6rem; }
-  html.app-open .ios-scroll { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
-  .hm-apps, .hm-apps .hm-icon, .hm-apps .hm-icon svg { transition: width .35s cubic-bezier(.32, .72, 0, 1), height .35s cubic-bezier(.32, .72, 0, 1), padding .35s, border-radius .35s; }
 }
 
 /* Further in, the page's small icon and name are the way back to its start: the name in the
@@ -2790,3 +2777,57 @@ html.av .av-dock.av-dock-solid {
 html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-bottom)); }
 
 .sources-dialog .contact-email { margin: 1rem 0; text-align: center; }
+
+/* ---------- The home screen's bar, as in the App Store ----------
+   A pill with a glyph and a name for each app; the open app in a capsule that glides to it.
+   The bar stays over an open app, the same size, so another app is one tap away. */
+@media (max-width: 979px) {
+  .hm-apps {
+    position: fixed; z-index: 320; left: .7rem; right: .7rem; bottom: calc(.55rem + env(safe-area-inset-bottom)); max-width: 30rem; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: .35rem; border-radius: 999px;
+    background: color-mix(in srgb, #fbfbfc 88%, transparent); border: 1px solid rgba(0, 0, 0, .08);
+    -webkit-backdrop-filter: saturate(180%) blur(22px); backdrop-filter: saturate(180%) blur(22px);
+    box-shadow: 0 12px 30px -16px rgba(0, 0, 0, .35);
+  }
+  [data-theme="dark"] .hm-apps { background: color-mix(in srgb, #2a2a2d 90%, transparent); border-color: rgba(255, 255, 255, .1); box-shadow: 0 12px 30px -16px rgba(0, 0, 0, .9); }
+  .hm-apps .hm-app { position: relative; z-index: 1; gap: .15rem; padding: .5rem 0 .45rem; border-radius: 999px; color: #111; }
+  [data-theme="dark"] .hm-apps .hm-app { color: #f2f2f4; }
+  .hm-apps .hm-icon { width: auto; height: auto; border-radius: 0; background: none !important; box-shadow: none; color: inherit; overflow: visible; }
+  .hm-apps .hm-icon::before { content: none; }
+  .hm-apps .hm-icon svg { width: 1.85rem; height: 1.85rem; }
+  .hm-apps .hm-app-t { font-size: .74rem; font-weight: 600; letter-spacing: -.01em; }
+  .hm-apps .hm-app[aria-current] { color: #9a7322; }
+  [data-theme="dark"] .hm-apps .hm-app[aria-current] { color: #e0b760; }
+  .hm-apps .hm-app:active .hm-icon { transform: scale(.9); filter: none; }
+  .hm-pill {
+    position: absolute; z-index: 0; top: .35rem; bottom: .35rem; left: 0; width: 0; border-radius: 999px; opacity: 0;
+    background: rgba(0, 0, 0, .075); transition: transform .38s cubic-bezier(.32, .72, 0, 1), width .38s cubic-bezier(.32, .72, 0, 1), opacity .2s;
+  }
+  [data-theme="dark"] .hm-pill { background: rgba(0, 0, 0, .55); }
+  .hm-pill.is-on { opacity: 1; }
+  html.app-open .ios-scroll { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
+  /* from one open app to another: at once, nothing grows, shrinks or fades */
+  .ios-app.is-instant, .ios-app.is-instant *, .ios-spot.is-instant, .ios-spot.is-instant * { transition: none !important; animation: none !important; }
+  .ios-app.is-instant .ios-splash { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .hm-pill { transition: none; } }
+
+/* ---------- Type on phones and tablets: Apple's own San Francisco where there is one, Inter
+   (open source, drawn in the same spirit) everywhere else ---------- */
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@media (max-width: 979px) {
+  html:not([data-a11y-dyslexia="1"]) {
+    --serif: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  }
+  html:not([data-a11y-dyslexia="1"]) body { letter-spacing: -.005em; }
+}

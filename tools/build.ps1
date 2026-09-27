@@ -2150,8 +2150,17 @@ function Home-Page([string]$lang) {
   $lists = "<div class=`"hm-lists`">$cols</div>"
   # Phone: the icons, the search overlay and the three apps
   $araLabel = L 'Ara' 'Search'
-  $icons = "<button type=`"button`" class=`"hm-app`" data-app-open=`"ara`" aria-haspopup=`"dialog`" aria-controls=`"app-ara`"><span class=`"hm-icon app-ara`">$IcoSearch</span><span class=`"hm-app-t`">$araLabel</span></button>" +
-    (($HomeApps | ForEach-Object { "<button type=`"button`" class=`"hm-app`" data-app-open=`"$($_.id)`" aria-haspopup=`"dialog`" aria-controls=`"app-$($_.id)`"><span class=`"hm-icon app-$($_.id)`">$($_.ico)</span><span class=`"hm-app-t`">$(L $_.t $_.te)</span></button>" }) -join '')
+  # The bar at the foot of the home screen, as in the App Store: a glyph and a name for each app,
+  # the open one in a capsule that glides to it (script.js moves .hm-pill)
+  $dockGlyph = @{
+    ara    = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.4" cy="10.4" r="6.6"/><path d="m15.3 15.3 5.2 5.2"/></g></svg>'
+    ogren  = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" transform="translate(2 2) scale(.2)">' + $CrossShapes + '</g></svg>'
+    dua    = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><circle cx="12" cy="3.4" r="1.25"/><circle cx="15.9" cy="4.5" r="1.25"/><circle cx="18.4" cy="7.6" r="1.25"/><circle cx="18.4" cy="11.4" r="1.25"/><circle cx="8.1" cy="4.5" r="1.25"/><circle cx="5.6" cy="7.6" r="1.25"/><circle cx="5.6" cy="11.4" r="1.25"/><circle cx="8.1" cy="14.4" r="1.25"/><circle cx="15.9" cy="14.4" r="1.25"/><circle cx="12" cy="15.6" r="1.6"/><rect x="11.25" y="17.2" width="1.5" height="5.6" rx=".4"/><rect x="9.6" y="18.6" width="4.8" height="1.4" rx=".4"/></g></svg>'
+    kesfet = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c.9 3.4 1.9 5.4 3.4 6.7 1.5 1.4 3.4 2.2 6.4 3.1-3 .9-4.9 1.7-6.4 3.1-1.5 1.3-2.5 3.3-3.4 6.7-.9-3.4-1.9-5.4-3.4-6.7-1.5-1.4-3.4-2.2-6.4-3.1 3-.9 4.9-1.7 6.4-3.1 1.5-1.3 2.5-3.3 3.4-6.7Z"/></svg>'
+  }
+  $icons = "<span class=`"hm-pill`" aria-hidden=`"true`"></span>" +
+    "<button type=`"button`" class=`"hm-app`" data-app-open=`"ara`" aria-haspopup=`"dialog`" aria-controls=`"app-ara`"><span class=`"hm-icon`">$($dockGlyph.ara)</span><span class=`"hm-app-t`">$araLabel</span></button>" +
+    (($HomeApps | ForEach-Object { "<button type=`"button`" class=`"hm-app`" data-app-open=`"$($_.id)`" aria-haspopup=`"dialog`" aria-controls=`"app-$($_.id)`"><span class=`"hm-icon`">$($dockGlyph[$_.id])</span><span class=`"hm-app-t`">$(L $_.t $_.te)</span></button>" }) -join '')
   $close = L 'Kapat' 'Close'
   $spot = "<div class=`"ios-spot`" id=`"app-ara`" role=`"dialog`" aria-modal=`"true`" aria-label=`"$araLabel`" hidden><div class=`"ios-spot-bg`" data-app-close></div>" +
     "<div class=`"ios-spot-panel`"><div class=`"ios-spot-row`">$(Search-Form 'spot-search' 'q-spot' $placeholder $lang)</div>" +

@@ -1589,12 +1589,47 @@
       if (spotRes && window.MutationObserver) new MutationObserver(placeSpot).observe(spotRes, { attributes: true, attributeFilter: ['hidden'] });
       if (window.visualViewport) { window.visualViewport.addEventListener('resize', placeSpot); window.visualViewport.addEventListener('scroll', placeSpot); }
       window.addEventListener('resize', placeSpot);
+      window.addEventListener('resize', function () { if (openApp) setPill(fromBtn); });
+    }
+    /* the capsule behind the open app's icon, as in the App Store's bar */
+    var dockBar = $('.hm-apps'), pill = $('.hm-pill');
+    function setPill(btn) {
+      $$('.hm-app', dockBar).forEach(function (b) { if (b === btn) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+      if (!pill) return;
+      if (!btn) { pill.classList.remove('is-on'); return; }
+      pill.style.width = btn.offsetWidth + 'px';
+      pill.style.transform = 'translateX(' + btn.offsetLeft + 'px)';
+      pill.classList.add('is-on');
+    }
+    /* from one open app straight to another: no closing and opening, just the other list */
+    function switchTo(btn) {
+      var id = btn.getAttribute('data-app-open'), app = document.getElementById('app-' + id), old = openApp;
+      if (!app || !old || app === old) return;
+      var oldBox = boxOf(old);
+      old.classList.add('is-instant'); app.classList.add('is-instant');
+      old.classList.remove('is-open'); old.hidden = true;
+      oldBox.style.transition = 'none'; oldBox.style.transform = ''; oldBox.style.borderRadius = ''; oldBox.style.opacity = '';
+      if (oldBox !== old) { var q0 = $('input', old), rs0 = $('.search-results', old); if (q0) q0.value = ''; if (rs0) { rs0.hidden = true; rs0.innerHTML = ''; } }
+      var sc0 = $('.ios-scroll', old); if (sc0) sc0.scrollTop = 0;
+      openApp = app; fromBtn = btn; fromIcon = $('.hm-icon', btn);
+      setPill(btn);
+      app.hidden = false;
+      var box = boxOf(app);
+      box.style.transition = 'none'; box.style.transform = ''; box.style.borderRadius = ''; box.style.opacity = '';
+      if (box !== app) placeSpot();
+      app.classList.add('is-open');
+      setPill(btn);
+      if (marked) { try { history.replaceState({ homeApp: id }, ''); } catch (e) { /* file:// */ } }
+      /* Ara: the cursor in the field within the tap, so the keyboard comes up */
+      if (box !== app) { var inp = $('input', app); if (inp) inp.focus({ preventScroll: true }); }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { old.classList.remove('is-instant'); app.classList.remove('is-instant'); }); });
     }
     function mark(app) { try { history.pushState({ homeApp: app.id.slice(4) }, ''); marked = true; } catch (e) { /* file:// */ } }
     function open(btn, instant) {
       var id = btn.getAttribute('data-app-open'), app = document.getElementById('app-' + id);
       if (!app || openApp) return;
       openApp = app; fromBtn = btn; fromIcon = $('.hm-icon', btn);
+      setPill(btn);
       app.hidden = false;
       document.documentElement.classList.add('app-open');
       var box = boxOf(app), spot = box !== app;
@@ -1624,12 +1659,13 @@
       if (box !== app) { var q = $('input', app), rs = $('.search-results', app); if (q) q.value = ''; if (rs) { rs.hidden = true; rs.innerHTML = ''; } }
       var sc = $('.ios-scroll', app); if (sc) sc.scrollTop = 0;
       document.documentElement.classList.remove('app-open');
-      openApp = null;
+      if (openApp === app) openApp = null;
     }
     function close(fromHistory) {
       var app = openApp;
       if (!app) return;
       var box = boxOf(app), spot = box !== app;
+      setPill(null);
       app.classList.remove('is-open');
       if (!still) {
         var tf = iconTransform(fromIcon, box);
@@ -1652,9 +1688,7 @@
       if (o) {
         /* the icons stay over an open app: its own icon closes it, another one switches to that app */
         if (!openApp) { open(o); return; }
-        var same = openApp.id === 'app-' + o.getAttribute('data-app-open');
-        close();
-        if (!same) setTimeout(function () { open(o); }, still ? 0 : 420);
+        if (openApp.id === 'app-' + o.getAttribute('data-app-open')) close(); else switchTo(o);
         return;
       }
       if (openApp && t.closest('[data-app-close]')) close();
