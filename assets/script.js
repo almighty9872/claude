@@ -840,7 +840,7 @@
     var ui = {
       context: $('.rt-context', sheet), myst: $('.rt-mystery', sheet), mLabel: $('.rt-m-label', sheet), mTitle: $('.rt-m-title', sheet),
       title: $('.rt-title', sheet), text: $('.rt-text', sheet), prev: $('.rt-prev', sheet), next: $('.rt-next', sheet),
-      nextLabel: $('.rt-next span', sheet), bar: $('.rt-progress span', sheet), live: $('.rt-live', sheet), grip: $('.rt-grip', sheet),
+       bar: $('.rt-progress span', sheet), live: $('.rt-live', sheet), grip: $('.rt-grip', sheet),
       resume: $('.rt-resume', sheet),
       center: $('.rt-center', root), cSet: $('.rt-c-set', root), cCount: $('.rt-c-count', root), cMyst: $('.rt-c-myst', root)
     };
@@ -946,7 +946,7 @@
         ui.title.textContent = T.doneTitle;
         setText(ui.text, T.doneText);
         ui.prev.disabled = false;
-        ui.nextLabel.textContent = T.again;
+        ui.next.setAttribute('aria-label', T.again); ui.next.title = T.again;
         ui.bar.style.width = '100%';
         ui.live.textContent = T.doneTitle;
       } else {
@@ -969,7 +969,7 @@
         setText(ui.text, p.text);
         ui.text.scrollTop = 0;
         ui.prev.disabled = idx === 0;
-        ui.nextLabel.textContent = idx === steps.length - 1 ? T.finish : T.next;
+        var nl = idx === steps.length - 1 ? T.finish : T.next; ui.next.setAttribute('aria-label', nl); ui.next.title = nl;
         ui.bar.style.width = (idx / steps.length * 100) + '%';
         ui.live.textContent = p.title + ', ' + ctx + (st.announce ? ', ' + ui.mTitle.textContent : '');
       }
@@ -2028,12 +2028,8 @@
       $$('main > .wrap > section[id]', document).forEach(function (s) { avNode(s, avHead($('h2', s))); });
       $$('.amap-card[id]', m).forEach(function (c) { avNode(c, avText($('.amap-c-name', c)), avText($('.amap-c-place', c)), true); });
     },
-    'kiliseler.html': function (m, T) {
-      $$('.church-city', m).forEach(function (d) {
-        var n = $$('.church-card', d).length;
-        avNode(d, avText($('.church-city-name', d)), n + ' ' + (n === 1 ? T.church : T.churches));
-      });
-      $$('.church-card', m).forEach(function (c) { avNode(c, avText($('.t-title', c)), avText($('.church-rite', c))); });
+    'kiliseler.html': function (m) {
+      /* the churches themselves open from the map; only the question below it is a level */
       $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
     },
     'katekizm.html': function (m) {
@@ -2426,7 +2422,7 @@
           if (k.hidden) a.hidden = true;
           box.appendChild(a);
         });
-        if (level === main && i === 0) {
+        if (level === main && i === 0 && !$('.cmap', main)) {
           var gh = document.createElement('p'); gh.className = 'av-gh'; gh.textContent = T.sections;
           r.list[0].parentNode.insertBefore(gh, r.list[0]);
         }

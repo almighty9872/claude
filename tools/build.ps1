@@ -699,7 +699,6 @@ $SheetNav = @(
     @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e" },
     @{ href = 'kiliseler.html'; t = 'Kilise Bul'; s = "Türkiye$($Apos)de kiliseler" }) },
   @{ label = 'Site'; items = @(
-    @{ href = 'index.html'; t = 'Ana Sayfa'; s = 'Bugün ve bütün bölümler' },
     @{ href = 'iletisim.html'; t = 'İletişim'; s = 'Bize ulaşın' },
     @{ href = 'erisilebilirlik.html'; t = 'Erişilebilirlik'; s = 'Herkes için okunur bir site'; ico = $IcoA11yPerson },
     @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Kişisel veri toplanmaz'; ico = $IcoShield }) }
@@ -1896,7 +1895,7 @@ function Rosary-Tracker([string]$lang) {
        sel = 'Mysteries'; restart = 'Start over'; panel = 'Prayer panel'; grip = 'Hide prayer text'; prev = 'Previous'; next = 'Next'
        svg = 'A five-decade rosary: tap a bead to move to it'; ctx = 'Opening'; title = $first.en.title; text = $first.en.text }
   } else {
-    @{ h = 'Adım Adım Tesbih'; lead = "Parlayan taneye dokunun ya da Sonraki düğmesine basın; her tanenin duası dua panelinde görünür. Günün gizemleri kendiliğinden seçilir."
+    @{ h = 'Adım Adım Tesbih'; lead = "Parlayan taneye dokunun ya da ileri okuna basın; her tanenin duası dua panelinde görünür. Günün gizemleri kendiliğinden seçilir."
        sel = 'Gizemler'; restart = 'Baştan başla'; panel = 'Dua paneli'; grip = 'Dua metnini gizle'; prev = 'Önceki'; next = 'Sonraki'
        svg = 'Beş onluklu tesbih: bir taneye geçmek için dokunun'; ctx = 'Giriş'; title = $first.tr.title; text = $first.tr.text }
   }
@@ -1922,8 +1921,8 @@ function Rosary-Tracker([string]$lang) {
         <h3 class="rt-title">$(Inline $t.title)</h3>
         <div class="rt-text" id="rt-text">$((Verse $t.text) -replace '<br>', ' <br>')</div>
         <div class="rt-nav">
-          <button type="button" class="rt-prev" disabled>$IcoPrev<span>$($t.prev)</span></button>
-          <button type="button" class="rt-next"><span>$($t.next)</span>$IcoNext</button>
+          <button type="button" class="rt-prev" disabled aria-label="$($t.prev)" title="$($t.prev)">$IcoPrev</button>
+          <button type="button" class="rt-next" aria-label="$($t.next)" title="$($t.next)">$IcoNext</button>
         </div>
         <p class="visually-hidden rt-live" aria-live="polite"></p>
       </div>
@@ -2013,11 +2012,6 @@ $IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cur
 $IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
 $IcoWarn = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 18.2a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0Z"/><path d="M12 9.5v4.4"/><circle cx="12" cy="16.8" r="1" fill="currentColor" stroke="none"/></svg>'
 $IcoChurch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v3.1M10.6 4.1h2.8"/><path d="M5 10.8 12 6l7 4.8V21H5Z"/><path d="M9.6 21v-4.6a2.4 2.4 0 0 1 4.8 0V21"/></svg>'
-$riteSelectOpts = ($Churches.rites | ForEach-Object { "<option value=`"$($_.id)`">$($_.tr) ($($_.en))</option>" }) -join ''
-$riteFilterHtml = "<div class=`"select-wrap rite-filter`">" +
-  "<select id=`"rite-select`" aria-label=`"Kilise türüne göre filtrele`"><option value=`"all`">Tüm Kiliseler (All Churches)</option>$riteSelectOpts</select>$IcoChevDown" +
-"</div>"
-$kiliselerToc = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`" data-city-link=`"$($_.id)`">$($_.name)</a></li>" }) -join ''
 $kiliselerCities = ($Churches.cities | ForEach-Object {
   $city = $_
   $cards = ($city.churches | ForEach-Object {
@@ -2025,7 +2019,7 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     # Skip the address line entirely when the sourced data was only district-level (the address
     # field then just repeats "district, city", which the line above already shows).
     $hasRealAddr = $_.address -ne "$($_.district), $($city.name)"
-    # Searching by the church's own name (all 31 are unique) resolves to the right building far
+    # Searching by the church's own name (each is unique) resolves to the right building far
     # more reliably in Google/Apple Maps than an assembled street address, which both apps have
     # sometimes mis-parsed or only matched down to the district centroid.
     $mapQ = "$($_.name), $($city.name)"
@@ -2073,7 +2067,7 @@ $RiteIco['keldani'] = $RiteIco['suryani']
 # where each city's name sits beside its dot (px): dx, dy, text-anchor
 $CityLabel = @{ istanbul = @(0, -13, 'middle'); bursa = @(0, 21, 'middle'); izmir = @(11, 5, 'start'); ankara = @(11, 5, 'start')
   mersin = @(-11, 12, 'end'); adana = @(11, -2, 'start'); antakya = @(11, 12, 'start'); antalya = @(0, 21, 'middle')
-  diyarbakir = @(0, -13, 'middle'); mardin = @(0, 21, 'middle') }
+  diyarbakir = @(0, -13, 'middle'); mardin = @(0, 21, 'middle'); trabzon = @(0, -13, 'middle') }
 function Cm-Pin([double]$lat, [double]$lon) { $p = Map-XY $lat $lon; return "data-x=`"$($p[0])`" data-y=`"$($p[1])`"" }
 $cmCities = New-Object Text.StringBuilder; $cmMarks = New-Object Text.StringBuilder; $cmOpts = New-Object Text.StringBuilder
 foreach ($city in $Churches.cities) {
@@ -2084,7 +2078,7 @@ foreach ($city in $Churches.cities) {
   $box = "$(Map-Num ($xs | Measure-Object -Minimum).Minimum) $(Map-Num ($ys | Measure-Object -Minimum).Minimum) $(Map-Num ($xs | Measure-Object -Maximum).Maximum) $(Map-Num ($ys | Measure-Object -Maximum).Maximum)"
   [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" $(Cm-Pin $city.lat $city.lon) data-box=`"$box`" tabindex=`"0`" role=`"button`" aria-label=`"$($city.name): $n kilise`">" +
     "<circle class=`"cc-hit`" r=`"18`"></circle><circle class=`"cc-dot`" r=`"5.5`"></circle>" +
-    "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$($city.name -replace ' \(.*\)$', '')<tspan class=`"cc-n`"> $n</tspan></text></g>")
+    "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$($city.name -replace ' \(.*\)$', '')</text></g>")
   [void]$cmOpts.Append("<optgroup label=`"$($city.name)`">")
   foreach ($ch in $city.churches) {
     $rite = $RiteLabels[$ch.rite]
@@ -2117,9 +2111,7 @@ $cmTexts = (@(
 }) -join ''
 $cmBox = $CmShape.box
 $churchMapHtml = @"
-<section class="cmap" id="harita" aria-labelledby="cmap-h">
-  <h2 class="section-title" id="cmap-h">Haritada Kiliseler</h2>
-  <p class="cmap-lead">Bir şehrin adına dokunun: harita o bölgeye yaklaşır ve her kilise, ayininin haçıyla gösterilir. Konumlar semt düzeyinde yaklaşıktır; kilisenin tam yeri için kartındaki “Haritada Aç” bağlantısını kullanın.</p>
+<section class="cmap" id="harita" aria-label="Kilise haritası">
   <div class="cmap-bar">
     <div class="select-wrap cmap-select"><select id="cmap-find" aria-label="Haritada göster: bir ayin ya da bir kilise"><option value="all">Tüm kiliseler</option><optgroup label="Katolik ayinleri">$cmRiteOpts</optgroup>$($cmOpts.ToString())</select>$IcoChevDown</div>
     <button type="button" class="btn cmap-reset" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg>Bölgeyi Göster</button>
@@ -2152,9 +2144,10 @@ $kiliselerBody = @"
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
 $churchMapHtml
-  <nav class="faq-toc is-sticky" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
-  $riteFilterHtml
+  <!-- every church's card, by city: not shown as a list, but opened from the map above -->
+  <div class="church-data" hidden>
 $kiliselerCities
+  </div>
   <p class="conventions">$(Inline $Churches.note)</p>
   <div class="faq-list">
     <details class="faq-item" id="katolik-bulunamadiginda"><summary><span class="faq-q">Yakınımda Katolik kilisesi yoksa ne yapmalıyım?</span>$IcoChevLg</summary>

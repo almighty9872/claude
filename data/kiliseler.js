@@ -472,6 +472,25 @@ window.CHURCHES = /*JSON-START*/{
    ]
   },
   {
+   "id": "trabzon",
+   "lat": 41.0, "lon": 39.72,
+   "name": "Trabzon",
+   "churches": [
+    {
+     "id": "santa-maria-trabzon",
+     "lat": 41.0045, "lon": 39.7235,
+     "name": "Santa Maria Katolik Kilisesi",
+     "nameEn": "Santa Maria Catholic Church",
+     "rite": "latin",
+     "district": "İskenderpaşa, Ortahisar",
+     "address": "İskenderpaşa Mah., Sümer Sokak No. 24-26, 61100 Trabzon",
+     "website": "https://www.trabzonkatolikkilisesi.com",
+     "hours": "Pazar: 11:30. Kilise pazar ve pazartesi günleri ziyarete kapalıdır; salı, çarşamba, perşembe, cuma ve cumartesi günleri 15:30–17:30 arasında ziyaret edilebilir. Saatler değişebilir; trabzonkatolikkilisesi.com’dan teyit edin.",
+     "hoursEn": "Sunday: 11:30am. The church is closed to visitors on Sundays and Mondays; it can be visited Tuesday to Saturday, 3:30–5:30pm. Times change; confirm at trabzonkatolikkilisesi.com."
+    }
+   ]
+  },
+  {
    "id": "diyarbakir",
    "lat": 37.91, "lon": 40.23,
    "name": "Diyarbakır",

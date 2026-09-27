@@ -1397,13 +1397,14 @@ html:not(.js) .rt { display: none; }
 .rt-text p { margin: 0 0 .5rem; }
 .rt-text p:last-child { margin-bottom: 0; }
 .rt-sheet.is-collapsed .rt-text { display: none; }
-.rt-nav { display: grid; grid-template-columns: 1fr 1.6fr; gap: .6rem; margin-top: .6rem; }
+/* back and forward: two small round arrows, one at each side */
+.rt-nav { display: flex; justify-content: space-between; gap: .6rem; margin-top: .6rem; }
 .rt-nav button {
-  display: inline-flex; align-items: center; justify-content: center; gap: .35rem; min-height: 3rem; padding: .5rem 1rem;
-  font-family: var(--sans); font-size: 1rem; font-weight: 600; border-radius: 14px; border: 1px solid var(--border-strong);
+  display: inline-flex; align-items: center; justify-content: center; width: 2.9rem; height: 2.9rem; padding: 0;
+  font-family: var(--sans); font-size: 1rem; font-weight: 600; border-radius: 50%; border: 1px solid var(--border-strong);
   background: var(--surface); color: var(--text); transition: background-color .18s, color .18s, transform .12s;
 }
-.rt-nav button svg { width: 1.15rem; height: 1.15rem; flex: none; }
+.rt-nav button svg { width: 1.3rem; height: 1.3rem; flex: none; }
 .rt-nav .rt-next { background: var(--gold); border-color: var(--gold); color: var(--surface); }
 .rt-nav .rt-next:hover { background: var(--gold-active); }
 .rt-nav .rt-prev:hover:not(:disabled) { border-color: var(--gold-soft); color: var(--gold); }
@@ -1629,10 +1630,7 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .month-pills a:hover { border-color: var(--gold-soft); color: var(--gold); }
 .month-pills a.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); }
 
-.month {
-  scroll-margin-top: calc(var(--header-h) + 3.2rem); margin-bottom: 2rem;
-  content-visibility: auto; contain-intrinsic-size: 0 1200px;
-}
+.month { scroll-margin-top: calc(var(--header-h) + 3.2rem); margin-bottom: 2rem; }
 /* JS-only: once a month is picked, the rest hide instead of being scrolled past.
    No class is added at all without JS, so a non-JS visitor still gets the full year. */
 .saints-cal.month-filter .month { display: none; }
@@ -2953,7 +2951,6 @@ html.av .to-top-wrap { display: none; }
 .cmap-city .cc-hit { fill: transparent; }
 .cmap-city .cc-dot { fill: var(--gold); stroke: var(--amap-tr); stroke-width: 2; }
 .cmap-city .cc-name { font-family: var(--sans); font-size: 13px; font-weight: 700; fill: var(--text); paint-order: stroke; stroke: var(--amap-tr); stroke-width: 3.5px; stroke-linejoin: round; }
-.cmap-city .cc-n { fill: var(--gold-active); font-weight: 700; }
 .cmap-city:hover .cc-name, .cmap-city:focus-visible .cc-name { fill: var(--gold-active); text-decoration: underline; }
 .cmap-city:focus-visible .cc-dot { stroke: var(--focus); stroke-width: 3; }
 .cmap-city.is-off { opacity: .35; }
