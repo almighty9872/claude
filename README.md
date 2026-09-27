@@ -103,6 +103,14 @@ Search reads the data files at runtime, so edits show up in search results immed
 
 Below 980px wide, every page except the home screen is shown as a screen of an app (`initAppView` in `assets/script.js`): the page's sections as a list, a section with its items as a list, an item on its own. All of the page's text stays in its HTML, so search engines read the same page on a phone as on a computer. Each level has its own `#anchor` address, so the browser's back steps back a level and links open the right level. The bar at the top leads back to the page's home screen app (Öğren, Dua Et, Keşfet) or the page it belongs to (`Av-Parent` in `tools/build.ps1`); where a level holds English or Latin originals, a Türkçe / English / Latina switch swaps the text in place. Which elements are levels on each page is set in `AV_PAGES` in `assets/script.js`.
 
+Every page on a phone also carries the home screen's four icons, small, at its foot (`Av-Dock` in `tools/build.ps1`), and an X beside the settings gear that returns to the home screen. Further into a page, its small icon and name lead straight back to the page's first screen (going back in the browser's history as many steps as that takes), with the levels in between shown under them. On the Katekizm's own pages a magnifier in the bar opens the question search across it.
+
+## References and addresses
+
+Every Scripture reference in a page's text (Turkish or English book names, e.g. "Matta 13:1–23", "1. Korintliler 12:13", "Luke 15:3–7") is linked at build time to that passage on BibleGateway in the RSV Catholic Edition (`Link-Refs` in `tools/build.ps1`); the English of the parables, which is the Douay-Rheims text, links to the same passage in that translation. Catechism paragraph references (the "KKK/CCC" numbers under the questions and in the text) open the Catechism on vatican.va in a new window: `data/ccc-vatican.json`, when present, maps paragraph ranges to the vatican.va page holding them, and a paragraph it doesn't cover opens the Catechism's contents page there.
+
+The Katekizm overview is `katekizm.html`; its old address `katesizm.html` is a forwarding page that keeps any `?q=` search and `#question`.
+
 ## Editing the sources and copyright text
 
 Edit `content/hakkinda.md`. On github.com, open the file, click the pencil icon and commit. The workflow rebuilds every page in about a minute, since the text appears in each page's footer. In the top block (between the `---` lines), `title` is the footer link and dialog heading, and `about` is the one-line sentence under the site name in the footer. The rest is Markdown, shown in the "Kaynaklar ve telif" dialog:

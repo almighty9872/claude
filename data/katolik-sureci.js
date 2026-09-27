@@ -18,15 +18,15 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "id": "vaftizsiz",
    "title": "Daha önce hiç vaftiz olmadıysanız",
    "titleEn": "If you've never been baptized before",
-   "text": "Vaftiz olduğunuz anda Katolik olursunuz. Hazırlık süreci aşağıda.",
-   "textEn": "You become Catholic the moment you're baptized. The preparation is described below."
+   "text": "Vaftiz olduğunuz anda Katolik olursunuz. <a href=\"#surec\">Hazırlık sürecini adım adım görün</a>.",
+   "textEn": "You become Catholic the moment you're baptized. <a href=\"#surec\">See the preparation step by step</a>."
   },
   {
    "id": "vaftizli",
    "title": "Başka bir Hristiyan topluluğunda geçerli biçimde vaftiz olduysanız",
    "titleEn": "If you were validly baptized in another Christian community",
-   "text": "Zaten Hristiyansınız. İman ikrarıyla Kilise’ye kabul edilir, genellikle aynı ayinde konfirmasyon ve ilk komünyonu alırsınız.",
-   "textEn": "You're already Christian. You're received into the Church with a profession of faith, usually along with confirmation and first Communion in the same Mass."
+   "text": "Zaten Hristiyansınız. İman ikrarıyla Kilise’ye kabul edilir, genellikle aynı ayinde konfirmasyon ve ilk komünyonu alırsınız. <a href=\"#zaten-hristiyan\">Bu yolun ayrıntıları</a>.",
+   "textEn": "You're already Christian. You're received into the Church with a profession of faith, usually along with confirmation and first Communion in the same Mass. <a href=\"#zaten-hristiyan\">More on this path</a>."
   }
  ],
  "processIntro": "Vaftiz olmamış yetişkinlerin hazırlığına OCIA denir (eskiden RCIA). Adayları imana hazırlama geleneği ilk yüzyıllara uzanır. Süreç genellikle eylülde başlar ve yaklaşık altı ay sonra Paskalya Nöbeti’nde tamamlanır. Başlamak için en yakın Katolik kilisesine başvurun.",

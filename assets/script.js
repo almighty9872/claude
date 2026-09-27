@@ -562,7 +562,17 @@
         if (sheet.classList.contains('open')) closeSheet(true); else openSheet();
       });
     });
-    if (panel) panel.addEventListener('click', function (e) { if (e.target.closest('a')) closeSheet(false); });
+    if (panel) panel.addEventListener('click', function (e) {
+      /* the arrow beside Katekizm folds its parts open or closed */
+      var more = e.target.closest('.ns-more');
+      if (more) {
+        var fold = more.closest('.ns-fold'), open = !fold.classList.contains('is-open');
+        fold.classList.toggle('is-open', open);
+        more.setAttribute('aria-expanded', open ? 'true' : 'false');
+        return;
+      }
+      if (e.target.closest('a')) closeSheet(false);
+    });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(true); });
     /* Growing past the phone breakpoint while the sheet is open would leave the page locked */
     window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });
@@ -1142,6 +1152,8 @@
       if (pieces.length) body.innerHTML = pieces.join('');
     }
 
+    buildCalendar(cal, today, MONTHS);
+
     /* Month pills: without JS these are plain #ay-N anchors and every month shows, full
        year, scroll-to-jump. With JS, only one month shows at a time (today's, at first)
        and a pill click swaps which one instead of scrolling past the other eleven. */
@@ -1326,6 +1338,167 @@
      slide further in to a page's sections, and shrink back into the
      icon on Kapat. A swipe in from the left edge goes back a level.
      --------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+     11b. The saints' calendar as a calendar. The page's own HTML keeps
+          every day of the year as text (what search engines and readers
+          without JS get); from it this lays out:
+          - on a computer, a month at a time on a real grid (Monday first,
+            this year's weekdays), each day showing its saints, with the
+            chosen day's saints and lives beside it, and a year view to
+            jump across the months;
+          - on a phone, the Takvim screen as a year of small months (a
+            tap opens that month) and each month as a grid of its days
+            (a tap opens that day).
+     --------------------------------------------------------------- */
+  var RANKS = ['rk-hi', 'rk-solemn', 'rk-feast', 'rk-memorial', 'rk-optional', 'rk-other', 'genel'];
+  function buildCalendar(cal, today, MONTHS) {
+    var en = LANG === 'en';
+    var WD = en ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+    var WD1 = en ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['P', 'S', 'Ç', 'P', 'C', 'C', 'P'];
+    var WDL = en ? ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] : ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+    var TX = en ? { prev: 'Previous month', next: 'Next month', today: 'Today', month: 'Month', year: 'Year', more: 'more', legend: ['Solemnity', 'Feast', 'Memorial', 'Optional memorial'], none: 'No saint is listed for this day.' }
+      : { prev: 'Önceki ay', next: 'Sonraki ay', today: 'Bugün', month: 'Ay', year: 'Yıl', more: 'daha', legend: ['Büyük Bayram', 'Bayram', 'Anma', 'İhtiyari Anma'], none: 'Bu gün için kayıtlı bir aziz yok.' };
+    var Y = today.year;
+    function rankOf(cell) { for (var i = 0; i < RANKS.length; i++) if (cell.classList.contains(RANKS[i])) return RANKS[i]; return 'rk-other'; }
+    function dayOf(m, d) { return $('.day-cell[data-m="' + m + '"][data-d="' + d + '"]', cal); }
+    function daysIn(m) { return new Date(Y, m, 0).getDate(); }
+    function lead(m) { return (new Date(Y, m - 1, 1).getDay() + 6) % 7; }
+    function wd(m, d) { return (new Date(Y, m - 1, d).getDay() + 6) % 7; }
+    function isToday(m, d) { return m === today.month && d === today.day; }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function names(cell) { return cell ? $$('.s-name', cell).map(function (n) { return n.textContent.replace(/\s+/g, ' ').trim(); }) : []; }
+    var LEG_RK = ['rk-solemn', 'rk-feast', 'rk-memorial', 'rk-optional'];
+    function legend() {
+      return '<p class="cal-legend">' + LEG_RK.map(function (r, i) { return '<span><i class="cal-dot ' + r + '"></i>' + TX.legend[i] + '</span>'; }).join('') + '</p>';
+    }
+
+    /* ----- a phone: the year, and each month's grid, inside the page's own levels */
+    var pills = $('.month-pills');
+    if (document.documentElement.classList.contains('av')) {
+      var year = document.createElement('div');
+      year.className = 'cal-year cal-phone';
+      year.innerHTML = '<p class="cal-year-y">' + Y + '</p>' + [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (m) {
+        var cells = '';
+        for (var i = 0; i < lead(m); i++) cells += '<span></span>';
+        for (var d = 1; d <= daysIn(m); d++) {
+          var c = dayOf(m, d), r = c ? rankOf(c) : '';
+          cells += '<span class="' + (isToday(m, d) ? 'is-today ' : '') + (/rk-(hi|solemn|feast)/.test(r) ? 'is-big' : '') + '">' + d + '</span>';
+        }
+        return '<a class="cal-mini' + (m === today.month ? ' is-now' : '') + '" href="#ay-' + m + '"><span class="cal-mini-h">' + MONTHS[m - 1] + '</span><span class="cal-mini-g" aria-hidden="true">' + cells + '</span></a>';
+      }).join('') + legend();
+      if (pills) pills.parentNode.insertBefore(year, pills.nextSibling); else cal.parentNode.insertBefore(year, cal);
+      /* a day's own screen: its month and weekday beside the number */
+      $$('.day-cell', cal).forEach(function (c) {
+        var m = +c.getAttribute('data-m'), d = +c.getAttribute('data-d'), n = $('.day-num', c);
+        if (!n) return;
+        var s = document.createElement('span'); s.className = 'day-mon';
+        s.textContent = MONTHS[m - 1] + ', ' + WDL[wd(m, d)];
+        n.parentNode.insertBefore(s, n.nextSibling);
+      });
+      $$('.month', cal).forEach(function (sec) {
+        var m = +sec.getAttribute('data-month'), g = '';
+        WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + w.slice(0, en ? 2 : 3) + '</span>'; });
+        for (var i = 0; i < lead(m); i++) g += '<span></span>';
+        for (var d = 1; d <= daysIn(m); d++) {
+          var c = dayOf(m, d), n = names(c);
+          g += '<a class="cal-md ' + (c ? rankOf(c) : '') + (isToday(m, d) ? ' is-today' : '') + (wd(m, d) > 4 ? ' is-we' : '') + '" href="#gun-' + m + '-' + d + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1] + (n.length ? ': ' + n.join(', ') : '')) + '"><span class="cal-n">' + d + '</span><i class="cal-dot"></i></a>';
+        }
+        var grid = document.createElement('div');
+        grid.className = 'cal-mgrid cal-phone';
+        grid.innerHTML = g;
+        var legendBox = document.createElement('div'); legendBox.className = 'cal-phone'; legendBox.innerHTML = legend();
+        var t = $('.month-title', sec);
+        sec.insertBefore(legendBox, t.nextSibling);
+        sec.insertBefore(grid, t.nextSibling);
+      });
+      return;
+    }
+
+    /* ----- a computer: the calendar itself */
+    var app = document.createElement('div');
+    app.className = 'cal-app';
+    app.innerHTML =
+      '<div class="cal-bar"><div class="cal-nav"><button type="button" class="cal-arrow" data-cal-step="-1" aria-label="' + TX.prev + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>' +
+      '<h3 class="cal-title" aria-live="polite"></h3><button type="button" class="cal-arrow" data-cal-step="1" aria-label="' + TX.next + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>' +
+      '<button type="button" class="cal-todaybtn">' + TX.today + '</button>' +
+      '<div class="cal-seg" role="group"><button type="button" data-cal-view="month" aria-pressed="true">' + TX.month + '</button><button type="button" data-cal-view="year" aria-pressed="false">' + TX.year + '</button></div></div>' +
+      '<div class="cal-body"><div class="cal-main"></div><aside class="cal-day" aria-live="polite"></aside></div>' + legend();
+    if (pills) pills.parentNode.insertBefore(app, pills); else cal.parentNode.insertBefore(app, cal);
+    cal.classList.add('cal-on');
+    if (pills) pills.classList.add('cal-on');
+    var main = $('.cal-main', app), side = $('.cal-day', app), title = $('.cal-title', app);
+    var st = { view: 'month', m: today.month, sel: { m: today.month, d: today.day } };
+
+    function monthHtml(m) {
+      var h = '<div class="cal-grid" role="grid" aria-label="' + esc(MONTHS[m - 1] + ' ' + Y) + '"><div class="cal-row cal-head" role="row">' +
+        WD.map(function (w, i) { return '<span role="columnheader" class="' + (i > 4 ? 'is-we' : '') + '">' + w + '</span>'; }).join('') + '</div><div class="cal-days">';
+      for (var i = 0; i < lead(m); i++) h += '<span class="cal-cell is-out" aria-hidden="true"></span>';
+      for (var d = 1; d <= daysIn(m); d++) {
+        var c = dayOf(m, d), n = names(c), r = c ? rankOf(c) : 'rk-other';
+        var ev = n.slice(0, 2).map(function (x) { return '<span class="cal-ev ' + r + '">' + esc(x) + '</span>'; }).join('') +
+          (n.length > 2 ? '<span class="cal-more">+' + (n.length - 2) + ' ' + TX.more + '</span>' : '');
+        var sel = st.sel.m === m && st.sel.d === d;
+        h += '<button type="button" role="gridcell" class="cal-cell ' + r + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
+          '" data-m="' + m + '" data-d="' + d + '" aria-selected="' + sel + '" tabindex="' + (sel ? 0 : -1) + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1] + ', ' + WDL[wd(m, d)] + (n.length ? ': ' + n.join(', ') : '')) + '">' +
+          '<span class="cal-n">' + d + '</span>' + ev + '</button>';
+      }
+      var tail = (7 - (lead(m) + daysIn(m)) % 7) % 7;
+      for (var k = 0; k < tail; k++) h += '<span class="cal-cell is-out" aria-hidden="true"></span>';
+      return h + '</div></div>';
+    }
+    function yearHtml() {
+      return '<div class="cal-year">' + [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (m) {
+        var g = WD1.map(function (w) { return '<span class="cal-wd">' + w + '</span>'; }).join('');
+        for (var i = 0; i < lead(m); i++) g += '<span></span>';
+        for (var d = 1; d <= daysIn(m); d++) {
+          var c = dayOf(m, d), r = c ? rankOf(c) : '';
+          g += '<button type="button" class="cal-yd' + (isToday(m, d) ? ' is-today' : '') + (/rk-(hi|solemn|feast)/.test(r) ? ' is-big' : '') + '" data-m="' + m + '" data-d="' + d + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1]) + '">' + d + '</button>';
+        }
+        return '<section class="cal-mini' + (m === today.month ? ' is-now' : '') + '"><button type="button" class="cal-mini-h" data-m="' + m + '">' + MONTHS[m - 1] + '</button><div class="cal-mini-g">' + g + '</div></section>';
+      }).join('') + '</div>';
+    }
+    function dayHtml(m, d) {
+      var c = dayOf(m, d), r = c ? rankOf(c) : '';
+      var rank = c ? $('.day-rank', c) : null;
+      var h = '<p class="cal-day-date"><span class="cal-day-n">' + d + '</span><span><span class="cal-day-m">' + MONTHS[m - 1] + ' ' + Y + '</span><span class="cal-day-w">' + WDL[wd(m, d)] + '</span></span></p>';
+      if (rank && rank.textContent.trim()) h += '<p class="cal-day-rank"><i class="cal-dot ' + r + '"></i>' + esc(rank.textContent.trim()) + '</p>';
+      var items = c ? $$('.saint-item', c) : [];
+      if (!items.length) return h + '<p class="hint">' + TX.none + '</p>';
+      return h + items.map(function (it) {
+        var n = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio', it);
+        return '<article class="cal-saint"><h4>' + (n ? n.innerHTML : '') + '</h4>' + (t ? '<p class="cal-saint-t">' + t.innerHTML + '</p>' : '') + (b ? '<div class="cal-saint-bio">' + b.innerHTML + '</div>' : '') + '</article>';
+      }).join('');
+    }
+    function render(focus) {
+      app.setAttribute('data-view', st.view);
+      title.textContent = st.view === 'year' ? String(Y) : MONTHS[st.m - 1] + ' ' + Y;
+      $$('[data-cal-view]', app).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-cal-view') === st.view)); });
+      $$('.cal-arrow', app).forEach(function (b) { var s = +b.getAttribute('data-cal-step'); b.disabled = st.view === 'year' || (s < 0 ? st.m === 1 : st.m === 12); });
+      main.innerHTML = st.view === 'year' ? yearHtml() : monthHtml(st.m);
+      side.innerHTML = dayHtml(st.sel.m, st.sel.d);
+      if (focus) { var f = $('.cal-cell.is-sel', main); if (f) f.focus(); }
+    }
+    function pick(m, d, focus) { st.sel = { m: m, d: d }; st.m = m; st.view = 'month'; render(focus); }
+    app.addEventListener('click', function (e) {
+      var t = e.target.closest('button'); if (!t || !app.contains(t)) return;
+      if (t.hasAttribute('data-cal-step')) { st.m = Math.min(12, Math.max(1, st.m + +t.getAttribute('data-cal-step'))); render(); return; }
+      if (t.hasAttribute('data-cal-view')) { st.view = t.getAttribute('data-cal-view'); render(); return; }
+      if (t.classList.contains('cal-todaybtn')) { pick(today.month, today.day); return; }
+      if (t.classList.contains('cal-mini-h')) { st.m = +t.getAttribute('data-m'); st.view = 'month'; render(); return; }
+      if (t.hasAttribute('data-d')) pick(+t.getAttribute('data-m'), +t.getAttribute('data-d'));
+    });
+    /* arrow keys walk the days, across the months */
+    main.addEventListener('keydown', function (e) {
+      var step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+      if (!step || st.view !== 'month') return;
+      e.preventDefault();
+      var dt = new Date(Y, st.sel.m - 1, st.sel.d + step);
+      if (dt.getFullYear() !== Y) return;
+      pick(dt.getMonth() + 1, dt.getDate(), true);
+    });
+    render();
+  }
+
   function initHome() {
     var home = $('.home-v2');
     if (!home) return;
@@ -1453,7 +1626,7 @@
       setTimeout(function () { finishClose(app); if (fromBtn) fromBtn.focus({ preventScroll: true }); }, still ? 0 : 390);
       if (!fromHistory && marked) { marked = false; skipPop++; history.back(); }
       else marked = false;
-      if (location.hash && /^#app-(ogren|dua|kesfet)$/.test(location.hash)) { try { history.replaceState(history.state, '', location.pathname); } catch (e) { /* file:// */ } }
+      if (location.hash && /^#app-(ara|ogren|dua|kesfet)$/.test(location.hash)) { try { history.replaceState(history.state, '', location.pathname); } catch (e) { /* file:// */ } }
     }
     window.addEventListener('popstate', function () {
       if (skipPop) { skipPop--; return; }
@@ -1461,7 +1634,15 @@
     });
     document.addEventListener('click', function (e) {
       var t = e.target.closest ? e.target : e.target.parentNode;
-      var o = t.closest('[data-app-open]'); if (o) { open(o); return; }
+      var o = t.closest('[data-app-open]');
+      if (o) {
+        /* the icons stay over an open app: its own icon closes it, another one switches to that app */
+        if (!openApp) { open(o); return; }
+        var same = openApp.id === 'app-' + o.getAttribute('data-app-open');
+        close();
+        if (!same) setTimeout(function () { open(o); }, still ? 0 : 420);
+        return;
+      }
       if (openApp && t.closest('[data-app-close]')) close();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openApp) close(); });
@@ -1473,7 +1654,7 @@
        was not kept in memory): the history entry says which app was open. A page opened without
        coming from here (from a search engine, say) links back to its app as #app-ogren, #app-dua or #app-kesfet. */
     var st = history.state, want = st && st.homeApp ? st.homeApp : (location.hash || '').replace(/^#app-/, '');
-    var btn0 = /^(ogren|dua|kesfet)$/.test(want) && $('[data-app-open="' + want + '"]');
+    var btn0 = /^(ara|ogren|dua|kesfet)$/.test(want) && $('[data-app-open="' + want + '"]');
     if (btn0) { open(btn0, true); marked = !!(st && st.homeApp); }
     else if (st && st.homeApp) { try { history.replaceState(null, ''); } catch (e) { /* file:// */ } }
   }
@@ -1490,8 +1671,8 @@
      level, and any link to #something opens the level that holds it.
      --------------------------------------------------------------- */
   var AV_TX = {
-    tr: { sections: 'Bölümler', share: 'Paylaş', copied: 'Bağlantı kopyalandı', text: 'Metin', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti', today: 'Bugünün Azizi', calendar: 'Takvim', church: 'kilise', churches: 'kilise' },
-    en: { sections: 'Sections', share: 'Share', copied: 'Link copied', text: 'Text', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done', today: 'Saint of the Day', calendar: 'Calendar', church: 'church', churches: 'churches' }
+    tr: { top: 'Sayfanın başına dön', sections: 'Bölümler', share: 'Paylaş', copied: 'Bağlantı kopyalandı', text: 'Metin', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti', today: 'Bugünün Azizi', calendar: 'Takvim', church: 'kilise', churches: 'kilise' },
+    en: { top: 'Back to the start of the page', sections: 'Sections', share: 'Share', copied: 'Link copied', text: 'Text', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done', today: 'Saint of the Day', calendar: 'Calendar', church: 'church', churches: 'churches' }
   };
   var AV_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
   var AV_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
@@ -1593,7 +1774,9 @@
       var pills = $('#takvim', m), cal = $('.saints-cal', m);
       if (pills && cal) {
         var box = document.createElement('div'); box.className = 'av-sec'; box.setAttribute('data-av-id', 'takvim');
-        pills.parentNode.insertBefore(box, pills); box.appendChild(pills); box.appendChild(cal);
+        pills.parentNode.insertBefore(box, pills); box.appendChild(pills);
+        var yr = $('.cal-year', m); if (yr) box.appendChild(yr);
+        box.appendChild(cal);
         avNode(box, T.calendar);
       }
       avWrap(wrap, 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
@@ -1627,7 +1810,7 @@
       $$('.church-card', m).forEach(function (c) { avNode(c, avText($('.t-title', c)), avText($('.church-rite', c))); });
       $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
     },
-    'katesizm.html': function (m) {
+    'katekizm.html': function (m) {
       $$('.part-acc', m).forEach(function (d) {
         avNode(d, avText($('.p-title', d)), avText($('.p-meta', d)));
         /* its sections and chapters as lists of links */
@@ -1682,6 +1865,26 @@
     foot.innerHTML = '<button type="button" class="av-share">' + AV_SHARE + '<span>' + T.share + '</span></button><p class="av-toast" role="status" aria-live="polite"></p>';
     main.parentNode.insertBefore(foot, main.nextSibling);
 
+    /* In a level further in, the page's small icon and name lead back to its start; a level
+       deeper still also shows the levels between as a trail under them */
+    var crumbs = document.createElement('p');
+    crumbs.className = 'av-crumbs';
+    if (hero) {
+      hero.appendChild(crumbs);
+      var toTop = function (e) { if (cur && !(e.target.closest && e.target.closest('a, button, input, select'))) { e.preventDefault(); popTo(null); } };
+      hero.addEventListener('click', toTop);
+      hero.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') toTop(e); });
+    }
+    function trailFor(n) {
+      var list = [];
+      for (var p = parentOf(parentOf(n)); p; p = parentOf(p)) list.unshift(p);
+      crumbs.innerHTML = list.map(function (p) { return '<a href="#' + idOf(p) + '" data-av-pop="' + idOf(p) + '"></a>'; }).join(AV_CHEV);
+      $$('a', crumbs).forEach(function (a, i) { a.textContent = titleOf(list[i]); });
+      crumbs.hidden = !list.length;
+      if (!hero) return;
+      if (n) { hero.setAttribute('role', 'button'); hero.setAttribute('tabindex', '0'); hero.setAttribute('aria-label', T.top + ': ' + pageT); }
+      else { hero.removeAttribute('role'); hero.removeAttribute('tabindex'); hero.removeAttribute('aria-label'); }
+    }
     var navTitle = $('.av-title', nav), backA = $('[data-av-back]', nav), backL = $('[data-av-back-label]', nav);
     var homeBack = { href: backA.getAttribute('href'), label: backL.textContent };
     /* Came here from another of the site's pages: back goes there, under its name */
@@ -1763,6 +1966,8 @@
       /* collapsed parts inside the level (a church's Mass times, a day's saints) open */
       $$('details:not([data-av-node]):not(.latin)', target).forEach(function (d) { if (nodeOf(d.parentElement) === n) d.open = true; });
       H.classList.toggle('av-sub', !!n);
+      /* a level with no levels under it is read, not chosen from: its heading sits on the left */
+      H.classList.toggle('av-leaf', !!n && !$('[data-av-node]', n));
       H.classList.toggle('av-reader', !!(n && n.hasAttribute('data-av-qn')));
       cur = n;
       var par = parentOf(n);
@@ -1770,6 +1975,7 @@
       backL.textContent = n ? (par ? titleOf(par) : pageT) : homeBack.label;
       backA.setAttribute('href', n ? '#' + (par ? idOf(par) : '') : homeBack.href);
       langFor(target);
+      trailFor(n);
       if (n && n.hasAttribute('data-av-qn')) reader(n);
       document.title = n ? titleOf(n) + ' | ' + pageT : pageT0;
     }
@@ -1799,12 +2005,22 @@
         if (h && how !== 'none') { if (!h.hasAttribute('tabindex') && h.tagName !== 'SUMMARY') h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
       }, dir);
     }
+    /* The levels this page's history entries hold, oldest first, so a level further up can be
+       reached by going back that many steps at once */
+    function trail() { var s = history.state; return s && s.av && s.trail ? s.trail.slice() : [keyOf(cur)]; }
+    function popTo(a) {
+      var tr = trail(), k = tr.lastIndexOf(keyOf(a));
+      if (a === cur) return;
+      if (k >= 0 && k < tr.length - 1) { viaButton = true; history.go(k - (tr.length - 1)); }
+      else go(a, 'replace');
+    }
     function urlFor(n) { return n ? '#' + idOf(n) : location.pathname + location.search; }
     function go(n, how) {
       if (n === cur) return;
       try {
-        if (how === 'replace') history.replaceState({ av: 1, pushed: !!(history.state && history.state.pushed) }, '', urlFor(n));
-        else history.pushState({ av: 1, pushed: true }, '', urlFor(n));
+        var tr = trail();
+        if (how === 'replace') history.replaceState({ av: 1, pushed: !!(history.state && history.state.pushed), trail: tr.slice(0, -1).concat(keyOf(n)) }, '', urlFor(n));
+        else history.pushState({ av: 1, pushed: true, trail: tr.concat(keyOf(n)) }, '', urlFor(n));
       } catch (e) { /* file:// */ }
       show(n, how === 'replace' ? 'back' : 'push');
     }
@@ -1834,6 +2050,7 @@
       var a = e.target.closest && e.target.closest('a[href]');
       if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || a.target === '_blank') return;
       if (a === backA) { e.preventDefault(); back(); return; }
+      if (a.hasAttribute('data-av-pop')) { e.preventDefault(); popTo(nodeOf(byId(a.getAttribute('data-av-pop')))); return; }
       var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
       if (u.origin !== location.origin || u.pathname !== location.pathname || !u.hash) return;
       var el = byId(decodeURIComponent(u.hash.slice(1)));
@@ -1856,6 +2073,25 @@
     }
     /* the settings are the header's: opened once this tap has finished, so the panel's own
        "tap outside closes it" doesn't take this tap for one */
+    /* The Katekizm's search: the magnifier opens the field across the bar and puts the cursor
+       in it in the same tap (so a phone's keyboard comes up); a tap elsewhere folds it away */
+    var findBtn = $('.av-find', nav), findBar = $('#av-findbar');
+    if (findBtn && findBar) {
+      var findIn = $('input', findBar);
+      var setFind = function (on) {
+        findBar.hidden = false;
+        findBtn.setAttribute('aria-expanded', String(on));
+        H.classList.toggle('av-finding', on);
+        if (on) findIn.focus();
+        else { findIn.blur(); setTimeout(function () { if (!H.classList.contains('av-finding')) findBar.hidden = true; }, 320); }
+      };
+      findBar.hidden = true;
+      findBtn.addEventListener('click', function () { setFind(!H.classList.contains('av-finding')); });
+      document.addEventListener('click', function (e) { if (H.classList.contains('av-finding') && !findBar.contains(e.target) && !findBtn.contains(e.target)) setFind(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && H.classList.contains('av-finding')) { setFind(false); findBtn.focus(); } });
+      /* a result on this page opens its question here */
+      findBar.addEventListener('click', function (e) { if (e.target.closest('.sr-item')) setFind(false); });
+    }
     $('.av-gear', nav).addEventListener('click', function () { var g = $('.site-header .settings-btn'); if (g) setTimeout(function () { g.click(); }, 0); });
 
     /* the title in the bar once the page's own has scrolled away */
@@ -1891,7 +2127,8 @@
     }
     function setOrig(o, target) {
       if (o === 'tr') H.removeAttribute('data-orig'); else H.setAttribute('data-orig', o);
-      if (o === 'la') $$('details.latin', target).forEach(function (d) { d.open = true; });
+      /* the Latin shows only as Latina: back in Turkish or English it folds away again */
+      $$('details.latin', target).forEach(function (d) { d.open = o === 'la'; });
       $$('button', seg).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-orig') === o)); });
     }
     seg.addEventListener('click', function (e) {
@@ -1915,7 +2152,7 @@
       var el = document.getElementById('soru-' + n);
       if (!el) { location.href = kqUrl(n); return; }
       var same = parentOf(el) === parentOf(cur);
-      try { history.replaceState({ av: 1, pushed: same && !!(history.state && history.state.pushed) }, '', '#soru-' + n); } catch (e) { /* file:// */ }
+      try { history.replaceState({ av: 1, pushed: same && !!(history.state && history.state.pushed), trail: trail().slice(0, -1).concat('soru-' + n) }, '', '#soru-' + n); } catch (e) { /* file:// */ }
       scrolls[keyOf(cur)] = 0;
       swap(function () { place(el); window.scrollTo(0, 0); onScroll(); }, dir > 0 ? 'next' : 'prev');
     }
@@ -2027,7 +2264,11 @@
       var sn = start.hasAttribute('data-av-node') ? start : nodeOf(start);
       if (sn && start.id && sn.getAttribute('data-av-id') === start.id) start = sn;
       place(sn);
-      try { history.replaceState({ av: 1, pushed: false }, '', location.href); } catch (e) { /* file:// */ }
+      /* a reload keeps the entry's own record of the levels before it */
+      var st0 = history.state;
+      if (!(st0 && st0.av && st0.trail && st0.trail[st0.trail.length - 1] === keyOf(sn))) {
+        try { history.replaceState({ av: 1, pushed: false, trail: [keyOf(sn)] }, '', location.href); } catch (e) { /* file:// */ }
+      }
       /* the browser jumps to the #anchor itself as the page finishes loading: after that, put
          the level at its top (or the linked element under the bar) */
       var settle = function () { if (start !== sn) reveal(start, 'none'); else window.scrollTo(0, 0); onScroll(); };
