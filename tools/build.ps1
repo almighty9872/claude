@@ -909,7 +909,7 @@ $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-about">
-      <a class="foot-brand" href="index.html">$Logo<span>$SiteName</span></a>
+      <p class="foot-brand">$Logo<span>$SiteName</span></p>
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-desc">$($fm['about'])</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
@@ -1119,15 +1119,36 @@ $acc = ($Parts | ForEach-Object {
   $nQ = @($items | Where-Object { $_.type -eq 'qa' }).Count
   $nS = @($items | Where-Object { $_.type -eq 'heading' -and $_.level -eq 2 }).Count
   $sb = New-Object Text.StringBuilder; $open = $false
+  # The questions that sit straight under a heading, before its first subheading (question 1,
+  # under "Birinci Bölüm", say): listed as rows of their own, so they are not taken for a mere title
+  $direct = @{}; $hasSub = @{}; $curH = $null; $stack = New-Object Collections.ArrayList
+  foreach ($it in $items) {
+    if ($it.type -eq 'heading') {
+      while ($stack.Count -and $stack[$stack.Count - 1].level -ge $it.level) { $stack.RemoveAt($stack.Count - 1) }
+      if ($stack.Count) { $hasSub[$stack[$stack.Count - 1].id] = $true }
+      [void]$stack.Add($it)
+      $curH = $it.id; $direct[$curH] = New-Object Collections.ArrayList
+    }
+    elseif ($it.type -eq 'qa' -and $curH) { [void]$direct[$curH].Add($it) }
+  }
+  $ownRows = {
+    param($h, [string]$cls)
+    $qs = @($direct[$h.id])
+    # a heading with no subheadings is itself the row for its questions (but a section always lists them)
+    if (-not $qs.Count -or ($h.level -gt 2 -and -not $hasSub[$h.id])) { return '' }
+    ($qs | ForEach-Object { "<li class=`"$cls lv-own`"><a href=`"$($meta.file)#soru-$($_.n)`"><span><span class=`"c-label`">Soru $($_.n)</span>$(Inline $_.tr.q)</span><span class=`"rng`"></span></a></li>" }) -join ''
+  }
   foreach ($h in ($items | Where-Object { $_.type -eq 'heading' -and $_.level -ge 2 -and $_.level -le 4 })) {
     $sp = Split-Heading $h.tr; $href = "$($meta.file)#$($h.id)"; $rt = Range-Text $ranges[$h.id]
     if ($h.level -eq 2) {
       if ($open) { [void]$sb.Append('</ul></div>') }
       [void]$sb.Append("<div class=`"acc-section`"><a href=`"$href`"><span class=`"label`">$($sp[0])</span><span class=`"s-title`">$(Inline $sp[1])</span></a><ul class=`"acc-list`">")
+      [void]$sb.Append((& $ownRows $h 'lv3'))
       $open = $true
     } elseif ($h.level -eq 3) {
       $lab = if ($sp[0]) { "<span class=`"c-label`">$($sp[0])</span>" } else { '' }
       [void]$sb.Append("<li class=`"lv3`"><a href=`"$href`"><span>$lab$(Inline $sp[1])</span><span class=`"rng`">$rt</span></a></li>")
+      [void]$sb.Append((& $ownRows $h 'lv4'))
     } else {
       [void]$sb.Append("<li class=`"lv4`"><a href=`"$href`"><span>$(Inline $sp[1])</span><span class=`"rng`">$rt</span></a></li>")
     }
@@ -1579,9 +1600,47 @@ function Rank-Class([string]$rank) {
   if ($rank -match 'Anma') { return 'rk-memorial' }
   return 'rk-other'
 }
+# The calendar's saints (and Marian feasts) who have a page of their own here: their card leads to
+# it. Every other saint's card ends in a Google search for the name.
+$SaintPageRe = [ordered]@{
+  'meryem-ana'             = "Meryem Ana(?!.*Bazilika)"
+  'aziz-yusuf'             = "^(İşçi )?Yusuf$"
+  'havari-petrus'          = "Petrus.un Kürsüsü|^Havariler Petrus ve Pavlus$"
+  'havari-pavlus'          = "Pavlus.un İmana Dönüşü|^Havariler Petrus ve Pavlus$"
+  'vaftizci-yahya'         = "^Vaftizci Yahya"
+  'havari-yuhanna'         = "^Havari ve İncil Yazarı Ioannes|Latin Kapısı Önündeki Aziz Yuhanna"
+  'aziz-augustinus'        = "^Augustinus of Hippo"
+  'aziz-thomas-aquinas'    = "^Thomas Aquinas"
+  'assisili-aziz-francis'  = "^Franciscus of Assisi"
+  'sienali-aziz-catharina' = "^Catharina of Siena"
+  'avilali-aziz-teresa'    = "^Teresia of Ávila"
+  'lisieuxlu-kucuk-teresa' = "Lisieux"
+  'aziz-ignatius-loyola'   = "^Ignatius of Loyola"
+  'aziz-benedictus'        = "^Benedictus$"
+  'aziz-patrick'           = "^Patricius$"
+  'padovali-aziz-antonius' = "^Antonius of Padua"
+  'kalkutali-aziz-teresa'  = "^Teresa of Calcutta"
+  'aziz-ii-yuhanna-pavlus' = "^Ioannes Paulus II"
+  'padre-pio'              = "Padre Pio"
+  'aziz-hieronymus'        = "^Hieronymus$"
+}
+function Saint-Links($s) {
+  $pages = @($SaintPageRe.Keys | Where-Object { $s.name -cmatch $SaintPageRe[$_] })
+  if ($pages.Count) {
+    # one page: "Devamını oku"; two (Petrus and Pavlus): each by its name
+    return '<p class="s-links">' + (($pages | ForEach-Object {
+      $id = $_
+      $label = if ($pages.Count -gt 1) { ($GreatSaints.saints | Where-Object { $_.id -eq $id } | Select-Object -First 1).name } else { 'Devamını oku' }
+      "<a class=`"s-page`" href=`"$id.html`">$label$IcoNext</a>"
+    }) -join '') + '</p>'
+  }
+  $plain = ($s.name -replace '<[^>]+>', '')
+  $q = if ($plain -match '(^|\s)(Aziz|Havari|Havariler|Meryem|Vaftizci|Bazilika)') { $plain } else { "Aziz $plain" }
+  return "<p class=`"s-links`"><a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($q))`" target=`"_blank`" rel=`"noopener nofollow`">Google$($Apos)da ara$IcoExternal</a></p>"
+}
 function Saint-Item($s) {
   $titlePart = if ($s.title) { "<span class=`"s-title`">$(Inline $s.title)</span>" } else { '' }
-  return "<details class=`"saint-item`"><summary><span class=`"s-name`">$(Inline $s.name)</span>$titlePart$IcoChev</summary><div class=`"saint-bio`">$(Blocks $s.bio)</div></details>"
+  return "<details class=`"saint-item`"><summary><span class=`"s-name`">$(Inline $s.name)</span>$titlePart$IcoChev</summary><div class=`"saint-bio`">$(Blocks $s.bio)$(Saint-Links $s)</div></details>"
 }
 $monthSectionsHtml = (1..12 | ForEach-Object {
   $mo = $_

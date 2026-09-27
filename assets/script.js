@@ -1420,9 +1420,9 @@
         var day = '<p class="cal-now-date"><b>' + sd + ' ' + MONTHS[sm - 1] + '</b>, ' + WDL[wd(sm, sd)] + '</p>' +
           (rank && rank.textContent.trim() ? '<p class="cal-now-rank"><i class="cal-dot ' + (c ? rankOf(c) : '') + '"></i>' + esc(rank.textContent.trim()) + '</p>' : '') +
           (c ? $$('.saint-item', c).map(function (it) {
-            var nm = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio p', it);
+            var nm = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio p', it), lk = $('.s-links', it);
             return '<div class="cal-now-saint"><p class="cal-now-n">' + (nm ? nm.innerHTML : '') + '</p>' + (t ? '<p class="cal-now-st">' + t.innerHTML + '</p>' : '') +
-              (b ? '<p class="cal-now-bio">' + esc(b.textContent) + '</p>' : '') + '</div>';
+              (b ? '<p class="cal-now-bio">' + esc(b.textContent) + '</p>' : '') + (lk ? lk.outerHTML : '') + '</div>';
           }).join('') : '') +
           '<a class="cal-now-go" href="#gun-' + sm + '-' + sd + '">' + TXP.read + ' ›</a>';
         now.innerHTML = '<div class="cal-now-bar"><button type="button" class="cal-now-arrow" data-step="-1" aria-label="' + TXP.prev + '"' + (m === 1 ? ' disabled' : '') + '>‹</button>' +
@@ -1737,6 +1737,59 @@
       if (openApp && t.closest('[data-app-close]')) close();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openApp) close(); });
+    /* As in the App Store's bar: a finger drawn along it carries the capsule with it, a lens
+       over the icons, and where it is lifted, that app opens */
+    if (dockBar && pill && window.PointerEvent) {
+      var drag = null, noClick = 0;
+      var appAt = function (x) {
+        var best = null, bd = 1e9;
+        $$('.hm-app', dockBar).forEach(function (b) { var r = b.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - x); if (d < bd) { bd = d; best = b; } });
+        return best;
+      };
+      var overTo = function (b) { $$('.hm-app', dockBar).forEach(function (x) { x.classList.toggle('is-over', x === b); }); };
+      var endDrag = function (e, cancel) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var d = drag; drag = null;
+        if (!d.moved) return;
+        dockBar.classList.remove('is-drag'); overTo(null);
+        noClick = Date.now();
+        var b = cancel ? null : appAt(e.clientX);
+        if (!b) { setPill(openApp ? fromBtn : null); return; }
+        if (!openApp) open(b);
+        else if (openApp.id !== 'app-' + b.getAttribute('data-app-open')) switchTo(b);
+        else setPill(b);
+      };
+      dockBar.addEventListener('pointerdown', function (e) {
+        if (e.button > 0) return;
+        var b = e.target.closest('.hm-app'); if (!b) return;
+        drag = { id: e.pointerId, x0: e.clientX, moved: false, w: b.offsetWidth };
+      });
+      dockBar.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        if (!drag.moved) {
+          if (Math.abs(e.clientX - drag.x0) < 6) return;
+          drag.moved = true;
+          try { dockBar.setPointerCapture(e.pointerId); } catch (err) { /* not capturable */ }
+          dockBar.classList.add('is-drag');
+        }
+        var bs = $$('.hm-app', dockBar), lo = bs[0].offsetLeft, hi = bs[bs.length - 1].offsetLeft;
+        var x = e.clientX - dockBar.getBoundingClientRect().left - dockBar.clientLeft - drag.w / 2;
+        pill.style.width = drag.w + 'px';
+        pill.style.transform = 'translateX(' + Math.max(lo, Math.min(hi, x)) + 'px) scale(1.1)';
+        pill.classList.add('is-on');
+        overTo(appAt(e.clientX));
+      });
+      dockBar.addEventListener('pointerup', function (e) { endDrag(e, false); });
+      dockBar.addEventListener('pointercancel', function (e) { endDrag(e, true); });
+      /* the tap that ends a drag is not a tap on an icon as well */
+      dockBar.addEventListener('click', function (e) { if (Date.now() - noClick < 400) { e.preventDefault(); e.stopPropagation(); } }, true);
+    }
+    /* the footer fades in once the home screen is scrolled (see the styles) */
+    if (dockBar) {
+      var footIn = function () { document.documentElement.classList.toggle('foot-in', window.pageYOffset > 24); };
+      window.addEventListener('scroll', footIn, { passive: true });
+      footIn();
+    }
     $$('.ios-scroll').forEach(function (sc) {
       sc.addEventListener('scroll', function () { sc.parentNode.classList.toggle('is-scrolled', sc.scrollTop > 40); }, { passive: true });
     });
@@ -2016,6 +2069,36 @@
   /* A page other than the home screen is laid out as a phone's app screens or as a computer's
      page when it loads (html.av, set in <head>). Resizing the window across that width loads
      the page again in the other layout, at the same place */
+  /* "Başa dön": at the foot of a page (or a phone's level) that runs well past one screen */
+  function initToTop() {
+    var av = document.documentElement.classList.contains('av');
+    var foot = av ? $('.av-foot') : $('.site-footer');
+    if (!foot || !window.scrollTo) return;
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'to-top'; b.hidden = true;
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span>' + (LANG === 'en' ? 'Back to top' : 'Başa dön') + '</span>';
+    if (av) {
+      var row = document.createElement('div'), share = $('.av-share', foot);
+      row.className = 'av-foot-row';
+      foot.insertBefore(row, foot.firstChild);
+      row.appendChild(b);
+      if (share) row.appendChild(share);
+    } else {
+      var w = document.createElement('div');
+      w.className = 'wrap to-top-wrap';
+      w.appendChild(b);
+      foot.parentNode.insertBefore(w, foot);
+    }
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var check = function () { b.hidden = document.documentElement.scrollHeight < window.innerHeight * 1.25; };
+    b.addEventListener('click', function () {
+      try { window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+    });
+    if (window.ResizeObserver) new ResizeObserver(check).observe(document.body);
+    window.addEventListener('resize', check);
+    check();
+  }
+
   function initLayoutSwitch() {
     if (!document.body.hasAttribute('data-avp') || !window.matchMedia) return;
     var mq = window.matchMedia('(max-width: 979px)'), was = document.documentElement.classList.contains('av');
@@ -2184,12 +2267,19 @@
     /* Slide the new level in (forward) or back, with the page's icon and title shrinking or
        growing between them; the browser's own back swipe has already shown its picture of the
        level underneath, so that one is put in place at once */
+    var vtNow = null;
     function swap(fn, dir) {
+      /* a tap while the last slide is still running: that one ends at once */
+      if (vtNow) { try { vtNow.skipTransition(); } catch (e) { /* already over */ } vtNow = null; }
       if (still || !dir || !document.startViewTransition) { fn(); return; }
       H.setAttribute('data-av-dir', dir);
-      var vt = document.startViewTransition(fn);
-      var off = function () { H.removeAttribute('data-av-dir'); };
+      var vt, done = false;
+      try { vt = document.startViewTransition(fn); } catch (e) { H.removeAttribute('data-av-dir'); fn(); return; }
+      vtNow = vt;
+      var off = function () { done = true; if (vtNow === vt) vtNow = null; H.removeAttribute('data-av-dir'); };
       vt.finished.then(off, off);
+      /* Safari can leave a slide hanging, the new level blank under its picture: end it */
+      setTimeout(function () { if (!done) try { vt.skipTransition(); } catch (e) { /* already over */ } }, 900);
     }
     function show(n, how, scrollTo) {
       var from = cur;
@@ -2930,6 +3020,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initLayoutSwitch();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initLayoutSwitch();
   });
 })();

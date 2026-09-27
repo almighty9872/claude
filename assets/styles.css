@@ -1194,7 +1194,7 @@ html.js .why-end { margin-top: -1rem; }
 .foot-grid {
   display: grid; grid-template-columns: 1.1fr 2fr; column-gap: 2.5rem; row-gap: 1.8rem; align-items: start;
 }
-.foot-brand { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--text); font-weight: 600; }
+.foot-brand { margin: 0; display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--text); font-weight: 600; }
 .foot-brand .logo { width: 22px; height: 22px; color: var(--gold); }
 .foot-brand span { font-family: var(--sans); font-size: .95rem; }
 .foot-tag { margin: .6rem 0 .15rem; font-family: var(--sans); font-size: .85rem; }
@@ -2278,7 +2278,7 @@ html.av main [tabindex="-1"]:focus { outline: none; }
 /* The bar at the top: back, the level's name, theme and settings; glass over the page */
 html.av .av-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 60;
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .3rem;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .3rem;
   min-height: calc(env(safe-area-inset-top) + 3.2rem); padding: env(safe-area-inset-top) .45rem 0;
   background: color-mix(in srgb, var(--chrome) 72%, transparent);
   -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
@@ -2293,9 +2293,13 @@ html.av.av-scrolled .av-nav, html.av.av-sub .av-nav { border-bottom-color: var(-
 .av-back svg { flex: none; width: 1.35rem; height: 1.35rem; }
 .av-back span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .av-back:active { opacity: .5; }
-.av-title { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); max-width: 44vw; line-height: 3.2rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--text); opacity: 0; transition: opacity .2s; pointer-events: none; }
+/* the level's title sits between the back button and the icons, never under them; once it shows,
+   the back button keeps only its arrow, as on an iPhone when the bar is short of room */
+.av-title { min-width: 0; padding: 0 .3rem; line-height: 3.2rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--text); opacity: 0; transition: opacity .2s; pointer-events: none; }
 html.av.av-scrolled .av-title { opacity: 1; }
-html.av.av-scrolled .av-back { max-width: calc(28vw - .5rem); }
+html.av:not(.av-scrolled) .av-nav { grid-template-columns: minmax(0, 1fr) 0 auto; }
+html.av:not(.av-scrolled) .av-title { padding: 0; }
+html.av.av-scrolled .av-back span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .av-tools { justify-self: end; display: flex; align-items: center; gap: .1rem; }
 html.av .av-tools .av-theme, .av-gear, .av-close, .av-find {
   position: relative; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%;
@@ -2480,8 +2484,11 @@ html.av main .av-cur > .faq-cat-en { margin-top: .2rem; }
 html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child,
 html.av.av-leaf main .av-sec.av-cur > h2:first-child {
   display: block; margin: .4rem 0 1rem; padding: .2rem 0 .8rem; border: 0; border-bottom: 1px solid var(--border);
-  font-size: 1.35rem; line-height: 1.25; font-weight: 600; text-align: left;
+  font-size: 1.35rem; line-height: 1.25; font-weight: 600; text-align: center;
 }
+/* a heading with its English name under it: the line goes under both, and both are centred */
+html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child:has(+ .faq-cat-en) { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child + .faq-cat-en { margin: .25rem 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--border); text-align: center; }
 /* Neden Katoliğiz: a step is a list of its questions; a question is plain text */
 html.av main .why-step.av-cur .why-step-head { display: block; margin: .4rem 0 1rem; text-align: center; }
 html.av main .why-step .why-num, html.av main .why-step-head .label, html.av main .why-pager { display: none !important; }
@@ -2806,6 +2813,23 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
   }
   [data-theme="dark"] .hm-pill { background: rgba(0, 0, 0, .55); }
   .hm-pill.is-on { opacity: 1; }
+  /* a finger drawn along the bar: the capsule follows it as a slightly larger lens */
+  .hm-apps { touch-action: pan-y; }
+  .hm-apps.is-drag .hm-pill {
+    transition: transform .09s linear, width .2s, opacity .15s;
+    background: rgba(0, 0, 0, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .6), 0 8px 20px -10px rgba(0, 0, 0, .35);
+  }
+  [data-theme="dark"] .hm-apps.is-drag .hm-pill { background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 8px 20px -10px rgba(0, 0, 0, .8); }
+  .hm-apps.is-drag .hm-app.is-over { color: #9a7322; }
+  [data-theme="dark"] .hm-apps.is-drag .hm-app.is-over { color: #e0b760; }
+  .hm-apps.is-drag .hm-app:not(.is-over) { color: #111; }
+  [data-theme="dark"] .hm-apps.is-drag .hm-app:not(.is-over) { color: #f2f2f4; }
+  .hm-apps.is-drag .hm-app:active .hm-icon { transform: none; }
+  /* The home screen opens without the footer squeezed between the cards and the bar: it waits
+     just below the fold and fades in once the page is scrolled */
+  html.js body:has(.hm-apps) main { min-height: calc(100svh - 3.4rem); }
+  html.js body:has(.hm-apps) .site-footer { opacity: 0; transition: opacity .35s ease; }
+  html.js.foot-in body:has(.hm-apps) .site-footer { opacity: 1; }
   html.app-open .ios-scroll { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
   /* from one open app to another: at once, nothing grows, shrinks or fades */
   .ios-app.is-instant, .ios-app.is-instant *, .ios-spot.is-instant, .ios-spot.is-instant * { transition: none !important; animation: none !important; }
@@ -2874,3 +2898,27 @@ html.av .cal-now-bio { margin: .45rem 0 0; font-size: .95rem; line-height: 1.5; 
 html.av .cal-now-go { display: inline-block; margin-top: .7rem; font: 600 .88rem var(--sans); color: var(--gold-active); text-decoration: none; }
 html.av .cal-now .cal-mgrid { display: grid; }
 html.av main .av-cur > .cal-year.cal-phone:not(.is-open) { display: none; }
+
+/* ---------- A saint's card ends in their own page here, or else a Google search for the name ---------- */
+.s-links { display: flex; flex-wrap: wrap; gap: .35rem 1.2rem; margin: .75rem 0 0; font-family: var(--sans); font-size: .9rem; line-height: 1.4; }
+.s-links a { display: inline-flex; align-items: center; gap: .3rem; color: var(--gold-active); font-weight: 600; text-decoration: none; }
+.s-links a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.s-links svg { display: inline-block; flex: none; width: .95em; height: .95em; }
+.s-links .ext { width: .8em; height: .8em; }
+.cal-now-saint .s-links { margin-top: .45rem; }
+
+/* ---------- "Başa dön": at the foot of a long page; beside "Paylaş" on a phone ---------- */
+.to-top {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 2.75rem; padding: 0 1.2rem; border: 0; border-radius: 999px;
+  background: var(--surface); color: var(--gold-active); font-family: var(--sans); font-size: .9rem; font-weight: 700; cursor: pointer;
+  box-shadow: 0 1px 2px rgba(20, 20, 40, .08); -webkit-tap-highlight-color: transparent;
+}
+.to-top[hidden] { display: none; }
+.to-top svg { width: 1.05rem; height: 1.05rem; }
+.to-top:active { background: var(--tap); }
+.to-top:hover { filter: brightness(1.08); }
+.to-top:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.to-top-wrap { display: flex; justify-content: center; margin-top: 2rem; }
+.av-foot-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
+html.av .to-top-wrap { display: none; }
+@media print { .to-top, .to-top-wrap { display: none !important; } }
