@@ -955,7 +955,8 @@ function Write-Page {
   # Preload the regular text fonts so they start downloading with the stylesheet instead of
   # after it. Turkish body text needs both subsets (ç, ö, ü are in the base latin file; ğ, ş, İ
   # in latin-ext); English pages need only the base one.
-  $fontFiles = @('eb-garamond-latin.woff2', 'eb-garamond-latin-ext.woff2')
+  # The text is set in the device's own San Francisco or Inter (loaded only where needed): nothing to preload
+  $fontFiles = @()
   $preload = ($fontFiles | Where-Object { Test-Path (Join-Path $Root "assets/fonts/$_") } | ForEach-Object {
     "<link rel=`"preload`" href=`"assets/fonts/$_`" as=`"font`" type=`"font/woff2`" crossorigin>"
   }) -join "`n"

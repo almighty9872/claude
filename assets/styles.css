@@ -2683,7 +2683,8 @@ html.av .av-findbar .search-results { position: absolute; left: 0; right: 0; top
 html.av .cal-phone { display: none; }
 html.av main .av-cur > .cal-phone { display: block; }
 html.av main .av-cur > .cal-mgrid.cal-phone { display: grid; }
-html.av main .av-cur > .cal-year.cal-phone { display: grid; }
+html.av main .av-cur > .cal-year.cal-phone.is-open { display: grid; }
+html.av main .av-cur > .cal-now.cal-phone.is-hidden { display: none; }
 html.av main .av-sec.av-cur > .saints-cal > .av-rows, html.av main .month.av-cur .av-rows { display: none; }
 html.av .cal-year.cal-phone { grid-template-columns: repeat(3, 1fr); gap: 1.1rem .9rem; margin: .4rem 0 1rem; }
 html.av .cal-year-y { grid-column: 1 / -1; margin: 0; font-size: 1.9rem; font-weight: 700; color: var(--gold-active); line-height: 1; }
@@ -2824,10 +2825,52 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
   src: url("fonts/inter-latin-ext.woff2") format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-@media (max-width: 979px) {
-  html:not([data-a11y-dyslexia="1"]) {
-    --serif: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-  }
-  html:not([data-a11y-dyslexia="1"]) body { letter-spacing: -.005em; }
+/* the same on a computer */
+html:not([data-a11y-dyslexia="1"]) {
+  --serif: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
 }
+html:not([data-a11y-dyslexia="1"]) body { letter-spacing: -.005em; }
+:root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) { --serif: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif; --sans: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif; }
+/* A level's heading takes the focus when it opens (for screen readers), without a ring round it */
+html.av main :is(.av-cur, .av-cur > *, .av-cur summary, .av-cur h2, .av-cur h3):focus:not(:focus-visible),
+html.av main .av-cur summary:focus, html.av main .av-cur [tabindex="-1"]:focus, html.av .av-hero h1:focus { outline: none; box-shadow: none; }
+
+/* ---------- The calendar's ranks, each in its own colour ---------- */
+:root { --rk-solemn: #b7860b; --rk-feast: #c0392b; --rk-memorial: #2f6fd6; --rk-optional: #1f8a5a; }
+[data-theme="dark"] { --rk-solemn: #e3b341; --rk-feast: #ef6b5f; --rk-memorial: #6d9cf0; --rk-optional: #4cc38a; }
+.cal-dot.rk-hi, .cal-dot.rk-solemn { background: var(--rk-solemn); box-shadow: none; }
+.cal-dot.rk-feast { background: var(--rk-feast); box-shadow: none; }
+.cal-dot.rk-memorial { background: var(--rk-memorial); box-shadow: none; }
+.cal-dot.rk-optional { background: transparent; box-shadow: inset 0 0 0 1.6px var(--rk-optional); }
+.cal-ev.rk-hi, .cal-ev.rk-solemn { border-left-color: var(--rk-solemn) !important; background: color-mix(in srgb, var(--rk-solemn) 16%, transparent) !important; }
+.cal-ev.rk-feast { border-left-color: var(--rk-feast) !important; background: color-mix(in srgb, var(--rk-feast) 13%, transparent) !important; }
+.cal-ev.rk-memorial { border-left-color: var(--rk-memorial) !important; }
+.cal-ev.rk-optional { border-left-color: var(--rk-optional) !important; }
+.cal-yd.is-big.rk-feast::after, html.av .cal-phone .cal-mini-g .is-big.rk-feast::after { background: var(--rk-feast); }
+.cal-yd.is-big:is(.rk-hi, .rk-solemn)::after, html.av .cal-phone .cal-mini-g .is-big:is(.rk-hi, .rk-solemn)::after { background: var(--rk-solemn); }
+html.av .cal-md:is(.rk-hi, .rk-solemn) .cal-dot { background: var(--rk-solemn); }
+html.av .cal-md.rk-feast .cal-dot { background: var(--rk-feast); }
+html.av .cal-md.rk-memorial .cal-dot { background: var(--rk-memorial); }
+html.av .cal-md.rk-optional .cal-dot { background: transparent; box-shadow: inset 0 0 0 1.3px var(--rk-optional); }
+
+/* A phone's Takvim screen: this month and the chosen day's saints, "Tüm yıl" for the year */
+html.av .cal-now-bar { display: flex; align-items: center; gap: .3rem; margin: .3rem 0 .2rem; }
+html.av .cal-now-t { flex: 1; margin: 0; text-align: center; font-size: 1.3rem; font-weight: 700; }
+html.av .cal-now-arrow { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; padding: 0; border: 0; border-radius: 50%; background: var(--surface); color: var(--gold-active); font-size: 1.5rem; line-height: 1; }
+html.av .cal-now-arrow:disabled { opacity: .3; }
+html.av .cal-now-year { padding: .4rem .8rem; border: 0; border-radius: 999px; background: var(--surface); color: var(--gold-active); font: 600 .8rem var(--sans); }
+html.av .cal-year-back { grid-column: 1 / -1; justify-self: start; }
+html.av .cal-now .cal-md { border: 0; background: none; font: inherit; }
+html.av .cal-now .cal-md.is-sel:not(.is-today) .cal-n { box-shadow: inset 0 0 0 1.6px var(--gold-active); color: var(--gold-active); }
+html.av .cal-now-day { margin: .8rem 0 0; padding: .9rem 1rem 1rem; border-radius: 14px; background: var(--surface); }
+html.av .cal-now-date { margin: 0; font-size: 1.05rem; }
+html.av .cal-now-date b { color: var(--gold-active); }
+html.av .cal-now-rank { display: flex; align-items: center; gap: .45rem; margin: .3rem 0 0; font: 600 .7rem var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+html.av .cal-now-saint { margin-top: .7rem; padding-top: .7rem; border-top: 1px solid var(--border); }
+html.av .cal-now-n { margin: 0; font-size: 1.15rem; font-weight: 600; }
+html.av .cal-now-st { margin: .1rem 0 0; font: .78rem var(--sans); color: var(--muted); }
+html.av .cal-now-bio { margin: .45rem 0 0; font-size: .95rem; line-height: 1.5; color: var(--text-soft); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+html.av .cal-now-go { display: inline-block; margin-top: .7rem; font: 600 .88rem var(--sans); color: var(--gold-active); text-decoration: none; }
+html.av .cal-now .cal-mgrid { display: grid; }
+html.av main .av-cur > .cal-year.cal-phone:not(.is-open) { display: none; }

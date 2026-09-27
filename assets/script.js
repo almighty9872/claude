@@ -1387,7 +1387,7 @@
         for (var i = 0; i < lead(m); i++) cells += '<span></span>';
         for (var d = 1; d <= daysIn(m); d++) {
           var c = dayOf(m, d), r = c ? rankOf(c) : '';
-          cells += '<span class="' + (isToday(m, d) ? 'is-today ' : '') + (/rk-(hi|solemn|feast)/.test(r) ? 'is-big' : '') + '">' + d + '</span>';
+          cells += '<span class="' + (isToday(m, d) ? 'is-today ' : '') + (/rk-(hi|solemn|feast)/.test(r) ? 'is-big ' + r : '') + '">' + d + '</span>';
         }
         return '<a class="cal-mini' + (m === today.month ? ' is-now' : '') + '" href="#ay-' + m + '"><span class="cal-mini-h">' + MONTHS[m - 1] + '</span><span class="cal-mini-g" aria-hidden="true">' + cells + '</span></a>';
       }).join('') + legend();
@@ -1400,6 +1400,49 @@
         s.textContent = MONTHS[m - 1] + ', ' + WDL[wd(m, d)];
         n.parentNode.insertBefore(s, n.nextSibling);
       });
+      /* the Takvim screen itself: this month, the chosen day's saints under it (today's at
+         first), arrows for the other months, and "Tüm yıl" for the twelve at a glance */
+      var now = document.createElement('div');
+      now.className = 'cal-now cal-phone';
+      var nst = { m: today.month, sel: { m: today.month, d: today.day } };
+      var TXP = en ? { year: 'Full year', month: 'This month', read: 'Read their life', prev: 'Previous month', next: 'Next month' }
+        : { year: 'Tüm yıl', month: 'Bu ay', read: 'Hayatını oku', prev: 'Önceki ay', next: 'Sonraki ay' };
+      function nowRender() {
+        var m = nst.m, g = '';
+        WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + w.slice(0, en ? 2 : 3) + '</span>'; });
+        for (var i = 0; i < lead(m); i++) g += '<span></span>';
+        for (var d = 1; d <= daysIn(m); d++) {
+          var c = dayOf(m, d), n = names(c), sel = nst.sel.m === m && nst.sel.d === d;
+          g += '<button type="button" class="cal-md ' + (c ? rankOf(c) : '') + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
+            '" data-m="' + m + '" data-d="' + d + '" aria-pressed="' + sel + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1] + (n.length ? ': ' + n.join(', ') : '')) + '"><span class="cal-n">' + d + '</span><i class="cal-dot"></i></button>';
+        }
+        var sm = nst.sel.m, sd = nst.sel.d, c = dayOf(sm, sd), rank = c ? $('.day-rank', c) : null;
+        var day = '<p class="cal-now-date"><b>' + sd + ' ' + MONTHS[sm - 1] + '</b>, ' + WDL[wd(sm, sd)] + '</p>' +
+          (rank && rank.textContent.trim() ? '<p class="cal-now-rank"><i class="cal-dot ' + (c ? rankOf(c) : '') + '"></i>' + esc(rank.textContent.trim()) + '</p>' : '') +
+          (c ? $$('.saint-item', c).map(function (it) {
+            var nm = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio p', it);
+            return '<div class="cal-now-saint"><p class="cal-now-n">' + (nm ? nm.innerHTML : '') + '</p>' + (t ? '<p class="cal-now-st">' + t.innerHTML + '</p>' : '') +
+              (b ? '<p class="cal-now-bio">' + esc(b.textContent) + '</p>' : '') + '</div>';
+          }).join('') : '') +
+          '<a class="cal-now-go" href="#gun-' + sm + '-' + sd + '">' + TXP.read + ' ›</a>';
+        now.innerHTML = '<div class="cal-now-bar"><button type="button" class="cal-now-arrow" data-step="-1" aria-label="' + TXP.prev + '"' + (m === 1 ? ' disabled' : '') + '>‹</button>' +
+          '<p class="cal-now-t">' + MONTHS[m - 1] + ' ' + Y + '</p><button type="button" class="cal-now-arrow" data-step="1" aria-label="' + TXP.next + '"' + (m === 12 ? ' disabled' : '') + '>›</button>' +
+          '<button type="button" class="cal-now-year" aria-expanded="false">' + TXP.year + '</button></div>' +
+          '<div class="cal-mgrid">' + g + '</div><div class="cal-now-day" aria-live="polite">' + day + '</div>' + legend();
+      }
+      now.addEventListener('click', function (e) {
+        var t = e.target.closest('button'); if (!t) return;
+        if (t.hasAttribute('data-step')) { nst.m = Math.min(12, Math.max(1, nst.m + +t.getAttribute('data-step'))); nowRender(); return; }
+        if (t.classList.contains('cal-now-year')) { year.classList.add('is-open'); now.classList.add('is-hidden'); year.scrollIntoView({ block: 'start' }); window.scrollBy(0, -80); return; }
+        if (t.hasAttribute('data-d')) { nst.sel = { m: +t.getAttribute('data-m'), d: +t.getAttribute('data-d') }; nowRender(); }
+      });
+      nowRender();
+      year.insertAdjacentHTML('afterbegin', '<button type="button" class="cal-now-year cal-year-back">' + TXP.month + '</button>');
+      year.addEventListener('click', function (e) {
+        if (!e.target.closest('.cal-year-back')) return;
+        year.classList.remove('is-open'); now.classList.remove('is-hidden'); nst.m = today.month; nst.sel = { m: today.month, d: today.day }; nowRender();
+      });
+      year.parentNode.insertBefore(now, year);
       $$('.month', cal).forEach(function (sec) {
         var m = +sec.getAttribute('data-month'), g = '';
         WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + w.slice(0, en ? 2 : 3) + '</span>'; });
@@ -1457,7 +1500,7 @@
         for (var i = 0; i < lead(m); i++) g += '<span></span>';
         for (var d = 1; d <= daysIn(m); d++) {
           var c = dayOf(m, d), r = c ? rankOf(c) : '';
-          g += '<button type="button" class="cal-yd' + (isToday(m, d) ? ' is-today' : '') + (/rk-(hi|solemn|feast)/.test(r) ? ' is-big' : '') + '" data-m="' + m + '" data-d="' + d + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1]) + '">' + d + '</button>';
+          g += '<button type="button" class="cal-yd' + (isToday(m, d) ? ' is-today' : '') + (/rk-(hi|solemn|feast)/.test(r) ? ' is-big ' + r : '') + '" data-m="' + m + '" data-d="' + d + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1]) + '">' + d + '</button>';
         }
         return '<section class="cal-mini' + (m === today.month ? ' is-now' : '') + '"><button type="button" class="cal-mini-h" data-m="' + m + '">' + MONTHS[m - 1] + '</button><div class="cal-mini-g">' + g + '</div></section>';
       }).join('') + '</div>';
@@ -1904,6 +1947,7 @@
       if (pills && cal) {
         var box = document.createElement('div'); box.className = 'av-sec'; box.setAttribute('data-av-id', 'takvim');
         pills.parentNode.insertBefore(box, pills); box.appendChild(pills);
+        var cn = $('.cal-now', m); if (cn) box.appendChild(cn);
         var yr = $('.cal-year', m); if (yr) box.appendChild(yr);
         box.appendChild(cal);
         avNode(box, T.calendar);
@@ -1969,6 +2013,15 @@
   };
   ['iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html'].forEach(function (f) { AV_PAGES[f] = AV_PAGES['katekizm-part']; });
 
+  /* A page other than the home screen is laid out as a phone's app screens or as a computer's
+     page when it loads (html.av, set in <head>). Resizing the window across that width loads
+     the page again in the other layout, at the same place */
+  function initLayoutSwitch() {
+    if (!document.body.hasAttribute('data-avp') || !window.matchMedia) return;
+    var mq = window.matchMedia('(max-width: 979px)'), was = document.documentElement.classList.contains('av');
+    var check = function () { if (mq.matches !== was) location.reload(); };
+    if (mq.addEventListener) mq.addEventListener('change', check); else if (mq.addListener) mq.addListener(check);
+  }
   function initAppView() {
     var H = document.documentElement, main = $('#main'), nav = $('.av-nav');
     if (!H.classList.contains('av')) return;
@@ -2877,6 +2930,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initLayoutSwitch();
   });
 })();
