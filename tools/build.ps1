@@ -2059,10 +2059,99 @@ $kiliselerCities = ($Churches.cities | ForEach-Object {
     "</summary>" +
     "<div class=`"church-list`">$cards</div></details>"
 }) -join "`n"
+# ---------------- The map: Turkey with the cities that have a Catholic church; a city's name zooms
+# into its region (Istanbul down to its two sides of the Bosphorus), where each church is a marker
+# in its rite's colour and cross. Places are approximate (to the district): a regional guide, not a
+# street map. The shape is the Anatolian Roots map's outline, with the Marmara coast in full detail.
+$CmShape = Read-Data 'kilise-harita-sekli.js'
+$RiteIco = @{
+  latin   = '<path d="M0-7.6v15.2M-5-2.8h10"/>'
+  ermeni  = '<path d="M0-5v10M-5 0h10M0-5l-2-2.2M0-5l2-2.2M0 5l-2 2.2M0 5l2 2.2M-5 0l-2.2-2M-5 0l-2.2 2M5 0l2.2-2M5 0l2.2 2"/>'
+  suryani = '<path d="M0-5v10M-5 0h10"/><circle cx="0" cy="-6.3" r="1.6"/><circle cx="0" cy="6.3" r="1.6"/><circle cx="-6.3" cy="0" r="1.6"/><circle cx="6.3" cy="0" r="1.6"/>'
+}
+$RiteIco['keldani'] = $RiteIco['suryani']
+# where each city's name sits beside its dot (px): dx, dy, text-anchor
+$CityLabel = @{ istanbul = @(0, -13, 'middle'); bursa = @(0, 21, 'middle'); izmir = @(11, 5, 'start'); ankara = @(11, 5, 'start')
+  mersin = @(-11, 12, 'end'); adana = @(11, -2, 'start'); antakya = @(11, 12, 'start'); antalya = @(0, 21, 'middle')
+  diyarbakir = @(0, -13, 'middle'); mardin = @(0, 21, 'middle') }
+function Cm-Pin([double]$lat, [double]$lon) { $p = Map-XY $lat $lon; return "data-x=`"$($p[0])`" data-y=`"$($p[1])`"" }
+$cmCities = New-Object Text.StringBuilder; $cmMarks = New-Object Text.StringBuilder; $cmOpts = New-Object Text.StringBuilder
+foreach ($city in $Churches.cities) {
+  $n = @($city.churches).Count; $lab = $CityLabel[$city.id]
+  # the part of the map a tap on the city shows (map units): its churches, with room around them
+  $xs = @(); $ys = @()
+  foreach ($ch in $city.churches) { $q = Map-XY $ch.lat $ch.lon; $xs += [double]$q[0]; $ys += [double]$q[1] }
+  $box = "$(Map-Num ($xs | Measure-Object -Minimum).Minimum) $(Map-Num ($ys | Measure-Object -Minimum).Minimum) $(Map-Num ($xs | Measure-Object -Maximum).Maximum) $(Map-Num ($ys | Measure-Object -Maximum).Maximum)"
+  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" $(Cm-Pin $city.lat $city.lon) data-box=`"$box`" tabindex=`"0`" role=`"button`" aria-label=`"$($city.name): $n kilise`">" +
+    "<circle class=`"cc-hit`" r=`"18`"></circle><circle class=`"cc-dot`" r=`"5.5`"></circle>" +
+    "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$($city.name -replace ' \(.*\)$', '')<tspan class=`"cc-n`"> $n</tspan></text></g>")
+  [void]$cmOpts.Append("<optgroup label=`"$($city.name)`">")
+  foreach ($ch in $city.churches) {
+    $rite = $RiteLabels[$ch.rite]
+    # Istanbul: which side of the Bosphorus (a line along the strait), so that markers set around
+    # one another to stay apart never cross to the other side
+    $side = if ($city.id -ne 'istanbul') { '' } elseif ($ch.lon -lt 29.005 + ($ch.lat - 41.0) * 0.6) { ' data-side="eu"' } else { ' data-side="as"' }
+    [void]$cmMarks.Append("<g class=`"church-marker rite-$($ch.rite)`" data-church=`"$($ch.id)`" data-city=`"$($city.id)`" data-rite=`"$($ch.rite)`"$side $(Cm-Pin $ch.lat $ch.lon) tabindex=`"-1`" role=`"button`" aria-label=`"$(Attr (Plain $ch.name)), $($rite.tr)`" data-name=`"$(Attr (Plain $ch.name))`" data-rite-t=`"$($rite.tr)`">" +
+      "<circle class=`"cm-hit`" r=`"12`"></circle><circle class=`"cm-badge`" r=`"10.5`"></circle><g class=`"cm-ico`">$($RiteIco[$ch.rite])</g></g>")
+    [void]$cmOpts.Append("<option value=`"church:$($ch.id)`">$(Plain $ch.name)</option>")
+  }
+  [void]$cmOpts.Append('</optgroup>')
+}
+$cmRiteOpts = ($Churches.rites | ForEach-Object { "<option value=`"rite:$($_.id)`">$($_.tr)</option>" }) -join ''
+$cmLegend = ($Churches.rites | ForEach-Object { "<li><svg viewBox=`"-12 -12 24 24`" aria-hidden=`"true`" class=`"church-marker rite-$($_.id)`"><circle class=`"cm-badge`" r=`"10.5`"></circle><g class=`"cm-ico`">$($RiteIco[$_.id])</g></svg>$($_.tr)</li>" }) -join ''
+# the names on the map, each shown only in the views where it helps (map-unit widths of the view)
+$cmTexts = (@(
+  @{ t = 'Karadeniz'; lat = 42.55; lon = 34.6; c = 'cm-sea'; max = 9999; min = 300 }
+  @{ t = 'Akdeniz'; lat = 35.25; lon = 31.2; c = 'cm-sea'; max = 9999; min = 300 }
+  @{ t = 'Marmara Denizi'; lat = 40.8; lon = 28.5; c = 'cm-sea'; max = 300; min = 0 }
+  @{ t = 'Karadeniz'; lat = 41.28; lon = 29.15; c = 'cm-sea'; max = 300; min = 0 }
+  @{ t = 'Tekirdağ'; lat = 40.99; lon = 27.51; c = 'cm-prov'; max = 300; min = 0 }
+  @{ t = 'Kocaeli'; lat = 40.79; lon = 29.93; c = 'cm-prov'; max = 300; min = 0 }
+  @{ t = 'Yalova'; lat = 40.63; lon = 29.27; c = 'cm-prov'; max = 300; min = 60 }
+  @{ t = 'Avrupa Yakası'; lat = 41.16; lon = 28.74; c = 'cm-side'; max = 110; min = 0 }
+  @{ t = 'Anadolu Yakası'; lat = 40.93; lon = 29.3; c = 'cm-side'; max = 110; min = 0 }
+  @{ t = 'Boğaziçi'; lat = 41.125; lon = 29.058; c = 'cm-bos'; max = 110; min = 0; r = -62 }
+) | ForEach-Object {
+  $rot = if ($_.r) { ' data-rot="' + $_.r + '"' } else { '' }
+  "<text class=`"$($_.c)`" $(Cm-Pin $_.lat $_.lon) data-min=`"$($_.min)`" data-max=`"$($_.max)`"$rot>$($_.t)</text>"
+}) -join ''
+$cmBox = $CmShape.box
+$churchMapHtml = @"
+<section class="cmap" id="harita" aria-labelledby="cmap-h">
+  <h2 class="section-title" id="cmap-h">Haritada Kiliseler</h2>
+  <p class="cmap-lead">Bir şehrin adına dokunun: harita o bölgeye yaklaşır ve her kilise, ayininin haçıyla gösterilir. Konumlar semt düzeyinde yaklaşıktır; kilisenin tam yeri için kartındaki “Haritada Aç” bağlantısını kullanın.</p>
+  <div class="cmap-bar">
+    <div class="select-wrap cmap-select"><select id="cmap-find" aria-label="Haritada göster: bir ayin ya da bir kilise"><option value="all">Tüm kiliseler</option><optgroup label="Katolik ayinleri">$cmRiteOpts</optgroup>$($cmOpts.ToString())</select>$IcoChevDown</div>
+    <button type="button" class="btn cmap-reset" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg>Bölgeyi Göster</button>
+  </div>
+  <div class="cmap-frame">
+    <svg class="cmap-svg" viewBox="0 0 $($AnShape.W) $($AnShape.H)" role="group" aria-label="Türkiye$($Apos)deki Katolik kiliselerinin haritası">
+      <defs><clipPath id="cmap-out"><path clip-rule="evenodd" d="M-500-500H1500V1100H-500ZM$($cmBox[0]) $($cmBox[1])H$($cmBox[2])V$($cmBox[3])H$($cmBox[0])Z"></path></clipPath></defs>
+      <rect class="cmap-sea" x="-500" y="-500" width="2000" height="1600"></rect>
+      <path class="cmap-land" d="$($AnShape.land)"></path>
+      <path class="cmap-tr" d="$($AnShape.turkey)" clip-path="url(#cmap-out)"></path>
+      <path class="cmap-tr" d="$($CmShape.marmara)"></path>
+      <path class="cmap-lake" d="$($AnShape.lakes)"></path>
+      <g class="cmap-texts" aria-hidden="true">$cmTexts</g>
+      <g class="cmap-cities">$($cmCities.ToString())</g>
+      <g class="cmap-marks">$($cmMarks.ToString())</g>
+    </svg>
+    <p class="cmap-tip" role="tooltip" hidden></p>
+    <div class="cmap-card" id="cmap-card" role="dialog" aria-labelledby="cmap-card-h" hidden>
+      <div class="cmap-grab" aria-hidden="true"></div>
+      <button type="button" class="cmap-close" aria-label="Kapat">$IcoClose</button>
+      <div class="cmap-card-body"></div>
+      <p class="cmap-approx">Haritadaki yer yaklaşıktır.</p>
+    </div>
+  </div>
+  <ul class="cmap-legend" aria-label="Ayinler">$cmLegend</ul>
+</section>
+"@
 $kiliselerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
+$churchMapHtml
   <nav class="faq-toc is-sticky" aria-label="Şehirler"><ul>$kiliselerToc</ul></nav>
   $riteFilterHtml
 $kiliselerCities

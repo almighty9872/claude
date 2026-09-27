@@ -401,7 +401,7 @@ COMPENDIUM.parts[2] = /*JSON-START*/{
               "a": "Mesih tarafından duyurulan ve yerine getirilen Yeni Yasa ya da Müjde’nin Yasası, doğal ve açıklanmış ilahi yasanın doluluğu ve tamamlanmasıdır. Allah’ı ve komşuyu sevme ve Mesih’in bizi sevdiği gibi birbirimizi sevme buyruğunda özetlenir. Aynı zamanda içsel bir gerçekliktir: böyle bir sevgiyi mümkün kılan Kutsal Ruh’un lütfu. “Özgürlük yasasıdır” (Yakup 1:25), çünkü bizi sevginin itkisiyle kendiliğimizden hareket etmeye yöneltir." },
       "en": { "q": "What is the New Law or the Law of the Gospel?",
               "a": "The New Law or the Law of the Gospel, proclaimed and fulfilled by Christ, is the fullness and completion of the divine law, natural and revealed. It is summed up in the commandment to love God and neighbor and to love one another as Christ loved us. It is also an interior reality: the grace of the Holy Spirit which makes possible such love. It is “the law of freedom” (<em>Galatians</em> 1:25) because it inclines us to act spontaneously by the prompting of charity." },
-      "note": "Vatikan’ın İngilizce metninde “Galatians 1:25” olarak geçen atıf (böyle bir ayet yoktur) burada Yakup 1:25 olarak düzeltilmiştir." },
+      "note": "Vatikan’ın İngilizce metninde Galatyalılar’a Mektup’un 1. bölümünün 25. ayeti olarak geçen atıf (böyle bir ayet yoktur) burada Yakup 1:25 olarak düzeltilmiştir." },
     { "type": "quote",
       "tr": "“Yeni Yasa, esas olarak Mesih’e inananlara verilen Kutsal Ruh’un lütfunun ta kendisidir.” ([[Aquinolu Aziz Tomas|Saint Thomas Aquinas]])",
       "en": "“The New Law is mainly the same grace of the Holy Spirit which is given to believers in Christ.” (Saint Thomas Aquinas)" },

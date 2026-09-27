@@ -440,12 +440,12 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "points": [
       "Cennet, bütün iyiliğin ve sevginin kaynağı olan Tanrı’yla sonsuz birliktir.",
       "Cehennem, Tanrı’dan uzak kalmayı özgürce ve ısrarla seçmenin sonucudur; C. S. Lewis’in dediği gibi, kapıları içeriden kilitlidir.",
-      "Araf, Tanrı’nın lütfunda ölen ama henüz tam arınmamış olanların cennete hazırlanmasıdır; bir ceza değil, sevginin tamamlanmasıdır (2 Makkabiler 12:46)."
+      "Araf, Tanrı’nın lütfunda ölen ama henüz tam arınmamış olanların cennete hazırlanmasıdır; bir ceza değil, sevginin tamamlanmasıdır (2 Makkabiler 12:45)."
      ],
      "pointsEn": [
       "Heaven is eternal union with God, the source of all goodness and love.",
       "Hell is the result of freely and stubbornly choosing to stay away from God; as C. S. Lewis put it, its doors are locked from the inside.",
-      "Purgatory is where those who die in God’s grace but not yet fully purified are made ready for heaven; not a punishment but love brought to completion (2 Maccabees 12:46)."
+      "Purgatory is where those who die in God’s grace but not yet fully purified are made ready for heaven; not a punishment but love brought to completion (2 Maccabees 12:45)."
      ],
      "objection": "Sonsuz bir ceza, sınırlı bir hayattaki günahlarla orantısız değil mi?",
      "objectionEn": "Isn’t eternal punishment out of proportion to the sins of a finite life?",

@@ -2828,6 +2828,8 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
   /* The home screen opens without the footer squeezed between the cards and the bar: it waits
      just below the fold and fades in once the page is scrolled */
   html.js body:has(.hm-apps) main { min-height: calc(100svh - 3.4rem); }
+  /* no "Başa dön" on the home screen */
+  body:has(.hm-apps) .to-top-wrap { display: none; }
   html.js body:has(.hm-apps) .site-footer { opacity: 0; transition: opacity .35s ease; }
   html.js.foot-in body:has(.hm-apps) .site-footer { opacity: 1; }
   html.app-open .ios-scroll { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
@@ -2922,3 +2924,82 @@ html.av main .av-cur > .cal-year.cal-phone:not(.is-open) { display: none; }
 .av-foot-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
 html.av .to-top-wrap { display: none; }
 @media print { .to-top, .to-top-wrap { display: none !important; } }
+
+/* ---------- Kilise Bul: the map (Turkey, then each city's region; the churches by rite) ---------- */
+.cmap { --amap-sea: #dce7ec; --amap-land: #e9e2d3; --amap-tr: var(--surface); margin: 1.5rem 0 2.2rem; }
+:root[data-theme="dark"] .cmap { --amap-sea: #0e1a2e; --amap-land: #1a2439; --amap-tr: #22304d; }
+.cmap .section-title { margin-bottom: .4rem; }
+.cmap-lead { margin: 0 0 1rem; color: var(--text-soft); font-size: .98rem; text-align: center; }
+.cmap-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem; margin: 0 0 .8rem; }
+.cmap-select { flex: 1 1 16rem; max-width: 26rem; margin: 0; }
+.cmap-reset { display: inline-flex; align-items: center; gap: .4rem; }
+.cmap-reset[hidden] { display: none; }
+.cmap-reset svg { width: 1rem; height: 1rem; }
+.cmap .rite-latin { --rite: #c9a13f; } .cmap .rite-ermeni { --rite: #cf5448; } .cmap .rite-suryani { --rite: #3d8fd6; } .cmap .rite-keldani { --rite: #8b66d4; }
+.cmap-frame {
+  position: relative; overflow: hidden; aspect-ratio: 1000 / 594; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--amap-sea); box-shadow: var(--shadow); touch-action: manipulation;
+}
+.cmap-svg { display: block; width: 100%; height: 100%; }
+.cmap-sea, .cmap-lake { fill: var(--amap-sea); }
+.cmap-land { fill: var(--amap-land); }
+.cmap-tr { fill: var(--amap-tr); }
+.cmap-texts text { font-family: var(--sans); pointer-events: none; text-anchor: middle; }
+.cmap-texts .cm-sea { fill: var(--muted); font-size: 12px; font-style: italic; letter-spacing: .16em; opacity: .85; }
+.cmap-texts .cm-prov { fill: var(--muted); font-size: 11px; letter-spacing: .06em; opacity: .75; }
+.cmap-texts .cm-side { fill: var(--gold-active); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .9; }
+.cmap-texts .cm-bos { fill: var(--muted); font-size: 11px; font-style: italic; letter-spacing: .1em; }
+.cmap-city { cursor: pointer; outline: none; }
+.cmap-city .cc-hit { fill: transparent; }
+.cmap-city .cc-dot { fill: var(--gold); stroke: var(--amap-tr); stroke-width: 2; }
+.cmap-city .cc-name { font-family: var(--sans); font-size: 13px; font-weight: 700; fill: var(--text); paint-order: stroke; stroke: var(--amap-tr); stroke-width: 3.5px; stroke-linejoin: round; }
+.cmap-city .cc-n { fill: var(--gold-active); font-weight: 700; }
+.cmap-city:hover .cc-name, .cmap-city:focus-visible .cc-name { fill: var(--gold-active); text-decoration: underline; }
+.cmap-city:focus-visible .cc-dot { stroke: var(--focus); stroke-width: 3; }
+.cmap-city.is-off { opacity: .35; }
+.cmap.is-zoomed .cmap-city.is-off { display: none; }
+.cmap.is-zoomed .cmap-city .cc-dot { display: none; }
+.cmap.is-zoomed .cmap-city .cc-name { font-size: 12px; fill: var(--text-soft); }
+.church-marker { cursor: pointer; outline: none; }
+.church-marker .cm-hit { fill: transparent; }
+.church-marker .cm-badge { fill: var(--rite, var(--gold)); stroke: #fff; stroke-width: 1.6; }
+.church-marker .cm-ico { fill: #fff; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; }
+.church-marker .cm-ico circle { stroke: none; }
+.church-marker:hover .cm-badge, .church-marker:focus-visible .cm-badge { stroke: var(--text); stroke-width: 2.4; }
+.church-marker.is-sel .cm-badge { stroke: var(--text); stroke-width: 3; }
+.cmap-tip {
+  position: absolute; z-index: 3; max-width: 16rem; margin: 0; padding: .45rem .7rem; border-radius: 10px; pointer-events: none;
+  background: var(--surface); box-shadow: var(--shadow); border: 1px solid var(--border); font-family: var(--sans); font-size: .82rem; line-height: 1.3;
+}
+.cmap-tip[hidden] { display: none; }
+.cmap-tip b { display: block; color: var(--text); }
+.cmap-tip span { color: var(--muted); font-size: .75rem; }
+/* a church's card: a drawer from the right on a computer */
+.cmap-card {
+  position: absolute; z-index: 4; top: .6rem; right: .6rem; bottom: .6rem; width: min(22rem, 70%); overflow-y: auto; padding: 1rem 1.1rem 1rem;
+  border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow);
+  transform: translateX(calc(100% + 1rem)); transition: transform .28s cubic-bezier(.32, .72, 0, 1);
+}
+.cmap-card.is-open { transform: none; }
+.cmap-card[hidden] { display: none; }
+.cmap-grab { display: none; }
+.cmap-close { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; padding: 0; border: 0; border-radius: 50%; background: var(--tap); color: var(--text); cursor: pointer; }
+.cmap-close svg { width: 1rem; height: 1rem; }
+.cmap-church { gap: .4rem; padding: 0; border: 0; background: none; box-shadow: none; }
+.cmap-church .church-head { padding-right: 2.2rem; }
+.cmap-church .t-title { font-size: 1.1rem; }
+.cmap-approx { margin: .8rem 0 0; color: var(--muted); font-size: .78rem; }
+.cmap-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem 1.1rem; margin: .7rem 0 0; padding: 0; list-style: none; font-family: var(--sans); font-size: .82rem; color: var(--text-soft); }
+.cmap-legend li { display: inline-flex; align-items: center; gap: .35rem; }
+.cmap-legend svg { width: 1.3rem; height: 1.3rem; }
+/* on a phone: a taller frame, and the card as a sheet from the bottom of the screen */
+@media (max-width: 979px) {
+  .cmap-frame { aspect-ratio: 1 / .82; }
+  .cmap-card {
+    position: fixed; z-index: 420; top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 72vh; padding: 1.4rem 1.1rem calc(1.2rem + env(safe-area-inset-bottom));
+    border-radius: 20px 20px 0 0; border-width: 1px 0 0; transform: translateY(100%);
+  }
+  .cmap-grab { display: block; position: absolute; top: .5rem; left: 50%; width: 2.4rem; height: .3rem; margin-left: -1.2rem; border-radius: 99px; background: var(--border-strong); }
+}
+@media (prefers-reduced-motion: reduce) { .cmap-card { transition: none; } }
+@media print { .cmap-bar, .cmap-card, .cmap-tip { display: none !important; } }

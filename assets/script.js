@@ -2069,6 +2069,213 @@
   /* A page other than the home screen is laid out as a phone's app screens or as a computer's
      page when it loads (html.av, set in <head>). Resizing the window across that width loads
      the page again in the other layout, at the same place */
+  /* ----- Kilise Bul's map: Turkey with the cities that have a Catholic church. A city (or the
+     list above the map) zooms the view to its region, just close enough to see its churches spread
+     out (in Istanbul, across both sides of the Bosphorus) with the sea and the next provinces still
+     in sight; each church is a marker in its rite's colour and cross, and opens its card. Places
+     are approximate: the map is a regional guide, not a street map. */
+  function initChurchMap() {
+    var sec = $('.cmap'); if (!sec) return;
+    var svg = $('.cmap-svg', sec), frame = $('.cmap-frame', sec), sel = $('#cmap-find'), reset = $('.cmap-reset', sec);
+    var tip = $('.cmap-tip', sec), card = $('#cmap-card'), body = $('.cmap-card-body', card);
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var W = 1000, H = 594, ZOOMED = 150;
+    var pin = function (el) { el._x = +el.getAttribute('data-x'); el._y = +el.getAttribute('data-y'); return el; };
+    var marks = $$('.church-marker', svg).map(pin), cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin);
+    cities.forEach(function (c) {
+      c._box = c.getAttribute('data-box').split(' ').map(Number);
+      c._rites = {};
+      marks.forEach(function (m) { if (m.getAttribute('data-city') === c.getAttribute('data-city')) c._rites[m.getAttribute('data-rite')] = true; });
+    });
+    var vb = null, anim = 0, rite = null, openM = null;
+
+    /* a view round a box of the map, as wide as the frame's own shape needs */
+    function fit(x0, y0, x1, y1, minW) {
+      var a = (frame.clientHeight / frame.clientWidth) || H / W;
+      var w = Math.max(x1 - x0, minW || 0, (y1 - y0) / a), h = w * a;
+      return { x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w: w, h: h };
+    }
+    function whole() { return fit(10, 60, 995, 430, 0); }
+    /* a city's region: its churches with plenty of room round them (a single church: some 150 km) */
+    function cityView(c) {
+      var b = c._box, w = b[2] - b[0], h = b[3] - b[1];
+      return fit(b[0] - w * 0.6, b[1] - h * 0.6, b[2] + w * 0.6, b[3] + h * 0.6, c.getAttribute('data-city') === 'istanbul' ? 56 : 125);
+    }
+
+    function draw() {
+      svg.setAttribute('viewBox', vb.x + ' ' + vb.y + ' ' + vb.w + ' ' + vb.h);
+      /* markers and names keep their size on screen (a little smaller in a phone's narrow frame) */
+      var fw = svg.clientWidth || 1, k = Math.max(.8, Math.min(1, fw / 640)), s = vb.w / fw, zoomed = vb.w < ZOOMED;
+      cities.forEach(function (c) {
+        c.setAttribute('transform', 'translate(' + c._x + ' ' + c._y + ') scale(' + s * k + ')');
+        /* close in, a city's name sits over its churches; Istanbul's gives way to its two sides */
+        var t = $('.cc-name', c);
+        if (!t._at) t._at = [t.getAttribute('x'), t.getAttribute('y'), t.getAttribute('text-anchor')];
+        var at = zoomed ? ['0', '-24', 'middle'] : t._at;
+        t.setAttribute('x', at[0]); t.setAttribute('y', at[1]); t.setAttribute('text-anchor', at[2]);
+        var off = (zoomed && c.getAttribute('data-city') === 'istanbul') || (rite && !c._rites[rite]);
+        c.classList.toggle('is-off', !!off);
+        c.setAttribute('tabindex', off && zoomed ? '-1' : '0');
+      });
+      texts.forEach(function (t) {
+        var on = vb.w >= +t.getAttribute('data-min') && vb.w < +t.getAttribute('data-max');
+        t.style.display = on ? '' : 'none';
+        if (on) t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s * k + ')' + (t.getAttribute('data-rot') ? ' rotate(' + t.getAttribute('data-rot') + ')' : ''));
+      });
+      /* the churches, when close enough to tell them apart; those too close to see singly are set
+         round one another, on their own side of the Bosphorus */
+      var vis = marks.filter(function (m) { return zoomed && (!rite || m.getAttribute('data-rite') === rite); });
+      marks.forEach(function (m) { var on = vis.indexOf(m) >= 0; m.style.display = on ? '' : 'none'; m.setAttribute('tabindex', on ? '0' : '-1'); });
+      /* each group of churches too close to tell apart becomes a small disc of markers round its
+         middle; discs that would touch are merged, until none overlap */
+      var R = function (n, side) { return n > 1 ? (side ? 27 : 19.5) * Math.sqrt(n) + 4 : 11; };
+      var groups = vis.map(function (m) { return { x: (m._x - vb.x) / s / k, y: (m._y - vb.y) / s / k, side: m.getAttribute('data-side') || '', list: [m] }; });
+      for (var merged = true; merged;) {
+        merged = false;
+        for (var a = 0; a < groups.length && !merged; a++) for (var b = a + 1; b < groups.length && !merged; b++) {
+          var ga = groups[a], gb = groups[b];
+          if (ga.side !== gb.side || Math.hypot(ga.x - gb.x, ga.y - gb.y) >= R(ga.list.length, ga.side) + R(gb.list.length, gb.side) - 2) continue;
+          var na = ga.list.length, nb = gb.list.length;
+          ga.x = (ga.x * na + gb.x * nb) / (na + nb); ga.y = (ga.y * na + gb.y * nb) / (na + nb);
+          ga.list = ga.list.concat(gb.list); groups.splice(b, 1); merged = true;
+        }
+      }
+      groups.forEach(function (g) {
+        var n = g.list.length, dir = g.side === 'eu' ? -1 : g.side === 'as' ? 1 : 0;
+        /* northernmost first, so the disc keeps roughly the order they have on the ground */
+        g.list.sort(function (a, b) { return a._y - b._y || a._x - b._x; });
+        g.list.forEach(function (m, i) {
+          var dx = 0, dy = 0;
+          if (n > 1) {
+            if (dir) {
+              /* in Istanbul, a half disc turned away from the Bosphorus: the European side's to the
+                 west, the Asian side's to the east */
+              var rh = 18.5 * Math.sqrt(2 * (i + 0.5)), ah = (i * 2.39996) % Math.PI - Math.PI / 2;
+              dx = dir * (rh * Math.cos(ah) + 4); dy = rh * Math.sin(ah);
+            } else {
+              var r = 18.5 * Math.sqrt(i + 0.5), th = i * 2.39996;
+              dx = r * Math.cos(th); dy = r * Math.sin(th);
+            }
+          }
+          m.setAttribute('transform', 'translate(' + (vb.x + (g.x + dx) * s * k) + ' ' + (vb.y + (g.y + dy) * s * k) + ') scale(' + s * k + ')');
+        });
+      });
+      var w0 = whole();
+      reset.hidden = vb.w > w0.w * 0.9;
+      sec.classList.toggle('is-zoomed', zoomed);
+    }
+    function go(to) {
+      cancelAnimationFrame(anim);
+      hideTip();
+      if (still || !vb) { vb = to; draw(); return; }
+      var from = vb, t0 = null, D = 650;
+      var step = function (t) {
+        if (t0 === null) t0 = t;
+        var k = Math.min(1, (t - t0) / D), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        vb = { x: from.x + (to.x - from.x) * e, y: from.y + (to.y - from.y) * e, w: from.w + (to.w - from.w) * e, h: from.h + (to.h - from.h) * e };
+        draw();
+        if (k < 1) anim = requestAnimationFrame(step);
+      };
+      anim = requestAnimationFrame(step);
+    }
+
+    /* hovering a church (with a mouse): its full name and rite */
+    function showTip(m) {
+      var r = m.getBoundingClientRect(), f = frame.getBoundingClientRect();
+      tip.textContent = '';
+      var b = document.createElement('b'); b.textContent = m.getAttribute('data-name'); tip.appendChild(b);
+      var sp = document.createElement('span'); sp.textContent = m.getAttribute('data-rite-t'); tip.appendChild(sp);
+      tip.hidden = false;
+      var x = r.left + r.width / 2 - f.left, y = r.top - f.top;
+      tip.style.left = Math.max(8, Math.min(f.width - tip.offsetWidth - 8, x - tip.offsetWidth / 2)) + 'px';
+      tip.style.top = Math.max(4, y - tip.offsetHeight - 6) + 'px';
+    }
+    function hideTip() { tip.hidden = true; }
+
+    /* a church's card: beside the map on a computer, a sheet from the bottom on a phone */
+    function openCard(m) {
+      var src = document.getElementById(m.getAttribute('data-church'));
+      if (!src) return;
+      var c = src.cloneNode(true);
+      [c].concat($$('[id], [data-av-node], [data-av-id], [hidden]', c)).forEach(function (el) {
+        el.removeAttribute('id'); el.removeAttribute('data-av-node'); el.removeAttribute('data-av-id'); el.removeAttribute('data-av-t'); el.removeAttribute('data-av-s');
+        if (el !== c && el.hasAttribute('hidden')) el.removeAttribute('hidden');
+      });
+      c.removeAttribute('hidden'); c.className = 'cmap-church ' + c.className.replace(/\b(av-\S+|text-card)\b/g, '');
+      var h = $('.t-title', c); if (h) h.id = 'cmap-card-h';
+      $$('details.church-hours-item', c).forEach(function (d) { d.open = true; });
+      body.innerHTML = ''; body.appendChild(c);
+      if (openM) openM.classList.remove('is-sel');
+      openM = m; m.classList.add('is-sel');
+      card.hidden = false;
+      requestAnimationFrame(function () { card.classList.add('is-open'); });
+      $('.cmap-close', card).focus({ preventScroll: true });
+    }
+    function closeCard(back) {
+      if (card.hidden) return;
+      card.classList.remove('is-open');
+      setTimeout(function () { if (!card.classList.contains('is-open')) card.hidden = true; }, 260);
+      if (openM) { openM.classList.remove('is-sel'); if (back) openM.focus({ preventScroll: true }); }
+      openM = null;
+    }
+    function markOf(id) { return marks.filter(function (m) { return m.getAttribute('data-church') === id; })[0]; }
+    function cityOf(id) { return cities.filter(function (c) { return c.getAttribute('data-city') === id; })[0]; }
+
+    function act(el) {
+      if (el.classList.contains('church-marker')) { hideTip(); openCard(el); return; }
+      if (el.classList.contains('cmap-city')) { closeCard(); go(cityView(el)); }
+    }
+    svg.addEventListener('click', function (e) {
+      var el = e.target.closest('.church-marker, .cmap-city');
+      if (el) act(el); else closeCard();
+    });
+    svg.addEventListener('keydown', function (e) {
+      var el = e.target.closest && e.target.closest('.church-marker, .cmap-city');
+      if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); act(el); }
+    });
+    svg.addEventListener('pointerover', function (e) {
+      var m = e.pointerType === 'mouse' && e.target.closest('.church-marker');
+      if (m) showTip(m);
+    });
+    svg.addEventListener('pointerout', function (e) { if (e.target.closest('.church-marker')) hideTip(); });
+    svg.addEventListener('focusin', function (e) { var m = e.target.closest('.church-marker'); if (m) showTip(m); });
+    svg.addEventListener('focusout', hideTip);
+    $('.cmap-close', card).addEventListener('click', function () { closeCard(true); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeCard(true); });
+
+    /* the list above the map: all churches, a rite (the view gathers its churches), or one church */
+    sel.addEventListener('change', function () {
+      var v = sel.value; closeCard();
+      if (v === 'all') { rite = null; go(whole()); return; }
+      if (v.indexOf('rite:') === 0) {
+        rite = v.slice(5);
+        var ms = marks.filter(function (m) { return m.getAttribute('data-rite') === rite; });
+        var cs = cities.filter(function (c) { return c._rites[rite]; });
+        if (cs.length === 1) { go(cityView(cs[0])); return; }
+        var xs = ms.map(function (m) { return m._x; }), ys = ms.map(function (m) { return m._y; });
+        var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs), y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+        go(fit(x0 - 40, y0 - 40, x1 + 40, y1 + 40, 120));
+        return;
+      }
+      var m = markOf(v.slice(7)); if (!m) return;
+      rite = null;
+      go(cityView(cityOf(m.getAttribute('data-city'))));
+      setTimeout(function () { openCard(m); }, still ? 0 : 680);
+    });
+    reset.addEventListener('click', function () { rite = null; sel.value = 'all'; closeCard(); go(whole()); });
+    /* a new frame size (a turned phone, a level of the page shown at last): the same middle and width */
+    var lastW = 0;
+    var refit = function () {
+      var fw = frame.clientWidth; if (!fw || fw === lastW) return;
+      var wasWhole = !lastW || reset.hidden; lastW = fw;
+      cancelAnimationFrame(anim);
+      vb = wasWhole ? whole() : fit(vb.x, vb.y + vb.h / 2, vb.x + vb.w, vb.y + vb.h / 2, vb.w);
+      draw();
+    };
+    if (window.ResizeObserver) new ResizeObserver(refit).observe(frame); else window.addEventListener('resize', refit);
+    vb = whole(); draw(); refit();
+  }
+
   /* "Başa dön": at the foot of a page (or a phone's level) that runs well past one screen */
   function initToTop() {
     var av = document.documentElement.classList.contains('av');
@@ -2267,19 +2474,19 @@
     /* Slide the new level in (forward) or back, with the page's icon and title shrinking or
        growing between them; the browser's own back swipe has already shown its picture of the
        level underneath, so that one is put in place at once */
-    var vtNow = null;
+    /* The new level slides in from the side it comes from (the page's own animation, not the
+       browser's view transitions: Safari could leave one of those hanging over a blank level) */
     function swap(fn, dir) {
-      /* a tap while the last slide is still running: that one ends at once */
-      if (vtNow) { try { vtNow.skipTransition(); } catch (e) { /* already over */ } vtNow = null; }
-      if (still || !dir || !document.startViewTransition) { fn(); return; }
-      H.setAttribute('data-av-dir', dir);
-      var vt, done = false;
-      try { vt = document.startViewTransition(fn); } catch (e) { H.removeAttribute('data-av-dir'); fn(); return; }
-      vtNow = vt;
-      var off = function () { done = true; if (vtNow === vt) vtNow = null; H.removeAttribute('data-av-dir'); };
-      vt.finished.then(off, off);
-      /* Safari can leave a slide hanging, the new level blank under its picture: end it */
-      setTimeout(function () { if (!done) try { vt.skipTransition(); } catch (e) { /* already over */ } }, 900);
+      fn();
+      if (still || !dir || !main.animate) return;
+      var from = dir === 'fwd' ? '34%' : '-34%';
+      var parts = cur ? [cur] : $$(':scope > *', main).filter(function (el) { return el !== hero && !el.classList.contains('av-fixed') && el.offsetHeight; });
+      parts.forEach(function (el) {
+        try {
+          el.animate([{ transform: 'translateX(' + from + ')', opacity: 0 }, { transform: 'none', opacity: 1 }],
+            { duration: 380, easing: 'cubic-bezier(.32, .72, 0, 1)' });
+        } catch (e) { /* no Web Animations */ }
+      });
     }
     function show(n, how, scrollTo) {
       var from = cur;
@@ -3020,6 +3227,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initLayoutSwitch();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
   });
 })();
