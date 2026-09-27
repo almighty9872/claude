@@ -446,7 +446,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   border-bottom: 1px dotted var(--border-strong);
 }
 .qa-ref a:hover, .faq-ref a:hover { color: var(--gold); border-bottom-color: var(--gold-soft); }
-.qa-ref .ext, .faq-ref .ext { width: .78em; height: .78em; margin-left: .3em; vertical-align: -.05em; flex: none; }
+.qa-ref .ext, .faq-ref .ext { display: inline-block; width: .78em; height: .78em; margin-left: .3em; vertical-align: -.05em; }
+.qa-ref a:last-of-type, .faq-ref a:last-of-type { white-space: nowrap; }
 .qa-a { margin-top: .6rem; }
 .qa-a p { margin: 0 0 .7em; }
 .qa-a ul { margin: 0 0 .7em; padding-left: 1.25rem; }
@@ -1204,9 +1205,9 @@ html.js .why-end { margin-top: -1rem; }
 .foot-desc { margin: 0 0 .6rem; max-width: 22rem; font-family: var(--sans); font-size: .8rem; line-height: 1.5; color: var(--text-soft); }
 .foot-sources {
   padding: 0; border: 0; background: none; font: inherit; color: var(--muted); cursor: pointer;
-  text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: .2em;
+  text-decoration: none;
 }
-.foot-sources:hover { color: var(--gold); text-decoration-color: currentColor; }
+.foot-sources:hover { color: var(--gold); }
 .foot-sources:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
 
 /* "Kaynaklar ve telif": a centred modal over a blurred page. Two columns on wide screens so
@@ -2015,6 +2016,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
   .foot-tag, .foot-desc, .foot-sitemap, .foot-about .foot-copy:not(.foot-src) { display: none; }
   .foot-grid { gap: 0; }
   .foot-about .foot-src { margin-top: .5rem; }
+  .foot-src { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; row-gap: .35rem; }
   .foot-src .foot-contact { display: inline; }
   .foot-src .foot-contact::before { content: "·"; margin: 0 .55rem; color: var(--muted); }
 
@@ -2540,6 +2542,8 @@ html.av .av-dock {
 .av-dock-a:focus-visible { outline: none; } .av-dock-a:focus-visible .hm-icon { outline: 3px solid var(--focus); outline-offset: 2px; }
 /* room for it under the page, and above it for what sits at the foot of the screen */
 html.av .av-foot { padding-bottom: calc(var(--dock-h) + 1rem); }
+html.av:not(.av-sub) .av-foot { padding-bottom: 1.2rem; }
+html.av .site-footer { padding-bottom: calc(var(--dock-h) + .8rem); }
 html.av.av-reader main { padding-bottom: calc(var(--dock-h) + 5rem); }
 html.av .av-kq-fab { bottom: calc(var(--dock-h) + .5rem); }
 html.av .rt-sheet { bottom: var(--dock-h); }
@@ -2736,3 +2740,49 @@ html.av main .church-city.av-cur > summary .church-city-body > :not(:first-child
 html.av main .church-city.av-cur > summary .church-city-body > :first-child { font-size: 1.45rem; font-weight: 600; color: var(--text); }
 html.av main :is(.church-card, .myst).av-cur { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
 html.av main :is(.church-card, .myst).av-cur > header { margin: .4rem 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--border); }
+
+/* ---------- Katekizm: questions already read ----------
+   A read question: its number badge turns gold with a tick; in a list, a gold tick at the end.
+   A chapter or part: a ring that fills as its questions are read, full with a tick. */
+.rd { display: inline-flex; align-items: center; gap: .3rem; flex: none; margin-left: .45rem; vertical-align: middle; }
+.rd svg { width: 1.05rem; height: 1.05rem; }
+.rd-ring { transform: rotate(-90deg); }
+.rd-ring circle { fill: none; stroke-width: 2.4; }
+.rd-bg { stroke: var(--border-strong); }
+.rd-fg { stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset .5s cubic-bezier(.32, .72, 0, 1); }
+.rd-k { font: 600 .66rem var(--sans); color: var(--muted); font-variant-numeric: tabular-nums; }
+.rd-tick circle { fill: var(--gold); }
+.rd-tick path { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.av-row .rd { margin: 0 .1rem 0 .4rem; }
+.av-row.is-read .av-t { color: var(--text-soft); }
+.acc-list a .rd, .toc a .rd { margin-left: .35rem; }
+.p-meta .rd { margin-left: .6rem; letter-spacing: 0; text-transform: none; }
+/* the question itself */
+article.qa.is-read .qa-num { position: relative; background: var(--gold); border-color: var(--gold); color: #fff; }
+article.qa.is-read .qa-num::after {
+  content: ""; position: absolute; right: -.3rem; bottom: -.25rem; width: .95rem; height: .95rem; border-radius: 50%;
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='%23a07a2c'/%3E%3Cpath d='m6 10.3 2.7 2.7L14.2 7.4' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% no-repeat;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+.kq-read { display: inline-flex; align-items: center; gap: .3rem; margin-left: .6rem; color: var(--gold-active); font-weight: 700; animation: rdIn .45s cubic-bezier(.32, .72, 0, 1); }
+.kq-read svg { width: .95rem; height: .95rem; }
+.kq-read .rd-tick path { stroke-dasharray: 14; stroke-dashoffset: 14; animation: rdDraw .45s .15s ease-out forwards; }
+@keyframes rdIn { from { opacity: 0; transform: scale(.6); } }
+@keyframes rdDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .kq-read, .kq-read .rd-tick path { animation: none; stroke-dashoffset: 0; } .rd-fg { transition: none; } }
+/* the overview: how far along, and "Sıfırla" */
+.rd-total { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .4rem .8rem; margin: 1rem auto 0; font-family: var(--sans); font-size: .82rem; color: var(--text-soft); }
+.rd-total[hidden] { display: none; }
+.rd-total b { color: var(--gold-active); font-variant-numeric: tabular-nums; }
+.rd-total-bar { position: relative; width: 9rem; height: .38rem; border-radius: 999px; background: var(--border); overflow: hidden; }
+.rd-total-bar i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: var(--gold); }
+.rd-reset { padding: .2rem .55rem; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--muted); font: 600 .74rem var(--sans); cursor: pointer; }
+.rd-reset:hover { border-color: var(--gold-soft); color: var(--gold-active); }
+
+/* The Katekizm's pages: the icons on a solid bar across the foot of the screen */
+html.av .av-dock.av-dock-solid {
+  left: 0; right: 0; bottom: 0; transform: none; justify-content: center; grid-template-columns: repeat(4, 4.2rem); gap: .6rem;
+  padding: .45rem .5rem calc(.35rem + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid var(--border); border-radius: 0;
+  background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 -6px 18px -14px rgba(20, 26, 44, .35);
+}
+html.av:has(.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-bottom)); }

@@ -395,7 +395,11 @@ function Ccc-Link([string]$text, [string]$lang) {
       if ($_ -match '^(\d{1,4})') { "<a href=`"$(Ccc-Url ([int]$Matches[1]))`" target=`"_blank`" rel=`"noopener`" title=`"$title`">$_</a>" } else { $_ }
     }) -join ', ')
   }
-  return (($out -join ' · ') + $IcoExternal)
+  $h = $out -join ' · '
+  # the small "opens elsewhere" arrow rides inside the last link, so it never wraps onto a line alone
+  $i = $h.LastIndexOf('</a>')
+  if ($i -ge 0) { return $h.Substring(0, $i) + $IcoExternal + $h.Substring($i) }
+  return $h
 }
 # Scripture: every "Matta 13:1–23", "1. Korintliler 12:13", "Luke 15:3–7" in a page's text links
 # to that passage on BibleGateway, in the Revised Standard Version, Catholic Edition.
@@ -777,7 +781,9 @@ function Av-Dock([string]$trFile) {
     $cur = if ($_[0] -eq $app) { ' aria-current="true"' } else { '' }
     "<a class=`"av-dock-a`" href=`"index.html#app-$($_[0])`"$cur><span class=`"hm-icon app-$($_[0])`">$($_[2])</span><span class=`"av-dock-t`">$($_[1])</span></a>"
   }) -join ''
-  return "<nav class=`"av-dock`" aria-label=`"Bölümler`">$links</nav>"
+  # On the Katekizm's pages the icons sit on a solid bar across the screen, clear of the text
+  $solid = if ($KatekizmPages -contains $trFile) { ' av-dock-solid' } else { '' }
+  return "<nav class=`"av-dock$solid`" aria-label=`"Bölümler`">$links</nav>"
 }
 $MassIcons = @{
   gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
@@ -898,7 +904,7 @@ $FooterHtml = @"
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-desc">$($fm['about'])</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
-      <p class="foot-copy foot-src"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$($fm['title'])</button><a class="foot-contact" href="iletisim.html">İletişim</a></p>
+      <p class="foot-copy foot-src"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$($fm['title'])</button><a class="foot-contact" href="iletisim.html">İletişim</a><a class="foot-contact foot-extra" href="erisilebilirlik.html">Erişilebilirlik</a><a class="foot-contact foot-extra" href="gizlilik.html">Gizlilik</a></p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">

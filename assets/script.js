@@ -1674,6 +1674,87 @@
     tr: { top: 'Sayfanın başına dön', sections: 'Bölümler', share: 'Paylaş', copied: 'Bağlantı kopyalandı', text: 'Metin', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti', today: 'Bugünün Azizi', calendar: 'Takvim', church: 'kilise', churches: 'kilise' },
     en: { top: 'Back to the start of the page', sections: 'Sections', share: 'Share', copied: 'Link copied', text: 'Text', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done', today: 'Saint of the Day', calendar: 'Calendar', church: 'church', churches: 'churches' }
   };
+  /* ---------------------------------------------------------------
+     Katekizm: which questions this reader has read. A question counts
+     once it has been on screen for a few seconds (or "Sonraki" is
+     tapped past it); the list stays in this browser only. A read
+     question gets a gold tick; each chapter, part and contents entry a
+     ring that fills as its questions are read.
+     --------------------------------------------------------------- */
+  var KKREAD = (function () {
+    var KEY = 'kkio-read', set = {}, subs = [];
+    try { (localStorage.getItem(KEY) || '').split(',').forEach(function (x) { if (+x) set[+x] = 1; }); } catch (e) { /* private mode */ }
+    function save() { try { localStorage.setItem(KEY, Object.keys(set).join(',')); } catch (e) { /* private mode */ } }
+    function count(a, b) { var c = 0; for (var i = a; i <= b; i++) if (set[i]) c++; return c; }
+    return {
+      has: function (n) { return !!set[n]; },
+      mark: function (n) { if (!n || set[n]) return; set[n] = 1; save(); subs.forEach(function (f) { f(n); }); },
+      clear: function () { set = {}; save(); subs.forEach(function (f) { f(0); }); },
+      count: count, total: function () { return Object.keys(set).length; },
+      on: function (f) { subs.push(f); }
+    };
+  })();
+  var RD_TICK = '<svg class="rd-tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="m6 10.3 2.7 2.7L14.2 7.4"/></svg>';
+  /* a ring for "k of n read": empty, part-filled, or full with a tick */
+  function rdRing(k, n) {
+    if (!n) return '';
+    if (k >= n) return '<span class="rd rd-full" title="' + k + ' / ' + n + '">' + RD_TICK + '</span>';
+    var C = 2 * Math.PI * 7.5, off = C * (1 - k / n);
+    return '<span class="rd' + (k ? ' rd-some' : '') + '" title="' + k + ' / ' + n + '"><svg class="rd-ring" viewBox="0 0 20 20" aria-hidden="true"><circle class="rd-bg" cx="10" cy="10" r="7.5"/>' +
+      (k ? '<circle class="rd-fg" cx="10" cy="10" r="7.5" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '"/>' : '') + '</svg>' +
+      (k ? '<span class="rd-k">' + k + '/' + n + '</span>' : '') + '</span>';
+  }
+  function rdRange(txt) { var m = /(\d+)\s*[–-]\s*(\d+)/.exec(txt || ''); if (m) return [+m[1], +m[2]]; m = /^\s*(\d+)\s*$/.exec(txt || ''); return m ? [+m[1], +m[1]] : null; }
+  /* a computer: the questions' own number badges, the contents' ranges, the overview's parts */
+  function initReadMarks() {
+    var H = document.documentElement;
+    function paint() {
+      $$('article.qa[data-n]').forEach(function (a) { a.classList.toggle('is-read', KKREAD.has(+a.getAttribute('data-n'))); });
+      $$('.toc a, .acc-list a').forEach(function (a) {
+        var r = rdRange(avText($('.rng, .toc-rng, .count', a)) || (a.getAttribute('data-rng') || ''));
+        var old = $('.rd', a); if (old) old.remove();
+        if (!r) return;
+        a.insertAdjacentHTML('beforeend', rdRing(KKREAD.count(r[0], r[1]), r[1] - r[0] + 1));
+      });
+      $$('.part-acc > summary .p-meta').forEach(function (s) {
+        var old = $('.rd', s); if (old) old.remove();
+        var r = rdRange(avText(s).split('·').pop());
+        if (r) s.insertAdjacentHTML('beforeend', rdRing(KKREAD.count(r[0], r[1]), r[1] - r[0] + 1));
+      });
+      var tot = $('.rd-total');
+      if (tot) {
+        var k = KKREAD.total();
+        tot.hidden = !k;
+        $('.rd-total-n', tot).textContent = k + ' / 598';
+        $('.rd-total-bar i', tot).style.width = (k / 5.98) + '%';
+      }
+    }
+    /* the overview: how far the reader has come, and a way to start over */
+    var hero = $('.work-hero');
+    if (hero && $('.parts')) {
+      var tot = document.createElement('p');
+      tot.className = 'rd-total'; tot.hidden = true;
+      tot.innerHTML = '<span class="rd-total-t">' + (LANG === 'en' ? 'Questions you have read' : 'Okuduğunuz sorular') + ' <b class="rd-total-n"></b></span>' +
+        '<span class="rd-total-bar" aria-hidden="true"><i></i></span><button type="button" class="rd-reset">' + (LANG === 'en' ? 'Start over' : 'Sıfırla') + '</button>';
+      hero.appendChild(tot);
+      $('.rd-reset', tot).addEventListener('click', function () {
+        if (window.confirm(LANG === 'en' ? 'Forget which questions you have read?' : 'Okuduğunuz soruların kaydı silinsin mi?')) KKREAD.clear();
+      });
+    }
+    paint();
+    KKREAD.on(paint);
+    /* a question read on a computer: most of it in view for three seconds */
+    if (H.classList.contains('av') || !window.IntersectionObserver) return;
+    var timers = {};
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var n = +e.target.getAttribute('data-n');
+        if (e.isIntersecting && !KKREAD.has(n)) { if (!timers[n]) timers[n] = setTimeout(function () { KKREAD.mark(n); }, 3000); }
+        else { clearTimeout(timers[n]); timers[n] = null; }
+      });
+    }, { threshold: 0.6 });
+    $$('article.qa[data-n]').forEach(function (a) { io.observe(a); });
+  }
   var AV_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
   var AV_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
   var AV_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M8 11H6.5A1.5 1.5 0 0 0 5 12.5v7A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>';
@@ -1875,6 +1956,23 @@
       hero.addEventListener('click', toTop);
       hero.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') toTop(e); });
     }
+    /* rows of questions: a gold tick once read; rows of chapters: a ring filling up */
+    function readRows(level) {
+      $$('.av-row', level).forEach(function (a) {
+        var k = a._avSrc; if (!k) return;
+        var old = $('.rd', a); if (old) old.remove();
+        a.classList.remove('is-read');
+        if (k.hasAttribute('data-av-qn')) {
+          if (KKREAD.has(+k.getAttribute('data-av-qn'))) { a.classList.add('is-read'); a.lastElementChild.insertAdjacentHTML('beforebegin', '<span class="rd rd-full">' + RD_TICK + '</span>'); }
+          return;
+        }
+        var qs = $$('article.qa[data-n]', k);
+        if (!qs.length) return;
+        var got = qs.filter(function (q) { return KKREAD.has(+q.getAttribute('data-n')); }).length;
+        a.lastElementChild.insertAdjacentHTML('beforebegin', rdRing(got, qs.length));
+      });
+    }
+    KKREAD.on(function () { if (cur !== undefined) readRows(cur || main); });
     function trailFor(n) {
       var list = [];
       for (var p = parentOf(parentOf(n)); p; p = parentOf(p)) list.unshift(p);
@@ -1976,6 +2074,7 @@
       backA.setAttribute('href', n ? '#' + (par ? idOf(par) : '') : homeBack.href);
       langFor(target);
       trailFor(n);
+      readRows(target);
       if (n && n.hasAttribute('data-av-qn')) reader(n);
       document.title = n ? titleOf(n) + ' | ' + pageT : pageT0;
     }
@@ -2169,11 +2268,23 @@
         a.appendChild(pager);
       }
       kqTools();
+      var qn = +a.getAttribute('data-av-qn');
+      clearTimeout(reader.t);
+      if (!KKREAD.has(qn)) reader.t = setTimeout(function () { if (cur === a) { KKREAD.mark(qn); readMark(a); } }, 3000);
+      readMark(a);
+    }
+    /* the question's own line: "Okundu" with a tick once it has been read */
+    function readMark(a) {
+      var top = $('.kq-count', a); if (!top) return;
+      var had = $('.kq-read', top), on = KKREAD.has(+a.getAttribute('data-av-qn'));
+      if (on && !had) top.insertAdjacentHTML('beforeend', '<span class="kq-read">' + RD_TICK + '<span>' + (LANG === 'en' ? 'Read' : 'Okundu') + '</span></span>');
+      else if (!on && had) had.remove();
     }
     document.addEventListener('click', function (e) {
       var b = e.target.closest && e.target.closest('[data-kq]');
       if (!b || !cur) return;
       var d = +b.getAttribute('data-kq');
+      if (d > 0) KKREAD.mark(+cur.getAttribute('data-av-qn'));
       kqGo(+cur.getAttribute('data-av-qn') + d, d);
     });
     /* a swipe across the question (not from the edge, which is the browser's back) */
@@ -2711,6 +2822,6 @@
   ready(function () {
     initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView();
+    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks();
   });
 })();
