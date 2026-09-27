@@ -896,6 +896,15 @@ $(Nav-Sheet 'tr' $current)
 $footKatekizm = (@(@{ href = 'katekizm.html'; t = 'Katekizm' }) + $TextNav) | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $footKaynaklar = $KaynaklarNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
 $footDualar = $PrayerNav | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }
+# İletişim, Erişilebilirlik and Gizlilik also open over the page from the footer, like
+# "Kaynaklar ve telif" (their own pages stay, for search engines and links from elsewhere)
+function Foot-Dialog([string]$id, [string]$title, [string]$inner) {
+  return "<dialog class=`"sources-dialog`" id=`"$id`" aria-labelledby=`"$id-t`"><button type=`"button`" class=`"sources-close`" aria-label=`"Kapat`">$IcoClose</button>" +
+    "<h2 class=`"sources-title`" id=`"$id-t`">$title</h2><div class=`"info-inner`">$inner</div></dialog>"
+}
+$FootContactHtml = "<p>Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa veya sadece merhaba demek isterseniz, aşağıdaki e-posta adresi üzerinden iletişime geçebilirsiniz.</p>" +
+  "<p class=`"contact-email`"><a class=`"btn`" href=`"mailto:david@katolikdunyasi.com`">david@katolikdunyasi.com</a></p>" +
+  "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>"
 $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
@@ -904,7 +913,7 @@ $FooterHtml = @"
       <p class="foot-tag">$SiteTag</p>
       <p class="foot-desc">$($fm['about'])</p>
       <p class="foot-copy">Türkçe çeviriler ve özgün içerik © 2026 $SiteName</p>
-      <p class="foot-copy foot-src"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$($fm['title'])</button><a class="foot-contact" href="iletisim.html">İletişim</a><a class="foot-contact foot-extra" href="erisilebilirlik.html">Erişilebilirlik</a><a class="foot-contact foot-extra" href="gizlilik.html">Gizlilik</a></p>
+      <p class="foot-copy foot-src"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$($fm['title'])</button><a class="foot-contact" href="iletisim.html" data-dialog="dlg-iletisim">İletişim</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">Erişilebilirlik</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">Gizlilik</a></p>
       <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" aria-label="Site haritası">
@@ -915,6 +924,9 @@ $FooterHtml = @"
     </nav>
   </div>
 </footer>
+$(Foot-Dialog 'dlg-iletisim' 'İletişim' $FootContactHtml)
+$(Foot-Dialog 'dlg-erisilebilirlik' $ErMeta.title (Convert-Markdown $Er.body))
+$(Foot-Dialog 'dlg-gizlilik' $GzMeta.title (Convert-Markdown $Gz.body))
 <dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
   <button type="button" class="sources-close" aria-label="Kapat">$IcoClose</button>
   <h2 class="sources-title" id="sources-title">$($fm['title'])</h2>
@@ -961,7 +973,8 @@ function Write-Page {
   $isHome = $File -match '(^|/)index\.html$'
   $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches)document.documentElement.classList.add('av');" }
   $avNav = if ($isHome) { '' } else { Av-Nav $File $false }
-  $avDock = if ($isHome) { '' } else { Av-Dock $(if ($trOf) { $trOf } else { $File }) }
+  # The home screen's icons live on the home screen only; elsewhere the X beside the gear leads there
+  $avDock = ''
   $appAttr += if ($isHome) { '' } else { " data-avp=`"$(if ($trOf) { $trOf } else { $File })`"" }
   $a11yHtml = $A11yWidgetHtml
   $html = @"
@@ -974,7 +987,7 @@ function Write-Page {
 <meta name="description" content="$(Attr $Description)">
 <meta name="robots" content="$Robots">
 $canon
-<meta name="theme-color" content="#f8f5ee">
+<meta name="theme-color" content="#0f1728">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="$OgType">
@@ -994,7 +1007,7 @@ $canon
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>document.documentElement.classList.add('js');$($avJs)document.documentElement.setAttribute('data-theme','light');try{if(localStorage.getItem('kkio-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#0f1728')}var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
+<script>document.documentElement.classList.add('js');$($avJs)document.documentElement.setAttribute('data-theme','dark');try{if(localStorage.getItem('kkio-theme')==='light'){document.documentElement.setAttribute('data-theme','light');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#f8f5ee')}var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>

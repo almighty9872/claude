@@ -2014,7 +2014,8 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 
   /* The phone footer: the name, and the sources and copyright notice */
   .foot-tag, .foot-desc, .foot-sitemap, .foot-about .foot-copy:not(.foot-src) { display: none; }
-  .foot-grid { gap: 0; }
+  .foot-grid { gap: 0; grid-template-columns: 1fr; text-align: center; }
+  .foot-about { width: 100%; }
   .foot-about .foot-src { margin-top: .5rem; }
   .foot-src { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; row-gap: .35rem; }
   .foot-src .foot-contact { display: inline; }
@@ -2525,7 +2526,8 @@ html.av main .amap-card.av-cur { padding: 0; border: 0; background: none; box-sh
 .av-close { color: var(--gold-active); text-decoration: none; }
 .av-close:active { opacity: .5; }
 /* The home screen's icons, small, at the foot of every page: always one tap from another app */
-html.av { --dock-h: calc(4.3rem + env(safe-area-inset-bottom)); }
+html.av { --dock-h: env(safe-area-inset-bottom); }
+html.av:has(.av-dock) { --dock-h: calc(4.3rem + env(safe-area-inset-bottom)); }
 html.av .av-dock {
   position: fixed; z-index: 60; left: 50%; bottom: calc(.45rem + env(safe-area-inset-bottom)); transform: translateX(-50%);
   display: grid; grid-template-columns: repeat(4, 3.6rem); gap: .15rem; padding: .4rem .5rem .3rem; border-radius: 1.4rem;
@@ -2785,4 +2787,6 @@ html.av .av-dock.av-dock-solid {
   padding: .45rem .5rem calc(.35rem + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid var(--border); border-radius: 0;
   background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 -6px 18px -14px rgba(20, 26, 44, .35);
 }
-html.av:has(.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-bottom)); }
+html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-bottom)); }
+
+.sources-dialog .contact-email { margin: 1rem 0; text-align: center; }

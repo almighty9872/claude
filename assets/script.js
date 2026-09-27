@@ -53,9 +53,9 @@
     if (meta) meta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || (isDark() ? '#0f1728' : '#f8f5ee'));
   }
   function initTheme() {
-    /* Light is the default: the site does not follow the OS setting, only an explicit choice. */
+    /* Dark is the default: the site does not follow the OS setting, only an explicit choice. */
     var saved = storedTheme();
-    document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
     syncTheme();
     $$('.theme-toggle').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -72,7 +72,7 @@
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
       var H = document.documentElement;
-      H.setAttribute('data-theme', storedTheme() === 'dark' ? 'dark' : 'light');
+      H.setAttribute('data-theme', storedTheme() === 'light' ? 'light' : 'dark');
       syncTheme(); syncChrome();
       try {
         var fs = localStorage.getItem('kkio-fontsize');
@@ -597,19 +597,23 @@
         trap, Esc and focus return come from the browser); a click on
         the blurred backdrop closes it too.
      --------------------------------------------------------------- */
+  /* The footer's popups: Kaynaklar ve telif, and İletişim, Erişilebilirlik and Gizlilik (which
+     are links to their own pages without JS) */
   function initSources() {
-    var dlg = $('#sources-dialog');
-    if (!dlg) return;
-    $$('.foot-sources').forEach(function (b) {
-      b.addEventListener('click', function () {
-        if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
-      });
+    function open(dlg) { if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
+    function close(dlg) { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+    var src = $('#sources-dialog');
+    if (src) $$('.foot-sources').forEach(function (b) { b.addEventListener('click', function () { open(src); }); });
+    $$('[data-dialog]').forEach(function (a) {
+      var dlg = document.getElementById(a.getAttribute('data-dialog'));
+      if (dlg) a.addEventListener('click', function (e) { e.preventDefault(); open(dlg); });
     });
-    function close() { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
-    $('.sources-close', dlg).addEventListener('click', close);
-    dlg.addEventListener('click', function (e) {
-      var r = dlg.getBoundingClientRect();
-      if (e.target === dlg && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) close();
+    $$('.sources-dialog').forEach(function (dlg) {
+      $('.sources-close', dlg).addEventListener('click', function () { close(dlg); });
+      dlg.addEventListener('click', function (e) {
+        var r = dlg.getBoundingClientRect();
+        if (e.target === dlg && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) close(dlg);
+      });
     });
   }
 
@@ -1323,7 +1327,8 @@
       if (s) s = { name: s[0], nameEn: s[1] };
       var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
       var slug = top20Id ? (LANG === 'en' ? TOP20_EN_SLUGS[top20Id] : top20Id) : (LANG === 'en' ? 'saints' : 'azizler');
-      var href = ROOT + LANG_PREFIX + slug + '.html';
+      /* a saint without a page of their own: straight to today in the calendar, their life open */
+      var href = ROOT + LANG_PREFIX + slug + '.html' + (top20Id ? '' : '#gun-' + today.month + '-' + today.day);
       var noSaintText = LANG === 'en' ? 'None for today' : 'Bugün için yok';
       return { text: s ? (LANG === 'en' ? s.nameEn : s.name) : noSaintText, href: href };
     });
@@ -1497,6 +1502,12 @@
       pick(dt.getMonth() + 1, dt.getDate(), true);
     });
     render();
+    /* a link to a day (the home page's saint of the day): that day chosen, the calendar in view */
+    var dm = /^#gun-(\d{1,2})-(\d{1,2})$/.exec(location.hash);
+    if (dm && dayOf(+dm[1], +dm[2])) {
+      pick(+dm[1], +dm[2]);
+      requestAnimationFrame(function () { app.scrollIntoView({ block: 'start' }); });
+    }
   }
 
   function initHome() {
@@ -1534,7 +1545,8 @@
       $('[data-hm-name]', myst).textContent = en ? set.en : set.tr;
       /* the days this set is prayed on, and its name in the other language */
       $('[data-hm-days]', myst).textContent = '(' + (en ? set.dayEn : set.dayTr) + ') ' + (en ? set.tr : set.en);
-      myst.setAttribute('href', ROOT + LANG_PREFIX + (en ? 'rosary.html' : 'tesbih-duasi.html') + '#gizem-' + set.id);
+      /* "Tesbihe başla": the rosary itself, which opens on today's mysteries */
+      myst.setAttribute('href', ROOT + LANG_PREFIX + (en ? 'rosary.html' : 'tesbih-duasi.html') + '#tesbih-rehberi');
     })['catch'](function () { $('[data-hm-name]', myst).textContent = en ? 'The Rosary' : 'Tesbih'; });
 
     /* the date card's clock: 24-hour, with seconds */
@@ -1600,7 +1612,9 @@
       });
       if (!instant) mark(app);
       var focusTo = spot ? $('input', app) : $('.ios-done', app);
-      if (focusTo && !instant) setTimeout(function () { focusTo.focus({ preventScroll: true }); }, spot ? 60 : 350);
+      /* Ara: the field takes the cursor within the tap itself, which is what lets a phone
+         bring its keyboard up (a moment later, it would not) */
+      if (focusTo && !instant) { if (spot) focusTo.focus({ preventScroll: true }); else setTimeout(function () { focusTo.focus({ preventScroll: true }); }, 350); }
     }
     function finishClose(app) {
       var box = boxOf(app);
@@ -2094,6 +2108,12 @@
       var from = cur;
       scrolls[keyOf(from)] = window.pageYOffset;
       var dir = how === 'none' ? null : (depthOf(n) >= depthOf(from) ? 'fwd' : 'back');
+      /* the phone's own swipe back has already shown the level underneath as it was: it is put
+         in place as it is, without the icon and title resizing again */
+      if (how === 'none') {
+        H.classList.add('av-still');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { H.classList.remove('av-still'); }); });
+      }
       swap(function () {
         place(n);
         var y = scrollTo != null ? scrollTo : (dir === 'back' || how === 'none' ? (scrolls[keyOf(n)] || 0) : 0);
@@ -2136,11 +2156,12 @@
     }
 
     /* the browser's back and forward */
-    var edgeAt = 0, viaButton = false;
-    document.addEventListener('touchstart', function (e) { if (e.touches[0].clientX < 40) edgeAt = Date.now(); }, { passive: true });
+    var viaButton = false;
     window.addEventListener('popstate', function () {
       var n = nodeOf(byId(decodeURIComponent(location.hash.slice(1))));
-      var native = !viaButton && Date.now() - edgeAt < 2500;
+      /* anything but the page's own back button (a swipe from the edge, the browser's back or
+         forward) has already been drawn by the browser: no slide of our own on top of it */
+      var native = !viaButton;
       viaButton = false;
       show(n, native ? 'none' : 'pop');
     });
