@@ -10,6 +10,7 @@ description: katolikdunyasi.com’un kaynakları ve telif bilgileri.
 - Azizler: tarihler ve ayin dereceleri Roma Genel Takvimi’ni, boş kalan günler için seçilen azizler Roma Azizler Cetveli’ni (Martyrologium Romanum) esas alır; hayat öyküleri, en bilinen yirmi azizin uzun biyografileri dahil, bu site için özgün olarak Türkçe kaleme alınmıştır.
 - İsa’nın Meselleri: Yeni Ahit’teki İnciller’de (Matta, Markos, Luka) anlatılan meseller esas alınır; yeniden anlatımlar ve açıklamalar, tek bir çeviriye bağlı kalınmadan bu site için özgün olarak Türkçe kaleme alınmıştır.
 - Mucizeler: Kilise’nin incelemesinden geçmiş, kayıt altına alınmış görünmeler, kalıntılar ve olağanüstü olaylar esas alınır; metinler bu site için özgün olarak Türkçe kaleme alınmıştır.
+- İslam’a Cevap: Kur’an, sahih hadis derlemeleri (Buhari, Müslim, Ebu Davud) ve Müslüman tarihçiler esas alınır; metin, Sam Shamoun’un ve Avery’nin (GodLogic Apologetics) çalışmalarından yararlanılarak bu site için özgün olarak Türkçe kaleme alınmıştır.
 - Kilise Bul: Türkiye’deki cemaatlerin listesi ve iletişim bilgileri, cemaatlerin kendi yayımladıkları bilgilerden derlenmiştir; ayin saatleri değişebilir.
 - Katolik Süreci, Günah Çıkarma, Neden Katoliğiz?, Topraklarımızda Hristiyanlık ve Sorular bölümlerindeki metinler, Katekizm’e ve güvenilir Katolik kaynaklarına dayanılarak bu site için özgün olarak yazılmıştır.
 - Anadolu’daki Kökler Haritası: kıyı çizgileri ve göller, kamu malı olan [Natural Earth](https://www.naturalearthdata.com) verilerinden çizilmiştir.

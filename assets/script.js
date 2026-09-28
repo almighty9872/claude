@@ -1719,7 +1719,7 @@
       setTimeout(function () { finishClose(app); if (fromBtn) fromBtn.focus({ preventScroll: true }); }, still ? 0 : 390);
       if (!fromHistory && marked) { marked = false; skipPop++; history.back(); }
       else marked = false;
-      if (location.hash && /^#app-(ara|ogren|dua|kesfet)$/.test(location.hash)) { try { history.replaceState(history.state, '', location.pathname); } catch (e) { /* file:// */ } }
+      if (location.hash && /^#app-(ogren|tartis|dua|kesfet)$/.test(location.hash)) { try { history.replaceState(history.state, '', location.pathname); } catch (e) { /* file:// */ } }
     }
     window.addEventListener('popstate', function () {
       if (skipPop) { skipPop--; return; }
@@ -1796,9 +1796,9 @@
 
     /* Back here from one of an app's pages (its back button, or the browser's back when the page
        was not kept in memory): the history entry says which app was open. A page opened without
-       coming from here (from a search engine, say) links back to its app as #app-ogren, #app-dua or #app-kesfet. */
+       coming from here (from a search engine, say) links back to its app as #app-ogren, #app-tartis, #app-dua or #app-kesfet. */
     var st = history.state, want = st && st.homeApp ? st.homeApp : (location.hash || '').replace(/^#app-/, '');
-    var btn0 = /^(ara|ogren|dua|kesfet)$/.test(want) && $('[data-app-open="' + want + '"]');
+    var btn0 = /^(ogren|tartis|dua|kesfet)$/.test(want) && $('[data-app-open="' + want + '"]');
     if (btn0) { open(btn0, true); marked = !!(st && st.homeApp); }
     else if (st && st.homeApp) { try { history.replaceState(null, ''); } catch (e) { /* file:// */ } }
   }

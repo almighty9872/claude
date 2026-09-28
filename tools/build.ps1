@@ -655,6 +655,9 @@ $IcoScroll = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.3 9.2a2.8 2.8 0 1 1 3.5 3.1c-.6.2-.9.7-.9 1.3v.6"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor" stroke="none"/></svg>'
 $IcoPin = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>'
 $SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
+# Tartış: two speech bubbles; İslam'a Cevap: a speech bubble with a cross in it
+$IcoDebate = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.6h9.6a1.6 1.6 0 0 1 1.6 1.6v5.2a1.6 1.6 0 0 1-1.6 1.6H8.4l-3.6 3v-3H4a1.6 1.6 0 0 1-1.6-1.6V6.2A1.6 1.6 0 0 1 4 4.6Z"/><path d="M15.2 8.6H20a1.6 1.6 0 0 1 1.6 1.6v5.2A1.6 1.6 0 0 1 20 17h-.8v3l-3.6-3h-4.4a1.6 1.6 0 0 1-1.6-1.6V13"/></svg>'
+$IcoAnswer = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.8h14a1.8 1.8 0 0 1 1.8 1.8v9.2a1.8 1.8 0 0 1-1.8 1.8h-7.4L7 20.4v-3.8H5a1.8 1.8 0 0 1-1.8-1.8V5.6A1.8 1.8 0 0 1 5 3.8Z"/><path d="M12 6.6v7.2M9.4 9.2h5.2"/></svg>'
 # href -> icon lookup for the mobile menu sheet (each real destination gets a small icon; the
 # plain-text ns-label section headers do not). Defined early, before Header-Html is first called
 # by the Compendium part-page loop below, so every icon it references must already exist here.
@@ -673,6 +676,7 @@ $NavIcons = @{
   'sss.html'             = $IcoAsk
   'kiliseler.html'       = $IcoPin
   'topraklarimizda-hristiyanlik.html' = $IcoRoots
+  'islama-cevap.html'    = $IcoAnswer
   'iletisim.html'        = $IcoMail
 }
 $IcoA11yPerson = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="7.4" r="1.3" fill="currentColor" stroke="none"/><path d="M7.6 10.2 12 11l4.4-.8M12 11v3.2l-2.2 4M12 14.2l2.2 4"/></svg>'
@@ -688,6 +692,8 @@ $SheetNav = @(
     @{ href = 'sss.html'; t = 'Sorular'; s = 'Sıkça sorulan sorular' },
     @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci'; s = 'OCIA, adım adım' },
     @{ href = 'meseller.html'; t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel' }) },
+  @{ label = 'Tartış'; items = @(
+    @{ href = 'islama-cevap.html'; t = "İslam$($Apos)a Cevap"; s = 'İslam, kendi kaynaklarıyla' }) },
   @{ label = 'Dua Et'; items = @(
     @{ href = 'kutsal-ayin.html'; t = 'Kutsal Ayin'; s = 'Ayinin sırası' },
     @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Dualar ve gizemler' },
@@ -736,6 +742,7 @@ $AppOf = @{}
 foreach ($f in @('neden-katoligiz.html', 'katekizm.html', 'kutsal-kitap.html', 'sss.html', 'katolik-sureci.html', 'meseller.html',
                  'motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html')) { $AppOf[$f] = 'ogren' }
 foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'ekler.html', 'gunah-cikarma.html')) { $AppOf[$f] = 'dua' }
+$AppOf['islama-cevap.html'] = 'tartis'
 foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
 foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
 
@@ -743,7 +750,7 @@ foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
 # All of the page's text stays in its HTML, as on a computer; the phone shows it one level at a
 # time. The bar at the top leads back to where the page belongs: its app on the home screen, or
 # the page it is part of.
-$AppNames = @{ ogren = @('Öğren', 'Learn'); dua = @('Dua Et', 'Pray'); kesfet = @('Keşfet', 'Explore') }
+$AppNames = @{ ogren = @('Öğren', 'Learn'); tartis = @('Tartış', 'Debate'); dua = @('Dua Et', 'Pray'); kesfet = @('Keşfet', 'Explore') }
 $KatekizmSub = @('motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html')
 function Av-Parent([string]$trFile, [bool]$en) {
   $i = if ($en) { 1 } else { 0 }
@@ -773,10 +780,10 @@ function Av-Nav([string]$trFile, [bool]$en) {
     "<a class=`"av-close`" href=`"index.html`" aria-label=`"Kapat: ana ekrana dön`">$IcoClose</a></span>$findBar</nav>"
 }
 # The home screen's four icons, small, at the foot of every page on a phone: each opens its app
-# on the home screen (Ara, its search), so another part of the site is always one tap away.
+# on the home screen, so another part of the site is always one tap away.
 function Av-Dock([string]$trFile) {
   $app = $AppOf[$trFile]
-  $items = @(@('ara', 'Ara', $IcoSearch), @('ogren', 'Öğren', $SmallCross), @('dua', 'Dua Et', $TbChurch), @('kesfet', 'Keşfet', $IcoCompass))
+  $items = @(@('ogren', 'Öğren', $SmallCross), @('tartis', 'Tartış', $IcoDebate), @('dua', 'Dua Et', $TbChurch), @('kesfet', 'Keşfet', $IcoCompass))
   $links = ($items | ForEach-Object {
     $cur = if ($_[0] -eq $app) { ' aria-current="true"' } else { '' }
     "<a class=`"av-dock-a`" href=`"index.html#app-$($_[0])`"$cur><span class=`"hm-icon app-$($_[0])`">$($_[2])</span><span class=`"av-dock-t`">$($_[1])</span></a>"
@@ -920,7 +927,7 @@ $FooterHtml = @"
       <div class="foot-col"><p class="foot-label">Katekizm</p><ul>$($footKatekizm -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Kaynaklar</p><ul>$($footKaynaklar -join '')</ul></div>
       <div class="foot-col"><p class="foot-label">Dualar</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="neden-katoligiz.html">Neden Katoliğiz?</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li><li><a href="gizlilik.html">Gizlilik Politikası</a></li></ul></div>
+      <div class="foot-col"><p class="foot-label">Diğer</p><ul><li><a href="neden-katoligiz.html">Neden Katoliğiz?</a></li><li><a href="islama-cevap.html">İslam’a Cevap</a></li><li><a href="mucizeler.html">Mucizeler</a></li><li><a href="azizler.html">Azizler</a></li><li><a href="sss.html">Sorular</a></li><li><a href="iletisim.html">İletişim</a></li><li><a href="erisilebilirlik.html">Erişilebilirlik</a></li><li><a href="gizlilik.html">Gizlilik Politikası</a></li></ul></div>
     </nav>
   </div>
 </footer>
@@ -1501,6 +1508,85 @@ $anatoliaSections
 Write-Page -File 'topraklarimizda-hristiyanlik.html' -Title "$($Anatolia.title) | $SiteName" `
   -Description "Hristiyanlığın Anadolu'daki kökleri: Pavlus'un memleketi Tarsus, Vahiy Kitabı'nın yedi kilisesi, İznik Konsili, Antakya ve İzmir'deki ilk Kilise Babaları." `
   -Path 'topraklarimizda-hristiyanlik.html' -Body $anatoliaBody -JsonLd @((Breadcrumb-Ld 'Topraklarımızda Hristiyanlık' 'topraklarimizda-hristiyanlik.html'))
+
+# ================================================================== İSLAM'A CEVAP (islama-cevap.html)
+# The Tartış section's first page: a short summary ("Kısaca"), each point leading to its section,
+# then the full case in parts. In the text, "Kur’an 9:29" (and "; 6:114" after it) links to that
+# verse on quran.com, and "Buhari 25", "Müslim 1452a" or "Ebu Davud 4002" to the hadith on sunnah.com.
+$Ic = Read-Data 'islama-cevap.js'
+$QuranRx = [regex]("Kur$($Apos)an " + '(\d{1,3}:\d{1,3}(?:-\d{1,3})?(?:;\s?\d{1,3}:\d{1,3}(?:-\d{1,3})?)*)')
+$QuranEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  $refs = ($m.Groups[1].Value -split ';\s?' | ForEach-Object {
+    $cv = $_ -split ':'
+    "<a class=`"qref`" href=`"https://quran.com/$($cv[0])/$($cv[1])`" target=`"_blank`" rel=`"noopener`">$_</a>"
+  }) -join '; '
+  "Kur$($Apos)an $refs"
+}
+$HadithRx = [regex]'(?<![\p{L}])(Buhari|Müslim|Ebu Davud) (\d{1,5}[a-z]?)(?![\d\p{L}])'
+$HadithBooks = @{ 'Buhari' = 'bukhari'; 'Müslim' = 'muslim'; 'Ebu Davud' = 'abudawud' }
+$HadithEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  "<a class=`"hdref`" href=`"https://sunnah.com/$($HadithBooks[$m.Groups[1].Value]):$($m.Groups[2].Value)`" target=`"_blank`" rel=`"noopener`">$($m.Value)</a>"
+}
+function Ic-Link([string]$s) { return $HadithRx.Replace($QuranRx.Replace($s, $QuranEval), $HadithEval) }
+# One paragraph per line; "- " list items, "### " a subheading, "> text || source" a quotation
+function Ic-Blocks([string]$s) {
+  $sb = New-Object Text.StringBuilder; $list = New-Object Collections.ArrayList
+  $flush = { if ($list.Count) { [void]$sb.Append('<ul>' + (($list | ForEach-Object { "<li>$(Ic-Link $_)</li>" }) -join '') + '</ul>'); $list.Clear() } }
+  foreach ($line in ($s -split "`n")) {
+    $l = $line.Trim(); if (-not $l) { continue }
+    if ($l.StartsWith('- ')) { [void]$list.Add($l.Substring(2)); continue }
+    . $flush
+    if ($l.StartsWith('### ')) { [void]$sb.Append("<h4>$(Ic-Link $l.Substring(4))</h4>"); continue }
+    if ($l.StartsWith('> ')) {
+      $qs = $l.Substring(2) -split ' \|\| ', 2
+      $cite = if ($qs.Count -gt 1) { "<cite>$(Ic-Link $qs[1])</cite>" } else { '' }
+      [void]$sb.Append("<blockquote class=`"ic-quote`"><p>$($qs[0])</p>$cite</blockquote>"); continue
+    }
+    [void]$sb.Append("<p>$(Ic-Link $l)</p>")
+  }
+  . $flush
+  return $sb.ToString()
+}
+$icTldr = ($Ic.tldr | ForEach-Object -Begin { $i = 0 } -Process {
+  $i++
+  "<li><a class=`"ic-tl`" href=`"#$($_.href)`"><span class=`"ic-tl-n`">$i</span><span class=`"ic-tl-b`"><span class=`"ic-tl-t`">$($_.t)</span><span class=`"ic-tl-s`">$($_.text)</span></span></a></li>"
+}) -join ''
+$icRoman = @('I', 'II', 'III', 'IV', 'V', 'VI')
+$icN = 0
+$icParts = (@($Ic.parts) | ForEach-Object -Begin { $pi = 0 } -Process {
+  $part = $_
+  $secs = ($part.sections | ForEach-Object {
+    $script:icN++
+    "<section class=`"ic-sec`" id=`"$($_.id)`"><h3 class=`"ic-sec-t`"><span class=`"label`">$($script:icN)</span>$($_.title)</h3>" +
+      "<div class=`"prose`">$(Ic-Blocks $_.body)</div><p class=`"ic-top`"><a href=`"#kisaca`">Özete dön</a></p></section>"
+  }) -join "`n"
+  $pi++
+  "<section class=`"ic-part`" id=`"$($part.id)`" aria-labelledby=`"$($part.id)-h`"><p class=`"ic-part-n`">$($icRoman[$pi - 1]). Bölüm</p><h2 class=`"ic-part-t`" id=`"$($part.id)-h`">$($part.title)</h2>`n$secs</section>"
+}) -join "`n"
+$icSources = ($Ic.sources | ForEach-Object {
+  if ($_[1]) { "<li><a href=`"$($_[1])`" target=`"_blank`" rel=`"noopener`">$($_[0])</a></li>" } else { "<li>$($_[0])</li>" }
+}) -join ''
+$icBody = @"
+<div class="wrap narrow ic-page">
+  <header class="page-head center">$(Page-Ico $IcoAnswer)<h1>$($Ic.title)</h1><p class="sub" lang="en">$($Ic.en)</p></header>
+  <p class="ic-lead">$($Ic.lead)</p>
+  <section class="ic-tldr" id="kisaca" aria-labelledby="kisaca-h">
+    <h2 class="section-title" id="kisaca-h">$($Ic.tldrTitle)</h2>
+    <ol class="ic-tl-list">$icTldr</ol>
+    <p class="ic-full"><a href="#$($Ic.parts[0].id)">Tam tartışma aşağıda $IcoChevDown</a></p>
+  </section>
+  <p class="ic-note">$(Ic-Link $Ic.note)</p>
+$icParts
+  <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$($Ic.closing.title)</h2><div class="prose">$(Ic-Blocks $Ic.closing.body)</div></section>
+  <section class="ic-sources" aria-labelledby="ic-kaynak-h"><h2 class="section-title" id="ic-kaynak-h">Kaynaklar</h2><ul>$icSources</ul></section>
+</div>
+"@
+$icLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ic.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/islama-cevap.html") + '}'
+Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadislerle | $SiteName" `
+  -Description (Meta-Trim "İslam'ın iddiaları kendi kaynaklarıyla sınanıyor: İslam ikilemi, Kur'an'ın korunmuşluğu, Muhammed'in karakteri, Kâbe'nin putu Hübel. Kısa özet ve tam tartışma.") `
+  -Path 'islama-cevap.html' -Body $icBody -JsonLd @($icLd, (Breadcrumb-Ld "İslam$($Apos)a Cevap" 'islama-cevap.html'))
 
 # ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html + en/why-were-catholic.html)
 # A guided case in five steps. Each step is a tab panel (script.js shows one at a time; without
@@ -2201,7 +2287,8 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -Description 
 # Phones: an iPhone-like home screen. Today's saint, the date with the liturgical season (the card
 # takes the season's colour) and the day's rosary mysteries, then four app icons: Ara opens the
 # Katekizm search over the blurred screen, and Öğren, Dua Et and Keşfet open Settings-style pages
-# listing their pages, with each page's own sections one level further in (see initHome).
+# listing their pages, with each page's own sections one level further in (see initHome). Tartış
+# (İslam'a Cevap) took Ara's place; the Katekizm's own pages keep their search.
 # Desktop: the same three cards in a row, a search bar, and the three lists side by side.
 # Each page's own content, down to single questions and prayers, is laid out in the browser from
 # the site's data files once a page is opened in its app (initHomeTree in assets/script.js).
@@ -2218,6 +2305,9 @@ $HomeApps = @(
        s = 'Katolik olmak isteyenler için OCIA süreci, adım adım.'; se = 'The OCIA process for those who want to become Catholic, step by step.' },
     @{ f = 'meseller.html'; ico = $IcoScroll; t = "İsa$($Apos)nın Meselleri"; te = 'The Parables of Jesus'
        s = 'Otuz iki mesel, düz bir dille açıklanmış.'; se = 'Thirty-two parables, plainly explained.' }) },
+  @{ id = 'tartis'; t = 'Tartış'; te = 'Debate'; s = 'İtirazlara cevap, inancın savunusu'; se = 'Answers to objections, a defence of the faith'; ico = $IcoDebate; tr = $true; pages = @(
+    @{ f = 'islama-cevap.html'; ico = $IcoAnswer; t = "İslam$($Apos)a Cevap"; te = 'Answering Islam'
+       s = "İslam$($Apos)ın iddiaları, Kur$($Apos)an ve hadislerle sınanıyor."; se = '' }) },
   @{ id = 'dua'; t = 'Dua Et'; te = 'Pray'; s = 'Ayin, tesbih ve günlük dualar'; se = 'The Mass, the Rosary and daily prayers'; ico = $TbChurch; pages = @(
     @{ f = 'kutsal-ayin.html'; ico = $IcoChalice; t = 'Kutsal Ayin'; te = 'The Mass'
        s = 'Ayinin sırası, toplanmadan son takdise altı bölüm.'; se = 'The order of the Mass, in six parts.' },
@@ -2248,6 +2338,8 @@ function Home-Page([string]$lang) {
   $en = $lang -eq 'en'
   function L([string]$tr, [string]$enText) { if ($en) { $enText } else { $tr } }
   function F([string]$f) { if ($en) { $EnAltMap[$f] } else { $f } }
+  # Apps whose pages are in Turkish only are left off the English home page
+  $HomeApps = @($HomeApps | Where-Object { -not ($en -and $_.tr) })
   $loading = L 'Yükleniyor…' 'Loading…'
   $cards = @"
   <div class="hm-today" id="bugun">
@@ -2278,22 +2370,18 @@ function Home-Page([string]$lang) {
   }) -join ''
   $lists = "<div class=`"hm-lists`">$cols</div>"
   # Phone: the icons, the search overlay and the three apps
-  $araLabel = L 'Ara' 'Search'
   # The bar at the foot of the home screen, as in the App Store: a glyph and a name for each app,
   # the open one in a capsule that glides to it (script.js moves .hm-pill)
   $dockGlyph = @{
     ara    = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.4" cy="10.4" r="6.6"/><path d="m15.3 15.3 5.2 5.2"/></g></svg>'
     ogren  = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" transform="translate(2 2) scale(.2)">' + $CrossShapes + '</g></svg>'
     dua    = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><circle cx="12" cy="3.4" r="1.25"/><circle cx="15.9" cy="4.5" r="1.25"/><circle cx="18.4" cy="7.6" r="1.25"/><circle cx="18.4" cy="11.4" r="1.25"/><circle cx="8.1" cy="4.5" r="1.25"/><circle cx="5.6" cy="7.6" r="1.25"/><circle cx="5.6" cy="11.4" r="1.25"/><circle cx="8.1" cy="14.4" r="1.25"/><circle cx="15.9" cy="14.4" r="1.25"/><circle cx="12" cy="15.6" r="1.6"/><rect x="11.25" y="17.2" width="1.5" height="5.6" rx=".4"/><rect x="9.6" y="18.6" width="4.8" height="1.4" rx=".4"/></g></svg>'
+    tartis = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><path d="M3.8 3.6h10.4a2 2 0 0 1 2 2v5.8a2 2 0 0 1-2 2H8.6l-4 3.2v-3.2h-.8a2 2 0 0 1-2-2V5.6a2 2 0 0 1 2-2Z"/><path d="M17.8 8.2h2.4a2 2 0 0 1 2 2v5.6a2 2 0 0 1-2 2h-.6V21l-3.8-3.2h-4.4a2 2 0 0 1-2-2v-1.4h4.8a3.6 3.6 0 0 0 3.6-3.6Z" opacity=".78"/></g></svg>'
     kesfet = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c.9 3.4 1.9 5.4 3.4 6.7 1.5 1.4 3.4 2.2 6.4 3.1-3 .9-4.9 1.7-6.4 3.1-1.5 1.3-2.5 3.3-3.4 6.7-.9-3.4-1.9-5.4-3.4-6.7-1.5-1.4-3.4-2.2-6.4-3.1 3-.9 4.9-1.7 6.4-3.1 1.5-1.3 2.5-3.3 3.4-6.7Z"/></svg>'
   }
   $icons = "<span class=`"hm-pill`" aria-hidden=`"true`"></span>" +
-    "<button type=`"button`" class=`"hm-app`" data-app-open=`"ara`" aria-haspopup=`"dialog`" aria-controls=`"app-ara`"><span class=`"hm-icon`">$($dockGlyph.ara)</span><span class=`"hm-app-t`">$araLabel</span></button>" +
     (($HomeApps | ForEach-Object { "<button type=`"button`" class=`"hm-app`" data-app-open=`"$($_.id)`" aria-haspopup=`"dialog`" aria-controls=`"app-$($_.id)`"><span class=`"hm-icon`">$($dockGlyph[$_.id])</span><span class=`"hm-app-t`">$(L $_.t $_.te)</span></button>" }) -join '')
   $close = L 'Kapat' 'Close'
-  $spot = "<div class=`"ios-spot`" id=`"app-ara`" role=`"dialog`" aria-modal=`"true`" aria-label=`"$araLabel`" hidden><div class=`"ios-spot-bg`" data-app-close></div>" +
-    "<div class=`"ios-spot-panel`"><div class=`"ios-spot-row`">$(Search-Form 'spot-search' 'q-spot' $placeholder $lang)</div>" +
-    "<button type=`"button`" class=`"ios-spot-x`" data-app-close>$(L 'Aramayı kapat' 'Close search')</button></div></div>"
   $apps = ($HomeApps | ForEach-Object {
     $app = $_; $appT = L $app.t $app.te; $i = 0
     # Each row opens the page itself, which a phone shows as the next screen of this app
@@ -2314,7 +2402,6 @@ $cards
   <nav class="hm-apps" aria-label="$(L 'Bölümler' 'Sections')">$icons</nav>
   $lists
 </div>
-$spot
 $apps
 "@
   $homePath = if ($en) { 'en/' } else { '' }
@@ -2358,7 +2445,7 @@ $pages = @(
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' },
-  @{ p = 'neden-katoligiz.html'; pr = '0.9' },
+  @{ p = 'neden-katoligiz.html'; pr = '0.9' }, @{ p = 'islama-cevap.html'; pr = '0.8' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'mucizeler.html'; pr = '0.7' },
