@@ -1534,8 +1534,10 @@ Write-Page -File 'topraklarimizda-hristiyanlik.html' -Title "$($Anatolia.title) 
 # ================================================================== İSLAM'A CEVAP (islama-cevap.html)
 # The Tartış section's first page: a short summary ("Kısaca"), each point leading to its section,
 # then the full case in parts. In the text, "Kur’an 9:29" (and "; 6:114" after it) links to that
-# verse on quran.com, and "Buhari 25", "Müslim 1452a" or "Ebu Davud 4002" to the hadith on sunnah.com
-# (in the English text: "Qur’an 9:29", "Bukhari 25", "Muslim 1452a", "Abu Dawud 4002").
+# verse on quran.com, and "Buhari 25", "Müslim 1452a", "Ebu Davud 4002", "Tirmizi 2653", "İbn Mace 1944" or
+# "Nesai 3959" to the hadith on sunnah.com
+# (in the English text: "Qur’an 9:29", "Bukhari 25", "Muslim 1452a", "Abu Dawud 4002", "Tirmidhi 2653",
+# "Ibn Majah 1944", "Nasa’i 3959").
 $Ic = Read-Data 'islama-cevap.js'
 $QuranRx = [regex]("(Kur$($Apos)an|Qur$($Apos)an) " + '(\d{1,3}:\d{1,3}(?:-\d{1,3})?(?:;\s?\d{1,3}:\d{1,3}(?:-\d{1,3})?)*)')
 $QuranEval = [System.Text.RegularExpressions.MatchEvaluator]{
@@ -1546,11 +1548,13 @@ $QuranEval = [System.Text.RegularExpressions.MatchEvaluator]{
   }) -join '; '
   "$($m.Groups[1].Value) $refs"
 }
-$HadithRx = [regex]'(?<![\p{L}])(Buhari|Müslim|Ebu Davud|Bukhari|Muslim|Abu Dawud) (\d{1,5}[a-z]?)(?![\d\p{L}])'
-$HadithBooks = @{ 'Buhari' = 'bukhari'; 'Müslim' = 'muslim'; 'Ebu Davud' = 'abudawud'; 'Bukhari' = 'bukhari'; 'Muslim' = 'muslim'; 'Abu Dawud' = 'abudawud' }
+$HadithRx = [regex]'(?<![\p{L}])(Buhari|Müslim|Ebu Davud|Tirmizi|İbn Mace|Nesai|Bukhari|Muslim|Abu Dawud|Tirmidhi|Ibn Majah|Nasa.i) (\d{1,5}[a-z]?)(?![\d\p{L}])'
+$HadithBooks = @{ 'Buhari' = 'bukhari'; 'Müslim' = 'muslim'; 'Ebu Davud' = 'abudawud'; 'Tirmizi' = 'tirmidhi'; 'İbn Mace' = 'ibnmajah'; 'Nesai' = 'nasai'
+  'Bukhari' = 'bukhari'; 'Muslim' = 'muslim'; 'Abu Dawud' = 'abudawud'; 'Tirmidhi' = 'tirmidhi'; 'Ibn Majah' = 'ibnmajah' }
 $HadithEval = [System.Text.RegularExpressions.MatchEvaluator]{
   param($m)
-  "<a class=`"hdref`" href=`"https://sunnah.com/$($HadithBooks[$m.Groups[1].Value]):$($m.Groups[2].Value)`" target=`"_blank`" rel=`"noopener`">$($m.Value)</a>"
+  $book = if ($m.Groups[1].Value -like 'Nasa*') { 'nasai' } else { $HadithBooks[$m.Groups[1].Value] }
+  "<a class=`"hdref`" href=`"https://sunnah.com/$($book):$($m.Groups[2].Value)`" target=`"_blank`" rel=`"noopener`">$($m.Value)</a>"
 }
 function Ic-Link([string]$s) { return $HadithRx.Replace($QuranRx.Replace($s, $QuranEval), $HadithEval) }
 # One paragraph per line; "- " list items, "### " a subheading, "> text || source" a quotation
