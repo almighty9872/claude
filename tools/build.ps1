@@ -362,7 +362,7 @@ function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" 
 # Jerusalem cross: large cross potent in the centre, a small cross in each quadrant (100x100 grid)
 $CrossShapes = '<rect x="44" y="12" width="12" height="76"/><rect x="12" y="44" width="76" height="12"/><rect x="33" y="8" width="34" height="9"/><rect x="33" y="83" width="34" height="9"/><rect x="8" y="33" width="9" height="34"/><rect x="83" y="33" width="9" height="34"/><rect x="23.5" y="18" width="5" height="16"/><rect x="18" y="23.5" width="16" height="5"/><rect x="71.5" y="18" width="5" height="16"/><rect x="66" y="23.5" width="16" height="5"/><rect x="23.5" y="66" width="5" height="16"/><rect x="18" y="71.5" width="16" height="5"/><rect x="71.5" y="66" width="5" height="16"/><rect x="66" y="71.5" width="16" height="5"/>'
 $Logo = '<svg class="logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
-$Favicon = 'data:image/svg+xml,' + ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#0c1322"/><g fill="#d6b16b" transform="translate(12 12) scale(.76)">' + $CrossShapes + '</g></svg>').Replace('<', '%3C').Replace('>', '%3E').Replace('#', '%23').Replace('"', "'")
+$Favicon = 'data:image/svg+xml,' + ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#16161a"/><g fill="#d6b16b" transform="translate(12 12) scale(.76)">' + $CrossShapes + '</g></svg>').Replace('<', '%3C').Replace('>', '%3E').Replace('#', '%23').Replace('"', "'")
 
 # ------------------------------------------------------------------ components
 $script:EnSeq = 0
@@ -988,7 +988,7 @@ function Write-Page {
 <meta name="description" content="$(Attr $Description)">
 <meta name="robots" content="$Robots">
 $canon
-<meta name="theme-color" content="#0f1728">
+<meta name="theme-color" content="#16161a">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="$OgType">
@@ -1008,7 +1008,7 @@ $canon
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 $preload
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>document.documentElement.classList.add('js');$($avJs)document.documentElement.setAttribute('data-theme','dark');try{if(localStorage.getItem('kkio-theme')==='light'){document.documentElement.setAttribute('data-theme','light');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#f8f5ee')}var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
+<script>document.documentElement.classList.add('js');$($avJs)document.documentElement.setAttribute('data-theme','dark');try{if(localStorage.getItem('kkio-theme')==='light'){document.documentElement.setAttribute('data-theme','light');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#f7f2e8')}var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
@@ -2238,6 +2238,11 @@ $HomeApps = @(
        s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches you can attend Mass at in Turkey, city by city.' }) }
 )
 
+# The faint religious images in the corners of the home page's three cards
+$DecoSvg = { param($d) "<svg class=`"hm-deco`" viewBox=`"0 0 64 64`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"2.2`" stroke-linecap=`"round`" stroke-linejoin=`"round`">$d</svg>" }
+$DecoDove = & $DecoSvg '<path d="M32 42c-2.6 0-4.6-2-4.6-4.6 0-4.2 2.4-8.6 4.6-12.6 2.2 4 4.6 8.4 4.6 12.6 0 2.6-2 4.6-4.6 4.6Z"/><path d="M28 30c-6-4.6-14.6-5.6-22-2.6 7.2 1 13.4 4.2 19 9"/><path d="M36 30c6-4.6 14.6-5.6 22-2.6-7.2 1-13.4 4.2-19 9"/><path d="M29.4 22.6 32 18l2.6 4.6"/><circle cx="32" cy="46" r="2.6"/><path d="M32 51v7M25 50l-3.6 6M39 50l3.6 6M20 46l-5.4 3.4M44 46l5.4 3.4"/>'
+$DecoCross = & $DecoSvg '<path d="M32 6v52M18 20h28"/><path d="M32 20m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0" stroke-width="1.4"/><path d="M26 58h12" stroke-width="1.6"/>'
+$DecoChalice = & $DecoSvg '<circle cx="32" cy="9" r="5"/><path d="M32 6.4v5.2M29.4 9h5.2" stroke-width="1.4"/><path d="M18 18h28c0 11-5.6 18-14 18S18 29 18 18Z"/><path d="M32 36v12"/><path d="M22 58c0-5.6 4.4-10 10-10s10 4.4 10 10Z"/>'
 $IcoChevR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
 function Home-Page([string]$lang) {
   $en = $lang -eq 'en'
@@ -2246,17 +2251,17 @@ function Home-Page([string]$lang) {
   $loading = L 'Yükleniyor…' 'Loading…'
   $cards = @"
   <div class="hm-today" id="bugun">
-    <a class="hm-card hm-saint" href="$(F 'azizler.html')" data-home-saint>
+    <a class="hm-card hm-saint" href="$(F 'azizler.html')" data-home-saint>$DecoChalice
       <span class="hm-label">$IcoStar $(L 'Bugünün Azizi' 'Saint of the Day')</span>
       <span class="hm-sn" data-hs-name>$loading</span><span class="hm-sub" data-hs-title></span><span class="hm-bio" data-hs-bio></span>
       <span class="hm-go">$(L 'Hayatını oku' 'Read their life') $IcoChevR</span>
     </a>
-    <div class="hm-card hm-date" data-home-lit>
+    <div class="hm-card hm-date" data-home-lit>$DecoDove
       <span class="hm-label">$(L 'Bugün' 'Today')</span>
       <span class="hm-day" data-hd-day>$loading</span><span class="hm-year" data-hd-year></span><time class="hm-time" data-hd-time></time>
       <span class="hm-season" data-hd-season></span><span class="hm-sub" data-hd-colour></span>
     </div>
-    <a class="hm-card hm-myst" href="$(F 'tesbih-duasi.html')#tesbih-rehberi" data-home-mystery>
+    <a class="hm-card hm-myst" href="$(F 'tesbih-duasi.html')#tesbih-rehberi" data-home-mystery>$DecoCross
       <span class="hm-label">$IcoBeads $(L 'Günün Gizemi' 'Mysteries')</span>
       <span class="hm-mn" data-hm-name>$loading</span><span class="hm-sub" data-hm-days></span>
       <span class="hm-go">$(L 'Tesbihe başla' 'Pray the Rosary') $IcoChevR</span>

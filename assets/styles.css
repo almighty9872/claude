@@ -43,26 +43,26 @@
 /* ---------- 1. Theme tokens ---------- */
 :root {
   /* light: soft ivory + gold (never pure white) */
-  --bg: #f5f2ea;
+  --bg: #f6f1e6;
   --bg-glow: rgba(190, 150, 70, .10);
   /* The page's wallpaper: soft, blurred colour behind everything, like a phone's home screen */
   --wall:
-    radial-gradient(55% 40% at 8% 4%, rgba(226, 184, 98, .30), transparent 72%),
-    radial-gradient(50% 38% at 96% 14%, rgba(232, 150, 140, .18), transparent 72%),
-    radial-gradient(60% 45% at 88% 92%, rgba(118, 146, 214, .20), transparent 72%),
-    radial-gradient(55% 42% at 4% 78%, rgba(124, 182, 146, .17), transparent 72%);
+    radial-gradient(55% 40% at 8% 4%, rgba(222, 180, 96, .26), transparent 72%),
+    radial-gradient(50% 38% at 96% 14%, rgba(214, 150, 104, .16), transparent 72%),
+    radial-gradient(60% 45% at 88% 92%, rgba(196, 160, 110, .16), transparent 72%),
+    radial-gradient(55% 42% at 4% 80%, rgba(206, 150, 80, .18), transparent 72%);
   /* The home screen's app icons, and each page's icon on phones: one gold throughout */
   --app-gold: linear-gradient(160deg, #dcb35a, #8a6414);
   --tap: rgba(116, 116, 128, .18);   /* iOS's grey tap feedback on list rows */
   --app-ara: var(--app-gold); --app-ogren: var(--app-gold); --app-dua: var(--app-gold); --app-kesfet: var(--app-gold);
-  --surface: #fbf9f4;
-  --surface-2: #f1ece1;
-  --surface-3: #e8e1d2;
-  --border: #e1d8c5;
-  --border-strong: #cbbd9f;
-  --text: #1b2336;          /* navy ink */
-  --text-soft: #39425a;
-  --muted: #697086;
+  --surface: #fffcf6;
+  --surface-2: #f3ecde;
+  --surface-3: #eae1cf;
+  --border: #e6dcc8;
+  --border-strong: #cfbf9f;
+  --text: #28221a;          /* warm ink */
+  --text-soft: #4a4136;
+  --muted: #776d60;
   --gold: #8a6720;          /* WCAG AA on ivory: 4.6:1 for normal text */
   --gold-soft: #b99a5b;     /* decorative (rules, borders; not for text) */
   --gold-roman: #9c7d3f;    /* roman numerals: darker than --gold-soft for WCAG AA large-text (3:1) */
@@ -70,9 +70,9 @@
   --gold-bg: rgba(185, 150, 80, .12);
   --mark: rgba(214, 170, 70, .38);
   --shadow: 0 1px 2px rgba(27, 35, 54, .05), 0 8px 24px -14px rgba(27, 35, 54, .25);
-  --header-bg: rgba(245, 242, 234, .86);
+  --header-bg: rgba(246, 241, 230, .86);
   --glass: rgba(250, 247, 240, .72);
-  --chrome: #f8f5ee;         /* solid header and tab bar on phones (the glass above, flattened onto --bg) */
+  --chrome: #f7f2e8;         /* solid header and tab bar on phones (the glass above, flattened onto --bg) */
   --glass-brd: rgba(203, 189, 159, .55);
   --glass-hi: rgba(255, 255, 255, .75);
   --glass-menu: rgba(250, 247, 240, .9);
@@ -96,32 +96,32 @@
 }
 /* dark: deep navy + gold (opt-in only, the OS setting does not flip it) */
 :root[data-theme="dark"] {
-  --bg: #0c1322; --bg-glow: rgba(70, 100, 170, .16);
+  --bg: #131316; --bg-glow: rgba(160, 110, 50, .14);
   --wall:
-    radial-gradient(55% 40% at 6% 4%, rgba(92, 84, 210, .30), transparent 72%),
-    radial-gradient(50% 38% at 96% 18%, rgba(40, 140, 176, .22), transparent 72%),
-    radial-gradient(60% 45% at 90% 94%, rgba(160, 72, 150, .18), transparent 72%),
-    radial-gradient(55% 42% at 4% 80%, rgba(206, 156, 64, .13), transparent 72%);
-  --surface: #121b2f; --surface-2: #17223a; --surface-3: #1e2b48;
-  --border: #243152; --border-strong: #35456b;
-  --text: #ece4d1; --text-soft: #cdc5b2; --muted: #8f99b2;
-  --gold: #d6b16b; --gold-soft: #8c7547; --gold-roman: #8c7547; --gold-active: #d6b16b; --gold-bg: rgba(214, 177, 107, .10);
-  --mark: rgba(214, 177, 107, .32);
-  --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 12px 30px -16px rgba(0, 0, 0, .7);
-  --header-bg: rgba(12, 19, 34, .82);
-  --glass: rgba(16, 25, 43, .66);
-  --chrome: #0f1728;
+    radial-gradient(55% 42% at 4% 96%, rgba(150, 98, 40, .26), transparent 72%),
+    radial-gradient(50% 40% at 98% 4%, rgba(120, 92, 56, .16), transparent 72%),
+    radial-gradient(60% 45% at 92% 96%, rgba(96, 70, 46, .16), transparent 72%),
+    radial-gradient(55% 40% at 6% 4%, rgba(110, 96, 60, .12), transparent 72%);
+  --surface: #1c1d21; --surface-2: #232429; --surface-3: #2b2c32;
+  --border: #2e2f36; --border-strong: #45464f;
+  --text: #efe6d3; --text-soft: #cfc6b4; --muted: #9b9384;
+  --gold: #e2bd70; --gold-soft: #8c7547; --gold-roman: #8c7547; --gold-active: #e2bd70; --gold-bg: rgba(226, 189, 112, .10);
+  --mark: rgba(226, 189, 112, .32);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 30px -16px rgba(0, 0, 0, .75);
+  --header-bg: rgba(19, 19, 22, .84);
+  --glass: rgba(28, 28, 32, .7);
+  --chrome: #16161a;
   --tap: rgba(255, 255, 255, .1);
-  --glass-brd: rgba(63, 82, 124, .55);
-  --glass-hi: rgba(180, 205, 255, .14);
-  --glass-menu: rgba(15, 23, 40, .9);
-  --glass-strong: rgba(15, 23, 40, .95);
-  --glass-overlay: rgba(15, 23, 40, .68);
-  --glass-sheen: rgba(170, 200, 255, .10);
-  --glass-shadow: 0 10px 34px -12px rgba(0, 0, 0, .7);
-  --scrim: rgba(4, 8, 16, .62);
+  --glass-brd: rgba(92, 82, 66, .5);
+  --glass-hi: rgba(255, 238, 205, .08);
+  --glass-menu: rgba(24, 24, 28, .92);
+  --glass-strong: rgba(24, 24, 28, .96);
+  --glass-overlay: rgba(24, 24, 28, .7);
+  --glass-sheen: rgba(255, 238, 205, .06);
+  --glass-shadow: 0 10px 34px -12px rgba(0, 0, 0, .75);
+  --scrim: rgba(6, 6, 8, .62);
   --focus: #e6c47f;
-  --danger: #f2938c;        /* lighter on navy so it still reads as red, not brown */
+  --danger: #f2938c;
   --danger-bg: rgba(242, 147, 140, .12);
   --danger-border: rgba(242, 147, 140, .4);
   color-scheme: dark;
@@ -1441,7 +1441,7 @@ html:not(.js) .rt { display: none; }
 }
 :root[data-theme="dark"] .amap {
   --c-pavlus: #d6b16b; --c-kilise: #e58b95; --c-konsil: #86b6ea; --c-gelenek: #8ccb9b; --c-eski: #c9a2dc;
-  --amap-sea: #0e1a2e; --amap-land: #1a2439; --amap-tr: #22304d;
+  --amap-sea: #111215; --amap-land: #1c1d22; --amap-tr: #2a2b31;
 }
 .amap .c-pavlus { --cat: var(--c-pavlus); } .amap .c-kilise { --cat: var(--c-kilise); } .amap .c-konsil { --cat: var(--c-konsil); }
 .amap .c-gelenek { --cat: var(--c-gelenek); } .amap .c-eski { --cat: var(--c-eski); }
@@ -2058,13 +2058,17 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
   min-height: 10.5rem; padding: 1rem 1.05rem; border-radius: 1.4rem; color: #fff; text-decoration: none;
   box-shadow: 0 12px 28px -16px rgba(20, 20, 40, .6);
 }
-.hm-card::after { content: ""; position: absolute; right: -2.4rem; top: -2.4rem; width: 8.5rem; height: 8.5rem; border-radius: 50%; background: rgba(255, 255, 255, .09); z-index: -1; }
+.hm-card { --hc-ink: #f3e8d2; --hc-title: #f2d189; color: var(--hc-ink); }
+/* in the corner of each card, faintly: the Holy Spirit's dove, the cross, the chalice */
+.hm-deco { position: absolute; right: -.4rem; top: -.5rem; z-index: -1; width: 7.6rem; height: 7.6rem; color: var(--hc-ink); opacity: .13; pointer-events: none; }
+.hm-card .hm-sn, .hm-card .hm-day, .hm-card .hm-mn { color: var(--hc-title); }
+.hm-card .hm-season { color: var(--hc-title); }
 .hm-label { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; opacity: .9; }
 .hm-label svg { width: 1rem; height: 1rem; }
 .hm-sub { font-family: var(--sans); font-size: .76rem; line-height: 1.35; opacity: .88; }
 .hm-go { display: inline-flex; align-items: center; gap: .15rem; margin-top: auto; padding-top: .5rem; font-family: var(--sans); font-size: .82rem; font-weight: 700; }
 .hm-go svg { width: .95rem; height: .95rem; }
-.hm-saint { grid-column: 1 / -1; min-height: 12.5rem; justify-content: flex-end; background: linear-gradient(155deg, #b08a38, #5f4412); }
+.hm-saint { grid-column: 1 / -1; min-height: 12.5rem; justify-content: flex-end; background: linear-gradient(155deg, #a26d3d, #633f21); }
 .hm-sn { font-size: 1.8rem; font-weight: 600; line-height: 1.1; }
 .hm-bio { font-size: 1rem; line-height: 1.4; opacity: .92; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .hm-bio:empty, .hm-sub:empty { display: none; }
@@ -2072,15 +2076,25 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 .hm-year { font-family: var(--sans); font-size: .85rem; font-weight: 600; opacity: .92; }
 .hm-season { margin-top: auto; font-size: 1.02rem; font-weight: 600; line-height: 1.2; }
 .hm-mn { font-size: 1.25rem; font-weight: 600; line-height: 1.15; }
-.hm-myst { background: linear-gradient(155deg, #4b64a8, #1d2c5e); }
-.hm-date, .hm-date[data-lit="green"] { background: linear-gradient(155deg, #4a8f60, #1d4a31); }
-.hm-date[data-lit="violet"] { background: linear-gradient(155deg, #7a58a8, #3a2358); }
-.hm-date[data-lit="white"] { background: linear-gradient(155deg, #c3a35a, #7a5d1c); }
-.hm-date[data-lit="red"] { background: linear-gradient(155deg, #b8463b, #621b15); }
-.hm-date[data-lit="rose"] { background: linear-gradient(155deg, #cf8aa3, #8b4a63); }
+.hm-myst { background: linear-gradient(155deg, #4b4252, #2c2931); }
+.hm-date, .hm-date[data-lit="green"] { background: linear-gradient(155deg, #786627, #3b3418); }
+.hm-date[data-lit="violet"] { background: linear-gradient(155deg, #5f4672, #2f2438); }
+.hm-date[data-lit="white"] { background: linear-gradient(155deg, #a68c4c, #574521); }
+.hm-date[data-lit="red"] { background: linear-gradient(155deg, #8c3d2e, #421c15); }
+.hm-date[data-lit="rose"] { background: linear-gradient(155deg, #9a6275, #4b2b37); }
+/* light: the same cards in soft, sunlit tones, with dark ink */
+:root:not([data-theme="dark"]) .hm-card { box-shadow: 0 10px 26px -18px rgba(90, 60, 20, .45); border: 1px solid rgba(160, 120, 60, .18); }
+:root:not([data-theme="dark"]) .hm-saint { --hc-ink: #4a2c13; --hc-title: #7a4516; background: linear-gradient(155deg, #f5dcc0, #e2b68a); }
+:root:not([data-theme="dark"]) .hm-myst { --hc-ink: #372d3d; --hc-title: #5b416b; background: linear-gradient(155deg, #efe8f1, #d9cedf); }
+:root:not([data-theme="dark"]) .hm-date, :root:not([data-theme="dark"]) .hm-date[data-lit="green"] { --hc-ink: #3a3010; --hc-title: #6b5411; background: linear-gradient(155deg, #f3e6b8, #dcc684); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="violet"] { --hc-ink: #33243e; --hc-title: #5c3d75; background: linear-gradient(155deg, #ece2f2, #d3c1e0); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="white"] { --hc-ink: #3a3010; --hc-title: #6b5411; background: linear-gradient(155deg, #faf3de, #e9d9a6); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="red"] { --hc-ink: #461a12; --hc-title: #8a2e1f; background: linear-gradient(155deg, #f5d9d2, #e3aea2); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="rose"] { --hc-ink: #46222f; --hc-title: #86455c; background: linear-gradient(155deg, #f7e0e7, #e5bccb); }
+:root:not([data-theme="dark"]) .hm-deco { opacity: .16; }
 a.hm-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 /* The site's link hover (gold text) would turn these white cards' words dark: they lift a little instead */
-a.hm-card:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 16px 32px -16px rgba(20, 20, 40, .65); }
+a.hm-card:hover { color: var(--hc-ink); transform: translateY(-2px); box-shadow: 0 16px 32px -16px rgba(20, 20, 40, .65); }
 a.hm-card { transition: transform .2s, box-shadow .2s; }
 .hm-time { font-family: var(--sans); font-size: .82rem; font-weight: 600; letter-spacing: .04em; opacity: .9; font-variant-numeric: tabular-nums; }
 .hm-about { margin: .3rem .3rem 1.2rem; text-align: center; }
@@ -2238,7 +2252,8 @@ html.app-open { overflow: hidden; }
   .hm-row { display: flex; align-items: center; gap: .8rem; padding: .75rem .9rem; color: var(--text); text-decoration: none; }
   .hm-row + .hm-row { border-top: 1px solid var(--border); }
   .hm-row:hover { background: var(--gold-bg); }
-  .hm-ri { flex: none; display: grid; place-items: center; width: 2.35rem; height: 2.35rem; border-radius: .7rem; background: var(--gold-bg); color: var(--gold); }
+  .hm-ri { flex: none; display: grid; place-items: center; width: 2.35rem; height: 2.35rem; border-radius: .7rem; background: #f1e5cf; color: var(--gold); }
+  :root[data-theme="dark"] .hm-ri { background: #3a2e22; }
   .hm-ri svg { width: 1.3rem; height: 1.3rem; }
   .hm-rt { flex: 1; min-width: 0; display: grid; }
   .hm-t { font-size: 1.08rem; font-weight: 600; line-height: 1.25; }
@@ -2925,7 +2940,7 @@ html.av .to-top-wrap { display: none; }
 
 /* ---------- Kilise Bul: the map (Turkey, fixed; a city's churches open in a glass card beside it) ---------- */
 .cmap { --amap-sea: #dce7ec; --amap-land: #e9e2d3; --amap-tr: var(--surface); --pop-bg: rgba(255, 252, 245, .96); --pop-line: rgba(160, 120, 40, .35); margin: 1.5rem 0 2.2rem; }
-:root[data-theme="dark"] .cmap { --amap-sea: #0e1a2e; --amap-land: #1a2439; --amap-tr: #22304d; --pop-bg: rgba(20, 28, 46, .95); --pop-line: rgba(233, 196, 106, .28); }
+:root[data-theme="dark"] .cmap { --amap-sea: #111215; --amap-land: #1c1d22; --amap-tr: #2a2b31; --pop-bg: rgba(28, 28, 32, .96); --pop-line: rgba(233, 196, 106, .28); }
 .cmap-frame { position: relative; aspect-ratio: 1000 / 594; background: var(--amap-sea); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); touch-action: manipulation; }
 .cmap-svg { display: block; width: 100%; height: 100%; border-radius: var(--radius); }
 .cmap-sea, .cmap-lake { fill: var(--amap-sea); }

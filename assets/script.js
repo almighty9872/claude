@@ -50,7 +50,7 @@
      iOS 18, Chrome on Android); Safari 26 reads the solid header and tab bar instead. */
   function syncChrome() {
     var meta = $('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || (isDark() ? '#0f1728' : '#f8f5ee'));
+    if (meta) meta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || (isDark() ? '#16161a' : '#f7f2e8'));
   }
   function initTheme() {
     /* Dark is the default: the site does not follow the OS setting, only an explicit choice. */
