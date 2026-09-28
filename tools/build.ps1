@@ -748,6 +748,7 @@ $KatekizmSub = @('motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-
 function Av-Parent([string]$trFile, [bool]$en) {
   $i = if ($en) { 1 } else { 0 }
   $homeF = if ($en) { 'en/index.html' } else { 'index.html' }
+  if ($trFile -like 'kilise/*') { return @{ href = 'kiliseler.html'; t = 'Kilise Bul' } }
   if ($KatekizmSub -contains $trFile) { return @{ href = $(if ($en) { 'en/compendium.html' } else { 'katekizm.html' }); t = @('Katekizm', 'Compendium')[$i] } }
   if ($GreatSaints.saints | Where-Object { "$($_.id).html" -eq $trFile }) { return @{ href = "$(if ($en) { 'en/saints.html#best-known-saints' } else { 'azizler.html#buyuk-azizler' })"; t = @('Azizler', 'Saints')[$i] } }
   $app = $AppOf[$trFile]
@@ -1025,7 +1026,7 @@ $a11yHtml
 "@
   # 404.html and /en/ pages are not at a fixed directory depth (or are one level deep), so their
   # links must start at the site root rather than being relative to the file's own location.
-  if ($rootRelativeEffective) { $html = [regex]::Replace($html, '(href|src)="(?!https?:|#|/|data:|mailto:)', '$1="/') }
+  if ($rootRelativeEffective) { $html = [regex]::Replace($html, '(href|src)="(?!https?:|#|/|data:|mailto:|tel:)', '$1="/') }
   # The contact address is public on every page (footer) and a few others (İletişim, the About
   # panel, Erişilebilirlik, Gizlilik); catching it here once, after every page is assembled,
   # keeps it out of the raw HTML for basic scrapers without touching the markdown/build source
@@ -1999,125 +2000,118 @@ Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" `
   -Path 'mucizeler.html' -Body $mucizelerBody -JsonLd @((Breadcrumb-Ld 'Mucizeler' 'mucizeler.html'))
 
 # ================================================================== KILISELER (kiliseler.html): parish locator
+# The map of Turkey with the cities that have a Catholic church (kiliseler.html), and a page of
+# its own for every church (kilise/<id>.html): its history, Mass times, visiting hours, contact
+# details and the sources they came from.
 $Churches = Read-Data 'kiliseler.js'
 $RiteLabels = @{}
 $Churches.rites | ForEach-Object { $RiteLabels[$_.id] = @{ tr = $_.tr; en = $_.en } }
-# Deliberately searches Google Maps by the church's own name + district + city rather than a
-# possibly-imprecise street address: these are all named, independently mappable landmarks, so
-# a name search resolves reliably even where the sourced address text is only district-level.
+# Searches Google Maps by the church's own name and city: these are all named, independently
+# mappable landmarks, so a name search resolves more reliably than a sourced street address.
 function Map-Url([string]$q) { return 'https://www.google.com/maps/search/?api=1&query=' + [uri]::EscapeDataString($q) }
-function Google-Url([string]$q) { return 'https://www.google.com/search?q=' + [uri]::EscapeDataString($q) }
 $IcoClock = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 7.4V12l3.2 2"/></svg>'
 $IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4h3.1l1.3 4-2 1.4a12.5 12.5 0 0 0 5.9 5.9l1.4-2 4 1.3v3.1a1.6 1.6 0 0 1-1.7 1.6A16.3 16.3 0 0 1 3.6 5.7 1.6 1.6 0 0 1 5.2 4Z"/></svg>'
 $IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
 $IcoWarn = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 18.2a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0Z"/><path d="M12 9.5v4.4"/><circle cx="12" cy="16.8" r="1" fill="currentColor" stroke="none"/></svg>'
 $IcoChurch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v3.1M10.6 4.1h2.8"/><path d="M5 10.8 12 6l7 4.8V21H5Z"/><path d="M9.6 21v-4.6a2.4 2.4 0 0 1 4.8 0V21"/></svg>'
-$kiliselerCities = ($Churches.cities | ForEach-Object {
-  $city = $_
-  $cards = ($city.churches | ForEach-Object {
-    $rite = $RiteLabels[$_.rite]
-    # Skip the address line entirely when the sourced data was only district-level (the address
-    # field then just repeats "district, city", which the line above already shows).
-    $hasRealAddr = $_.address -ne "$($_.district), $($city.name)"
-    # Searching by the church's own name (each is unique) resolves to the right building far
-    # more reliably in Google/Apple Maps than an assembled street address, which both apps have
-    # sometimes mis-parsed or only matched down to the district centroid.
-    $mapQ = "$($_.name), $($city.name)"
-    $mapQAttr = $mapQ -replace '&', '&amp;' -replace '"', '&quot;'
-    $phoneRow = if ($_.phone) { "<p class=`"church-meta`">$IcoPhone $($_.phone)</p>" } else { '' }
-    $addrRow = if ($hasRealAddr) { "<p class=`"church-meta church-address`">$(Inline $_.address)</p>" } else { '' }
-    $siteLink = if ($_.website) { "<a class=`"btn`" href=`"$($_.website)`" target=`"_blank`" rel=`"noopener`">Resmi Site $IcoExternal</a>" }
-                else { "<a class=`"btn`" href=`"$(Google-Url "$($_.name) $($city.name)")`" target=`"_blank`" rel=`"noopener`">Web$($Apos)te Ara $IcoExternal</a>" }
-    $warnRow = if ($_.inactive) {
-      "<details class=`"church-warn`"><summary>$IcoWarn<strong>Şu anda kapalı</strong><span class=`"en`" lang=`"en`">(Currently closed)</span>" +
-        "<span class=`"church-warn-more`">Devamını oku <span class=`"en`" lang=`"en`">(Read more)</span> $IcoChevDown</span></summary>" +
-        "<div class=`"church-warn-body`"><p>$(Inline $_.inactiveNote)</p><p lang=`"en`">$(Inline $_.inactiveNoteEn)</p></div></details>"
-    } else { '' }
-    "<article class=`"text-card church-card`" id=`"$($_.id)`" data-rite=`"$($_.rite)`">" +
-      "<header class=`"church-head`"><h3 class=`"t-title`">$(Inline $_.name)</h3><span class=`"church-rite rite-$($_.rite)`">$($rite.tr)</span></header>" +
-      $warnRow +
-      "<p class=`"sub`" lang=`"en`">$(Inline $_.nameEn) · $($rite.en)</p>" +
-      "<p class=`"church-meta`">$IcoPin $($_.district), $($city.name)</p>" +
-      $addrRow +
-      $phoneRow +
-      "<details class=`"church-hours-item`"><summary>$IcoClock Ayin Saatleri <span class=`"en`" lang=`"en`">(Mass Times)</span></summary>" +
-        "<div class=`"church-hours-body`"><p class=`"church-hours`">$(Inline $_.hours)</p><p class=`"church-hours en`" lang=`"en`">$(Inline $_.hoursEn)</p></div></details>" +
-      "<p class=`"church-actions`"><a class=`"btn map-link`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$mapQAttr`" target=`"_blank`" rel=`"noopener`">Haritada Aç $IcoExternal</a>$siteLink</p>" +
-    "</article>"
-  }) -join "`n"
-  $cityNames = (($city.churches | ForEach-Object { Inline $_.name }) -join ', ')
-  "<details class=`"church-city`" id=`"$($city.id)`" open><summary class=`"church-city-head`">" +
-    "<span class=`"church-city-ico`">$IcoChurch</span>" +
-    "<span class=`"church-city-body`"><span class=`"church-city-name`">$($city.name)</span><span class=`"church-city-names`">$cityNames</span></span>" +
-    "<span class=`"church-city-more`">Tüm Liste <span class=`"en`" lang=`"en`">(Full List)</span> $IcoChevDown</span>" +
-    "</summary>" +
-    "<div class=`"church-list`">$cards</div></details>"
-}) -join "`n"
-# ---------------- The map: Turkey with the cities that have a Catholic church; a city's name zooms
-# into its region (Istanbul down to its two sides of the Bosphorus), where each church is a marker
-# in its rite's colour and cross. Places are approximate (to the district): a regional guide, not a
-# street map. The shape is the Anatolian Roots map's outline, with the Marmara coast in full detail.
-$CmShape = Read-Data 'kilise-harita-sekli.js'
-$RiteIco = @{
-  latin   = '<path d="M0-7.6v15.2M-5-2.8h10"/>'
-  ermeni  = '<path d="M0-5v10M-5 0h10M0-5l-2-2.2M0-5l2-2.2M0 5l-2 2.2M0 5l2 2.2M-5 0l-2.2-2M-5 0l-2.2 2M5 0l2.2-2M5 0l2.2 2"/>'
-  suryani = '<path d="M0-5v10M-5 0h10"/><circle cx="0" cy="-6.3" r="1.6"/><circle cx="0" cy="6.3" r="1.6"/><circle cx="-6.3" cy="0" r="1.6"/><circle cx="6.3" cy="0" r="1.6"/>'
-}
-$RiteIco['keldani'] = $RiteIco['suryani']
-# where each city's name sits beside its dot (px): dx, dy, text-anchor
-$CityLabel = @{ istanbul = @(0, -13, 'middle'); bursa = @(0, 21, 'middle'); izmir = @(11, 5, 'start'); ankara = @(11, 5, 'start')
-  mersin = @(-11, 12, 'end'); adana = @(11, -2, 'start'); antakya = @(11, 12, 'start'); antalya = @(0, 21, 'middle')
-  diyarbakir = @(0, -13, 'middle'); mardin = @(0, 21, 'middle'); trabzon = @(0, -13, 'middle') }
-function Cm-Pin([double]$lat, [double]$lon) { $p = Map-XY $lat $lon; return "data-x=`"$($p[0])`" data-y=`"$($p[1])`"" }
-$cmCities = New-Object Text.StringBuilder; $cmMarks = New-Object Text.StringBuilder; $cmOpts = New-Object Text.StringBuilder
+$IcoMailSm = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.4" y="5.4" width="17.2" height="13.2" rx="2"/><path d="m4 7 8 6 8-6"/></svg>'
+$IcoGlobe = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg>'
+$IcoDoor = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4.6A1.6 1.6 0 0 1 6.6 3h10.8A1.6 1.6 0 0 1 19 4.6V21"/><path d="M3 21h18"/><circle cx="15" cy="12.4" r=".9" fill="currentColor" stroke="none"/></svg>'
+# a phone number as shown ("0212 244 09 35 (14:00–17:00)") and as dialled (+902122440935)
+function Tel-Href([string]$p) { $d = (($p -replace '\(.*$', '') -replace '[^\d]', ''); if ($d.StartsWith('0')) { $d = $d.Substring(1) }; return "tel:+90$d" }
+function Site-Host([string]$u) { return (($u -replace '^https?://(www\.)?', '') -replace '/$', '') }
+# where each church belongs on phones and in the bar at the top: Keşfet, under Kilise Bul
+$ChurchPages = @()
+foreach ($city in $Churches.cities) { foreach ($ch in $city.churches) { $AppOf["kilise/$($ch.id).html"] = 'kesfet'; $ChurchPages += "kilise/$($ch.id).html" } }
+$ChurchDir = Join-Path $Root 'kilise'
+if (-not (Test-Path $ChurchDir)) { New-Item -ItemType Directory -Path $ChurchDir | Out-Null }
+# pages of churches no longer in the data are removed, so no stale page stays online
+Get-ChildItem $ChurchDir -Filter '*.html' | Where-Object { $ChurchPages -notcontains "kilise/$($_.Name)" } | Remove-Item
+
 foreach ($city in $Churches.cities) {
-  $n = @($city.churches).Count; $lab = $CityLabel[$city.id]
-  # the part of the map a tap on the city shows (map units): its churches, with room around them
-  $xs = @(); $ys = @()
-  foreach ($ch in $city.churches) { $q = Map-XY $ch.lat $ch.lon; $xs += [double]$q[0]; $ys += [double]$q[1] }
-  $box = "$(Map-Num ($xs | Measure-Object -Minimum).Minimum) $(Map-Num ($ys | Measure-Object -Minimum).Minimum) $(Map-Num ($xs | Measure-Object -Maximum).Maximum) $(Map-Num ($ys | Measure-Object -Maximum).Maximum)"
-  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" $(Cm-Pin $city.lat $city.lon) data-box=`"$box`" tabindex=`"0`" role=`"button`" aria-label=`"$($city.name): $n kilise`">" +
-    "<circle class=`"cc-hit`" r=`"18`"></circle><circle class=`"cc-dot`" r=`"5.5`"></circle>" +
-    "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$($city.name -replace ' \(.*\)$', '')</text></g>")
-  [void]$cmOpts.Append("<optgroup label=`"$($city.name)`">")
+  $cityName = $city.name -replace ' \(.*\)$', ''
   foreach ($ch in $city.churches) {
     $rite = $RiteLabels[$ch.rite]
-    # Istanbul: which side of the Bosphorus (a line along the strait), so that markers set around
-    # one another to stay apart never cross to the other side
-    $side = if ($city.id -ne 'istanbul') { '' } elseif ($ch.lon -lt 29.005 + ($ch.lat - 41.0) * 0.6) { ' data-side="eu"' } else { ' data-side="as"' }
-    [void]$cmMarks.Append("<g class=`"church-marker rite-$($ch.rite)`" data-church=`"$($ch.id)`" data-city=`"$($city.id)`" data-rite=`"$($ch.rite)`"$side $(Cm-Pin $ch.lat $ch.lon) tabindex=`"-1`" role=`"button`" aria-label=`"$(Attr (Plain $ch.name)), $($rite.tr)`" data-name=`"$(Attr (Plain $ch.name))`" data-rite-t=`"$($rite.tr)`">" +
-      "<circle class=`"cm-hit`" r=`"12`"></circle><circle class=`"cm-badge`" r=`"10.5`"></circle><g class=`"cm-ico`">$($RiteIco[$ch.rite])</g></g>")
-    [void]$cmOpts.Append("<option value=`"church:$($ch.id)`">$(Plain $ch.name)</option>")
+    $file = "kilise/$($ch.id).html"
+    # the notice: closed, or something to know before going
+    $notice = ''
+    if ($ch.status -ne 'active' -and $ch.notice) {
+      $head = if ($ch.status -eq 'closed') { 'Şu anda kapalı' } else { 'Gitmeden önce' }
+      $notice = "<div class=`"ch-notice is-$($ch.status)`" role=`"note`">$IcoWarn<p><strong>$head.</strong> $(Inline $ch.notice)</p></div>"
+    }
+    # contact: address (with a map link), phones, e-mail, website
+    $mapQ = "$(Plain $ch.name), $cityName"
+    $rows = New-Object Text.StringBuilder
+    [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoPin<span>Adres</span></dt><dd>$(Inline $ch.address)<br><a class=`"map-link`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$(Attr $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada aç $IcoExternal</a></dd></div>")
+    if (@($ch.phones).Count) {
+      $ph = (@($ch.phones) | ForEach-Object { "<a href=`"$(Tel-Href $_)`">$_</a>" }) -join '<br>'
+      [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoPhone<span>Telefon</span></dt><dd>$ph</dd></div>")
+    }
+    if ($ch.email) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoMailSm<span>E-posta</span></dt><dd><a href=`"mailto:$($ch.email)`">$($ch.email)</a></dd></div>") }
+    if ($ch.website) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoGlobe<span>Web</span></dt><dd><a href=`"$($ch.website)`" target=`"_blank`" rel=`"noopener`">$(Site-Host $ch.website) $IcoExternal</a></dd></div>") }
+    $times = (@($ch.mass) | ForEach-Object { "<tr><th scope=`"row`">$(Inline $_[0])</th><td>$(Inline $_[1])</td></tr>" }) -join ''
+    $massNote = if ($ch.massNote) { "<p class=`"ch-note`">$(Inline $ch.massNote)</p>" } else { '' }
+    $visits = if ($ch.visits) { "<section class=`"ch-sec`" id=`"ziyaret`"><h2 class=`"ch-h`">$IcoDoor Ziyaret</h2><p>$(Inline $ch.visits)</p></section>" } else { '' }
+    $hist = (@($ch.history) | ForEach-Object { "<p>$(Inline $_)</p>" }) -join "`n"
+    $srcs = (@($ch.sources) | ForEach-Object { "<li><a href=`"$($_[1])`" target=`"_blank`" rel=`"noopener`">$(Inline $_[0])</a></li>" }) -join ''
+    $body = @"
+<div class="wrap narrow">
+  <article class="article church-page" id="article">
+    <header class="page-head center">$(Page-Ico $IcoChurch)<p class="label">$($rite.tr) · $cityName</p><h1>$(Inline $ch.name)</h1><p class="sub">$(Inline $ch.district), $cityName</p></header>
+    $notice
+    <section class="ch-sec ch-contact"><dl class="ch-list">$($rows.ToString())</dl></section>
+    <section class="ch-sec" id="ayin-saatleri"><h2 class="ch-h">$IcoClock Ayin Saatleri</h2><table class="ch-times"><tbody>$times</tbody></table>$massNote</section>
+    $visits
+    <section class="ch-sec" id="tarihce"><h2 class="ch-h">$IcoBook Tarihçe</h2><div class="prose">$hist</div></section>
+    <section class="ch-sec ch-sources" id="kaynaklar"><h2 class="ch-h">Kaynaklar</h2><ul>$srcs</ul>
+      <p class="conventions">Son kontrol: $($Churches.updated). Ayin ve ziyaret saatleri bayramlarda ve mevsime göre değişebilir; gitmeden önce kiliseyle teyit edin. Bir hata gördüyseniz <a href="iletisim.html">bize bildirin</a>.</p></section>
+  </article>
+  <p class="ch-back"><a class="btn" href="kiliseler.html#harita">$IcoPin Kilise Bul haritasına dön</a></p>
+</div>
+"@
+    $desc = "$(Plain $ch.name), $(Plain $ch.district), $($cityName): ayin saatleri, ziyaret saatleri, adres, iletişim bilgileri ve kilisenin tarihçesi."
+    $ld = '{"@context":"https://schema.org","@type":"Church","name":' + (JStr (Plain $ch.name)) + ',"address":' + (JStr (Plain $ch.address)) +
+      $(if (@($ch.phones).Count) { ',"telephone":' + (JStr ((Tel-Href @($ch.phones)[0]) -replace '^tel:', '')) } else { '' }) +
+      $(if ($ch.website) { ',"sameAs":' + (JStr $ch.website) } else { '' }) + ',"url":' + (JStr "$SiteUrl/$file") + '}'
+    Write-Page -File $file -Title "$(Plain $ch.name), $cityName | $SiteName" -Description (Meta-Trim $desc) -Path $file -Body $body `
+      -JsonLd @($ld, (Breadcrumb-Ld (Plain $ch.name) $file 'Kilise Bul' 'kiliseler.html')) -OgType 'article' -RootRelative $true
   }
-  [void]$cmOpts.Append('</optgroup>')
 }
-$cmRiteOpts = ($Churches.rites | ForEach-Object { "<option value=`"rite:$($_.id)`">$($_.tr)</option>" }) -join ''
-$cmLegend = ($Churches.rites | ForEach-Object { "<li><svg viewBox=`"-12 -12 24 24`" aria-hidden=`"true`" class=`"church-marker rite-$($_.id)`"><circle class=`"cm-badge`" r=`"10.5`"></circle><g class=`"cm-ico`">$($RiteIco[$_.id])</g></svg>$($_.tr)</li>" }) -join ''
-# the names on the map, each shown only in the views where it helps (map-unit widths of the view)
+
+# ---------------- The map: Turkey, fixed, with the cities that have a Catholic church. A city's dot
+# lights up under the pointer and opens the list of its churches (script.js, initChurchMap), each
+# name leading to the church's page. The shape is the Anatolian Roots map's outline, with the
+# Marmara coast in full detail.
+$CmShape = Read-Data 'kilise-harita-sekli.js'
+function Cm-Pin([double]$lat, [double]$lon) { $p = Map-XY $lat $lon; return "data-x=`"$($p[0])`" data-y=`"$($p[1])`"" }
+$cmCities = New-Object Text.StringBuilder; $cmPops = New-Object Text.StringBuilder
+# the columns of a city's list: Istanbul's two sides of the Bosphorus; İzmir and Selçuk (Efes)
+$SideLabel = @{ avrupa = 'Avrupa Yakası'; anadolu = 'Anadolu Yakası'; merkez = 'Şehir merkezi'; selcuk = 'Selçuk (Efes)' }
+foreach ($city in $Churches.cities) {
+  $lab = $city.label; $cityName = $city.name -replace ' \(.*\)$', ''
+  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" data-open=`"$($city.open)`" $(Cm-Pin $city.lat $city.lon) tabindex=`"0`" role=`"button`" aria-haspopup=`"true`" aria-expanded=`"false`" aria-controls=`"cmap-pop-$($city.id)`" aria-label=`"$($city.name): kiliseleri göster`">" +
+    "<circle class=`"cc-hit`" r=`"18`"></circle><circle class=`"cc-glow`" r=`"13`"></circle><circle class=`"cc-dot`" r=`"5.5`"></circle>" +
+    "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$cityName</text></g>")
+  $li = { param($list) ($list | ForEach-Object { "<li><a href=`"kilise/$($_.id).html`">$(Inline $_.short)</a></li>" }) -join '' }
+  $sides = @($city.churches | Where-Object { $_.side } | ForEach-Object { $_.side } | Select-Object -Unique)
+  if ($sides.Count -gt 1) {
+    $cols = ($sides | ForEach-Object { ,@($_, $SideLabel[$_]) } | ForEach-Object {
+      $s = $_; $in = @($city.churches | Where-Object { $_.side -eq $s[0] }); $long = if ($in.Count -gt 12) { ' is-long' } else { '' }
+      $rows = if ($long) { " style=`"--rows:$([Math]::Ceiling($in.Count / 2))`"" } else { '' }
+      "<div class=`"cmap-pop-col$long`"><p class=`"cmap-pop-h`">$($s[1])</p><ul$rows>$(& $li $in)</ul></div>"
+    }) -join ''
+  } else { $cols = "<div class=`"cmap-pop-col`"><ul>$(& $li @($city.churches))</ul></div>" }
+  [void]$cmPops.Append("<div class=`"cmap-pop`" id=`"cmap-pop-$($city.id)`" role=`"group`" aria-label=`"$($city.name) kiliseleri`" hidden><p class=`"cmap-pop-t`">$($city.name)</p><div class=`"cmap-pop-cols`">$cols</div></div>")
+}
 $cmTexts = (@(
-  @{ t = 'Karadeniz'; lat = 42.55; lon = 34.6; c = 'cm-sea'; max = 9999; min = 300 }
-  @{ t = 'Akdeniz'; lat = 35.25; lon = 31.2; c = 'cm-sea'; max = 9999; min = 300 }
-  @{ t = 'Marmara Denizi'; lat = 40.8; lon = 28.5; c = 'cm-sea'; max = 300; min = 0 }
-  @{ t = 'Karadeniz'; lat = 41.28; lon = 29.15; c = 'cm-sea'; max = 300; min = 0 }
-  @{ t = 'Tekirdağ'; lat = 40.99; lon = 27.51; c = 'cm-prov'; max = 300; min = 0 }
-  @{ t = 'Kocaeli'; lat = 40.79; lon = 29.93; c = 'cm-prov'; max = 300; min = 0 }
-  @{ t = 'Yalova'; lat = 40.63; lon = 29.27; c = 'cm-prov'; max = 300; min = 60 }
-  @{ t = 'Avrupa Yakası'; lat = 41.16; lon = 28.74; c = 'cm-side'; max = 110; min = 0 }
-  @{ t = 'Anadolu Yakası'; lat = 40.93; lon = 29.3; c = 'cm-side'; max = 110; min = 0 }
-  @{ t = 'Boğaziçi'; lat = 41.125; lon = 29.058; c = 'cm-bos'; max = 110; min = 0; r = -62 }
-) | ForEach-Object {
-  $rot = if ($_.r) { ' data-rot="' + $_.r + '"' } else { '' }
-  "<text class=`"$($_.c)`" $(Cm-Pin $_.lat $_.lon) data-min=`"$($_.min)`" data-max=`"$($_.max)`"$rot>$($_.t)</text>"
-}) -join ''
+  @{ t = 'Karadeniz'; lat = 42.55; lon = 34.6 }
+  @{ t = 'Akdeniz'; lat = 35.25; lon = 31.2 }
+) | ForEach-Object { "<text class=`"cm-sea`" $(Cm-Pin $_.lat $_.lon)>$($_.t)</text>" }) -join ''
 $cmBox = $CmShape.box
 $churchMapHtml = @"
 <section class="cmap" id="harita" aria-label="Kilise haritası">
-  <div class="cmap-bar">
-    <div class="select-wrap cmap-select"><select id="cmap-find" aria-label="Haritada göster: bir ayin ya da bir kilise"><option value="all">Tüm kiliseler</option><optgroup label="Katolik ayinleri">$cmRiteOpts</optgroup>$($cmOpts.ToString())</select>$IcoChevDown</div>
-    <button type="button" class="btn cmap-reset" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg>Bölgeyi Göster</button>
-  </div>
   <div class="cmap-frame">
-    <svg class="cmap-svg" viewBox="0 0 $($AnShape.W) $($AnShape.H)" role="group" aria-label="Türkiye$($Apos)deki Katolik kiliselerinin haritası">
+    <svg class="cmap-svg" viewBox="0 0 $($AnShape.W) $($AnShape.H)" role="group" aria-label="Türkiye$($Apos)deki Katolik kiliselerinin haritası: bir şehir seçin">
       <defs><clipPath id="cmap-out"><path clip-rule="evenodd" d="M-500-500H1500V1100H-500ZM$($cmBox[0]) $($cmBox[1])H$($cmBox[2])V$($cmBox[3])H$($cmBox[0])Z"></path></clipPath></defs>
       <rect class="cmap-sea" x="-500" y="-500" width="2000" height="1600"></rect>
       <path class="cmap-land" d="$($AnShape.land)"></path>
@@ -2126,17 +2120,9 @@ $churchMapHtml = @"
       <path class="cmap-lake" d="$($AnShape.lakes)"></path>
       <g class="cmap-texts" aria-hidden="true">$cmTexts</g>
       <g class="cmap-cities">$($cmCities.ToString())</g>
-      <g class="cmap-marks">$($cmMarks.ToString())</g>
     </svg>
-    <p class="cmap-tip" role="tooltip" hidden></p>
-    <div class="cmap-card" id="cmap-card" role="dialog" aria-labelledby="cmap-card-h" hidden>
-      <div class="cmap-grab" aria-hidden="true"></div>
-      <button type="button" class="cmap-close" aria-label="Kapat">$IcoClose</button>
-      <div class="cmap-card-body"></div>
-      <p class="cmap-approx">Haritadaki yer yaklaşıktır.</p>
-    </div>
+    $($cmPops.ToString())
   </div>
-  <ul class="cmap-legend" aria-label="Ayinler">$cmLegend</ul>
 </section>
 "@
 $kiliselerBody = @"
@@ -2144,19 +2130,15 @@ $kiliselerBody = @"
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$($Churches.title)</h1><p class="sub" lang="en">$($Churches.en)</p></header>
 $churchMapHtml
-  <!-- every church's card, by city: not shown as a list, but opened from the map above -->
-  <div class="church-data" hidden>
-$kiliselerCities
-  </div>
   <p class="conventions">$(Inline $Churches.note)</p>
   <div class="faq-list">
-    <details class="faq-item" id="katolik-bulunamadiginda"><summary><span class="faq-q">Yakınımda Katolik kilisesi yoksa ne yapmalıyım?</span>$IcoChevLg</summary>
+    <details class="faq-item" id="katolik-bulunamadiginda" open><summary><span class="faq-q">Yakınımda Katolik kilisesi yoksa ne yapmalıyım?</span>$IcoChevLg</summary>
       <div class="faq-a"><p>$(Inline $Churches.orthodoxNote)</p></div></details>
   </div>
 </div>
 "@
 Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" `
-  -Description "Türkiye$($Apos)deki etkin Katolik kiliselerinin listesi: Latin, Ermeni Katolik, Süryani Katolik ve Keldani Katolik cemaatleri, adres ve ayin saatleriyle." `
+  -Description "Türkiye$($Apos)deki Katolik kiliseleri haritası: Latin, Ermeni, Süryani ve Keldani Katolik kiliseleri; her birinin ayin saatleri, ziyaret saatleri, adresi ve tarihçesi." `
   -Path 'kiliseler.html' -Body $kiliselerBody -JsonLd @((Breadcrumb-Ld 'Kilise Bul' 'kiliseler.html'))
 
 # ================================================================== ILETISIM (iletisim.html)
@@ -2377,7 +2359,7 @@ $pages = @(
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'mucizeler.html'; pr = '0.7' },
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }
-) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } })
+) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) + ($ChurchPages | ForEach-Object { @{ p = $_; pr = '0.5' } })
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
   (($pages | ForEach-Object {
     "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>"
