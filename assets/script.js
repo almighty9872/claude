@@ -2183,7 +2183,16 @@
   function initLayoutSwitch() {
     if (!document.body.hasAttribute('data-avp') || !window.matchMedia) return;
     var mq = window.matchMedia('(max-width: 979px)'), was = document.documentElement.classList.contains('av');
-    var check = function () { if (mq.matches !== was) location.reload(); };
+    /* laying the page out for printing changes its width too: that must not reload it (the
+       browser's print dialog would close at once) */
+    var printing = false;
+    window.addEventListener('beforeprint', function () { printing = true; });
+    window.addEventListener('afterprint', function () { setTimeout(function () { printing = false; }, 500); });
+    var isPrint = function () { return printing || (window.matchMedia && window.matchMedia('print').matches); };
+    var check = function () {
+      if (isPrint()) return;
+      setTimeout(function () { if (!isPrint() && mq.matches !== was) location.reload(); }, 250);
+    };
     if (mq.addEventListener) mq.addEventListener('change', check); else if (mq.addListener) mq.addListener(check);
   }
   function initAppView() {

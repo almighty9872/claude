@@ -1,5 +1,5 @@
 ---
-title: Kaynaklar ve telif
+title: Kaynaklar ve Telif
 about: katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türkçe olarak erişilebilir kılmak için hazırlanmıştır.
 description: katolikdunyasi.com’un kaynakları ve telif bilgileri.
 ---
