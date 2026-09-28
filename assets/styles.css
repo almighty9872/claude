@@ -3012,33 +3012,73 @@ html.av .to-top-wrap { display: none; }
 /* ------------------------------------------------------------------ İslam'a Cevap (islama-cevap.html)
    A short summary first, each point a link to its section, then the full case part by part */
 .ic-page [id] { scroll-margin-top: 5.5rem; }
-.ic-lead { max-width: 44rem; margin: 0 auto 1.6rem; font-size: 1.14rem; line-height: 1.65; text-align: center; }
+.ic-lead { max-width: 40rem; margin: 0 auto 1.8rem; font-size: 1.14rem; line-height: 1.7; text-align: center; color: var(--text-soft); }
+.ic-fn-ref { margin-left: .15em; font-family: var(--sans); font-weight: 700; color: var(--gold); text-decoration: none; vertical-align: super; font-size: .8em; line-height: 0; }
 .ic-tldr { padding: .2rem 1.2rem 1.1rem; border: 1px solid var(--border); border-radius: 1.2rem; background: var(--surface); }
 .ic-tldr .section-title { margin-top: 1.1rem; }
 .ic-tl-list { list-style: none; margin: 0; padding: 0; }
-.ic-tl { display: flex; gap: .9rem; padding: .85rem .3rem; border-top: 1px solid var(--border); color: var(--text); text-decoration: none; }
+.ic-tl { display: flex; gap: .9rem; padding: .95rem .3rem; border-top: 1px solid var(--border); color: var(--text); text-decoration: none; }
 .ic-tl-list li:first-child .ic-tl { border-top: 0; }
 .ic-tl-n { flex: none; display: grid; place-items: center; width: 1.85rem; height: 1.85rem; margin-top: .1rem; border-radius: 50%; background: var(--app-gold); color: #fff; font-family: var(--sans); font-size: .85rem; font-weight: 700; }
-.ic-tl-b { display: grid; gap: .25rem; min-width: 0; }
+.ic-tl-b { display: grid; gap: .3rem; min-width: 0; }
 .ic-tl-t { font-size: 1.08rem; font-weight: 700; line-height: 1.3; }
-.ic-tl-s { color: var(--text-soft); line-height: 1.55; }
+.ic-tl-s { color: var(--text-soft); font-size: 1rem; line-height: 1.6; }
+.ic-tl-more { display: inline-flex; align-items: center; gap: .25rem; justify-self: start; margin-top: .1rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; color: var(--gold); }
+.ic-tl-more svg { width: .85rem; height: .85rem; transition: transform .2s; }
 .ic-tl:hover .ic-tl-t, .ic-tl:focus-visible .ic-tl-t { color: var(--gold); }
+.ic-tl:hover .ic-tl-more svg, .ic-tl:focus-visible .ic-tl-more svg { transform: translateX(3px); }
 .ic-full { margin: .5rem 0 0; text-align: center; font-family: var(--sans); }
 .ic-full a { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; }
 .ic-full svg { width: 1.05rem; height: 1.05rem; }
-.ic-note { margin: 1.4rem 0 0; padding: .8rem 1rem; border-left: 3px solid var(--gold-soft); border-radius: 0 .6rem .6rem 0; background: var(--surface-2); color: var(--text-soft); font-size: .95rem; line-height: 1.6; }
-.ic-part { margin-top: 3.4rem; }
-.ic-part-n { margin: 0; text-align: center; font-family: var(--sans); font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
-.ic-part-t { margin: .3rem 0 1.2rem; text-align: center; font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 600; line-height: 1.15; }
-.ic-sec { margin-top: 1.8rem; padding-top: .4rem; border-top: 1px solid var(--border); }
-.ic-sec-t { display: flex; align-items: baseline; gap: .65rem; margin: 1rem 0 .8rem; font-size: clamp(1.35rem, 3vw, 1.7rem); font-weight: 600; line-height: 1.2; }
-.ic-sec-t .label { flex: none; font-family: var(--sans); font-size: .95rem; font-weight: 700; color: var(--gold); }
-.ic-quote cite { display: block; margin-top: .45rem; font-family: var(--sans); font-size: .82rem; font-style: normal; color: var(--muted); }
-.ic-top { margin: .5rem 0 0; text-align: right; font-family: var(--sans); font-size: .85rem; }
+
+/* The full case: a comfortable reading column, headings that stand apart from the text,
+   subheadings as small labels, quotes set off, and room between the steps of an argument */
+.ic-part { margin-top: 4.2rem; }
+.ic-part-head { padding: 1.6rem 1rem 1.4rem; border-radius: 1.2rem; background: var(--surface); border: 1px solid var(--border); text-align: center; }
+.ic-part-n { margin: 0; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.ic-part-t { margin: .35rem 0 0; text-align: center; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 600; line-height: 1.2; text-wrap: balance; }
+.ic-sec { max-width: 40rem; margin: 3rem auto 0; }
+.ic-sec-t { display: flex; align-items: flex-start; gap: .8rem; margin: 0 0 1.3rem; padding-bottom: .9rem; border-bottom: 1px solid var(--border); font-size: clamp(1.35rem, 3vw, 1.65rem); font-weight: 600; line-height: 1.25; text-wrap: balance; }
+.ic-sec-t .label { flex: none; display: grid; place-items: center; min-width: 1.9rem; height: 1.9rem; margin-top: .05rem; padding: 0 .35rem; border-radius: 999px; background: var(--gold-bg); color: var(--gold); font-family: var(--sans); font-size: .85rem; font-weight: 700; line-height: 1; }
+.ic-page .prose { font-size: 1.08rem; line-height: 1.74; }
+.ic-page .prose p { margin: 0 0 1.15em; }
+.ic-page .prose h4 { margin: 2.1rem 0 .7rem; font-family: var(--sans); font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.4; color: var(--gold); }
+.ic-page .prose ul { margin: 0 0 1.3em; padding-left: 1.3rem; }
+.ic-page .prose li { margin-bottom: .6em; padding-left: .2rem; }
+.ic-page .prose .ic-quote { margin: 1.6rem 0; padding: 1rem 1.2rem; border-left: 3px solid var(--gold); border-radius: 0 .8rem .8rem 0; background: var(--surface); color: var(--text); font-style: italic; line-height: 1.7; }
+.ic-page .prose .ic-quote p { margin: 0; }
+.ic-quote cite { display: block; margin-top: .55rem; font-family: var(--sans); font-size: .8rem; font-style: normal; color: var(--muted); }
 .qref, .hdref { white-space: nowrap; }
-.ic-closing { margin-top: 3.4rem; }
+
+/* Between sections: the one before, the one after, and back to the start */
+.ic-nav { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin: 2.2rem 0 0; font-family: var(--sans); }
+.ic-nav > a { display: grid; gap: .3rem; align-content: start; padding: .8rem 1rem; border: 1px solid var(--border); border-radius: .9rem; background: var(--surface); color: var(--text); text-decoration: none; transition: border-color .2s, background .2s; }
+.ic-nav > a:hover, .ic-nav > a:focus-visible { border-color: var(--gold); }
+.ic-nav-next { text-align: right; }
+.ic-nav-l { display: inline-flex; align-items: center; gap: .3rem; font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
+.ic-nav-next .ic-nav-l { justify-content: flex-end; }
+.ic-nav-l svg { width: .9rem; height: .9rem; }
+.ic-nav-t { font-size: .92rem; font-weight: 600; line-height: 1.35; }
+.ic-nav > a.ic-nav-start { grid-column: 1 / -1; justify-self: center; display: inline-flex; align-items: center; gap: .35rem; padding: .45rem 1rem; border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--text-soft); }
+.ic-nav-start svg { width: .9rem; height: .9rem; }
+
+.ic-closing { margin-top: 4.2rem; }
+.ic-closing > .ic-part-t { margin-bottom: 1.4rem; }
 .ic-closing .prose p:last-child { margin-top: 1.4rem; text-align: center; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
+.ic-sources { max-width: 40rem; margin: 3.4rem auto 0; }
 .ic-sources ul { padding-left: 1.2rem; color: var(--text-soft); font-size: .92rem; line-height: 1.6; }
+.ic-footnote { max-width: 40rem; margin: 2.4rem auto 0; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-soft); font-size: .88rem; line-height: 1.65; }
+.ic-footnote p { margin: 0; }
+.ic-fn-mark { margin-right: .3em; font-family: var(--sans); font-weight: 700; color: var(--gold); }
+@media (max-width: 600px) {
+  .ic-page .prose { font-size: 1.04rem; line-height: 1.72; }
+  .ic-sec { margin-top: 2.4rem; }
+  .ic-sec-t { font-size: 1.3rem; }
+  .ic-part-head { padding: 1.3rem .9rem 1.1rem; }
+  .ic-page .prose .ic-quote { padding: .85rem 1rem; }
+  .ic-nav { gap: .5rem; }
+  .ic-nav > a { padding: .7rem .8rem; }
+}
 
 /* ------------------------------------------------------------------ Two languages on every page
    Each text is written twice, as a pair of wrappers (.l-tr / .l-en). The wrappers take no room of

@@ -2074,11 +2074,9 @@
     'kutsal-ayin.html': function (m) {
       $$('.mass-part', m).forEach(function (d) { avNode(d, avText($('h2', d)), avText($('.mass-part-n', d))); });
     },
-    /* the summary, then each part holding its sections, the closing and the sources; the note
-       about the word "Allah" moves up under the lead so the rows stay together */
+    /* the summary, then each part holding its sections, the closing and the sources; the
+       footnote on the word "Allah" stays under the rows, at the foot of the page's list */
     'islama-cevap.html': function (m) {
-      var lead = $('.ic-lead', m), note = $('.ic-note', m);
-      if (lead && note) lead.parentNode.insertBefore(note, lead.nextSibling);
       avNode($('#kisaca', m), avHead($('#kisaca-h', m)), pcat(String($$('.ic-tl-list > li', m).length), ' ', pmake('madde', 'points')));
       $$('.ic-part', m).forEach(function (p) { avNode(p, avText($('.ic-part-t', p)), avText($('.ic-part-n', p))); });
       $$('.ic-part .ic-sec', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
@@ -2265,14 +2263,14 @@
     draw();
   }
 
-  /* "Başa dön": at the foot of a page (or a phone's level) that runs well past one screen */
+  /* "En üste kaydır": at the foot of a page (or a phone's level) that runs well past one screen */
   function initToTop() {
     var av = document.documentElement.classList.contains('av');
     var foot = av ? $('.av-foot') : $('.site-footer');
     if (!foot || !window.scrollTo) return;
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'to-top'; b.hidden = true;
-    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span>' + LT('Başa dön', 'Back to top') + '</span>';
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span>' + LT('En üste kaydır', 'Scroll to top') + '</span>';
     if (av) {
       var row = document.createElement('div'), share = $('.av-share', foot);
       row.className = 'av-foot-row';
@@ -2535,6 +2533,13 @@
       } catch (e) { /* file:// */ }
       show(n, how === 'replace' ? 'back' : 'push');
     }
+    function step(n) {
+      if (!n || n === cur) return;
+      /* into another part, the back button leads to that part's list rather than the history */
+      var same = parentOf(n) === parentOf(cur);
+      try { history.replaceState({ av: 1, pushed: same && !!(history.state && history.state.pushed), trail: trail().slice(0, -1).concat(keyOf(n)) }, '', urlFor(n)); } catch (e) { /* file:// */ }
+      show(n, 'push');
+    }
     /* an element anywhere on the page: open the level that holds it, then bring it into view */
     function reveal(el, how) {
       var n = el.hasAttribute('data-av-node') ? el : nodeOf(el);
@@ -2563,6 +2568,9 @@
       if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || a.target === '_blank') return;
       if (a === backA) { e.preventDefault(); back(); return; }
       if (a.hasAttribute('data-av-pop')) { e.preventDefault(); popTo(nodeOf(byId(a.getAttribute('data-av-pop')))); return; }
+      /* the previous or next section: it takes the place of the one being read, so the back
+         button still leads to the list the reader came from, not through every section read */
+      if (a.hasAttribute('data-av-step')) { e.preventDefault(); step(nodeOf(byId(a.getAttribute('href').slice(1)))); return; }
       var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
       if (u.origin !== location.origin || u.pathname !== location.pathname || !u.hash) return;
       var el = byId(decodeURIComponent(u.hash.slice(1)));

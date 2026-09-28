@@ -1576,21 +1576,32 @@ function Ic-Blocks([string]$s) {
   . $flush
   return $sb.ToString()
 }
+$IcoArrowR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+$IcoArrowL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+$IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>'
 $icTldr = ($Ic.tldr | ForEach-Object -Begin { $i = 0 } -Process {
   $i++
-  "<li><a class=`"ic-tl`" href=`"#$($_.href)`"><span class=`"ic-tl-n`">$i</span><span class=`"ic-tl-b`"><span class=`"ic-tl-t`">$(T $_.t $_.tEn)</span><span class=`"ic-tl-s`">$(T $_.text $_.textEn)</span></span></a></li>"
+  "<li><a class=`"ic-tl`" href=`"#$($_.href)`"><span class=`"ic-tl-n`">$i</span><span class=`"ic-tl-b`"><span class=`"ic-tl-t`">$(T $_.t $_.tEn)</span><span class=`"ic-tl-s`">$(T $_.text $_.textEn)</span><span class=`"ic-tl-more`">$(T 'Tümünü oku' 'Read all') $IcoArrowR</span></span></a></li>"
 }) -join ''
 $icRoman = @('I', 'II', 'III', 'IV', 'V', 'VI')
+# Every section, the closing too, in reading order: each ends with a way to the one before, the
+# one after and back to the start (on a phone, the page's list of parts)
+$icSeq = @(@($Ic.parts) | ForEach-Object { $_.sections }) + @($Ic.closing)
+function Ic-Nav($k) {
+  $prev = if ($k -gt 0) { $p = $icSeq[$k - 1]; "<a class=`"ic-nav-prev`" href=`"#$($p.id)`" data-av-step><span class=`"ic-nav-l`">$IcoArrowL $(T 'Önceki bölüm' 'Previous section')</span><span class=`"ic-nav-t`">$(T $p.title $p.titleEn)</span></a>" } else { '<span></span>' }
+  $next = if ($k -lt $icSeq.Count - 1) { $n = $icSeq[$k + 1]; "<a class=`"ic-nav-next`" href=`"#$($n.id)`" data-av-step><span class=`"ic-nav-l`">$(T 'Sonraki bölüm' 'Next section') $IcoArrowR</span><span class=`"ic-nav-t`">$(T $n.title $n.titleEn)</span></a>" } else { '<span></span>' }
+  return "<nav class=`"ic-nav`" aria-label=`"Bölümler arasında`" data-en-aria-label=`"Between sections`">$prev$next<a class=`"ic-nav-start`" href=`"#bas`" data-av-pop=`"bas`">$IcoSections $(T 'Bölümlere dön' 'Back to sections')</a></nav>"
+}
 $icN = 0
 $icParts = (@($Ic.parts) | ForEach-Object -Begin { $pi = 0 } -Process {
   $part = $_
   $secs = ($part.sections | ForEach-Object {
     $script:icN++
-    "<section class=`"ic-sec`" id=`"$($_.id)`"><h3 class=`"ic-sec-t`"><span class=`"label`">$($script:icN)</span>$(T $_.title $_.titleEn)</h3>" +
-      "<div class=`"prose`">$(TB (Ic-Blocks $_.body) (Ic-Blocks $_.bodyEn))</div><p class=`"ic-top`"><a href=`"#kisaca`">$(T 'Özete dön' 'Back to the summary')</a></p></section>"
+    "<section class=`"ic-sec`" id=`"$($_.id)`"><h3 class=`"ic-sec-t`"><span class=`"label`">$($script:icN)</span><span>$(T $_.title $_.titleEn)</span></h3>" +
+      "<div class=`"prose`">$(TB (Ic-Blocks $_.body) (Ic-Blocks $_.bodyEn))</div>$(Ic-Nav ($script:icN - 1))</section>"
   }) -join "`n"
   $pi++
-  "<section class=`"ic-part`" id=`"$($part.id)`" aria-labelledby=`"$($part.id)-h`"><p class=`"ic-part-n`">$(T "$($icRoman[$pi - 1]). Bölüm" "Part $($icRoman[$pi - 1])")</p><h2 class=`"ic-part-t`" id=`"$($part.id)-h`">$(T $part.title $part.titleEn)</h2>`n$secs</section>"
+  "<section class=`"ic-part`" id=`"$($part.id)`" aria-labelledby=`"$($part.id)-h`"><header class=`"ic-part-head`"><p class=`"ic-part-n`">$(T "$($icRoman[$pi - 1]). Bölüm" "Part $($icRoman[$pi - 1])")</p><h2 class=`"ic-part-t`" id=`"$($part.id)-h`">$(T $part.title $part.titleEn)</h2></header>`n$secs</section>"
 }) -join "`n"
 $icSources = ($Ic.sources | ForEach-Object {
   $t = T $_[0] $_[2]
@@ -1598,17 +1609,17 @@ $icSources = ($Ic.sources | ForEach-Object {
 }) -join ''
 $icBody = @"
 <div class="wrap narrow ic-page">
-  <header class="page-head center">$(Page-Ico $IcoAnswer)<h1>$(T $Ic.title $Ic.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Ic.en)</p>")</header>
-  <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)</p>
+  <header class="page-head center" id="bas">$(Page-Ico $IcoAnswer)<h1>$(T $Ic.title $Ic.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Ic.en)</p>")</header>
+  <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)<a class="ic-fn-ref" href="#dipnot" aria-label="Dipnot" data-en-aria-label="Footnote">*</a></p>
   <section class="ic-tldr" id="kisaca" aria-labelledby="kisaca-h">
     <h2 class="section-title" id="kisaca-h">$(T $Ic.tldrTitle $Ic.tldrTitleEn)</h2>
     <ol class="ic-tl-list">$icTldr</ol>
     <p class="ic-full"><a href="#$($Ic.parts[0].id)">$(T 'Tam tartışma aşağıda' 'The full case below') $IcoChevDown</a></p>
   </section>
-  <p class="ic-note">$(T (Ic-Link $Ic.note) (Ic-Link $Ic.noteEn))</p>
 $icParts
-  <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$(T $Ic.closing.title $Ic.closing.titleEn)</h2><div class="prose">$(TB (Ic-Blocks $Ic.closing.body) (Ic-Blocks $Ic.closing.bodyEn))</div></section>
+  <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$(T $Ic.closing.title $Ic.closing.titleEn)</h2><div class="prose">$(TB (Ic-Blocks $Ic.closing.body) (Ic-Blocks $Ic.closing.bodyEn))</div>$(Ic-Nav ($icSeq.Count - 1))</section>
   <section class="ic-sources" aria-labelledby="ic-kaynak-h"><h2 class="section-title" id="ic-kaynak-h">$(T 'Kaynaklar' 'Sources')</h2><ul>$icSources</ul></section>
+  <aside class="ic-footnote" id="dipnot" aria-label="Dipnot" data-en-aria-label="Footnote"><p><span class="ic-fn-mark" aria-hidden="true">*</span>$(T (Ic-Link $Ic.note) (Ic-Link $Ic.noteEn))</p></aside>
 </div>
 "@
 $icLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ic.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/islama-cevap.html") + '}'
@@ -1620,8 +1631,6 @@ Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadis
 # A guided case in five steps. Each step is a tab panel (script.js shows one at a time; without
 # JavaScript all five simply follow each other), and each topic a card: the skeptic's question,
 # a one-line answer, the key points as a list, and the strongest objection with its answer.
-$IcoArrowR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
-$IcoArrowL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
 $IcoSkeptic = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.8 9.6a2.3 2.3 0 0 1 4.4.8c0 1.6-2.2 2-2.2 3.3"/><path d="M12 16.4h.01"/></svg>'
 function Why-Page([string]$lang) {
   $W = $WhyCatholic
