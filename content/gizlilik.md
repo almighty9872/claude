@@ -11,7 +11,7 @@ Bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya
 
 ## Tarayıcınızda saklanan tercihler
 
-Açık/koyu tema seçiminiz, erişilebilirlik menüsündeki tercihleriniz (yazı boyutu, kontrast, harf aralığı gibi) ve Tesbih Duası sayfasındaki etkileşimli tesbihte o gün kaldığınız yer, yalnızca kendi tarayıcınızda (localStorage) saklanır. Tesbihteki yer ertesi gün kendiliğinden sıfırlanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
+Açık/koyu tema ve Türkçe/İngilizce dil seçiminiz, erişilebilirlik menüsündeki tercihleriniz (yazı boyutu, kontrast, harf aralığı gibi) ve Tesbih Duası sayfasındaki etkileşimli tesbihte o gün kaldığınız yer, yalnızca kendi tarayıcınızda (localStorage) saklanır. Tesbihteki yer ertesi gün kendiliğinden sıfırlanır. Bu bilgi hiçbir sunucuya gönderilmez, bizim tarafımızdan görülemez ve yalnızca sizin cihazınızda kalır. Tarayıcı verilerinizi temizlediğinizde bu tercihler de silinir.
 
 ## Sunucu günlükleri
 

@@ -1,14 +1,22 @@
 # katolikdunyasi.com
 
-A static, Turkish-language Catholic resource site (English and Latin originals are shown on request inside the Turkish pages). It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, frequently asked questions, and a directory of active Catholic churches in Turkey.
+A static Catholic resource site in Turkish and English: every page is written in Turkish, and a TR | EN switch that stays on screen turns the whole page, its text and its buttons, into English in place (Latin originals are shown on request). It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, frequently asked questions, and a directory of active Catholic churches in Turkey.
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font (and Lexend, used only when a visitor turns on the dyslexia-friendly font) is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
 The site makes no outside network calls and never asks for the visitor's location. The full-menu overlay (opened from the header's hamburger icon) shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
 
-## Former English section (`/en/`)
+## Two languages: the TR | EN switch
 
-The site is Turkish only. The old English addresses under `en/` are small forwarding pages (built from `$EnAltMap` in `tools/build.ps1`) that send each visitor, and search engines, to the Turkish page that replaced it, keeping any `#section`.
+There is no separate English site. Each page carries both languages, and the TR | EN pill in the bottom corner (bottom left on the Katekizm's phone pages, where its button sits on the right) switches between them without reloading or losing the reader's place:
+
+- In the build, `T` (a phrase), `TB` (a block), `TS` (SVG text) and `TA` (an attribute) in `tools/build.ps1` write a Turkish and an English version side by side: `<span class="l-tr">…</span><span class="l-en" lang="en">…</span>`, or `aria-label="…" data-en-aria-label="…"` for an attribute. `TO` marks something shown only in Turkish (the small English glosses under Turkish titles). CSS shows one language and hides the other (`html.lang-en`); the wrappers are `display: contents`, so they don't change the layout.
+- The page's English title is in `<meta name="kd-title-en">`. The choice is remembered in the browser (`kd-lang` in localStorage, see the privacy page) and applied in `<head>` before the page is drawn, so an English reader never sees a flash of Turkish.
+- Text the scripts write (the calendar, search results, the phone's app screens, the rosary) is paired the same way: `LT(tr, en)` for HTML, and "pair strings" (`pmake`, `pstr`, `pset` and friends in `assets/script.js`) for labels taken from the page.
+- Switching keeps the paragraph under the reading line in place, so a reader can flip back and forth in the middle of a long text.
+- Content in `data/` has its English beside the Turkish: `en`/`textEn`/`bodyEn`/`historyEn` and so on (each file's header says which), and `content/<name>-en.md` for the Markdown pages.
+
+The old English addresses under `en/` are small forwarding pages (built from `$EnAltMap` in `tools/build.ps1`) that send each visitor, and search engines, to the page that replaced them, keeping any `#section`.
 
 ## Folder layout
 
@@ -17,10 +25,10 @@ index.html              Home: search box, section cards, today's saint
 neden-katoligiz.html    Why we're Catholic: a five-step case for the faith, reason to doctrine, one step
                         at a time (a skeptic's question, short answer, key points, objection per card)
 iman-ikrari.html        Compendium Part I · Q 1–217   (reading page: sticky contents sidebar, chapter
-kutsal-sirlar.html      Compendium Part II · Q 218–356  prev/next, "English" button per question +
-mesihte-yasam.html      Compendium Part III · Q 357–533 "show all English")
+kutsal-sirlar.html      Compendium Part II · Q 218–356  prev/next; the EN switch shows the Vatican's
+mesihte-yasam.html      Compendium Part III · Q 357–533 English original)
 hristiyan-duasi.html    Compendium Part IV · Q 534–598
-motu-proprio.html       Motu Proprio (Turkish, English paragraph by paragraph on demand)
+motu-proprio.html       Motu Proprio (Turkish, or the English original with the EN switch)
 giris.html              Introduction (same)
 ekler.html              Appendix: prayers (TR/EN/LA) + formulas of Catholic doctrine
 katolik-sureci.html     Becoming Catholic: the OCIA/RCIA process
@@ -41,12 +49,14 @@ topraklarimizda-hristiyanlik.html  Christianity's roots in Anatolia: an interact
                         places (hover for a card that follows the pointer, click to pin it),
                         then Paul's homeland, the Seven Churches, Nicaea, the Church Fathers
 sss.html                Frequently asked questions, grouped by topic
-kiliseler.html          Parish locator: a map of Turkey (each city zooms to its region; churches by rite), then the churches by city
+kiliseler.html          Parish locator: a map of Turkey; a city's dot opens the list of its churches
+kilise/<id>.html        One page per church: Mass and visiting times, address, history, sources
+islama-cevap.html       Tartış (Debate): Answering Islam, a short summary then the full case in four parts
 iletisim.html           Contact page (email)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
 sitemap.xml, robots.txt
 assets/styles.css       All styling, hand-edited. Theme tokens at the top: dark = navy/gold, light = ivory/gold
-assets/script.js        Theme, clock, English reveal, search, reading bar, contents drawer, widgets
+assets/script.js        Theme, TR | EN switch, search, reading bar, contents drawer, phone app screens, widgets
 assets/styles.min.css   ← generated by build.ps1 from styles.css; the file pages actually load
 assets/script.min.js    ← generated by build.ps1 from script.js; the file pages actually load
 assets/fonts/           EB Garamond and Lexend .woff2 files (both SIL Open Font License; OFL.txt, OFL-Lexend.txt)
@@ -69,8 +79,10 @@ data/neden-katoligiz.js ← "Why we're Catholic" content
 data/azizler-adlar.js   ← Generated by the build: just each day's saint name, for the today's-saint pill
 data/kiliseler.js       ← Parish locator: churches in Turkey by city and rite, with approximate (district) map positions
 data/kilise-harita-sekli.js ← The Marmara coast in full detail for the parish map (generated; don't edit)
+data/islama-cevap.js    ← Answering Islam: the summary, the four parts and the sources (Turkish + English)
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← Footer text: the one-line "about" sentence and the "Kaynaklar ve Telif" (sources and copyright) dialog (Markdown)
+content/*-en.md         ← The English of each Markdown page (hakkinda, kutsal-kitap, erisilebilirlik, gizlilik)
 tools/build.ps1         Regenerates the static pages from data/ and content/
 tools/anadolu-harita-sekli.mjs  Regenerates the map outline (Node; only if the map frame should change)
 tools/kilise-harita-sekli.mjs   Regenerates the parish map's detailed Marmara coast (Node)
@@ -103,7 +115,7 @@ Search reads the data files at runtime, so edits show up in search results immed
 
 ## Phones: pages as app screens
 
-Below 980px wide, every page except the home screen is shown as a screen of an app (`initAppView` in `assets/script.js`): the page's sections as a list, a section with its items as a list, an item on its own. All of the page's text stays in its HTML, so search engines read the same page on a phone as on a computer. Each level has its own `#anchor` address, so the browser's back steps back a level and links open the right level. The bar at the top leads back to the page's home screen app (Öğren, Dua Et, Keşfet) or the page it belongs to (`Av-Parent` in `tools/build.ps1`); where a level holds English or Latin originals, a Türkçe / English / Latina switch swaps the text in place. Which elements are levels on each page is set in `AV_PAGES` in `assets/script.js`.
+Below 980px wide, every page except the home screen is shown as a screen of an app (`initAppView` in `assets/script.js`): the page's sections as a list, a section with its items as a list, an item on its own. All of the page's text stays in its HTML, so search engines read the same page on a phone as on a computer. Each level has its own `#anchor` address, so the browser's back steps back a level and links open the right level. The bar at the top leads back to the page's home screen app (Öğren, Dua Et, Keşfet, Tartış) or the page it belongs to (`Av-Parent` in `tools/build.ps1`); where a level holds Latin originals, a Türkçe / Latina switch swaps the text in place. Which elements are levels on each page is set in `AV_PAGES` in `assets/script.js`.
 
 An X beside the settings gear returns to the home screen, where the four app icons are. The home screen's bar is drawn after the App Store's: a glyph and a name for each app, the open one in a capsule; tapping another app switches to it at once. The type, on every screen size, is Apple's own San Francisco where the device has it and Inter (`assets/fonts`, SIL Open Font License) elsewhere. Resizing a window across the phone width (980px) reloads an inner page in the other layout. Further into a page, its small icon and name lead straight back to the page's first screen (going back in the browser's history as many steps as that takes), with the levels in between shown under them. On the Katekizm's own pages a magnifier in the bar opens the question search across it.
 

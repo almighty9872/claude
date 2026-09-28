@@ -106,7 +106,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "q": "Günah çıkarmam gerekiyor mu?",
    "a": "Zaten vaftizliyseniz evet: Kilise’ye kabulünüzden önce, ayrı bir zamanda günah çıkarırsınız. Hiç vaftiz olmadıysanız gerekmez, çünkü vaftiz bütün önceki günahları siler. Adım adım anlatım için <a href=\"gunah-cikarma.html\" target=\"_blank\" rel=\"noopener\">Günah Çıkarma rehberine</a> bakın.",
    "qEn": "Do I need to go to confession?",
-   "aEn": "If you're already baptized, yes: you go to confession at a separate time before your reception into the Church. If you've never been baptized, you don't need to, because baptism wipes away all earlier sins. See the <a href=\"en/confession.html\" target=\"_blank\" rel=\"noopener\">step-by-step confession guide</a>."
+   "aEn": "If you're already baptized, yes: you go to confession at a separate time before your reception into the Church. If you've never been baptized, you don't need to, because baptism wipes away all earlier sins. See the <a href=\"gunah-cikarma.html\" target=\"_blank\" rel=\"noopener\">step-by-step confession guide</a>."
   }
  ]
 }/*JSON-END*/;

@@ -50,7 +50,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "Pişmanlık Duası",
    "en": "Act of Contrition",
    "text": "Kendi sözlerinizle ya da geleneksel duayla pişmanlığınızı dile getirin: “Ey Allah’ım, seni gücendirdiğim için yürekten pişmanım ve adil cezaların yüzünden bütün günahlarımdan nefret ediyorum; ama en çok da, bütünüyle iyi ve bütün sevgime layık olan seni, Allah’ımı gücendirdikleri için. Lütfunun yardımıyla bir daha günah işlememeye ve günaha yakın fırsatlardan kaçınmaya kesin karar veriyorum. Amin.” (<a href=\"ekler.html#pismanlik-eylemi\" target=\"_blank\" rel=\"noopener\">tam metin ve diğer dualar için bkz. Ekler</a>)",
-   "textEn": "Express your sorrow in your own words or with the traditional prayer: \"O my God, I am heartily sorry for having offended thee, and I detest all my sins because of thy just punishments, but most of all because they offend thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of thy grace, to sin no more, and to avoid the near occasions of sin. Amen.\" (<a href=\"en/appendix.html#pismanlik-eylemi\" target=\"_blank\" rel=\"noopener\">see the Appendix for the full text and other prayers</a>)"
+   "textEn": "Express your sorrow in your own words or with the traditional prayer: \"O my God, I am heartily sorry for having offended thee, and I detest all my sins because of thy just punishments, but most of all because they offend thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of thy grace, to sin no more, and to avoid the near occasions of sin. Amen.\" (<a href=\"ekler.html#pismanlik-eylemi\" target=\"_blank\" rel=\"noopener\">see the Appendix for the full text and other prayers</a>)"
   },
   {
    "title": "Bağışlama",
@@ -240,7 +240,7 @@ window.CONFESSION = /*JSON-START*/{
    "q": "Henüz vaftiz olmadıysam ya da başka bir mezheptensem günah çıkarabilir miyim?",
    "qEn": "Can I go to confession if I'm not baptized yet, or belong to another denomination?",
    "a": "Günah çıkarma, vaftiz edilmiş Katolikler içindir. Katolik olmayı düşünüyorsanız <a href=\"katolik-sureci.html\">Katolik Olma Süreci</a> sayfasına bakın ya da bir rahiple konuşun.",
-   "aEn": "Confession is for baptized Catholics. If you're thinking of becoming Catholic, see the <a href=\"en/becoming-catholic.html\">Becoming Catholic</a> page or talk to a priest."
+   "aEn": "Confession is for baptized Catholics. If you're thinking of becoming Catholic, see the <a href=\"katolik-sureci.html\">Becoming Catholic</a> page or talk to a priest."
   },
   {
    "id": "agir-hafif-gunah",

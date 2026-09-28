@@ -25,8 +25,10 @@
   /* Pages served at arbitrary URLs (404.html), and every /en/ page, declare <html data-root="/">
      so data and links resolve from the site root */
   var ROOT = document.documentElement.getAttribute('data-root') || '';
-  var LANG = document.documentElement.lang === 'en' ? 'en' : 'tr';
-  var LANG_PREFIX = LANG === 'en' ? 'en/' : '';
+  /* The language shown (TR | EN switch, initLang). Every page carries both; LANG follows the switch.
+     There are no separate English pages any more, so links never get a prefix. */
+  var LANG = document.documentElement.classList.contains('lang-en') ? 'en' : 'tr';
+  var LANG_PREFIX = '';
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
@@ -36,6 +38,111 @@
   var nextFrame = function (fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); };
 
   /* ---------------------------------------------------------------
+     0. Language: TR | EN. Every text is on the page in both languages, as a pair of wrappers
+        (.l-tr / .l-en, written by tools/build.ps1, or by LT() below for text made here), and
+        html.lang-en shows the English one. Attributes carry their English in data-en-<name>.
+        The choice is kept in localStorage and applied in <head> before the first paint.
+        Switching keeps the passage being read where it is on the screen.
+     --------------------------------------------------------------- */
+  var LANG_KEY = 'kd-lang';
+  function isEn() { return document.documentElement.classList.contains('lang-en'); }
+  /* the same pair, for text this script writes into the page */
+  function LT(tr, en) { return (!en || en === tr) ? tr : '<span class="l-tr">' + tr + '</span><span class="l-en" lang="en">' + en + '</span>'; }
+  /* one of the two, for text that cannot hold markup (a confirm box, a document title) */
+  function L2(tr, en) { return isEn() && en ? en : tr; }
+  /* an attribute in both languages: swapAttrs() keeps it in step with the switch */
+  function setAttr2(el, name, tr, en) {
+    el.setAttribute('data-tr-' + name, tr); el.setAttribute('data-en-' + name, en || tr);
+    el.setAttribute(name, isEn() && en ? en : tr);
+  }
+  var I18N_ATTRS = ['aria-label', 'title', 'placeholder', 'content', 'alt', 'data-tooltip', 'value'];
+  function swapAttrs(root) {
+    var en = isEn();
+    I18N_ATTRS.forEach(function (a) {
+      $$('[data-en-' + a + ']', root).forEach(function (el) {
+        if (!el.hasAttribute('data-tr-' + a)) el.setAttribute('data-tr-' + a, el.getAttribute(a) || '');
+        el.setAttribute(a, el.getAttribute(en ? 'data-en-' + a : 'data-tr-' + a));
+      });
+    });
+    var tEn = $('meta[name="kd-title-en"]');
+    if (tEn) {
+      if (!document.documentElement.hasAttribute('data-title-tr')) document.documentElement.setAttribute('data-title-tr', document.title);
+      document.title = en ? tEn.getAttribute('content') : document.documentElement.getAttribute('data-title-tr');
+    }
+  }
+  /* the pair wrapper under the reading line, and where in it the line falls */
+  function langAnchor() {
+    var y = Math.min(window.innerHeight * 0.3, (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + 40);
+    var el = document.elementFromPoint(window.innerWidth / 2, y), pair = null;
+    for (var n = el; n && n !== document.body; n = n.parentElement) if (n.classList && (n.classList.contains('l-tr') || n.classList.contains('l-en'))) pair = n;
+    if (pair) {
+      var r = boxOf(pair); if (!r) return null;
+      return { pair: pair, y: y, f: r.height ? (y - r.top) / r.height : 0 };
+    }
+    return el && el !== document.body ? { el: el, top: el.getBoundingClientRect().top } : null;
+  }
+  /* a display:contents wrapper has no box of its own: measure what it holds */
+  function boxOf(node) {
+    try { var rg = document.createRange(); rg.selectNodeContents(node); var r = rg.getBoundingClientRect(); return r.height || r.width ? r : null; } catch (e) { return null; }
+  }
+  /* Text taken from the page to label something else (the phone's rows and titles) keeps both
+     languages: one string, "Türkçe\u0001English". pset() writes it back as a pair. */
+  var PSEP = '\u0001';
+  function langTextOf(el, lang) {
+    var c = el.cloneNode(true);
+    $$(lang === 'en' ? '.l-tr' : '.l-en', c).forEach(function (x) { x.remove(); });
+    return c.textContent.replace(/\s+/g, ' ').trim();
+  }
+  function pmake(tr, en) { tr = tr == null ? '' : String(tr); en = en == null ? tr : String(en); return tr === en ? tr : tr + PSEP + en; }
+  function psplit(v) { v = v == null ? '' : String(v); var i = v.indexOf(PSEP); return i < 0 ? [v, v] : [v.slice(0, i), v.slice(i + 1)]; }
+  function pstr(el) {
+    if (!el) return '';
+    if (!(el.querySelector && el.querySelector('.l-tr, .l-en'))) return el.textContent.replace(/\s+/g, ' ').trim();
+    return pmake(langTextOf(el, 'tr'), langTextOf(el, 'en'));
+  }
+  function pcat() { var tr = '', en = ''; for (var i = 0; i < arguments.length; i++) { var x = psplit(arguments[i]); tr += x[0]; en += x[1]; } return pmake(tr, en); }
+  function pjoin(list, sep) { var a = list.filter(Boolean).map(psplit); return pmake(a.map(function (x) { return x[0]; }).join(sep), a.map(function (x) { return x[1]; }).join(sep)); }
+  function pmap(v, fn) { var x = psplit(v); return pmake(fn(x[0], 'tr'), fn(x[1], 'en')); }
+  function phtml(v) { var x = psplit(v); return x[0] === x[1] ? esc(x[0]) : LT(esc(x[0]), esc(x[1])); }
+  function pset(el, v) { if (!el) return; if (String(v == null ? '' : v).indexOf(PSEP) < 0) el.textContent = v == null ? '' : v; else el.innerHTML = phtml(v); }
+  function pnow(v) { var x = psplit(v); return isEn() ? x[1] : x[0]; }
+  /* an attribute written into markup from a pair string, kept in step by swapAttrs() */
+  function pattr(name, v) { var x = psplit(v); return name + '="' + esc(isEn() ? x[1] : x[0]) + '" data-tr-' + name + '="' + esc(x[0]) + '" data-en-' + name + '="' + esc(x[1]) + '"'; }
+  /* html has smooth scrolling on: this move must not be seen */
+  function jumpBy(d) { if (!d) return; try { window.scrollBy({ top: d, left: 0, behavior: 'instant' }); } catch (e) { window.scrollBy(0, d); } }
+  function setLang(lang, keepView) {
+    var en = lang === 'en', root = document.documentElement;
+    var a = keepView ? langAnchor() : null;
+    root.classList.toggle('lang-en', en);
+    root.lang = en ? 'en' : 'tr';
+    LANG = en ? 'en' : 'tr';
+    try { localStorage.setItem(LANG_KEY, LANG); } catch (e) { /* private mode */ }
+    swapAttrs(document);
+    $$('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === LANG)); });
+    if (a) {
+      if (a.pair) {
+        var other = a.pair.classList.contains('l-tr') ? a.pair.nextElementSibling : a.pair.previousElementSibling;
+        var r = other && boxOf(other);
+        if (r) jumpBy(r.top + a.f * r.height - a.y);
+      } else if (a.el) {
+        jumpBy(a.el.getBoundingClientRect().top - a.top);
+      }
+    }
+    try { document.dispatchEvent(new CustomEvent('kd:lang', { detail: LANG })); } catch (e) { /* old browsers */ }
+  }
+  function initLang() {
+    setLang(isEn() ? 'en' : 'tr', false);
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-set-lang]');
+      if (!b) return;
+      var want = b.getAttribute('data-set-lang');
+      /* a tap on the language already shown flips to the other one, like a switch */
+      if (want === LANG && b.closest('.lang-pill')) want = LANG === 'en' ? 'tr' : 'en';
+      setLang(want, true);
+    });
+  }
+
+  /* ---------------------------------------------------------------
      1. Theme (navy/gold dark, ivory/gold light), persisted in localStorage
      --------------------------------------------------------------- */
   function storedTheme() { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
@@ -43,7 +150,7 @@
   function syncTheme() {
     $$('.theme-toggle').forEach(function (b) {
       b.setAttribute('aria-checked', String(isDark()));
-      b.setAttribute('aria-label', isDark() ? 'Açık temaya geç' : 'Koyu temaya geç');
+      setAttr2(b, 'aria-label', isDark() ? 'Açık temaya geç' : 'Koyu temaya geç', isDark() ? 'Switch to light theme' : 'Switch to dark theme');
     });
   }
   /* The browser's own bars follow the theme too: through the theme-color meta (Safari up to
@@ -92,11 +199,12 @@
      --------------------------------------------------------------- */
   var FONTSIZE_KEY = 'kkio-fontsize';
   var FONTSIZE_LABELS = ['Yazı boyutunu büyüt', 'Yazı boyutunu büyüt', 'Yazı boyutunu sıfırla'];
+  var FONTSIZE_LABELS_EN = ['Make the text bigger', 'Make the text bigger', 'Reset the text size'];
   function fontsizeLevel() { return document.documentElement.getAttribute('data-fontsize') || '0'; }
   function syncFontsize() {
     var level = fontsizeLevel();
     $$('.fontsize-toggle').forEach(function (b) {
-      b.setAttribute('aria-label', FONTSIZE_LABELS[Number(level)]);
+      setAttr2(b, 'aria-label', FONTSIZE_LABELS[Number(level)], FONTSIZE_LABELS_EN[Number(level)]);
     });
   }
   function initFontSize() {
@@ -147,8 +255,8 @@
       colours: { green: 'green', violet: 'violet', white: 'white', red: 'red', rose: 'rose' }
     }
   };
-  function liturgicalDay(now) {
-    var L = LIT_TEXT[LANG], y = now.getFullYear();
+  function liturgicalDay(now, lang) {
+    var L = LIT_TEXT[lang || LANG], y = now.getFullYear();
     var today = new Date(y, now.getMonth(), now.getDate());
     function date(m, d) { return new Date(y, m - 1, d); }
     function add(dt, n) { var x = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()); x.setDate(x.getDate() + n); return x; }
@@ -187,20 +295,23 @@
   function fillTodaySeason() {
     var val = $('[data-ns-season]'), dot = $('[data-ns-season-dot]');
     if (!val) return;
-    var lit = liturgicalDay(new Date()), L = LIT_TEXT[LANG], label = L.colour + ': ' + L.colours[lit.colour];
-    val.textContent = lit.name;
+    var now = new Date(), lit = liturgicalDay(now, 'tr'), litEn = liturgicalDay(now, 'en');
+    var label = LIT_TEXT.tr.colour + ': ' + LIT_TEXT.tr.colours[lit.colour], labelEn = LIT_TEXT.en.colour + ': ' + LIT_TEXT.en.colours[lit.colour];
+    val.innerHTML = LT(lit.name, litEn.name);
     val.classList.remove('hint');
     if (dot) {
       dot.className = 'lit-dot lit-' + lit.colour;
       dot.setAttribute('role', 'img');
-      dot.setAttribute('aria-label', label);
-      dot.title = label;
+      setAttr2(dot, 'aria-label', label, labelEn);
+      setAttr2(dot, 'title', label, labelEn);
     }
   }
-  function todayDateText() {
+  /* today's date in both languages, as a pair */
+  function todayDateHtml() { return LT(todayDateText('tr'), todayDateText('en')); }
+  function todayDateText(lang) {
     var d = new Date();
     try {
-      if (LANG === 'en') return new Intl.DateTimeFormat('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(d);
+      if ((lang || LANG) === 'en') return new Intl.DateTimeFormat('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(d);
       var p = {};
       new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }).formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
       return p.day + ' ' + p.month + ' ' + p.year + ' ' + p.weekday;
@@ -214,25 +325,22 @@
     loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
       var day = new Date().getDay();
       var set = window.COMPENDIUM_ROSARY.sets.filter(function (s) { return s.days.indexOf(day) !== -1; })[0];
-      val.textContent = set ? (LANG === 'en' ? set.en : set.tr) : (LANG === 'en' ? 'Unavailable' : 'Bulunamadı');
+      val.innerHTML = set ? LT(set.tr, set.en) : LT('Bulunamadı', 'Unavailable');
       val.classList.remove('hint');
       var link = val.closest('a');
-      if (link && set) {
-        var file = LANG === 'en' ? 'rosary.html' : 'tesbih-duasi.html';
-        link.setAttribute('href', ROOT + LANG_PREFIX + file + '#gizem-' + set.id);
-      }
-    })['catch'](function () { val.textContent = LANG === 'en' ? 'Unavailable' : 'Bulunamadı'; val.classList.remove('hint'); });
+      if (link && set) link.setAttribute('href', ROOT + 'tesbih-duasi.html#gizem-' + set.id);
+    })['catch'](function () { val.innerHTML = LT('Bulunamadı', 'Unavailable'); val.classList.remove('hint'); });
   }
   function fillTodaySaint() {
     var val = $('[data-ns-saint]');
     if (!val) return;
     getTodaySaint().then(function (s) {
-      val.textContent = s.text;
+      val.innerHTML = s.html;
       val.classList.remove('hint');
       var link = val.closest('a');
       if (link) link.setAttribute('href', s.href);
     })['catch'](function () {
-      val.textContent = LANG === 'en' ? 'Unavailable' : 'Bulunamadı';
+      val.innerHTML = LT('Bulunamadı', 'Unavailable');
       val.classList.remove('hint');
     });
   }
@@ -251,45 +359,11 @@
   }
   function initNavToday() {
     var dateEl = $('[data-ns-date]');
-    if (dateEl) dateEl.textContent = todayDateText();
+    if (dateEl) dateEl.innerHTML = todayDateHtml();
     tickNavTime();
     fillTodaySeason();
     fillTodayMystery();
     fillTodaySaint();
-  }
-
-  /* ---------------------------------------------------------------
-     3. English original: per-item reveal (toggles the [hidden] block;
-        CSS plays a short opacity fade, no layout-heavy animation)
-     --------------------------------------------------------------- */
-  function setReveal(btn, open) {
-    var block = document.getElementById(btn.getAttribute('aria-controls'));
-    if (!block) return;
-    block.hidden = !open;
-    btn.setAttribute('aria-expanded', String(open));
-  }
-  function initReveal() {
-    document.addEventListener('click', function (e) {
-      var btn = e.target.closest && e.target.closest('.en-toggle');
-      if (btn) setReveal(btn, btn.getAttribute('aria-expanded') !== 'true');
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     4. "Show all English" (reading bar / article pages)
-     --------------------------------------------------------------- */
-  function initRevealAll() {
-    $$('[data-en-all]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var on = btn.getAttribute('aria-pressed') !== 'true';
-        var scope = document.getElementById(btn.getAttribute('data-en-all')) || document.body;
-        $$('[data-en-all]').forEach(function (b) { b.setAttribute('aria-pressed', String(on)); });
-        scope.classList.toggle('show-en', on);
-        $$('.en-toggle', scope).forEach(function (t) { setReveal(t, on); });
-        $$('.en-par', scope).forEach(function (p) { p.hidden = !on; });
-        var label = btn.querySelector('.btn-label'); if (label) label.textContent = on ? 'İngilizce aslını gizle' : 'İngilizce aslını göster';
-      });
-    });
   }
 
   /* ---------------------------------------------------------------
@@ -360,7 +434,7 @@
       window.COMPENDIUM.parts.forEach(function (p, pi) {
         p.items.forEach(function (it) {
           if (it.type !== 'qa') return;
-          var e = { n: it.n, page: ROOT + LANG_PREFIX + (LANG === 'en' ? PAGES_EN[pi] : PAGES[pi]), part: p.tr, q: plain(it.tr.q), a: plain(it.tr.a), qe: plain(it.en.q), ae: plain(it.en.a) };
+          var e = { n: it.n, page: ROOT + PAGES[pi], part: p.tr, partEn: p.en, q: plain(it.tr.q), a: plain(it.tr.a), qe: plain(it.en.q), ae: plain(it.en.a) };
           e.fq = fold(e.q); e.fa = fold(e.a); e.fe = fold(e.qe + ' ' + e.ae);
           index.push(e);
         });
@@ -391,17 +465,19 @@
 
   function renderResults(box, raw, res) {
     if (!res.terms.length) { box.hidden = true; box.innerHTML = ''; return; }
-    var html = '<p class="sr-head" role="status">' + (res.hits.length
-      ? '“' + esc(raw.trim()) + '” için ' + res.hits.length + ' soru' + (res.hits.length > MAX_RESULTS ? ' (ilk ' + MAX_RESULTS + ' gösteriliyor)' : '')
-      : '“' + esc(raw.trim()) + '” için sonuç bulunamadı.') + '</p>';
+    var qx = '“' + esc(raw.trim()) + '”', n = res.hits.length, more = n > MAX_RESULTS;
+    var html = '<p class="sr-head" role="status">' + (n
+      ? LT(qx + ' için ' + n + ' soru' + (more ? ' (ilk ' + MAX_RESULTS + ' gösteriliyor)' : ''), n + (n === 1 ? ' question' : ' questions') + ' for ' + qx + (more ? ' (first ' + MAX_RESULTS + ' shown)' : ''))
+      : LT(qx + ' için sonuç bulunamadı.', 'No results for ' + qx + '.')) + '</p>';
     res.hits.slice(0, MAX_RESULTS).forEach(function (h) {
-      var e = h.e, snip;
-      if (h.en) snip = snippet(fold(e.qe).indexOf(res.terms[0]) !== -1 && fold(e.ae).indexOf(res.terms[0]) === -1 ? e.qe : e.ae, res.terms, 150);
-      else snip = snippet(e.a, res.terms, 150);
+      var e = h.e, t0 = res.terms[0];
+      /* the snippet in each language: where the words were found, else the answer */
+      var snipTr = h.en ? null : snippet(e.a, res.terms, 150);
+      var snipEn = snippet(fold(e.qe).indexOf(t0) !== -1 && fold(e.ae).indexOf(t0) === -1 ? e.qe : e.ae, res.terms, 150);
       html += '<a class="sr-item" href="' + e.page + '#soru-' + e.n + '"><span class="sr-num">' + e.n + '</span><span class="sr-body">' +
-        '<span class="sr-q">' + highlight(e.q, res.terms) + '</span>' +
-        '<span class="sr-snip"' + (h.en ? ' lang="en"' : '') + '>' + highlight(snip, res.terms) + '</span>' +
-        '<span class="sr-meta">' + esc(e.part) + (h.en ? '<span class="sr-en">EN</span>' : '') + '</span></span></a>';
+        '<span class="sr-q">' + LT(highlight(e.q, res.terms), highlight(e.qe, res.terms)) + '</span>' +
+        '<span class="sr-snip">' + LT(snipTr === null ? '<span lang="en">' + highlight(snipEn, res.terms) + '</span>' : highlight(snipTr, res.terms), highlight(snipEn, res.terms)) + '</span>' +
+        '<span class="sr-meta">' + LT(esc(e.part) + (h.en ? '<span class="sr-en">EN</span>' : ''), esc(e.partEn || e.part)) + '</span></span></a>';
     });
     box.innerHTML = html;
     box.hidden = false;
@@ -414,7 +490,7 @@
         var raw = input.value;
         if (!raw.trim()) { renderResults(box, raw, { terms: [], hits: [] }); return; }
         loadIndex().then(function () { if (input.value === raw) renderResults(box, raw, search(raw)); })
-          .catch(function () { box.hidden = false; box.innerHTML = '<p class="sr-empty">Arama verileri yüklenemedi.</p>'; });
+          .catch(function () { box.hidden = false; box.innerHTML = '<p class="sr-empty">' + LT('Arama verileri yüklenemedi.', 'The search data could not be loaded.') + '</p>'; });
       }
       input.addEventListener('focus', function () { loadIndex().catch(function () {}); if (input.value.trim() && box.innerHTML) box.hidden = false; });
       input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 120); });
@@ -463,14 +539,14 @@
     var heads = $$('.sec', content);
     var stops = heads.filter(function (h) { return h.classList.contains('sec-l2') || h.classList.contains('sec-l3'); });
     var current = $('.readbar .current');
-    var defaultTitle = current ? current.textContent : '';
+    var defaultTitle = current ? pstr(current) : '';
     var header = $('.site-header');
     var links = {};
     $$('.toc a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
     var tocBox = $('.toc');
     var activeLink = null, stopIndex = -1, ticking = false;
 
-    function titleOf(h) { var t = $('.sec-title', h); return (t || h).textContent.trim(); }
+    function titleOf(h) { var t = $('.sec-title', h); return pstr(t || h); }
     function update() {
       ticking = false;
       var line = (header ? header.offsetHeight : 64) + 80;
@@ -478,7 +554,7 @@
       for (var i = 0; i < heads.length; i++) { if (heads[i].getBoundingClientRect().top <= line) cur = heads[i]; else break; }
       for (var j = 0; j < stops.length; j++) { if (stops[j].getBoundingClientRect().top <= line) si = j; else break; }
       stopIndex = si;
-      if (current) current.textContent = si >= 0 ? titleOf(stops[si]) : defaultTitle;
+      if (current) pset(current, si >= 0 ? titleOf(stops[si]) : defaultTitle);
       var link = cur ? links[cur.id] : null;
       if (link !== activeLink) {
         if (activeLink) activeLink.removeAttribute('aria-current');
@@ -876,6 +952,13 @@
     }
 
     function currentSet() { return sets[select.value] || firstSet; }
+    /* the sets' names in the list, in the language shown, today's marked */
+    function nameOptions() {
+      $$('option', select).forEach(function (o) {
+        var st = sets[o.value]; if (!st) return;
+        o.textContent = (LANG === 'en' ? st.en : st.tr) + (o.hasAttribute('data-today') ? ' (' + T.today + ')' : '');
+      });
+    }
     function setName() { var s = currentSet(); return LANG === 'en' ? s.en : s.tr; }
     function mysteryName(d) { var it = currentSet().items[d - 1]; return plain(LANG === 'en' ? it.en : it.tr); }
     function setText(el, text) {
@@ -1056,8 +1139,9 @@
       var today = new Date().getDay();
       $$('option', select).forEach(function (o) {
         var days = (o.getAttribute('data-days') || '').split(',').map(Number);
-        if (days.indexOf(today) !== -1) { o.textContent += ' (' + T.today + ')'; select.value = o.value; }
+        if (days.indexOf(today) !== -1) { o.setAttribute('data-today', '1'); select.value = o.value; }
       });
+      nameOptions();
       var saved = savedProgress();
       if (saved) {
         select.value = saved.set; idx = saved.idx; done = !!saved.done;
@@ -1065,6 +1149,14 @@
       }
       wire();
       render(false);
+      /* the TR | EN switch: the guide's own words and the prayer in the other language */
+      document.addEventListener('kd:lang', function () {
+        T = RT_TEXT[LANG];
+        nameOptions();
+        if (!ui.resume.hidden) ui.resume.textContent = T.resumed;
+        ui.grip.setAttribute('aria-label', sheet.classList.contains('is-collapsed') ? T.show : T.hide);
+        render(false);
+      });
     })['catch'](function () {
       ui.title.textContent = T.loadFail;
       ui.text.textContent = '';
@@ -1092,9 +1184,10 @@
       return { m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
     }
 
-    var MONTHS = LANG === 'en'
-      ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-      : ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+    /* month names as pair strings (Turkish, English) */
+    var MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'].map(function (t, i) {
+      return pmake(t, ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][i]);
+    });
     var today = localParts();
     var easterThis = easterMD(today.year);
     var movableTodayCard = null;
@@ -1104,7 +1197,7 @@
       var offset = parseInt(card.getAttribute('data-offset'), 10);
       var date = addDays(easterThis, today.year, offset);
       var dateEl = $('[data-movable-date]', card);
-      if (dateEl) dateEl.textContent = ' · ' + date.d + ' ' + MONTHS[date.m - 1];
+      if (dateEl) pset(dateEl, pcat(' · ' + date.d + ' ', MONTHS[date.m - 1]));
       var isToday = date.m === today.month && date.d === today.day;
       if (isToday) movableTodayCard = card;
       var cell = $('.day-cell[data-m="' + date.m + '"][data-d="' + date.d + '"]');
@@ -1132,7 +1225,7 @@
 
     /* Hero: today's saint(s), in full, above the fold */
     var dateLabel = $('[data-today-date]');
-    if (dateLabel) dateLabel.textContent = today.day + ' ' + MONTHS[today.month - 1];
+    if (dateLabel) pset(dateLabel, pcat(today.day + ' ', MONTHS[today.month - 1]));
     var body = $('[data-today-body]');
     if (body) {
       var source = movableTodayCard || $('.day-cell.is-today');
@@ -1145,8 +1238,8 @@
             return { name: $('.s-name', it).innerHTML, title: t ? t.innerHTML : '', bio: $('.saint-bio', it).innerHTML };
           });
         items.forEach(function (it) {
-          var moreSlug = top20Id ? (LANG === 'en' ? TOP20_EN_SLUGS[top20Id] : top20Id) : null;
-          var more = moreSlug ? '<a class="today-more-link" href="' + ROOT + LANG_PREFIX + moreSlug + '.html">' + (LANG === 'en' ? 'Read more' : 'Devamını oku') +
+          var moreSlug = top20Id || null;
+          var more = moreSlug ? '<a class="today-more-link" href="' + ROOT + moreSlug + '.html">' + LT('Devamını oku', 'Read more') +
             '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></a>' : '';
           pieces.push('<div class="today-more"><span class="today-name">' + it.name + '</span>' +
             (it.title ? '<span class="today-title">' + it.title + '</span>' : '') +
@@ -1326,11 +1419,10 @@
       var s = window.SAINT_NAMES[today.month + '-' + today.day];
       if (s) s = { name: s[0], nameEn: s[1] };
       var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
-      var slug = top20Id ? (LANG === 'en' ? TOP20_EN_SLUGS[top20Id] : top20Id) : (LANG === 'en' ? 'saints' : 'azizler');
+      var slug = top20Id || 'azizler';
       /* a saint without a page of their own: straight to today in the calendar, their life open */
-      var href = ROOT + LANG_PREFIX + slug + '.html' + (top20Id ? '' : '#gun-' + today.month + '-' + today.day);
-      var noSaintText = LANG === 'en' ? 'None for today' : 'Bugün için yok';
-      return { text: s ? (LANG === 'en' ? s.nameEn : s.name) : noSaintText, href: href };
+      var href = ROOT + slug + '.html' + (top20Id ? '' : '#gun-' + today.month + '-' + today.day);
+      return { html: s ? LT(esc(s.name), esc(s.nameEn || s.name)) : LT('Bugün için yok', 'None for today'), href: href };
     });
   }
   /* ---------------------------------------------------------------
@@ -1357,12 +1449,18 @@
      --------------------------------------------------------------- */
   var RANKS = ['rk-hi', 'rk-solemn', 'rk-feast', 'rk-memorial', 'rk-optional', 'rk-other', 'genel'];
   function buildCalendar(cal, today, MONTHS) {
-    var en = LANG === 'en';
-    var WD = en ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-    var WD1 = en ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['P', 'S', 'Ç', 'P', 'C', 'C', 'P'];
-    var WDL = en ? ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] : ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-    var TX = en ? { prev: 'Previous month', next: 'Next month', today: 'Today', month: 'Month', year: 'Year', more: 'more', legend: ['Solemnity', 'Feast', 'Memorial', 'Optional memorial'], none: 'No saint is listed for this day.' }
-      : { prev: 'Önceki ay', next: 'Sonraki ay', today: 'Bugün', month: 'Ay', year: 'Yıl', more: 'daha', legend: ['Büyük Bayram', 'Bayram', 'Anma', 'İhtiyari Anma'], none: 'Bu gün için kayıtlı bir aziz yok.' };
+    /* every word of the calendar as a pair string (Turkish, English): phtml() and pattr() write it */
+    function pairs(tr, en) { return tr.map(function (t, i) { return pmake(t, en[i]); }); }
+    function pobj(tr, en) { var o = {}; Object.keys(tr).forEach(function (k) { o[k] = Array.isArray(tr[k]) ? pairs(tr[k], en[k]) : pmake(tr[k], en[k]); }); return o; }
+    var WD = pairs(['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'], ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+    var WD1 = pairs(['P', 'S', 'Ç', 'P', 'C', 'C', 'P'], ['M', 'T', 'W', 'T', 'F', 'S', 'S']);
+    var WDL = pairs(['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'], ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
+    var TX = pobj({ prev: 'Önceki ay', next: 'Sonraki ay', today: 'Bugün', month: 'Ay', year: 'Yıl', more: 'daha', legend: ['Büyük Bayram', 'Bayram', 'Anma', 'İhtiyari Anma'], none: 'Bu gün için kayıtlı bir aziz yok.' },
+      { prev: 'Previous month', next: 'Next month', today: 'Today', month: 'Month', year: 'Year', more: 'more', legend: ['Solemnity', 'Feast', 'Memorial', 'Optional memorial'], none: 'No saint is listed for this day.' });
+    /* short weekday names: three letters in Turkish, two in English */
+    function wdShort(w) { return phtml(pmap(w, function (x, l) { return x.slice(0, l === 'en' ? 2 : 3); })); }
+    /* "5 March: Saint A, Saint B" */
+    function dayLabel(d, m, withWd, n) { return pcat(d + ' ', MONTHS[m - 1], withWd ? pcat(', ', WDL[wd(m, d)]) : '', n && n.length ? pcat(': ', pjoin(n, ', ')) : ''); }
     var Y = today.year;
     function rankOf(cell) { for (var i = 0; i < RANKS.length; i++) if (cell.classList.contains(RANKS[i])) return RANKS[i]; return 'rk-other'; }
     function dayOf(m, d) { return $('.day-cell[data-m="' + m + '"][data-d="' + d + '"]', cal); }
@@ -1371,10 +1469,15 @@
     function wd(m, d) { return (new Date(Y, m - 1, d).getDay() + 6) % 7; }
     function isToday(m, d) { return m === today.month && d === today.day; }
     function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-    function names(cell) { return cell ? $$('.s-name', cell).map(function (n) { return n.textContent.replace(/\s+/g, ' ').trim(); }) : []; }
+    function names(cell) { return cell ? $$('.s-name', cell).map(pstr) : []; }
+    /* the first paragraph of a saint's life, in both languages */
+    function bioStart(it) {
+      var t = $('.saint-bio .l-tr p', it) || $('.saint-bio p', it), e = $('.saint-bio .l-en p', it);
+      return t ? pmake(t.textContent.replace(/\s+/g, ' ').trim(), e ? e.textContent.replace(/\s+/g, ' ').trim() : null) : '';
+    }
     var LEG_RK = ['rk-solemn', 'rk-feast', 'rk-memorial', 'rk-optional'];
     function legend() {
-      return '<p class="cal-legend">' + LEG_RK.map(function (r, i) { return '<span><i class="cal-dot ' + r + '"></i>' + TX.legend[i] + '</span>'; }).join('') + '</p>';
+      return '<p class="cal-legend">' + LEG_RK.map(function (r, i) { return '<span><i class="cal-dot ' + r + '"></i>' + phtml(TX.legend[i]) + '</span>'; }).join('') + '</p>';
     }
 
     /* ----- a phone: the year, and each month's grid, inside the page's own levels */
@@ -1389,7 +1492,7 @@
           var c = dayOf(m, d), r = c ? rankOf(c) : '';
           cells += '<span class="' + (isToday(m, d) ? 'is-today ' : '') + (/rk-(hi|solemn|feast)/.test(r) ? 'is-big ' + r : '') + '">' + d + '</span>';
         }
-        return '<a class="cal-mini' + (m === today.month ? ' is-now' : '') + '" href="#ay-' + m + '"><span class="cal-mini-h">' + MONTHS[m - 1] + '</span><span class="cal-mini-g" aria-hidden="true">' + cells + '</span></a>';
+        return '<a class="cal-mini' + (m === today.month ? ' is-now' : '') + '" href="#ay-' + m + '"><span class="cal-mini-h">' + phtml(MONTHS[m - 1]) + '</span><span class="cal-mini-g" aria-hidden="true">' + cells + '</span></a>';
       }).join('') + legend();
       if (pills) pills.parentNode.insertBefore(year, pills.nextSibling); else cal.parentNode.insertBefore(year, cal);
       /* a day's own screen: its month and weekday beside the number */
@@ -1397,7 +1500,7 @@
         var m = +c.getAttribute('data-m'), d = +c.getAttribute('data-d'), n = $('.day-num', c);
         if (!n) return;
         var s = document.createElement('span'); s.className = 'day-mon';
-        s.textContent = MONTHS[m - 1] + ', ' + WDL[wd(m, d)];
+        pset(s, pcat(MONTHS[m - 1], ', ', WDL[wd(m, d)]));
         n.parentNode.insertBefore(s, n.nextSibling);
       });
       /* the Takvim screen itself: this month, the chosen day's saints under it (today's at
@@ -1405,29 +1508,29 @@
       var now = document.createElement('div');
       now.className = 'cal-now cal-phone';
       var nst = { m: today.month, sel: { m: today.month, d: today.day } };
-      var TXP = en ? { year: 'Full year', month: 'This month', read: 'Read their life', prev: 'Previous month', next: 'Next month' }
-        : { year: 'Tüm yıl', month: 'Bu ay', read: 'Hayatını oku', prev: 'Önceki ay', next: 'Sonraki ay' };
+      var TXP = pobj({ year: 'Tüm yıl', month: 'Bu ay', read: 'Hayatını oku', prev: 'Önceki ay', next: 'Sonraki ay' },
+        { year: 'Full year', month: 'This month', read: 'Read their life', prev: 'Previous month', next: 'Next month' });
       function nowRender() {
         var m = nst.m, g = '';
-        WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + w.slice(0, en ? 2 : 3) + '</span>'; });
+        WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + wdShort(w) + '</span>'; });
         for (var i = 0; i < lead(m); i++) g += '<span></span>';
         for (var d = 1; d <= daysIn(m); d++) {
           var c = dayOf(m, d), n = names(c), sel = nst.sel.m === m && nst.sel.d === d;
           g += '<button type="button" class="cal-md ' + (c ? rankOf(c) : '') + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
-            '" data-m="' + m + '" data-d="' + d + '" aria-pressed="' + sel + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1] + (n.length ? ': ' + n.join(', ') : '')) + '"><span class="cal-n">' + d + '</span><i class="cal-dot"></i></button>';
+            '" data-m="' + m + '" data-d="' + d + '" aria-pressed="' + sel + '" ' + pattr('aria-label', dayLabel(d, m, false, n)) + '><span class="cal-n">' + d + '</span><i class="cal-dot"></i></button>';
         }
         var sm = nst.sel.m, sd = nst.sel.d, c = dayOf(sm, sd), rank = c ? $('.day-rank', c) : null;
-        var day = '<p class="cal-now-date"><b>' + sd + ' ' + MONTHS[sm - 1] + '</b>, ' + WDL[wd(sm, sd)] + '</p>' +
-          (rank && rank.textContent.trim() ? '<p class="cal-now-rank"><i class="cal-dot ' + (c ? rankOf(c) : '') + '"></i>' + esc(rank.textContent.trim()) + '</p>' : '') +
+        var day = '<p class="cal-now-date"><b>' + phtml(pcat(sd + ' ', MONTHS[sm - 1])) + '</b>, ' + phtml(WDL[wd(sm, sd)]) + '</p>' +
+          (rank && rank.textContent.trim() ? '<p class="cal-now-rank"><i class="cal-dot ' + (c ? rankOf(c) : '') + '"></i>' + phtml(pstr(rank)) + '</p>' : '') +
           (c ? $$('.saint-item', c).map(function (it) {
-            var nm = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio p', it), lk = $('.s-links', it);
+            var nm = $('.s-name', it), t = $('.s-title', it), b = bioStart(it), lk = $('.s-links', it);
             return '<div class="cal-now-saint"><p class="cal-now-n">' + (nm ? nm.innerHTML : '') + '</p>' + (t ? '<p class="cal-now-st">' + t.innerHTML + '</p>' : '') +
-              (b ? '<p class="cal-now-bio">' + esc(b.textContent) + '</p>' : '') + (lk ? lk.outerHTML : '') + '</div>';
+              (b ? '<p class="cal-now-bio">' + phtml(b) + '</p>' : '') + (lk ? lk.outerHTML : '') + '</div>';
           }).join('') : '') +
-          '<a class="cal-now-go" href="#gun-' + sm + '-' + sd + '">' + TXP.read + ' ›</a>';
-        now.innerHTML = '<div class="cal-now-bar"><button type="button" class="cal-now-arrow" data-step="-1" aria-label="' + TXP.prev + '"' + (m === 1 ? ' disabled' : '') + '>‹</button>' +
-          '<p class="cal-now-t">' + MONTHS[m - 1] + ' ' + Y + '</p><button type="button" class="cal-now-arrow" data-step="1" aria-label="' + TXP.next + '"' + (m === 12 ? ' disabled' : '') + '>›</button>' +
-          '<button type="button" class="cal-now-year" aria-expanded="false">' + TXP.year + '</button></div>' +
+          '<a class="cal-now-go" href="#gun-' + sm + '-' + sd + '">' + phtml(TXP.read) + ' ›</a>';
+        now.innerHTML = '<div class="cal-now-bar"><button type="button" class="cal-now-arrow" data-step="-1" ' + pattr('aria-label', TXP.prev) + (m === 1 ? ' disabled' : '') + '>‹</button>' +
+          '<p class="cal-now-t">' + phtml(pcat(MONTHS[m - 1], ' ' + Y)) + '</p><button type="button" class="cal-now-arrow" data-step="1" ' + pattr('aria-label', TXP.next) + (m === 12 ? ' disabled' : '') + '>›</button>' +
+          '<button type="button" class="cal-now-year" aria-expanded="false">' + phtml(TXP.year) + '</button></div>' +
           '<div class="cal-mgrid">' + g + '</div><div class="cal-now-day" aria-live="polite">' + day + '</div>' + legend();
       }
       now.addEventListener('click', function (e) {
@@ -1437,7 +1540,7 @@
         if (t.hasAttribute('data-d')) { nst.sel = { m: +t.getAttribute('data-m'), d: +t.getAttribute('data-d') }; nowRender(); }
       });
       nowRender();
-      year.insertAdjacentHTML('afterbegin', '<button type="button" class="cal-now-year cal-year-back">' + TXP.month + '</button>');
+      year.insertAdjacentHTML('afterbegin', '<button type="button" class="cal-now-year cal-year-back">' + phtml(TXP.month) + '</button>');
       year.addEventListener('click', function (e) {
         if (!e.target.closest('.cal-year-back')) return;
         year.classList.remove('is-open'); now.classList.remove('is-hidden'); nst.m = today.month; nst.sel = { m: today.month, d: today.day }; nowRender();
@@ -1445,11 +1548,11 @@
       year.parentNode.insertBefore(now, year);
       $$('.month', cal).forEach(function (sec) {
         var m = +sec.getAttribute('data-month'), g = '';
-        WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + w.slice(0, en ? 2 : 3) + '</span>'; });
+        WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + wdShort(w) + '</span>'; });
         for (var i = 0; i < lead(m); i++) g += '<span></span>';
         for (var d = 1; d <= daysIn(m); d++) {
           var c = dayOf(m, d), n = names(c);
-          g += '<a class="cal-md ' + (c ? rankOf(c) : '') + (isToday(m, d) ? ' is-today' : '') + (wd(m, d) > 4 ? ' is-we' : '') + '" href="#gun-' + m + '-' + d + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1] + (n.length ? ': ' + n.join(', ') : '')) + '"><span class="cal-n">' + d + '</span><i class="cal-dot"></i></a>';
+          g += '<a class="cal-md ' + (c ? rankOf(c) : '') + (isToday(m, d) ? ' is-today' : '') + (wd(m, d) > 4 ? ' is-we' : '') + '" href="#gun-' + m + '-' + d + '" ' + pattr('aria-label', dayLabel(d, m, false, n)) + '><span class="cal-n">' + d + '</span><i class="cal-dot"></i></a>';
         }
         var grid = document.createElement('div');
         grid.className = 'cal-mgrid cal-phone';
@@ -1466,10 +1569,10 @@
     var app = document.createElement('div');
     app.className = 'cal-app';
     app.innerHTML =
-      '<div class="cal-bar"><div class="cal-nav"><button type="button" class="cal-arrow" data-cal-step="-1" aria-label="' + TX.prev + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>' +
-      '<h3 class="cal-title" aria-live="polite"></h3><button type="button" class="cal-arrow" data-cal-step="1" aria-label="' + TX.next + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>' +
-      '<button type="button" class="cal-todaybtn">' + TX.today + '</button>' +
-      '<div class="cal-seg" role="group"><button type="button" data-cal-view="month" aria-pressed="true">' + TX.month + '</button><button type="button" data-cal-view="year" aria-pressed="false">' + TX.year + '</button></div></div>' +
+      '<div class="cal-bar"><div class="cal-nav"><button type="button" class="cal-arrow" data-cal-step="-1" ' + pattr('aria-label', TX.prev) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>' +
+      '<h3 class="cal-title" aria-live="polite"></h3><button type="button" class="cal-arrow" data-cal-step="1" ' + pattr('aria-label', TX.next) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>' +
+      '<button type="button" class="cal-todaybtn">' + phtml(TX.today) + '</button>' +
+      '<div class="cal-seg" role="group"><button type="button" data-cal-view="month" aria-pressed="true">' + phtml(TX.month) + '</button><button type="button" data-cal-view="year" aria-pressed="false">' + phtml(TX.year) + '</button></div></div>' +
       '<div class="cal-body"><div class="cal-main"></div><aside class="cal-day" aria-live="polite"></aside></div>' + legend();
     if (pills) pills.parentNode.insertBefore(app, pills); else cal.parentNode.insertBefore(app, cal);
     cal.classList.add('cal-on');
@@ -1478,16 +1581,16 @@
     var st = { view: 'month', m: today.month, sel: { m: today.month, d: today.day } };
 
     function monthHtml(m) {
-      var h = '<div class="cal-grid" role="grid" aria-label="' + esc(MONTHS[m - 1] + ' ' + Y) + '"><div class="cal-row cal-head" role="row">' +
-        WD.map(function (w, i) { return '<span role="columnheader" class="' + (i > 4 ? 'is-we' : '') + '">' + w + '</span>'; }).join('') + '</div><div class="cal-days">';
+      var h = '<div class="cal-grid" role="grid" ' + pattr('aria-label', pcat(MONTHS[m - 1], ' ' + Y)) + '><div class="cal-row cal-head" role="row">' +
+        WD.map(function (w, i) { return '<span role="columnheader" class="' + (i > 4 ? 'is-we' : '') + '">' + phtml(w) + '</span>'; }).join('') + '</div><div class="cal-days">';
       for (var i = 0; i < lead(m); i++) h += '<span class="cal-cell is-out" aria-hidden="true"></span>';
       for (var d = 1; d <= daysIn(m); d++) {
         var c = dayOf(m, d), n = names(c), r = c ? rankOf(c) : 'rk-other';
-        var ev = n.slice(0, 2).map(function (x) { return '<span class="cal-ev ' + r + '">' + esc(x) + '</span>'; }).join('') +
-          (n.length > 2 ? '<span class="cal-more">+' + (n.length - 2) + ' ' + TX.more + '</span>' : '');
+        var ev = n.slice(0, 2).map(function (x) { return '<span class="cal-ev ' + r + '">' + phtml(x) + '</span>'; }).join('') +
+          (n.length > 2 ? '<span class="cal-more">+' + (n.length - 2) + ' ' + phtml(TX.more) + '</span>' : '');
         var sel = st.sel.m === m && st.sel.d === d;
         h += '<button type="button" role="gridcell" class="cal-cell ' + r + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
-          '" data-m="' + m + '" data-d="' + d + '" aria-selected="' + sel + '" tabindex="' + (sel ? 0 : -1) + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1] + ', ' + WDL[wd(m, d)] + (n.length ? ': ' + n.join(', ') : '')) + '">' +
+          '" data-m="' + m + '" data-d="' + d + '" aria-selected="' + sel + '" tabindex="' + (sel ? 0 : -1) + '" ' + pattr('aria-label', dayLabel(d, m, true, n)) + '>' +
           '<span class="cal-n">' + d + '</span>' + ev + '</button>';
       }
       var tail = (7 - (lead(m) + daysIn(m)) % 7) % 7;
@@ -1496,22 +1599,22 @@
     }
     function yearHtml() {
       return '<div class="cal-year">' + [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(function (m) {
-        var g = WD1.map(function (w) { return '<span class="cal-wd">' + w + '</span>'; }).join('');
+        var g = WD1.map(function (w) { return '<span class="cal-wd">' + phtml(w) + '</span>'; }).join('');
         for (var i = 0; i < lead(m); i++) g += '<span></span>';
         for (var d = 1; d <= daysIn(m); d++) {
           var c = dayOf(m, d), r = c ? rankOf(c) : '';
-          g += '<button type="button" class="cal-yd' + (isToday(m, d) ? ' is-today' : '') + (/rk-(hi|solemn|feast)/.test(r) ? ' is-big ' + r : '') + '" data-m="' + m + '" data-d="' + d + '" aria-label="' + esc(d + ' ' + MONTHS[m - 1]) + '">' + d + '</button>';
+          g += '<button type="button" class="cal-yd' + (isToday(m, d) ? ' is-today' : '') + (/rk-(hi|solemn|feast)/.test(r) ? ' is-big ' + r : '') + '" data-m="' + m + '" data-d="' + d + '" ' + pattr('aria-label', dayLabel(d, m, false)) + '>' + d + '</button>';
         }
-        return '<section class="cal-mini' + (m === today.month ? ' is-now' : '') + '"><button type="button" class="cal-mini-h" data-m="' + m + '">' + MONTHS[m - 1] + '</button><div class="cal-mini-g">' + g + '</div></section>';
+        return '<section class="cal-mini' + (m === today.month ? ' is-now' : '') + '"><button type="button" class="cal-mini-h" data-m="' + m + '">' + phtml(MONTHS[m - 1]) + '</button><div class="cal-mini-g">' + g + '</div></section>';
       }).join('') + '</div>';
     }
     function dayHtml(m, d) {
       var c = dayOf(m, d), r = c ? rankOf(c) : '';
       var rank = c ? $('.day-rank', c) : null;
-      var h = '<p class="cal-day-date"><span class="cal-day-n">' + d + '</span><span><span class="cal-day-m">' + MONTHS[m - 1] + ' ' + Y + '</span><span class="cal-day-w">' + WDL[wd(m, d)] + '</span></span></p>';
-      if (rank && rank.textContent.trim()) h += '<p class="cal-day-rank"><i class="cal-dot ' + r + '"></i>' + esc(rank.textContent.trim()) + '</p>';
+      var h = '<p class="cal-day-date"><span class="cal-day-n">' + d + '</span><span><span class="cal-day-m">' + phtml(pcat(MONTHS[m - 1], ' ' + Y)) + '</span><span class="cal-day-w">' + phtml(WDL[wd(m, d)]) + '</span></span></p>';
+      if (rank && rank.textContent.trim()) h += '<p class="cal-day-rank"><i class="cal-dot ' + r + '"></i>' + phtml(pstr(rank)) + '</p>';
       var items = c ? $$('.saint-item', c) : [];
-      if (!items.length) return h + '<p class="hint">' + TX.none + '</p>';
+      if (!items.length) return h + '<p class="hint">' + phtml(TX.none) + '</p>';
       return h + items.map(function (it) {
         var n = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio', it);
         return '<article class="cal-saint"><h4>' + (n ? n.innerHTML : '') + '</h4>' + (t ? '<p class="cal-saint-t">' + t.innerHTML + '</p>' : '') + (b ? '<div class="cal-saint-bio">' + b.innerHTML + '</div>' : '') + '</article>';
@@ -1519,7 +1622,7 @@
     }
     function render(focus) {
       app.setAttribute('data-view', st.view);
-      title.textContent = st.view === 'year' ? String(Y) : MONTHS[st.m - 1] + ' ' + Y;
+      pset(title, st.view === 'year' ? String(Y) : pcat(MONTHS[st.m - 1], ' ' + Y));
       $$('[data-cal-view]', app).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-cal-view') === st.view)); });
       $$('.cal-arrow', app).forEach(function (b) { var s = +b.getAttribute('data-cal-step'); b.disabled = st.view === 'year' || (s < 0 ? st.m === 1 : st.m === 12); });
       main.innerHTML = st.view === 'year' ? yearHtml() : monthHtml(st.m);
@@ -1556,41 +1659,41 @@
   function initHome() {
     var home = $('.home-v2');
     if (!home) return;
-    var now = new Date(), en = LANG === 'en';
-    /* the date and the season */
+    var now = new Date();
+    /* the date and the season, in both languages */
     var dayEl = $('[data-hd-day]'), yearEl = $('[data-hd-year]'), litCard = $('[data-home-lit]');
     try {
-      var loc = en ? 'en-US' : 'tr-TR';
-      dayEl.textContent = new Intl.DateTimeFormat(loc, en ? { month: 'long', day: 'numeric' } : { day: 'numeric', month: 'long' }).format(now);
-      yearEl.textContent = now.getFullYear() + ' · ' + new Intl.DateTimeFormat(loc, { weekday: 'long' }).format(now);
+      var fmt = function (loc, o) { return new Intl.DateTimeFormat(loc, o).format(now); };
+      dayEl.innerHTML = LT(fmt('tr-TR', { day: 'numeric', month: 'long' }), fmt('en-US', { month: 'long', day: 'numeric' }));
+      yearEl.innerHTML = now.getFullYear() + ' · ' + LT(fmt('tr-TR', { weekday: 'long' }), fmt('en-US', { weekday: 'long' }));
     } catch (e) { dayEl.textContent = now.toDateString(); }
-    var lit = liturgicalDay(now), LT = LIT_TEXT[LANG];
-    $('[data-hd-season]').textContent = lit.name;
-    $('[data-hd-colour]').textContent = LT.colour + ': ' + LT.colours[lit.colour];
+    var lit = liturgicalDay(now, 'tr'), litEn = liturgicalDay(now, 'en');
+    $('[data-hd-season]').innerHTML = LT(lit.name, litEn.name);
+    $('[data-hd-colour]').innerHTML = LT(LIT_TEXT.tr.colour + ': ' + LIT_TEXT.tr.colours[lit.colour], LIT_TEXT.en.colour + ': ' + LIT_TEXT.en.colours[lit.colour]);
     litCard.setAttribute('data-lit', lit.colour);
     /* the saint */
     var saintCard = $('[data-home-saint]'), m = now.getMonth() + 1, key = m + '-' + now.getDate();
     getTodaySaint().then(function (sn) {
-      $('[data-hs-name]', saintCard).textContent = sn.text;
+      $('[data-hs-name]', saintCard).innerHTML = sn.html;
       saintCard.setAttribute('href', sn.href);
       return loadDataScript('data/azizler-ozet-' + m + '.js', 'SAINT_SUMMARY_' + m);
     }).then(function () {
       var x = (window['SAINT_SUMMARY_' + m] || {})[key];
       if (!x) return;
-      $('[data-hs-title]', saintCard).textContent = en ? x[1] : x[0];
-      $('[data-hs-bio]', saintCard).textContent = en ? x[3] : x[2];
-    })['catch'](function () { $('[data-hs-name]', saintCard).textContent = en ? 'Saints of the year' : 'Yılın azizleri'; });
+      $('[data-hs-title]', saintCard).innerHTML = LT(esc(x[0] || ''), esc(x[1] || x[0] || ''));
+      $('[data-hs-bio]', saintCard).innerHTML = LT(esc(x[2] || ''), esc(x[3] || x[2] || ''));
+    })['catch'](function () { $('[data-hs-name]', saintCard).innerHTML = LT('Yılın azizleri', 'Saints of the year'); });
     /* the mysteries */
     var myst = $('[data-home-mystery]');
     loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
       var set = window.COMPENDIUM_ROSARY.sets.filter(function (x) { return x.days.indexOf(now.getDay()) !== -1; })[0];
       if (!set) return;
-      $('[data-hm-name]', myst).textContent = en ? set.en : set.tr;
-      /* the days this set is prayed on, and its name in the other language */
-      $('[data-hm-days]', myst).textContent = '(' + (en ? set.dayEn : set.dayTr) + ') ' + (en ? set.tr : set.en);
+      $('[data-hm-name]', myst).innerHTML = LT(set.tr, set.en);
+      /* the days this set is prayed on */
+      $('[data-hm-days]', myst).innerHTML = '(' + LT(set.dayTr, set.dayEn) + ')';
       /* "Tesbihe başla": the rosary itself, which opens on today's mysteries */
-      myst.setAttribute('href', ROOT + LANG_PREFIX + (en ? 'rosary.html' : 'tesbih-duasi.html') + '#tesbih-rehberi');
-    })['catch'](function () { $('[data-hm-name]', myst).textContent = en ? 'The Rosary' : 'Tesbih'; });
+      myst.setAttribute('href', ROOT + 'tesbih-duasi.html#tesbih-rehberi');
+    })['catch'](function () { $('[data-hm-name]', myst).innerHTML = LT('Tesbih', 'The Rosary'); });
 
     /* the date card's clock: 24-hour, with seconds */
     var clock = $('[data-hd-time]');
@@ -1878,11 +1981,11 @@
     if (hero && $('.parts')) {
       var tot = document.createElement('p');
       tot.className = 'rd-total'; tot.hidden = true;
-      tot.innerHTML = '<span class="rd-total-t">' + (LANG === 'en' ? 'Questions you have read' : 'Okuduğunuz sorular') + ' <b class="rd-total-n"></b></span>' +
-        '<span class="rd-total-bar" aria-hidden="true"><i></i></span><button type="button" class="rd-reset">' + (LANG === 'en' ? 'Start over' : 'Sıfırla') + '</button>';
+      tot.innerHTML = '<span class="rd-total-t">' + LT('Okuduğunuz sorular', 'Questions you have read') + ' <b class="rd-total-n"></b></span>' +
+        '<span class="rd-total-bar" aria-hidden="true"><i></i></span><button type="button" class="rd-reset">' + LT('Sıfırla', 'Start over') + '</button>';
       hero.appendChild(tot);
       $('.rd-reset', tot).addEventListener('click', function () {
-        if (window.confirm(LANG === 'en' ? 'Forget which questions you have read?' : 'Okuduğunuz soruların kaydı silinsin mi?')) KKREAD.clear();
+        if (window.confirm(L2('Okuduğunuz soruların kaydı silinsin mi?', 'Forget which questions you have read?'))) KKREAD.clear();
       });
     }
     paint();
@@ -1902,7 +2005,7 @@
   var AV_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
   var AV_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
   var AV_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M8 11H6.5A1.5 1.5 0 0 0 5 12.5v7A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>';
-  function avText(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+  function avText(el) { return pstr(el); }
   /* A heading's text without its small label or English gloss */
   function avHead(h) {
     if (!h) return '';
@@ -1971,13 +2074,24 @@
     'kutsal-ayin.html': function (m) {
       $$('.mass-part', m).forEach(function (d) { avNode(d, avText($('h2', d)), avText($('.mass-part-n', d))); });
     },
+    /* the summary, then each part holding its sections, the closing and the sources; the note
+       about the word "Allah" moves up under the lead so the rows stay together */
+    'islama-cevap.html': function (m) {
+      var lead = $('.ic-lead', m), note = $('.ic-note', m);
+      if (lead && note) lead.parentNode.insertBefore(note, lead.nextSibling);
+      avNode($('#kisaca', m), avHead($('#kisaca-h', m)), pcat(String($$('.ic-tl-list > li', m).length), ' ', pmake('madde', 'points')));
+      $$('.ic-part', m).forEach(function (p) { avNode(p, avText($('.ic-part-t', p)), avText($('.ic-part-n', p))); });
+      $$('.ic-part .ic-sec', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
+      var end = $('.ic-closing', m); if (end) avNode(end, avText($('.ic-part-t', end)));
+      avNode($('.ic-sources', m), avHead($('#ic-kaynak-h', m)));
+    },
     'katolik-sureci.html': function (m) {
       avWrap($('.wrap', m), 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
       $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
     },
     'gunah-cikarma.html': function (m) {
       avWrap($('.wrap', m), 'h2.section-title[id]', 'aside, p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
-      var a = $('#muhur-sehitleri', m); if (a) avNode(a, avText($('.footnote-label', a)).replace(/^\*\s*/, ''));
+      var a = $('#muhur-sehitleri', m); if (a) avNode(a, pmap(avText($('.footnote-label', a)), function (x) { return x.replace(/^\*\s*/, ''); }));
       $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
     },
     'ekler.html': function (m) {
@@ -2012,8 +2126,8 @@
         $$('.day-cell', mo).forEach(function (c) {
           var d = c.getAttribute('data-d'), mm = c.getAttribute('data-m');
           c.setAttribute('data-av-id', 'gun-' + mm + '-' + d);
-          var names = $$('.s-name', c).map(avText).join(', ');
-          avNode(c, LANG === 'en' ? mn + ' ' + d : d + ' ' + mn, names || avText($('.day-rank', c)));
+          var names = pjoin($$('.s-name', c).map(avText), ', ');
+          avNode(c, pmake(d + ' ' + psplit(mn)[0], psplit(mn)[1] + ' ' + d), names || avText($('.day-rank', c)));
         });
       });
       $$('.saint-grid .post-card', m).forEach(function (a) { avLink(a, avText($('.t-title', a)), avText($('.post-date', a))); });
@@ -2039,11 +2153,12 @@
             var r = document.createElement('a'), lab = avText($('.c-label', a)), rng = avText($('.rng', a));
             r.className = 'av-row' + (a.parentNode.classList.contains('lv4') ? ' av-row-sub' : ''); r.href = a.getAttribute('href');
             r.innerHTML = '<span class="av-rt"><span class="av-t"></span><span class="av-s"></span></span>' + AV_CHEV;
-            $('.av-t', r).textContent = avHead($('span', a)).replace(lab, '').trim() || avText(a);
-            $('.av-s', r).textContent = [lab, rng].filter(Boolean).join(' · ');
+            var hd = psplit(avHead($('span', a))), lp = psplit(lab), tt = pmake(hd[0].replace(lp[0], '').trim(), hd[1].replace(lp[1], '').trim());
+            pset($('.av-t', r), psplit(tt)[0] ? tt : avText(a));
+            pset($('.av-s', r), pjoin([lab, rng], ' · '));
             rows.appendChild(r);
           });
-          if (head) { var g = document.createElement('a'); g.className = 'av-gh av-gh-link'; g.href = head.getAttribute('href'); g.textContent = [avText($('.label', head)), avText($('.s-title', head))].filter(Boolean).join(': '); sec.insertBefore(g, sec.firstChild); }
+          if (head) { var g = document.createElement('a'); g.className = 'av-gh av-gh-link'; g.href = head.getAttribute('href'); pset(g, pjoin([avText($('.label', head)), avText($('.s-title', head))], ': ')); sec.insertBefore(g, sec.firstChild); }
           sec.appendChild(rows);
         });
       });
@@ -2053,7 +2168,7 @@
       var c = $('#content', m);
       if (!c) return;
       avNest(c);
-      $$('article.qa', c).forEach(function (a) { a.setAttribute('data-av-qn', a.id.replace('soru-', '')); avNode(a, avText($('.qa-num', a)) + '. ' + avText($('.qa-q', a))); });
+      $$('article.qa', c).forEach(function (a) { a.setAttribute('data-av-qn', a.id.replace('soru-', '')); avNode(a, pcat(avText($('.qa-num', a)), '. ', avText($('.qa-q', a)))); });
     }
   };
   ['iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html'].forEach(function (f) { AV_PAGES[f] = AV_PAGES['katekizm-part']; });
@@ -2157,7 +2272,7 @@
     if (!foot || !window.scrollTo) return;
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'to-top'; b.hidden = true;
-    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span>' + (LANG === 'en' ? 'Back to top' : 'Başa dön') + '</span>';
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span>' + LT('Başa dön', 'Back to top') + '</span>';
     if (av) {
       var row = document.createElement('div'), share = $('.av-share', foot);
       row.className = 'av-foot-row';
@@ -2199,7 +2314,9 @@
     var H = document.documentElement, main = $('#main'), nav = $('.av-nav');
     if (!H.classList.contains('av')) return;
     if (!main || !nav) { H.classList.remove('av'); return; }
-    var T = AV_TX[LANG], key = document.body.getAttribute('data-avp') || '';
+    /* its own words in both languages, as pair strings (pset/phtml write them) */
+    var T = {}; Object.keys(AV_TX.tr).forEach(function (k) { T[k] = pmake(AV_TX.tr[k], AV_TX.en[k]); });
+    var key = document.body.getAttribute('data-avp') || '';
     var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     try { history.scrollRestoration = 'manual'; } catch (e) { /* old browsers */ }
 
@@ -2212,12 +2329,12 @@
 
     /* the language of the originals: Türkçe, English or Latina, where a level has them */
     var seg = document.createElement('div');
-    seg.className = 'av-lang av-fixed'; seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', T.text);
+    seg.className = 'av-lang av-fixed'; seg.setAttribute('role', 'group'); setAttr2(seg, 'aria-label', AV_TX.tr.text, AV_TX.en.text);
     if (hero) hero.parentNode.insertBefore(seg, hero.nextSibling); else main.insertBefore(seg, main.firstChild);
     /* the page's own list heading, and the button to share the level being read */
     var foot = document.createElement('div');
     foot.className = 'av-foot';
-    foot.innerHTML = '<button type="button" class="av-share">' + AV_SHARE + '<span>' + T.share + '</span></button><p class="av-toast" role="status" aria-live="polite"></p>';
+    foot.innerHTML = '<button type="button" class="av-share">' + AV_SHARE + '<span>' + phtml(T.share) + '</span></button><p class="av-toast" role="status" aria-live="polite"></p>';
     main.parentNode.insertBefore(foot, main.nextSibling);
 
     /* In a level further in, the page's small icon and name lead back to its start; a level
@@ -2251,14 +2368,14 @@
       var list = [];
       for (var p = parentOf(parentOf(n)); p; p = parentOf(p)) list.unshift(p);
       crumbs.innerHTML = list.map(function (p) { return '<a href="#' + idOf(p) + '" data-av-pop="' + idOf(p) + '"></a>'; }).join(AV_CHEV);
-      $$('a', crumbs).forEach(function (a, i) { a.textContent = titleOf(list[i]); });
+      $$('a', crumbs).forEach(function (a, i) { pset(a, titleOf(list[i])); });
       crumbs.hidden = !list.length;
       if (!hero) return;
-      if (n) { hero.setAttribute('role', 'button'); hero.setAttribute('tabindex', '0'); hero.setAttribute('aria-label', T.top + ': ' + pageT); }
+      if (n) { hero.setAttribute('role', 'button'); hero.setAttribute('tabindex', '0'); setAttr2(hero, 'aria-label', AV_TX.tr.top + ': ' + psplit(pageT)[0], AV_TX.en.top + ': ' + psplit(pageT)[1]); }
       else { hero.removeAttribute('role'); hero.removeAttribute('tabindex'); hero.removeAttribute('aria-label'); }
     }
     var navTitle = $('.av-title', nav), backA = $('[data-av-back]', nav), backL = $('[data-av-back-label]', nav);
-    var homeBack = { href: backA.getAttribute('href'), label: backL.textContent };
+    var homeBack = { href: backA.getAttribute('href'), label: pstr(backL) };
     /* Came here from another of the site's pages: back goes there, under its name */
     var ref = null;
     try { if (document.referrer && new URL(document.referrer).origin === location.origin) ref = new URL(document.referrer); } catch (e) { /* no URL() */ }
@@ -2303,14 +2420,14 @@
           a.className = 'av-row';
           a.href = out ? k.getAttribute('href') : '#' + idOf(k);
           a.innerHTML = '<span class="av-rt"><span class="av-t"></span>' + (s ? '<span class="av-s"></span>' : '') + '</span>' + AV_CHEV;
-          $('.av-t', a).textContent = titleOf(k);
-          if (s) $('.av-s', a).textContent = s;
+          pset($('.av-t', a), titleOf(k));
+          if (s) pset($('.av-s', a), s);
           a._avSrc = k;
           if (k.hidden) a.hidden = true;
           box.appendChild(a);
         });
         if (level === main && i === 0 && !$('.cmap', main)) {
-          var gh = document.createElement('p'); gh.className = 'av-gh'; gh.textContent = T.sections;
+          var gh = document.createElement('p'); gh.className = 'av-gh'; pset(gh, T.sections);
           r.list[0].parentNode.insertBefore(gh, r.list[0]);
         }
         r.list[0].parentNode.insertBefore(box, r.list[0]);
@@ -2321,7 +2438,7 @@
       $$('.av-row', main).forEach(function (a) {
         var k = a._avSrc; if (!k) return;
         a.hidden = !!k.hidden;
-        if (k.classList.contains('church-city')) { var n = $$('.church-card', k).filter(function (c) { return !c.hidden; }).length, sEl = $('.av-s', a); if (sEl) sEl.textContent = n + ' ' + (n === 1 ? T.church : T.churches); }
+        if (k.classList.contains('church-city')) { var n = $$('.church-card', k).filter(function (c) { return !c.hidden; }).length, sEl = $('.av-s', a); if (sEl) pset(sEl, pmake(n + ' ' + AV_TX.tr.church, n + ' ' + (n === 1 ? AV_TX.en.church : AV_TX.en.churches))); }
       });
     }
     var rite = $('#rite-select'); if (rite) rite.addEventListener('change', function () { setTimeout(syncRows, 0); });
@@ -2343,16 +2460,24 @@
       H.classList.toggle('av-reader', !!(n && n.hasAttribute('data-av-qn')));
       cur = n;
       var par = parentOf(n);
-      navTitle.textContent = n ? titleOf(n) : pageT;
-      backL.textContent = n ? (par ? titleOf(par) : pageT) : homeBack.label;
+      pset(navTitle, n ? titleOf(n) : pageT);
+      pset(backL, n ? (par ? titleOf(par) : pageT) : homeBack.label);
       backA.setAttribute('href', n ? '#' + (par ? idOf(par) : '') : homeBack.href);
       langFor(target);
       trailFor(n);
       readRows(target);
       if (n && n.hasAttribute('data-av-qn')) reader(n);
-      document.title = n ? titleOf(n) + ' | ' + pageT : pageT0;
+      setTitle();
     }
-    var pageT0 = document.title;
+    /* the tab's title: the level's name and the page's, in the language shown */
+    function setTitle() { document.title = cur ? pnow(titleOf(cur)) + ' | ' + pnow(pageT) : pageT0(); }
+    function pageT0() { return document.documentElement.getAttribute(isEn() ? 'data-title-en' : 'data-title-tr') || document.title; }
+    (function () {
+      var m = $('meta[name="kd-title-en"]');
+      if (!H.hasAttribute('data-title-tr')) H.setAttribute('data-title-tr', isEn() && m ? '' : document.title);
+      H.setAttribute('data-title-en', m ? m.getAttribute('content') : H.getAttribute('data-title-tr'));
+    })();
+    document.addEventListener('kd:lang', function () { setTitle(); });
     function keyOf(n) { return n ? idOf(n) : ''; }
     /* Slide the new level in (forward) or back, with the page's icon and title shrinking or
        growing between them; the browser's own back swipe has already shown its picture of the
@@ -2493,7 +2618,7 @@
     $('.av-share', foot).addEventListener('click', function () {
       var url = location.href, title = document.title;
       if (navigator.share) { navigator.share({ title: title, url: url })['catch'](function () { /* dismissed */ }); return; }
-      var done = function () { toast.textContent = T.copied; clearTimeout(toastT); toastT = setTimeout(function () { toast.textContent = ''; }, 2200); };
+      var done = function () { toast.textContent = pnow(T.copied); clearTimeout(toastT); toastT = setTimeout(function () { toast.textContent = ''; }, 2200); };
       if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { /* blocked */ }); else done();
     });
 
@@ -2501,15 +2626,15 @@
        Turkish, remembered from page to page */
     var ORIG_KEY = 'kkio-orig', pref = 'tr';
     try { pref = localStorage.getItem(ORIG_KEY) || 'tr'; } catch (e) { /* private mode */ }
-    var LABELS = { tr: 'Türkçe', en: 'English', la: 'Latina' };
+    var LABELS = { tr: LT('Türkçe', 'English'), la: 'Latina' };
     function mine(el, target) { return nodeOf(el) === (target === main ? null : target); }
     function langFor(target) {
-      var has = { en: $$('.en-block, .en-par', target).some(function (x) { return mine(x, target); }), la: $$('details.latin', target).some(function (x) { return mine(x, target); }) };
-      var opts = ['tr'].concat(has.en ? ['en'] : [], has.la ? ['la'] : []);
-      H.classList.toggle('av-orig', LANG === 'tr' && opts.length > 1);
-      if (LANG !== 'tr' || opts.length < 2) { H.removeAttribute('data-orig'); return; }
+      var has = { la: $$('details.latin', target).some(function (x) { return mine(x, target); }) };
+      var opts = ['tr'].concat(has.la ? ['la'] : []);
+      H.classList.toggle('av-orig', opts.length > 1);
+      if (opts.length < 2) { H.removeAttribute('data-orig'); return; }
       var eff = opts.indexOf(pref) >= 0 ? pref : 'tr';
-      seg.innerHTML = opts.map(function (o) { return '<button type="button" data-orig="' + o + '" aria-pressed="' + (o === eff) + '"' + (o === 'tr' ? '' : ' lang="' + o + '"') + '>' + LABELS[o] + '</button>'; }).join('');
+      seg.innerHTML = opts.map(function (o) { return '<button type="button" data-orig="' + o + '" aria-pressed="' + (o === eff) + '"' + (o === 'la' ? ' lang="la"' : '') + '>' + LABELS[o] + '</button>'; }).join('');
       setOrig(eff, target);
     }
     function setOrig(o, target) {
@@ -2532,8 +2657,7 @@
        over all 598 and the questions of this chapter. Past the first or the last question of a
        part, the next part's page opens at that question. */
     var KQ_TOTAL = 598, KQ_STARTS = [1, 218, 357, 534];
-    var kqPages = LANG === 'en' ? PAGES_EN : PAGES;
-    function kqUrl(n) { var pi = 0; KQ_STARTS.forEach(function (s, i) { if (n >= s) pi = i; }); return ROOT + LANG_PREFIX + kqPages[pi] + '#soru-' + n; }
+    function kqUrl(n) { var pi = 0; KQ_STARTS.forEach(function (s, i) { if (n >= s) pi = i; }); return ROOT + PAGES[pi] + '#soru-' + n; }
     function kqGo(n, dir) {
       if (n < 1 || n > KQ_TOTAL) return;
       var el = document.getElementById('soru-' + n);
@@ -2548,11 +2672,11 @@
         a._avKq = true;
         var n = +a.getAttribute('data-av-qn');
         var top = document.createElement('p'); top.className = 'kq-count av-keepl';
-        top.innerHTML = '<span>' + T.q + ' ' + n + ' / ' + KQ_TOTAL + '</span><span class="kq-hint">' + T.swipe + '</span>';
+        top.innerHTML = '<span>' + phtml(T.q) + ' ' + n + ' / ' + KQ_TOTAL + '</span><span class="kq-hint">' + phtml(T.swipe) + '</span>';
         a.insertBefore(top, a.firstChild);
         var pager = document.createElement('div'); pager.className = 'kq-pager av-keepl';
-        pager.innerHTML = '<button type="button" class="kq-btn" data-kq="-1"' + (n <= 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg><span>' + T.prev + '</span></button>' +
-          '<button type="button" class="kq-btn kq-next" data-kq="1"' + (n >= KQ_TOTAL ? ' disabled' : '') + '><span>' + T.next + '</span>' + AV_CHEV + '</button>';
+        pager.innerHTML = '<button type="button" class="kq-btn" data-kq="-1"' + (n <= 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg><span>' + phtml(T.prev) + '</span></button>' +
+          '<button type="button" class="kq-btn kq-next" data-kq="1"' + (n >= KQ_TOTAL ? ' disabled' : '') + '><span>' + phtml(T.next) + '</span>' + AV_CHEV + '</button>';
         a.appendChild(pager);
       }
       kqTools();
@@ -2565,7 +2689,7 @@
     function readMark(a) {
       var top = $('.kq-count', a); if (!top) return;
       var had = $('.kq-read', top), on = KKREAD.has(+a.getAttribute('data-av-qn'));
-      if (on && !had) top.insertAdjacentHTML('beforeend', '<span class="kq-read">' + RD_TICK + '<span>' + (LANG === 'en' ? 'Read' : 'Okundu') + '</span></span>');
+      if (on && !had) top.insertAdjacentHTML('beforeend', '<span class="kq-read">' + RD_TICK + '<span>' + LT('Okundu', 'Read') + '</span></span>');
       else if (!on && had) had.remove();
     }
     document.addEventListener('click', function (e) {
@@ -2603,26 +2727,26 @@
     function kqTools() {
       if (kq) return;
       var fab = document.createElement('button');
-      fab.type = 'button'; fab.className = 'kq-fab av-kq-fab'; fab.setAttribute('aria-label', T.toc); fab.setAttribute('aria-haspopup', 'dialog');
+      fab.type = 'button'; fab.className = 'kq-fab av-kq-fab'; setAttr2(fab, 'aria-label', AV_TX.tr.toc, AV_TX.en.toc); fab.setAttribute('aria-haspopup', 'dialog');
       fab.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor" stroke="none"/></svg>';
       var sh = document.createElement('div');
       sh.className = 'kq-sheet av-kq-sheet'; sh.hidden = true;
-      sh.innerHTML = '<div class="kq-sheet-bg" data-kq-close></div><div class="kq-sheet-panel" role="dialog" aria-modal="true" aria-label="' + T.toc + '">' +
-        '<div class="kq-grab" aria-hidden="true"></div><div class="kq-sheet-head"><p class="kq-sheet-t">' + T.toc + '</p><button type="button" class="ios-done" data-kq-close>' + T.done + '</button></div>' +
-        '<div class="kq-slider"><p class="kq-slider-l"></p><input type="range" min="1" max="' + KQ_TOTAL + '" step="1" aria-label="' + T.q + '"><p class="kq-slider-q"></p></div>' +
+      sh.innerHTML = '<div class="kq-sheet-bg" data-kq-close></div><div class="kq-sheet-panel" role="dialog" aria-modal="true" aria-label="' + esc(pnow(T.toc)) + '" data-tr-aria-label="' + AV_TX.tr.toc + '" data-en-aria-label="' + AV_TX.en.toc + '">' +
+        '<div class="kq-grab" aria-hidden="true"></div><div class="kq-sheet-head"><p class="kq-sheet-t">' + phtml(T.toc) + '</p><button type="button" class="ios-done" data-kq-close>' + phtml(T.done) + '</button></div>' +
+        '<div class="kq-slider"><p class="kq-slider-l"></p><input type="range" min="1" max="' + KQ_TOTAL + '" step="1" aria-label="' + esc(pnow(T.q)) + '" data-tr-aria-label="' + AV_TX.tr.q + '" data-en-aria-label="' + AV_TX.en.q + '"><p class="kq-slider-q"></p></div>' +
         '<div class="kq-sheet-scroll"><p class="av-gh kq-sheet-gh"></p><div class="av-rows kq-sheet-list"></div></div></div>';
       document.body.appendChild(fab); document.body.appendChild(sh);
       var range = $('input', sh), lab = $('.kq-slider-l', sh), qt = $('.kq-slider-q', sh);
       function label() {
         var n = +range.value, el = document.getElementById('soru-' + n);
-        lab.textContent = T.q + ' ' + n + ' / ' + KQ_TOTAL;
-        qt.textContent = el ? avText($('.qa-q', el)) : '';
+        lab.innerHTML = phtml(T.q) + ' ' + n + ' / ' + KQ_TOTAL;
+        pset(qt, el ? avText($('.qa-q', el)) : '');
       }
       function openSheet(on) {
         if (!on) { sh.classList.remove('is-open'); setTimeout(function () { if (!sh.classList.contains('is-open')) sh.hidden = true; }, 260); fab.focus({ preventScroll: true }); return; }
         var n = +cur.getAttribute('data-av-qn'), par = parentOf(cur);
         range.value = n; label();
-        $('.kq-sheet-gh', sh).textContent = par ? titleOf(par) : pageT;
+        pset($('.kq-sheet-gh', sh), par ? titleOf(par) : pageT);
         var list = $('.kq-sheet-list', sh);
         list.innerHTML = '';
         $$('[data-av-qn]', par || main).filter(function (q) { return parentOf(q) === par; }).forEach(function (q) {
@@ -2630,7 +2754,7 @@
           b.type = 'button'; b.className = 'av-row' + (here ? ' is-here' : ''); b.setAttribute('data-kq-go', q.getAttribute('data-av-qn'));
           if (here) b.setAttribute('aria-current', 'true');
           b.innerHTML = '<span class="av-rt"><span class="av-t"></span></span>';
-          $('.av-t', b).textContent = titleOf(q);
+          pset($('.av-t', b), titleOf(q));
           list.appendChild(b);
         });
         sh.hidden = false;
@@ -2963,6 +3087,8 @@
          language of the element actually being read. */
       var effLang = ((el.closest('[lang]') || document.documentElement).getAttribute('lang') || document.documentElement.lang || 'tr').split('-')[0];
       var clone = el.cloneNode(true);
+      /* only the language the TR | EN switch is showing */
+      $$(isEn() ? '.l-tr' : '.l-en', clone).forEach(function (n) { n.remove(); });
       $$('[lang]', clone).forEach(function (n) {
         var l = (n.getAttribute('lang') || '').split('-')[0];
         if (l && l !== effLang) n.remove();
@@ -3108,7 +3234,7 @@
   function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday(); initReveal(); initRevealAll();
+    initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
   });

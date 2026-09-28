@@ -7,6 +7,10 @@
  *     name shown in the map's list; "side" (Istanbul only) is the side of
  *     the Bosphorus; "status" is active, limited or closed, with "notice"
  *     explaining it. "open" on a city is the side of its dot the list opens.
+ *     English, shown when the reader switches to EN, sits beside each
+ *     Turkish field ("nameEn", "shortEn", "massEn", "massNoteEn",
+ *     "visitsEn", "historyEn", "noticeEn"; a source's third item, when its
+ *     title needs one).
  * TR: Türkiye'deki Katolik kiliseleri: her kilise için ayrı bir sayfa
  *     (kilise/<id>.html) üretilir. Ayin saatleri değişebilir; kaynaklar her
  *     kilisenin "sources" alanındadır. Düzenledikten sonra tools/build.ps1
@@ -14,7 +18,7 @@
  * ===================================================================== */
 window.CHURCHES = /*JSON-START*/{
  "title": "Kilise Bul",
- "en": "Find a Parish",
+ "en": "Find a Church",
  "updated": "Eylül 2026",
  "note": "Bu bilgiler kiliselerin kendi sitelerinden, İzmir Katolik Başepiskoposluğu’ndan, Türkiye Katolik Ruhani Reisler Kurulu’nun ayin saatleri listesinden, İstanbul Valiliği’nin Dijital İstanbul envanterinden ve başka açık kaynaklardan derlenmiştir; resmî ve eksiksiz bir kilise sicili değildir. Bir bilgide hata gördüyseniz İletişim sayfasından bize bildirebilirsiniz.",
  "orthodoxNote": "Yakınınızda Katolik kilisesi yoksa Ortodoks bir kilise olabilir. Kilise Hukuku’na göre (Kanun 844 §2), Katolik bir rahibe ulaşmak mümkün değilse ve gerçek bir ihtiyaç varsa, bir Katolik Efkaristiya’yı, Günah Çıkarma’yı ve Hastaların Meshi’ni, sırları geçerli olan Ortodoks Kilisesi’nden alabilir. Bu olağan değil, istisnai bir izindir; her cemaatin kendi disiplini vardır ve rahip her zaman komünyon vermeyebilir.",
@@ -99,11 +103,13 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Sent Antuan Bazilikası resmi sitesi",
-       "https://www.sentantuan.com"
+       "https://www.sentantuan.com",
+       "Basilica of Sent Antuan, official website"
       ],
       [
        "Dijital İstanbul (İstanbul Valiliği): Sent Antuan Katolik Kilisesi",
-       "https://dijitalistanbul.org/sent-antuan-katolik-kilisesi"
+       "https://dijitalistanbul.org/sent-antuan-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Basilica of St. Anthony of Padua (Sent Antuan)"
       ],
       [
        "Wikipedia: Church of St. Anthony of Padua, Istanbul",
@@ -111,11 +117,44 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Basilica of St. Anthony of Padua (Sent Antuan)",
+     "shortEn": "St. Anthony",
+     "massEn": [
+      [
+       "Sunday",
+       "10:00 English · 11:30 Italian · 11:30 Polish (in the lower church) · 19:00 Turkish (18:00 from October to March)"
+      ],
+      [
+       "Monday–Saturday",
+       "08:00 English"
+      ],
+      [
+       "Tuesday",
+       "11:30 Turkish (sung, with organ)"
+      ],
+      [
+       "Tuesday–Friday",
+       "19:00 Turkish"
+      ],
+      [
+       "Saturday",
+       "19:00 English and Italian"
+      ]
+     ],
+     "massNoteEn": "A separate schedule is published for great feasts such as Holy Week and Christmas.",
+     "visitsEn": "The church is open every day from about 08:00 to 19:30 (from 09:00 on Sundays). On Tuesdays a priest is available for confession from 10:00 to 11:30 and from 15:00 to 17:00.",
+     "historyEn": [
+      "The largest Catholic church in Istanbul, Sent Antuan is dedicated to St. Anthony of Padua and is run by the Conventual Franciscan friars. The Franciscan presence in the city goes back to the early 13th century, to 1221.",
+      "The first church of the same name was built in 1725 by the city’s Italian community. When that building was demolished to make way for a new tram line along the street, the community found a new site on İstiklal Avenue. The foundation stone was laid on 23 August 1906; construction, halted for a time by financial difficulties, was completed, and the church was consecrated and opened for worship on 15 February 1912.",
+      "The Venetian neo-Gothic building was designed by the Levantine architect Giulio Mongeri together with Eduardo de Nari. The church is built on the plan of a Latin cross; its nave is about 50 meters long from the apse to the door and about 23 meters high inside, and beneath it lies a Romanesque crypt. The “St. Antoine Apartments” facing the street were designed together with the complex to provide the church with an income.",
+      "Pope Pius XI made the church a minor basilica in 1932. Angelo Giuseppe Roncalli, later Pope John XXIII, preached here for years while he was the Vatican’s representative in Turkey from 1934 to 1944, which is why his statue stands in the courtyard. Pope Paul VI celebrated Mass here in 1967. Today the church is home to a community that worships in four languages, with Masses in Turkish, English, Italian and Polish."
+     ]
     },
     {
      "id": "santa-maria-draperis",
@@ -153,11 +192,13 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İstanbul OFM (Santa Maria Draperis)",
-       "https://www.istanbulofm.org"
+       "https://www.istanbulofm.org",
+       "Istanbul OFM (Santa Maria Draperis)"
       ],
       [
        "Dijital İstanbul (İstanbul Valiliği): Santa Maria Draperis Kilisesi",
-       "https://dijitalistanbul.org/santa-maria-draperis-kilisesi"
+       "https://dijitalistanbul.org/santa-maria-draperis-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of Santa Maria Draperis"
       ],
       [
        "Wikipedia: Church of Saint Mary Draperis",
@@ -165,15 +206,41 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Santa Maria Draperis",
+     "shortEn": "Santa Maria Draperis",
+     "massEn": [
+      [
+       "Sunday",
+       "09:00 Italian · 10:00 Korean · 11:15 English · Spanish Mass in the evening (17:00 October–March, 18:30 April–September)"
+      ],
+      [
+       "Last Sunday of the month",
+       "A single Mass: 10:30"
+      ],
+      [
+       "Monday–Saturday",
+       "08:00 Italian"
+      ]
+     ],
+     "massNoteEn": "Times may change during the year; check the current schedule on the church’s website.",
+     "visitsEn": "Usually open to visitors during the day, outside Mass times. The church stands at the far end of a courtyard reached by steps down from İstiklal Avenue.",
+     "historyEn": [
+      "Santa Maria Draperis is the church of one of Istanbul’s oldest Catholic communities. Its story begins with the church of St. Anthony of the Cypresses (Sant’Antonio dei Cipressi), built by Franciscan friars in Sirkeci shortly before 1453. Forced to leave that church after the conquest, the friars settled in Galata in 1584 after a long period of moving from place to place. A Levantine lady, Clara Maria Draperis, gave them her house, which had a small chapel; the church takes its name from this benefactor.",
+      "The chapel’s altar was adorned with a wooden icon of the Virgin Mary. The chapel burned down completely in the fire of 1660, but the icon was rescued by a member of the Draperis family. The community moved to Pera in 1678; the present church was rebuilt in 1769, after the fire of 1767.",
+      "The barrel vault of the rectangular, three-aisled church was decorated in 1874. The high altar of pink Carrara marble dates from 1772, and the Draperis icon still stands above it; the icon was crowned with a papal crown on 25 March 1911. The entrance on İstiklal Avenue has a neoclassical façade with a statue of Mary in a niche, and the inscription of the 1904 renovation. Inside the church, gravestones from the 18th and 19th centuries, most in Italian and Latin, commemorate Levantine families, bishops and consuls.",
+      "The church is still run by the Friars Minor (OFM) and serves a multinational community with Masses in Italian, English, Korean and Spanish."
+     ]
     },
     {
      "id": "sen-piyer",
@@ -206,7 +273,8 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Sen Piyer (Dominikenler)",
-       "https://senpiyer.org"
+       "https://senpiyer.org",
+       "Sen Piyer (the Dominicans)"
       ],
       [
        "Wikipedia: Church of SS Peter and Paul, Istanbul",
@@ -214,11 +282,30 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Saints Peter and Paul",
+     "shortEn": "St. Peter (Galata)",
+     "massEn": [
+      [
+       "Monday–Friday",
+       "08:00 (Turkish / Italian)"
+      ],
+      [
+       "Saturday",
+       "19:00"
+      ]
+     ],
+     "visitsEn": "Open to visitors on Fridays and Saturdays from 14:30 to 17:30.",
+     "historyEn": [
+      "The Church of Saints Peter and Paul, at the foot of the Galata Tower, is the church of the Dominican friars. The Dominicans came to Constantinople at the beginning of the 13th century; their first large church in Galata, San Paolo, was turned into a mosque in 1475 (today’s Arap Mosque). After that the friars settled on the present site, where the Genoese built a church in 1604.",
+      "The church was destroyed by fire twice, in 1660 and 1731. The present building was rebuilt in the neoclassical style between 1841 and 1843 by the Swiss-Italian Fossati brothers. It stands inside a courtyard among the narrow streets of Galata, barely noticeable from outside.",
+      "The church’s most precious treasure is an icon of the Virgin of the Hodegetria type. The icon originally belonged to the Dominican church of Caffa (Kefe) in Crimea and survived the fire of 1731. Today the priory also houses a research and dialogue center called “Dost-i”, run by the Dominican friars."
+     ]
     },
     {
      "id": "sent-esprit",
@@ -258,7 +345,8 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Saint Esprit Katedrali",
-       "https://dijitalistanbul.org/saint-esprit-katedrali"
+       "https://dijitalistanbul.org/saint-esprit-katedrali",
+       "Dijital İstanbul (Governorship of Istanbul): Cathedral of the Holy Spirit (Sent Esprit)"
       ],
       [
        "Wikipedia: Cathedral of the Holy Spirit, Istanbul",
@@ -266,15 +354,41 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Cathedral of the Holy Spirit (Sent Esprit)",
+     "shortEn": "Holy Spirit Cathedral",
+     "massEn": [
+      [
+       "Sunday",
+       "08:00 Aramaic/Arabic · 10:00 English · 11:15 French"
+      ],
+      [
+       "Saturday",
+       "18:00 Turkish (Sunday vigil)"
+      ],
+      [
+       "Weekdays",
+       "18:00 French"
+      ]
+     ],
+     "massNoteEn": "The sources differ slightly (the French Sunday Mass is given as 11:15 or 11:30); check before you go.",
+     "visitsEn": "Usually open during Mass times and during the day.",
+     "historyEn": [
+      "The Cathedral of the Holy Spirit is the cathedral of the Latin Catholic Apostolic Vicariate of Istanbul; the bishop’s seat is here. It stands between Taksim and Nişantaşı, next to the Notre Dame de Sion school, and is the city’s second largest Catholic church after Sent Antuan.",
+      "The Baroque basilica was built in 1846 by the architect Gaspare Fossati, on the initiative of the Apostolic Vicar, the French archbishop Julien Hillereau. Damaged in the earthquake of 1865, it was restored by Pietro Vitalis; it became a cathedral in 1876 and was made a minor basilica on 18 March 1909. The painting of “The Descent of the Holy Spirit” on the high altar was a gift of Pope Pius IX in 1867.",
+      "In the crypt beneath the cathedral lie Archbishop Hillereau and Giuseppe Donizetti (Donizetti Pasha), master of music at the Ottoman court. The statue of Pope Benedict XV in the courtyard was erected in 1921; it honors the pope who helped the wounded of the First World War without regard to nationality or religion. Since 1989 the cathedral has been in the care of the Salesian priests.",
+      "Popes Paul VI, John Paul II, Benedict XVI, Francis and, on 28 November 2025, Leo XIV came to this cathedral during their visits to Turkey. The street beside the church is named “Papa Roncalli Street” in memory of Pope John XXIII."
+     ]
     },
     {
      "id": "sankt-georg",
@@ -315,19 +429,42 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Dijital İstanbul (İstanbul Valiliği): Sankt Georg Katolik Kilisesi",
-       "https://dijitalistanbul.org/sankt-georg-katolik-kilisesi"
+       "https://dijitalistanbul.org/sankt-georg-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of St. George (Sankt Georg)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. George (Sankt Georg)",
+     "shortEn": "St. George (Karaköy)",
+     "massEn": [
+      [
+       "Sunday",
+       "10:00 German"
+      ],
+      [
+       "Tuesday and Thursday",
+       "18:30"
+      ]
+     ],
+     "massNoteEn": "This is the church of the German-speaking Austrian community. On some Sundays there is no Mass here (for example when there is a joint ecumenical service); check the community’s calendar.",
+     "visitsEn": "Visitors are advised to come through the entrance of the St. Georg Austrian High School, after letting them know in advance.",
+     "historyEn": [
+      "Sankt Georg is first mentioned in 1303; the church is known to have been built over a holy spring (ayazma). It was the principal church of the Genoese, who held Galata until the conquest of Constantinople. According to one tradition, the head of St. Irene, one of the city’s patron saints, was thrown into this spring.",
+      "In 1628 the church became a compound, with a small school opened inside it; it burned down completely in the fire of 1660. In 1677 the French ambassador, the Marquis de Nointel, obtained permission from Sultan Mehmed IV and had the church rebuilt. After the fires of 1696 and 1731 it was repaired in 1732, partly with donations from King Louis XV of France.",
+      "The building, which for a time also served as a hospital for Austro-Hungarian sailors, was bought together with its school by the Austrian Lazarists in 1882. Today’s St. Georg Austrian High School has its roots in that school. The church was renovated at the beginning of the 20th century and its interior simplified in 1963; in the dome over the middle of the nave is a dove, symbol of the Holy Spirit.",
+      "Today the church belongs to the German-speaking Catholic community and carries the legacy of the Lazarists and the Sisters of Mercy (Barmherzige Schwestern). The sisters left Istanbul in September 2025 after more than 150 years of service."
+     ]
     },
     {
      "id": "saint-benoit",
@@ -359,12 +496,30 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Saint Benoit Kilisesi",
-       "https://dijitalistanbul.org/saint-benoit-kilisesi"
+       "https://dijitalistanbul.org/saint-benoit-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of Saint Benoît"
       ],
       [
        "Vikipedi: Saint Benoît Latin Katolik Kilisesi",
-       "https://tr.wikipedia.org/wiki/Saint_Beno%C3%AEt_Latin_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Saint_Beno%C3%AEt_Latin_Katolik_Kilisesi",
+       "Wikipedia (Turkish): Church of Saint Benoît"
       ]
+     ],
+     "nameEn": "Church of Saint Benoît",
+     "shortEn": "Saint Benoît (Karaköy)",
+     "massEn": [
+      [
+       "Regular Mass",
+       "None; Mass is celebrated on special days and at the school’s ceremonies."
+      ]
+     ],
+     "visitsEn": "Because it is on school grounds, a visit requires permission in advance.",
+     "noticeEn": "There is no regular public Mass; the church stands inside the grounds of the Saint Benoît High School and opens only for certain ceremonies and services.",
+     "historyEn": [
+      "Saint Benoît is one of the oldest Catholic churches in Istanbul still in use. Its roots go back to a monastery of the early 13th century and to the monastery of Santa Maria della Cisterna in Pera, together with the bell tower the Genoese built in 1362. The bell tower that stands today is that 14th-century structure.",
+      "Between 1427 and 1450 the complex passed to French Benedictine monks and was dedicated to St. Benedict (Saint Benoît). At the time of the conquest, the church’s relics and liturgical objects were taken first to Chios and then to Genoa. In the 17th and 18th centuries the church belonged to the Jesuits; in 1783 it was handed over to the French Lazarist priests.",
+      "The church was damaged in the fires of 1686, 1696 and 1731 and, as the inscription at its entrance records, was rebuilt in its present form in 1732. Through the efforts of the French ambassador Pierre de Girardin, it was allowed to be built with a dome, a privilege until then granted only to mosques; according to tradition, the şeyhülislam of the day gave the columns that still stand today.",
+      "The school the Lazarists founded here in 1783 is today’s Saint Benoît French High School. The complex underwent an extensive restoration in the 2000s."
      ]
     },
     {
@@ -399,8 +554,24 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
+     ],
+     "nameEn": "Church of Saint-Louis des Français",
+     "shortEn": "Saint-Louis (French)",
+     "massEn": [
+      [
+       "At present",
+       "No Mass (closed since 1 September 2025)."
+      ]
+     ],
+     "massNoteEn": "French speakers can attend the French Masses at other churches (for example the Cathedral of the Holy Spirit, Sunday 11:15).",
+     "visitsEn": "Closed.",
+     "noticeEn": "The church has been closed since 1 September 2025 following earthquake risk assessments; Masses are suspended until further notice.",
+     "historyEn": [
+      "Saint-Louis des Français is the church in the garden of the Palais de France in Beyoğlu (the former French Embassy, today the consulate general). As the church of France’s embassy in the Ottoman Empire, it is linked to one of the oldest institutions of the Catholic presence in Istanbul, and for many years it was the meeting place of the French-speaking community.",
+      "On 1 September 2025 the parish announced that, following new assessments of earthquake risk, Masses had been suspended and the church closed. No date has been given for its reopening."
      ]
     },
     {
@@ -434,23 +605,45 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Notre Dame de Lourdes Gürcü Katolik Kilisesi",
-       "https://dijitalistanbul.org/notre-dame-de-lourdes-gurcu-katolik-kilisesi"
+       "https://dijitalistanbul.org/notre-dame-de-lourdes-gurcu-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Notre-Dame de Lourdes Georgian Catholic Church"
       ],
       [
        "Vikipedi: Bomonti Gürcü Katolik Kilisesi",
-       "https://tr.wikipedia.org/wiki/Bomonti_G%C3%BCrc%C3%BC_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Bomonti_G%C3%BCrc%C3%BC_Katolik_Kilisesi",
+       "Wikipedia (Turkish): Notre-Dame de Lourdes Georgian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Notre-Dame de Lourdes Georgian Catholic Church",
+     "shortEn": "Notre-Dame de Lourdes (Bomonti)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:15 Turkish"
+      ],
+      [
+       "Monday–Saturday",
+       "08:00"
+      ]
+     ],
+     "visitsEn": "Open during Mass times; at other times you need to ask at the door.",
+     "historyEn": [
+      "Notre-Dame de Lourdes in Bomonti is one of the very few Georgian Catholic churches in the world; older sources call it the “Feriköy Georgian Catholic Church”. After the Russo-Ottoman War of 1828–1829, thousands of Catholic Georgians forced by the Russians to leave the Meskheti-Javakheti region came to Istanbul. One of the emigrants, the priest Petre Kharischirashvili, founded this church and monastery in 1861.",
+      "The monastery soon became a cultural center for the Georgians. Some 200 books in Georgian and French were printed at its press, founded in 1870; schools were opened for girls and boys, and in 1908 a library named after the poet Akaki Tsereteli was founded. The first readers for Muslim Georgians in the Ottoman lands were also printed here. When the Red Army invaded Georgia in 1921, the Georgian government under Noe Jordania and many refugees first took shelter here.",
+      "The church was repaired in 1901. Inside are the founder’s Latin-Georgian gravestone, an image of St. Nino and, on the high altar, an icon of Mary with a Polish inscription; in the garden is a small shrine dedicated to St. Rita of Cascia. Since the number of Georgian Catholics fell sharply after 1955, most of the congregation today are Turkish and Armenian Catholics."
+     ]
     },
     {
      "id": "aziz-pavlus-nisantasi",
@@ -482,15 +675,31 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Paul",
+     "shortEn": "St. Paul (Nişantaşı)",
+     "massEn": [
+      [
+       "1st and 3rd Sunday of the month",
+       "10:30 German"
+      ]
+     ],
+     "massNoteEn": "The meeting place of the German-speaking Catholic community.",
+     "visitsEn": "Open only during Mass times.",
+     "historyEn": [
+      "St. Paul in Nişantaşı is the parish center of the German-speaking Catholics living in Istanbul. Mass is celebrated here in German twice a month, and the community’s meetings and events are also held in this building.",
+      "The church works together with the German-speaking Austrian community’s St. Georg Church in Karaköy; the two communities often celebrate feasts and ecumenical services together."
+     ]
     },
     {
      "id": "kutsal-kalp-bebek",
@@ -522,15 +731,34 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of the Sacred Heart (Bebek)",
+     "shortEn": "Sacred Heart (Bebek)",
+     "massEn": [
+      [
+       "Saturday",
+       "18:00 Turkish (Sunday vigil)"
+      ],
+      [
+       "Sunday",
+       "11:00"
+      ]
+     ],
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The Church of the Sacred Heart in Bebek, on the shore of the Bosphorus, is a small parish church serving the Catholic families of the area and the foreign students and teachers at the neighborhood’s schools and university.",
+      "The church is dedicated to the Sacred Heart of Jesus. Because the congregation comes from many countries, Sunday Masses are often said in more than one language."
+     ]
     },
     {
      "id": "rosario-bakirkoy",
@@ -563,19 +791,40 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Meryem Ana Rosario Kilisesi",
-       "https://dijitalistanbul.org/meryem-ana-rosario-kilisesi"
+       "https://dijitalistanbul.org/meryem-ana-rosario-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of Our Lady of the Rosary"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Our Lady of the Rosary",
+     "shortEn": "Rosario (Bakırköy)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 Turkish"
+      ],
+      [
+       "Monday, Wednesday, Thursday, Friday",
+       "18:30"
+      ]
+     ],
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The Church of Our Lady of the Rosary in Bakırköy was built in the second half of the 19th century (1849–1885) for the area’s Latin Catholic community. The emblem of the Dominican order in the middle of the pediment shows the church’s link with the Dominican friars.",
+      "The building, with its neo-Baroque façade, is built on the plan of a Latin cross; over the crossing rises a dome 20.48 meters high inside, with ten arched windows in its drum. The interior has painted decoration and images of saints in the pendentives. On the high altar is a painting of “Our Lady of the Rosary” signed by Consoli Pinse and dated 1886.",
+      "Over time the church was also opened to other congregations; the Masses of the Latin community continue to this day."
+     ]
     },
     {
      "id": "aziz-stefanos-yesilkoy",
@@ -608,19 +857,41 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Aziz Stefanos Latin Katolik Kilisesi",
-       "https://dijitalistanbul.org/aziz-stefanos-latin-katolik-kilisesi"
+       "https://dijitalistanbul.org/aziz-stefanos-latin-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of St. Stephen (St. Etienne)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Stephen (St. Etienne)",
+     "shortEn": "St. Stephen (Yeşilköy)",
+     "massEn": [
+      [
+       "Sunday",
+       "10:30"
+      ],
+      [
+       "Monday–Saturday",
+       "18:00 (on Saturday evening, the Sunday vigil Mass)"
+      ]
+     ],
+     "massNoteEn": "The CET’s 2023 list gave the Sunday Mass as 09:30; current sources give 10:30.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "Until 1926 Yeşilköy was called San Stefano (Ayastefanos), after an old church dedicated to St. Stephen, the first martyr of Christianity. According to tradition, the saint’s bones were brought from Palestine to Constantinople in the 4th century; as they were being sent on to Italy, the ship was caught in a storm and had to put ashore off present-day Yeşilköy, and a church dedicated to St. Stephen was built where the tent had been pitched.",
+      "The present Latin Catholic church was built in 1865 and officially opened in 1886. Its stone dome collapsed in the earthquake of 1894 and was replaced by a wooden ceiling made with materials brought from Austria. The three statues in front of the church were brought from France. The latest renovation and repainting was completed in 2024.",
+      "The church is run by the Capuchin Franciscan friars, and Mass is said in Turkish and Italian. The neighborhood also has a Greek Orthodox and an Armenian church dedicated to the same saint."
+     ]
     },
     {
      "id": "buyukdere-meryem-ana",
@@ -654,7 +925,8 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Meryem Ana Doğuş Katolik Kilisesi",
-       "https://dijitalistanbul.org/meryem-ana-dogus-katolik-kilisesi"
+       "https://dijitalistanbul.org/meryem-ana-dogus-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of the Nativity of Mary (Santa Maria)"
       ],
       [
        "Wikipedia: Church of Saint Mary of Büyükdere",
@@ -662,15 +934,36 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of the Nativity of Mary (Santa Maria)",
+     "shortEn": "Santa Maria (Büyükdere)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 (Turkish / English)"
+      ],
+      [
+       "Monday–Saturday",
+       "19:00 (Turkish / English)"
+      ]
+     ],
+     "visitsEn": "Open during Mass times. Since the attack in 2024 there may be a security check at the entrance.",
+     "historyEn": [
+      "The first Catholic church in Büyükdere was built of wood in 1815. In 1866 the Conventual Franciscan friars replaced it with the present masonry church, dedicated to the Nativity of Mary. The façade, which combines Baroque and neo-Gothic elements, has a rose window and two angel figures over the doors.",
+      "During the First World War (1915–1918) the church was closed and used as a soup kitchen for Muslim children; after the war it was reopened for worship. Until the 1960s it also served as a seminary. Handed over to the Focolare movement in 1985, the building returned to the Conventual Franciscans in 1999.",
+      "Three of the large paintings inside are by Giuseppe Carta and the fourth by the Franciscan friar Pasquale Sarullo. The organ, installed in 1914, was originally brought for the chapel of the Notre Dame de Sion school and still works today.",
+      "On 28 January 2024 the church was attacked by gunmen during Sunday Mass, and a member of the congregation, Tuncer Cihan, was killed. The community has continued to celebrate Mass since the attack."
+     ]
     },
     {
      "id": "surp-asdvadzadzin",
@@ -699,15 +992,32 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Asdvadzadzin Ermeni Katolik Katedrali",
-       "https://dijitalistanbul.org/surp-asdvadzadzin-ermeni-katolik-katedrali"
+       "https://dijitalistanbul.org/surp-asdvadzadzin-ermeni-katolik-katedrali",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Asdvadzadzin Armenian Catholic Cathedral"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Surp Asdvadzadzin Armenian Catholic Cathedral",
+     "shortEn": "Surp Asdvadzadzin Cathedral",
+     "massEn": [
+      [
+       "Every day",
+       "10:30"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time.",
+     "historyEn": [
+      "The Surp Asdvadzadzin (Holy Mother of God) Cathedral in Sakızağacı is the spiritual center of the Armenian Catholic Patriarchate in Turkey and of the Armenian Catholic community of Istanbul. The church stands at the very heart of a compound made up of the patriarchal residence, the priests’ house, a library and a printing house.",
+      "An imperial firman for its construction was obtained on 15 June 1864. Built at the expense of Bedros Bey Mısırlıyan and designed by the architect Andon Tülbentçiyan, the church had its foundations laid in January 1865; completed in about 18 months, it was consecrated on 6 November 1866.",
+      "In the great Beyoğlu fire of 1870 the patriarchal building and its outbuildings were badly damaged; an extensive restoration was carried out in 1880–1881. Inside the neoclassical building is kept a reliquary of St. Gregory the Illuminator (Surp Krikor Lusavoriç). On 26 July 1967 a great liturgy attended by Pope Paul VI was celebrated here."
+     ]
     },
     {
      "id": "surp-hovhan-vosgeperan",
@@ -736,15 +1046,32 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Hovhan Vosgeperan Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/surp-hovhan-vosgeperan-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/surp-hovhan-vosgeperan-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Hovhan Vosgeperan Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Surp Hovhan Vosgeperan Armenian Catholic Church",
+     "shortEn": "Surp Hovhan Vosgeperan",
+     "massEn": [
+      [
+       "Sunday (winter)",
+       "11:00"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time.",
+     "historyEn": [
+      "Surp Hovhan Vosgeperan (St. John Chrysostom), near Taksim Square behind the French Consulate, holds 600 people and is the largest Armenian Catholic church in Turkey.",
+      "The wooden church built here in 1837 grew worn over time and burned down. The foundations of the new masonry building were laid in 1860; after the death of the architect Garabet Tülbentçiyan in 1861, Andon Tülbentçiyan completed the work, and the church was finished in 1863. A school building was also put up beside it.",
+      "Built of dressed stone, the church looks like a basilica from outside and like a rotunda with a central dome from inside; four piers carry the octagonal dome. Inside, the neoclassical style prevails, with round arches, engaged piers and columns with composite capitals. Pope John Paul II came to this church during his visit to Turkey in 1979."
+     ]
     },
     {
      "id": "surp-pirgic",
@@ -773,15 +1100,32 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Pirgiç Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/surp-pirgic-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/surp-pirgic-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Pırgiç Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Surp Pırgiç Armenian Catholic Church",
+     "shortEn": "Surp Pırgiç (Galata)",
+     "massEn": [
+      [
+       "Thursday (winter)",
+       "10:30"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time.",
+     "historyEn": [
+      "Surp Pırgiç (Holy Saviour) in Galata is the first Armenian Catholic church built in Istanbul. It was built by the Armenian Catholic community of Galata in 1832–1834, and from 1850 to 1928 it was the seat of the Armenian Catholic patriarchate.",
+      "According to tradition, while it was being built a plague broke out in the city, and on 25 March the icon of the Virgin Mary was carried in procession through the streets; after the epidemic subsided, Sultan Mahmud II is said to have sent the church a gift set with diamonds.",
+      "The broad basilica-plan building is entered through an “ancient temple” façade, reached by steps, where six piers are joined by an architrave. Inside are five altars; one is dedicated to the Virgin Mary, with an image of the crowned Virgin and Child. The tomb of Emir Bashir Shihab of Lebanon is also in this church. Part of the building was demolished in 1958 when the street was widened."
+     ]
     },
     {
      "id": "anarad-higutyun",
@@ -810,15 +1154,32 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Anarad Hığutyun Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/anarad-higutyun-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/anarad-higutyun-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Anarad Hığutyun Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Anarad Hığutyun Armenian Catholic Church",
+     "shortEn": "Anarad Hığutyun (Fatih)",
+     "massEn": [
+      [
+       "Sunday (winter)",
+       "10:30"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time.",
+     "historyEn": [
+      "The Anarad Hığutyun (Immaculate Conception) Church is one of the few Armenian Catholic churches on the historic peninsula, inside the city walls. Its roots go back to the Mesrobyan School, founded in 1845 to educate the children of the Armenian Catholic community.",
+      "The church opened in 1856 with the permission of Sultan Abdülmecid. Its construction was undertaken by Patriarch Andon Bedros IX Hasunyan, the first Armenian Catholic cardinal from the Ottoman lands; its architect was Andon Tülbentçiyan, who also designed Surp Hovhan Vosgeperan in Taksim and the cathedral in Sakızağacı.",
+      "The Mesrobyan School was the first Istanbul school of the Sisters of the Immaculate Conception (Anarad Hığutyun), a congregation founded to educate poor Armenian girls. Earthquakes and neighborhood fires took their toll on the church; the building took its present form in a restoration in 1990."
+     ]
     },
     {
      "id": "surp-krikor-ortakoy",
@@ -846,15 +1207,31 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Krikor Lusavoriç Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/surp-krikor-lusavoric-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/surp-krikor-lusavoric-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Krikor Lusavoriç Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Surp Krikor Lusavoriç Armenian Catholic Church",
+     "shortEn": "Surp Krikor Lusavoriç (Ortaköy)",
+     "massEn": [
+      [
+       "Saturday (winter)",
+       "15:00"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time.",
+     "historyEn": [
+      "The building of the Surp Krikor Lusavoriç (St. Gregory the Illuminator) Church in Ortaköy was permitted by a firman dated 5 November 1837. Built at the expense of Krikor Hekimyan, the church opened for worship on 6 January 1839.",
+      "The building, whose architecture recalls the basilicas of Rome, has two stacked galleries for women and four small altars inside. Today the church is run by the Ortaköy Surp Krikor Lusavoriç Armenian Catholic Church Foundation."
+     ]
     },
     {
      "id": "surp-bogos-buyukdere",
@@ -882,15 +1259,31 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Boğos Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/surp-bogos-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/surp-bogos-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Boğos Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Surp Boğos Armenian Catholic Church",
+     "shortEn": "Surp Boğos (Büyükdere)",
+     "massEn": [
+      [
+       "Sunday (summer)",
+       "11:00"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time during the summer months.",
+     "historyEn": [
+      "Surp Boğos (St. Paul) in Büyükdere was first built as a wooden chapel in 1847. As the community grew, the wooden building became too small; it was taken down in 1882 and replaced by the larger masonry church built at the expense of Boğos Amira Bilezikçiyan, which opened for worship in 1885.",
+      "East of the church, which stands in a garden and looks two-storied, are the priest’s house and the bell tower; the compound has an old well. The building was listed in 1978. Like many churches in the summer neighborhoods of the Bosphorus, Mass is held here in the summer months."
+     ]
     },
     {
      "id": "surp-andon-sariyer",
@@ -920,8 +1313,23 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Andon Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/surp-andon-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/surp-andon-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Andon Armenian Catholic Church"
       ]
+     ],
+     "nameEn": "Surp Andon Armenian Catholic Church",
+     "shortEn": "Surp Andon (Sarıyer)",
+     "massEn": [
+      [
+       "Regular Mass",
+       "No published schedule."
+      ]
+     ],
+     "visitsEn": "Ask before you visit.",
+     "noticeEn": "No regular Mass schedule has been published; Mass has resumed in the church since its restoration. Consult the Armenian Catholic Patriarchate before you go.",
+     "historyEn": [
+      "The Surp Andon Church, dedicated to St. Anthony, was built in 1871 by Andon Tıngır Yaver Pasha. The church and the two buildings beside it were placed under the administration of the Armenian Catholic spiritual authority by an agreement dated 1877.",
+      "The single-nave, basilica-plan building has a narthex, choir, apse and baptistery; a tower rises at each corner of the west entrance, and the exterior has a half-Gothic look. In a restoration begun in 2019 the garden, walls and cemetery were renewed; after the work, Mass was celebrated in the church again after a long interval."
      ]
     },
     {
@@ -965,15 +1373,44 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Gümüşsuyu Süryani Katolik Kilisesi",
-       "https://dijitalistanbul.org/gumussuyu-suryani-katolik-kilisesi"
+       "https://dijitalistanbul.org/gumussuyu-suryani-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Sacred Heart Syriac Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Sacred Heart Syriac Catholic Church",
+     "shortEn": "Syriac Catholic (Gümüşsuyu)",
+     "massEn": [
+      [
+       "Winter: Monday–Saturday",
+       "10:00 (Arabic-Aramaic)"
+      ],
+      [
+       "Winter: Sunday",
+       "11:00 (Turkish, Arabic-Aramaic)"
+      ],
+      [
+       "Summer: Sunday",
+       "09:30 (a single Mass)"
+      ],
+      [
+       "First Friday of every month",
+       "11:00 Turkish, in honor of the Sacred Heart"
+      ]
+     ],
+     "massNoteEn": "The Syriac Catholic liturgy is celebrated in Syriac (Aramaic), Arabic and Turkish.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The Sacred Heart (Sacré-Cœur) Church in Gümüşsuyu is the principal church of the Syriac Catholic Patriarchal Vicariate in Turkey. The building was built in 1910 by the Jesuits. After the Jesuits left Turkey, the building and its land passed to the Treasury.",
+      "From the 1970s on, the Syriac Catholic community that had come to Istanbul from the southeast repaired the church, then in ruins, and opened it for worship. In 1997 the building was allocated to the community’s foundation free of charge for 99 years; after a long legal process, a decision granting it free of charge for 49 years was issued in 2018.",
+      "The Syriac Catholics are an Eastern Catholic Church that comes from the ancient Syriac Church of Antioch and entered into union with Rome in the 18th century. Their liturgy still uses Syriac (Aramaic), close to the language Jesus spoke."
+     ]
     },
     {
      "id": "keldani-istanbul",
@@ -1003,8 +1440,23 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Vikipedi: Keldani Katolik Kilisesi",
-       "https://tr.wikipedia.org/wiki/Keldani_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Keldani_Katolik_Kilisesi",
+       "Wikipedia (Turkish): Chaldean Catholic Church (Istanbul)"
       ]
+     ],
+     "nameEn": "Chaldean Catholic Church (Istanbul)",
+     "shortEn": "Chaldean Catholic (Beyoğlu)",
+     "massEn": [
+      [
+       "Mass times",
+       "Ask the church."
+      ]
+     ],
+     "visitsEn": "Arrange your visit in advance.",
+     "noticeEn": "No reliable, current source could be found for the church’s exact address and Mass times. Consult the Chaldean Catholic Patriarchal Vicariate of Turkey before you go.",
+     "historyEn": [
+      "The Chaldean Catholic Church is an Eastern Catholic Church that comes from the ancient Church of the East in Mesopotamia and entered into union with Rome in the 16th century (1552). Its liturgy uses the eastern dialect of Syriac; the patriarchate is based in Baghdad today.",
+      "The center of the Chaldean Catholic community in Turkey is in Istanbul, in Beyoğlu, and is led by the Chaldean Catholic Patriarchal Vicar of Turkey, Mgr. François Yakan. Most of the community are families who came from the southeast in the second half of the 20th century, especially from around Şırnak, Mardin and Diyarbakır."
      ]
     },
     {
@@ -1042,23 +1494,49 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Notre Dame de L’Assomption Kilisesi",
-       "https://dijitalistanbul.org/notre-dame-de-lassomption-kilisesi"
+       "https://dijitalistanbul.org/notre-dame-de-lassomption-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of Notre Dame de l’Assomption"
       ],
       [
        "Vikipedi: Kadıköy Fransız Katolik Kilisesi",
-       "https://tr.wikipedia.org/wiki/Kad%C4%B1k%C3%B6y_Frans%C4%B1z_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Kad%C4%B1k%C3%B6y_Frans%C4%B1z_Katolik_Kilisesi",
+       "Wikipedia (Turkish): Church of Notre Dame de l’Assomption"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Notre Dame de l’Assomption",
+     "shortEn": "Notre Dame de l’Assomption (Moda)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:30 (Turkish / French)"
+      ],
+      [
+       "Monday–Friday",
+       "18:30 (Turkish / French)"
+      ],
+      [
+       "Saturday",
+       "18:30 Turkish"
+      ]
+     ],
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "Notre Dame de l’Assomption, also known in Kadıköy as “the French Church”, is dedicated to the Assumption of the Virgin Mary. In 1858 the Apostolic Vicar Brunoni charged Father De Negri with founding a church in Kadıköy; Catholic families newly arrived from Chios made a real contribution to the building.",
+      "Permitted by a firman of 1859, the church was designed in the neoclassical style by the architect Giovanni Battista Barberini and completed in 1865; in the Latin inscription on the façade the architect’s name appears as “Architectus Johannes Barborini”. Two bell towers rise on the west front of the cross-plan, domed building.",
+      "By a papal letter of 2 July 1895 the church and its annexes were handed over to the Assumptionist priests, and a monastery building was added beside it. Since the mid-1970s the church has also been used by the Syriac community. Mass is said in Turkish and French."
+     ]
     },
     {
      "id": "tubini-sapeli",
@@ -1090,15 +1568,34 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Meryem Ana Latin Katolik Kilisesi",
-       "https://dijitalistanbul.org/meryem-ana-latin-katolik-kilisesi"
+       "https://dijitalistanbul.org/meryem-ana-latin-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of Our Lady, Latin Catholic (Tubini Chapel)"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Our Lady, Latin Catholic (Tubini Chapel)",
+     "shortEn": "Tubini Chapel (Kadıköy)",
+     "massEn": [
+      [
+       "Tuesday and Thursday",
+       "18:00"
+      ],
+      [
+       "Sunday",
+       "18:00"
+      ]
+     ],
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "This small Baroque chapel in Kadıköy is the one Hyacinthe Tubini, in his will of 30 December 1886, asked to be built for his family’s use, on condition that it also be open to all believers. The building, about 6 meters wide and 12 meters long, was completed in 1905 and dedicated to the Annunciation.",
+      "The chapel was repaired in 1960 and on 13 January 1990. Under a lease signed in 2017 it was given to another Christian community for use until 2023. Restored again in 2023, the chapel was consecrated and opened for Latin Catholic worship on 7 December 2023, this time dedicated to Our Lady of Chalcedon (Santa Maria in Calcedonia); Chalcedon is the ancient name of Kadıköy."
+     ]
     },
     {
      "id": "aziz-augustin-fenerbahce",
@@ -1127,19 +1624,36 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Aziz Augustin Kilisesi",
-       "https://dijitalistanbul.org/aziz-augustin-kilisesi"
+       "https://dijitalistanbul.org/aziz-augustin-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of St. Augustine"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ],
       [
        "Weekday Masses: İstanbul kiliseleri",
-       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches"
+       "https://weekdaymasses.org.uk/en/area/turkey-istanbul/churches",
+       "Weekday Masses: Istanbul churches"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Augustine",
+     "shortEn": "St. Augustine (Fenerbahçe)",
+     "massEn": [
+      [
+       "Sunday",
+       "10:00 (Turkish / French)"
+      ]
+     ],
+     "visitsEn": "Open for the Sunday Mass.",
+     "historyEn": [
+      "The St. Augustine chapel in Fenerbahçe is part of a building put up in 1889–1892 as a house of formation for the Assumptionist priests. The building was blessed by Bishop Bonetti on 1 May 1890; of the two side wings added in 1892, the left one was fitted out as a chapel dedicated to St. Augustine of Hippo.",
+      "Between 1890 and 1914 the building served in turn as a novitiate, a house of studies and a student hostel; from 1895 to 1914 it was a seminary, a role it kept on a small scale until the Second World War. From 1914 to 1919 it served as a hospital. After 1920 the chapel became an annex of the Kadıköy parish, and the priests from Moda went on celebrating Mass here regularly.",
+      "In 1982 the building was leased as part of a sports facility; the chapel was thoroughly renovated in 2012–2013. The neighborhood’s old Greek name, “Phanaraki” (little lighthouse), appears in the building’s early records."
+     ]
     },
     {
      "id": "surp-levon-kadikoy",
@@ -1167,15 +1681,31 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Surp Levon Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/surp-levon-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/surp-levon-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Surp Levon Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Surp Levon Armenian Catholic Church",
+     "shortEn": "Surp Levon (Kadıköy)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:30"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open for the Sunday Mass.",
+     "historyEn": [
+      "The Surp Levon Church in Altıyol, Kadıköy, takes its name from St. Leo the Great (Surp Levon), pope from 440 to 461. A wooden chapel was built here in 1890, on the grounds of the Armenian cemetery.",
+      "The wooden building was taken down, and in 1908 the foundations of the present masonry church were laid; the church was completed and opened for worship in 1911. Its plan follows the basilicas of Rome. On the high altar in the apse is a painting of Surp Levon by Giovanni Cingolani, dated 1890; the bell tower has four bells of different sizes and a rooster figure on top."
+     ]
     },
     {
      "id": "polonezkoy",
@@ -1203,15 +1733,31 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Vikipedi: Czestochova Meryem Ana Kilisesi",
-       "https://tr.wikipedia.org/wiki/Czestochova_Meryem_Ana_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Czestochova_Meryem_Ana_Kilisesi",
+       "Wikipedia (Turkish): Church of Our Lady of Częstochowa (Polonezköy)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Our Lady of Częstochowa (Polonezköy)",
+     "shortEn": "Our Lady (Polonezköy)",
+     "massEn": [
+      [
+       "Saturday",
+       "18:00 (October–March) · 19:00 (April–September), Polish / Turkish"
+      ]
+     ],
+     "massNoteEn": "For the Polish community’s Masses, see duszpasterstwowstambule.pl.",
+     "visitsEn": "Open at Mass time and on the village’s event days.",
+     "historyEn": [
+      "Polonezköy (Adampol) is a village founded in 1842 by Polish émigrés. The village’s first place of worship was the Church of St. Anne, built in 1842. That church was destroyed in the Istanbul earthquake of 1894, and the present Church of Our Lady of Częstochowa was built in its place in 1914.",
+      "During the First World War the church was used as a headquarters by the Turkish army; after the war it was repaired and reopened for worship in 1918. Inside is a copy of the famous icon of the Virgin Mary at Częstochowa, Poland’s most important place of pilgrimage. The church is still the meeting place of the village’s people of Polish descent and of the Polish Catholics of Istanbul."
+     ]
     },
     {
      "id": "san-pacifico-buyukada",
@@ -1247,15 +1793,38 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Büyükada Aziz Pasifiko Kilisesi",
-       "https://dijitalistanbul.org/buyukada-aziz-pasifiko-kilisesi"
+       "https://dijitalistanbul.org/buyukada-aziz-pasifiko-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Church of St. Pacificus (San Pacifico)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Pacificus (San Pacifico)",
+     "shortEn": "San Pacifico (Büyükada)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 Turkish"
+      ],
+      [
+       "Tuesday",
+       "11:00 Turkish"
+      ],
+      [
+       "Saturday (April–September)",
+       "19:00 Italian"
+      ]
+     ],
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The San Pacifico Church on Büyükada is a neo-Gothic church built at the expense of Ignazio Corpi and designed by the architect Giacomo Leoni; it was built in 1885. The church and friary were damaged in the Istanbul earthquake of 1894 and repaired about a month and a half later.",
+      "Inside are a wooden ceiling and various paintings and statues; the symbol of the iron gate crowned with a cross at the entrance is repeated in the stained glass. The church also has a painting associated with Angelo Giuseppe Roncalli (Pope John XXIII), who was the papal representative in Turkey from 1935 to 1944 and often visited Büyükada."
+     ]
     },
     {
      "id": "verapokhumin-buyukada",
@@ -1283,17 +1852,34 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Dijital İstanbul (İstanbul Valiliği): Verapokhumin Surp Asdvadzazni Ermeni Katolik Kilisesi",
-       "https://dijitalistanbul.org/verapokhumin-surp-asdvadzazni-ermeni-katolik-kilisesi"
+       "https://dijitalistanbul.org/verapokhumin-surp-asdvadzazni-ermeni-katolik-kilisesi",
+       "Dijital İstanbul (Governorship of Istanbul): Verapokhumin Surp Asdvadzadzin Armenian Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Verapokhumin Surp Asdvadzadzin Armenian Catholic Church",
+     "shortEn": "Verapokhumin (Büyükada)",
+     "massEn": [
+      [
+       "Sunday (summer)",
+       "11:00"
+      ]
+     ],
+     "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
+     "visitsEn": "Open at Mass time during the summer months.",
+     "historyEn": [
+      "The Verapokhumin Surp Asdvadzadzin (Assumption of the Virgin Mary) Church is the only Armenian Catholic church on the Princes’ Islands. It was built in 1856–1858 at the expense of the benefactor Andon Ağa Apelyan; it was consecrated and opened on 15 August 1858, the feast of the Assumption.",
+      "In the prayer hall, whose vaulted ceiling rests on columns, is a marble plaque commemorating Andon Ağa Apelyan, who at his request was buried inside the church. Above the entrance is a circular rose window, and inside are a choir gallery and an organ. The bell tower dates from 1895; the church was repaired in 1956 and 1985."
+     ]
     }
-   ]
+   ],
+   "nameEn": "Istanbul"
   },
   {
    "id": "izmir",
@@ -1346,20 +1932,49 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Yuhanna Katedral Bazilikası",
-       "https://izmirkatolikkilisesi.com/aziz-yuhanna-kilisesi/"
+       "https://izmirkatolikkilisesi.com/aziz-yuhanna-kilisesi/",
+       "Catholic Archdiocese of Izmir: Cathedral Basilica of St. John"
       ],
       [
        "İzmir Katedrali resmi sitesi",
-       "https://www.izmirkatedrali.com"
+       "https://www.izmirkatedrali.com",
+       "Izmir Cathedral, official website"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Cathedral Basilica of St. John",
+     "shortEn": "St. John’s Cathedral",
+     "massEn": [
+      [
+       "Sunday",
+       "10:00 English · 12:00 Turkish · 18:00 Polish"
+      ],
+      [
+       "Monday–Friday",
+       "17:30 Rosary · 18:00 Mass in Turkish"
+      ],
+      [
+       "Thursday",
+       "Eucharistic Adoration after Mass (18:30)"
+      ]
+     ],
+     "massNoteEn": "Tea and coffee are served after Mass every Sunday. Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open every day from 15:00 to 17:00 for personal prayer and visits; closed to visitors on Sundays and Mondays.",
+     "historyEn": [
+      "The Cathedral Basilica of St. John is the cathedral of the Catholic Archdiocese of Izmir and one of the most impressive Catholic places of worship in Anatolia. The church of Smyrna (Izmir), one of the seven churches of the Book of Revelation, is praised in the second letter Jesus sent through John with the words “Be faithful unto death, and I will give you the crown of life” (Revelation 2:8-11). Tradition holds the Apostle John to be the founder of this community, and the cathedral is dedicated to him.",
+      "The history of the church of Smyrna continues with John’s disciple, Bishop Polycarp. Around the year 107 Polycarp welcomed Ignatius of Antioch here as he was being taken to Rome in chains, and around 155 he was martyred in the ancient stadium, not far from the cathedral. Because no bishop could reside in Izmir in Ottoman times, the title long remained honorary; between the 17th and 19th centuries there was an Apostolic Vicariate. In 1818 Pope Pius VII re-established the Archdiocese of Izmir; until a new cathedral was built, the Santa Maria Church in Pasaport served as the cathedral for 56 years.",
+      "In 1857 Archbishop Antonio Mussabini bought land for the cathedral. Mussabini, papal representative in Constantinople, not only obtained permission thanks to his friendship with Sultan Abdülaziz; the sultan also donated 11,000 gold liras for the building. The work, interrupted by Mussabini’s death, resumed when his successor Vincenzo Spaccapietra blessed the foundation stone on 25 November 1862. After twelve years of building, carried forward by the generous contributions of Izmir’s Catholics, the cathedral was consecrated on 14 June 1874.",
+      "The simple, elegant neoclassical building stands where the ancient harbor of Smyrna lay; remains of the Hellenistic-Roman harbor lie beneath the buildings in front of the cathedral. Pope Pius IX gave the cathedral its high altar, and the Archdiocese of Lyon, whose bishop was St. Irenaeus of Smyrna, sent the fourteen paintings of the Stations of the Cross as a sign of gratitude. Of the stained-glass windows commissioned from the painter Paul Gaudin in Paris in 1901, only one survived the fire of 1922; it is now to the right of the altar of St. Joseph. In the vault beneath the Blessed Sacrament chapel lie Mussabini, Spaccapietra, Andrea Timoni, who helped bring about the discovery of the House of the Virgin Mary at Ephesus, and Domenico Marengo.",
+      "In the great fire of 1922 the cathedral was badly damaged; the archbishop’s palace, the administrative buildings and the catechism halls burned down completely. Before the fire Izmir had about 15,000 Catholics and many schools, hospitals and religious orders; that vitality declined quickly afterwards. To preserve the cathedral, Archbishop Joseph Descuffi leased it in 1965 to the US military community as a chapel. When security measures made it hard for the public to enter the church, the archdiocese ended the agreement in 2013; the restored cathedral reopened to the local community on 29 September 2013.",
+      "In 2014 the Diocese of Isernia in Italy gave a 4-meter bronze statue of St. John by the sculptor Battista Marello; it now stands in the church garden. On 27 December 2016 Archbishop Lorenzo Piretto consecrated the new marble altar, which contains relics of St. John and the other apostles and a fragment from the tomb of St. Peter. Popes John XXIII, Paul VI and John Paul II have visited the cathedral."
+     ]
     },
     {
      "id": "aziz-polikarp",
@@ -1394,20 +2009,43 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Polikarp Kilisesi",
-       "https://izmirkatolikkilisesi.com/aziz-polikarpos/"
+       "https://izmirkatolikkilisesi.com/aziz-polikarpos/",
+       "Catholic Archdiocese of Izmir: Church of St. Polycarp (Sen Polikarp)"
       ],
       [
        "Aziz Polikarp Katolik Kilisesi resmi sitesi",
-       "https://senpolikarpizmir.com"
+       "https://senpolikarpizmir.com",
+       "St. Polycarp Catholic Church, official website"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Polycarp (Sen Polikarp)",
+     "shortEn": "St. Polycarp",
+     "massEn": [
+      [
+       "Monday",
+       "09:00 Mass, followed by Eucharistic Adoration until 12:00"
+      ],
+      [
+       "Saturday and Sunday",
+       "No Mass"
+      ]
+     ],
+     "massNoteEn": "The feast of St. Polycarp is celebrated with great solemnity every year on 23 February, preceded by a nine-day novena. Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open to visitors every day except Sunday from 15:00 to 17:00.",
+     "historyEn": [
+      "The Church of St. Polycarp is the oldest church still standing in Izmir. It takes its name from St. Polycarp, one of the disciples of the Apostle John, who was bishop of Smyrna for about fifty years. Because he refused to deny Christ, around the year 155 they tried to burn him alive in the stadium of Smyrna, and when the flames did not touch him he was killed with a dagger. He has been regarded as the patron saint of Izmir ever since.",
+      "The church’s story begins in 1625 with a chapel opened in the French Consulate building, with permission from the Ottoman authorities. In 1630 a church and friary were built in place of the chapel on the archdiocese’s present grounds, and St. Polycarp became the church of the French community. The building was destroyed in the great earthquake of 1688, and the present church was built in its place in 1690.",
+      "Damaged and repaired many times, the church was enlarged in 1898 and received its present splendid decoration. Raymond Péré, a young French painter and architect who settled in Izmir at the end of the 19th century, painted the frescoes, which also tell the story of St. Polycarp’s martyrdom. The church’s name is linked with Izmir’s emblem, the Clock Tower.",
+      "For centuries the church was served by the Capuchin Franciscan friars; the order left the friary in 1984. The present friary building was built in 1929 to replace the old one destroyed in the great Izmir fire of 1922."
+     ]
     },
     {
      "id": "santo-rosario-izmir",
@@ -1453,16 +2091,49 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Notre Dame du Rosaire Kilisesi",
-       "https://izmirkatolikkilisesi.com/santo-rosario/"
+       "https://izmirkatolikkilisesi.com/santo-rosario/",
+       "Catholic Archdiocese of Izmir: Church of Notre Dame du Rosaire (Santo Rosario)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Notre Dame du Rosaire (Santo Rosario)",
+     "shortEn": "Santo Rosario (Alsancak)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 Italian · 18:30 Turkish (January–May; 19:00 in summer) · 17:00 Spanish once a month"
+      ],
+      [
+       "Monday, Tuesday, Wednesday, Friday (January–May)",
+       "18:10 Rosary · 18:30 Mass"
+      ],
+      [
+       "Weekdays (June–September)",
+       "09:00"
+      ],
+      [
+       "Thursday",
+       "10:00"
+      ],
+      [
+       "Saturday (October–May)",
+       "17:00 Turkish"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The Church of the Holy Rosary in Alsancak is one of the centers of the Latin Catholic community in Izmir and has been attached to the Dominican friars since its foundation. Armenian Dominican friars came to Izmir in 1718 and in 1755 opened their first house, together with a guesthouse for the community. From 1813 on, Italian Dominicans began to serve the community.",
+      "In 1859 the first church, dedicated to Saints Peter and Paul, was completed. The foundation stone of a new church in honor of the Holy Rosary was laid on 4 October 1903, and the church opened to the community on 1 October 1904. When the great Izmir fire of 1922 destroyed the surrounding neighborhoods, the church, in the community’s words miraculously, remained standing without any damage.",
+      "After the Second Vatican Council, the altar and sanctuary were renewed in 1965 in line with the new liturgy. When the Armenian Dominicans came to Izmir they brought their most precious relics with them: the arm of the Apostle Jude Thaddeus, now kept in a church in the United States, a relic venerated as the lance of Longinus, and a silver statue of Our Lady of the Rosary. The friars gave this statue as a gift of thanks to the Capuchins, who had welcomed them at the Church of St. Polycarp in their first days in Izmir."
+     ]
     },
     {
      "id": "santa-maria-izmir",
@@ -1492,18 +2163,36 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Santa Maria Katolik Kilisesi",
-       "https://izmirkatolikkilisesi.com/santa-maria/"
+       "https://izmirkatolikkilisesi.com/santa-maria/",
+       "Catholic Archdiocese of Izmir: Church of Santa Maria"
       ],
       [
        "Vikipedi: Santa Maria Katolik Kilisesi (Konak)",
-       "https://tr.wikipedia.org/wiki/Santa_Maria_Katolik_Kilisesi_(Konak)"
+       "https://tr.wikipedia.org/wiki/Santa_Maria_Katolik_Kilisesi_(Konak)",
+       "Wikipedia (Turkish): Church of Santa Maria"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
-     "side": "merkez"
+     "side": "merkez",
+     "nameEn": "Church of Santa Maria",
+     "shortEn": "Santa Maria (Pasaport)",
+     "massEn": [
+      [
+       "Catholic Mass",
+       "None at present (the church is open for Orthodox worship)."
+      ]
+     ],
+     "visitsEn": "Ask in advance before visiting.",
+     "noticeEn": "According to the Catholic Archdiocese of Izmir, the church is currently used as an Orthodox church; no Catholic Mass is celebrated. The CET’s 2023 list gave a Sunday Mass in Italian at 11:00; check before you go.",
+     "historyEn": [
+      "Santa Maria is one of the oldest Catholic churches in Izmir. In the 14th century Italian Franciscan friars built a church dedicated to the Virgin Mary near the present site; that building was damaged in the earthquake of 1688. In 1692 work began on a new church and friary on the present site, with the Dutch also contributing to the building. The church was consecrated on 25 December 1698. The neighborhood, then on the shore, was known as Maltezika after the Maltese immigrants who lived there.",
+      "Until 1865 Italian Catholics, Ragusans and Austrians were buried in the church garden. The Sant’Antonio Hospital, founded in 1866, was run by the church’s Franciscan friars. Damaged in the fire of 16 August 1889, the church was under the protection of Austria-Hungary from 1890 to 1919; during this period its ceiling was reinforced with iron structures. The friary building was destroyed in the fire of 1922.",
+      "When the Archdiocese of Izmir was re-established in 1818, the church served for 56 years as the cathedral, the archbishop’s seat, until St. John’s Cathedral was completed (1874); Archbishop Mussabini was temporarily buried here. The church’s organ, made in Venice, dates from 1700 and was restored in 2014 by Lucien Arkas in memory of his wife, Viviana de Zandonati Arkas. Its latest restoration was carried out by Father Francesco de Luca, who served here from 2003 to 2015."
+     ]
     },
     {
      "id": "bornova-meryemin-adi",
@@ -1541,16 +2230,41 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Meryem’in Kutsal Adı Kilisesi",
-       "https://izmirkatolikkilisesi.com/bornova/"
+       "https://izmirkatolikkilisesi.com/bornova/",
+       "Catholic Archdiocese of Izmir: Church of the Holy Name of Mary (Saint Nom de Marie)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of the Holy Name of Mary (Saint Nom de Marie)",
+     "shortEn": "Holy Name of Mary (Bornova)",
+     "massEn": [
+      [
+       "Monday–Friday",
+       "08:30 Turkish"
+      ],
+      [
+       "Saturday",
+       "17:00 (winter) · 18:00 (summer), Turkish"
+      ],
+      [
+       "Sunday",
+       "No Mass"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The Church of the Holy Name of Mary in Bornova was founded for the Levantine and Catholic families living in this neighborhood. For about half a century there had been a wooden house and chapel here; the church was canonically established in 1797. Before that, priests from the Santa Maria Church in Izmir came to celebrate Mass.",
+      "The present church has stood since 1831 and bears the Holy Name of Mary. Until 1925 the community had more than 500 Catholics, three priests and sisters; it had an orphanage and a school run by the Sisters of Charity, which closed in 1935.",
+      "The church was under Austrian protection until 1918; in the 1960s, when the community numbered 82 Christians of seven nationalities, its official language became French. Since its foundation the church has belonged to the Friars Minor (OFM); today two priests, from Argentina and Pakistan, lead the community, and Mass is said in Turkish."
+     ]
     },
     {
      "id": "buca-vaftizci-yahya",
@@ -1584,16 +2298,37 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Vaftizci Yuhanna Kilisesi",
-       "https://izmirkatolikkilisesi.com/buca/"
+       "https://izmirkatolikkilisesi.com/buca/",
+       "Catholic Archdiocese of Izmir: Church of St. John the Baptist"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. John the Baptist",
+     "shortEn": "St. John the Baptist (Buca)",
+     "massEn": [
+      [
+       "Saturday",
+       "18:00 Turkish"
+      ],
+      [
+       "Sunday",
+       "11:00 French"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The Buca church has its origins in a chapel of unknown size built in 1805 for the foreign workers and summer residents here; Mass was said in it first by a Franciscan and then by a parish priest. Buca became a canonical parish in 1828.",
+      "The present church, dedicated to St. John the Baptist, dates from 1840 and is the fruit of ten years’ work by the first parish priest, Don Giacomo Vitalis, who died in 1866 at the age of 64. A French translation of an 1841 firman in the Foreign Ministry archives in Paris shows that the church was recognized as an institution under French protection. In 1937–1938 the church was decorated by the Capuchin decorator Father Agostino da Modica, who also decorated the churches of Bornova, Samsun and Yeşilköy.",
+      "From October 1932, for lack of a parish priest, the church was entrusted to the Capuchin friars of the Parma region of Italy. Restorations were carried out in 1954 and 1976, and an organ, altars and a new presbytery (1970) were added. Since the end of summer 2022 a community of the Sisters of the Incarnate Word (Verbo Incarnato) and a priest of the archdiocese have lived in the buildings beside the church."
+     ]
     },
     {
      "id": "goztepe-lourdes",
@@ -1631,7 +2366,8 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Notre-Dame de Lourdes Kilisesi",
-       "https://izmirkatolikkilisesi.com/goztepe/"
+       "https://izmirkatolikkilisesi.com/goztepe/",
+       "Catholic Archdiocese of Izmir: Church of Notre-Dame de Lourdes"
       ],
       [
        "Notre-Dame de Lourdes Göztepe",
@@ -1639,12 +2375,36 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of Notre-Dame de Lourdes",
+     "shortEn": "Notre-Dame de Lourdes (Göztepe)",
+     "massEn": [
+      [
+       "Monday–Friday",
+       "18:30 Rosary · 19:00 Mass in Turkish"
+      ],
+      [
+       "Saturday",
+       "No Mass"
+      ],
+      [
+       "Sunday",
+       "17:00 Turkish"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The parish of Notre-Dame de Lourdes in Göztepe was founded in 1900 by the Dutch priest Father Fercken. In those years Göztepe was a small village inhabited mostly by Latin Christians. On 27 May 1900 the Archbishop of Izmir, André Timoni, opened the church and founded the confraternity of Our Lady of Lourdes in the still unfinished church; members of the community supported the completion of the building with their small contributions.",
+      "On 17 October 1902 it was requested that the confraternity, which had more than 400 members, be affiliated with the great confraternity of the Basilica of Lourdes in France. The high altar of Carrara marble designed by Raymond Péré was consecrated on 9 October 1904; beneath it are relics of St. James the Great and of Saints Perpetua and Felicity. Most of the statues and one of the two bells were given by benefactors between 1904 and 1906.",
+      "French-speaking since its foundation, the community kept its vitality until the 1960s; as the Christian population declined it shrank, and for years it was kept alive by the Dominicans of Alsancak. From 2006, with a major renovation of the friary and church, the arrival of African students and a priest living at the church, the community came back to life. Mass is said in Turkish today."
+     ]
     },
     {
      "id": "karsiyaka-helena",
@@ -1683,16 +2443,42 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Azize Helena Kilisesi",
-       "https://izmirkatolikkilisesi.com/karsiyaka/"
+       "https://izmirkatolikkilisesi.com/karsiyaka/",
+       "Catholic Archdiocese of Izmir: Church of St. Helena (Saint Hélène)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Helena (Saint Hélène)",
+     "shortEn": "St. Helena (Karşıyaka)",
+     "massEn": [
+      [
+       "Sunday",
+       "09:30 Rosary · 10:00 Mass in Turkish"
+      ],
+      [
+       "Tuesday–Saturday",
+       "17:30 Rosary · 18:00 Mass in Turkish"
+      ],
+      [
+       "Monday",
+       "No Mass"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "The first Catholic families in Karşıyaka were recorded in 1880; in 1882, when they numbered twenty, Archbishop Timoni appointed Don Valery as their first priest. At that time the community had only a makeshift chapel.",
+      "Work on the present church began in 1904 to a design by the French architect Raymond Charles Péré and was completed in about ten years. Its construction was permitted by a firman of Sultan Abdülhamid II; in 1926 this document was converted into a document of the Republic of Turkey. The church is dedicated to St. Helena, mother of the Emperor Constantine I, who found the Holy Cross in Jerusalem.",
+      "The basilica-plan, three-aisled church is in the neo-Gothic style fashionable in the 19th century. Behind the high altar is an image of St. Helena as an empress, crowned and holding the Cross; on either side of the altar are statues of St. Joseph and of St. Polycarp, patron saint of Izmir, and on the side altars are statues of Our Lady of Fatima and the Sacred Heart of Jesus.",
+      "The church was entrusted to the Capuchin friars in 1951. In 1979 the community numbered about 90 families and 280 people, more than half of them Turkish citizens. St. Helena is today the only active church in Karşıyaka and is run by a Conventual Franciscan priest."
+     ]
     },
     {
      "id": "bayrakli-antuan",
@@ -1729,16 +2515,42 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Antuan Kilisesi",
-       "https://izmirkatolikkilisesi.com/bayrakli/"
+       "https://izmirkatolikkilisesi.com/bayrakli/",
+       "Catholic Archdiocese of Izmir: Church of St. Anthony (Saint Antoine)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "merkez",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "Church of St. Anthony (Saint Antoine)",
+     "shortEn": "St. Anthony (Bayraklı)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 Turkish"
+      ],
+      [
+       "Monday–Friday",
+       "11:00 Turkish"
+      ],
+      [
+       "Tuesday",
+       "13:00 Turkish (Padre Pio group)"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir; they may change between summer and winter.",
+     "visitsEn": "Open during Mass times.",
+     "historyEn": [
+      "In 1898 Sultan Abdülhamid II gave the hill of Bayraklı to Yahya Hayati Pasha and Transibullo Pittako. The two wanted to found a new village on this green hill overlooking the sea; many Catholic families from Izmir built summer houses here. Eager to see the village grow, the founders gave free land to Catholics, Armenians, Orthodox and Muslims to build places of worship.",
+      "In 1899 the Capuchin friar Giambattista da San Lorenzo came to visit a family he knew in Bayraklı; the families told him they wished to give the Capuchins the land the pasha had donated to them, for a church and friary. In 1901 the bishop gave his permission. On 29 June 1902 the first Catholic Mass was celebrated in the house of the Mattesich family, with 30 people present.",
+      "Despite the municipality’s hesitation and the wait for the sultan’s firman, the first stone of the church was laid on 14 July 1902 and that of the friary on 7 August 1902; at the time, 300 Catholic families lived in Bayraklı. The first resident priest, Bernardo da Castelmine, settled in 1903; the same year the sultan’s firman arrived and a Christian cemetery was established. In 1904 a six-class Italian school opened beside the friary. On 19 April 1905, 4,000 people attended the feast of St. Expeditus, celebrated when the church still had only its walls.",
+      "The first official ceremony in the church took place on 13 August 1922. The building once had two bell towers; one collapsed after a major earthquake. The friary and church took their present form in 1990 and continue to serve the area’s small Christian community."
+     ]
     },
     {
      "id": "meryem-ana-evi",
@@ -1773,20 +2585,42 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Meryem Ana Evi Kilisesi",
-       "https://izmirkatolikkilisesi.com/meryem-ana-evi/"
+       "https://izmirkatolikkilisesi.com/meryem-ana-evi/",
+       "Catholic Archdiocese of Izmir: House of the Virgin Mary (Ephesus)"
       ],
       [
        "Meryem Ana Evi resmi sitesi",
-       "https://www.hzmeryemanaevi.com"
+       "https://www.hzmeryemanaevi.com",
+       "House of the Virgin Mary, official website"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "selcuk",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "House of the Virgin Mary (Ephesus)",
+     "shortEn": "House of the Virgin Mary",
+     "massEn": [
+      [
+       "Sunday",
+       "10:30 English"
+      ],
+      [
+       "Monday–Saturday",
+       "Evening Mass: 17:15 (November–March) · 18:15 (April–October)"
+      ]
+     ],
+     "massNoteEn": "The archdiocese’s website lists the Rosary at 18:15 on weekdays, while the CET’s 2023 list gives Mass at the same times. Mass can be arranged in advance for pilgrim groups.",
+     "visitsEn": "The site of the House of the Virgin Mary is open to visitors every day; there is an entrance fee, and the hours vary with the season.",
+     "historyEn": [
+      "The House of the Virgin Mary, on the slope of Bülbüldağı (Mount Koressos), is according to tradition the house where the Virgin Mary spent the last years of her life together with the Apostle John. Ancient sources tell that John lived and died in Ephesus; the remains of his tomb are today in the Basilica of St. John in Selçuk.",
+      "The site of the house was identified at the end of the 19th century through research based on the accounts of the German mystic Anne Catherine Emmerich. In 1891 the Lazarist priests of Izmir, in a search supported by Archbishop Andrea Timoni, found the present remains. The small stone chapel standing on the old foundations was restored and opened for worship.",
+      "The House of the Virgin Mary is an important place of pilgrimage both for Christians and for Muslims who revere Mary. Popes Paul VI (1967), John Paul II (1979) and Benedict XVI (2006) visited it. Today the chapel is served by Capuchin friars of the Archdiocese of Izmir; every year on 15 August the feast of the Assumption is celebrated here."
+     ]
     },
     {
      "id": "selcuk-aziz-yuhanna",
@@ -1815,18 +2649,35 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Yuhanna Katolik Kilisesi Derneği",
-       "https://izmirkatolikkilisesi.com/aziz-yuhanna-selcuk/"
+       "https://izmirkatolikkilisesi.com/aziz-yuhanna-selcuk/",
+       "Catholic Archdiocese of Izmir: St. John’s Catholic Church (Selçuk)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "side": "selcuk",
      "status": "active",
-     "notice": ""
+     "notice": "",
+     "nameEn": "St. John’s Catholic Church (Selçuk)",
+     "shortEn": "St. John (Selçuk)",
+     "massEn": [
+      [
+       "Sunday",
+       "15:00 Turkish"
+      ]
+     ],
+     "massNoteEn": "The CET’s 2023 list gave the Sunday Mass as 10:00; the archdiocese’s website gives 15:00.",
+     "visitsEn": "Open at Mass time.",
+     "historyEn": [
+      "This small Catholic place of worship in Selçuk was founded under the name “Selçuk Catholic Church Association” and holds Sunday Masses for pilgrims visiting Ephesus and for the Catholics living in the town. The church is served by the same community of priests as the House of the Virgin Mary.",
+      "Selçuk is held to be the place where the Apostle John spent the last years of his life and was buried; the remains of the great Basilica of St. John on Ayasuluk Hill are near the church. It was here, at the Council of Ephesus in 431, that Mary was proclaimed “Mother of God” (Theotokos)."
+     ]
     }
-   ]
+   ],
+   "nameEn": "Izmir"
   },
   {
    "id": "bursa",
@@ -1869,18 +2720,37 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Agos: Bursa’nın ibadete açık tek kilisesi kapatıldı",
-       "https://www.agos.com.tr/tr/haber/bursanin-ibadete-acik-tek-kilisesi-kapatildi-32298"
+       "https://www.agos.com.tr/tr/haber/bursanin-ibadete-acik-tek-kilisesi-kapatildi-32298",
+       "Agos: Bursa’s only church open for worship is closed (in Turkish)"
       ],
       [
        "ANKA: Bursa Fransız Kilisesi’nde son kez ibadet yapıldı",
-       "https://ankahaber.net/haber/detay/depreme_dayaniksiz_oldugu_gerekcesiyle_tahliyesi_istenen_bursa_fransiz_kilisesinde_son_kez_ibadet_yapildi_220908"
+       "https://ankahaber.net/haber/detay/depreme_dayaniksiz_oldugu_gerekcesiyle_tahliyesi_istenen_bursa_fransiz_kilisesinde_son_kez_ibadet_yapildi_220908",
+       "ANKA: last service held at Bursa’s French Church (in Turkish)"
       ],
       [
        "Kültür Portalı: Fransız Kilisesi (Bursa)",
-       "https://www.kulturportali.gov.tr/turkiye/bursa/gezilecekyer/fransiz-kilisesi"
+       "https://www.kulturportali.gov.tr/turkiye/bursa/gezilecekyer/fransiz-kilisesi",
+       "Kültür Portalı (Culture Portal): the French Church (Bursa)"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "French Church of St. Mary",
+     "shortEn": "St. Mary (French Church)",
+     "massEn": [
+      [
+       "At present",
+       "No Mass (the church is closed)."
+      ]
+     ],
+     "visitsEn": "Closed.",
+     "noticeEn": "The church was evacuated and closed by the Bursa Regional Directorate of Foundations on the grounds that it is not earthquake-safe. The last Mass was held on Sunday, 16 February 2025; it is not known when it will reopen. No other church has been allocated to the congregations; for now, Christians worship in the building of the Bursa Protestant Church Life and Culture Foundation.",
+     "historyEn": [
+      "The Church of St. Mary in the Hocaalizade neighborhood was built at the end of the 19th century for French merchants living in Bursa and for the Daughters of Charity (Filles de la Charité); sources say it opened for non-Muslim worship in 1881. The building also housed a dispensary, an orphanage and a place for nursing the sick. The church’s interior was decorated in 1927 by the Assumptionist priest Prosper Lamerand and a Russian painter.",
+      "The rectangular, single-nave church has a plain body; the stepped towers rising above the main walls, the pointed-arch windows and the Gothic style give the building movement. The church fell out of use after 1960; in 1971 it briefly returned to its original purpose, and in the 1970s it was opened to families arriving from Italy for worship.",
+      "To reflect this side of Bursa, where different religions, languages and cultures lived side by side, the church was restored in 2004 by the Bursa Metropolitan Municipality as a building with social, cultural and religious uses. For about twenty years it was a church, rare anywhere in the world, where Catholic, Orthodox and Protestant congregations worshipped together.",
+      "In July 2024 the Regional Directorate of Foundations requested its evacuation, stating that the church stands in the area of the thermal baths, that the groundwater level is high, and that there is a risk of soil liquefaction and stress building up along a fault line. A report the congregation commissioned from an office attached to the Chamber of Geological Engineers, however, found the risk to be much lower than claimed. The court case ended in evacuation, and the last Mass was held on 16 February 2025. The church’s closure was also a real loss for the Christian pilgrims who came to the region in 2025 for the 1700th anniversary of the Council of Nicaea."
+     ]
     }
    ]
   },
@@ -1929,20 +2799,43 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Azize Tereza Kilisesi resmi sitesi: Kilisemizin Tarihi",
-       "https://www.ankarakatolik.com/tr/kilisemizin-tarihi/"
+       "https://www.ankarakatolik.com/tr/kilisemizin-tarihi/",
+       "Church of St. Thérèse, official website: the history of our church"
       ],
       [
        "Azize Tereza Kilisesi: İletişim",
-       "https://www.ankarakatolik.com/tr/iletisim/"
+       "https://www.ankarakatolik.com/tr/iletisim/",
+       "Church of St. Thérèse: Contact"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Church of St. Thérèse",
+     "shortEn": "St. Thérèse (Ulus)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:30 Turkish"
+      ],
+      [
+       "Wednesday",
+       "18:00 Turkish"
+      ]
+     ],
+     "massNoteEn": "Times change at feasts such as Easter and Christmas; they are announced on the church’s “Announcements” page.",
+     "visitsEn": "Open to visitors Tuesday to Saturday from 14:00 to 17:00.",
+     "historyEn": [
+      "The Church of St. Thérèse is on Kardeşler Street in Ulus, the historic center of Ankara. In 1915 the St. Clement French College, run by the Brothers of the Christian Schools (Frères des Écoles Chrétiennes), stood here; at the time the area was also close to the old Armenian quarter. The street took the name “Kardeşler Sokağı” (Brothers’ Street) in memory of these brothers, who taught French.",
+      "In the great Ankara fire of 1916 the college and the whole surrounding neighborhood burned down; only one wall of the college remained. In 1928 a building was put up on the site of the old college, with the chancery of the French Embassy on the ground floor and a hall and a small chapel on the first floor. In the early years the French consul lived here; the apartments were later given to a small French school until 1962.",
+      "The most precious part of the building is the chapel on the first floor, fully restored in 2002; after the restoration it was dedicated to St. Thérèse of Lisieux. Its main mosaic is by the French artist Hervé Vital, inspired by the churches of Cappadocia: David and Solomon, and Adam and Eve reaching for the hand held out by the risen Christ as He comes out of the tomb. The mosaics on either side show Mary with the Child Jesus in her arms and Christ blessing, holding the Gospel in one hand. The cross is the work of Madeleine Diener.",
+      "The rams’ heads on the column capitals recall the sacrifices of the Old Testament, and the ears of wheat and bunches of grapes in the corners of the ceiling recall the Eucharist. Six of the stained-glass windows in the side walls were made in Bordeaux in 1914 by D. P. Dagrant; they were in the chapel of the French College in İzmit, were kept in Kadıköy when the school closed in 1920, and were installed here in 1952. The four windows that complete the series were made in Florence. The church is run today by Jesuit priests and belongs to the Latin Catholic Apostolic Vicariate of Istanbul."
+     ]
     },
     {
      "id": "meryem-ana-ankara",
@@ -1991,7 +2884,8 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Meryem Ana Church (Ankara) resmi sitesi",
-       "https://www.ankarakatolik.com/en/"
+       "https://www.ankarakatolik.com/en/",
+       "Meryem Ana Church (Ankara), official website"
       ],
       [
        "Meryem Ana Church: Contact",
@@ -1999,12 +2893,47 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Church of Our Lady (Apostolic Nunciature)",
+     "shortEn": "Our Lady (Çankaya)",
+     "massEn": [
+      [
+       "Saturday",
+       "18:00 French"
+      ],
+      [
+       "Sunday",
+       "10:00 English · 11:30 Spanish"
+      ],
+      [
+       "Third Sunday of every month",
+       "A single Mass: 10:00 (international)"
+      ],
+      [
+       "Monday and Friday",
+       "19:00"
+      ],
+      [
+       "Tuesday and Wednesday",
+       "08:00"
+      ],
+      [
+       "Thursday",
+       "12:00"
+      ]
+     ],
+     "massNoteEn": "The church is open to people from outside only during Mass times.",
+     "visitsEn": "Open only during Mass times.",
+     "historyEn": [
+      "The Church of Our Lady is the place of worship of the international Catholic community living in Ankara. It stands in the garden of the Holy See’s embassy to Turkey (the Apostolic Nunciature) and brings together people from all over the world, from different cultures and walks of life.",
+      "The congregation includes diplomats, mission staff and many university students, especially from African countries. Mass is said in French, English and Spanish; catechism, preparation for children’s First Communion and Confirmation, the choir and the youth group are run by the parish council. With St. Thérèse in Ulus, the church is one of the two places of worship of the Catholic Church in Ankara."
+     ]
     }
    ]
   },
@@ -2049,16 +2978,34 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Pavlus Katolik Kilisesi",
-       "https://izmirkatolikkilisesi.com/konya/"
+       "https://izmirkatolikkilisesi.com/konya/",
+       "Catholic Archdiocese of Izmir: Church of St. Paul"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Church of St. Paul",
+     "shortEn": "St. Paul",
+     "massEn": [
+      [
+       "Sunday",
+       "14:00 Turkish"
+      ]
+     ],
+     "massNoteEn": "Times are taken from the website of the Catholic Archdiocese of Izmir. Mass can be arranged in advance for pilgrim groups.",
+     "visitsEn": "Can be visited by letting them know in advance.",
+     "historyEn": [
+      "On his missionary journeys St. Paul passed through Konya (ancient Iconium) several times (Acts 14:1-6). The city’s present Catholic church is dedicated to him. The Assumptionist priests settled in Konya in December 1892, after an agreement made on 20 August that year with the Archbishop of Izmir, André Polycarpe Timoni; together with Brother Agapit Didier they set up a mission house between the city’s Greek and Armenian quarters and opened a school. In June 1894 the Oblate sisters came too.",
+      "In 1899 the priests’ school had 70 pupils and the sisters’ 40. In 1903 a small plot and a house were bought with a donation of 10,000 francs from the Baroness de Gargan. The firman permitting the church’s construction arrived in July 1909 after seven years of paperwork; the church was consecrated on 11 December 1910.",
+      "Between 1915 and 1919 the parish priest, Father Antoine Herbier, took in more than 2,000 Catholics deported from Ankara and a dozen priests of different rites. In 1922, with the departure of the Christians, the Greek and Armenian clergy left the region and the Church of St. Paul was left alone; the school closed in 1926.",
+      "On 8 March 1995 two Italian sisters of the Fraternity of Jesus Risen, founded near Trento, came to Konya to serve pilgrims following in the footsteps of St. Paul, and stayed until 16 January 2022. Today the church is served by Maria Grazia Zambon of the Order of Consecrated Virgins (Ordo Virginum)."
+     ]
     }
    ]
   },
@@ -2115,12 +3062,32 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "İzmir Katolik Başepiskoposluğu: Aziz Nikola Kilisesi",
-       "https://izmirkatolikkilisesi.com/antalya/"
+       "https://izmirkatolikkilisesi.com/antalya/",
+       "Catholic Archdiocese of Izmir: Church of St. Nicholas (St. Nikolaus)"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Church of St. Nicholas (St. Nikolaus)",
+     "shortEn": "St. Nicholas",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 German · 18:00 English"
+      ],
+      [
+       "Thursday",
+       "11:00 German"
+      ]
+     ],
+     "massNoteEn": "On some Sunday mornings there is an ecumenical or Protestant service at 11:00, and on some Thursdays there is no Mass; each month’s schedule is published on the church’s website (Gottesdienste). For German Masses in Alanya, see kircheinalanya.blogspot.com.",
+     "visitsEn": "The church is open to everyone; let them know in advance to visit outside Mass times.",
+     "historyEn": [
+      "The Church of St. Nicholas is the church of the German-speaking Catholic community in Antalya. About 10,000 Germans live permanently on the Turkish Riviera, and many of the millions of tourists who come each year want to follow in the footsteps of St. Paul and see the heritage of early Christianity. The community was founded for these people.",
+      "The community was founded and officially recognized in 2004 under Turkish association law as the “St. Nicholas Church Association”. Prelate Rainer Korten of the Diocese of Hildesheim was the first priest to receive a work permit and served as the association’s founding president until 2013. The association’s statutes guarantee that anyone may enter the church freely, as well as religious publications and visits to German speakers in hospitals and prisons.",
+      "With financial support from the German Bishops’ Conference, a former internet café was rented and turned into a church. The same building houses two parish halls and a large library of German books (Nikolas Bücherei); the lovely walled garden is the meeting place after Mass. The church is on the street parallel to Atatürk Avenue, a five-minute walk from Hadrian’s Gate. The present priest is Father Ludger Paskert."
+     ]
     }
    ]
   },
@@ -2165,16 +3132,35 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Vikipedi: Sent Antuan Latin Katolik Kilisesi (Mersin)",
-       "https://tr.wikipedia.org/wiki/Sent_Antuan_Latin_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Sent_Antuan_Latin_Katolik_Kilisesi",
+       "Wikipedia (Turkish): St. Anthony’s Latin Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "St. Anthony’s Latin Catholic Church",
+     "shortEn": "St. Anthony",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 Turkish"
+      ],
+      [
+       "Monday–Saturday",
+       "18:00 Turkish"
+      ]
+     ],
+     "visitsEn": "Can be visited during the day by appointment.",
+     "historyEn": [
+      "Mersin’s Latin Catholic church is a product of the city’s rapid growth as a port in the 19th century. After the events of 1840, Maronite Catholic families from Lebanon had settled in Mersin. The decision to build a church was taken in 1853; in May 1854 the Capuchin friar Antonio settled in Mersin, and the church was built under a firman of Sultan Abdülmecid dated 18 September 1855.",
+      "Beside the church the Capuchins also had a friary school, completed in 1898. The school was confiscated in 1923 and in 1944 became Mersin’s Üçocak Primary School. The church is dedicated to St. Anthony of Padua and is still run by Capuchin friars today."
+     ]
     }
    ]
   },
@@ -2217,7 +3203,8 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Kültür Portalı: Bebekli Kilise",
-       "https://www.kulturportali.gov.tr/turkiye/adana/gezilecekyer/bebekli-kilise"
+       "https://www.kulturportali.gov.tr/turkiye/adana/gezilecekyer/bebekli-kilise",
+       "Kültür Portalı (Culture Portal): Bebekli Kilise"
       ],
       [
        "Wikipedia: Saint Paul Church, Adana",
@@ -2225,12 +3212,26 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Church of St. Paul (Bebekli Kilise)",
+     "shortEn": "St. Paul (Bebekli Kilise)",
+     "massEn": [
+      [
+       "Sunday",
+       "11:00 Turkish"
+      ]
+     ],
+     "visitsEn": "Can be visited on Mondays, Wednesdays and Saturdays.",
+     "historyEn": [
+      "This church in Adana’s old Tepebağ neighborhood is popularly known as the “Bebekli Kilise” (the Church with the Baby). The name comes from the bronze statue of the Virgin Mary, about 2.5 meters high, on top of the tower; because from a distance the statue looks like a baby, the church was given this name.",
+      "Built in the 1880s by Italian Catholics and dedicated to St. Paul, the church is all the more meaningful for being close to the land where St. Paul of Tarsus was born. Today it belongs to the Apostolic Vicariate of Anatolia and serves its community with a Sunday Mass in Turkish."
+     ]
     }
    ]
   },
@@ -2276,18 +3277,37 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "KÜRE Ansiklopedi: Antakya Katolik Kilisesi",
-       "https://kureansiklopedi.com/tr/detay/antakya-katolik-kilisesi-b62be"
+       "https://kureansiklopedi.com/tr/detay/antakya-katolik-kilisesi-b62be",
+       "KÜRE Encyclopedia: the Catholic Church of Antakya"
       ],
       [
        "Antakya Katolik Kilisesi (eski resmi site)",
-       "http://www.anadolukatolikkilisesi.org/antakya/en/"
+       "http://www.anadolukatolikkilisesi.org/antakya/en/",
+       "Catholic Church of Antakya (former official website)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "Catholic Church of Saints Peter and Paul",
+     "shortEn": "Peter and Paul (Antakya)",
+     "massEn": [
+      [
+       "Pre-earthquake schedule",
+       "Monday–Saturday 08:30 · Sunday 17:00 (October–April) / 18:00 (May–September), Turkish"
+      ]
+     ],
+     "massNoteEn": "These times are the schedule from before the earthquake.",
+     "visitsEn": "May be closed to visitors while the restoration continues.",
+     "noticeEn": "The church was damaged in the earthquakes of 6 February 2023 and, as a listed cultural property, was taken into the state’s restoration program. The pre-earthquake Mass schedule is not currently valid; to find out where the community meets today, consult the Apostolic Vicariate of Anatolia.",
+     "historyEn": [
+      "Antioch (Antakya) is one of the most important cities in Christian history: according to the Acts of the Apostles, it was here that the followers of Jesus were first called “Christians” (Acts 11:26). Tradition holds St. Peter to be the first leader of the Church of Antioch; the Cave Church of St. Peter outside the city is venerated as the place where the first Christians gathered.",
+      "After a gap of about 600 years, at the wish of Pope Pius IX, Capuchin friars settled in Antakya in 1846; the first to come was Father Basilio Galli of the Parma region. In 1852 a friary was built with permission obtained from Sultan Abdülmecid. In 1939 the community had to move to a new part of the city and for a time met in an old sugar factory.",
+      "The present church and friary were formed when a house about 150 years old, where the architect Vilyam Azaroğlu was born, and the house next to it, in the historic Jewish quarter of old Antakya, were bought and restored in 1989–1991; a guesthouse was added in 1995. Built around a courtyard with a pool, the building has the features of traditional Antakya houses. Together with the Sarımiye Mosque and the Antakya Synagogue it forms the “ecumenical triangle”, remembered as a symbol of tolerance where the call to prayer, church bells and the voice of the cantor could be heard together."
+     ]
     },
     {
      "id": "iskenderun-mujde",
@@ -2317,18 +3337,37 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Vikipedi: İskenderun Latin Katolik Kilisesi",
-       "https://tr.wikipedia.org/wiki/%C4%B0skenderun_Latin_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/%C4%B0skenderun_Latin_Katolik_Kilisesi",
+       "Wikipedia (Turkish): Cathedral of the Annunciation (Iskenderun Latin Catholic Church)"
       ],
       [
        "Agos: İskenderun Kilisesi’nin restorasyonu için kaynak aranıyor",
-       "https://www.agos.com.tr/tr/haber/iskenderun-kilisesinin-restorasyonu-icin-kaynak-araniyor-38953"
+       "https://www.agos.com.tr/tr/haber/iskenderun-kilisesinin-restorasyonu-icin-kaynak-araniyor-38953",
+       "Agos: funds sought for the restoration of the Iskenderun church (in Turkish)"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "Cathedral of the Annunciation (Iskenderun Latin Catholic Church)",
+     "shortEn": "Annunciation Cathedral (Iskenderun)",
+     "massEn": [
+      [
+       "Pre-earthquake schedule",
+       "Sunday 11:30"
+      ]
+     ],
+     "massNoteEn": "This time is the schedule from before the earthquake.",
+     "visitsEn": "Closed.",
+     "noticeEn": "The cathedral was badly damaged in the earthquakes of 6 February 2023; most of it collapsed. Funds are being sought for its restoration, and the building is currently closed for worship.",
+     "historyEn": [
+      "Dedicated to the Annunciation, the Iskenderun Cathedral is the cathedral of the Apostolic Vicariate of Anatolia. Priests of the Discalced Carmelite order, founded in Spain in the 16th century, came to Iskenderun in 1858 and began building a new church.",
+      "After a fire, the church was renewed in 1888–1901 and returned to service. Father Paolo Pergantino of Tuscany served here for forty years from 1871; over time a friary was added to the church for the priests to live in.",
+      "Most of the cathedral collapsed in the earthquakes of 6 February 2023. The vicariate’s bishop, Luigi Padovese, was murdered in Iskenderun in 2010; today the vicariate is led by the Jesuit bishop Antuan İlgit."
+     ]
     }
    ]
   },
@@ -2383,20 +3422,51 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Mater Dolorosa Katolik Kilisesi resmi sitesi",
-       "https://www.materdolorosakatolikkilisesi.org"
+       "https://www.materdolorosakatolikkilisesi.org",
+       "Mater Dolorosa Catholic Church, official website"
       ],
       [
        "Mater Dolorosa: Tarih",
-       "https://www.materdolorosakatolikkilisesi.org/history"
+       "https://www.materdolorosakatolikkilisesi.org/history",
+       "Mater Dolorosa: History"
       ],
       [
        "Vikipedi: Mater Dolorosa Katolik Kilisesi",
-       "https://tr.wikipedia.org/wiki/Mater_Dolorosa_Katolik_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Mater_Dolorosa_Katolik_Kilisesi",
+       "Wikipedia (Turkish): Mater Dolorosa Catholic Church (Our Lady of Sorrows)"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Mater Dolorosa Catholic Church (Our Lady of Sorrows)",
+     "shortEn": "Mater Dolorosa",
+     "massEn": [
+      [
+       "Sunday",
+       "12:00"
+      ],
+      [
+       "Saturday",
+       "07:30"
+      ],
+      [
+       "Monday, Tuesday, Wednesday, Friday",
+       "18:00 (Rosary before Mass on Monday, Wednesday and Friday)"
+      ],
+      [
+       "Thursday",
+       "17:00 Eucharistic Adoration, followed by Mass"
+      ]
+     ],
+     "massNoteEn": "For the Christmas, New Year and Easter schedule, you can write to the church by email.",
+     "visitsEn": "Monday, Tuesday, Wednesday and Friday 15:30–17:30; Thursday 15:30–16:30. Closed to visitors on Saturday and Sunday.",
+     "historyEn": [
+      "In 1845 eight Italian Capuchin friars who had been forced to leave Georgia met, as they crossed the Black Sea, Latin Catholics without a church; there were such communities in Trabzon and Giresun as well as Samsun. In 1851 French Marist priests opened a school; a wooden church and house were built on land donated by an Italian lady. In those years about 30 percent of Samsun’s population was Christian.",
+      "In 1876 Sultan Murad V gave special permission for a new church, and work began on a small church measuring 8 by 12 meters; two years later its title deed was also sent. After the church was completed, a friary, rental apartments and a cemetery were built beside it in 1885, and the walls were decorated with frescoes. In 1913 the building was confiscated and the priests were squeezed into two rooms with a leaking roof. In 1976 the mayor wanted the church demolished and a park built in its place; the church was saved by the efforts of the papal nunciature and the Italian consulate.",
+      "In 1998 an extensive restoration was carried out under the leadership of Father Ruggero Franceschini, responsible for the Catholic churches of Anatolia. In 2006 the church’s priest, Father Pierre Brunissen, was attacked with a knife. After being closed for several years, the church reopened in 2017 with Argentine Franciscans and served especially the Catholic migrants of the region.",
+      "At the end of 2023 the church reopened with the “Omnes Gentes” community, founded at the invitation of the Apostolic Vicariate of Anatolia by the Marist Fathers (Society of Mary) and the Marist Missionary Sisters (SMSM). Made up of members from all over the world, the community is lively today, with regular Masses."
+     ]
     }
    ]
   },
@@ -2441,20 +3511,39 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Trabzon Santa Maria Katolik Kilisesi resmi sitesi",
-       "https://www.trabzonkatolikkilisesi.com"
+       "https://www.trabzonkatolikkilisesi.com",
+       "Santa Maria Catholic Church, Trabzon, official website"
       ],
       [
        "Vikipedi: Santa Maria Katolik Kilisesi (Trabzon)",
-       "https://tr.wikipedia.org/wiki/Santa_Maria_Katolik_Kilisesi_(Trabzon)"
+       "https://tr.wikipedia.org/wiki/Santa_Maria_Katolik_Kilisesi_(Trabzon)",
+       "Wikipedia (Turkish): Santa Maria Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
      "status": "active",
      "notice": "",
-     "side": ""
+     "side": "",
+     "nameEn": "Santa Maria Catholic Church",
+     "shortEn": "Santa Maria",
+     "massEn": [
+      [
+       "Sunday",
+       "11:30"
+      ]
+     ],
+     "massNoteEn": "Current announcements are published on the church’s website.",
+     "visitsEn": "Tuesday, Wednesday, Thursday, Friday and Saturday 15:30–17:30. Closed to visitors on Sunday and Monday.",
+     "historyEn": [
+      "The Santa Maria Church, dedicated to the Virgin Mary, is an important legacy of the Black Sea’s multicultural past and today the only Catholic church open for worship in Trabzon. Its construction was led by Capuchin friars, originally from Italy’s Emilia region, who had come to the Black Sea from Russian-ruled Tbilisi. Its foundations were laid in 1869; the church was completed in five years and opened for worship with a ceremony on 2 February 1874.",
+      "The painting the Capuchins brought with them to the city, showing the Virgin Mary in local dress with the Child Jesus asleep in her arms, became over time one with the church’s spiritual identity. Because of the miracles attributed to it, the image came to be known in the region as “Santa Maria di Trebisonda” (Our Lady of Trebizond).",
+      "The outer walls of the neo-Gothic building are of rubble stone and its inner partition walls of brick. The rectangular, three-aisled church has no apse and is covered by a long barrel vault; the arched aisles carried on piers are kept very high. The west front stands out with its symmetrical windows and triangular pediment.",
+      "The church’s priest, Don Andrea Santoro, was killed on 5 February 2006 while praying in the church. Born in 1945 in Priverno, Italy, Santoro worked for years as a priest in Rome before coming to Turkey of his own accord in 2000, serving first in Şanlıurfa-Harran and then in Trabzon. Today the church belongs to the Apostolic Vicariate of Anatolia."
+     ]
     }
    ]
   },
@@ -2500,22 +3589,41 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "AA: Mar Petyun Keldani Kilisesi düzenlenen ayinle açıldı",
-       "https://www.aa.com.tr/tr/gundem/pkkli-teroristlerce-tahrip-edilen-mar-patyun-keldani-kilisesi-duzenlenen-ayinle-acildi/3020115"
+       "https://www.aa.com.tr/tr/gundem/pkkli-teroristlerce-tahrip-edilen-mar-patyun-keldani-kilisesi-duzenlenen-ayinle-acildi/3020115",
+       "AA: Mar Petyun Chaldean Church opens with a Mass (in Turkish)"
       ],
       [
        "Tigris Haber: Keldani kilisesinde 7 yıldan sonra ilk ayin",
-       "https://www.tigrishaber.com/keldani-kilisesinde-7-yildan-sonra-ilk-ayin-88707h.htm"
+       "https://www.tigrishaber.com/keldani-kilisesinde-7-yildan-sonra-ilk-ayin-88707h.htm",
+       "Tigris Haber: first Mass in 7 years at the Chaldean church (in Turkish)"
       ],
       [
        "Vikipedi: Mar Petyun Keldani Kilisesi",
-       "https://tr.wikipedia.org/wiki/Mar_Petyun_Keldani_Kilisesi"
+       "https://tr.wikipedia.org/wiki/Mar_Petyun_Keldani_Kilisesi",
+       "Wikipedia (Turkish): Mar Petyun Chaldean Catholic Church"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "Mar Petyun Chaldean Catholic Church",
+     "shortEn": "Mar Petyun (Chaldean)",
+     "massEn": [
+      [
+       "Mass",
+       "No regular schedule; Mass is said from time to time by visiting clergy."
+      ]
+     ],
+     "visitsEn": "According to the Diyarbakır Governorship’s cultural inventory, it is open to visitors every day from 09:00 to 17:30; check before you go.",
+     "noticeEn": "The church was damaged in the clashes of 2015–2016, restored by the state and reopened with a Mass on 14 October 2023. The community is small and Mass is not regular; call the church in advance to visit or attend Mass.",
+     "historyEn": [
+      "Mar Petyun (St. Petyun) is in Diyarbakır’s historic Sur district, opposite the Sheikh Mutahhar Mosque, known for its four-legged minaret, and right next to the Surp Giragos Armenian Church. Tradition says the first worship on this site took place in the year 498; over its history the church was destroyed and rebuilt many times. The present building dates from the 17th century and is built of Diyarbakır’s characteristic black basalt.",
+      "The church became one of the centers of the Chaldean community, which entered into union with Rome together with the Chaldean Catholic patriarchate founded in Diyarbakır in 1681. The once large congregation shrank as families moved to the big cities and to Europe; today a Chaldean community of 25–30 people lives in Diyarbakır. Yusuf Karadayı, president of the Diyarbakır Chaldean Catholic Church Foundation since 1988, was born in the church and has devoted his life to serving it.",
+      "The church was restored by the foundation in 2010–2013, but was damaged again in the clashes of 2015–2016. The restoration, begun in 2019 under the supervision of the General Directorate of Foundations, was completed in 2023. The opening Mass on 14 October 2023 was celebrated jointly by the Chaldean Catholic Patriarchal Vicar of Turkey, François Yakan, and Sabri Anar of Uludere, whom Pope Francis had appointed archbishop of the Chaldean Church of Diyarbakır in June 2023."
+     ]
     },
     {
      "id": "surp-hovsep-diyarbakir",
@@ -2545,18 +3653,36 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Rudaw: Diyarbakır’da restore edilen kilise Dicle Üniversitesi’ne verildi",
-       "https://www.rudaw.net/turkish/kurdistan/061220212"
+       "https://www.rudaw.net/turkish/kurdistan/061220212",
+       "Rudaw: church restored in Diyarbakır given to Dicle University (in Turkish)"
       ],
       [
        "Agos: Diyarbakır Surp Hovsep Kilisesi’nde ayin",
-       "https://www.agos.com.tr/tr/yazi/26489/diyarbakir-surp-hovsep-kilisesi-nde-ayin"
+       "https://www.agos.com.tr/tr/yazi/26489/diyarbakir-surp-hovsep-kilisesi-nde-ayin",
+       "Agos: Mass at the Surp Hovsep Church in Diyarbakır (in Turkish)"
       ],
       [
        "Vikipedi: Ermeni Katolik Kilisesi (Diyarbakır)",
-       "https://tr.wikipedia.org/wiki/Ermeni_Katolik_Kilisesi_(Diyarbak%C4%B1r)"
+       "https://tr.wikipedia.org/wiki/Ermeni_Katolik_Kilisesi_(Diyarbak%C4%B1r)",
+       "Wikipedia (Turkish): Surp Hovsep Armenian Catholic Church"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "Surp Hovsep Armenian Catholic Church",
+     "shortEn": "Surp Hovsep (Armenian Catholic)",
+     "massEn": [
+      [
+       "Mass",
+       "No regular Mass; it can be held on special days at the community’s request."
+      ]
+     ],
+     "visitsEn": "Because it is used as Dicle University’s Culture, Art, Application and Research Centre, ask the university for visiting hours.",
+     "noticeEn": "The church is not used as a regular place of worship. After its restoration, at the end of 2021 it was allocated to Dicle University for 10 years as a center for culture and the arts; the Armenian Catholic community keeps the right to celebrate Mass when it asks.",
+     "historyEn": [
+      "Dedicated to St. Joseph, the husband of the Virgin Mary, Surp Hovsep is the historic Armenian Catholic church in Diyarbakır’s Sur district. Known to have been built in the 16th century, the church became the center of worship for the region’s Catholic Armenian community after the Armenian Catholic Church entered into full union with Rome in the 18th century.",
+      "The church, which has a women’s gallery and a flat roof, contains Armenian inscriptions and the gravestones of clergy; the building has living quarters and a courtyard. From the middle of the 20th century, as the community moved to other cities and abroad, the church was left without a congregation.",
+      "It was one of the churches most heavily damaged in the Sur clashes of 2015–2016. The restoration carried out by the General Directorate of Foundations was completed at the beginning of 2021. In December 2021 the Armenian Catholic Archbishop of Turkey, Levon Zekiyan, blessed the church, and the first Mass in about 100 years was celebrated here. In the same period the church was allocated to Dicle University for 10 years, on condition that its architectural features be preserved and the community’s right to celebrate Mass be kept."
+     ]
     }
    ]
   },
@@ -2600,18 +3726,36 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Présence: Mardin Süryani Katolik Kilisesi kutsal mekânlarımız",
-       "https://presencet.com.tr/mardin-suryani-katolik-kilisesi-kutsal-mekanlarimiz/"
+       "https://presencet.com.tr/mardin-suryani-katolik-kilisesi-kutsal-mekanlarimiz/",
+       "Présence: the holy places of the Syriac Catholic Church in Mardin"
       ],
       [
        "Kültür Portalı: Meryem Ana Kilisesi ve Patrikhanesi",
-       "https://www.kulturportali.gov.tr/turkiye/mardin/gezilecekyer/meryemana-kilisesi-ve-patrikhanesi"
+       "https://www.kulturportali.gov.tr/turkiye/mardin/gezilecekyer/meryemana-kilisesi-ve-patrikhanesi",
+       "Kültür Portalı (Culture Portal): the Church and Patriarchate of Our Lady"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "Syriac Catholic Cathedral of Our Lady",
+     "shortEn": "Our Lady’s Cathedral",
+     "massEn": [
+      [
+       "Mass",
+       "Ask the church."
+      ]
+     ],
+     "visitsEn": "The church is usually open to visitors during the day; the old patriarchate building next to it is the Mardin Museum.",
+     "noticeEn": "Mass times have not been published; the community is small. For Mass, consult the church or the Syriac Catholic Patriarchal Vicariate in Istanbul in advance.",
+     "historyEn": [
+      "The Cathedral of Our Lady on Mardin’s Cumhuriyet Square is the historic center of the Syriac Catholic Church. The Syriac Catholics are the community that separated from the ancient Syriac Church and entered into union with Rome during a patriarchal election held in Mardin in the 18th century.",
+      "The cathedral and the patriarchate beside it were built in 1895, when the seat of the patriarchate was in Mardin. The patriarchate later moved to Mosul, to Aleppo and, in 1929, to the Monastery of Charfet in Lebanon. The patriarchate building was used for military purposes for a time, handed over to the Ministry of Culture in 1988 and restored, and has served as the Mardin Museum since 1995.",
+      "The church, with its arches and round stone columns, contains paintings the patriarch brought back from Rome; one of them is thought to belong to the school of the Renaissance painter Raphael."
+     ]
     },
     {
      "id": "mor-efrem-mardin",
@@ -2640,16 +3784,35 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Présence: Mardin Süryani Katolik Kilisesi kutsal mekânlarımız",
-       "https://presencet.com.tr/mardin-suryani-katolik-kilisesi-kutsal-mekanlarimiz/"
+       "https://presencet.com.tr/mardin-suryani-katolik-kilisesi-kutsal-mekanlarimiz/",
+       "Présence: the holy places of the Syriac Catholic Church in Mardin"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
-       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf"
+       "https://www.katolik-kilisesi.org/wp-content/uploads/2023/08/2023-TURKIYE-KATOLIK-KILISELERI-AYIN-SAATLERI.pdf",
+       "Bishops’ Conference of Turkey (CET), 2023 list of Mass times"
       ]
      ],
-     "side": ""
+     "side": "",
+     "nameEn": "Mor Efrem Syriac Catholic Church",
+     "shortEn": "Mor Efrem",
+     "massEn": [
+      [
+       "Mass",
+       "Ask the church."
+      ]
+     ],
+     "visitsEn": "Ask before you visit.",
+     "noticeEn": "Mass times have not been published; ask in advance to visit or attend Mass.",
+     "historyEn": [
+      "The Mor Efrem church and monastery were built in 1884, under Patriarch Cercis Şelhet, and consecrated by the metropolitan of the day, Mor Yakup Matay Ahmar-Dakno. The church takes its name from St. Ephrem the Syrian, the great 4th-century Syriac theologian and poet.",
+      "From 1922 the building was used as a military hospital and prison, and more recently as a cinder-block workshop and warehouse; during these years it partly collapsed. Rebuilt through the restoration carried out by the Mardin Syriac Catholic Foundation between 2012 and 2022, the church was consecrated by the Syriac Catholic Patriarch Ignatius Joseph III Younan and reopened for worship."
+     ]
     }
    ]
   }
- ]
+ ],
+ "noteEn": "This information has been compiled from the churches’ own websites, the Catholic Archdiocese of Izmir, the Mass times list of the Bishops’ Conference of Turkey, the Istanbul Governorship’s Dijital İstanbul inventory and other public sources; it is not an official or complete register of churches. If you spot a mistake, you can let us know through the Contact page.",
+ "orthodoxNoteEn": "If there is no Catholic church near you, there may be an Orthodox one. Under Canon Law (Canon 844 §2), when it is impossible to reach a Catholic priest and there is genuine need, a Catholic may receive the Eucharist, Confession and the Anointing of the Sick from the Orthodox Church, whose sacraments are valid. This is an exceptional permission, not the ordinary rule; each community has its own discipline, and the priest may not always give Communion.",
+ "updatedEn": "September 2026"
 }/*JSON-END*/;

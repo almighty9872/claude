@@ -18,7 +18,7 @@ katolikdunyasi.com, ekran okuyucu kullanan görme engelli ziyaretçiler dahil, m
 - **Hareket azaltma:** işletim sisteminizde “hareketi azalt” tercihi açıksa site buna uyar ve gereksiz geçiş animasyonlarını kapatır.
 - **Koyu ve açık tema:** göz yorgunluğuna ya da ışık hassasiyetine göre seçilebilir, tercihiniz hatırlanır.
 - **Renk kontrastı:** metin renkleri, WCAG 2.1 AA standardının önerdiği kontrast oranları hedeflenerek seçilmiştir; Ayarlar panelindeki “Kontrast Artır” ayarıyla daha da güçlendirilebilir.
-- **Dil:** site Türkçe olarak yayımlanır; Katekizm, dualar, meseller ve Ayin metinlerinin İngilizce ve Latince asılları ilgili sayfalarda isteğe bağlı olarak gösterilebilir.
+- **Dil:** her sayfanın sağ alt köşesinde duran TR | EN düğmesi, sayfanın tamamını yerinde, okuduğunuz yeri kaybettirmeden Türkçeden İngilizceye (ve geri) çevirir; seçiminiz hatırlanır. Katekizm’de İngilizce metin, özgün İngilizce metindir.
 
 ## Bilinen sınırlamalar
 

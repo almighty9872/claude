@@ -458,29 +458,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   background: var(--gold-bg); border-left: 3px solid var(--gold-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 .qa-foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: .6rem; margin-top: .2rem; }
-.en-toggle {
-  display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .75rem; min-height: 2.1rem;
-  border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text-soft);
-  font-family: var(--sans); font-size: .8rem; font-weight: 500;
-}
 .qa-foot.end { justify-content: flex-end; }
-.en-toggle:hover { border-color: var(--gold-soft); color: var(--gold); }
-.en-toggle svg { width: .9rem; height: .9rem; transition: transform .2s ease; }
-.en-toggle[aria-expanded="true"] { color: var(--gold-active); border-color: var(--gold-soft); background: var(--gold-bg); }
-.en-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
-
-/* English original: instant reveal with a light fade (opacity/transform only) */
-.en-block { margin-top: .75rem; padding: .8rem 1rem .4rem; background: var(--surface-2); border-radius: var(--radius-sm); border-left: 3px solid var(--gold-soft); }
-.en-block:not([hidden]) { animation: reveal .18s ease-out; }
 @keyframes reveal { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .en-block:not([hidden]) { animation: none; } }
-.en-block .label { display: block; margin-bottom: .35rem; }
-.en-block .attr { display: block; margin-top: .3rem; font-family: var(--sans); font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.en-par { margin: -.4em 0 1.1em; padding: .55rem .9rem .1rem; font-size: 1.05rem; color: var(--text-soft); }
-.en-par p { margin: 0 0 .5em; }
-.signature .en-par { text-align: right; }
-.en-block .qa-q { font-size: 1.12rem; }
-.en-block .qa-a { margin-top: .35rem; color: var(--text-soft); }
 
 /* Quotes between questions */
 .quote { margin: 1.8rem auto; max-width: 38rem; text-align: center; }
@@ -488,8 +467,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .quote blockquote::before { content: "“"; display: block; font-size: 3rem; line-height: .6; color: var(--gold-soft); margin-bottom: .2rem; }
 .quote p { margin: 0; font-size: clamp(1.18rem, 2.6vw, 1.36rem); line-height: 1.5; }
 .quote .attr { display: block; margin-top: .55rem; font-family: var(--sans); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.quote .en-toggle { margin-top: .7rem; }
-.quote .en-block { text-align: left; }
 
 /* Text cards: Creeds, Decalogue, Our Father, prayers, formulas */
 .text-grid { display: grid; gap: 1rem; margin: 1rem 0 1.6rem; }
@@ -2428,10 +2405,6 @@ html.av.av-orig .av-lang {
 .av-lang button { min-height: 2rem; padding: .3rem .6rem; border: 0; border-radius: 7px; background: none; color: var(--text); font-family: var(--sans); font-size: .82rem; font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .av-lang button[aria-pressed="true"] { background: var(--surface); box-shadow: 0 1px 3px rgba(0, 0, 0, .14), 0 0 0 .5px rgba(0, 0, 0, .04); }
 .av-lang button:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
-html.av[data-orig="en"] main .en-block, html.av[data-orig="en"] main .en-par { display: block !important; }
-html.av[data-orig="en"] main :has(> .en-block) > :not(.en-block):not(summary):not(.av-keepl):not(.av-rows),
-html.av[data-orig="en"] main :has(+ .en-par) { display: none !important; }
-html.av[data-orig="en"] main .en-block > .label:first-child { display: none; }
 html.av[data-orig="la"] main :has(> details.latin) > :not(details.latin):not(summary):not(.av-keepl):not(.av-rows) { display: none !important; }
 html.av[data-orig="la"] main details.latin { margin: 0; padding: 0; border: 0; }
 html.av[data-orig="la"] main details.latin > summary { pointer-events: none; list-style: none; margin-bottom: .6rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -3066,3 +3039,49 @@ html.av .to-top-wrap { display: none; }
 .ic-closing { margin-top: 3.4rem; }
 .ic-closing .prose p:last-child { margin-top: 1.4rem; text-align: center; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
 .ic-sources ul { padding-left: 1.2rem; color: var(--text-soft); font-size: .92rem; line-height: 1.6; }
+
+/* ------------------------------------------------------------------ Two languages on every page
+   Each text is written twice, as a pair of wrappers (.l-tr / .l-en). The wrappers take no room of
+   their own, so the page lays out as if the text were written straight into its element; the
+   TR | EN switch sets html.lang-en and only one of the two is shown. */
+.l-tr, .l-en { display: contents; }
+html.lang-en .l-tr, html:not(.lang-en) .l-en { display: none !important; }
+
+/* The switch: a pill that floats in the corner over every page, like quran.com's */
+.lang-pill {
+  position: fixed; z-index: 80; right: max(1rem, env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom));
+  display: grid; grid-template-columns: 1fr 1fr; padding: .25rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent); border: 1px solid var(--glass-brd, var(--border));
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+  box-shadow: inset 0 1px 0 var(--glass-hi, transparent), 0 10px 26px -12px rgba(0, 0, 0, .55);
+}
+.lp-knob {
+  position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .25rem); border-radius: 999px;
+  background: var(--surface-3); box-shadow: 0 1px 3px rgba(0, 0, 0, .25); transition: transform .3s cubic-bezier(.3, .7, .2, 1);
+}
+html.lang-en .lp-knob { transform: translateX(100%); }
+.lp-btn {
+  position: relative; z-index: 1; min-width: 2.75rem; height: 2.25rem; padding: 0 .7rem; border: 0; border-radius: 999px;
+  background: none; color: var(--muted); font: 700 .82rem/1 var(--sans); letter-spacing: .06em; cursor: pointer;
+  transition: color .25s;
+}
+html:not(.lang-en) .lp-btn[data-set-lang="tr"], html.lang-en .lp-btn[data-set-lang="en"] { color: var(--text); }
+.lp-btn:hover { color: var(--text); }
+.lp-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+html:not(.js) .lang-pill { display: none; }
+@media (prefers-reduced-motion: reduce) { .lp-knob { transition: none; } }
+@media print { .lang-pill { display: none !important; } }
+/* room at the page's end, so its last line never sits under the pill */
+html.js .site-footer { padding-bottom: 6.2rem; }
+html.js.av .site-footer { padding-bottom: calc(var(--dock-h) + 4.2rem); }
+/* a level further in has no footer: its share row is the page's end */
+html.js.av.av-sub .av-foot { padding-bottom: calc(var(--dock-h) + 4.4rem); }
+/* on the phone's home screen the pill sits above the app bar */
+@media (max-width: 979px) {
+  body:has(.hm-apps) .lang-pill { bottom: calc(5.4rem + env(safe-area-inset-bottom)); }
+  html.av:has(.av-dock) .lang-pill { bottom: calc(var(--dock-h) + .9rem); }
+}
+/* the Katekizm's contents button holds the phone's bottom right: the pill moves to the left */
+@media (max-width: 979px) { body:has(.kq-fab) .lang-pill { right: auto; left: max(1rem, env(safe-area-inset-left)); } }
+/* SVG labels: their two languages are tspans, which cannot use display: contents */
+tspan.l-tr, tspan.l-en { display: inline; }
