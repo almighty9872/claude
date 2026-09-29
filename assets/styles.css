@@ -482,7 +482,8 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .examen-title { font-size: 1.05rem; }
 .examen-about { margin: .35rem 0 .8rem; padding: .6rem .8rem; border-radius: var(--radius-sm); background: var(--gold-bg); font-size: .95rem; line-height: 1.55; color: var(--text); }
 .fn-mark { margin-left: .15rem; color: var(--gold); text-decoration: none; font-weight: 700; }
-#dokuz-on { scroll-margin-top: calc(var(--header-h) + 1rem); }
+.examen-note { margin: 1rem 0 0; font-family: var(--sans); font-size: .85rem; line-height: 1.6; color: var(--muted); }
+.sureci-wrap .examen-list li { color: var(--text-soft); }
 .examen-list { margin: 0; padding: 0; list-style: none; color: var(--text-soft); }
 .examen-list li { position: relative; padding-left: 1rem; margin-bottom: .5rem; line-height: 1.5; }
 .examen-list li::before { content: ""; position: absolute; left: .1rem; top: .65em; width: .32rem; height: .32rem; border-radius: 50%; background: var(--gold); }
@@ -796,21 +797,24 @@ html.av .gs-list { display: block; padding: 0; border: 0; }
 .site-header { z-index: 91; }
 .navsheet {
   position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0; z-index: 90;
+  background: transparent; transition: background-color .32s ease;
 }
+.navsheet.open { background: rgba(24, 18, 10, .28); }
 .navsheet[hidden] { display: none; }
+/* A drawer that slides in from the right, one list of links, the date and time on top */
 .navsheet-panel {
-  position: relative; width: 100%; height: 100%; overflow-y: auto; overscroll-behavior: contain;
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(23rem, 88vw); overflow-y: auto; overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 1.4rem 1.1rem calc(2rem + env(safe-area-inset-bottom));
-  opacity: 0; transform: translateY(-14px) scale(.99);
-  transition: opacity .32s ease, transform .38s cubic-bezier(.19, 1, .22, 1);
+  padding: 1.1rem .9rem calc(2rem + env(safe-area-inset-bottom));
+  border-left: 1px solid var(--border); box-shadow: -18px 0 40px rgba(0, 0, 0, .12);
+  transform: translateX(100%);
+  transition: transform .38s cubic-bezier(.19, 1, .22, 1);
 }
-.navsheet.open .navsheet-panel { opacity: 1; transform: none; }
-/* Translucent (not the near-opaque --glass-strong used elsewhere) so the .glass backdrop-filter
-   blur is actually visible -- a proper frosted-glass sheet over the page behind it. */
-.navsheet-panel { background: var(--glass-overlay); }
-.ns-head { margin-bottom: 1rem; padding-bottom: .65rem; border-bottom: 1px solid var(--border); text-align: center; }
-.ns-date { margin: 0 0 .6rem; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--text-soft); }
+.navsheet.open .navsheet-panel { transform: none; }
+.navsheet-panel { background: var(--glass-strong, var(--surface)); }
+@media (prefers-reduced-motion: reduce) { .navsheet, .navsheet-panel { transition: none; } }
+.ns-head { margin: 0 .4rem .6rem; padding-bottom: .65rem; border-bottom: 1px solid var(--border); }
+.ns-date { margin: 0; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--text-soft); }
 .ns-time { color: var(--gold); font-variant-numeric: tabular-nums; }
 .ns-today.today-pills { margin-top: 0; }
 /* Liturgical season pill: a disc in the colour the priest wears in this season */
@@ -828,8 +832,6 @@ html.av .gs-list { display: block; padding: 0; border: 0; }
 @keyframes ns-reveal { to { opacity: 1; transform: none; } }
 /* Four groups side by side on a wide screen, two by two below that, one column on a phone */
 .ns-nav { display: grid; grid-template-columns: 1fr; gap: .2rem 2rem; align-items: start; max-width: 76rem; margin: 0 auto; }
-@media (min-width: 700px) { .ns-nav { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1100px) { .ns-nav { grid-template-columns: repeat(4, 1fr); gap: .2rem 1.4rem; } }
 /* The Katekizm row: the link, and an arrow that folds its seven parts open underneath */
 .ns-fold-row { display: flex; align-items: center; gap: .2rem; }
 .ns-fold-row .ns-item { flex: 1; min-width: 0; margin-bottom: 0; }
@@ -2010,20 +2012,22 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 .hm-season { margin-top: auto; font-size: 1.02rem; font-weight: 600; line-height: 1.2; }
 .hm-mn { font-size: 1.25rem; font-weight: 600; line-height: 1.15; }
 .hm-myst { background: linear-gradient(155deg, #4b4252, #2c2931); }
-.hm-date, .hm-date[data-lit="green"] { background: linear-gradient(155deg, #786627, #3b3418); }
-.hm-date[data-lit="violet"] { background: linear-gradient(155deg, #5f4672, #2f2438); }
-.hm-date[data-lit="white"] { background: linear-gradient(155deg, #a68c4c, #574521); }
-.hm-date[data-lit="red"] { background: linear-gradient(155deg, #8c3d2e, #421c15); }
-.hm-date[data-lit="rose"] { background: linear-gradient(155deg, #9a6275, #4b2b37); }
+/* the Bugün card takes a soft tint of the liturgical colour of the day: clearly green, violet,
+   red, rose or white, but quiet enough to sit with the other cards */
+.hm-date, .hm-date[data-lit="green"] { --hc-ink: #e3efd9; --hc-title: #b9e0a2; background: linear-gradient(155deg, #3f6b36, #1f3a1c); }
+.hm-date[data-lit="violet"] { --hc-ink: #ece0f6; --hc-title: #d5b9f0; background: linear-gradient(155deg, #5e3f86, #2d1f45); }
+.hm-date[data-lit="white"] { --hc-ink: #f6f1e4; --hc-title: #f2dca0; background: linear-gradient(155deg, #7a7466, #3e3a31); }
+.hm-date[data-lit="red"] { --hc-ink: #f8e0dc; --hc-title: #f5b1a4; background: linear-gradient(155deg, #93352a, #461510); }
+.hm-date[data-lit="rose"] { --hc-ink: #f8e3ea; --hc-title: #f3b8cc; background: linear-gradient(155deg, #a45a78, #4f2536); }
 /* light: the same cards in soft, sunlit tones, with dark ink */
 :root:not([data-theme="dark"]) .hm-card { box-shadow: 0 10px 26px -18px rgba(90, 60, 20, .45); border: 1px solid rgba(160, 120, 60, .18); }
 :root:not([data-theme="dark"]) .hm-saint { --hc-ink: #4a2c13; --hc-title: #7a4516; background: linear-gradient(155deg, #f5dcc0, #e2b68a); }
 :root:not([data-theme="dark"]) .hm-myst { --hc-ink: #372d3d; --hc-title: #5b416b; background: linear-gradient(155deg, #efe8f1, #d9cedf); }
-:root:not([data-theme="dark"]) .hm-date, :root:not([data-theme="dark"]) .hm-date[data-lit="green"] { --hc-ink: #3a3010; --hc-title: #6b5411; background: linear-gradient(155deg, #f3e6b8, #dcc684); }
-:root:not([data-theme="dark"]) .hm-date[data-lit="violet"] { --hc-ink: #33243e; --hc-title: #5c3d75; background: linear-gradient(155deg, #ece2f2, #d3c1e0); }
-:root:not([data-theme="dark"]) .hm-date[data-lit="white"] { --hc-ink: #3a3010; --hc-title: #6b5411; background: linear-gradient(155deg, #faf3de, #e9d9a6); }
-:root:not([data-theme="dark"]) .hm-date[data-lit="red"] { --hc-ink: #461a12; --hc-title: #8a2e1f; background: linear-gradient(155deg, #f5d9d2, #e3aea2); }
-:root:not([data-theme="dark"]) .hm-date[data-lit="rose"] { --hc-ink: #46222f; --hc-title: #86455c; background: linear-gradient(155deg, #f7e0e7, #e5bccb); }
+:root:not([data-theme="dark"]) .hm-date, :root:not([data-theme="dark"]) .hm-date[data-lit="green"] { --hc-ink: #1d3517; --hc-title: #2e6a25; background: linear-gradient(155deg, #e4f0da, #bfdcaa); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="violet"] { --hc-ink: #2e1f44; --hc-title: #5b3590; background: linear-gradient(155deg, #eee4f8, #d0bbea); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="white"] { --hc-ink: #3a3010; --hc-title: #6b5411; background: linear-gradient(155deg, #fffdf7, #f1e8cf); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="red"] { --hc-ink: #4a140d; --hc-title: #9a2a1a; background: linear-gradient(155deg, #fae1dc, #eeb2a6); }
+:root:not([data-theme="dark"]) .hm-date[data-lit="rose"] { --hc-ink: #4a1f30; --hc-title: #9a4467; background: linear-gradient(155deg, #fbe5ee, #efbfd2); }
 :root:not([data-theme="dark"]) .hm-deco { opacity: .16; }
 a.hm-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 /* The site's link hover (gold text) would turn these white cards' words dark: they lift a little instead */
@@ -3084,3 +3088,8 @@ tspan.l-tr, tspan.l-en { display: inline; }
 .sureci-wrap .kk-sec-body { font-size: 1.02rem; }
 .sureci-wrap .kk-sec-body p { margin: 0 0 .8rem; }
 html.av main .kk-sec.av-cur > summary h3 { font-size: 1.35rem; line-height: 1.25; }
+.kk-logos { margin: 0 0 2.4rem; padding: 1.2rem 1.35rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--gold); }
+.kk-logos h2 { margin: 0 0 .6rem; font-size: 1.25rem; line-height: 1.3; }
+.kk-logos p { margin: 0 0 .75rem; line-height: 1.65; }
+.kk-logos p:last-child { margin-bottom: 0; }
+body.sheet-open .hm-apps { display: none; }

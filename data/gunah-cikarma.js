@@ -65,18 +65,18 @@ window.CONFESSION = /*JSON-START*/{
    "textEn": "Do your penance as soon as you can, and carry the peace you've found into daily life."
   }
  ],
- "examenIntro": "Sorular On Emir’e göre sıralanmıştır. Hepsini kendinize sormanız gerekmez; size dokunan birkaç soru yeterlidir.",
- "examenIntroEn": "The questions follow the Ten Commandments. You don't need to ask yourself all of them; the few that strike you are enough.",
+ "examenIntro": "Sorular On Emir’e göre sıralanmıştır. Aşağıdaki listeyle vicdan muhasebenizi yapıp günah çıkarmaya hazırlanabilirsiniz.",
+ "examenIntroEn": "The questions follow the Ten Commandments. You can use the list below to examine your conscience and prepare for confession.",
  "examenGroups": [
   {
    "title": "1. Tanrın RAB Ben’im: benden başka tanrın olmayacak",
    "titleEn": "1. I am the LORD your God: you shall not have other gods before me",
-   "about": "Tanrı’yı hayatın merkezine koymayı ister. Yalnızca başka ilahlara tapmak değil; parayı, başarıyı, şöhreti ya da bir insanı Tanrı’nın yerine koymak da bu emre aykırıdır. Fal, burç, büyü ve muska gibi batıl uygulamalar da buraya girer (KKK 2110-2128).",
+   "about": "Bu emir, Tanrı’yı hayatımızın merkezine koymamızı ister. Yalnızca başka ilahlara tapmak değil; parayı, başarıyı, şöhreti ya da bir insanı Tanrı’nın yerine koymak da bu emre aykırıdır. Fal, burç, büyü ve muska gibi batıl inançlar da buraya girer (KKK 2110-2128).",
    "aboutEn": "It asks us to put God at the center of life. Not only worshipping other gods, but putting money, success, fame or a person in God’s place goes against it. Superstitious practices such as fortune-telling, horoscopes, magic and amulets belong here too (CCC 2110-2128).",
    "items": [
     "Duayı ihmal ettim mi? Tanrı’yı yalnızca zor anlarda mı hatırladım?",
-    "Fala, burca, büyüye, muskaya ya da nazarlığa güvendim mi?",
-    "Para, kariyer, beğenilmek ya da bir ilişki hayatımda Tanrı’nın yerini aldı mı?",
+    "Fala, burca, büyüye ya da muskaya inandım mı, nazarlığa güvendim mi?",
+    "Para, kariyer, beğenilme isteği ya da bir ilişki hayatımda Tanrı’nın yerini aldı mı?",
     "İnancımdan utandım ya da onu gizledim mi?",
     "Kilise’nin öğrettiği bir gerçeği bilerek ve inatla reddettim mi?",
     "Tanrı’nın merhametinden umudumu kestim mi, ya da “nasılsa affeder” diye bile bile günah işledim mi?"
@@ -93,13 +93,13 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "2. Tanrı’nın adını boş yere ağzına almayacaksın",
    "titleEn": "2. You shall not take the name of the Lord your God in vain",
-   "about": "Tanrı’nın adına ve kutsal olana saygıyı ister. Küfretmek, Tanrı’nın adıyla boş yere ya da yalan yere yemin etmek, verilen bir adağı tutmamak ve dinle alay etmek bu emre aykırıdır (KKK 2142-2159).",
+   "about": "Bu emir, Tanrı’nın adına ve kutsal olan her şeye saygı göstermemizi ister. Küfretmek, Tanrı’nın adına boş yere ya da yalan yere yemin etmek, adağını yerine getirmemek ve dinle alay etmek bu emre aykırıdır (KKK 2142-2159).",
    "aboutEn": "It asks for reverence for God’s name and for what is holy. Blasphemy, swearing by God’s name needlessly or falsely, breaking a vow made to God and mocking religion go against it (CCC 2142-2159).",
    "items": [
-    "Öfkeyle Tanrı’nın, İsa’nın ya da Meryem’in adını ağzıma aldım mı, küfrettim mi?",
-    "Gereksiz yere ya da yalan yere Tanrı’nın adıyla yemin ettim mi?",
-    "Tanrı’ya verdiğim bir sözü ya da adağı tutmadım mı?",
-    "Dinle, kutsal şeylerle ya da inananlarla alay ettim mi, alay edilirken güldüm mü?"
+    "Öfkelenince Tanrı’nın, İsa’nın ya da Meryem’in adını saygısızca andım mı, küfrettim mi?",
+    "Gereksiz yere ya da yalan yere Tanrı’nın adına yemin ettim mi?",
+    "Tanrı’ya verdiğim bir sözü tutmadım mı, adağımı yerine getirmedim mi?",
+    "Dinle, kutsal şeylerle ya da inananlarla alay ettim mi, başkaları alay ederken onlara katıldım mı?"
    ],
    "itemsEn": [
     "Have I used the name of God, Jesus or Mary in anger, or blasphemed?",
@@ -111,12 +111,12 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "3. Rab’bin gününü kutsal tutmayı unutma",
    "titleEn": "3. Remember to keep holy the Lord's Day",
-   "about": "Pazar gününü Tanrı’ya ve dinlenmeye ayırmayı ister. Katolikler için bu, pazar günleri ve yükümlü bayramlarda Ayin’e katılmak demektir. Gereksiz işlerden kaçınmak, aileye, dinlenmeye ve iyiliğe zaman ayırmak da bu emrin parçasıdır (KKK 2180-2188).",
+   "about": "Bu emir, pazar gününü Tanrı’ya ve dinlenmeye ayırmamızı ister. Katolikler için bu, pazar günleri ve yükümlü bayramlarda Ayine gitmek demektir. Gereksiz işlerden kaçınıp aileye, dinlenmeye ve iyiliğe vakit ayırmak da bu emrin parçasıdır (KKK 2180-2188).",
    "aboutEn": "It asks us to give Sunday to God and to rest. For Catholics this means taking part in Mass on Sundays and holy days of obligation. Avoiding needless work and making time for family, rest and good works are part of it too (CCC 2180-2188).",
    "items": [
-    "Geçerli bir nedenim olmadan pazar ya da yükümlü bayram Ayini’ni kaçırdım mı?",
-    "Ayine bile bile geç kaldım mı, Ayin boyunca aklım telefonumda mıydı?",
-    "Pazarı da iş, alışveriş ve ekran arasında mı geçirdim? Aileme ve dinlenmeye zaman ayırdım mı?",
+    "Geçerli bir nedenim yokken pazar Ayinini ya da yükümlü bir bayram Ayinini kaçırdım mı?",
+    "Ayine bile bile geç kaldım mı? Ayin boyunca aklım telefonumda mıydı?",
+    "Pazar gününü de iş, alışveriş ve ekran başında mı geçirdim? Aileme ve dinlenmeye vakit ayırdım mı?",
     "Başkalarının (çalışanlarımın, ailemin) pazar günü dinlenmesine engel oldum mu?"
    ],
    "itemsEn": [
@@ -129,14 +129,14 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "4. Annene ve babana saygı göster",
    "titleEn": "4. Honor your father and your mother",
-   "about": "Önce anne babaya, sonra da ailede, işte ve toplumda sorumluluk taşıyan herkese saygıyı ister. Ama tek yönlü değildir: Anne babaların çocuklarına, amirlerin çalışanlarına, yetişkin çocukların da yaşlanan anne babalarına karşı görevlerini kapsar (KKK 2197-2233).",
+   "about": "Bu emir önce anne babamıza, sonra da ailede, işte ve toplumda sorumluluk taşıyan herkese saygı göstermemizi ister. Ama tek yönlü değildir: Anne babanın çocuğuna, işverenin çalışanına, yetişkin çocukların da yaşlanan anne babalarına karşı görevlerini de kapsar (KKK 2197-2233).",
    "aboutEn": "It asks for respect first for our parents, then for everyone who carries responsibility in the family, at work and in society. But it runs both ways: it also covers the duties of parents to their children, of employers to their workers, and of grown children to their aging parents (CCC 2197-2233).",
    "items": [
     "Anne babama kaba, saygısız ya da nankör davrandım mı? Onları aramayı, ziyaret etmeyi ihmal ettim mi?",
-    "Yaşlanan ya da hasta aile üyelerime gereken ilgiyi gösterdim mi?",
-    "Anne babaysam, çocuklarıma zaman ayırdım mı, onlara imanı ve iyi bir örneği verdim mi?",
+    "Yaşlı ya da hasta aile büyüklerimle yeterince ilgilendim mi?",
+    "Çocuklarım varsa, onlara vakit ayırdım mı? Onlara imanı öğrettim ve iyi örnek oldum mu?",
     "Eşime ve aileme sabırla ve sevgiyle davrandım mı?",
-    "Öğretmenlerime, amirlerime ve yasalara, vicdanıma aykırı olmadıkça, saygı gösterdim mi?"
+    "Vicdanıma aykırı olmayan her konuda öğretmenlerime, amirlerime ve yasalara saygı gösterdim mi?"
    ],
    "itemsEn": [
     "Have I been rude, disrespectful or ungrateful to my parents? Have I neglected to call or visit them?",
@@ -149,14 +149,14 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "5. Adam öldürmeyeceksin",
    "titleEn": "5. You shall not kill",
-   "about": "Yalnızca cinayeti değil, insan hayatına ve sağlığına zarar veren her şeyi kapsar: öfke, kin ve intikam isteği, birini aşağılamak ya da ona zorbalık etmek, kürtaj, uyuşturucu, aşırı alkol, dikkatsiz araç kullanmak ve kendi sağlığını ihmal etmek. İsa, kardeşine öfkelenenin de yargılanacağını söyler (Matta 5:21-22; KKK 2258-2317).",
+   "about": "Bu emir yalnızca cinayeti değil, insan hayatına ve sağlığına zarar veren her şeyi kapsar: öfke, kin ve intikam, birini aşağılamak ya da ona zorbalık etmek, kürtaj, uyuşturucu, aşırı alkol, trafikte dikkatsizlik ve kendi sağlığını ihmal etmek. İsa, kardeşine öfkelenenin de yargılanacağını söyler (Matta 5:21-22; KKK 2258-2317).",
    "aboutEn": "It covers not only murder but everything that harms human life and health: anger, hatred and the wish for revenge, humiliating or bullying someone, abortion, drugs, drunkenness, reckless driving and neglecting one’s own health. Jesus says that whoever is angry with his brother will also be judged (Matthew 5:21-22; CCC 2258-2317).",
    "items": [
-    "Birine öfkeyle bağırdım, hakaret ettim ya da onu aşağıladım mı? İçimde kin ya da intikam isteği taşıdım mı?",
-    "Birini bilerek dışladım mı, ona zorbalık ettim mi (internette de)?",
-    "Aşırı alkol, sigara, uyuşturucu ya da umursamazlıkla kendi sağlığıma zarar verdim mi?",
-    "Trafikte hızla ya da dikkatsizce kendimi ve başkalarını tehlikeye attım mı?",
-    "Kürtaja katıldım, onu önerdim ya da destekledim mi?",
+    "Öfkelenip birine bağırdım, hakaret ettim ya da onu aşağıladım mı? Birine kin besledim mi, intikam almak istedim mi?",
+    "Birini bilerek dışladım mı, internette ya da yüz yüze birine zorbalık ettim mi?",
+    "Aşırı alkolle, sigarayla, uyuşturucuyla ya da kendimi ihmal ederek sağlığıma zarar verdim mi?",
+    "Trafikte hız yaparak ya da dikkatsiz davranarak kendimi ve başkalarını tehlikeye attım mı?",
+    "Kürtaj yaptırdım mı ya da birinin kürtaj yaptırmasına ön ayak oldum mu?",
     "Kötü örneğimle birini günaha sürükledim mi?"
    ],
    "itemsEn": [
@@ -164,21 +164,21 @@ window.CONFESSION = /*JSON-START*/{
     "Have I deliberately excluded or bullied someone (online too)?",
     "Have I harmed my own health through excessive alcohol, smoking, drugs or carelessness?",
     "Have I endangered myself and others by speeding or driving carelessly?",
-    "Have I taken part in, suggested or supported an abortion?",
+    "Have I had an abortion, or pushed someone toward having one?",
     "Have I led someone into sin by my bad example?"
    ]
   },
   {
    "title": "6. Zina etmeyeceksin",
    "titleEn": "6. You shall not commit adultery",
-   "about": "Cinselliğin, evlilikte eşlerin birbirine ömür boyu ve bütünüyle verdiği sevginin bir parçası olduğunu öğretir. Evlilik dışı cinsel ilişki, aldatma, pornografi, mastürbasyon, evlilikte yapay doğum kontrolü ve eşi bir nesne gibi görmek bu emre aykırıdır. Evli ya da bekâr, herkes kendi durumuna göre iffetli yaşamaya çağrılır (KKK 2337-2359, 2380-2391).",
+   "about": "Bu emir, cinselliğin evlilikte eşlerin birbirine ömür boyu verdiği sevginin bir parçası olduğunu hatırlatır. Evlilik dışı cinsel ilişki, aldatma, pornografi, mastürbasyon, evlilikte yapay doğum kontrolü ve eşine bir nesne gibi davranmak bu emre aykırıdır. Evli ya da bekâr, herkes kendi durumuna göre iffetli yaşamaya çağrılır (KKK 2337-2359, 2380-2391).",
    "aboutEn": "It teaches that sexuality belongs to the lifelong, total gift of love between husband and wife in marriage. Sex outside marriage, adultery, pornography, masturbation, artificial contraception in marriage and treating one’s spouse as an object go against it. Married or single, everyone is called to live chastely according to their state of life (CCC 2337-2359, 2380-2391).",
    "items": [
-    "Pornografi izledim ya da müstehcen içerik aradım mı?",
+    "Pornografik içerik izledim mi, müstehcen şeylere baktım mı?",
     "Evlilik dışında cinsel ilişkiye girdim mi?",
-    "Evliysem, eşimi aldattım mı? Eşimle ilişkimde onu bir nesne gibi gördüm mü?",
+    "Evliysem, eşimi aldattım mı? Eşime bir arzu nesnesi gibi davrandım mı?",
     "Mastürbasyon yaptım mı?",
-    "Giyimimle, şakalarımla ya da mesajlarımla başkasını günaha sürükledim mi?"
+    "Giyimimle, şakalarımla ya da mesajlarımla başkalarını günaha teşvik ettim mi?"
    ],
    "itemsEn": [
     "Have I watched pornography or looked for explicit content?",
@@ -191,15 +191,15 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "7. Çalmayacaksın",
    "titleEn": "7. You shall not steal",
-   "about": "Başkasının malına ve emeğine saygıyı ister. Hırsızlık yalnızca bir şey çalmak değildir: İşte tembellik edip maaşını tam almak, müşteriyi kandırmak, vergi kaçırmak, borcunu ödememek, korsan yazılım ya da film kullanmak ve bulduğu bir şeyi sahibine vermemek de buraya girer. Yoksullara yardım ve yaratılışa özen göstermek de bu emrin parçasıdır (KKK 2401-2449).",
+   "about": "Bu emir, başkasının malına ve emeğine saygı göstermemizi ister. Hırsızlık yalnızca bir şey çalmak değildir: İşte kaytarıp maaşını tam almak, müşteriyi kandırmak, vergi kaçırmak, borcunu ödememek, korsan yazılım ya da film kullanmak ve bulduğu bir şeyi sahibine vermemek de buraya girer. Yoksullara yardım etmek ve doğayı korumak da bu emrin parçasıdır (KKK 2401-2449).",
    "aboutEn": "It asks for respect for other people’s property and work. Stealing isn’t only taking something: idling at work while taking full pay, cheating customers, tax evasion, not paying debts, using pirated software or films, and keeping something you found also belong here. Helping the poor and caring for creation are part of it too (CCC 2401-2449).",
    "items": [
-    "Başkasına ait bir şeyi aldım, ödünç aldığımı geri vermedim ya da borcumu ödemedim mi?",
-    "İş yerimde çalışmadan maaş aldım, mesaiyi boşa geçirdim ya da iş yerinin malını kendim için kullandım mı?",
-    "Alışverişte, satışta ya da vergilerimde hile yaptım mı? Çalışanıma hakkını tam ve zamanında verdim mi?",
+    "Başkasının bir eşyasını izinsiz aldım mı? Ödünç aldığım bir şeyi geri vermedim ya da borcumu ödemedim mi?",
+    "İşte kaytarıp mesaiyi boşa geçirdim mi? İş yerinin malzemelerini kendi işim için kullandım mı?",
+    "Alışverişte ya da vergide hile yaptım mı? İşverensem, çalışanlarımın hakkını tam ve zamanında verdim mi?",
     "Korsan yazılım, film ya da müzik kullandım mı?",
-    "Kumarla ya da gereksiz harcamalarla ailemin ihtiyaçlarını ihmal ettim mi?",
-    "Yoksullara ve muhtaç olanlara elimden geldiğince yardım ettim mi?"
+    "Kumar ya da gereksiz harcamalar yüzünden ailemin ihtiyaçlarını ihmal ettim mi?",
+    "Yoksullara ve ihtiyacı olanlara elimden geldiğince yardım ettim mi?"
    ],
    "itemsEn": [
     "Have I taken something that belongs to someone else, failed to return what I borrowed or to pay a debt?",
@@ -213,14 +213,14 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "8. Komşuna karşı yalan yere tanıklık etmeyeceksin",
    "titleEn": "8. You shall not bear false witness against your neighbor",
-   "about": "Hakikate saygıyı ister. Yalan söylemek, iftira etmek ve dedikodu yapmak, yani birinin gerçek ama gizli kusurlarını gereksiz yere başkalarına anlatmak bu emre aykırıdır. Birini dinlemeden yargılamak, sırları açık etmek ve sosyal medyada doğrulanmamış şeyler yaymak da buraya girer (KKK 2475-2492).",
+   "about": "Bu emir, doğru sözlü olmamızı ister. Yalan söylemek, iftira atmak ve dedikodu yapmak, yani birinin gizli kusurlarını gereksiz yere başkalarına anlatmak bu emre aykırıdır. Birini dinlemeden yargılamak, sır saklamamak ve sosyal medyada doğruluğundan emin olmadığımız şeyleri yaymak da buraya girer (KKK 2475-2492).",
    "aboutEn": "It asks for respect for the truth. Lying, slander and gossip, that is, needlessly telling others someone’s real but hidden faults, go against it. Judging someone without hearing them out, revealing secrets and spreading unverified things on social media belong here too (CCC 2475-2492).",
    "items": [
     "Yalan söyledim mi, gerçeği çarpıttım ya da abarttım mı?",
-    "Birinin arkasından konuştum, kusurlarını gereksiz yere başkalarına anlattım mı?",
-    "Birine iftira ettim, onu haksız yere suçladım mı?",
-    "Birini dinlemeden, yalnızca duyduklarıma göre yargıladım mı?",
-    "Bana emanet edilen bir sırrı açık ettim mi?",
+    "Birinin arkasından konuşup kusurlarını başkalarına anlattım mı?",
+    "Birine iftira attım mı, birini haksız yere suçladım mı?",
+    "Birini dinlemeden, kulaktan dolma bilgilerle yargıladım mı?",
+    "Bana söylenen bir sırrı başkalarına anlattım mı?",
     "Sosyal medyada doğruluğundan emin olmadığım şeyleri paylaştım mı?"
    ],
    "itemsEn": [
@@ -235,12 +235,12 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "9 ve 10. Komşunun eşine ve malına göz dikmeyeceksin",
    "titleEn": "9 and 10. You shall not covet your neighbor's spouse or goods",
-   "about": "Son iki emir eylemlere değil, kalbe bakar. Dokuzuncu emir başkasının eşine arzuyla bakmayı, onuncu emir ise başkasının malını kıskanmayı ve açgözlülüğü yasaklar. İsa, bir kadına şehvetle bakanın yüreğinde zina etmiş olduğunu söyler (Matta 5:28; KKK 2514-2557).",
+   "about": "Son iki emir davranışlara değil, kalbe bakar. Dokuzuncu emir başkasının eşine arzuyla bakmayı, onuncu emir ise başkasının malını kıskanmayı ve açgözlülüğü yasaklar. İsa, bir kadına şehvetle bakanın yüreğinde onunla zina etmiş olduğunu söyler (Matta 5:28; KKK 2514-2557).",
    "aboutEn": "The last two commandments look not at actions but at the heart. The ninth forbids desiring another person’s spouse; the tenth forbids envy of other people’s goods and greed. Jesus says that whoever looks at a woman with lust has already committed adultery in his heart (Matthew 5:28; CCC 2514-2557).",
    "items": [
-    "Şehvet dolu düşünce ve hayallere bile bile daldım mı?",
+    "Cinsel düşünce ve hayallere bile bile kapıldım mı?",
     "Başkasının eşine ya da sevgilisine arzuyla baktım mı?",
-    "Başkalarının evini, arabasını, işini ya da hayatını kıskandım mı? Sosyal medyada başkalarının hayatına bakıp hoşnutsuzluğa kapıldım mı?",
+    "Başkalarının evini, arabasını, işini ya da hayatını kıskandım mı? Sosyal medyada başkalarının hayatına bakıp kendi hayatımdan hoşnutsuz oldum mu?",
     "Paraya ve eşyaya aşırı bağlandım mı? Sahip olduklarım için Tanrı’ya şükrettim mi?"
    ],
    "itemsEn": [

@@ -14,30 +14,12 @@ Check two things before buying:
 - **"Catholic Edition"** on the cover.
 - **Nihil obstat** and **Imprimatur** inside: they show the translation carries the Church's approval.
 
-## Where to start in Turkish {#turkce}
+## Which Turkish edition? {#turkce}
 
 There's no printed, Church-approved Turkish Catholic edition yet. The closest option is the Bible Society in Turkey's 2003 translation, **Kutsal Kitap ve Deuterokanonik Kitaplar** ("The Bible and the Deuterocanonical Books"): it includes the seven deuterocanonical books and reads easily. To read it free:
 
 - [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU), Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
 - [kitabimukaddes.com](https://kitabimukaddes.com/tr/kutsal-kitap)
-
-## Which translation for what {#hangi-ceviri}
-
-Translators take one of two approaches: a **formal** (word-for-word) translation stays close to the original wording, while a **dynamic** (thought-for-thought) one carries the meaning into natural language.
-
-- **For serious study,** choose a formal translation: it keeps the subtle cues of meaning, though it's harder going.
-- **For daily reading,** choose a dynamic or middle-of-the-road translation: it flows, but detail is lost and the translator's reading can slip in.
-- **Translation can even affect doctrine:** when the Greek "ergon" ("work") isn't rendered consistently, it's easy to miss that God will judge everyone according to their works (Romans 2:6-7).
-- **Older translations aren't more reliable,** just older. Even the Douay-Rheims sold today is Bishop Challoner's 18th-century revision.
-
-Catholic English editions, from formal to dynamic:
-
-- **Most formal:** Douay-Rheims (Challoner)
-- **Formal, more readable:** RSV-CE and RSV-2CE, Confraternity Bible
-- **Middle:** NABRE, New Jerusalem Bible
-- **Closer to dynamic:** NRSV-CE, Good News Translation (Catholic edition)
-
-Paraphrases such as the Living Bible aren't translations and carry no Church approval. Reading a few translations side by side helps too.
 
 ## Approved translations {#onayli}
 

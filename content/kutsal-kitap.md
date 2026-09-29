@@ -14,30 +14,12 @@ Satın alırken iki şeye bakın:
 - Kapakta **“Catholic Edition”** ibaresi.
 - İç kapakta **Nihil obstat** ve **Imprimatur** ibareleri: Bunlar çevirinin Kilise onayı taşıdığını gösterir.
 
-## Türkçe nereden başlamalı? {#turkce}
+## Türkçe hangi kaynak? {#turkce}
 
 Henüz Kilise onayı taşıyan, basılı bir Türkçe Katolik baskı yok. En yakın seçenek, Kitabı Mukaddes Şirketi’nin 2003 tarihli **Kutsal Kitap ve Deuterokanonik Kitaplar** çevirisidir: yedi deuterokanonik kitabı da içerir ve kolay okunur. Ücretsiz okumak için:
 
 - [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU), Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
 - [kitabimukaddes.com](https://kitabimukaddes.com/tr/kutsal-kitap)
-
-## Hangi çeviri ne için? {#hangi-ceviri}
-
-Çevirmenler iki yol izler: **sözel çeviri** özgün metnin sözcüklerine bağlı kalır, **dinamik çeviri** anlamı rahat bir dille aktarır.
-
-- **Ciddi bir çalışma için** sözel bir çeviri seçin: Anlamın ince ayrıntılarını korur, ama okuması yorucudur.
-- **Günlük okuma için** dinamik ya da ikisinin ortasında duran bir çeviri seçin: Akıcıdır, ama bazı ayrıntılar kaybolur ve çevirmenin yorumu araya karışabilir.
-- **Çeviri öğretiyi bile etkileyebilir:** “iş” anlamındaki Yunanca “ergon” tutarlı çevrilmediğinde, Allah’ın herkesi işlerine göre yargılayacağı (Romalılar 2:6-7) gözden kaçabilir.
-- **Eski çeviriler daha güvenilir değildir,** yalnızca daha eskidir. Bugün satılan Douay-Rheims bile 18. yüzyılda Episkopos Challoner’ın gözden geçirdiği bir baskıdır.
-
-Katolik İngilizce baskılar, sözelden dinamiğe:
-
-- **Sözele en yakın:** Douay-Rheims (Challoner)
-- **Sözel, daha okunur:** RSV-CE ve RSV-2CE, Confraternity Bible
-- **Ortada:** NABRE, New Jerusalem Bible
-- **Dinamiğe yakın:** NRSV-CE, Good News Translation (Katolik baskısı)
-
-Living Bible gibi serbest anlatımlar çeviri değildir ve kilise onayı taşımaz. Birkaç çeviriyi yan yana okumak da çok yardımcı olur.
 
 ## Onaylı çeviriler {#onayli}
 

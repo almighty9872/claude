@@ -716,7 +716,7 @@ $IcoShield = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $SheetNav = @(
   @{ label = 'Öğren'; labelEn = 'Learn'; items = @(
     @{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?'; s = 'Tanrı, İsa ve Kilise, kısaca'; te = "Why We're Catholic"; se = 'God, Jesus and the Church, briefly'; ico = $IcoCompass },
-    @{ href = 'katekizm.html'; t = 'Katekizm'; s = '598 soru ve yanıt'; te = 'Catechism'; se = '598 questions and answers'; fold = $TextNav },
+    @{ href = 'katekizm.html'; t = 'Katekizm'; s = '598 soru ve yanıt'; te = 'Catechism'; se = '598 questions and answers' },
     @{ href = 'kutsal-kitap.html'; t = 'Kutsal Kitap'; s = 'Onaylı çeviriler'; te = 'The Bible'; se = 'Approved translations' },
     @{ href = 'sss.html'; t = 'Sorular'; s = 'Sıkça sorulan sorular'; te = 'FAQ'; se = 'Frequently asked questions' },
     @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci'; s = 'OCIA, adım adım'; te = 'Becoming Catholic'; se = 'OCIA, step by step' },
@@ -919,11 +919,6 @@ $Sprite
   <div class="navsheet-panel glass" role="dialog" aria-modal="true" $(TA 'aria-label' 'Menü' 'Menu')>
     <div class="ns-head">
       <p class="ns-date"><span data-ns-date></span> <time class="ns-time" data-ns-time>--:--:--</time></p>
-      <div class="today-pills ns-today">
-        <div class="today-pill"><span class="tp-ico"><span class="lit-dot" data-ns-season-dot></span></span><span><span class="tp-label">$(T 'Litürjik Dönem' 'Liturgical Season')</span><span class="tp-value hint" data-ns-season>$(T 'Yükleniyor…' 'Loading…')</span></span></div>
-        <a class="today-pill" href="tesbih-duasi.html"><span class="tp-ico">$IcoBeads</span><span><span class="tp-label">$(T 'Günün Gizemi' "Today's Mystery")</span><span class="tp-value hint" data-ns-mystery>$(T 'Yükleniyor…' 'Loading…')</span></span></a>
-        <a class="today-pill" href="azizler.html"><span class="tp-ico">$IcoStar</span><span><span class="tp-label">$(T 'Bugünün Azizi' "Today's Saint")</span><span class="tp-value hint" data-ns-saint>$(T 'Yükleniyor…' 'Loading…')</span></span></a>
-      </div>
     </div>
     <nav class="ns-nav" $(TA 'aria-label' 'Menü' 'Menu')>
 $(Nav-Sheet 'tr' $current)
@@ -1357,7 +1352,8 @@ $kkQuick = @(
     (T '73 kitabın tamamı, kolay okunur bir dille.' 'All 73 books, in easy modern Turkish.'),
     "<a href=`"$kkRead`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
   @((T 'İngilizce için' 'In English'), 'RSV-CE (The Ignatius Bible)',
-    (T 'Özgün metne yakın ama okunur; genel kullanım için en iyi seçim.' 'Close to the original yet readable; the best choice for general use.'), ''),
+    (T 'Özgün metne yakın ama okunur; genel kullanım için en iyi seçim.' 'Close to the original yet readable; the best choice for general use.'),
+    "<a href=`"https://www.ewtn.com/bible`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
   @((T 'Satın alırken' 'When buying one'), (T '73 kitap ve Imprimatur' '73 books and an Imprimatur'),
     (T 'Katolik baskıda 73 kitap vardır; iç kapakta Nihil obstat ve Imprimatur yazar.' 'A Catholic edition has 73 books, with Nihil obstat and Imprimatur inside the cover.'), '')
 )
@@ -1365,12 +1361,19 @@ $kkQuickHtml = ($kkQuick | ForEach-Object {
   $act = if ($_[3]) { '<p class="kk-q-a">' + $_[3] + '</p>' } else { '' }
   '<div class="kk-q"><p class="kk-q-k">' + $_[0] + '</p><p class="kk-q-t">' + $_[1] + '</p><p class="kk-q-s">' + $_[2] + '</p>' + $act + '</div>'
 }) -join ''
+$kkLogosTr = @'
+<h2>Çeviri neden bu kadar önemli?</h2><p>Yeni Ahit Grekçe yazıldı. Eski Grekçe, tek bir kelimeye koca bir felsefeyi sığdırabilen bir dildir; bu yüzden onu daha dar anlamlı dillere aktarmak zordur. Yuhanna İncili şöyle başlar: <em>“Başlangıçta Söz vardı. Söz Tanrı’yla birlikteydi ve Söz Tanrı’ydı”</em> (Yuhanna 1:1). Burada “Söz” diye çevrilen kelime, Grekçe <em lang="grc">logos</em>’tur.</p><p>Eski Grek felsefesinde logos, evrene düzen veren akıl ve ilahi zekâdır: her şeyi birbirine bağlayan ve yöneten evrensel ilke. Stoacı filozoflar için logos, doğa, kader ya da takdirle bir tutulan etkin, akıllı ve ruhani bir güçtü. Yuhanna bu kelimeyi seçerek şunu söyler: Evrenin anlamı ve düzeni olan bu Akıl, Tanrı’nın kendisidir ve İsa’da insan oldu (Yuhanna 1:14).</p><p>“Söz” ya da “Tanrısal Söz” gibi karşılıklar bu derinliği taşıyamaz; birçok okur için anlamı bile açık değildir. Grekçenin bu zenginliği, her kelimenin bağlamıyla birlikte dikkatle yorumlanmasını gerektirir. İyi bir çeviri ve Kilise’nin rehberliği bu yüzden bu kadar önemlidir.</p>
+'@
+$kkLogosEn = @'
+<h2>Why translation matters so much</h2><p>The New Testament was written in Greek. Ancient Greek can fit a whole philosophy into a single word, which makes it hard to carry into languages with narrower words. John’s Gospel opens: <em>“In the beginning was the Word, and the Word was with God, and the Word was God”</em> (John 1:1). The word translated “Word” is the Greek <em lang="grc">logos</em>.</p><p>In ancient Greek philosophy, logos is the reason and divine intelligence that orders the cosmos: the universal principle that connects and governs all things. For the Stoics it was an active, rational, spiritual principle, equated with nature, fate or providence. By choosing this word, John says that this Reason, the meaning and order of the universe, is God himself, and became man in Jesus (John 1:14).</p><p>Renderings such as “Söz” (“Word”) or “Tanrısal Söz” (“Divine Word”) in Turkish cannot carry this depth; to many readers they barely make sense. Greek’s semantic breadth means every word must be read carefully in its context. That is why a good translation, and the Church’s guidance, matter so much.</p>
+'@
 $kkBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kutsal Kitap')
   <header class="page-head center">$(Page-Ico $IcoBible)<h1>$(T $KkMeta.title $KkEn.meta.title)</h1><p class="sub">$(T $KkMeta.subtitle $KkEn.meta.subtitle)</p></header>
   <section class="kk-quick" aria-labelledby="kk-quick-h"><h2 class="visually-hidden" id="kk-quick-h">$(T 'Kısaca' 'In short')</h2>$kkQuickHtml</section>
   <p class="kk-motto">$(T 'En iyi çeviri, okuyacağınız çeviridir.' 'The best translation is the one you will read.')</p>
+  <section class="kk-logos" id="logos">$(TB (Inline $kkLogosTr) (Inline $kkLogosEn))</section>
   <div class="body prose kk-body">$(TB (Kk-Fold (Convert-Markdown $Kk.body)) (Kk-Fold (Convert-Markdown $KkEn.body)))</div>
 </div>
 "@
@@ -1424,48 +1427,56 @@ Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" -Ti
   -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Olma Süreci' 'katolik-sureci.html'))
 
 # ================================================================== GUNAH CIKARMA (gunah-cikarma.html)
+# Two doors (how it works / preparing), the steps as a light timeline, and the rest folded: one fold
+# per commandment in the examination of conscience (what it covers, then the questions) and one per
+# question and fear. The seal martyrs footnote stays open under the questions.
 $confessionSteps = ($Confession.steps | ForEach-Object {
   $i = [array]::IndexOf(@($Confession.steps), $_) + 1
-  "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(T (Inline $_.title) (Inline $_.en))</h3>$(TO "<p class=`"stage-en label`" lang=`"en`">$($_.en)</p>")<p>$(T (Inline $_.text) (Inline $_.textEn))</p></div></li>"
+  "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(T (Inline $_.title) (Inline $_.en))</h3><p>$(T (Inline $_.text) (Inline $_.textEn))</p></div></li>"
 }) -join "`n"
-$examenGroups = ($Confession.examenGroups | ForEach-Object {
+$examenFolds = ($Confession.examenGroups | ForEach-Object {
   $group = $_
-  $items = ($group.items | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
-  $itemsEn = ($group.itemsEn | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
+  $items = ($group.items | ForEach-Object { '<li>' + (Inline $_) + '</li>' }) -join ''
+  $itemsEn = ($group.itemsEn | ForEach-Object { '<li>' + (Inline $_) + '</li>' }) -join ''
   $lists = TB ('<ul class="examen-list">' + $items + '</ul>') ('<ul class="examen-list">' + $itemsEn + '</ul>')
-  $mark = if ($group.noteMark) { '<a class="fn-mark" href="#dokuz-on" aria-label="Dipnot">*</a>' } else { '' }
-  "<article class=`"text-card examen-card`"><h3 class=`"t-title examen-title`">$(T (Inline $group.title) (Inline $group.titleEn))$mark</h3>" +
-    "<p class=`"examen-about`">$(T (Inline $group.about) (Inline $group.aboutEn))</p>" +
-    $lists + '</article>'
+  $note = ''
+  if ($group.noteMark) { $note = '<p class="examen-note">* ' + (T (Inline $Confession.examenNote) (Inline $Confession.examenNoteEn)) + '</p>' }
+  $title = (T (Inline $group.title) (Inline $group.titleEn)) + $(if ($group.noteMark) { '*' } else { '' })
+  $slug = 'emir-' + (([regex]::Match($group.title, '^[\d ve]+')).Value.Trim() -replace '\s+ve\s+', '-' -replace '\s', '')
+  '<details class="kk-sec" id="' + $slug + '"><summary><h3>' + $title + '</h3>' + $IcoChevLg + '</summary><div class="kk-sec-body">' +
+    '<p class="examen-about">' + (T (Inline $group.about) (Inline $group.aboutEn)) + '</p>' + $lists + $note + '</div></details>'
 }) -join "`n"
-$examenNote = "<aside class=`"footnote-block`" id=`"dokuz-on`"><p>* $(T (Inline $Confession.examenNote) (Inline $Confession.examenNoteEn))</p></aside>"
 $confessionFaq = ($Confession.faq | ForEach-Object {
-  "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(T (Inline $_.q) (Inline $_.qEn))</span>$IcoChevLg</summary>" +
-    "<div class=`"faq-a`"><p>$(T (Inline $_.a) (Inline $_.aEn))</p></div></details>"
+  '<details class="kk-sec" id="' + $_.id + '"><summary><h3>' + (T (Inline $_.q) (Inline $_.qEn)) + '</h3>' + $IcoChevLg + '</summary><div class="kk-sec-body"><p>' + (T (Inline $_.a) (Inline $_.aEn)) + '</p></div></details>'
 }) -join "`n"
-$sealMartyrsItems = ($Confession.sealMartyrs.items | ForEach-Object { "<li><strong>$(Inline $_.name)</strong> $(Inline $_.detail)</li>" }) -join "`n"
-$sealMartyrsItemsEn = ($Confession.sealMartyrs.itemsEn | ForEach-Object { "<li><strong>$(Inline $_.name)</strong> $(Inline $_.detail)</li>" }) -join "`n"
-$sealMartyrsHtml = "<aside class=`"footnote-block`" id=`"muhur-sehitleri`"><p class=`"footnote-label`">* $(T (Inline $Confession.sealMartyrs.title) (Inline $Confession.sealMartyrs.titleEn))</p><p>$(T (Inline $Confession.sealMartyrs.intro) (Inline $Confession.sealMartyrs.introEn))</p>$(TB "<ul class=`"footnote-list`">$sealMartyrsItems</ul>" "<ul class=`"footnote-list`">$sealMartyrsItemsEn</ul>")</aside>"
+$sealMartyrsItems = ($Confession.sealMartyrs.items | ForEach-Object { '<li><strong>' + (Inline $_.name) + '</strong> ' + (Inline $_.detail) + '</li>' }) -join "`n"
+$sealMartyrsItemsEn = ($Confession.sealMartyrs.itemsEn | ForEach-Object { '<li><strong>' + (Inline $_.name) + '</strong> ' + (Inline $_.detail) + '</li>' }) -join "`n"
+$sealLists = TB ('<ul class="footnote-list">' + $sealMartyrsItems + '</ul>') ('<ul class="footnote-list">' + $sealMartyrsItemsEn + '</ul>')
+$sealMartyrsHtml = '<aside class="footnote-block" id="muhur-sehitleri"><p class="footnote-label">* ' + (T (Inline $Confession.sealMartyrs.title) (Inline $Confession.sealMartyrs.titleEn)) + '</p><p>' + (T (Inline $Confession.sealMartyrs.intro) (Inline $Confession.sealMartyrs.introEn)) + '</p>' + $sealLists + '</aside>'
+$confessionDoors = '<a class="why-door" href="#adim-adim"><span class="why-door-t">' + (T 'İlk kez ya da uzun bir aradan sonra gidiyorum' 'I am going for the first time, or after a long time') + '</span><span class="why-door-s">' + (T 'Adım adım neler olacağını görün' 'See what happens, step by step') + '</span>' + $IcoArrowR + '</a>' +
+  '<a class="why-door" href="#vicdan-muhasebesi"><span class="why-door-t">' + (T 'Hazırlanmak istiyorum' 'I want to prepare') + '</span><span class="why-door-s">' + (T "On Emir$($Apos)e göre vicdan muhasebesi" 'An examination of conscience by the Ten Commandments') + '</span>' + $IcoArrowR + '</a>'
 $confessionBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow sureci-wrap" data-av-nogh>
   $(Crumbs 'Günah Çıkarma')
   <header class="page-head center">$(Page-Ico $IcoKey)<h1>$(T $Confession.title $Confession.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Confession.en)</p>")</header>
-  <p class="faq-intro">$(T (Inline $Confession.intro) (Inline $Confession.introEn))</p>
-  <h2 class="section-title" id="adim-adim"><span class="label">1</span>$(T 'Nasıl İşler? Adım Adım' 'How It Works, Step by Step')</h2>
-  <ol class="stage-list">
+  <p class="why-intro">$(T (Inline $Confession.intro) (Inline $Confession.introEn))</p>
+  <nav class="why-doors two" $(TA 'aria-label' 'Nereden başlamak istersiniz?' 'Where would you like to start?')>$confessionDoors</nav>
+  <section class="sureci-sec" id="adim-adim" aria-labelledby="h-adim">
+    <h2 id="h-adim">$(T 'Adım adım' 'Step by step')</h2>
+    <ol class="stage-list">
 $confessionSteps
-  </ol>
-  <h2 class="section-title" id="vicdan-muhasebesi"><span class="label">2</span>$(T 'Vicdan Muhasebesi' 'Examination of Conscience')</h2>
-  <p class="faq-intro">$(T (Inline $Confession.examenIntro) (Inline $Confession.examenIntroEn))</p>
-  <div class="text-grid two examen-grid">
-$examenGroups
-  </div>
-  $examenNote
-  <h2 class="section-title" id="sorular-ve-korkular"><span class="label">3</span>$(T 'Sık Sorulan Sorular ve Korkular' 'Frequently Asked Questions and Fears')</h2>
-  <div class="faq-list">
-$confessionFaq
-  </div>
-  $sealMartyrsHtml
+    </ol>
+  </section>
+  <section class="sureci-sec" id="vicdan-muhasebesi" aria-labelledby="h-vicdan">
+    <h2 id="h-vicdan">$(T 'Vicdan muhasebesi' 'Examination of conscience')</h2>
+    <p class="why-thesis">$(T (Inline $Confession.examenIntro) (Inline $Confession.examenIntroEn))</p>
+    <div class="kk-secs">$examenFolds</div>
+  </section>
+  <section class="sureci-sec" id="sorular-ve-korkular" aria-labelledby="h-sorular">
+    <h2 id="h-sorular">$(T 'Sık sorulan sorular ve korkular' 'Common questions and fears')</h2>
+    <div class="kk-secs">$confessionFaq</div>
+    $sealMartyrsHtml
+  </section>
   $(TB "<p class=`"conventions`">Bu sayfa, Katolik Kilisesi Katekizmi$($Apos)nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">KKK 1420-1498</a>) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href=`"kiliseler.html`">Kilise Bul</a> sayfası size yardımcı olabilir.</p>" "<p class=`"conventions`">This page is grounded in the Catechism of the Catholic Church's teaching on the Sacrament of Penance and Reconciliation (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">CCC 1420-1498</a>) and canon law; the exact wording of the rite can vary slightly from region to region. For practical details (such as confession times), ask your nearest parish; the <a href=`"kiliseler.html`">Find a Church</a> page can help.</p>")
 </div>
 "@

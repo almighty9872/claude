@@ -713,6 +713,8 @@
       }
       if (e.target.closest('a')) closeSheet(false);
     });
+    /* a click beside the drawer, on the dimmed page, closes it */
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(true); });
     /* Growing past the phone breakpoint while the sheet is open would leave the page locked */
     window.addEventListener('resize', function () { if (window.innerWidth >= 900) closeSheet(false); });
@@ -2160,9 +2162,8 @@
       $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
     },
     'gunah-cikarma.html': function (m) {
-      avWrap($('.wrap', m), 'h2.section-title[id]', 'aside:not(#dokuz-on), p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
       var a = $('#muhur-sehitleri', m); if (a) avNode(a, pmap(avText($('.footnote-label', a)), function (x) { return x.replace(/^\*\s*/, ''); }));
-      $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
     },
     'ekler.html': function (m) {
       avWrap($('.wrap', m), 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
