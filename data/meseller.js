@@ -12,7 +12,7 @@
 window.PARABLES = /*JSON-START*/{
  "title": "İsa’nın Meselleri",
  "en": "The Parables of Jesus",
- "intro": "Meseller, günlük hayattan basit hikayeler kullanarak derin gerçekleri anlatan anlatımlardır. İsa, gerçeği arayan kalplerde bir düşünce kapısı açmak için meselleri kullanmıştır (Matta 13:10-17).",
+ "intro": "Meseller, gündelik hayattan alınmış basit hikâyelerle derin gerçekleri anlatır. İsa, gerçeği arayan yüreklerde düşünceye bir kapı açmak için meselleri kullandı (Matta 13:10-17).",
  "categories": [
   {
    "id": "hukumdarlik",
@@ -41,7 +41,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Wheat and the Weeds",
      "ref": "Matta 13:24–30, 36–43",
      "refEn": "Matthew 13:24–30, 36–43",
-     "bio": "Bir adamın tarlasına, o uyurken bir düşman delice serper. Adam deliceyi hemen sökmeye izin vermez, buğday da zarar görmesin diye; ayrım biçim zamanında yapılır.\nTarla dünyadır, biçim zamanı çağın sonu. İyi ve kötü bu dünyada bir arada yaşar; son yargı insana değil, Allah’a aittir.",
+     "bio": "Bir adam uyurken düşmanı gelip tarlasına delice serper. Adam deliceyi hemen söktürmez, çünkü buğday da zarar görebilir; ikisi hasat zamanında ayrılır.\nTarla dünyadır, hasat zamanı ise çağın sonudur. İyi ve kötü bu dünyada bir arada yaşar; son yargı insana değil, Allah’a aittir.",
      "bioEn": "While a man sleeps, an enemy sows weeds among his wheat. He won't let his servants pull them up, lest the wheat be uprooted too; the sorting waits for the harvest.\nThe field is the world, and the harvest is the end of the age. Good and evil live side by side here; the final judgment belongs to God, not to us.",
      "en": {
       "ref": "Matthew 13:24–30 (Douay-Rheims)",
@@ -54,7 +54,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Mustard Seed",
      "ref": "Matta 13:31–32 · Markos 4:30–32 · Luka 13:18–19",
      "refEn": "Matthew 13:31–32 · Mark 4:30–32 · Luke 13:18–19",
-     "bio": "Tohumların en küçüğü olan hardal tanesi büyüyüp kuşların dallarında yuva yaptığı bir ağaca dönüşür.\nAllah’ın Hükümdarlığı da birkaç öğrenciyle, küçük başladı ve bütün uluslara yayıldı. Küçük bir iman bile Allah’ın elinde büyük bir şeye dönüşür.",
+     "bio": "Tohumların en küçüğü olan hardal tanesi büyür ve dallarında kuşların yuva yaptığı bir ağaca dönüşür.\nAllah’ın Hükümdarlığı da birkaç öğrenciyle küçük bir başlangıç yaptı ve bütün uluslara yayıldı. Küçük bir iman bile Allah’ın elinde büyük bir şeye dönüşür.",
      "bioEn": "The mustard seed, the smallest of seeds, grows into a tree where birds build their nests.\nGod's Kingdom began small too, with a handful of disciples, and spread to every nation. Even a small faith becomes something great in God's hands.",
      "en": {
       "ref": "Matthew 13:31–32 (Douay-Rheims)",
@@ -67,7 +67,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Leaven",
      "ref": "Matta 13:33 · Luka 13:20–21",
      "refEn": "Matthew 13:33 · Luke 13:20–21",
-     "bio": "Bir kadın biraz mayayı büyük bir un yığınına karıştırır ve bütün hamur kabarır.\nMaya görünmez ama hamuru içten değiştirir. Hükümdarlık da dünyada gösterişsizce, içeriden, yürekleri dönüştürerek çalışır.",
+     "bio": "Bir kadın biraz mayayı büyük bir un yığınına karıştırır ve bütün hamur kabarır.\nMaya görünmez, ama hamuru içten değiştirir. Hükümdarlık da dünyada gösterişsizce, içeriden, yürekleri değiştirerek çalışır.",
      "bioEn": "A woman mixes a little yeast into a large batch of flour, and the whole dough rises.\nYeast is invisible, yet it changes the dough from within. The Kingdom works the same way in the world: quietly, from the inside, transforming hearts.",
      "en": {
       "ref": "Matthew 13:33 (Douay-Rheims)",
@@ -80,7 +80,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Hidden Treasure",
      "ref": "Matta 13:44",
      "refEn": "Matthew 13:44",
-     "bio": "Bir adam tarlada gömülü bir hazine bulur, sevinçle her şeyini satıp o tarlayı alır.\nHükümdarlık, her şeyden değerli bir hazinedir. Adam bir şeyi kaybettiği için değil, sevindiği için her şeyini verir: iman uğruna verilen hiçbir şey kayıp değildir.",
+     "bio": "Bir adam tarlada gömülü bir hazine bulur ve sevinçle her şeyini satıp o tarlayı satın alır.\nHükümdarlık, her şeyden değerli bir hazinedir. Adam her şeyini kayba uğradığı için değil, sevindiği için verir. İman uğruna verilen hiçbir şey boşa gitmez.",
      "bioEn": "A man finds treasure buried in a field and, full of joy, sells everything to buy that field.\nThe Kingdom is worth more than anything. He gives up everything not out of loss but out of joy: nothing given for faith is really lost.",
      "en": {
       "ref": "Matthew 13:44 (Douay-Rheims)",
@@ -93,7 +93,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Pearl of Great Price",
      "ref": "Matta 13:45–46",
      "refEn": "Matthew 13:45–46",
-     "bio": "Güzel inciler arayan bir tüccar çok değerli bir inci bulunca her şeyini satıp onu alır.\nHazineyi bulan adam onu aramıyordu, tüccar ise arıyordu. Hükümdarlık hem beklenmedik bir armağan hem de bir arayışın sonu olabilir; ikisinde de karşılığı aynıdır: her şeyi bırakıp onu seçmek.",
+     "bio": "Güzel inciler arayan bir tüccar, çok değerli bir inci bulunca her şeyini satıp onu alır.\nHazineyi bulan adam onu aramıyordu; tüccar ise arıyordu. Hükümdarlık hem beklenmedik bir armağan hem de uzun bir arayışın sonu olabilir. İki durumda da insanın vereceği karşılık aynıdır: Her şeyi bırakıp onu seçmek.",
      "bioEn": "A merchant looking for fine pearls finds one of great value and sells everything to buy it.\nThe man with the treasure wasn't looking; the merchant was. The Kingdom can come as an unexpected gift or as the end of a search, and either way the response is the same: leave everything and choose it.",
      "en": {
       "ref": "Matthew 13:45–46 (Douay-Rheims)",
@@ -106,7 +106,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Net",
      "ref": "Matta 13:47–50",
      "refEn": "Matthew 13:47–50",
-     "bio": "Denize atılan bir ağ her türden balığı toplar; balıkçılar iyileri kaplara ayırır, işe yaramazları atar.\nÇağın sonunda melekler kötüleri doğrulardan ayıracaktır. Bu dünya iyiyi de kötüyü de barındırır, ama son ayrım kaçınılmazdır.",
+     "bio": "Denize atılan bir ağ her türden balığı toplar. Balıkçılar iyi balıkları kaplara koyar, işe yaramayanları atar.\nÇağın sonunda melekler de kötüleri doğrulardan ayıracaktır. Bu dünyada iyi de kötü de bir arada bulunur, ama son ayrım kaçınılmazdır.",
      "bioEn": "A net thrown into the sea gathers fish of every kind; the fishermen keep the good ones and throw the bad away.\nAt the end of the age the angels will separate the evil from the righteous. This world holds both, but the final sorting will come.",
      "en": {
       "ref": "Matthew 13:47–50 (Douay-Rheims)",
@@ -119,7 +119,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Growing Seed",
      "ref": "Markos 4:26–29",
      "refEn": "Mark 4:26–29",
-     "bio": "Bir adam toprağa tohum eker; o uyurken de uyanıkken de tohum, nasıl olduğunu bilmeden filizlenir ve ürün verir.\nYalnızca Markos’ta geçen bu mesel, büyümeyi sağlayanın insan değil Allah olduğunu hatırlatır. Biz ekeriz; Allah’ın işi kendi zamanında olgunlaşır.",
+     "bio": "Bir adam toprağa tohum eker. O uyurken de uyanıkken de tohum, nasıl olduğunu bilmediği bir şekilde filizlenir ve ürün verir.\nYalnızca Markos İncili’nde geçen bu mesel, büyümeyi sağlayanın insan değil Allah olduğunu hatırlatır. Biz ekeriz; Allah’ın işi kendi zamanında olgunlaşır.",
      "bioEn": "A man scatters seed; whether he sleeps or wakes, it sprouts and grows, though he doesn't know how.\nFound only in Mark, this parable reminds us that it is God, not we, who makes things grow. We sow; God's work ripens in its own time.",
      "en": {
       "ref": "Mark 4:26–29 (Douay-Rheims)",
@@ -133,7 +133,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "heart",
    "title": "Merhamet ve Bağışlama Meselleri",
    "en": "Parables of Mercy and Forgiveness",
-   "lead": "Bu meseller, Allah’ın günahkârlara duyduğu sınırsız merhameti ve insanın da aynı merhameti başkalarına göstermesi gerektiğini anlatır.",
+   "lead": "Bu meseller, Allah’ın günahkârlara gösterdiği sınırsız merhameti ve insanın da aynı merhameti başkalarına göstermesi gerektiğini anlatır.",
    "leadEn": "These parables describe God's boundless mercy toward sinners, and teach that we must show that same mercy to others.",
    "items": [
     {
@@ -155,7 +155,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Lost Coin",
      "ref": "Luka 15:8–10",
      "refEn": "Luke 15:8–10",
-     "bio": "On gümüş parası olan bir kadın birini kaybedince kandil yakıp evi süpürür, bulana dek arar; bulunca komşularıyla sevinir.\nKayıp Koyun’un eşi olan bu mesel aynı şeyi söyler: Allah kaybolanı etkin biçimde arar, çünkü her insan onun gözünde değerlidir.",
+     "bio": "On gümüş parası olan bir kadın birini kaybeder. Kandil yakar, evi süpürür ve parayı bulana kadar arar; bulunca komşularıyla birlikte sevinir.\nKayıp Koyun meseliyle eş olan bu mesel de aynı şeyi söyler: Allah kaybolanı kendisi arar, çünkü her insan onun gözünde değerlidir.",
      "bioEn": "A woman with ten silver coins loses one, lights a lamp and sweeps the house until she finds it, then celebrates with her neighbors.\nA twin of the Lost Sheep, it says the same thing: God actively searches for the lost, because every person is precious to him.",
      "en": {
       "ref": "Luke 15:8–10 (Douay-Rheims)",
@@ -168,7 +168,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Prodigal Son",
      "ref": "Luka 15:11–32",
      "refEn": "Luke 15:11–32",
-     "bio": "Küçük oğul mirasını alıp uzaklarda har vurup harman savurur ve domuz çobanı olur. İşçi olarak dönmeye karar verdiğinde babası onu uzaktan görüp koşarak karşılar, sarılır ve şölen verir. Büyük oğul ise öfkelenip içeri girmez; babası onu da çağırmaya çıkar.\nİsa’nın belki de en bilinen meseli, Allah’ın merhametini hesap sormadan koşan bir babayla anlatır. Büyük oğul, kardeşinin bağışlanmasına içerleyen dindarları temsil eder. Mesel açık uçlu biter: onun içeri girip girmeyeceğine dinleyen karar verir.",
+     "bio": "Küçük oğul mirasını alır, uzak bir ülkede her şeyini har vurup harman savurur ve sonunda domuz çobanı olur. Babasının yanına işçi olarak dönmeye karar verir. Babası onu uzaktan görünce koşarak karşılar, ona sarılır ve bir şölen verir. Büyük oğul ise öfkelenir ve içeri girmek istemez; babası onu da çağırmak için dışarı çıkar.\nBelki de İsa’nın en bilinen meseli budur. Allah’ın merhametini, hesap sormadan oğluna koşan bir babayla anlatır. Büyük oğul, kardeşinin bağışlanmasını kıskanan dindarları temsil eder. Mesel açık uçlu biter: Büyük oğlun içeri girip girmeyeceğine dinleyen karar verir.",
      "bioEn": "The younger son takes his inheritance, squanders it far away and ends up feeding pigs. When he decides to come home as a hired hand, his father sees him from afar, runs to him, embraces him and throws a feast. The elder son is angry and won't go in, and the father comes out to plead with him too.\nPerhaps Jesus' best-known parable, it shows God's mercy as a father who runs without asking for an account. The elder son stands for the devout who resent a brother's forgiveness. The story is left open: whether he goes in is for the listener to decide.",
      "en": {
       "ref": "Luke 15:11–32 (Douay-Rheims)",
@@ -181,7 +181,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Unforgiving Servant",
      "ref": "Matta 18:23–35",
      "refEn": "Matthew 18:23–35",
-     "bio": "Bir kral, ödenemeyecek kadar büyük borcu olan hizmetkârını bağışlar. Aynı hizmetkâr, kendisine küçük bir borcu olan arkadaşını zindana attırır; bunu duyan kral bağışını geri alır.\nİsa bunu, Petrus’un “kardeşimi kaç kez bağışlamalıyım?” sorusuna cevap olarak anlattı. Allah’tan aldığımız bağışlama o kadar büyüktür ki, başkalarını bağışlamamak için hiçbir gerekçemiz kalmaz.",
+     "bio": "Bir kral, ödenemeyecek kadar büyük bir borcu olan hizmetkârının borcunu bağışlar. Ama aynı hizmetkâr, kendisine küçük bir borcu olan arkadaşını zindana attırır. Bunu duyan kral bağışını geri alır.\nİsa bu meseli, Petrus’un “Kardeşimi kaç kez bağışlamalıyım?” sorusuna cevap olarak anlattı. Allah’tan aldığımız bağışlama o kadar büyüktür ki, başkalarını bağışlamamak için hiçbir bahanemiz kalmaz.",
      "bioEn": "A king forgives a servant a debt too great ever to repay. That same servant has a fellow servant thrown into prison over a small debt, and the king takes back his pardon.\nJesus told it in answer to Peter's question, \"How often must I forgive my brother?\" The forgiveness we receive from God is so great that we have no excuse not to forgive others.",
      "en": {
       "ref": "Matthew 18:23–35 (Douay-Rheims)",
@@ -194,7 +194,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Pharisee and the Tax Collector",
      "ref": "Luka 18:9–14",
      "refEn": "Luke 18:9–14",
-     "bio": "Tapınakta bir Ferisi kendi doğruluğunu sayıp başkalarından üstün olduğu için şükreder. Vergi görevlisi ise gözlerini kaldıramadan göğsünü döver: “Allah’ım, ben günahkâra merhamet et.”\nİsa, aklanmış olarak evine dönenin vergi görevlisi olduğunu söyler. Allah, kendini övene değil, alçakgönüllülükle merhamet dileyene karşılık verir.",
+     "bio": "Tapınakta bir Ferisi, kendi iyi işlerini sayar ve başkalarından üstün olduğu için Allah’a şükreder. Vergi görevlisi ise gözlerini yerden kaldıramadan göğsünü döver: “Allah’ım, ben günahkâra merhamet et.”\nİsa, evine aklanmış olarak dönenin vergi görevlisi olduğunu söyler. Allah, kendini övene değil, alçakgönüllülükle merhamet dileyene karşılık verir.",
      "bioEn": "In the Temple a Pharisee lists his virtues and thanks God he isn't like others. A tax collector, not daring to look up, beats his breast: \"God, be merciful to me, a sinner.\"\nJesus says it was the tax collector who went home justified. God answers not the one who praises himself but the one who humbly asks for mercy.",
      "en": {
       "ref": "Luke 18:9–14 (Douay-Rheims)",
@@ -207,7 +207,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Two Debtors",
      "ref": "Luka 7:41–43",
      "refEn": "Luke 7:41–43",
-     "bio": "Bir alacaklı, biri beş yüz, öbürü elli dinar borçlu iki kişinin borcunu bağışlar. İsa, ev sahibi Ferisi Simun’a sorar: hangisi onu daha çok sever?\nİsa bunu, ayaklarını gözyaşlarıyla yıkayan günahkâr kadını hor gören Simun’a anlattı. Daha çok bağışlanan daha çok sever: günahının büyüklüğünü gören yürek, Allah’a en çok şükredendir.",
+     "bio": "Bir alacaklı, biri beş yüz, öbürü elli dinar borçlu olan iki kişinin borcunu bağışlar. İsa, ev sahibi Ferisi Simun’a sorar: Hangisi onu daha çok sever?\nİsa bunu, ayaklarını gözyaşlarıyla yıkayan günahkâr kadını küçümseyen Simun’a anlattı. Daha çok bağışlanan daha çok sever. Günahının büyüklüğünü gören yürek, Allah’a en çok şükreden yürektir.",
      "bioEn": "A creditor cancels the debts of two men, one owing five hundred denarii, the other fifty. Jesus asks his host, Simon the Pharisee: which will love him more?\nHe told it to Simon, who looked down on the sinful woman washing Jesus' feet with her tears. The one forgiven more loves more: a heart that sees how much it has been forgiven is the most grateful.",
      "en": {
       "ref": "Luke 7:41–43 (Douay-Rheims)",
@@ -220,7 +220,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Barren Fig Tree",
      "ref": "Luka 13:6–9",
      "refEn": "Luke 13:6–9",
-     "bio": "Üç yıldır meyve vermeyen bir incir ağacı kesilecektir; bağcı bir yıl daha ister, dibini kazıp gübreleyecektir.\nİsa bunu “tövbe etmezseniz hepiniz mahvolacaksınız” uyarısının hemen ardından anlattı. Allah sabırlıdır ve tövbe için zaman tanır, ama bu zaman sonsuz değildir.",
+     "bio": "Üç yıldır meyve vermeyen bir incir ağacı kesilmek üzeredir. Bağcı bir yıl daha süre ister; ağacın dibini kazıp gübreleyecektir.\nİsa bu meseli, “Tövbe etmezseniz hepiniz mahvolacaksınız” uyarısının hemen ardından anlattı. Allah sabırlıdır ve tövbe için zaman tanır, ama bu zaman sonsuz değildir.",
      "bioEn": "A fig tree that has borne no fruit for three years is about to be cut down; the gardener asks for one more year to dig around it and fertilize it.\nJesus told it right after warning, \"unless you repent, you will all perish.\" God is patient and gives time to repent, but that time isn't endless.",
      "en": {
       "ref": "Luke 13:6–9 (Douay-Rheims)",
@@ -233,7 +233,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Good Samaritan",
      "ref": "Luka 10:25–37",
      "refEn": "Luke 10:25–37",
-     "bio": "Soyulup dövülen ve yol kenarında yarı ölü bırakılan bir adamın yanından bir rahip ve bir Levili geçip gider. Yahudilerin hor gördüğü bir Samiriyeli ise yaralarını sarar, onu bir hana götürür ve masrafını üstlenir.\nİsa bunu “Komşum kim?” sorusuna cevap olarak anlattı. Komşuluk kan ya da din bağıyla değil, ihtiyacı görüp karşılık veren bir yürekle tanımlanır: “Git, sen de öyle yap.”",
+     "bio": "Soyulup dövülen ve yol kenarında yarı ölü bırakılan bir adamın yanından önce bir rahip, sonra bir Levili geçip gider. Yahudilerin küçümsediği bir Samiriyeli ise adamın yaralarını sarar, onu bir hana götürür ve bütün masraflarını üstlenir.\nİsa bu meseli “Komşum kim?” sorusuna cevap olarak anlattı. Komşuluk kan ya da din bağıyla değil, başkasının ihtiyacını görüp yardım eden bir yürekle tanımlanır: “Git, sen de öyle yap.”",
      "bioEn": "A man is robbed, beaten and left half dead by the road. A priest and a Levite pass by on the other side; a Samaritan, from a people the Jews despised, binds his wounds, takes him to an inn and pays for his care.\nJesus told it in answer to \"Who is my neighbor?\" A neighbor isn't defined by blood or religion but by a heart that sees a need and responds: \"Go and do likewise.\"",
      "en": {
       "ref": "Luke 10:30–35 (Douay-Rheims)",
@@ -247,7 +247,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "prayer",
    "title": "Dua ve Sebat Meselleri",
    "en": "Parables of Prayer and Perseverance",
-   "lead": "Bu iki kısa mesel, Allah’a güvenerek ve sebatla dua etmeyi öğretir.",
+   "lead": "Bu iki kısa mesel, Allah’a güvenerek ve vazgeçmeden dua etmeyi öğretir.",
    "leadEn": "These two short parables teach us to pray with trust in God and to persevere.",
    "items": [
     {
@@ -256,7 +256,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Persistent Widow",
      "ref": "Luka 18:1–8",
      "refEn": "Luke 18:1–8",
-     "bio": "Ne Allah’tan korkan ne insandan utanan bir yargıç, durmadan gelip hakkını isteyen dul kadına sonunda, sırf rahatsız etmesin diye hakkını verir.\nİsa bunu, her zaman dua edip gevşememek gerektiğini öğretmek için anlattı. Adaletsiz bir yargıç bile ısrara boyun eğiyorsa, adil ve seven Allah çocuklarını çok daha çabuk duyar.",
+     "bio": "Ne Allah’tan korkan ne de insanlardan utanan bir yargıç, durmadan gelip hakkını isteyen dul bir kadına, sırf onu rahatsız etmesin diye sonunda hakkını verir.\nİsa bu meseli, her zaman dua etmek ve pes etmemek gerektiğini öğretmek için anlattı. Adaletsiz bir yargıç bile ısrara boyun eğiyorsa, adil ve seven Allah çocuklarını çok daha çabuk duyar.",
      "bioEn": "A judge who neither fears God nor respects people finally gives a persistent widow her rights, just so she'll stop bothering him.\nJesus told it to teach us to pray always and not lose heart. If even an unjust judge gives in to persistence, the just and loving God will hear his children all the sooner.",
      "en": {
       "ref": "Luke 18:2–5 (Douay-Rheims)",
@@ -269,7 +269,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Friend at Midnight",
      "ref": "Luka 11:5–8",
      "refEn": "Luke 11:5–8",
-     "bio": "Gece yarısı misafiri gelen bir adam, ekmek istemek için komşusunun kapısını çalar. Komşu önce kalkmak istemez, ama ısrar karşısında istediğini verir.\nİsa bunu “İsteyin, size verilecek” sözünden hemen önce anlattı. Allah, çocuklarının ona güvenle ve ısrarla dua etmesini sever.",
+     "bio": "Gece yarısı evine misafir gelen bir adam, ekmek istemek için komşusunun kapısını çalar. Komşu önce kalkmak istemez, ama adamın ısrarı karşısında istediğini verir.\nİsa bu meseli “İsteyin, size verilecek” sözünden hemen önce anlattı. Allah, çocuklarının ona güvenle ve ısrarla dua etmesini sever.",
      "bioEn": "A man with an unexpected midnight guest knocks on his neighbor's door to borrow bread. The neighbor doesn't want to get up, but gives him what he needs because he keeps knocking.\nJesus told it just before saying, \"Ask, and it will be given you.\" God loves his children to pray to him with trust and persistence.",
      "en": {
       "ref": "Luke 11:5–8 (Douay-Rheims)",
@@ -283,7 +283,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "lamp",
    "title": "Uyanıklık, Hazırlık ve Bilgelik Meselleri",
    "en": "Parables of Watchfulness and Wisdom",
-   "lead": "Bu meseller, Mesih İsa’nın geri dönüşüne ve yaşamın sınavlarına hazırlıklı olmayı, gerçek bilgeliğin ne olduğunu anlatır.",
+   "lead": "Bu meseller, Mesih İsa’nın geri dönüşüne ve hayatın sınavlarına hazırlıklı olmayı, gerçek bilgeliğin ne olduğunu anlatır.",
    "leadEn": "These parables teach readiness for Christ's return and for life's trials, and what true wisdom looks like.",
    "items": [
     {
@@ -292,7 +292,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Ten Virgins",
      "ref": "Matta 25:1–13",
      "refEn": "Matthew 25:1–13",
-     "bio": "Güveyi bekleyen on kızdan beşi yedek yağ alır, beşi almaz. Güvey gece yarısı geldiğinde yağı biten kızlar yağ almaya gitmişken kapı kapanır.\nİsa’nın ne zaman döneceği bilinmez; bu yüzden her an hazır olmak gerekir. Yağ, son anda ödünç alınamayan hazırlığı, yani sadık bir yaşamı temsil eder.",
+     "bio": "Güveyi bekleyen on kızdan beşi yanına yedek yağ alır, beşi almaz. Güvey gece yarısı geldiğinde, yağı biten kızlar yağ almaya gitmiştir ve kapı kapanır.\nİsa’nın ne zaman döneceği bilinmez; bu yüzden her an hazır olmak gerekir. Yağ, son anda başkasından ödünç alınamayan hazırlığı, yani sadakatle yaşanmış bir hayatı temsil eder.",
      "bioEn": "Of ten virgins waiting for the bridegroom, five bring extra oil and five don't. When he arrives at midnight, the ones who ran out have gone to buy more, and the door is shut.\nNo one knows when Christ will return, so we must be ready at all times. The oil stands for what can't be borrowed at the last minute: a faithful life.",
      "en": {
       "ref": "Matthew 25:1–13 (Douay-Rheims)",
@@ -305,7 +305,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Rich Fool",
      "ref": "Luka 12:16–21",
      "refEn": "Luke 12:16–21",
-     "bio": "Bol ürün alan zengin bir adam daha büyük ambarlar yapıp keyfine bakmaya karar verir. Allah ona der ki: “Ey akılsız, canın bu gece senden istenecek; biriktirdiklerin kime kalacak?”\nİsa bunu “Açgözlülükten sakının” uyarısıyla anlattı. Yalnızca bu dünya için biriktirip Allah katında yoksul kalmak, en büyük akılsızlıktır.",
+     "bio": "Bol ürün alan zengin bir adam, daha büyük ambarlar yaptırıp keyfine bakmaya karar verir. Allah ona şöyle der: “Ey akılsız, canın bu gece senden istenecek; biriktirdiklerin kime kalacak?”\nİsa bu meseli “Açgözlülükten sakının” uyarısıyla anlattı. Yalnızca bu dünya için biriktirip Allah katında yoksul kalmak, en büyük akılsızlıktır.",
      "bioEn": "A rich man with a bumper harvest decides to build bigger barns and take life easy. God tells him: \"Fool! This night your soul is required of you; and the things you have prepared, whose will they be?\"\nJesus told it with a warning against greed. Storing up only for this world while staying poor before God is the height of folly.",
      "en": {
       "ref": "Luke 12:16–21 (Douay-Rheims)",
@@ -318,7 +318,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Watchful Servants",
      "ref": "Luka 12:35–40",
      "refEn": "Luke 12:35–40",
-     "bio": "Efendisinin düğünden ne zaman döneceğini bilmeyen hizmetkârlar, kapıyı hemen açmaya hazır bekler. Onları uyanık bulan efendi, kendisi onlara hizmet eder.\nMesih beklenmedik bir anda gelecektir; bu yüzden inananlar hep uyanık kalmalıdır. Sadakat, efendi görmese de değişmez.",
+     "bio": "Efendilerinin düğünden ne zaman döneceğini bilmeyen hizmetkârlar, kapıyı hemen açmak için hazır beklerler. Onları uyanık bulan efendi, sofraya oturtup onlara kendisi hizmet eder.\nMesih beklenmedik bir anda gelecektir; bu yüzden inananlar hep uyanık kalmalıdır. Gerçek sadakat, efendi görmese de değişmez.",
      "bioEn": "Servants who don't know when their master will return from the wedding wait ready to open the door at once. Finding them awake, the master serves them himself.\nChrist will come at an unexpected hour, so believers must stay awake. Faithfulness doesn't change when the master isn't watching.",
      "en": {
       "ref": "Luke 12:35–40 (Douay-Rheims)",
@@ -331,7 +331,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Faithful and the Foolish Steward",
      "ref": "Luka 12:42–48 · Matta 24:45–51",
      "refEn": "Luke 12:42–48 · Matthew 24:45–51",
-     "bio": "Diğer hizmetkârlara yiyecek dağıtmakla görevli bir kahya, efendisi dönünce onu görevinin başında bulursa mutlu olur. Efendim gecikiyor deyip hizmetkârları döver ve sarhoş olursa, efendi beklemediği bir anda gelir.\nMesel özellikle sorumluluk taşıyanlara seslenir: yetki bir ayrıcalık değil, hesabı sorulacak bir emanettir. “Kime çok verildiyse ondan çok istenecek.”",
+     "bio": "Öteki hizmetkârlara yiyecek dağıtmakla görevli bir kâhya, efendisi döndüğünde görevinin başında bulunursa ne mutlu ona. Ama “Efendim gecikiyor” deyip öteki hizmetkârları döver ve sarhoş olursa, efendisi hiç beklemediği bir anda gelir.\nBu mesel özellikle sorumluluk taşıyanlara seslenir: Yetki bir ayrıcalık değil, hesabı sorulacak bir emanettir. “Kime çok verildiyse ondan çok istenecek.”",
      "bioEn": "A steward put in charge of feeding the other servants is blessed if his master finds him doing his job. If he thinks the master is delayed and starts beating the servants and getting drunk, the master will come when he least expects it.\nIt speaks especially to those who carry responsibility: authority isn't a privilege but a trust to be accounted for. \"To whom much is given, much will be required.\"",
      "en": {
       "ref": "Luke 12:42–48 (Douay-Rheims)",
@@ -344,7 +344,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Wise and Foolish Builders",
      "ref": "Matta 7:24–27 · Luka 6:46–49",
      "refEn": "Matthew 7:24–27 · Luke 6:46–49",
-     "bio": "İsa’nın sözlerini dinleyip uygulayan, evini kaya üzerine kuran bilge adama benzer; fırtına gelince ev yıkılmaz. Dinleyip uygulamayan ise evini kum üzerine kurar ve evi çöker.\nDağdaki Vaaz’ın bu kapanışı, iki adamın da aynı sözleri duyduğunu hatırlatır. Fark, sözü yaşayıp yaşamamaktır.",
+     "bio": "İsa’nın sözlerini dinleyip uygulayan kişi, evini kaya üzerine kuran bilge adama benzer; fırtına gelince ev yıkılmaz. Dinleyip de uygulamayan ise evini kum üzerine kuran adama benzer ve onun evi çöker.\nDağdaki Vaaz’ı kapatan bu mesel, iki adamın da aynı sözleri duyduğunu hatırlatır. Aradaki fark, sözü yaşayıp yaşamamaktır.",
      "bioEn": "Whoever hears Jesus' words and acts on them is like a wise man who built his house on rock; when the storm comes, it stands. Whoever hears and doesn't act built on sand, and the house falls.\nThis close of the Sermon on the Mount reminds us that both men heard the same words. The difference is whether they lived them.",
      "en": {
       "ref": "Matthew 7:24–27 (Douay-Rheims)",
@@ -358,7 +358,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "coins",
    "title": "Sorumluluk ve Yönetim Meselleri",
    "en": "Parables of Stewardship",
-   "lead": "Bu meseller, Allah’ın insana emanet ettiği yetenek, zaman ve kaynakların nasıl kullanılması gerektiğini ve Allah’ın lütfunun insan adaletinden farklı işlediğini anlatır.",
+   "lead": "Bu meseller, Allah’ın insana emanet ettiği yeteneklerin, zamanın ve imkânların nasıl kullanılması gerektiğini ve Allah’ın lütfunun insan adaletinden farklı işlediğini anlatır.",
    "leadEn": "These parables describe how we are to use the talents, time and resources God entrusts to us, and how God's grace works differently from human fairness.",
    "items": [
     {
@@ -367,7 +367,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Talents",
      "ref": "Matta 25:14–30",
      "refEn": "Matthew 25:14–30",
-     "bio": "Yolculuğa çıkan bir efendi üç hizmetkârına beş, iki ve bir talant emanet eder. İlk ikisi parayı katlar; üçüncüsü korkup toprağa gömer. Efendi ilk ikisini ödüllendirir, üçüncüsünü azarlar.\nAllah her insana farklı ölçüde yetenek, zaman ve fırsat emanet eder. Hizmetkârın hatası az almış olması değil, korkudan hiçbir şey yapmamasıdır.",
+     "bio": "Yolculuğa çıkan bir efendi, üç hizmetkârına beş, iki ve bir talant emanet eder. İlk ikisi parayı işletip katlar; üçüncüsü ise korkup parayı toprağa gömer. Efendi dönünce ilk ikisini ödüllendirir, üçüncüsünü azarlar.\nAllah her insana farklı ölçüde yetenek, zaman ve fırsat emanet eder. Üçüncü hizmetkârın hatası az almış olması değil, korkudan hiçbir şey yapmamasıdır.",
      "bioEn": "A master going on a journey entrusts five, two and one talents to three servants. The first two double the money; the third, afraid, buries it. The master rewards the first two and rebukes the third.\nGod entrusts each of us with different gifts, time and opportunities. The third servant's fault isn't that he received little, but that fear kept him from doing anything.",
      "en": {
       "ref": "Matthew 25:14–30 (Douay-Rheims)",
@@ -380,7 +380,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Ten Minas",
      "ref": "Luka 19:11–27",
      "refEn": "Luke 19:11–27",
-     "bio": "Kral olmak için uzak bir ülkeye giden soylu bir adam on hizmetkârına birer mina verir. Dönüşünde parayı katlayanlara kentler verir, parayı bezine sarıp saklayanın elindekini alır.\nYetenekler’e benzeyen bu meseli İsa, Kudüs’e yaklaşırken anlattı: Hükümdarlık hemen görünmeyecek ama kesinlikle gelecek; o zamana dek sadakatle çalışmak gerekir.",
+     "bio": "Kral olmak için uzak bir ülkeye giden soylu bir adam, on hizmetkârına birer mina verir. Döndüğünde parayı artıranlara kentler verir; parayı bir mendile sarıp saklayanın elindekini ise alır.\nYetenekler meseline benzeyen bu meseli İsa, Kudüs’e yaklaşırken anlattı: Hükümdarlık hemen görünmeyecek, ama mutlaka gelecek. O zamana kadar sadakatle çalışmak gerekir.",
      "bioEn": "A nobleman going to a far country to receive a kingdom gives each of ten servants a mina. On his return he gives cities to those who made it grow, and takes the coin from the one who kept it wrapped in a cloth.\nSimilar to the Talents, it was told as Jesus neared Jerusalem: the Kingdom won't appear at once, but it will surely come, and until then we must work faithfully.",
      "en": {
       "ref": "Luke 19:12–27 (Douay-Rheims)",
@@ -393,7 +393,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Dishonest Manager",
      "ref": "Luka 16:1–13",
      "refEn": "Luke 16:1–13",
-     "bio": "İşten çıkarılacağını öğrenen bir kahya, efendisinin borçlularının borçlarını azaltarak kendine dostlar edinir. Efendisi, dürüst olmasa da bu kurnazlığını över.\nİsa’nın anlaşılması en zor meseli sayılır: övülen sahtekârlık değil, gelecek için gösterilen akıllı kararlılıktır. İnananlar da sonsuz geleceklerini aynı ciddiyetle düşünmelidir; çünkü hem Allah’a hem paraya kulluk edilemez.",
+     "bio": "İşten çıkarılacağını öğrenen bir kâhya, efendisine borçlu olanların borçlarını azaltarak kendine dostlar edinir. Efendisi, dürüst olmasa da kâhyanın bu kurnazlığını över.\nBu, İsa’nın anlaşılması en zor meseli sayılır. Övülen şey sahtekârlık değil, geleceği düşünen akıllı bir kararlılıktır. İnananlar da sonsuz geleceklerini aynı ciddiyetle düşünmelidir; çünkü hem Allah’a hem de paraya kulluk edilemez.",
      "bioEn": "A steward about to be fired reduces the debts of his master's debtors to win friends for later. His master, though the move is dishonest, praises his shrewdness.\nOften called Jesus' hardest parable, it praises not the dishonesty but the shrewd resolve for the future. Believers should plan for their eternal future just as seriously, for no one can serve both God and money.",
      "en": {
       "ref": "Luke 16:1–9 (Douay-Rheims)",
@@ -406,7 +406,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Workers in the Vineyard",
      "ref": "Matta 20:1–16",
      "refEn": "Matthew 20:1–16",
-     "bio": "Bir bağ sahibi sabahtan akşama kadar farklı saatlerde işçi tutar ve akşam hepsine aynı ücreti, bir dinar öder. Sabahtan çalışanlar söylenince, anlaştıkları ücreti aldıklarını hatırlatır.\nİnsan adaleti emeğe göre öder, Allah’ın lütfu ise cömertçe verir. Hayatının sonunda tövbe eden de aynı kurtuluşa kavuşabilir ve bu kimseye haksızlık değildir. Bağ sahibinin sorusu bunu özetler: cömertliğim seni neden kıskandırsın?",
+     "bio": "Bir bağ sahibi, sabahtan akşama kadar farklı saatlerde işçi tutar ve akşam hepsine aynı ücreti, bir dinar öder. Sabahtan beri çalışanlar söylenince, onlara anlaştıkları ücreti aldıklarını hatırlatır.\nİnsan adaleti emeğe göre öder; Allah’ın lütfu ise cömertçe verir. Hayatının sonunda tövbe eden de aynı kurtuluşa kavuşabilir ve bu kimseye haksızlık değildir. Bağ sahibinin sorusu bunu özetler: “Cömert olmam seni neden kıskandırıyor?”",
      "bioEn": "A landowner hires workers at different hours from morning to evening, and pays them all the same wage, one denarius. When those hired first complain, he reminds them they got what was agreed.\nHuman fairness pays by the hour; God's grace gives generously. Someone who repents at the end of life can receive the same salvation, and that wrongs no one. The landowner's question says it all: why should my generosity make you envious?",
      "en": {
       "ref": "Matthew 20:1–16 (Douay-Rheims)",
@@ -419,7 +419,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Two Sons",
      "ref": "Matta 21:28–32",
      "refEn": "Matthew 21:28–32",
-     "bio": "Bir baba iki oğlunu bağda çalışmaya çağırır. Biri önce “istemiyorum” der ama sonra gider; öbürü “olur” der ama gitmez. Babasının isteğini yapan hangisidir?\nİsa bunu, onu dinlemeyen din önderlerine anlattı: tövbe eden vergi görevlileri ve fahişeler, dindar görünüp itaat etmeyenlerden önce Hükümdarlığa girecek. Gerçek itaati sözler değil, eylemler gösterir.",
+     "bio": "Bir baba iki oğlunu bağda çalışmaya çağırır. Biri önce “İstemiyorum” der, ama sonra gider. Öbürü “Olur” der, ama gitmez. Babasının isteğini yerine getiren hangisidir?\nİsa bu meseli, onu dinlemeyen din önderlerine anlattı: Tövbe eden vergi görevlileri ve fahişeler, dindar görünüp de söz dinlemeyenlerden önce Hükümdarlığa girecek. Gerçek itaati sözler değil, davranışlar gösterir.",
      "bioEn": "A father asks his two sons to work in the vineyard. One says \"I won't\" but later goes; the other says \"I will\" but doesn't. Which one did his father's will?\nJesus told it to religious leaders who wouldn't listen to him: tax collectors and prostitutes who repent will enter the Kingdom ahead of those who look devout but don't obey. Real obedience shows in deeds, not words.",
      "en": {
       "ref": "Matthew 21:28–32 (Douay-Rheims)",
@@ -432,7 +432,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Wicked Tenants",
      "ref": "Matta 21:33–46 · Markos 12:1–12 · Luka 20:9–19",
      "refEn": "Matthew 21:33–46 · Mark 12:1–12 · Luke 20:9–19",
-     "bio": "Bir bağ sahibinin ürün almak için gönderdiği hizmetkârları kiracı bağcılar döver, öldürür. Sonunda gönderdiği oğlunu da mirasa konmak için öldürürler.\nBağ Allah’ın halkı, hizmetkârlar peygamberler, oğul da İsa’nın kendisidir. Mesel, reddedilen peygamberlere ve İsa’nın kendi ölümüne işaret eder: Allah’ın sabrını kötüye kullananı ağır bir sonuç bekler.",
+     "bio": "Bir bağ sahibi ürününden payını almak için hizmetkârlarını gönderir, ama bağı kiralayan bağcılar onları döver ve öldürür. Sonunda bağ sahibi kendi oğlunu gönderir; bağcılar mirasa konmak için onu da öldürür.\nBağ Allah’ın halkıdır, hizmetkârlar peygamberlerdir, oğul da İsa’nın kendisidir. Mesel, reddedilen peygamberlere ve İsa’nın kendi ölümüne işaret eder: Allah’ın sabrını kötüye kullananları ağır bir son bekler.",
      "bioEn": "The tenants of a vineyard beat and kill the servants the owner sends to collect his share. At last they kill his son as well, to seize the inheritance.\nThe vineyard is God's people, the servants are the prophets, and the son is Jesus himself. The parable points to the rejected prophets and to Jesus' own death: abusing God's patience brings a heavy reckoning.",
      "en": {
       "ref": "Matthew 21:33–41 (Douay-Rheims)",
@@ -455,7 +455,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Great Banquet",
      "ref": "Matta 22:1–14 · Luka 14:15–24",
      "refEn": "Matthew 22:1–14 · Luke 14:15–24",
-     "bio": "Büyük bir şölen hazırlayan ev sahibinin davetlileri türlü bahanelerle gelmez. Ev sahibi hizmetkârlarını sokaklara gönderip yoksulları, sakatları, körleri çağırır ve salon dolar.\nİlk davetliler çağrıyı reddedince davet herkese, özellikle dışlananlara açıldı. Matta’daki devamında düğün giysisi olmayan konuk dışarı çıkarılır: davete gelmek yetmez, ona yaraşır bir hayat da gerekir.",
+     "bio": "Büyük bir şölen hazırlayan ev sahibinin davetlileri türlü bahanelerle gelmez. Ev sahibi hizmetkârlarını sokaklara gönderir; yoksulları, sakatları ve körleri çağırır ve salon dolar.\nİlk davetliler çağrıyı reddedince davet herkese, özellikle de dışlananlara açıldı. Matta İncili’ndeki anlatımda düğün giysisi olmayan konuk dışarı çıkarılır: Davete gelmek yetmez, ona yakışan bir hayat da gerekir.",
      "bioEn": "A host prepares a great banquet, but his guests make excuses and don't come. He sends his servants into the streets to bring in the poor, the crippled and the blind, and the hall fills up.\nWhen the first guests refused, the invitation was opened to everyone, especially the outcasts. In Matthew's version, a guest without a wedding garment is thrown out: accepting the invitation isn't enough without a life to match it.",
      "en": {
       "ref": "Matthew 22:2–14 (Douay-Rheims)",
@@ -468,7 +468,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Rich Man and Lazarus",
      "ref": "Luka 16:19–31",
      "refEn": "Luke 16:19–31",
-     "bio": "Her gün ziyafet veren zengin bir adamın kapısında yoksul Lazar aç yatar. İkisi de ölür; Lazar Avraam’ın yanına, zengin adam azaba gider. Kardeşlerini uyarmak için Lazar’ın gönderilmesini ister, ama Musa’yı ve peygamberleri dinlemeyenlerin ölüden dirilen birine de inanmayacağı söylenir.\nZengin adamın günahı serveti değil, kapısındaki Lazar’ı görmezden gelmesidir. Zenginlik, insanı yoksulun ihtiyacına kör etme tehlikesi taşır.",
+     "bio": "Her gün ziyafet veren zengin bir adamın kapısında yoksul Lazar aç yatar. İkisi de ölür; Lazar İbrahim’in yanına, zengin adam ise azaba gider. Zengin adam, kardeşlerini uyarmak için Lazar’ın gönderilmesini ister. Ama ona, Musa’yı ve peygamberleri dinlemeyenlerin ölümden dirilen birine de inanmayacağı söylenir.\nZengin adamın günahı zenginliği değil, kapısındaki Lazar’ı görmezden gelmesidir. Zenginlik, insanı yoksulun ihtiyacına kör etme tehlikesi taşır.",
      "bioEn": "A rich man feasts every day while poor Lazarus lies hungry at his gate. Both die; Lazarus goes to Abraham's side, the rich man to torment. He asks that Lazarus be sent to warn his brothers, but is told that those who won't listen to Moses and the prophets won't be convinced even by someone rising from the dead.\nThe rich man's sin isn't his wealth but ignoring Lazarus at his door. Wealth carries the danger of blinding us to the needs of the poor.",
      "en": {
       "ref": "Luke 16:19–31 (Douay-Rheims)",
@@ -481,7 +481,7 @@ window.PARABLES = /*JSON-START*/{
      "nameEn": "The Sheep and the Goats",
      "ref": "Matta 25:31–46",
      "refEn": "Matthew 25:31–46",
-     "bio": "İnsanoğlu görkemiyle geldiğinde, çobanın koyunları keçilerden ayırdığı gibi ulusları ikiye ayıracak. Sağındakilere, aç olanı doyurdukları, yabancıyı barındırdıkları, hastayı ve tutsağı ziyaret ettikleri için Hükümdarlığı verecek: “Bu en küçük konumdaki kardeşlerimden birine yaptığınızı, bana yapmış oldunuz.” Bunu yapmayanlar aynı sözlerle yargılanır.\nBu, bir meselden çok son yargı üzerine bir öğretidir. Can alıcı noktası şudur: Mesih kendini en muhtaç, en göz ardı edilen insanla özdeşleştirir.",
+     "bio": "İnsanoğlu görkemiyle geldiğinde, çobanın koyunları keçilerden ayırdığı gibi ulusları ikiye ayıracak. Aç olanı doyurdukları, yabancıyı evlerine aldıkları, hastayı ve tutukluyu ziyaret ettikleri için sağındakilere Hükümdarlığı verecek: “Bu en küçük kardeşlerimden birine yaptığınızı, bana yapmış oldunuz.” Bunları yapmayanlar da aynı sözlerle yargılanacak.\nBu, bir meselden çok son yargı üzerine bir öğretidir. En önemli noktası şudur: Mesih, kendini en muhtaç ve en çok görmezden gelinen insanla bir tutar.",
      "bioEn": "When the Son of Man comes in glory, he will separate the nations as a shepherd separates sheep from goats. To those on his right he gives the Kingdom, because they fed the hungry, welcomed the stranger and visited the sick and imprisoned: \"Whatever you did for one of the very least of these brothers and sisters of mine, you did for me.\" Those who didn't are judged by the same words.\nIt's less a parable than a teaching on the Last Judgment. Its heart: Christ identifies himself with the neediest, most overlooked person.",
      "en": {
       "ref": "Matthew 25:31–46 (Douay-Rheims)",

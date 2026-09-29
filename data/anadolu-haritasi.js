@@ -13,7 +13,7 @@
 window.ANATOLIA_MAP = /*JSON-START*/{
   "title": "Anadolu’daki Kökler Haritası",
   "en": "Anatolian Roots Map",
-  "lead": "Haritadaki noktaların üzerine gelin ya da dokunun: her durağın kısa tarihi ve Kutsal Kitap’taki yeri açılır. Bir noktaya tıklarsanız bilgi kartı yerinde kalır.",
+  "lead": "Haritadaki noktaların üzerine gelin ya da dokunun; her durağın kısa tarihi ve Kutsal Kitap’taki yeri açılır. Bir noktaya tıklarsanız bilgi kartı açık kalır.",
   "leadEn": "Hover over or tap the points on the map to see each place’s short history and where it appears in Scripture. Click a point to keep its card open.",
   "cats": [
     { "id": "pavlus", "tr": "Pavlus’un Yolları", "en": "Paul’s Journeys" },
@@ -26,7 +26,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "antakya", "cat": "pavlus", "lat": 36.2021, "lon": 36.1606, "lx": 11, "ly": 4, "la": "start", "section": "pavlus",
       "tr": { "name": "Antakya", "old": "Antiokheia", "place": "Hatay",
-        "text": "Kudüs’ten sonraki ilk büyük Hristiyan cemaati burada doğdu ve İsa’nın öğrencileri ilk kez burada “Hristiyan” diye anıldı. Pavlus ile Barnabas misyon yolculuklarına buradan gönderildi. Geleneğe göre Petrus da burada vaaz etti; kentin kenarındaki Sen Piyer Mağara Kilisesi bu anıyı yaşatır. “Katolik Kilisesi” tabirini ilk kullanan Aziz İgnatius da Antakya episkoposuydu.",
+        "text": "Kudüs’ten sonraki ilk büyük Hristiyan cemaati burada doğdu ve İsa’nın öğrencileri ilk kez burada “Hristiyan” diye anıldı. Pavlus ile Barnabas misyon yolculuklarına buradan gönderildi. Geleneğe göre Petrus da burada vaaz etti; kentin kenarındaki Sen Piyer Mağara Kilisesi bu anıyı yaşatır. “Katolik Kilise” ifadesini ilk kullanan Aziz İgnatius da Antakya episkoposuydu.",
         "refs": ["Elçilerin İşleri 11:19-26", "Elçilerin İşleri 13:1-3", "Galatyalılar 2:11"] },
       "en": { "name": "Antioch", "old": "Antakya", "place": "Hatay province",
         "text": "After Jerusalem, the first great Christian community grew up here, and it was here that Jesus’s disciples were first called “Christians.” Paul and Barnabas were sent out on their missionary journeys from Antioch. Tradition holds that Peter preached here too; the St. Peter Cave Church on the edge of the city keeps that memory alive. St. Ignatius, the first writer to use the term “Catholic Church,” was bishop of Antioch.",
@@ -44,7 +44,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "yalvac", "cat": "pavlus", "lat": 38.3060, "lon": 31.1890, "lx": 0, "ly": -12, "la": "middle", "section": "pavlus",
       "tr": { "name": "Yalvaç", "old": "Pisidia Antiokheiası", "place": "Isparta",
-        "text": "Pavlus, ilk misyon yolculuğunda uğradığı bu kentin sinagogunda, Kutsal Kitap’ta kaydedilen ilk uzun vaazını verdi. Dinleyenlerin bir kısmı onu reddedince Pavlus ile Barnabas Müjde’yi artık uluslara da götüreceklerini ilan ettiler; bu an, Hristiyanlığın bütün dünyaya yayılmasının dönüm noktalarından sayılır.",
+        "text": "Pavlus, ilk misyon yolculuğunda uğradığı bu kentin sinagogunda, Kutsal Kitap’ta kaydedilen ilk uzun vaazını verdi. Dinleyenlerin bir kısmı onu reddedince Pavlus ile Barnabas, Müjde’yi artık uluslara da götüreceklerini ilan ettiler. Bu an, Hristiyanlığın bütün dünyaya yayılmasında bir dönüm noktası sayılır.",
         "refs": ["Elçilerin İşleri 13:14-52", "2 Timoteos 3:11"] },
       "en": { "name": "Pisidian Antioch", "old": "Yalvaç", "lx": 11, "ly": 4, "la": "start", "place": "Isparta province",
         "text": "On his first missionary journey Paul gave his first long sermon recorded in Scripture in the synagogue of this city. When some of his hearers rejected it, Paul and Barnabas announced that they would now take the Gospel to the Gentiles as well, one of the turning points in Christianity’s spread to the whole world.",
@@ -53,7 +53,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "konya", "cat": "pavlus", "lat": 37.8746, "lon": 32.4932, "lx": 11, "ly": 4, "la": "start", "section": "pavlus",
       "tr": { "name": "Konya ve Listra", "label": "Konya", "old": "İkonion", "place": "Konya",
-        "text": "Pavlus ile Barnabas ilk yolculuklarında İkonion’da uzun süre kalıp vaaz ettiler. Yakındaki Listra’da (bugünkü Hatunsaray yakınında) Pavlus doğuştan kötürüm bir adamı iyileştirdi; halk onları tanrı sanıp kurban sunmak istedi, kısa süre sonra da Pavlus taşlanıp ölü diye kentin dışına atıldı. Pavlus’un en yakın çalışma arkadaşı olacak Timoteos’la da bu bölgede tanıştı.",
+        "text": "Pavlus ile Barnabas ilk yolculuklarında İkonion’da uzun süre kalıp vaaz ettiler. Yakındaki Listra’da (bugünkü Hatunsaray yakınında) Pavlus doğuştan kötürüm bir adamı iyileştirdi. Halk onları tanrı sanıp kurban sunmak istedi, ama kısa süre sonra Pavlus taşlandı ve ölü sanılarak kentin dışına atıldı. Pavlus, en yakın çalışma arkadaşı olacak Timoteos’la da bu bölgede tanıştı.",
         "refs": ["Elçilerin İşleri 14:1-20", "Elçilerin İşleri 16:1-2", "2 Timoteos 3:11"] },
       "en": { "name": "Iconium and Lystra", "label": "Iconium", "old": "Konya", "place": "Konya province",
         "text": "On their first journey Paul and Barnabas stayed a long time in Iconium, preaching. In nearby Lystra (near today’s Hatunsaray) Paul healed a man lame from birth; the crowd took the two for gods and wanted to offer sacrifice to them, and soon afterwards Paul was stoned and dragged out of the city for dead. It was also in this region that he met Timothy, who became his closest co-worker.",
@@ -71,7 +71,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "ankara", "cat": "pavlus", "lat": 39.9334, "lon": 32.8597, "lx": 11, "ly": 4, "la": "start", "section": "pavlus",
       "tr": { "name": "Ankara", "old": "Ankyra, Galatya", "place": "Ankara",
-        "text": "Ankara, Roma döneminde Galatya eyaletinin merkeziydi. Pavlus yolculuklarında Galatya bölgesinden birkaç kez geçti ve bu bölgenin kiliselerine, Mesih’teki özgürlüğü anlatan Galatyalılar’a Mektup’u yazdı; mektubun tam olarak hangi Galatya kentlerine gittiği tarihçiler arasında tartışmalıdır. Kentin ortasındaki Augustus Tapınağı sonradan kiliseye dönüştürülmüştür.",
+        "text": "Ankara, Roma döneminde Galatya eyaletinin merkeziydi. Pavlus yolculuklarında Galatya bölgesinden birkaç kez geçti ve bu bölgenin kiliselerine, Mesih’teki özgürlüğü anlatan Galatyalılar’a Mektup’u yazdı. Mektubun tam olarak hangi Galatya kentlerine gönderildiği tarihçiler arasında tartışmalıdır. Kentin ortasındaki Augustus Tapınağı sonradan kiliseye dönüştürüldü.",
         "refs": ["Galatyalılar 1:1-2", "Elçilerin İşleri 16:6", "Elçilerin İşleri 18:23"] },
       "en": { "name": "Ankara", "old": "Ancyra, Galatia", "place": "Ankara province",
         "text": "In Roman times Ankara was the capital of the province of Galatia. Paul passed through the Galatian region several times on his journeys and wrote to its churches the Letter to the Galatians, on freedom in Christ; which Galatian cities it was sent to is still debated by historians. The Temple of Augustus in the city centre was later turned into a church.",
@@ -98,7 +98,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "efes", "cat": "kilise", "lat": 37.9395, "lon": 27.3417, "lx": -11, "ly": 4, "la": "end", "section": "yedi-kilise",
       "tr": { "name": "Efes", "old": "Ephesos", "place": "Selçuk, İzmir",
-        "text": "Pavlus burada iki yıldan uzun süre kalıp öğretti; gümüşçülerin “Efesliler’in Artemis’i büyüktür!” diye başlattığı ayaklanma da burada yaşandı. Vahiy Kitabı’ndaki mektupların ilki Efes kilisesine yazılmıştır. 431’de burada toplanan konsil, Meryem’in Theotokos, yani Tanrı Anası olduğunu ilan etti. Geleneğe göre Meryem Ana son yıllarını burada geçirdi; Havari Yuhanna’nın mezarı da Selçuk’taki Aziz Yuhanna Bazilikası’ndadır.",
+        "text": "Pavlus burada iki yıldan uzun süre kalıp öğretti. Gümüşçülerin “Efesliler’in Artemis’i büyüktür!” diye başlattığı ayaklanma da burada yaşandı. Vahiy Kitabı’ndaki mektupların ilki Efes kilisesine yazılmıştır. 431’de burada toplanan konsil, Meryem’in Theotokos, yani Tanrı Anası olduğunu ilan etti. Geleneğe göre Meryem Ana son yıllarını burada geçirdi. Havari Yuhanna’nın mezarı da Selçuk’taki Aziz Yuhanna Bazilikası’ndadır.",
         "refs": ["Elçilerin İşleri 19", "Elçilerin İşleri 20:17-38", "Efesliler 1:1", "Vahiy 2:1-7"] },
       "en": { "name": "Ephesus", "old": "Efes", "place": "Selçuk, İzmir province",
         "text": "Paul stayed and taught here for more than two years, and it was here that the silversmiths started the riot shouting “Great is Artemis of the Ephesians!” The first of the letters in the Book of Revelation is addressed to the church at Ephesus. The council held here in 431 proclaimed Mary Theotokos, Mother of God. By tradition the Virgin Mary spent her last years here, and the tomb of the Apostle John lies in the Basilica of St. John in Selçuk.",
@@ -107,7 +107,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "izmir", "cat": "kilise", "lat": 38.4192, "lon": 27.1287, "lx": -11, "ly": 4, "la": "end", "section": "yedi-kilise",
       "tr": { "name": "İzmir", "old": "Smyrna", "place": "İzmir",
-        "text": "Vahiy Kitabı’nın ikinci mektubu İzmir kilisesine yazılmıştır ve Alaşehir’le birlikte hiç kınanmayan iki kiliseden biridir: “Ölüm pahasına sadık kal, sana yaşam tacını vereceğim.” Havari Yuhanna’nın öğrencisi olan episkopos Polikarp, 155 civarında burada şehit edildi. Bugün İzmir’de onun adını taşıyan Aziz Polikarp Kilisesi bulunur.",
+        "text": "Vahiy Kitabı’nın ikinci mektubu İzmir kilisesine yazılmıştır. İzmir, Alaşehir’le birlikte hiç kınanmayan iki kiliseden biridir: “Ölüm pahasına sadık kal, sana yaşam tacını vereceğim.” Havari Yuhanna’nın öğrencisi olan episkopos Polikarp, 155 civarında burada şehit edildi. Bugün İzmir’de onun adını taşıyan Aziz Polikarp Kilisesi bulunur.",
         "refs": ["Vahiy 2:8-11"] },
       "en": { "name": "Smyrna", "old": "İzmir", "place": "İzmir province",
         "text": "The second letter in the Book of Revelation is addressed to the church at Smyrna, one of only two of the seven that receive no rebuke: “Be faithful unto death, and I will give you the crown of life.” Bishop Polycarp, a disciple of the Apostle John, was martyred here around 155. Today İzmir has a Church of St. Polycarp named after him.",
@@ -143,7 +143,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "alasehir", "cat": "kilise", "lat": 38.3500, "lon": 28.5167, "lx": 11, "ly": 4, "la": "start", "section": "yedi-kilise",
       "tr": { "name": "Alaşehir", "old": "Philadelphia", "place": "Manisa",
-        "text": "Vahiy Kitabı’nda övgüden başka bir şey işitmeyen iki kiliseden biri: “Önüne kimsenin kapatamayacağı açık bir kapı koydum.” Kent, Batı Anadolu’da Bizans’a en uzun süre bağlı kalan yerlerden biriydi. Bugün kentin ortasında Aziz Yuhanna Bazilikası’nın dev taş ayakları hâlâ ayakta durur.",
+        "text": "Vahiy Kitabı’nda yalnızca övgü alan iki kiliseden biridir: “Önüne kimsenin kapatamayacağı açık bir kapı koydum.” Kent, Batı Anadolu’da Bizans’a en uzun süre bağlı kalan yerlerden biriydi. Bugün kentin ortasında Aziz Yuhanna Bazilikası’nın dev taş ayakları hâlâ ayaktadır.",
         "refs": ["Vahiy 3:7-13"] },
       "en": { "name": "Philadelphia", "old": "Alaşehir", "place": "Manisa province",
         "text": "One of the two churches in Revelation that hear nothing but praise: “I have set before you an open door, which no one is able to shut.” The city was one of the places in western Anatolia that stayed Byzantine the longest. Today the huge stone piers of the Basilica of St. John still stand in the middle of town.",
@@ -161,7 +161,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "iznik", "cat": "konsil", "lat": 40.4292, "lon": 29.7211, "lx": 11, "ly": 4, "la": "start", "section": "iznik",
       "tr": { "name": "İznik", "old": "Nikaia", "place": "Bursa",
-        "text": "325’te İmparator Konstantin’in çağırdığı ilk ekümenik konsil burada toplandı ve İsa’nın Baba’yla “aynı özden” olduğunu ilan ederek bugün de her pazar okuduğumuz İman İkrarı’nın temelini attı. 787’de yine burada toplanan yedinci konsil, kutsal ikonalara saygıyı savundu. 2014’te göl kıyısında, sular altında kalmış bir bazilikanın kalıntıları bulundu.",
+        "text": "325’te İmparator Konstantin’in çağırdığı ilk ekümenik konsil burada toplandı. Konsil, İsa’nın Baba’yla “aynı özden” olduğunu ilan etti ve bugün de her pazar okuduğumuz İman İkrarı’nın temelini attı. 787’de yine burada toplanan yedinci konsil, kutsal ikonalara gösterilen saygıyı savundu. 2014’te göl kıyısında, sular altında kalmış bir bazilikanın kalıntıları bulundu.",
         "refs": ["Yuhanna 1:1-14", "Yuhanna 10:30"] },
       "en": { "name": "Nicaea", "old": "İznik", "place": "Bursa province",
         "text": "In 325 the first ecumenical council, summoned by Emperor Constantine, met here and declared Jesus “of the same substance” as the Father, laying the foundation of the Creed we still pray every Sunday. In 787 the seventh council, also held here, defended the veneration of holy icons. In 2014 the remains of a basilica were found under the waters of the lake shore.",
@@ -170,7 +170,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "istanbul", "cat": "konsil", "lat": 41.0082, "lon": 28.9784, "lx": 0, "ly": -11, "la": "middle", "section": "iznik",
       "tr": { "name": "İstanbul ve Kadıköy", "label": "İstanbul", "old": "Konstantinopolis ve Khalkedon", "place": "İstanbul",
-        "text": "İlk yedi ekümenik konsilin üçü Konstantinopolis’te (381, 553, 680-681), biri de karşı kıyıdaki Kadıköy’de (451) toplandı. 381’deki konsil İman İkrarı’nı Kutsal Ruh üzerine maddelerle tamamladı; Kadıköy ise İsa’nın tek kişide hem tam Tanrı hem tam insan olduğunu tanımladı. Sonradan Papa olan Aziz XXIII. Yuhanna, 1935-1944 yılları arasında burada Vatikan temsilcisi olarak görev yaptı.",
+        "text": "İlk yedi ekümenik konsilin üçü Konstantinopolis’te (381, 553, 680-681), biri de karşı kıyıdaki Kadıköy’de (451) toplandı. 381’deki konsil, İman İkrarı’na Kutsal Ruh hakkındaki maddeleri ekleyerek onu tamamladı. Kadıköy Konsili ise İsa’nın tek bir kişide hem tam Tanrı hem tam insan olduğunu tanımladı. Sonradan Papa olan Aziz XXIII. Yuhanna, 1935-1944 yılları arasında burada Vatikan temsilcisi olarak görev yaptı.",
         "refs": ["Yuhanna 1:14", "Yuhanna 15:26"] },
       "en": { "name": "Constantinople and Chalcedon", "label": "Constantinople", "old": "Istanbul and Kadıköy", "place": "Istanbul",
         "text": "Three of the first seven ecumenical councils met in Constantinople (381, 553, 680-681) and one across the water in Chalcedon, today’s Kadıköy (451). The council of 381 completed the Creed with its articles on the Holy Spirit; Chalcedon defined that Jesus is fully God and fully man in one person. St. John XXIII, later Pope, served here as the Holy See’s representative from 1935 to 1944.",
@@ -179,7 +179,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "kapadokya", "cat": "gelenek", "lat": 38.6431, "lon": 34.8289, "lx": 11, "ly": 4, "la": "start", "section": "",
       "tr": { "name": "Kapadokya", "old": "Kappadokia", "place": "Nevşehir ve Kayseri",
-        "text": "Pentekost günü Kudüs’te Müjde’yi dinleyenler arasında Kapadokyalılar da vardı; Petrus’un birinci mektubu da Kapadokya’daki imanlılara seslenir. Dördüncü yüzyılda “Kapadokyalı Babalar” diye anılan Büyük Basileios (Kayseri episkoposu), Nazianzoslu Gregorios ve Nyssalı Gregorios, Kutsal Üçlü öğretisinin dilini şekillendirdi. Göreme’nin kayalara oyulmuş freskli kiliseleri bu keşiş geleneğinin tanıklarıdır.",
+        "text": "Pentekost günü Kudüs’te Müjde’yi dinleyenler arasında Kapadokyalılar da vardı. Petrus’un birinci mektubu da Kapadokya’daki imanlılara seslenir. Dördüncü yüzyılda “Kapadokyalı Babalar” diye anılan Büyük Basileios (Kayseri episkoposu), Nazianzoslu Gregorios ve Nyssalı Gregorios, Kutsal Üçlü öğretisinin dilini şekillendirdi. Göreme’nin kayalara oyulmuş freskli kiliseleri, bu keşiş geleneğinin tanıklarıdır.",
         "refs": ["Elçilerin İşleri 2:9", "1 Petrus 1:1"] },
       "en": { "name": "Cappadocia", "old": "Kappadokia", "place": "Nevşehir and Kayseri provinces",
         "text": "Cappadocians were among those who heard the Gospel in Jerusalem on the day of Pentecost, and Peter’s first letter is addressed in part to believers in Cappadocia. In the fourth century the “Cappadocian Fathers,” Basil the Great (bishop of Caesarea, today’s Kayseri), Gregory of Nazianzus and Gregory of Nyssa, shaped the language of the Church’s teaching on the Holy Trinity. The frescoed rock-cut churches of Göreme bear witness to this monastic tradition.",
@@ -206,7 +206,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "mardin", "cat": "gelenek", "lat": 37.3212, "lon": 40.7245, "lx": 11, "ly": 4, "la": "start", "section": "",
       "tr": { "name": "Mardin ve Tur Abdin", "label": "Mardin", "old": "", "place": "Mardin",
-        "text": "Adı “Tanrı’ya kulluk edenlerin dağı” anlamına gelen Tur Abdin, yüzyıllardır süren Süryani keşiş geleneğinin yurdudur. Midyat yakınındaki Mor Gabriel Manastırı 397’de kurulmuştur ve dünyada hâlâ faal olan en eski manastırlardan biridir. Mardin’e yakın Deyrulzafaran Manastırı da uzun yüzyıllar Süryani Ortodoks patrikliğinin merkezi oldu. Buralarda Ayin, İsa’nın konuştuğu Aramice’nin bir kolu olan Süryanice ile hâlâ kutlanır.",
+        "text": "Adı “Tanrı’ya kulluk edenlerin dağı” anlamına gelen Tur Abdin, yüzyıllardır süren Süryani keşiş geleneğinin yurdudur. Midyat yakınındaki Mor Gabriel Manastırı 397’de kuruldu ve dünyada hâlâ faal olan en eski manastırlardan biridir. Mardin yakınındaki Deyrulzafaran Manastırı da yüzyıllar boyunca Süryani Ortodoks patrikliğinin merkezi oldu. Buralarda Ayin, İsa’nın konuştuğu Aramicenin bir kolu olan Süryanice ile hâlâ kutlanır.",
         "refs": [] },
       "en": { "name": "Mardin and Tur Abdin", "label": "Mardin", "old": "", "place": "Mardin province",
         "text": "Tur Abdin, whose name means “the mountain of the servants of God,” has been home to a Syriac monastic tradition for many centuries. The Mor Gabriel Monastery near Midyat was founded in 397 and is one of the oldest monasteries in the world still in use. The nearby Deyrulzafaran Monastery was for centuries the seat of the Syriac Orthodox patriarchate. The liturgy here is still celebrated in Syriac, a branch of the Aramaic that Jesus spoke.",
@@ -233,7 +233,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
     {
       "id": "agri", "cat": "eski", "lat": 39.7019, "lon": 44.2983, "lx": -11, "ly": 4, "la": "end", "section": "",
       "tr": { "name": "Ağrı Dağı", "old": "Ararat", "place": "Ağrı ve Iğdır",
-        "text": "Yaratılış Kitabı’na göre Tufan’dan sonra Nuh’un gemisi “Ararat dağlarının üzerine” oturdu. Kutsal Kitap’taki Ararat adı, bugünkü Doğu Anadolu’yu da içine alan eski Urartu ülkesini anlatır; yüzyıllardır süren gelenek ise bu bölgenin en yüksek zirvesini, Türkiye’nin en yüksek dağı olan Ağrı Dağı’nı geminin oturduğu yer olarak anar.",
+        "text": "Yaratılış Kitabı’na göre Tufan’dan sonra Nuh’un gemisi “Ararat dağlarının üzerine” oturdu. Kutsal Kitap’taki Ararat adı, bugünkü Doğu Anadolu’yu da içine alan eski Urartu ülkesini anlatır. Yüzyıllardır süren gelenek ise bu bölgenin en yüksek zirvesini, yani Türkiye’nin en yüksek dağı olan Ağrı Dağı’nı geminin oturduğu yer olarak bilir.",
         "refs": ["Yaratılış 8:4"] },
       "en": { "name": "Mount Ararat", "old": "Ağrı Dağı", "place": "Ağrı and Iğdır provinces",
         "text": "According to Genesis, after the Flood Noah’s ark came to rest “upon the mountains of Ararat.” The biblical name Ararat refers to the ancient land of Urartu, which took in much of today’s eastern Anatolia; a tradition centuries old names the region’s highest peak, Mount Ararat, the highest mountain in Turkey, as the place where the ark came to rest.",

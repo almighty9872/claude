@@ -13,19 +13,19 @@
 window.CONFESSION = /*JSON-START*/{
  "title": "Günah Çıkarma",
  "en": "Confession",
- "intro": "Günah çıkarma, Katolik inancının en çok çekinilen fakat en özgürleştirici kutsal sırrıdır. İsa bu sırrı Diriliş akşamı şu sözlerle başlatmıştır: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip sadece bir aracıdır, asıl karşılaştığınız Tanrı’nın kendisidir.",
+ "intro": "Günah çıkarma, Katolik inancında insanların en çok çekindiği ama en çok özgürleştiren kutsal sırdır. İsa bu sırrı, dirilişinin akşamı şu sözlerle başlattı: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip yalnızca bir aracıdır; asıl karşılaştığınız kişi Tanrı’nın kendisidir.",
  "introEn": "Confession is the most dreaded yet the most freeing sacrament of the Catholic faith. Jesus instituted it on the evening of the Resurrection with these words: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is only an instrument; the one you truly meet is God himself.",
  "steps": [
   {
    "title": "Vicdan Muhasebesi",
    "en": "Examination of Conscience",
-   "text": "Sessiz bir anda, son günah çıkarmanızdan bu yana Tanrı’ya, başkalarına ve kendinize karşı nerede yanıldığınızı düşünün. Aşağıdaki liste yardımcı olur.",
+   "text": "Sessiz bir anda, son günah çıkarmanızdan bu yana Tanrı’ya, başkalarına ve kendinize karşı nerede yanlış yaptığınızı düşünün. Aşağıdaki liste size yardımcı olur.",
    "textEn": "In a quiet moment, think back over how you've failed God, others and yourself since your last confession. The list below helps."
   },
   {
-   "title": "Günah Çıkarma Yerine Girme",
+   "title": "Günah Çıkarma Yerine Girmek",
    "en": "Entering the Confessional",
-   "text": "Perde arkasından (anonim) ya da yüz yüze günah çıkarabilirsiniz; ikisi de geçerlidir, seçim sizin.",
+   "text": "Perde arkasından (kimliğinizi göstermeden) ya da yüz yüze günah çıkarabilirsiniz. İkisi de geçerlidir; seçim sizin.",
    "textEn": "You can confess behind a screen (anonymously) or face to face; both are valid, and the choice is yours."
   },
   {
@@ -37,13 +37,13 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "Günahları İtiraf Etme",
    "en": "Confessing Your Sins",
-   "text": "Günahlarınızı sade ve açıkça söyleyin. Ağır günahların türünü ve mümkünse kaç kez işlendiğini belirtin. Kendinizi savunmanıza gerek yok: rahip yargılamak için değil, bağışlamayı iletmek için oradadır.",
+   "text": "Günahlarınızı sade ve açık bir dille söyleyin. Ağır günahların türünü ve mümkünse kaç kez işlendiğini belirtin. Kendinizi savunmanıza gerek yok: Rahip sizi yargılamak için değil, Tanrı’nın bağışlamasını size iletmek için oradadır.",
    "textEn": "Name your sins simply and clearly. For serious sins, say what they were and, if you can, how many times. There's no need to defend yourself: the priest is there to pass on forgiveness, not to judge."
   },
   {
    "title": "Rahibin Öğüdü ve Kefaret",
    "en": "Counsel and Penance",
-   "text": "Rahip kısa bir öğüt verebilir ve size bir kefaret verir: genellikle bir dua ya da iyi bir eylem. Bu bir ceza değil, yeniden Tanrı’ya yönelmenin somut bir işaretidir.",
+   "text": "Rahip kısa bir öğüt verebilir ve size bir kefaret verir; bu genellikle bir dua ya da iyi bir davranıştır. Kefaret bir ceza değil, yeniden Tanrı’ya yönelmenin somut bir işaretidir.",
    "textEn": "The priest may give brief advice, and gives you a penance, usually a prayer or a good deed. It isn't a punishment but a concrete sign of turning back to God."
   },
   {
@@ -55,24 +55,24 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "Bağışlama",
    "en": "Absolution",
-   "text": "Rahip elini kaldırıp sizi Tanrı’nın adına bağışlar: “…Ben de seni Peder, Oğul ve Kutsal Ruh adına günahlarından çözüyorum.” Bu sözlerle günahlarınız gerçekten ve tamamen bağışlanır (<a href=\"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html\" target=\"_blank\" rel=\"noopener\">KKK 1441-1442</a>); kefaret henüz yerine getirilmemiş olsa bile.",
+   "text": "Rahip elini kaldırır ve Tanrı adına sizi bağışlar: “…Ben de seni Peder, Oğul ve Kutsal Ruh adına günahlarından çözüyorum.” Bu sözlerle günahlarınız, kefaretinizi henüz yerine getirmemiş olsanız bile, gerçekten ve tamamen bağışlanır (<a href=\"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html\" target=\"_blank\" rel=\"noopener\">KKK 1441-1442</a>).",
    "textEn": "The priest raises his hand and absolves you in God's name: \"...and I absolve you from your sins, in the name of the Father, and of the Son, and of the Holy Spirit.\" With these words your sins are truly and completely forgiven (<a href=\"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html\" target=\"_blank\" rel=\"noopener\">CCC 1441-1442</a>), even before the penance is fulfilled."
   },
   {
    "title": "Kefareti Yerine Getirme",
    "en": "Fulfilling the Penance",
-   "text": "Kefaretinizi en kısa sürede yerine getirin ve bulduğunuz barışı gündelik hayatınıza taşıyın.",
+   "text": "Kefaretinizi en kısa sürede yerine getirin ve kavuştuğunuz huzuru gündelik hayatınıza taşıyın.",
    "textEn": "Do your penance as soon as you can, and carry the peace you've found into daily life."
   }
  ],
- "examenIntro": "Sorular On Emir’e göre dizilmiştir. Hepsini sormanız gerekmez; size dokunan birkaçı yeterlidir.",
+ "examenIntro": "Sorular On Emir’e göre sıralanmıştır. Hepsini kendinize sormanız gerekmez; size dokunan birkaç soru yeterlidir.",
  "examenIntroEn": "The questions follow the Ten Commandments. You don't need to ask yourself all of them; the few that strike you are enough.",
  "examenGroups": [
   {
    "title": "1. Tanrın RAB Ben’im: benden başka tanrın olmayacak",
    "titleEn": "1. I am the LORD your God: you shall not have other gods before me",
    "items": [
-    "Tanrı’ya olan güvenim sarsıldı mı; fala, büyüye ya da batıl inançlara başvurdum mu?",
+    "Tanrı’ya olan güvenimi yitirdim mi? Fala, büyüye ya da batıl inançlara başvurdum mu?",
     "Günlük hayatımda duaya ve Tanrı’ya zaman ayırdım mı, yoksa O’nu tamamen unuttuğum günler oldu mu?",
     "Kilise’nin öğrettiği bir gerçeği bilerek ve inatla reddettim mi?"
    ],
@@ -99,7 +99,7 @@ window.CONFESSION = /*JSON-START*/{
    "titleEn": "3. Remember to keep holy the Lord's Day",
    "items": [
     "Pazar günleri ya da yükümlü olduğum günlerde geçerli bir neden olmadan Ayin’i kaçırdım mı?",
-    "O günü gerçek bir dinlenme ve ibadet günü olarak mı geçirdim?"
+    "O günü gerçekten dinlenerek ve ibadet ederek mi geçirdim?"
    ],
    "itemsEn": [
     "Have I missed Mass on Sundays or holy days of obligation without a valid reason?",
@@ -122,8 +122,8 @@ window.CONFESSION = /*JSON-START*/{
    "title": "5. Adam öldürmeyeceksin",
    "titleEn": "5. You shall not kill",
    "items": [
-    "Başkasına söz, davranış ya da ihmalle zarar verdim mi? İçimde kin, öfke ya da intikam duyguları taşıdım mı?",
-    "Kendi sağlığıma ya da yaşamıma (aşırı alkol, madde, umursamazlık) zarar verdim mi?",
+    "Sözlerimle, davranışlarımla ya da ihmalimle birine zarar verdim mi? İçimde kin, öfke ya da intikam duygusu taşıdım mı?",
+    "Aşırı alkol, uyuşturucu ya da umursamazlıkla kendi sağlığıma veya hayatıma zarar verdim mi?",
     "Dedikoduyla ya da iftirayla birinin itibarını zedeledim mi?"
    ],
    "itemsEn": [
@@ -148,8 +148,8 @@ window.CONFESSION = /*JSON-START*/{
    "title": "7. Çalmayacaksın",
    "titleEn": "7. You shall not steal",
    "items": [
-    "Başkasına ait bir şeyi izinsiz aldım mı, ödünç aldığımı geri vermedim mi?",
-    "İşimde, alışverişimde, vergilerimde dürüst müydüm?",
+    "Başkasına ait bir şeyi izinsiz aldım mı? Ödünç aldığım bir şeyi geri vermedim mi?",
+    "İşimde, alışverişimde ve vergilerimde dürüst davrandım mı?",
     "Yoksullara ve muhtaç olanlara karşı elimden geldiğince cömert oldum mu?"
    ],
    "itemsEn": [
@@ -177,7 +177,7 @@ window.CONFESSION = /*JSON-START*/{
    "titleEn": "9 and 10. You shall not covet your neighbor's spouse or goods",
    "items": [
     "Düşüncelerimde başkasının eşine ya da partnerine karşı arzu besledim mi?",
-    "Başkalarının sahip olduklarına karşı kıskançlık ya da açgözlülük besledim mi, maddi şeylere ölçüsüzce bağlandım mı?"
+    "Başkalarının sahip olduklarını kıskandım mı ya da açgözlülük ettim mi? Maddi şeylere aşırı bağlandım mı?"
    ],
    "itemsEn": [
     "Have I harbored desire in my thoughts for someone else's spouse or partner?",
@@ -190,49 +190,49 @@ window.CONFESSION = /*JSON-START*/{
    "id": "sir-saklanir-mi",
    "q": "Rahip söylediklerimi kimseye anlatır mı?",
    "qEn": "Will the priest tell anyone what I say?",
-   "a": "Asla. “Günah çıkarma mührü” mutlaktır: rahip duyduğu hiçbir şeyi, hiçbir koşulda, hiç kimseye açıklayamaz. Bazı rahipler bu sırrı açıklamaktansa ölümü seçti.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a>",
+   "a": "Asla. “Günah çıkarma mührü” mutlaktır: Rahip duyduğu hiçbir şeyi, hiçbir koşulda, hiç kimseye açıklayamaz. Bazı rahipler bu sırrı açıklamaktansa ölmeyi seçti.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a>",
    "aEn": "Never. The \"seal of confession\" is absolute: the priest can never reveal anything he hears, under any circumstances, to anyone. Some priests chose death rather than break it.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a>"
   },
   {
    "id": "ne-soyleyecegimi-unutursam",
    "q": "Ne söyleyeceğimi unutursam ya da karıştırırsam ne olur?",
    "qEn": "What if I forget what to say or get confused?",
-   "a": "Sorun değil. Unutursanız rahip hatırlatır, gerekirse sorularla yol gösterir. Söyleyeceklerinizi önceden bir kâğıda ya da telefonunuza yazıp okuyabilirsiniz; önemli olan kusursuz konuşmak değil, içten olmaktır.",
+   "a": "Sorun değil. Bir şeyi unutursanız rahip hatırlatır, gerekirse sorular sorarak size yol gösterir. Söyleyeceklerinizi önceden bir kâğıda ya da telefonunuza yazıp okuyabilirsiniz. Önemli olan kusursuz konuşmak değil, içten olmaktır.",
    "aEn": "It's fine. If you forget, the priest will prompt you and, if needed, guide you with questions. You can write down what you want to say on paper or your phone and read it; what matters isn't a flawless speech but sincerity."
   },
   {
    "id": "cok-uzun-zaman-oldu",
    "q": "Üzerinden yıllar geçti, nasıl başlayacağımı bile bilmiyorum.",
    "qEn": "It's been years, and I don't even know how to begin.",
-   "a": "Rahibe açıkça söyleyin: “Peder, uzun zaman oldu, bana yardımcı olur musunuz?” Hiçbir rahip buna şaşırmaz, aksine sevinir ve size adım adım eşlik eder.",
+   "a": "Bunu rahibe açıkça söyleyin: “Peder, uzun zaman oldu, bana yardımcı olur musunuz?” Hiçbir rahip buna şaşırmaz; tam tersine sevinir ve size adım adım eşlik eder.",
    "aEn": "Tell the priest plainly: \"Father, it's been a long time, can you help me?\" No priest is surprised by that; he'll be glad, and he'll walk you through it."
   },
   {
    "id": "ayni-gunahlar-tekrar",
    "q": "Aynı günahları tekrar tekrar itiraf ediyorum; bu bir sorun mu?",
    "qEn": "I keep confessing the same sins over and over; is that a problem?",
-   "a": "Hayır, bu çok normaldir. Kutsallaşma zamanla olur; önemli olan mükemmel olmak değil, her seferinde Tanrı’ya dönmektir.",
+   "a": "Hayır, bu çok normaldir. Kutsallaşmak zaman alır. Önemli olan kusursuz olmak değil, her seferinde yeniden Tanrı’ya dönmektir.",
    "aEn": "No, it's completely normal. Holiness grows over time; what matters isn't being perfect but coming back to God each time."
   },
   {
    "id": "perde-mi-yuz-yuze-mi",
    "q": "Perde arkasını mı, yüz yüze olanı mı seçmeliyim?",
    "qEn": "Should I choose behind the screen, or face to face?",
-   "a": "Size kalmış; ikisi de geçerli ve yaygındır.",
+   "a": "Size kalmış. İkisi de geçerlidir ve ikisi de yaygındır.",
    "aEn": "It's up to you; both are valid and common."
   },
   {
    "id": "yargilanmak",
    "q": "Rahip beni yargılayacak mı, kızacak mı?",
    "qEn": "Will the priest judge me or get angry?",
-   "a": "Hayır. Rahip kendi adına değil, Mesih’in kişiliğinde (in persona Christi) hareket eder; duyduğunuz bağışlama Mesih’in bağışlamasıdır. Deneyimli bir rahibi hiçbir şey şaşırtmaz; çoğu, cesaretinize içtenlikle sevinir.",
+   "a": "Hayır. Rahip kendi adına değil, Mesih’in kişiliğinde (in persona Christi) hareket eder; duyduğunuz bağışlama Mesih’in bağışlamasıdır. Deneyimli bir rahibi hiçbir şey şaşırtmaz. Çoğu rahip, gösterdiğiniz cesarete içtenlikle sevinir.",
    "aEn": "No. The priest acts not in his own name but in the person of Christ (in persona Christi); the forgiveness you hear is Christ's. Nothing surprises an experienced priest, and most will be genuinely glad of your courage."
   },
   {
    "id": "kac-dakika-surer",
    "q": "Ne kadar sürer, nasıl hazırlanmalıyım?",
    "qEn": "How long does it take, and how should I prepare?",
-   "a": "Genellikle birkaç dakika. Önceden sakin bir anda yapılan vicdan muhasebesi yeterli hazırlıktır.",
+   "a": "Genellikle birkaç dakika sürer. Önceden sakin bir anda yapacağınız bir vicdan muhasebesi yeterli bir hazırlıktır.",
    "aEn": "Usually a few minutes. An examination of conscience beforehand, in a quiet moment, is preparation enough."
   },
   {
@@ -246,31 +246,31 @@ window.CONFESSION = /*JSON-START*/{
    "id": "agir-hafif-gunah",
    "q": "Ağır (ölümcül) günah ile hafif günah arasındaki fark nedir?",
    "qEn": "What's the difference between mortal and venial sin?",
-   "a": "Üç şart birlikte varsa günah ağırdır: konusu ciddidir, kişi bunu bilir ve özgürce, tam rızayla işler (<a href=\"https://www.vatican.va/content/catechism/en/part_three/section_one/chapter_one/article_8/iv_the_gravity_of_sin_mortal_and_venial_sin.html\" target=\"_blank\" rel=\"noopener\">KKK 1857</a>). Biri eksikse günah hafiftir. Emin değilseniz rahibinize sorun.",
+   "a": "Üç şart bir arada varsa günah ağırdır: Konusu ciddidir, kişi bunun ciddi olduğunu bilir ve günahı özgürce, tam bir rızayla işler (<a href=\"https://www.vatican.va/content/catechism/en/part_three/section_one/chapter_one/article_8/iv_the_gravity_of_sin_mortal_and_venial_sin.html\" target=\"_blank\" rel=\"noopener\">KKK 1857</a>). Bu şartlardan biri eksikse günah hafiftir. Emin değilseniz rahibinize sorun.",
    "aEn": "A sin is mortal when three conditions come together: the matter is grave, the person knows it, and they choose it freely and fully (<a href=\"https://www.vatican.va/content/catechism/en/part_three/section_one/chapter_one/article_8/iv_the_gravity_of_sin_mortal_and_venial_sin.html\" target=\"_blank\" rel=\"noopener\">CCC 1857</a>). If any is missing, the sin is venial. If you're unsure, ask your priest."
   }
  ],
  "sealMartyrs": {
   "title": "Mührün şehitleri",
   "titleEn": "Martyrs of the seal",
-  "intro": "Günah çıkarmada duyduklarını açıklamayı reddettikleri için öldürülen rahiplerden birkaçı:",
+  "intro": "Günah çıkarmada duyduklarını açıklamayı reddettikleri için öldürülen rahiplerden bazıları:",
   "introEn": "A few of the priests killed for refusing to reveal what they heard in confession:",
   "items": [
    {
     "name": "Aziz Jan Nepomucký (ö. 1393)",
-    "detail": "Kutsal sır mührünün ilk şehidi sayılır. Bohemya Kralı IV. Wenceslaus, kraliçenin günah çıkarmalarını açıklamayı reddettiği için onun işkenceyle Prag’daki Vltava Nehri’nde boğulmasını emretti."
+    "detail": "Günah çıkarma mührünün ilk şehidi sayılır. Kraliçenin günah çıkarırken söylediklerini açıklamayı reddettiği için Bohemya Kralı IV. Wenceslaus ona işkence yaptırdı ve Prag’daki Vltava Nehri’nde boğulmasını emretti."
    },
    {
     "name": "Aziz Mateo Correa Magallanes (ö. 1927)",
-    "detail": "Cristero Savaşı sırasında idam edilen Meksikalı bir rahip. General Eulogio Ortiz, tutuklu Cristero isyancılarının günah çıkarmalarını dinlemesini, ardından ne söylediklerini açıklamasını istedi. Magallanes reddetti ve kurşuna dizildi."
+    "detail": "Cristero Savaşı sırasında idam edilen Meksikalı bir rahip. General Eulogio Ortiz, tutuklu Cristero isyancılarının günah çıkarmalarını dinlemesini ve ardından ne söylediklerini açıklamasını istedi. Magallanes bunu reddetti ve kurşuna dizildi."
    },
    {
     "name": "Beatus Jan Sarkander (ö. 1620)",
-    "detail": "Otuz Yıl Savaşları sırasında Moravya’da görev yapan bir rahip. Katolik bir soylunun günah çıkarma sırrını karşı taraftaki yetkililere açıklamayı reddettiği için günlerce çarkta işkenceyle öldürüldü."
+    "detail": "Otuz Yıl Savaşları sırasında Moravya’da görev yapan bir rahip. Katolik bir soylunun günah çıkarırken söylediklerini karşı taraftaki yetkililere açıklamayı reddetti. Bu yüzden günlerce işkence gördü ve öldürüldü."
    },
    {
     "name": "Beatus Felipe Císcar Puig (ö. 1936)",
-    "detail": "İspanya İç Savaşı sırasında idam edilen İspanyol bir rahip. Hapiste az önce dinlediği bir Fransisken rahibin günah çıkarmasını açıklamayı reddettiği için Cumhuriyetçi güçler tarafından kurşuna dizildi."
+    "detail": "İspanya İç Savaşı sırasında idam edilen İspanyol bir rahip. Hapiste günah çıkarmasını dinlediği bir Fransisken rahibin söylediklerini açıklamayı reddetti ve Cumhuriyetçi güçler tarafından kurşuna dizildi."
    }
   ],
   "itemsEn": [

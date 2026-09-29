@@ -7,16 +7,16 @@ short: Onaylı Türkçe çeviriler ve nereden başlamalı, kısaca.
 
 ## Katolik baskı nasıl anlaşılır? {#katolik-baski}
 
-Katolik Kutsal Kitabı 73 kitaptır. Protestan baskılarında Eski Ahit’ten yedi kitap eksiktir: Tobit, Yudit, Bilgelik, Sirak, Baruk, 1. ve 2. Makabeler (ayrıca Ester ve Daniel’in bazı bölümleri). Kilise bu **deuterokanonik** kitapları en başından beri Kutsal Yazı olarak kabul eder.
+Katolik Kutsal Kitabı 73 kitaptan oluşur. Protestan baskılarında Eski Ahit’ten yedi kitap eksiktir: Tobit, Yudit, Bilgelik, Sirak, Baruk, 1. ve 2. Makabeler (ayrıca Ester ve Daniel’in bazı bölümleri). Kilise bu **deuterokanonik** kitapları en başından beri Kutsal Yazı olarak kabul eder.
 
 Satın alırken iki şeye bakın:
 
 - Kapakta **“Catholic Edition”** ibaresi.
-- İç kapakta **Nihil obstat** ve **Imprimatur**: çevirinin kilise onayı taşıdığını gösterir.
+- İç kapakta **Nihil obstat** ve **Imprimatur** ibareleri: Bunlar çevirinin Kilise onayı taşıdığını gösterir.
 
 ## Türkçe nereden başlamalı? {#turkce}
 
-Henüz kilise onaylı, basılı bir Türkçe Katolik baskı yok. En yakın seçenek, Kitabı Mukaddes Şirketi’nin 2003 tarihli **Kutsal Kitap ve Deuterokanonik Kitaplar** çevirisidir: yedi deuterokanonik kitabı da içerir ve kolay okunur. Ücretsiz okumak için:
+Henüz Kilise onayı taşıyan, basılı bir Türkçe Katolik baskı yok. En yakın seçenek, Kitabı Mukaddes Şirketi’nin 2003 tarihli **Kutsal Kitap ve Deuterokanonik Kitaplar** çevirisidir: yedi deuterokanonik kitabı da içerir ve kolay okunur. Ücretsiz okumak için:
 
 - [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU), Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
 - [kitabimukaddes.com](https://kitabimukaddes.com/tr/kutsal-kitap)
@@ -25,8 +25,8 @@ Henüz kilise onaylı, basılı bir Türkçe Katolik baskı yok. En yakın seçe
 
 Çevirmenler iki yol izler: **sözel çeviri** özgün metnin sözcüklerine bağlı kalır, **dinamik çeviri** anlamı rahat bir dille aktarır.
 
-- **Ciddi çalışma için** sözel bir çeviri seçin: anlamın ince ipuçlarını korur, ama okuması yorar.
-- **Günlük okuma için** dinamik ya da ortada duran bir çeviri seçin: akıcıdır, ama ayrıntı kaybolur ve çevirmenin yorumu araya karışabilir.
+- **Ciddi bir çalışma için** sözel bir çeviri seçin: Anlamın ince ayrıntılarını korur, ama okuması yorucudur.
+- **Günlük okuma için** dinamik ya da ikisinin ortasında duran bir çeviri seçin: Akıcıdır, ama bazı ayrıntılar kaybolur ve çevirmenin yorumu araya karışabilir.
 - **Çeviri öğretiyi bile etkileyebilir:** “iş” anlamındaki Yunanca “ergon” tutarlı çevrilmediğinde, Allah’ın herkesi işlerine göre yargılayacağı (Romalılar 2:6-7) gözden kaçabilir.
 - **Eski çeviriler daha güvenilir değildir,** yalnızca daha eskidir. Bugün satılan Douay-Rheims bile 18. yüzyılda Episkopos Challoner’ın gözden geçirdiği bir baskıdır.
 
@@ -63,6 +63,6 @@ ABD Katolik Episkoposlar Konferansı’nın (USCCB) 1983’ten beri onayladığ�
 - Good News Translation (Today's English Version, Second Edition), American Bible Society
 - Translation for Early Youth, A Translation of the New Testament for Children, Contemporary English Version, American Bible Society
 
-Douay-Rheims bu listede yoktur, çünkü liste yalnızca çağdaş çevirileri kapsar; kendi tarihî onayını taşır ve bugün de kullanılabilir. Başka bir ülkede yaşıyorsanız kendi episkoposlar konferansınızın listesine bakın.
+Douay-Rheims bu listede yok, çünkü liste yalnızca çağdaş çevirileri kapsar. Douay-Rheims’ın kendi tarihî onayı vardır ve bugün de kullanılabilir. Başka bir ülkede yaşıyorsanız kendi episkoposlar konferansınızın listesine bakın.
 
 > Çeviri bölümleri Catholic Answers’ın Bible Translations Guide broşüründen uyarlanmıştır; onaylı çeviriler listesi USCCB kaynaklıdır.
