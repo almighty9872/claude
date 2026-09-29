@@ -4,16 +4,20 @@ about: katolikdunyasi.com was built to make the core texts and teaching of the C
 description: Sources and copyright on katolikdunyasi.com: where the Compendium translation, Scripture quotations, prayers, lives of the saints and church details come from.
 ---
 
-- Catechism: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). The English text shown with the EN switch is the original, © 2005 Libreria Editrice Vaticana; the Turkish translation is © 2026 katolikdunyasi.com.
-- The Rosary: based on the Turkish prayer card used at the Basilica of Saint Anthony of Padua (Sant'Antuan) in Istanbul.
-- The Mass: based on the Turkish text published by Saint Theresa's Church in Ankara (Latin Catholic Vicariate of Istanbul-Ankara), brought in line with the terms used across this site.
-- Saints: dates and ranks follow the General Roman Calendar; saints chosen for otherwise open days follow the Roman Martyrology. The biographies, including the long lives of the twenty best-known saints, are original writing for this site.
-- The Parables of Jesus: based on the parables recounted in the Gospels (Matthew, Mark, Luke); the retellings and explanations are original writing for this site, not tied to a single translation.
-- Miracles: based on apparitions, relics and extraordinary events that have been examined and recorded by the Church; the text is original writing for this site.
-- Answering Islam: based on the Qur'an, the sahih hadith collections (Bukhari, Muslim, Abu Dawud) and Muslim historians; the text is original writing for this site, drawing on the work of Sam Shamoun and Avery (GodLogic Apologetics).
-- Find a Church: the list of parishes in Turkey and their contact details are compiled from what each community publishes; Mass times may change.
-- The Becoming Catholic, Confession, Why We're Catholic, Christianity in Anatolia and FAQ sections are original writing for this site, grounded in the Catechism and reliable Catholic sources.
-- Anatolian Roots Map: the coastlines and lakes are drawn from [Natural Earth](https://www.naturalearthdata.com)'s public-domain data.
+- **Catechism:** [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). The original text is © 2005 Libreria Editrice Vaticana; the Turkish translation is © 2026 katolikdunyasi.com. The Motu Proprio, the Introduction and the prayers and doctrinal formulas of the Appendix are part of the Compendium too. The CCC numbers under each question link to the Catechism of the Catholic Church on vatican.va.
+- **Scripture:** Bible references open the Revised Standard Version Catholic Edition (RSVCE) on BibleGateway. The English of the Parables of Jesus is the public-domain Douay-Rheims translation. The Turkish editions in the Bible guide link to where they can be read online.
+- **The Rosary:** based on the Turkish prayer card used at the Basilica of Saint Anthony of Padua (Sant'Antuan) in Istanbul.
+- **The Mass:** based on the Turkish text published by Saint Theresa's Church in Ankara (Latin Catholic Vicariate of Istanbul-Ankara), brought in line with the terms used across this site.
+- **Saints:** dates and ranks follow the General Roman Calendar; saints chosen for otherwise open days follow the Roman Martyrology. The biographies, including the long lives of the twenty best-known saints, are written for this site.
+- **The Parables of Jesus:** based on the parables in the Gospels of Matthew, Mark and Luke; the retellings and explanations are written for this site.
+- **Miracles:** based on apparitions, relics and extraordinary events that the Church has examined and recorded. The sections on Fatima, Lanciano and Padre Pio draw on Ethan Muse's [Motiva Credibilitatis](https://motivacredibilitatis.substack.com/); the videos mentioned on the page link to their own channels.
+- **Answering Islam:** based on the Qur'an, the sahih hadith collections (numbered as on sunnah.com), the early Muslim historians (Ibn Ishaq, Ibn Kathir, al-Tabari) and academic studies. The starting point of the case is the work of Sam Shamoun, David Wood and Avery (GodLogic Apologetics). The full list of sources is at the end of the page.
+- **Answering Atheism:** based on the accounts of Joe Schmid, Pat Flynn and Fr Mark Goring, the debates of Trent Horn and Cliffe Knechtle, and the historical work of Gary Habermas, Michael Licona and Brant Pitre. The full list of sources is at the end of the page.
+- **Find a Church:** addresses, contact details and Mass times are compiled from the list of the Bishops' Conference of Turkey (CET) and from the websites of the dioceses and parishes. Each church's page lists its own sources. Mass times may change; please check with the church before you go.
+- **Maps:** the coastlines and lakes on the Anatolian Roots and Find a Church maps are drawn from [Natural Earth](https://www.naturalearthdata.com)'s public-domain data.
+- **Other pages:** Becoming Catholic, Confession, Why We're Catholic, Christianity in Anatolia, the Bible guide and the FAQ are written for this site, grounded in the Catechism and reliable Catholic sources.
+- **The English site:** the English of the Compendium, the Motu Proprio and the Introduction is the Vatican's original text. The English of every other page is written for this site.
+- **Fonts:** Inter and Lexend (dyslexia mode), used under the SIL Open Font License.
 - This site is not an official Church publication; it is a personal project.
 
 Translations and original content © 2026 katolikdunyasi.com.
