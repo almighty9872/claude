@@ -946,9 +946,7 @@ $FooterHtml = @"
       <p class="foot-brand">$Logo<span>$SiteName</span></p>
       <p class="foot-tag">$(T $SiteTag $SiteTagEn)</p>
       <p class="foot-desc">$(T $fm['about'] $fmEn['about'])</p>
-      <p class="foot-copy">$(T "Türkçe çeviriler ve özgün içerik © 2026 $SiteName" "Translations and original content © 2026 $SiteName")</p>
       <p class="foot-copy foot-src"><button type="button" class="foot-sources" aria-haspopup="dialog" aria-controls="sources-dialog">$(T $fm['title'] $fmEn['title'])</button><a class="foot-contact" href="iletisim.html" data-dialog="dlg-iletisim">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
-      <p class="foot-copy"><a href="mailto:david@katolikdunyasi.com">david@katolikdunyasi.com</a></p>
     </div>
     <nav class="foot-sitemap" $(TA 'aria-label' 'Site haritası' 'Sitemap')>
       <div class="foot-col"><p class="foot-label">$(T 'Katekizm' 'Catechism')</p><ul>$($footKatekizm -join '')</ul></div>
