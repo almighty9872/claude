@@ -15,8 +15,8 @@
 window.WHY_CATHOLIC = /*JSON-START*/{
  "title": "Neden Katoliğiz?",
  "en": "Why We're Catholic",
- "intro": "Katolik inancı akla da yatar. Aşağıda bunu kısa cümlelerle anlatıyoruz; merak ettiğiniz cümleyi açın, ayrıntısı altında.",
- "introEn": "The Catholic faith makes sense to reason too. Below we say why in short sentences; open any one that catches your eye to see the details.",
+ "intro": "İster inancı yeni keşfediyor olun, ister manevi bir yuva arıyor olun, kapımız da kalbimiz de size sonuna kadar açık. Katolik Kilisesi’nin sunduğu huzuru, köklü geleneğini ve sevgi dolu topluluğunu bizimle birlikte keşfedin.",
+ "introEn": "Whether you are just discovering faith or looking for a spiritual home, our door and our hearts are wide open to you. Come and discover with us the peace, the deep-rooted tradition and the loving community of the Catholic Church.",
  "parts": [
   {
    "id": "tanri-var-mi",

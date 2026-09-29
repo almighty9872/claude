@@ -2160,7 +2160,7 @@
       $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
     },
     'gunah-cikarma.html': function (m) {
-      avWrap($('.wrap', m), 'h2.section-title[id]', 'aside, p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      avWrap($('.wrap', m), 'h2.section-title[id]', 'aside:not(#dokuz-on), p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
       var a = $('#muhur-sehitleri', m); if (a) avNode(a, pmap(avText($('.footnote-label', a)), function (x) { return x.replace(/^\*\s*/, ''); }));
       $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
     },

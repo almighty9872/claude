@@ -1432,8 +1432,13 @@ $examenGroups = ($Confession.examenGroups | ForEach-Object {
   $group = $_
   $items = ($group.items | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
   $itemsEn = ($group.itemsEn | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
-  "<article class=`"text-card examen-card`"><h3 class=`"t-title examen-title`">$(T (Inline $group.title) (Inline $group.titleEn))</h3>$(TB "<ul class=`"examen-list`">$items</ul>" "<ul class=`"examen-list`">$itemsEn</ul>")</article>"
+  $lists = TB ('<ul class="examen-list">' + $items + '</ul>') ('<ul class="examen-list">' + $itemsEn + '</ul>')
+  $mark = if ($group.noteMark) { '<a class="fn-mark" href="#dokuz-on" aria-label="Dipnot">*</a>' } else { '' }
+  "<article class=`"text-card examen-card`"><h3 class=`"t-title examen-title`">$(T (Inline $group.title) (Inline $group.titleEn))$mark</h3>" +
+    "<p class=`"examen-about`">$(T (Inline $group.about) (Inline $group.aboutEn))</p>" +
+    $lists + '</article>'
 }) -join "`n"
+$examenNote = "<aside class=`"footnote-block`" id=`"dokuz-on`"><p>* $(T (Inline $Confession.examenNote) (Inline $Confession.examenNoteEn))</p></aside>"
 $confessionFaq = ($Confession.faq | ForEach-Object {
   "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(T (Inline $_.q) (Inline $_.qEn))</span>$IcoChevLg</summary>" +
     "<div class=`"faq-a`"><p>$(T (Inline $_.a) (Inline $_.aEn))</p></div></details>"
@@ -1455,6 +1460,7 @@ $confessionSteps
   <div class="text-grid two examen-grid">
 $examenGroups
   </div>
+  $examenNote
   <h2 class="section-title" id="sorular-ve-korkular"><span class="label">3</span>$(T 'Sık Sorulan Sorular ve Korkular' 'Frequently Asked Questions and Fears')</h2>
   <div class="faq-list">
 $confessionFaq

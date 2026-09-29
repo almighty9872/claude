@@ -480,6 +480,9 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
    below): checking items and clicking "Build my checklist" collects them,
    grouped by commandment, into a private summary kept only in page state. */
 .examen-title { font-size: 1.05rem; }
+.examen-about { margin: .35rem 0 .8rem; padding: .6rem .8rem; border-radius: var(--radius-sm); background: var(--gold-bg); font-size: .95rem; line-height: 1.55; color: var(--text); }
+.fn-mark { margin-left: .15rem; color: var(--gold); text-decoration: none; font-weight: 700; }
+#dokuz-on { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .examen-list { margin: 0; padding: 0; list-style: none; color: var(--text-soft); }
 .examen-list li { position: relative; padding-left: 1rem; margin-bottom: .5rem; line-height: 1.5; }
 .examen-list li::before { content: ""; position: absolute; left: .1rem; top: .65em; width: .32rem; height: .32rem; border-radius: 50%; background: var(--gold); }

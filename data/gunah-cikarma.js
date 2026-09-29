@@ -71,120 +71,189 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "1. Tanrın RAB Ben’im: benden başka tanrın olmayacak",
    "titleEn": "1. I am the LORD your God: you shall not have other gods before me",
+   "about": "Tanrı’yı hayatın merkezine koymayı ister. Yalnızca başka ilahlara tapmak değil; parayı, başarıyı, şöhreti ya da bir insanı Tanrı’nın yerine koymak da bu emre aykırıdır. Fal, burç, büyü ve muska gibi batıl uygulamalar da buraya girer (KKK 2110-2128).",
+   "aboutEn": "It asks us to put God at the center of life. Not only worshipping other gods, but putting money, success, fame or a person in God’s place goes against it. Superstitious practices such as fortune-telling, horoscopes, magic and amulets belong here too (CCC 2110-2128).",
    "items": [
-    "Tanrı’ya olan güvenimi yitirdim mi? Fala, büyüye ya da batıl inançlara başvurdum mu?",
-    "Günlük hayatımda duaya ve Tanrı’ya zaman ayırdım mı, yoksa O’nu tamamen unuttuğum günler oldu mu?",
-    "Kilise’nin öğrettiği bir gerçeği bilerek ve inatla reddettim mi?"
+    "Duayı ihmal ettim mi? Tanrı’yı yalnızca zor anlarda mı hatırladım?",
+    "Fala, burca, büyüye, muskaya ya da nazarlığa güvendim mi?",
+    "Para, kariyer, beğenilmek ya da bir ilişki hayatımda Tanrı’nın yerini aldı mı?",
+    "İnancımdan utandım ya da onu gizledim mi?",
+    "Kilise’nin öğrettiği bir gerçeği bilerek ve inatla reddettim mi?",
+    "Tanrı’nın merhametinden umudumu kestim mi, ya da “nasılsa affeder” diye bile bile günah işledim mi?"
    ],
    "itemsEn": [
-    "Has my trust in God wavered; have I turned to fortune-telling, magic, or superstition?",
-    "Have I made time for prayer and God in my daily life, or were there days I forgot him entirely?",
-    "Have I knowingly and stubbornly rejected a truth the Church teaches?"
+    "Have I neglected prayer? Did I remember God only in hard times?",
+    "Have I trusted in fortune-telling, horoscopes, magic, amulets or charms against the evil eye?",
+    "Have money, career, being liked or a relationship taken God’s place in my life?",
+    "Have I been ashamed of my faith or hidden it?",
+    "Have I knowingly and stubbornly rejected a truth the Church teaches?",
+    "Have I despaired of God’s mercy, or sinned deliberately thinking “he’ll forgive me anyway”?"
    ]
   },
   {
    "title": "2. Tanrı’nın adını boş yere ağzına almayacaksın",
    "titleEn": "2. You shall not take the name of the Lord your God in vain",
+   "about": "Tanrı’nın adına ve kutsal olana saygıyı ister. Küfretmek, Tanrı’nın adıyla boş yere ya da yalan yere yemin etmek, verilen bir adağı tutmamak ve dinle alay etmek bu emre aykırıdır (KKK 2142-2159).",
+   "aboutEn": "It asks for reverence for God’s name and for what is holy. Blasphemy, swearing by God’s name needlessly or falsely, breaking a vow made to God and mocking religion go against it (CCC 2142-2159).",
    "items": [
-    "Tanrı’nın, İsa’nın ya da kutsal bir şeyin adını öfkeyle ya da saygısızca kullandım mı?",
-    "Verdiğim yeminlere ve sözlere sadık kaldım mı?"
+    "Öfkeyle Tanrı’nın, İsa’nın ya da Meryem’in adını ağzıma aldım mı, küfrettim mi?",
+    "Gereksiz yere ya da yalan yere Tanrı’nın adıyla yemin ettim mi?",
+    "Tanrı’ya verdiğim bir sözü ya da adağı tutmadım mı?",
+    "Dinle, kutsal şeylerle ya da inananlarla alay ettim mi, alay edilirken güldüm mü?"
    ],
    "itemsEn": [
-    "Have I used the name of God, Jesus, or something holy in anger or disrespect?",
-    "Have I kept the oaths and promises I've made?"
+    "Have I used the name of God, Jesus or Mary in anger, or blasphemed?",
+    "Have I sworn by God’s name needlessly or falsely?",
+    "Have I broken a promise or vow I made to God?",
+    "Have I mocked religion, holy things or believers, or laughed along when others did?"
    ]
   },
   {
    "title": "3. Rab’bin gününü kutsal tutmayı unutma",
    "titleEn": "3. Remember to keep holy the Lord's Day",
+   "about": "Pazar gününü Tanrı’ya ve dinlenmeye ayırmayı ister. Katolikler için bu, pazar günleri ve yükümlü bayramlarda Ayin’e katılmak demektir. Gereksiz işlerden kaçınmak, aileye, dinlenmeye ve iyiliğe zaman ayırmak da bu emrin parçasıdır (KKK 2180-2188).",
+   "aboutEn": "It asks us to give Sunday to God and to rest. For Catholics this means taking part in Mass on Sundays and holy days of obligation. Avoiding needless work and making time for family, rest and good works are part of it too (CCC 2180-2188).",
    "items": [
-    "Pazar günleri ya da yükümlü olduğum günlerde geçerli bir neden olmadan Ayin’i kaçırdım mı?",
-    "O günü gerçekten dinlenerek ve ibadet ederek mi geçirdim?"
+    "Geçerli bir nedenim olmadan pazar ya da yükümlü bayram Ayini’ni kaçırdım mı?",
+    "Ayine bile bile geç kaldım mı, Ayin boyunca aklım telefonumda mıydı?",
+    "Pazarı da iş, alışveriş ve ekran arasında mı geçirdim? Aileme ve dinlenmeye zaman ayırdım mı?",
+    "Başkalarının (çalışanlarımın, ailemin) pazar günü dinlenmesine engel oldum mu?"
    ],
    "itemsEn": [
-    "Have I missed Mass on Sundays or holy days of obligation without a valid reason?",
-    "Have I spent that day as a genuine day of rest and worship?"
+    "Have I missed Mass on a Sunday or holy day of obligation without a valid reason?",
+    "Have I come late to Mass on purpose, or had my mind on my phone throughout?",
+    "Did I spend Sunday on work, shopping and screens? Did I make time for my family and for rest?",
+    "Have I kept others (employees, family) from resting on Sunday?"
    ]
   },
   {
    "title": "4. Annene ve babana saygı göster",
    "titleEn": "4. Honor your father and your mother",
+   "about": "Önce anne babaya, sonra da ailede, işte ve toplumda sorumluluk taşıyan herkese saygıyı ister. Ama tek yönlü değildir: Anne babaların çocuklarına, amirlerin çalışanlarına, yetişkin çocukların da yaşlanan anne babalarına karşı görevlerini kapsar (KKK 2197-2233).",
+   "aboutEn": "It asks for respect first for our parents, then for everyone who carries responsibility in the family, at work and in society. But it runs both ways: it also covers the duties of parents to their children, of employers to their workers, and of grown children to their aging parents (CCC 2197-2233).",
    "items": [
-    "Ailemle, ebeveynlerimle ya da otoritedeki kişilerle ilişkimde saygısızlık ya da ihmal oldu mu?",
-    "Bakmakla yükümlü olduğum kişilere (çocuklar, yaşlılar) karşı sorumluluklarımı yerine getirdim mi?"
+    "Anne babama kaba, saygısız ya da nankör davrandım mı? Onları aramayı, ziyaret etmeyi ihmal ettim mi?",
+    "Yaşlanan ya da hasta aile üyelerime gereken ilgiyi gösterdim mi?",
+    "Anne babaysam, çocuklarıma zaman ayırdım mı, onlara imanı ve iyi bir örneği verdim mi?",
+    "Eşime ve aileme sabırla ve sevgiyle davrandım mı?",
+    "Öğretmenlerime, amirlerime ve yasalara, vicdanıma aykırı olmadıkça, saygı gösterdim mi?"
    ],
    "itemsEn": [
-    "Has there been disrespect or neglect in my relationship with my family, parents, or those in authority?",
-    "Have I fulfilled my responsibilities toward those in my care (children, the elderly)?"
+    "Have I been rude, disrespectful or ungrateful to my parents? Have I neglected to call or visit them?",
+    "Have I given aging or sick family members the care they need?",
+    "If I am a parent, have I made time for my children and given them the faith and a good example?",
+    "Have I treated my spouse and family with patience and love?",
+    "Have I respected my teachers, my superiors and the law, as long as they don’t ask me to act against my conscience?"
    ]
   },
   {
    "title": "5. Adam öldürmeyeceksin",
    "titleEn": "5. You shall not kill",
+   "about": "Yalnızca cinayeti değil, insan hayatına ve sağlığına zarar veren her şeyi kapsar: öfke, kin ve intikam isteği, birini aşağılamak ya da ona zorbalık etmek, kürtaj, uyuşturucu, aşırı alkol, dikkatsiz araç kullanmak ve kendi sağlığını ihmal etmek. İsa, kardeşine öfkelenenin de yargılanacağını söyler (Matta 5:21-22; KKK 2258-2317).",
+   "aboutEn": "It covers not only murder but everything that harms human life and health: anger, hatred and the wish for revenge, humiliating or bullying someone, abortion, drugs, drunkenness, reckless driving and neglecting one’s own health. Jesus says that whoever is angry with his brother will also be judged (Matthew 5:21-22; CCC 2258-2317).",
    "items": [
-    "Sözlerimle, davranışlarımla ya da ihmalimle birine zarar verdim mi? İçimde kin, öfke ya da intikam duygusu taşıdım mı?",
-    "Aşırı alkol, uyuşturucu ya da umursamazlıkla kendi sağlığıma veya hayatıma zarar verdim mi?",
-    "Dedikoduyla ya da iftirayla birinin itibarını zedeledim mi?"
+    "Birine öfkeyle bağırdım, hakaret ettim ya da onu aşağıladım mı? İçimde kin ya da intikam isteği taşıdım mı?",
+    "Birini bilerek dışladım mı, ona zorbalık ettim mi (internette de)?",
+    "Aşırı alkol, sigara, uyuşturucu ya da umursamazlıkla kendi sağlığıma zarar verdim mi?",
+    "Trafikte hızla ya da dikkatsizce kendimi ve başkalarını tehlikeye attım mı?",
+    "Kürtaja katıldım, onu önerdim ya da destekledim mi?",
+    "Kötü örneğimle birini günaha sürükledim mi?"
    ],
    "itemsEn": [
-    "Have I harmed someone through words, actions, or neglect? Have I carried hatred, anger, or a desire for revenge?",
-    "Have I harmed my own health or life (excessive alcohol, substances, recklessness)?",
-    "Have I damaged someone's reputation through gossip or slander?"
+    "Have I shouted at, insulted or humiliated someone in anger? Have I held on to hatred or a wish for revenge?",
+    "Have I deliberately excluded or bullied someone (online too)?",
+    "Have I harmed my own health through excessive alcohol, smoking, drugs or carelessness?",
+    "Have I endangered myself and others by speeding or driving carelessly?",
+    "Have I taken part in, suggested or supported an abortion?",
+    "Have I led someone into sin by my bad example?"
    ]
   },
   {
    "title": "6. Zina etmeyeceksin",
    "titleEn": "6. You shall not commit adultery",
+   "about": "Cinselliğin, evlilikte eşlerin birbirine ömür boyu ve bütünüyle verdiği sevginin bir parçası olduğunu öğretir. Evlilik dışı cinsel ilişki, aldatma, pornografi, mastürbasyon, evlilikte yapay doğum kontrolü ve eşi bir nesne gibi görmek bu emre aykırıdır. Evli ya da bekâr, herkes kendi durumuna göre iffetli yaşamaya çağrılır (KKK 2337-2359, 2380-2391).",
+   "aboutEn": "It teaches that sexuality belongs to the lifelong, total gift of love between husband and wife in marriage. Sex outside marriage, adultery, pornography, masturbation, artificial contraception in marriage and treating one’s spouse as an object go against it. Married or single, everyone is called to live chastely according to their state of life (CCC 2337-2359, 2380-2391).",
    "items": [
-    "Cinsellik konusunda Kilise’nin öğretisine aykırı davrandım mı?",
-    "Düşüncelerimde, bakışlarımda ya da izlediklerimde saygısızlık oldu mu?"
+    "Pornografi izledim ya da müstehcen içerik aradım mı?",
+    "Evlilik dışında cinsel ilişkiye girdim mi?",
+    "Evliysem, eşimi aldattım mı? Eşimle ilişkimde onu bir nesne gibi gördüm mü?",
+    "Mastürbasyon yaptım mı?",
+    "Giyimimle, şakalarımla ya da mesajlarımla başkasını günaha sürükledim mi?"
    ],
    "itemsEn": [
-    "Have I acted against the Church's teaching regarding sexuality?",
-    "Has there been disrespect in my thoughts, my glances, or what I've watched?"
+    "Have I watched pornography or looked for explicit content?",
+    "Have I had sexual relations outside marriage?",
+    "If I am married, have I been unfaithful to my spouse? Have I treated my spouse as an object?",
+    "Have I masturbated?",
+    "Have I led others into sin by the way I dress, my jokes or my messages?"
    ]
   },
   {
    "title": "7. Çalmayacaksın",
    "titleEn": "7. You shall not steal",
+   "about": "Başkasının malına ve emeğine saygıyı ister. Hırsızlık yalnızca bir şey çalmak değildir: İşte tembellik edip maaşını tam almak, müşteriyi kandırmak, vergi kaçırmak, borcunu ödememek, korsan yazılım ya da film kullanmak ve bulduğu bir şeyi sahibine vermemek de buraya girer. Yoksullara yardım ve yaratılışa özen göstermek de bu emrin parçasıdır (KKK 2401-2449).",
+   "aboutEn": "It asks for respect for other people’s property and work. Stealing isn’t only taking something: idling at work while taking full pay, cheating customers, tax evasion, not paying debts, using pirated software or films, and keeping something you found also belong here. Helping the poor and caring for creation are part of it too (CCC 2401-2449).",
    "items": [
-    "Başkasına ait bir şeyi izinsiz aldım mı? Ödünç aldığım bir şeyi geri vermedim mi?",
-    "İşimde, alışverişimde ve vergilerimde dürüst davrandım mı?",
-    "Yoksullara ve muhtaç olanlara karşı elimden geldiğince cömert oldum mu?"
+    "Başkasına ait bir şeyi aldım, ödünç aldığımı geri vermedim ya da borcumu ödemedim mi?",
+    "İş yerimde çalışmadan maaş aldım, mesaiyi boşa geçirdim ya da iş yerinin malını kendim için kullandım mı?",
+    "Alışverişte, satışta ya da vergilerimde hile yaptım mı? Çalışanıma hakkını tam ve zamanında verdim mi?",
+    "Korsan yazılım, film ya da müzik kullandım mı?",
+    "Kumarla ya da gereksiz harcamalarla ailemin ihtiyaçlarını ihmal ettim mi?",
+    "Yoksullara ve muhtaç olanlara elimden geldiğince yardım ettim mi?"
    ],
    "itemsEn": [
-    "Have I taken something belonging to someone else without permission, or failed to return something I borrowed?",
-    "Have I been honest in my work, my dealings, and my taxes?",
-    "Have I been as generous as I'm able toward the poor and those in need?"
+    "Have I taken something that belongs to someone else, failed to return what I borrowed or to pay a debt?",
+    "Have I taken pay without working, wasted work time, or used my employer’s property for myself?",
+    "Have I cheated in buying, selling or my taxes? Have I paid my employees fully and on time?",
+    "Have I used pirated software, films or music?",
+    "Have I neglected my family’s needs through gambling or needless spending?",
+    "Have I helped the poor and those in need as much as I can?"
    ]
   },
   {
    "title": "8. Komşuna karşı yalan yere tanıklık etmeyeceksin",
    "titleEn": "8. You shall not bear false witness against your neighbor",
+   "about": "Hakikate saygıyı ister. Yalan söylemek, iftira etmek ve dedikodu yapmak, yani birinin gerçek ama gizli kusurlarını gereksiz yere başkalarına anlatmak bu emre aykırıdır. Birini dinlemeden yargılamak, sırları açık etmek ve sosyal medyada doğrulanmamış şeyler yaymak da buraya girer (KKK 2475-2492).",
+   "aboutEn": "It asks for respect for the truth. Lying, slander and gossip, that is, needlessly telling others someone’s real but hidden faults, go against it. Judging someone without hearing them out, revealing secrets and spreading unverified things on social media belong here too (CCC 2475-2492).",
    "items": [
-    "Yalan söyledim mi ya da gerçeği çarpıttım mı?",
-    "Başkası hakkında haksız ya da doğrulanmamış şeyler konuştum mu?",
-    "Verdiğim sözleri tuttum mu?"
+    "Yalan söyledim mi, gerçeği çarpıttım ya da abarttım mı?",
+    "Birinin arkasından konuştum, kusurlarını gereksiz yere başkalarına anlattım mı?",
+    "Birine iftira ettim, onu haksız yere suçladım mı?",
+    "Birini dinlemeden, yalnızca duyduklarıma göre yargıladım mı?",
+    "Bana emanet edilen bir sırrı açık ettim mi?",
+    "Sosyal medyada doğruluğundan emin olmadığım şeyleri paylaştım mı?"
    ],
    "itemsEn": [
-    "Have I lied or twisted the truth?",
-    "Have I said unfair or unverified things about someone?",
-    "Have I kept the promises I've made?"
+    "Have I lied, or twisted or exaggerated the truth?",
+    "Have I talked behind someone’s back, needlessly telling others their faults?",
+    "Have I slandered someone or accused them unjustly?",
+    "Have I judged someone without hearing them out, only from what I had heard?",
+    "Have I revealed a secret entrusted to me?",
+    "Have I shared things on social media without being sure they were true?"
    ]
   },
   {
    "title": "9 ve 10. Komşunun eşine ve malına göz dikmeyeceksin",
    "titleEn": "9 and 10. You shall not covet your neighbor's spouse or goods",
+   "about": "Son iki emir eylemlere değil, kalbe bakar. Dokuzuncu emir başkasının eşine arzuyla bakmayı, onuncu emir ise başkasının malını kıskanmayı ve açgözlülüğü yasaklar. İsa, bir kadına şehvetle bakanın yüreğinde zina etmiş olduğunu söyler (Matta 5:28; KKK 2514-2557).",
+   "aboutEn": "The last two commandments look not at actions but at the heart. The ninth forbids desiring another person’s spouse; the tenth forbids envy of other people’s goods and greed. Jesus says that whoever looks at a woman with lust has already committed adultery in his heart (Matthew 5:28; CCC 2514-2557).",
    "items": [
-    "Düşüncelerimde başkasının eşine ya da partnerine karşı arzu besledim mi?",
-    "Başkalarının sahip olduklarını kıskandım mı ya da açgözlülük ettim mi? Maddi şeylere aşırı bağlandım mı?"
+    "Şehvet dolu düşünce ve hayallere bile bile daldım mı?",
+    "Başkasının eşine ya da sevgilisine arzuyla baktım mı?",
+    "Başkalarının evini, arabasını, işini ya da hayatını kıskandım mı? Sosyal medyada başkalarının hayatına bakıp hoşnutsuzluğa kapıldım mı?",
+    "Paraya ve eşyaya aşırı bağlandım mı? Sahip olduklarım için Tanrı’ya şükrettim mi?"
    ],
    "itemsEn": [
-    "Have I harbored desire in my thoughts for someone else's spouse or partner?",
-    "Have I been envious or greedy toward what others have, or excessively attached to material things?"
-   ]
+    "Have I deliberately dwelt on lustful thoughts and fantasies?",
+    "Have I looked with desire at someone else’s spouse or partner?",
+    "Have I envied other people’s homes, cars, jobs or lives? Have I grown discontented looking at others’ lives on social media?",
+    "Have I been too attached to money and things? Have I thanked God for what I have?"
+   ],
+   "noteMark": true
   }
  ],
+ "examenNote": "Neden 9 ve 10 bir arada? Kutsal Kitap On Emir’i numaralandırmaz; bu yüzden gelenekler onları farklı sayar. Katolik Kilisesi, Aziz Augustinus’u izleyerek, başka ilahlar ve putlarla ilgili yasağı tek bir emir, yani 1. emir sayar. Göz dikmeyle ilgili yasağı ise ikiye ayırır: 9. emir başkasının eşine, 10. emir başkasının malına göz dikmeyi yasaklar (Yasa’nın Tekrarı 5:21). Ortodoks ve Protestan kiliselerinin çoğu ise putlarla ilgili yasağı ayrı bir emir sayar ve göz dikmeyi tek emirde toplar. Burada son iki emri birlikte veriyoruz, çünkü ikisi de davranışlardan önce kalbin arzularına bakar (KKK 2514-2557).",
+ "examenNoteEn": "Why are 9 and 10 together? The Bible doesn’t number the Ten Commandments, so traditions count them differently. The Catholic Church, following Saint Augustine, counts the ban on other gods and idols as one commandment, the first, and splits the ban on coveting in two: the ninth forbids coveting your neighbor’s spouse, the tenth your neighbor’s goods (Deuteronomy 5:21). Most Orthodox and Protestant churches count the ban on idols as a separate commandment and join the two on coveting into one. We give the last two together here because both look at the desires of the heart before any action (CCC 2514-2557).",
  "faq": [
   {
    "id": "sir-saklanir-mi",
