@@ -40,8 +40,10 @@ meseller.html           The parables of Jesus, retold and explained plainly, by 
 tesbih-duasi.html       The Rosary: an interactive 59-bead SVG tracker (tap a bead or press Next;
                         prayer text in a bottom sheet, mystery of the day preselected, vibration
                         feedback on phones), then the prayers and the four sets of mysteries
-azizler.html            Calendar of the saints (current month shown, other months a click away),
-                        plus a "20 best-known saints" list, each linking to its own page below
+azizler.html            Calendar of the saints (current month shown, other months a click away;
+                        the feasts that move with Easter are dated for the year and placed on
+                        their days), plus the "20 best-known saints" in a compact dropdown list,
+                        each linking to its own page below
 <saint-id>.html         One page per saint in the "20 best-known" list (e.g. meryem-ana.html),
                         a long original Turkish biography
 kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)

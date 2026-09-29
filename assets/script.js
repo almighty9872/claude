@@ -1237,6 +1237,7 @@
   function initSaints() {
     var cal = $('.saints-cal');
     if (!cal) return;
+    var chev = $('.saint-item summary .ico', cal), AZ_CHEV = chev ? chev.outerHTML : '';
 
     function localParts() {
       var d = new Date();
@@ -1274,12 +1275,21 @@
       }
       var wrap = $('.day-saints', cell);
       if (!wrap) { wrap = document.createElement('div'); wrap.className = 'day-saints'; cell.appendChild(wrap); }
-      var h3 = $('h3', card), bio = $('.m-bio', card);
+      var h3 = $('h3', card), bio = $('.m-bio', card), rank = $('.m-rank', card);
       if (!h3 || !bio) return;
+      /* the feast leads its day, and its rank becomes the day's when it is the higher one */
+      var RK = ['rk-other', 'rk-optional', 'rk-memorial', 'rk-feast', 'rk-solemn', 'rk-hi'];
+      var rk = card.getAttribute('data-rk') || 'rk-other', had = RK.filter(function (c) { return cell.classList.contains(c); })[0] || 'rk-other';
+      if (RK.indexOf(rk) > RK.indexOf(had) || had === 'rk-other') {
+        cell.classList.remove(had); cell.classList.add(rk);
+        var dr = $('.day-rank', cell);
+        if (!dr) { dr = document.createElement('span'); dr.className = 'day-rank label'; cell.insertBefore(dr, wrap); }
+        if (rank) { var rc = rank.cloneNode(true); var md = $('.m-date', rc); if (md) md.remove(); dr.innerHTML = rc.innerHTML; }
+      }
       var det = document.createElement('details');
-      det.className = 'saint-item';
-      det.innerHTML = '<summary><span class="s-name">' + h3.innerHTML + '</span></summary><div class="saint-bio">' + bio.innerHTML + '</div>';
-      wrap.appendChild(det);
+      det.className = 'saint-item movable-item';
+      det.innerHTML = '<summary><span class="s-name">' + h3.innerHTML + '</span>' + AZ_CHEV + '</summary><div class="saint-bio">' + bio.innerHTML + '</div>';
+      wrap.insertBefore(det, wrap.firstChild);
       if (isToday) cell.classList.add('is-today');
     });
     if (!movableTodayCard) {
@@ -2192,11 +2202,9 @@
           avNode(c, pmake(d + ' ' + psplit(mn)[0], psplit(mn)[1] + ' ' + d), names || avText($('.day-rank', c)));
         });
       });
-      $$('.saint-grid .post-card', m).forEach(function (a) { avLink(a, avText($('.t-title', a)), avText($('.post-date', a))); });
-      $$('.movable-card', m).forEach(function (a) {
-        a.setAttribute('data-av-id', 'bayram-' + a.getAttribute('data-movable'));
-        avNode(a, avText($('h3', a)), avText($('.m-rank', a)));
-      });
+      /* the twenty saints: their list is open here, each saint a row to its page */
+      var gd = $('[data-gs-drop]', m); if (gd) gd.open = true;
+      $$('.gs-item', m).forEach(function (a) { avLink(a, avText($('.gs-n', a)), avText($('.gs-s', a))); });
     },
     'topraklarimizda-hristiyanlik.html': function (m) {
       var map = $('#harita', m), first = $('.wrap.narrow > section[id]', m);

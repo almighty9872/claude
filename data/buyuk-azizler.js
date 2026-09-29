@@ -1,7 +1,7 @@
 window.BUYUK_AZIZLER = /*JSON-START*/{
  "title": "En Çok Bilinen 20 Aziz",
  "en": "20 of the Church's Best-Known Saints",
- "intro": "Bazı azizler kendi çağlarını aşıp bütün Hristiyanlık tarihini şekillendirdi. İşte Katolik geleneğinin en çok bilinen yirmi ismi.",
+ "intro": "Bazı azizlerin etkisi kendi çağlarıyla sınırlı kalmadı ve bütün Hristiyanlık tarihine yayıldı. İşte Katolik geleneğinde en çok bilinen yirmi aziz.",
  "introEn": "Some saints outgrew their own age and shaped the whole of Christian history. Here are twenty of the best-known names in Catholic tradition.",
  "saints": [
   {
@@ -98,7 +98,7 @@ window.BUYUK_AZIZLER = /*JSON-START*/{
    "id": "aziz-thomas-aquinas",
    "name": "Aziz Thomas Aquinas",
    "en": "Saint Thomas Aquinas",
-   "epithet": "Meleksi Doktor",
+   "epithet": "Melekî Doktor",
    "epithetEn": "The Angelic Doctor",
    "era": "1225-1274",
    "summary": "Ailesi tarafından bir manastıra hapsedilerek tarikata girmesi engellenmeye çalışılan, sonunda Batı felsefesinin en etkili sistemlerinden birini kuran İtalyan keşiş.",
@@ -220,20 +220,20 @@ window.BUYUK_AZIZLER = /*JSON-START*/{
    "id": "aziz-ii-yuhanna-pavlus",
    "name": "Aziz II. Yuhanna Pavlus",
    "en": "Saint John Paul II",
-   "epithet": "Hacı Papa",
+   "epithet": "Gezgin Papa",
    "epithetEn": "The Pilgrim Pope",
    "era": "1920-2005 (Papalık: 1978-2005)",
    "eraEn": "1920-2005 (Papacy: 1978-2005)",
    "summary": "Nazi işgali altındaki Polonya'da gizlice rahip olan, sonra 455 yıl aradan sonra İtalyan olmayan ilk Papa seçilen, suikast girişiminden sağ çıkıp kendisini vuran adamı hapishanede ziyaret eden Papa.",
    "summaryEn": "A Pope who was secretly ordained a priest under Nazi occupation in Poland, was elected the first non-Italian Pope in 455 years, survived an assassination attempt, and visited the man who shot him in prison.",
    "bodyEn": "Karol Wojtyła was born in Poland; in his youth he was passionately drawn to theater and poetry, and at one point considered becoming an actor. When the Nazis occupied Poland during the Second World War and closed the universities, he works as forced labor in a quarry and a chemical factory; during this same period he studies for the priesthood in a secret, illegal seminary, since the Nazis specifically targeted Polish clergy. After the war he continues his studies in both philosophy and theater, and becomes a bishop, then a cardinal, in Kraków.\n\n## The First in 455 Years\n\nIn 1978, following the death of Pope John Paul I after a papacy of only thirty-three days, he is unexpectedly elected Pope, the first non-Italian Pope since 1522. He takes the name \"John Paul II\" in honor of his predecessor. His papacy becomes one of the longest and most influential of the twentieth century; he visits 129 countries, earning him the title \"the Pilgrim Pope.\"\n\n## Assassination and Forgiveness\n\nIn 1981, he is seriously wounded in St. Peter's Square by a Turkish gunman, Mehmet Ali Ağca; after months of recovery, in 1983 he personally visits the man in prison and announces that he has forgiven him. This image becomes, worldwide, a symbol of the power of forgiveness. He is widely believed to have played an indirect but powerful role in the fall of communism in Eastern Europe, especially in his own homeland Poland; his first papal visit to Poland in 1979 sparked a spiritual awakening that laid the ground for the birth of the Solidarity movement.\n\nHe works intensely to spread the teachings of the Second Vatican Council, launches World Youth Day to connect directly with young people, and advances dialogue with other faiths. In the final years of his life, he battles Parkinson's disease openly, in full public view, without concealment, seen by many as a silent witness to the dignity of suffering. He dies in 2005, at eighty-four; millions attend his funeral. He is canonized by Pope Francis in 2014. His feast day is October 22.",
-   "body": "Karol Wojtyła, Polonya'da doğar; gençliğinde tiyatroya ve şiire tutkuyla bağlıdır, hatta bir ara aktör olmayı düşünür. İkinci Dünya Savaşı sırasında Naziler Polonya'yı işgal edip üniversiteleri kapatınca, bir taş ocağında ve kimya fabrikasında zorunlu işçi olarak çalışır; aynı dönemde gizli, yasadışı bir seminerde rahiplik eğitimi alır, çünkü Naziler Polonyalı din adamlarını hedef almaktadır. Savaştan sonra hem felsefe hem tiyatro üzerine çalışmalarını sürdürür, Krakov'da episkopos, sonra kardinal olur.\n\n## 455 Yıl Sonra İlk\n\n1978'de, Papa I. Ioannes Paulus'un yalnızca otuz üç gün süren papalığının ardından beklenmedik biçimde Papa seçilir; 1522'den beri İtalyan olmayan ilk Papa'dır. Selefinin adını onurlandırmak için \"II. Yuhanna Pavlus\" adını alır. Papalığı, yirminci yüzyılın en uzun ve en etkili papalıklarından biri olur; 129 ülkeyi ziyaret eder, bu yüzden ona \"Hacı Papa\" denir.\n\n## Suikast ve Bağışlama\n\n1981'de, Aziz Petrus Meydanı'nda bir Türk suikastçı olan Mehmet Ali Ağca tarafından ağır biçimde yaralanır; aylar süren iyileşmenin ardından, 1983'te bizzat hapishaneye gidip kendisini vuran adamı ziyaret eder ve onu bağışladığını açıklar. Bu görüntü, dünya çapında bağışlamanın gücünün simgesi hâline gelir. Papalığı boyunca komünizmin Doğu Avrupa'daki çöküşünde, özellikle kendi ülkesi Polonya'da, dolaylı ama güçlü bir rol oynadığına yaygın biçimde inanılır; Polonya'ya yaptığı ilk papalık ziyareti (1979), Dayanışma hareketinin doğuşuna zemin hazırlayan bir manevi uyanışa yol açmıştır.\n\nII. Vatikan Konsili'nin öğretilerini yaygınlaştırmak için yoğun çaba gösterir, gençlerle doğrudan bağ kurmak amacıyla Dünya Gençlik Günleri'ni başlatır, farklı dinlerle diyaloğu ilerletir. Hayatının son yıllarında Parkinson hastalığıyla, kamuoyunun gözü önünde, gizlemeden mücadele eder; bu da acı çekmenin onuru üzerine sessiz bir tanıklık olarak görülür. 2005'te, seksen dört yaşında ölür; cenazesine milyonlarca kişi katılır. 2014'te Papa Fransis tarafından kutsanır. Anıldığı gün 22 Ekim'dir."
+   "body": "Karol Wojtyła, Polonya'da doğar; gençliğinde tiyatroya ve şiire tutkuyla bağlıdır, hatta bir ara aktör olmayı düşünür. İkinci Dünya Savaşı sırasında Naziler Polonya'yı işgal edip üniversiteleri kapatınca, bir taş ocağında ve kimya fabrikasında zorunlu işçi olarak çalışır; aynı dönemde gizli, yasadışı bir seminerde rahiplik eğitimi alır, çünkü Naziler Polonyalı din adamlarını hedef almaktadır. Savaştan sonra hem felsefe hem tiyatro üzerine çalışmalarını sürdürür, Krakov'da episkopos, sonra kardinal olur.\n\n## 455 Yıl Sonra İlk\n\n1978'de, Papa I. Ioannes Paulus'un yalnızca otuz üç gün süren papalığının ardından beklenmedik biçimde Papa seçilir; 1522'den beri İtalyan olmayan ilk Papa'dır. Selefinin adını onurlandırmak için \"II. Yuhanna Pavlus\" adını alır. Papalığı, yirminci yüzyılın en uzun ve en etkili papalıklarından biri olur; 129 ülkeyi ziyaret eder, bu yüzden ona \"Gezgin Papa\" denir.\n\n## Suikast ve Bağışlama\n\n1981'de, Aziz Petrus Meydanı'nda bir Türk suikastçı olan Mehmet Ali Ağca tarafından ağır biçimde yaralanır; aylar süren iyileşmenin ardından, 1983'te bizzat hapishaneye gidip kendisini vuran adamı ziyaret eder ve onu bağışladığını açıklar. Bu görüntü, dünya çapında bağışlamanın gücünün simgesi hâline gelir. Papalığı boyunca komünizmin Doğu Avrupa'daki çöküşünde, özellikle kendi ülkesi Polonya'da, dolaylı ama güçlü bir rol oynadığına yaygın biçimde inanılır; Polonya'ya yaptığı ilk papalık ziyareti (1979), Dayanışma hareketinin doğuşuna zemin hazırlayan bir manevi uyanışa yol açmıştır.\n\nII. Vatikan Konsili'nin öğretilerini yaygınlaştırmak için yoğun çaba gösterir, gençlerle doğrudan bağ kurmak amacıyla Dünya Gençlik Günleri'ni başlatır, farklı dinlerle diyaloğu ilerletir. Hayatının son yıllarında Parkinson hastalığıyla, kamuoyunun gözü önünde, gizlemeden mücadele eder; bu da acı çekmenin onuru üzerine sessiz bir tanıklık olarak görülür. 2005'te, seksen dört yaşında ölür; cenazesine milyonlarca kişi katılır. 2014'te Papa Fransis tarafından kutsanır. Anıldığı gün 22 Ekim'dir."
   },
   {
    "id": "padre-pio",
    "name": "Padre Pio",
    "en": "Saint Pio of Pietrelcina",
-   "epithet": "Kutsal Yaralar Taşıyan Rahip",
+   "epithet": "Kutsal Yaraları Taşıyan Rahip",
    "epithetEn": "The Priest Who Bore the Holy Wounds",
    "era": "1887-1968",
    "summary": "Elli yıl boyunca bedeninde İsa'nın çarmıh yaralarını taşıdığı, günde onlarca saat günah çıkardığı, ölmeden çok önce bile dünyanın dört bir yanından insanların akın ettiği Kapuçin rahip.",
@@ -245,7 +245,7 @@ window.BUYUK_AZIZLER = /*JSON-START*/{
    "id": "aziz-hieronymus",
    "name": "Aziz Hieronymus",
    "en": "Saint Jerome",
-   "epithet": "İncil'i Latinceye Çeviren Kilise Doktoru",
+   "epithet": "Kutsal Kitap'ı Latinceye Çeviren Kilise Doktoru",
    "epithetEn": "The Doctor of the Church Who Translated the Bible into Latin",
    "era": "yaklaşık 347-420",
    "eraEn": "c. 347-420",

@@ -1775,12 +1775,15 @@ $monthSectionsHtml = (1..12 | ForEach-Object {
   "<section class=`"month`" id=`"ay-$mo`" data-month=`"$mo`"><h2 class=`"month-title`">$(T $MonthNamesTr[$mo - 1] $MonthNamesEn[$mo - 1])</h2><div class=`"day-grid`">$cells</div></section>"
 }) -join "`n"
 $monthPillsHtml = (1..12 | ForEach-Object { "<a href=`"#ay-$_`" data-month-link=`"$_`">$(T $MonthNamesTr[$_ - 1].Substring(0, 3) $MonthNamesEn[$_ - 1].Substring(0, 3))</a>" }) -join ''
+# The feasts that move with Easter: script.js dates them for the year shown and puts each on its
+# day in the calendar; the cards themselves stay hidden, as that script's source
 $movableCardsHtml = ($Saints.movable | ForEach-Object {
-  "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`"><h3>$(T (Inline $_.title) (Inline $_.titleEn))</h3><p class=`"m-rank label`">$(T $_.rank $_.rankEn)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(TB (Blocks $_.bio) (Blocks $_.bioEn))</div></article>"
+  "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`" data-rk=`"$(Rank-Class $_.rank)`"><h3>$(T (Inline $_.title) (Inline $_.titleEn))</h3><p class=`"m-rank label`">$(T $_.rank $_.rankEn)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(TB (Blocks $_.bio) (Blocks $_.bioEn))</div></article>"
 }) -join "`n"
+# The twenty best-known saints: one compact list, folded into a dropdown
 $greatSaintsCardsHtml = ($GreatSaints.saints | ForEach-Object {
-  "<a class=`"text-link post-card`" href=`"$($_.id).html`"><span class=`"post-date label`">$(T "$(Inline $_.epithet) · $($_.era)" "$(Inline $_.epithetEn) · $($_.eraEn)")</span><span class=`"t-title`">$(T (Inline $_.name) $_.en)</span>$(TO "<span class=`"t-sub`" lang=`"en`">$($_.en)</span>")<p class=`"post-excerpt`">$(T (Inline $_.summary) (Inline $_.summaryEn))</p></a>"
-}) -join "`n"
+  "<a class=`"gs-item`" href=`"$($_.id).html`"><span class=`"gs-n`">$(T (Inline $_.name) $_.en)</span><span class=`"gs-s`">$(T (Inline $_.epithet) (Inline $_.epithetEn))</span></a>"
+}) -join ''
 $azizlerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Azizler')
@@ -1796,15 +1799,11 @@ $monthSectionsHtml
   </div>
   <h2 class="section-title" id="buyuk-azizler">$(T (Inline $GreatSaints.title) (Inline $GreatSaints.en))</h2>
   <p class="faq-intro">$(T (Inline $GreatSaints.intro) (Inline $GreatSaints.introEn))</p>
-  <div class="post-list saint-grid">
-$greatSaintsCardsHtml
-  </div>
-  <h2 class="section-title" id="hareketli-bayramlar">$(T 'Yıla Göre Değişen Bayramlar' 'Feasts That Move With the Year')</h2>
-  <p class="faq-intro">$(T "Paskalya her yıl farklı bir tarihe denk gelir; ona bağlı bütün bayramlar da (Kül Çarşambası$($Apos)ndan Kutsal Kalp$($Apos)e dek) buna göre kayar. Aşağıdaki tarihler, sayfayı açtığınız yılın Paskalya$($Apos)sına göre otomatik hesaplanır." 'Easter falls on a different date each year, and every feast tied to it (from Ash Wednesday to the Sacred Heart) shifts along with it. The dates below are calculated automatically for the year in which you open the page.')</p>
-  <div class="myst-grid movable-list" data-movable-list>
+  <details class="gs-drop" data-gs-drop><summary><span>$(T 'Yirmi azizin listesi' 'The list of twenty saints')</span>$IcoChev</summary><div class="gs-list">$greatSaintsCardsHtml</div></details>
+  <div class="movable-list" data-movable-list hidden>
 $movableCardsHtml
   </div>
-  $(TB "<p class=`"conventions`">Tarihler ve ayin dereceleri Roma Genel Takvimi$($Apos)ni esas alır; hareketli bayramların yılı, Meeus/Jones/Butcher algoritmasıyla hesaplanan Paskalya tarihine göre belirlenir. Roma Genel Takvimi$($Apos)nin boş bıraktığı günler için, rütbesi <em>Roma Azizler Cetveli</em> olarak etiketlenen bir aziz Roma Azizler Cetveli$($Apos)nden (Martyrologium Romanum) ya da Batı$($Apos)nın tarihî takvim geleneğinden seçilmiştir; bu, Kilise$($Apos)nin o gün için zorunlu kıldığı bir anma olmadığı, sitenin ek bir bilgi sunduğu anlamına gelir. Aziz hayat öyküleri bu site için Türkçe olarak özgün biçimde kaleme alınmıştır ve internet erişimi olmayan bir ortamda yazarın kendi bilgisine dayanır; özellikle daha az bilinen azizler için tarih ya da ayrıntıda küçük hatalar olabilir. Hiçbir güvenilir kaynağa dayandırılamayan çok az sayıda gün için Kilise$($Apos)nin kendi genel tanımı esas alınmıştır.</p>" "<p class=`"conventions`">Dates and liturgical ranks follow the General Roman Calendar; the year's movable feasts are set according to the date of Easter, calculated with the Meeus/Jones/Butcher algorithm. For dates the General Roman Calendar leaves open, a saint ranked <em>Roman Martyrology</em> has been chosen from the Roman Martyrology (Martyrologium Romanum) or the West's historical calendar tradition; this means it is not a commemoration the Church requires for that day, but additional information the site offers. The saint biographies were written for this site, from the author's own knowledge; small errors of date or detail are possible, especially for lesser-known saints. For a very small number of days that could not be grounded in any reliable source, the Church's own general description is used instead.</p>")
+  $(TB "<p class=`"conventions`">Tarihler ve ayin dereceleri Roma Genel Takvimi$($Apos)ne göredir. Hareketli bayramlar, Meeus/Jones/Butcher algoritmasıyla hesaplanan Paskalya tarihine göre yerleştirilir. Roma Genel Takvimi$($Apos)nde boş kalan günler için Roma Azizler Cetveli$($Apos)nden (Martyrologium Romanum) ya da Batı$($Apos)nın eski takvim geleneğinden bir aziz seçtik. Bu azizlerin rütbesi <em>Roma Azizler Cetveli</em> olarak gösterilir. Kilise bu anmaları o gün için zorunlu tutmaz; bunlar sitenin sunduğu ek bilgilerdir. Aziz hayat öyküleri bu site için Türkçe olarak yazıldı ve yazarın kendi bilgisine dayanır. Özellikle az bilinen azizlerde tarih ya da ayrıntı hataları olabilir. Güvenilir bir kaynağa dayandırılamayan birkaç gün için Kilise$($Apos)nin genel bir açıklaması kullanıldı.</p>" "<p class=`"conventions`">Dates and liturgical ranks follow the General Roman Calendar; the year's movable feasts are set according to the date of Easter, calculated with the Meeus/Jones/Butcher algorithm. For dates the General Roman Calendar leaves open, a saint ranked <em>Roman Martyrology</em> has been chosen from the Roman Martyrology (Martyrologium Romanum) or the West's historical calendar tradition; this means it is not a commemoration the Church requires for that day, but additional information the site offers. The saint biographies were written for this site, from the author's own knowledge; small errors of date or detail are possible, especially for lesser-known saints. For a very small number of days that could not be grounded in any reliable source, the Church's own general description is used instead.</p>")
 </div>
 <div class="hover-panel glass" id="saint-panel" role="tooltip" hidden></div>
 "@
