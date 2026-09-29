@@ -1581,7 +1581,7 @@ $IcoArrowL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>'
 $icTldr = ($Ic.tldr | ForEach-Object -Begin { $i = 0 } -Process {
   $i++
-  "<li><a class=`"ic-tl`" href=`"#$($_.href)`"><span class=`"ic-tl-n`">$i</span><span class=`"ic-tl-b`"><span class=`"ic-tl-t`">$(T $_.t $_.tEn)</span><span class=`"ic-tl-s`">$(T $_.text $_.textEn)</span><span class=`"ic-tl-more`">$(T 'Tümünü oku' 'Read all') $IcoArrowR</span></span></a></li>"
+  "<li><a class=`"ic-tl`" href=`"#$($_.href)`"><span class=`"ic-tl-n`">$i</span><span class=`"ic-tl-b`"><span class=`"ic-tl-t`">$(T $_.t $_.tEn)</span><span class=`"ic-tl-s`">$(T $_.text $_.textEn)<span class=`"ic-tl-more`">$(T 'Tümünü oku' 'Read all') $IcoArrowR</span></span></span></a></li>"
 }) -join ''
 $icRoman = @('I', 'II', 'III', 'IV', 'V', 'VI')
 # Every section, the closing too, in reading order: each ends with a way to the one before, the
