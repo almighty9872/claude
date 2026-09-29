@@ -10,7 +10,6 @@
 (function () {
   'use strict';
 
-  var THEME_KEY = 'kkio-theme';
   /* Part number → page. Keep in sync with tools/build.ps1 ($PartMeta). The English pages use
      their own English slugs (not a literal mirror of the Turkish filename), so a parallel list
      is needed; keep it in sync with $PartMeta's fileEn values. */
@@ -41,10 +40,12 @@
      0. Language: TR | EN. Every text is on the page in both languages, as a pair of wrappers
         (.l-tr / .l-en, written by tools/build.ps1, or by LT() below for text made here), and
         html.lang-en shows the English one. Attributes carry their English in data-en-<name>.
-        The choice is kept in localStorage and applied in <head> before the first paint.
-        Switching keeps the passage being read where it is on the screen.
+        Until a reader picks one, <head> chooses before the first paint: Turkish in Turkey's time
+        zone or with a Turkish browser, English everywhere else. A choice made with the switch is
+        kept in localStorage and wins from then on. Switching keeps the passage being read where
+        it is on the screen.
      --------------------------------------------------------------- */
-  var LANG_KEY = 'kd-lang';
+  var LANG_KEY = 'kd-lang-choice';
   function isEn() { return document.documentElement.classList.contains('lang-en'); }
   /* the same pair, for text this script writes into the page */
   function LT(tr, en) { return (!en || en === tr) ? tr : '<span class="l-tr">' + tr + '</span><span class="l-en" lang="en">' + en + '</span>'; }
@@ -110,13 +111,13 @@
   function pattr(name, v) { var x = psplit(v); return name + '="' + esc(isEn() ? x[1] : x[0]) + '" data-tr-' + name + '="' + esc(x[0]) + '" data-en-' + name + '="' + esc(x[1]) + '"'; }
   /* html has smooth scrolling on: this move must not be seen */
   function jumpBy(d) { if (!d) return; try { window.scrollBy({ top: d, left: 0, behavior: 'instant' }); } catch (e) { window.scrollBy(0, d); } }
-  function setLang(lang, keepView) {
+  function setLang(lang, keepView, remember) {
     var en = lang === 'en', root = document.documentElement;
     var a = keepView ? langAnchor() : null;
     root.classList.toggle('lang-en', en);
     root.lang = en ? 'en' : 'tr';
     LANG = en ? 'en' : 'tr';
-    try { localStorage.setItem(LANG_KEY, LANG); } catch (e) { /* private mode */ }
+    if (remember) try { localStorage.setItem(LANG_KEY, LANG); } catch (e) { /* private mode */ }
     swapAttrs(document);
     $$('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === LANG)); });
     if (a) {
@@ -138,14 +139,74 @@
       var want = b.getAttribute('data-set-lang');
       /* a tap on the language already shown flips to the other one, like a switch */
       if (want === LANG && b.closest('.lang-pill')) want = LANG === 'en' ? 'tr' : 'en';
-      setLang(want, true);
+      setLang(want, true, true);
     });
   }
 
   /* ---------------------------------------------------------------
-     1. Theme (navy/gold dark, ivory/gold light), persisted in localStorage
+     1. Theme (navy/gold dark, ivory/gold light) follows the sun: light from sunrise to sunset
+        where the reader is, dark after. Where that is comes from the device's time zone alone
+        (a table of zones below, or the zone's offset), worked out here and never sent anywhere.
+        Today's sunrise and sunset are kept (kd-sun) so <head> can pick the theme before the
+        first paint. The switch overrides the sun until its next rise or set (kd-theme-choice).
      --------------------------------------------------------------- */
-  function storedTheme() { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  var THEME_CHOICE = 'kd-theme-choice', SUN_KEY = 'kd-sun';
+  var SUN_ZONES = {
+    'Europe/Istanbul': [41, 29], 'Asia/Istanbul': [41, 29], 'Europe/London': [51.5, -0.1], 'Europe/Dublin': [53.3, -6.3],
+    'Europe/Berlin': [52.5, 13.4], 'Europe/Paris': [48.9, 2.4], 'Europe/Rome': [41.9, 12.5], 'Europe/Madrid': [40.4, -3.7],
+    'Europe/Amsterdam': [52.4, 4.9], 'Europe/Brussels': [50.8, 4.4], 'Europe/Vienna': [48.2, 16.4], 'Europe/Zurich': [47.4, 8.5],
+    'Europe/Stockholm': [59.3, 18.1], 'Europe/Oslo': [59.9, 10.8], 'Europe/Copenhagen': [55.7, 12.6], 'Europe/Warsaw': [52.2, 21],
+    'Europe/Athens': [38, 23.7], 'Europe/Lisbon': [38.7, -9.1], 'Europe/Moscow': [55.8, 37.6], 'Europe/Kiev': [50.5, 30.5], 'Europe/Kyiv': [50.5, 30.5],
+    'Asia/Nicosia': [35.2, 33.4], 'Europe/Nicosia': [35.2, 33.4], 'Asia/Beirut': [33.9, 35.5], 'Asia/Jerusalem': [31.8, 35.2], 'Asia/Baghdad': [33.3, 44.4],
+    'Asia/Tbilisi': [41.7, 44.8], 'Asia/Yerevan': [40.2, 44.5], 'Asia/Baku': [40.4, 49.9], 'Asia/Dubai': [25.2, 55.3], 'Asia/Tehran': [35.7, 51.4],
+    'America/New_York': [40.7, -74], 'America/Detroit': [42.3, -83], 'America/Chicago': [41.9, -87.6], 'America/Denver': [39.7, -105],
+    'America/Phoenix': [33.4, -112.1], 'America/Los_Angeles': [34.1, -118.2], 'America/Anchorage': [61.2, -149.9], 'Pacific/Honolulu': [21.3, -157.9],
+    'America/Toronto': [43.7, -79.4], 'America/Montreal': [45.5, -73.6], 'America/Halifax': [44.6, -63.6], 'America/St_Johns': [47.6, -52.7],
+    'America/Winnipeg': [49.9, -97.1], 'America/Regina': [50.4, -104.6], 'America/Edmonton': [53.5, -113.5], 'America/Vancouver': [49.3, -123.1],
+    'America/Mexico_City': [19.4, -99.1], 'America/Sao_Paulo': [-23.6, -46.6], 'America/Argentina/Buenos_Aires': [-34.6, -58.4],
+    'Australia/Sydney': [-33.9, 151.2], 'Australia/Melbourne': [-37.8, 145], 'Australia/Brisbane': [-27.5, 153], 'Australia/Adelaide': [-34.9, 138.6],
+    'Australia/Perth': [-31.9, 115.9], 'Australia/Hobart': [-42.9, 147.3], 'Australia/Darwin': [-12.5, 130.8], 'Pacific/Auckland': [-36.8, 174.8],
+    'Asia/Tokyo': [35.7, 139.7], 'Asia/Seoul': [37.6, 127], 'Asia/Shanghai': [31.2, 121.5], 'Asia/Hong_Kong': [22.3, 114.2], 'Asia/Singapore': [1.3, 103.8],
+    'Asia/Kolkata': [22.6, 77], 'Asia/Manila': [14.6, 121], 'Africa/Johannesburg': [-26.2, 28], 'Africa/Cairo': [30, 31.2], 'Africa/Lagos': [6.5, 3.4], 'Africa/Nairobi': [-1.3, 36.8]
+  };
+  function sunPlace(d) {
+    var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { /* old browser */ }
+    if (SUN_ZONES[tz]) return SUN_ZONES[tz];
+    /* a zone not in the table: its clock offset gives the longitude, its region the hemisphere */
+    var south = /^(Australia|Antarctica)\/|^Pacific\/(Auckland|Chatham|Fiji|Noumea|Tongatapu)|^America\/(Argentina|Sao_Paulo|Santiago|Montevideo|Asuncion|Lima|La_Paz)|^Africa\/(Johannesburg|Maputo|Harare|Lusaka|Windhoek|Gaborone)|^Indian\/(Mauritius|Reunion)/.test(tz);
+    return [south ? -30 : 40, -d.getTimezoneOffset() / 4];
+  }
+  /* sunrise or sunset on the day of d, in minutes after local midnight (null: the sun does not rise or set that day) */
+  function sunMin(d, lat, lon, rise) {
+    var R = Math.PI / 180, N = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 864e5);
+    var lh = lon / 15, t = N + ((rise ? 6 : 18) - lh) / 24, M = 0.9856 * t - 3.289;
+    var L = (M + 1.916 * Math.sin(M * R) + 0.020 * Math.sin(2 * M * R) + 282.634 + 720) % 360;
+    var RA = (Math.atan(0.91764 * Math.tan(L * R)) / R + 720) % 360;
+    RA = (RA + Math.floor(L / 90) * 90 - Math.floor(RA / 90) * 90) / 15;
+    var sinD = 0.39782 * Math.sin(L * R), cosD = Math.cos(Math.asin(sinD));
+    var cosH = (Math.cos(90.833 * R) - sinD * Math.sin(lat * R)) / (cosD * Math.cos(lat * R));
+    if (cosH > 1 || cosH < -1) return null;
+    var Hh = (rise ? 360 - Math.acos(cosH) / R : Math.acos(cosH) / R) / 15;
+    var UT = ((Hh + RA - 0.06571 * t - 6.622 - lh) % 24 + 24) % 24;
+    return Math.round(((UT * 60 - d.getTimezoneOffset()) % 1440 + 1440) % 1440);
+  }
+  function sunToday() {
+    var d = new Date(), p = sunPlace(d), r = sunMin(d, p[0], p[1], true), s = sunMin(d, p[0], p[1], false);
+    var sun = r == null || s == null || s <= r ? { r: 420, s: 1140 } : { r: r, s: s };
+    try { localStorage.setItem(SUN_KEY, JSON.stringify(sun)); } catch (e) { /* private mode */ }
+    return sun;
+  }
+  /* the theme the sun gives now, and the moment it next changes */
+  function sunTheme() {
+    var sun = sunToday(), d = new Date(), m = d.getHours() * 60 + d.getMinutes();
+    var mid = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    var next = m < sun.r ? mid + sun.r * 6e4 : m < sun.s ? mid + sun.s * 6e4 : mid + 864e5 + sun.r * 6e4;
+    return { t: m >= sun.r && m < sun.s ? 'light' : 'dark', next: next };
+  }
+  function themeChoice() {
+    try { var c = JSON.parse(localStorage.getItem(THEME_CHOICE) || 'null'); return c && c.until > Date.now() ? c.t : null; } catch (e) { return null; }
+  }
+  function wantedTheme() { return themeChoice() || sunTheme().t; }
   function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
   function syncTheme() {
     $$('.theme-toggle').forEach(function (b) {
@@ -159,28 +220,31 @@
     var meta = $('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--chrome').trim() || (isDark() ? '#16161a' : '#f7f2e8'));
   }
+  function applyTheme(t) {
+    if (document.documentElement.getAttribute('data-theme') === t) return;
+    document.documentElement.setAttribute('data-theme', t);
+    syncTheme(); syncChrome();
+  }
   function initTheme() {
-    /* Dark is the default: the site does not follow the OS setting, only an explicit choice. */
-    var saved = storedTheme();
-    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+    applyTheme(wantedTheme());
     syncTheme();
     $$('.theme-toggle').forEach(function (b) {
       b.addEventListener('click', function () {
         var next = isDark() ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private mode */ }
-        syncTheme();
-        syncChrome();
+        try { localStorage.setItem(THEME_CHOICE, JSON.stringify({ t: next, until: sunTheme().next })); } catch (e) { /* private mode */ }
+        applyTheme(next);
       });
     });
+    /* the page left open over sunrise or sunset changes with it */
+    setInterval(function () { applyTheme(wantedTheme()); }, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) applyTheme(wantedTheme()); });
     /* Back to a page the browser kept in memory (Safari's swipe back, the back button): it comes
        back as it was left, so a theme, text size or accessibility setting changed on a later page
        would not show. Read the saved choices again. */
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) return;
       var H = document.documentElement;
-      H.setAttribute('data-theme', storedTheme() === 'light' ? 'light' : 'dark');
-      syncTheme(); syncChrome();
+      applyTheme(wantedTheme());
       try {
         var fs = localStorage.getItem('kkio-fontsize');
         if (fs === '1' || fs === '2') H.setAttribute('data-fontsize', fs); else H.removeAttribute('data-fontsize');
