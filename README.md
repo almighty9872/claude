@@ -33,7 +33,7 @@ hristiyan-duasi.html    Compendium Part IV · Q 534–598
 motu-proprio.html       Motu Proprio (Turkish, or the English original with the EN switch)
 giris.html              Introduction (same)
 ekler.html              Appendix: prayers (TR/EN/LA) + formulas of Catholic doctrine
-katolik-sureci.html     Becoming Catholic: the OCIA/RCIA process
+katolik-sureci.html     Becoming Catholic: two doors (never baptized / baptized elsewhere), the first step, the OCIA steps, the rest folded
 gunah-cikarma.html      Confession: how it works step by step, an examination-of-conscience
                         checklist, and common first-timer fears/questions
 kutsal-ayin.html        The Mass, part by part

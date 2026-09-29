@@ -1377,41 +1377,46 @@ $kkBody = @"
 Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -TitleEn "$($KkEn.meta.title) | $SiteName" -Description $KkMeta.description `
   -Path 'kutsal-kitap.html' -Body $kkBody -JsonLd @((Breadcrumb-Ld 'Kutsal Kitap' 'kutsal-kitap.html'))
 
+$IcoArrowR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 # ================================================================== KATOLIK SURECI (katolik-sureci.html)
-$pathCards = ($Sureci.paths | ForEach-Object {
-  "<article class=`"text-card`"><h3 class=`"t-title`">$(T (Inline $_.title) (Inline $_.titleEn))</h3><div class=`"verse`">$(TB (Verse $_.text) (Verse $_.textEn))</div></article>"
-}) -join ""
+# Two doors up top (never baptized / baptized in another church), the first step in one line, the
+# OCIA steps as a short numbered list, and everything else (the baptized path, conditional
+# baptism, the wait, practical questions) folded away, each opening in place.
+$sureciDoors = (@($Sureci.paths) | ForEach-Object -Begin { $di = 0 } -Process {
+  $to = if ($di -eq 0) { 'surec' } else { 'zaten-hristiyan' }; $di++
+  "<a class=`"why-door`" href=`"#$to`"><span class=`"why-door-t`">$(T (Inline $_.door) (Inline $_.doorEn))</span><span class=`"why-door-s`">$(T (Inline $_.doorSub) (Inline $_.doorSubEn))</span>$IcoArrowR</a>"
+}) -join ''
 $stageList = ($Sureci.steps | ForEach-Object {
   $i = [array]::IndexOf(@($Sureci.steps), $_) + 1
-  "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(T (Inline $_.title) (Inline $_.en))</h3>$(TO "<p class=`"stage-en label`" lang=`"en`">$($_.en)</p>")<p>$(T (Inline $_.text) (Inline $_.textEn))</p></div></li>"
+  "<li class=`"stage`"><span class=`"stage-n`">$i</span><div class=`"stage-body`"><h3>$(T (Inline $_.title) (Inline $_.en))</h3><p>$(T (Inline $_.text) (Inline $_.textEn))</p></div></li>"
 }) -join "`n"
-$sureciFaq = ($Sureci.faq | ForEach-Object {
-  "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(T (Inline $_.q) (Inline $_.qEn))</span>$IcoChevLg</summary>" +
-    "<div class=`"faq-a`"><p>$(T (Inline $_.a) (Inline $_.aEn))</p></div></details>"
-}) -join "`n"
+function Sureci-Fold([string]$id, $title, $body) {
+  "<details class=`"kk-sec`" id=`"$id`"><summary><h3>$title</h3>$IcoChevLg</summary><div class=`"kk-sec-body prose`">$body</div></details>"
+}
+$sureciFolds = @(
+  (Sureci-Fold 'zaten-hristiyan' (T $Sureci.already.title $Sureci.already.titleEn) (TB (Blocks $Sureci.already.body) (Blocks $Sureci.already.bodyEn))),
+  (Sureci-Fold 'sartli-vaftiz' (T $Sureci.conditional.title $Sureci.conditional.titleEn) (TB (Blocks $Sureci.conditional.body) (Blocks $Sureci.conditional.bodyEn))),
+  (Sureci-Fold 'beklerken' (T $Sureci.waiting.title $Sureci.waiting.titleEn) (TB (Blocks $Sureci.waiting.body) (Blocks $Sureci.waiting.bodyEn)))
+) + @($Sureci.faq | ForEach-Object { Sureci-Fold $_.id (T (Inline $_.q) (Inline $_.qEn)) "<p>$(T (Inline $_.a) (Inline $_.aEn))</p>" })
 $sureciBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow sureci-wrap" data-av-nogh>
   $(Crumbs 'Katolik Olma Süreci')
   <header class="page-head center">$(Page-Ico $IcoDoor)<h1>$(T $Sureci.title $Sureci.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Sureci.en)</p>")</header>
-  <p class="faq-intro">$(T (Inline $Sureci.intro) (Inline $Sureci.introEn))</p>
-  <h2 class="section-title" id="iki-yol"><span class="label">1</span>$(T 'İki Yol' 'Two Paths')</h2>
-  <div class="text-grid two">$pathCards</div>
-  <h2 class="section-title" id="surec"><span class="label">2</span>$(T 'Süreç Adım Adım' 'The Process, Step by Step')</h2>
-  <p class="faq-intro">$(T (Inline $Sureci.processIntro) (Inline $Sureci.processIntroEn))</p>
-  <ol class="stage-list">
+  <p class="why-intro">$(T (Inline $Sureci.intro) (Inline $Sureci.introEn))</p>
+  <nav class="why-doors two" $(TA 'aria-label' 'Hangi yol sizin için?' 'Which path is yours?')>$sureciDoors</nav>
+  <p class="sureci-first">$(T (Inline $Sureci.firstStep) (Inline $Sureci.firstStepEn)) <a href="kiliseler.html">$IcoPin $(T 'Kilise Bul' 'Find a Church')</a></p>
+  <section class="sureci-sec" id="surec" aria-labelledby="h-surec">
+    <h2 id="h-surec">$(T 'Hazırlık adım adım' 'The preparation, step by step')</h2>
+    <p class="why-thesis">$(T (Inline $Sureci.processIntro) (Inline $Sureci.processIntroEn))</p>
+    <ol class="stage-list">
 $stageList
-  </ol>
-  <h2 class="section-title" id="zaten-hristiyan"><span class="label">3</span>$(T $Sureci.already.title $Sureci.already.titleEn)</h2>
-  <div class="prose">$(TB (Blocks $Sureci.already.body) (Blocks $Sureci.already.bodyEn))</div>
-  <h2 class="section-title" id="sartli-vaftiz"><span class="label">4</span>$(T $Sureci.conditional.title $Sureci.conditional.titleEn)</h2>
-  <div class="prose">$(TB (Blocks $Sureci.conditional.body) (Blocks $Sureci.conditional.bodyEn))</div>
-  <h2 class="section-title" id="beklerken"><span class="label">5</span>$(T $Sureci.waiting.title $Sureci.waiting.titleEn)</h2>
-  <div class="prose">$(TB (Blocks $Sureci.waiting.body) (Blocks $Sureci.waiting.bodyEn))</div>
-  <h2 class="section-title" id="pratik-sorular"><span class="label">6</span>$(T 'Pratik Sorular' 'Practical Questions')</h2>
-  <div class="faq-list">
-$sureciFaq
-  </div>
-  $(TB "<p class=`"conventions`">Bu sayfadaki genel OCIA süreci evrensel bir Kilise düzenlemesidir (1972, Tanrısal Kült Cemaati); yukarıdaki bazı ayrıntılar (Paskalya Nöbeti dışında kabul, günah çıkarmanın zamanlaması gibi) ABD Katolik Episkoposlar Konferansı$($Apos)nın Katekümenlik İçin Ulusal Tüzüğü$($Apos)nden (1986) alınmıştır. Kendi bölgenizdeki uygulama için en yakın cemaat kilisenize danışın.</p>" "<p class=`"conventions`">The general OCIA process on this page is a universal Church regulation (1972, Congregation for Divine Worship); some details above (such as reception outside the Easter Vigil, or the timing of confession) are drawn from the U.S. Conference of Catholic Bishops' National Statutes for the Catechumenate (1986). For practice in your own region, ask your nearest parish.</p>")
+    </ol>
+  </section>
+  <section class="sureci-sec" id="sorular" aria-labelledby="h-sorular">
+    <h2 id="h-sorular">$(T 'Merak edilenler' 'Good to know')</h2>
+    <div class="kk-secs">$($sureciFolds -join "`n")</div>
+  </section>
+  $(TB "<p class=`"conventions`">Bu sayfadaki OCIA süreci, Kilise$($Apos)nin bütün dünyada geçerli düzenlemesidir (1972, Tanrısal Kült Cemaati). Paskalya Nöbeti dışında kabul ve günah çıkarmanın zamanı gibi bazı ayrıntılar, ABD Katolik Episkoposlar Konferansı$($Apos)nın Katekümenlik İçin Ulusal Tüzüğü$($Apos)nden (1986) alınmıştır. Kendi bölgenizdeki uygulama için en yakın kiliseye danışın.</p>" "<p class=`"conventions`">The general OCIA process on this page is a universal Church regulation (1972, Congregation for Divine Worship); some details above (such as reception outside the Easter Vigil, or the timing of confession) are drawn from the U.S. Conference of Catholic Bishops' National Statutes for the Catechumenate (1986). For practice in your own region, ask your nearest parish.</p>")
 </div>
 "@
 Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" -TitleEn "$($Sureci.en) | $SiteName" `
@@ -1607,7 +1612,6 @@ function Ic-Blocks([string]$s) {
   . $flush
   return $sb.ToString()
 }
-$IcoArrowR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 $IcoArrowL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
 $IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>'
 $icTldr = ($Ic.tldr | ForEach-Object -Begin { $i = 0 } -Process {

@@ -16,6 +16,10 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
  "paths": [
   {
    "id": "vaftizsiz",
+   "door": "Hiç vaftiz olmadım",
+   "doorSub": "Vaftiz olduğunuz anda Katolik olursunuz. Hazırlık adımlarını görün.",
+   "doorEn": "I have never been baptized",
+   "doorSubEn": "You become Catholic the moment you are baptized. See the steps.",
    "title": "Daha önce hiç vaftiz olmadıysanız",
    "titleEn": "If you've never been baptized before",
    "text": "Vaftiz olduğunuz anda Katolik olursunuz. <a href=\"#surec\">Hazırlık sürecini adım adım görün</a>.",
@@ -23,14 +27,18 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
   },
   {
    "id": "vaftizli",
+   "door": "Başka bir kilisede vaftiz oldum",
+   "doorSub": "Zaten Hristiyansınız; iman ikrarıyla Kilise’ye kabul edilirsiniz.",
+   "doorEn": "I was baptized in another church",
+   "doorSubEn": "You are already a Christian; you are received with a profession of faith.",
    "title": "Başka bir Hristiyan topluluğunda geçerli biçimde vaftiz olduysanız",
    "titleEn": "If you were validly baptized in another Christian community",
    "text": "Zaten Hristiyansınız. İman ikrarında bulunarak Kilise’ye kabul edilirsiniz; genellikle aynı ayinde konfirmasyon ve ilk komünyonu da alırsınız. <a href=\"#zaten-hristiyan\">Bu yolun ayrıntıları</a>.",
    "textEn": "You're already Christian. You're received into the Church with a profession of faith, usually along with confirmation and first Communion in the same Mass. <a href=\"#zaten-hristiyan\">More on this path</a>."
   }
  ],
- "processIntro": "Vaftiz olmamış yetişkinlerin hazırlık sürecine OCIA denir (eskiden RCIA deniyordu). Adayları imana hazırlama geleneği ilk yüzyıllara kadar uzanır. Süreç genellikle eylülde başlar ve yaklaşık altı ay sonra Paskalya Nöbeti’nde tamamlanır. Başlamak için size en yakın Katolik kilisesine başvurun.",
- "processIntroEn": "The preparation of unbaptized adults is called OCIA (formerly RCIA). Preparing candidates for faith is a tradition that goes back to the first centuries. It usually starts in September and ends about six months later at the Easter Vigil. To begin, contact your nearest Catholic parish.",
+ "processIntro": "Vaftiz olmamış yetişkinlerin hazırlığına OCIA denir (eskiden RCIA deniyordu). Süreç genellikle eylülde başlar ve yaklaşık altı ay sonra, Paskalya Nöbeti’nde vaftizle tamamlanır.",
+ "processIntroEn": "The preparation of unbaptized adults is called OCIA (formerly RCIA). It usually begins in September and ends about six months later, with baptism at the Easter Vigil.",
  "steps": [
   {
    "title": "Araştırma Dönemi",
@@ -108,5 +116,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "qEn": "Do I need to go to confession?",
    "aEn": "If you're already baptized, yes: you go to confession at a separate time before your reception into the Church. If you've never been baptized, you don't need to, because baptism wipes away all earlier sins. See the <a href=\"gunah-cikarma.html\" target=\"_blank\" rel=\"noopener\">step-by-step confession guide</a>."
   }
- ]
+ ],
+ "firstStep": "İlk adım basit: Size en yakın Katolik kilisesine yazın ya da uğrayın. Rahip sizinle tanışır ve hazırlığı birlikte planlar.",
+ "firstStepEn": "The first step is simple: write to or visit your nearest Catholic church. The priest will meet you and plan your preparation with you."
 }/*JSON-END*/;

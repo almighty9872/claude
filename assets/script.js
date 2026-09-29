@@ -2157,8 +2157,7 @@
       avNode($('.ic-sources', m), avHead($('#ic-kaynak-h', m)));
     },
     'katolik-sureci.html': function (m) {
-      avWrap($('.wrap', m), 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
-      $$('.faq-list > details', m).forEach(function (d) { avNode(d, avText($('summary', d))); });
+      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
     },
     'gunah-cikarma.html': function (m) {
       avWrap($('.wrap', m), 'h2.section-title[id]', 'aside, p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
@@ -2986,16 +2985,17 @@
   }
 
   /* ---------------------------------------------------------------
-     Neden Katoliğiz? / Why We're Catholic: every topic is a one-line
-     hook that opens in place. A link to a topic (#ince-ayar, say)
-     opens it and brings it into view; the phone view does its own.
+     Folded sections (Neden Katoliğiz? hooks, Kutsal Kitap and Katolik
+     Olma Süreci sections) open in place. A link to one (#ince-ayar,
+     #zaten-hristiyan) opens it and brings it into view; the phone
+     view does its own.
      --------------------------------------------------------------- */
   function initWhyHooks() {
-    var wrap = $('.why-wrap');
-    if (!wrap || document.documentElement.classList.contains('av')) return;
+    var wrap = $('main') || document.body;
+    if (!$('.why-item, .kk-sec', wrap) || document.documentElement.classList.contains('av')) return;
     function openHash() {
       var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
-      if (!el || !wrap.contains(el) || !el.classList.contains('why-item')) return;
+      if (!el || !wrap.contains(el) || !el.matches('.why-item, .kk-sec')) return;
       el.open = true;
       requestAnimationFrame(function () { el.scrollIntoView({ block: 'start' }); });
     }
