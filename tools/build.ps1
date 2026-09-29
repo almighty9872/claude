@@ -275,6 +275,7 @@ function Blocks([string]$s) {
     $l = $line.Trim(); if (-not $l) { continue }
     if ($l.StartsWith('- ')) { [void]$list.Add($l.Substring(2)); continue }
     if ($list.Count) { [void]$sb.Append('<ul>' + (($list | ForEach-Object { '<li>' + (Inline $_) + '</li>' }) -join '') + '</ul>'); $list.Clear() }
+    if ($l.StartsWith('### ')) { [void]$sb.Append('<h3 class="blk-sub">' + (Inline $l.Substring(4)) + '</h3>'); continue }
     [void]$sb.Append('<p>' + (Inline $l) + '</p>')
   }
   if ($list.Count) { [void]$sb.Append('<ul>' + (($list | ForEach-Object { '<li>' + (Inline $_) + '</li>' }) -join '') + '</ul>') }
