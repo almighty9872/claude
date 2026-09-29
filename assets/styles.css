@@ -901,127 +901,64 @@ body.sheet-open { overflow: hidden; }
   line-height: 1.55; color: var(--text); max-width: 40rem;
 }
 
-/* ---------- Neden Katoliğiz? / Why We're Catholic: a guided case in five steps ----------
-   A stepper pinned under the header; one step shown at a time (script.js; without it all five
-   follow each other); each topic a card that reads top to bottom in a few seconds: the question,
-   a one-line answer, the key points, and the objection folded away until wanted. */
-.why-wrap { max-width: 1120px; }
-.why-intro { max-width: 44rem; margin: 0 auto 1.6rem; text-align: center; font-size: 1.12rem; line-height: 1.6; color: var(--text-soft); }
-.why-tabs {
-  position: sticky; top: calc(var(--header-h) + .5rem); z-index: 25; margin: 0 0 1.8rem;
-  background: var(--surface); border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); box-shadow: var(--shadow);
+/* ---------- Neden Katoliğiz? / Why We're Catholic: a short case in three parts ----------
+   One calm reading column. Two "doors" send the reader to the start or straight to the Church;
+   each part lists its topics as one-line hooks that open in place (question, one-line answer,
+   key points, and an "Ama..." line that opens the objection's reply). */
+.why-wrap { max-width: 760px; }
+.why-intro { max-width: 36rem; margin: 0 auto 1.6rem; text-align: center; font-size: 1.12rem; line-height: 1.6; color: var(--text-soft); }
+.why-doors { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 0 0 3rem; }
+@media (max-width: 560px) { .why-doors { grid-template-columns: 1fr; margin-bottom: 2.2rem; } }
+.why-door {
+  position: relative; display: grid; gap: .2rem; padding: 1rem 2.6rem 1rem 1.15rem; border-radius: var(--radius);
+  background: var(--gold-bg); border: 1px solid var(--gold-soft); text-decoration: none; color: var(--text);
+  transition: background-color .18s, transform .18s;
 }
-.why-tabs ol {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: .25rem; margin: 0; padding: .4rem; list-style: none;
-  overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+.why-door:hover { transform: translateY(-2px); }
+.why-door-t { font-weight: 600; font-size: 1.05rem; line-height: 1.3; }
+.why-door-s { font-family: var(--sans); font-size: .82rem; color: var(--muted); line-height: 1.35; }
+.why-door svg { position: absolute; right: 1rem; top: 50%; width: 1.15rem; height: 1.15rem; margin-top: -.575rem; color: var(--gold); }
+.why-part { margin: 0 0 3rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
+.why-part-head { margin: 0 0 1rem; }
+.why-part-head .label { margin: 0 0 .2rem; }
+.why-part-head h2 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.05rem); line-height: 1.15; }
+.why-thesis { margin: .45rem 0 0; font-size: 1.05rem; line-height: 1.55; color: var(--text-soft); }
+.why-list { border-top: 1px solid var(--border); }
+.why-item { border-bottom: 1px solid var(--border); scroll-margin-top: calc(var(--header-h) + 1rem); }
+.why-item > summary {
+  display: grid; grid-template-columns: 1fr auto; column-gap: 1rem; align-items: center;
+  padding: .95rem .2rem; cursor: pointer; list-style: none;
 }
-.why-tabs ol::-webkit-scrollbar { display: none; }
-.why-tab {
-  display: flex; align-items: center; gap: .55rem; height: 100%; padding: .55rem .7rem; border-radius: var(--radius);
-  font-family: var(--sans); font-size: .82rem; font-weight: 600; line-height: 1.25; color: var(--text-soft); text-decoration: none;
-  transition: background-color .18s, color .18s;
-}
-.why-tab:hover { background: var(--gold-bg); color: var(--gold-active); }
-.why-tab-n {
-  flex: none; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%;
-  border: 1.5px solid var(--gold-soft); color: var(--gold); font-size: .8rem; font-weight: 700;
-}
-.why-tab[aria-current="step"] { background: var(--gold-bg); color: var(--gold-active); }
-.why-tab[aria-current="step"] .why-tab-n { background: var(--gold); border-color: var(--gold); color: var(--surface); }
-.why-tab.is-done .why-tab-n { background: var(--gold-bg); }
-@media (max-width: 900px) {
-  .why-tabs { border-radius: 999px; }
-  .why-tabs ol {
-    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: max-content; border-radius: 999px;
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent);
-  }
-  .why-tabs ol:has(li:last-child [aria-current]) { -webkit-mask-image: none; mask-image: none; }
-  .why-tab { white-space: nowrap; border-radius: 999px; padding: .4rem .75rem .4rem .45rem; }
-  .why-tab-n { width: 1.55rem; height: 1.55rem; }
-}
-
-.why-step, .why-end { scroll-margin-top: calc(var(--header-h) + 5.5rem); }
-.why-step { margin-bottom: 2.5rem; }
-/* Before script.js runs, CSS alone already shows only the first step (html.js is set in <head>),
-   so hiding the others never shifts the page after it first paints */
-html.js .why-wrap:not(.why-ready) :is(.why-step ~ .why-step, .why-end),
-html.js .why-wrap.why-ready [data-why-panel]:not(.is-active) { display: none; }
-.why-step-head { display: flex; align-items: flex-start; gap: 1.1rem; margin: 0 0 1.4rem; }
-.why-num {
-  flex: none; display: grid; place-items: center; width: 3.4rem; height: 3.4rem; border-radius: 50%;
-  background: var(--gold-bg); border: 1px solid var(--gold-soft); color: var(--gold); font-size: 1.7rem; font-weight: 600;
-}
-.why-step-head .label { margin: .15rem 0 .1rem; }
-.why-step-head h2 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.15rem); line-height: 1.15; }
-.why-thesis { margin: .5rem 0 0; max-width: 48rem; font-size: 1.1rem; line-height: 1.55; color: var(--text-soft); }
-
-.why-grid { display: grid; gap: 1.1rem; }
-@media (min-width: 860px) {
-  .why-grid { grid-template-columns: repeat(2, 1fr); }
-  /* An odd last card takes the full row, its points in two columns so lines stay short */
-  .why-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
-  .why-card:last-child:nth-child(odd) .why-points { columns: 2; column-gap: 2.2rem; }
-  .why-card:last-child:nth-child(odd) .why-points li { break-inside: avoid; }
-}
-.why-card {
-  display: flex; flex-direction: column; min-width: 0; padding: 1.35rem 1.5rem 1.1rem;
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
-  scroll-margin-top: calc(var(--header-h) + 5.5rem);
-}
-.why-card:target { border-color: var(--gold-soft); }
-.why-kicker { margin: 0 0 .35rem; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
-.why-q { margin: 0 0 .6rem; font-size: 1.32rem; line-height: 1.3; font-weight: 600; }
-.why-q::before { content: "“"; color: var(--gold-soft); margin-right: .05em; }
-.why-q::after { content: "”"; color: var(--gold-soft); margin-left: .05em; }
-.why-lede { margin: 0 0 .9rem; padding-left: .85rem; border-left: 3px solid var(--gold); font-size: 1.08rem; line-height: 1.5; font-weight: 500; color: var(--text); }
-.why-points { margin: 0 0 1rem; padding: 0; list-style: none; }
-.why-points li { position: relative; margin: 0 0 .6rem; padding-left: 1.35rem; font-size: 1rem; line-height: 1.55; color: var(--text-soft); }
-.why-points li::before {
-  content: ""; position: absolute; left: .15rem; top: .62em; width: .45rem; height: .45rem; border-radius: 50%;
-  background: var(--gold-soft);
-}
-.why-obj { display: flex; gap: .65rem; align-items: flex-start; margin-top: auto; padding-top: .8rem; border-top: 1px solid var(--border); }
-.why-obj > svg { flex: none; width: 1.3rem; height: 1.3rem; margin-top: .1rem; color: var(--gold); }
-.why-obj p { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--text-soft); }
-.why-obj-label { display: block; font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.why-item > summary::-webkit-details-marker { display: none; }
+.why-item > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.why-hook-k { grid-column: 1; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+.why-hook { grid-column: 1; margin-top: .15rem; font-size: 1.15rem; line-height: 1.4; font-weight: 500; color: var(--text); }
+.why-item > summary .chev { grid-column: 2; grid-row: 1 / span 2; }
+.why-item > summary:hover .why-hook { color: var(--gold-active); }
+.why-item[open] > summary .chev { transform: rotate(180deg); color: var(--gold); }
+.why-body { padding: .1rem .2rem 1.3rem; }
+.why-q { margin: 0 0 .5rem; font-size: .98rem; color: var(--muted); font-style: italic; }
+.why-q-label { margin-right: .4rem; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; font-style: normal; }
+.why-lede { margin: 0 0 .8rem; font-size: 1.05rem; line-height: 1.5; font-weight: 600; color: var(--text); }
+.why-points { margin: 0 0 .9rem; padding: 0; list-style: none; }
+.why-points li { position: relative; margin: 0 0 .55rem; padding-left: 1.2rem; font-size: 1rem; line-height: 1.55; color: var(--text-soft); }
+.why-points li::before { content: ""; position: absolute; left: .15rem; top: .62em; width: .38rem; height: .38rem; border-radius: 50%; background: var(--gold-soft); }
+.why-obj { border-radius: var(--radius); background: var(--gold-bg); }
+.why-obj > summary { display: flex; align-items: baseline; gap: .5rem; padding: .65rem .85rem; cursor: pointer; list-style: none; font-size: .98rem; line-height: 1.45; }
+.why-obj > summary::-webkit-details-marker { display: none; }
+.why-obj > summary .ico { flex: none; width: .9rem; height: .9rem; margin-left: auto; align-self: center; color: var(--gold); transition: transform .2s; }
+.why-obj[open] > summary .ico { transform: rotate(180deg); }
+.why-obj-label { flex: none; font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--gold); }
 .why-obj-q { font-weight: 600; color: var(--text); }
-
-.why-pager { display: flex; justify-content: space-between; gap: 1rem; margin: 1.6rem 0 0; }
-.why-go {
-  display: inline-flex; align-items: center; gap: .7rem; max-width: 48%; padding: .75rem 1rem; border-radius: var(--radius);
-  border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); text-decoration: none; font-weight: 600; line-height: 1.25;
-  transition: border-color .18s, background-color .18s;
-}
-.why-go small { display: block; margin-bottom: .1rem; font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.why-go svg { flex: none; width: 1.15rem; height: 1.15rem; color: var(--gold); }
-.why-go:hover { border-color: var(--gold-soft); background: var(--gold-bg); }
-.why-go.next { margin-left: auto; text-align: right; background: var(--gold-bg); border-color: var(--gold-soft); }
-.why-go.next:hover { background: var(--gold); color: var(--surface); }
-.why-go.next:hover svg, .why-go.next:hover small { color: var(--surface); }
-
-.why-end { margin: 0 0 2rem; }
-.why-end > h2 { margin: 2.2rem 0 1.2rem; text-align: center; font-size: clamp(1.6rem, 3.6vw, 2.1rem); }
-html.js .why-end { margin-top: -1rem; }
-.why-chain { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6rem; margin: 0 0 1.6rem; padding: 0; list-style: none; counter-reset: none; }
-.why-chain li {
-  position: relative; display: flex; flex-direction: column; align-items: center; gap: .5rem; padding: 1rem .8rem;
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-align: center;
-  font-size: 1rem; line-height: 1.35; font-weight: 600;
-}
-.why-chain li + li::before {
-  content: ""; position: absolute; left: -1.25rem; top: 50%; width: .8rem; height: .8rem; margin-top: -.4rem;
-  border-top: 2px solid var(--gold-soft); border-right: 2px solid var(--gold-soft); transform: rotate(45deg);
-}
-.why-chain-n { display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--gold); color: var(--surface); font-family: var(--sans); font-size: .8rem; font-weight: 700; }
-@media (max-width: 760px) {
-  .why-chain { grid-template-columns: 1fr; gap: 1.2rem; }
-  .why-chain li { flex-direction: row; text-align: left; padding: .7rem .9rem; }
-  .why-chain li + li::before { left: 50%; top: -1rem; margin: 0 0 0 -.4rem; transform: rotate(135deg); }
-}
-.why-closing { max-width: 44rem; margin: 0 auto 2rem; font-size: 1.15rem; line-height: 1.6; text-align: center; color: var(--text); }
+.why-obj > p { margin: 0; padding: 0 .85rem .8rem; font-size: .98rem; line-height: 1.55; color: var(--text-soft); }
+.why-end { margin: 0 0 2rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
+.why-end > h2 { margin: 0 0 1.1rem; text-align: center; font-size: clamp(1.5rem, 3.4vw, 1.9rem); }
+.why-chain { display: grid; gap: .5rem; max-width: 30rem; margin: 0 auto 1.6rem; padding: 0; list-style: none; }
+.why-chain li { display: flex; align-items: center; gap: .7rem; font-size: 1.02rem; line-height: 1.35; font-weight: 600; }
+.why-chain-n { flex: none; display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--gold); color: var(--surface); font-family: var(--sans); font-size: .78rem; font-weight: 700; }
+.why-closing { margin: 0 0 2rem; font-size: 1.08rem; line-height: 1.6; color: var(--text); }
 .why-where { margin: 0 0 .9rem; text-align: center; font-size: 1.2rem; }
-.why-ctas { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; }
-@media (max-width: 900px) { .why-ctas { grid-template-columns: repeat(2, 1fr); } }
+.why-ctas { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
 @media (max-width: 480px) { .why-ctas { grid-template-columns: 1fr; } }
 .why-cta {
   position: relative; display: grid; gap: .2rem; padding: .95rem 2.4rem .95rem 1.05rem; border-radius: var(--radius);
@@ -1031,18 +968,9 @@ html.js .why-end { margin-top: -1rem; }
 .why-cta-t { font-weight: 600; }
 .why-cta-s { font-family: var(--sans); font-size: .8rem; color: var(--muted); line-height: 1.35; }
 .why-cta svg { position: absolute; right: .9rem; top: 50%; width: 1.1rem; height: 1.1rem; margin-top: -.55rem; color: var(--gold); }
-@media (max-width: 560px) {
-  .why-step-head { gap: .8rem; }
-  .why-num { width: 2.6rem; height: 2.6rem; font-size: 1.3rem; }
-  .why-card { padding: 1.1rem 1.1rem .9rem; }
-  .why-q { font-size: 1.18rem; }
-  .why-go { max-width: none; flex: 1; padding: .65rem .8rem; font-size: .95rem; }
-}
-@media print {
-  .why-tabs, .why-pager { display: none !important; }
-  html.js .why-wrap [data-why-panel] { display: block !important; }
-}
-@media (prefers-reduced-motion: reduce) { .why-cta { transition: none; } }
+@media (max-width: 560px) { .why-hook { font-size: 1.08rem; } }
+@media print { .why-doors { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .why-cta, .why-door, .why-obj > summary .ico { transition: none; } }
 
 /* The gear beside the brand at every width: opens the settings panel (language + accessibility) */
 .settings-btn {
@@ -2270,7 +2198,7 @@ html.app-open { overflow: hidden; }
    ====================================================================== */
 .av-nav, .av-foot, .av-lang, .av-dock { display: none; }
 html.av .site-header, html.av .navsheet,
-html.av .faq-toc, html.av .mass-pills, html.av .why-tabs, html.av .month-pills, html.av .readbar, html.av .toc, html.av .toc-backdrop,
+html.av .faq-toc, html.av .mass-pills, html.av .month-pills, html.av .readbar, html.av .toc, html.av .toc-backdrop,
 html.av .en-toggle, html.av .article-tools, html.av #saint-panel, html.av .ornament, html.av .why-foot-nav,
 html.av .acc-section > a:not(.av-gh-link), html.av .acc-list, html.av .part-acc > summary .chev, html.av .qa-foot:not(:has(> :not(.en-toggle))) { display: none !important; }
 html.av body { padding-bottom: 0 !important; }
@@ -2338,7 +2266,18 @@ html.av main .faq-item.av-cur .faq-q, html.av main .mira-item.av-cur .mira-name,
 html.av main .mira-item.av-cur .mira-place { display: block; margin-top: .35rem; }
 .av-row-sub { padding-left: 1.9rem; }
 .av-row-sub .av-t { font-size: .98rem; }
-html.av main :is(.av-cur, .av-path):is(.why-step, .why-end, .mira-cat, .faq-cat) { display: block !important; margin-top: 0; }
+html.av main :is(.av-cur, .av-path):is(.why-end, .mira-cat, .faq-cat) { display: block !important; margin-top: 0; }
+html.av main .why-part { margin: 0 0 1.6rem; }
+html.av main .why-part-head { margin: 0 0 .5rem; }
+html.av main .why-part-head h2 { font-size: 1.3rem; }
+html.av main .why-thesis { font-size: .95rem; }
+html.av main .why-list { border: 0; }
+html.av main .why-item.av-cur > summary { display: block; padding: .2rem 0 .8rem; margin: 0 0 1rem; border-bottom: 1px solid var(--border); }
+html.av main .why-item.av-cur .why-hook { font-size: 1.35rem; line-height: 1.3; font-weight: 600; }
+html.av main .why-item.av-cur .why-hook-k { display: block; }
+html.av main .why-item.av-cur .why-hook { display: block; }
+html.av main .why-item.av-cur .why-body { padding: 0; }
+html.av main .why-item.av-cur .why-points li { color: var(--text); }
 
 /* The page's icon, name and description: large on its list, small further in */
 html.av .av-hero { display: flex; flex-direction: column; align-items: center; gap: .15rem; margin: 0 auto .4rem; padding: .5rem 1rem .1rem; border: 0; text-align: center; view-transition-name: av-hero; }
@@ -2386,7 +2325,7 @@ a.av-gh-link { display: block; text-decoration: none; }
 .av-row.is-here .av-t { color: var(--gold-active); font-weight: 600; }
 
 /* A level's own heading */
-html.av main .av-cur > .section-title, html.av main .av-cur > h2, html.av main .av-cur .why-step-head h2, html.av main .av-cur > .month-title { margin-top: .4rem; font-size: 1.45rem; }
+html.av main .av-cur > .section-title, html.av main .av-cur > h2, html.av main .av-cur > .month-title { margin-top: .4rem; font-size: 1.45rem; }
 html.av main .av-cur > .sec { margin: .4rem 0 .8rem; }
 html.av main .sec-l4, html.av main .sec-l5 { margin: 1.3rem .9rem .45rem; padding: 0; border: 0; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 html.av main .sec-l4 .sec-label, html.av main .sec-l5 .sec-label, html.av main .sec-l4 .en, html.av main .sec-l5 .en { display: none; }
@@ -2488,19 +2427,6 @@ html.av.av-leaf main .av-sec.av-cur > h2:first-child {
 html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child:has(+ .faq-cat-en) { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
 html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child + .faq-cat-en { margin: .25rem 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--border); text-align: center; }
 /* Neden Katoliğiz: a step is a list of its questions; a question is plain text */
-html.av main .why-step.av-cur .why-step-head { display: block; margin: .4rem 0 1rem; text-align: center; }
-html.av main .why-step .why-num, html.av main .why-step-head .label, html.av main .why-pager { display: none !important; }
-html.av main .why-step.av-cur .why-step-head h2 { font-size: 1.45rem; }
-html.av main .why-step.av-cur .why-step-head p { margin-top: .5rem; font-size: 1rem; }
-html.av main .why-grid { display: block; }
-html.av main .why-card.av-cur { display: block; padding: 0; border: 0; background: none; box-shadow: none; }
-html.av main .why-card.av-cur .why-kicker { display: none; }
-html.av main .why-card.av-cur .why-q { margin: .4rem 0 1rem; padding: .2rem 0 .8rem; border-bottom: 1px solid var(--border); font-size: 1.35rem; line-height: 1.25; }
-html.av main .why-card.av-cur .why-q::before, html.av main .why-card.av-cur .why-q::after { content: none; }
-html.av main .why-card.av-cur .why-lede { padding: 0; border: 0; font-weight: 400; }
-html.av main .why-card.av-cur .why-points li { color: var(--text); }
-html.av main .why-card.av-cur .why-obj { margin-top: 1.4rem; padding-top: 1rem; }
-html.av main .why-card.av-cur .why-obj > svg { display: none; }
 /* Kutsal Kitap: no numbered circles or boxed points */
 html.av main .kk-body h2::before { content: none; }
 html.av main .kk-body h2 { display: block; }

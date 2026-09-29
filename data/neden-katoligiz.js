@@ -1,10 +1,10 @@
 /* =====================================================================
- * EN: "Why We're Catholic": a five-step case for the faith, written for
- *     readers who may not believe, moving from basic reality to specific
- *     Catholic teaching (truth and God, Jesus and the Bible, the Church
- *     and sacraments, saints and sinners, morality and destiny). Each
- *     topic is a skeptic's question ("q"), a one-line answer ("lede"),
- *     a few key points, and the strongest objection with a reply.
+ * EN: "Why We're Catholic": a short case for the faith in three parts,
+ *     written for readers who may not believe (Is there a God? Who is
+ *     Jesus? Why the Catholic Church?). Each topic opens with a one-line
+ *     "hook" the page lists; opening it shows the skeptic's question
+ *     ("q"), a one-line answer ("lede"), a few key points, and the
+ *     strongest objection with a reply.
  *     "chain" is the five-link summary drawn above the closing text.
  *     Original writing drawing on standard classical and Catholic
  *     apologetics (the cosmological and fine-tuning arguments, Lewis's
@@ -15,20 +15,22 @@
 window.WHY_CATHOLIC = /*JSON-START*/{
  "title": "Neden Katoliğiz?",
  "en": "Why We're Catholic",
- "intro": "Bu sayfa sizi tek bir cümleyle ikna etmeye çalışmıyor. Katolik inancının akla da hitap ettiğini adım adım gösteriyor: “Gerçek nedir?” ve “Evren nereden geldi?” sorularından başlayıp İsa’ya ve O’nun kurduğu Kilise’ye kadar. Her adımda bir şüphecinin en güçlü itirazına da cevap veriyoruz.",
- "introEn": "This page isn’t trying to convince you in a single sentence; it shows step by step that the Catholic faith speaks to reason too: from what is true and where the universe came from, all the way to Jesus and the Church he founded. At each step we also answer a skeptic’s strongest objection.",
+ "intro": "Katolik inancı akla da yatar. Aşağıda bunu kısa cümlelerle anlatıyoruz; merak ettiğiniz cümleyi açın, ayrıntısı altında.",
+ "introEn": "The Catholic faith makes sense to reason too. Below we say why in short sentences; open any one that catches your eye to see the details.",
  "parts": [
   {
-   "id": "hakikat-ve-tanri",
-   "title": "Hakikat ve Tanrı",
-   "en": "Truth and God",
-   "thesis": "Evrenin var olması, bu kadar ince ayarlı olması ve iyiyi kötüden ayırt edebilmemiz, en makul açıklamanın bir Yaratıcı olduğunu gösteriyor.",
-   "thesisEn": "That the universe exists, that it is finely tuned, and that we can tell good from evil make a Creator the most reasonable explanation.",
+   "id": "tanri-var-mi",
+   "title": "Tanrı var mı?",
+   "en": "Is There a God?",
+   "thesis": "Evrenin var olması, ince ayarı, iyiyle kötüyü ayırt edebilmemiz ve kalbimizin özlemi, en makul açıklamanın bir Yaratıcı olduğunu gösteriyor.",
+   "thesisEn": "That the universe exists and is finely tuned, that we can tell good from evil, and that our hearts long for more all make a Creator the most reasonable explanation.",
    "topics": [
     {
      "id": "nesnel-hakikat",
      "title": "Nesnel Hakikat",
      "en": "Objective Truth",
+     "hook": "“Mutlak hakikat yoktur” diyen, mutlak bir hüküm vermiş olur.",
+     "hookEn": "Whoever says “there is no absolute truth” is stating an absolute truth.",
      "q": "Herkesin doğrusu kendine göre değil mi?",
      "qEn": "Isn't truth different for everyone?",
      "lede": "Zevkler kişiden kişiye değişir, gerçekler değişmez.",
@@ -52,6 +54,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "evrenin-baslangici",
      "title": "Evrenin Başlangıcı",
      "en": "The Beginning of the Universe",
+     "hook": "Büyük Patlama’yı ilk öne süren kişi bir Katolik rahipti.",
+     "hookEn": "The first person to propose the Big Bang was a Catholic priest.",
      "q": "Evren kendiliğinden var olamaz mı?",
      "qEn": "Couldn't the universe just exist on its own?",
      "lede": "Bilim evrenin bir başlangıcı olduğunu söylüyor; başlayan her şeyin bir nedeni vardır.",
@@ -75,6 +79,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "ince-ayar",
      "title": "İnce Ayar",
      "en": "Fine-Tuning",
+     "hook": "Evrenin ayarları biraz farklı olsaydı, ne yıldızlar olurdu ne de biz.",
+     "hookEn": "Were the universe’s settings slightly different, there would be no stars, and no us.",
      "q": "Hayatın var olması sadece bir şans eseri olamaz mı?",
      "qEn": "Couldn't life be just a lucky accident?",
      "lede": "Evrenin temel sabitleri, hayatın var olabilmesi için inanılmaz bir hassasiyetle ayarlanmış görünüyor.",
@@ -98,6 +104,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "kotuluk-sorunu",
      "title": "Kötülük Sorunu",
      "en": "The Problem of Evil",
+     "hook": "Kötülüğe öfkelenmek, iyiliğin gerçek olduğunu gösterir.",
+     "hookEn": "Our anger at evil shows that goodness is real.",
      "q": "İyi bir Tanrı varsa neden bu kadar acı var?",
      "qEn": "If a good God exists, why is there so much suffering?",
      "lede": "Bu, en dürüst ve en ağır sorudur. Hristiyanlık ona bir formülle değil, çarmıhla cevap verir.",
@@ -116,20 +124,47 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objectionEn": "An all-powerful God would remove suffering at once.",
      "reply": "Bunun tek yolu özgür iradeyi, onunla birlikte de sevgiyi ve bağışlamayı ortadan kaldırmak olurdu. Hristiyan umudu, acının bir gün sona ereceğidir: “Gözlerinden bütün yaşları silecek. Artık ölüm olmayacak” (Vahiy 21:4).",
      "replyEn": "The only way would be to remove free will, and with it love and forgiveness. The Christian hope is that suffering will end: “He will wipe every tear from their eyes, and death shall be no more” (Revelation 21:4)."
+    },
+    {
+     "id": "kalbin-ozlemi",
+     "title": "Kalbin Özlemi",
+     "en": "The Heart's Longing",
+     "hook": "Susuzluk, suyun var olduğunu gösterir.",
+     "hookEn": "Thirst shows that water exists.",
+     "q": "Tanrı’ya gerçekten ihtiyacım var mı?",
+     "qEn": "Do I really need God?",
+     "lede": "Hiçbir başarı, zenginlik ya da ilişki kalbimizi tam olarak doyurmaz. Bu, başka bir şey için yaratıldığımızın işaretidir.",
+     "ledeEn": "No success, wealth or relationship fully satisfies the heart; a sign we were made for something more.",
+     "points": [
+      "Açlık yemeğin, susuzluk da suyun var olduğunu gösterir. Doğal arzularımızın bir karşılığı vardır.",
+      "C. S. Lewis: “İçimde bu dünyanın karşılayamayacağı bir arzu buluyorsam, en olası açıklama başka bir dünya için yaratılmış olmamdır.”",
+      "Augustinus: “Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”"
+     ],
+     "pointsEn": [
+      "Hunger shows that food exists, thirst that water exists; our natural desires have something that answers them.",
+      "C. S. Lewis: “If I find in myself a desire which no experience in this world can satisfy, the most probable explanation is that I was made for another world.”",
+      "Augustine: “You have made us for yourself, and our heart is restless until it rests in you.”"
+     ],
+     "objection": "Bu sadece bir teselli ihtiyacı; insanlar dini bu yüzden uydurur.",
+     "objectionEn": "That’s just a need for comfort; that’s why people invent religion.",
+     "reply": "Susamamız, suyun bir hayal olduğunu kanıtlamaz. Üstelik Hristiyanlık rahat bir teselli değildir: Düşmanı sevmeyi ve kendini feda etmeyi ister. Kendini iyi hissetmek için din uyduran biri bu kadar zor bir yolu seçmezdi.",
+     "replyEn": "Being thirsty doesn’t prove water is an illusion. And Christianity is no easy comfort: it asks us to love our enemies and give ourselves up; someone inventing a religion to feel good wouldn’t pick one this hard."
     }
    ]
   },
   {
-   "id": "isa-ve-kutsal-kitap",
-   "title": "İsa ve Kutsal Kitap",
-   "en": "Jesus and the Bible",
-   "thesis": "Bir Yaratıcı varsa, kendini bize tanıtmış olabilir mi? Hristiyanlık bu soruya tarihte sınanabilecek bir olayla cevap veriyor: İsa’nın ölümü ve dirilişi.",
-   "thesisEn": "If there is a Creator, might he have made himself known? Christianity answers with an event we can test in history: Jesus’ death and resurrection.",
+   "id": "isa-kim",
+   "title": "İsa kim?",
+   "en": "Who Is Jesus?",
+   "thesis": "Bir Yaratıcı varsa, kendini bize tanıtmış olabilir. Hristiyanlık bunu tarihte sınanabilecek bir olaya dayandırır: İsa’nın dirilişine.",
+   "thesisEn": "If there is a Creator, he may have made himself known. Christianity rests this on an event we can test in history: Jesus’ resurrection.",
    "topics": [
     {
      "id": "tarihteki-isa",
      "title": "Tarihteki İsa",
      "en": "The Historical Jesus",
+     "hook": "İsa’nın yaşadığından inanmayan tarihçiler bile şüphe etmez.",
+     "hookEn": "Even historians who don’t believe do not doubt that Jesus lived.",
      "q": "İsa gerçekten yaşadı mı, yoksa bir efsane mi?",
      "qEn": "Did Jesus really live, or is he a legend?",
      "lede": "İsa’nın yaşadığı ve Pilatus döneminde çarmıha gerildiği, tarihçilerin neredeyse hepsinin kabul ettiği bir gerçektir.",
@@ -153,6 +188,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "isanin-iddiasi",
      "title": "İsa’nın İddiası",
      "en": "Who Jesus Claimed to Be",
+     "hook": "İsa ya deliydi, ya yalancıydı, ya da gerçekten Tanrı’ydı.",
+     "hookEn": "Jesus was either mad, a liar, or truly God.",
      "q": "İsa sadece iyi bir öğretmen olamaz mı?",
      "qEn": "Couldn't Jesus just have been a good teacher?",
      "lede": "İsa’nın kendisi hakkında söyledikleri bu seçeneği ortadan kaldırıyor.",
@@ -176,6 +213,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "dirilis",
      "title": "Diriliş",
      "en": "The Resurrection",
+     "hook": "Korkup saklanan öğrenciler, bildikleri bir yalan uğruna ölmezdi.",
+     "hookEn": "Frightened disciples in hiding would not die for a lie they knew.",
      "q": "Ölümden dirilen bir adama nasıl inanılabilir?",
      "qEn": "How can anyone believe a man rose from the dead?",
      "lede": "Hristiyanlık, sınanabilir tarihsel bir iddiaya dayanır: “Mesih dirilmediyse imanınız boştur” (1 Korintliler 15:17).",
@@ -198,28 +237,30 @@ window.WHY_CATHOLIC = /*JSON-START*/{
    ]
   },
   {
-   "id": "kilise-ve-kutsal-sirlar",
-   "title": "Kilise ve Kutsal Sırlar",
-   "en": "The Church and Sacraments",
-   "thesis": "İsa dirildiyse söyledikleri önemlidir. O, arkasında bir kitap değil, havarilerin üzerine kurulmuş ve bugüne kadar süren bir Kilise bıraktı.",
-   "thesisEn": "If Jesus rose, what he said matters; and he left behind not a book but a Church built on the apostles, which lasts to this day.",
+   "id": "neden-katolik",
+   "title": "Neden Katolik Kilise?",
+   "en": "Why the Catholic Church?",
+   "thesis": "İsa dirildiyse söyledikleri önemlidir. O, havarilerin üzerine kurulmuş ve bugüne kadar süren bir Kilise bıraktı.",
+   "thesisEn": "If Jesus rose, what he said matters, and he left behind a Church built on the apostles that lasts to this day.",
    "topics": [
     {
      "id": "tek-kilise",
      "title": "Tek Kilise ve Petrus",
      "en": "One Church and Peter",
+     "hook": "İsa arkasında bir kitap değil, bir Kilise bıraktı.",
+     "hookEn": "Jesus left behind not a book, but a Church.",
      "q": "İsa’ya inanmak yetmez mi, neden bir Kilise?",
      "qEn": "Isn't believing in Jesus enough? Why a Church?",
      "lede": "İsa öğretisini tek tek kişilere değil, görünür ve yetkili bir topluluğa emanet etti.",
      "ledeEn": "Jesus entrusted his teaching not to scattered individuals but to a visible community with authority.",
      "points": [
       "Petrus’a “Bu kayanın üzerine kilisemi kuracağım” dedi ve ona Göklerin Egemenliği’nin anahtarlarını verdi (Matta 16:18-19).",
-      "Ortak bir yetki olmadığında herkes Kutsal Kitap’ı farklı yorumlar; bugünkü binlerce ayrı topluluk bunun sonucudur. Oysa Mesih, öğrencilerinin “bir olması” için dua etti (Yuhanna 17:21).",
+      "Ortak bir yetki olmadığında herkes Kutsal Kitap’ı farklı yorumlar; bugünkü binlerce ayrı topluluk bunun sonucudur. Oysa Mesih, öğrencilerinin “bir olması” için dua etti (Yuhanna 17:21). Bu, başka kiliselerdeki Hristiyanları küçümsemek demek değildir: Onlar da vaftizle Mesih’e bağlı kardeşlerimizdir ve imanlarından, tanıklıklarından öğreneceğimiz çok şey vardır (KKK 818).",
       "Bugünkü papa, Petrus’la başlayan ve iki bin yıldır kopmadan süren bir zincirin 260’tan fazla halkasından sonuncusudur."
      ],
      "pointsEn": [
       "He told Peter, “On this rock I will build my church,” and gave him the keys of the kingdom of heaven (Matthew 16:18-19).",
-      "Without a shared authority everyone reads the Bible differently; the thousands of separate communities today are the result. Christ prayed that his disciples would “be one” (John 17:21).",
+      "Without a shared authority everyone reads the Bible differently; the thousands of separate communities today are the result. Christ prayed that his disciples would “be one” (John 17:21). This doesn’t mean looking down on Christians in other churches: through baptism they are our brothers and sisters in Christ, and we have much to learn from their faith and witness (CCC 818).",
       "Today’s pope is the latest link in a chain of more than 260 that began with Peter and has held for two thousand years."
      ],
      "objection": "Kilise, İsa’nın sade mesajını sonradan kurumsallaştırdı.",
@@ -231,6 +272,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "kutsal-kitabi-kim-topladi",
      "title": "Kutsal Kitap ve Gelenek",
      "en": "Scripture and Tradition",
+     "hook": "Kutsal Kitap’ın içindekiler listesini Kilise belirledi.",
+     "hookEn": "The Church decided the Bible’s table of contents.",
      "q": "Neden sadece Kutsal Kitap yetmiyor?",
      "qEn": "Why isn't the Bible alone enough?",
      "lede": "Kutsal Kitap’ın hangi kitaplardan oluşacağına Kilise karar verdi. Yani Kutsal Kitap, Kilise’nin içinden doğdu.",
@@ -238,12 +281,14 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "points": [
       "Bugünkü 27 kitaplık Yeni Ahit listesi, Hippo (393) ve Kartaca (397) konseylerinde kesinleşti.",
       "Kutsal Kitap da sözle aktarılan öğretiye sadık kalmamızı ister: “Size sözle ya da mektupla aktardığımız öğretilere sımsıkı sarılın” (2 Selanikliler 2:15).",
-      "Kutsal Kitap, Kutsal Gelenek ve Kilise’nin öğretim yetkisi, aynı kaynaktan, Mesih’ten gelen tek bir bütündür."
+      "Kutsal Kitap, Kutsal Gelenek ve Kilise’nin öğretim yetkisi, aynı kaynaktan, Mesih’ten gelen tek bir bütündür.",
+      "Kutsal Kitap hiçbir yerde “yalnızca Kutsal Kitap” demez. Tersine, sözle aktarılan ve güvenilir kişilere emanet edilen öğretiden söz eder (2 Timoteos 2:2). Yuhanna da İsa’nın yaptıklarının hepsinin yazılmadığını söyler (Yuhanna 21:25)."
      ],
      "pointsEn": [
       "The 27-book New Testament list was settled at the councils of Hippo (393) and Carthage (397).",
       "The Bible itself tells us to keep the teaching handed on by word of mouth: “Hold to the traditions which you were taught by us, either by word of mouth or by letter” (2 Thessalonians 2:15).",
-      "Scripture, Tradition and the Church’s teaching office form one whole, coming from one source, Christ."
+      "Scripture, Tradition and the Church’s teaching office form one whole, coming from one source, Christ.",
+      "Nowhere does the Bible say “Scripture alone.” Instead it speaks of teaching handed on by word of mouth and entrusted to faithful men (2 Timothy 2:2), and John says that not everything Jesus did was written down (John 21:25)."
      ],
      "objection": "Böylece Kilise kendini Kutsal Kitap’ın üstüne koyuyor.",
      "objectionEn": "So the Church puts itself above the Bible.",
@@ -254,19 +299,23 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "kutsal-sirlar",
      "title": "Kutsal Sırlar",
      "en": "The Sacraments",
+     "hook": "İsa “Bu benim bedenimdir” dedi, “Bu bir semboldür” demedi.",
+     "hookEn": "Jesus said “This is my body,” not “This is a symbol.”",
      "q": "Su, ekmek ve yağın ruhsal bir etkisi olabilir mi?",
      "qEn": "Can water, bread and oil really have a spiritual effect?",
      "lede": "Tanrı bizi beden ve ruh olarak yarattı; lütfunu da görülebilen, dokunulabilen işaretlerle verir.",
      "ledeEn": "God made us body and soul, so he gives his grace through signs we can see and touch.",
      "points": [
-      "İsa hastaları iyileştirirken onlara dokundu, çamur ve su kullandı. Öğrencilerine vaftiz etmelerini, ekmeği “beni anmak için” sunmalarını ve günahları bağışlamalarını buyurdu.",
+      "İsa hastaları iyileştirirken onlara dokundu, çamur ve su kullandı. Öğrencilerine vaftiz etmelerini, ekmeği “beni anmak için” sunmalarını ve günahları bağışlamalarını buyurdu: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23).",
       "Yedi kutsal sır, doğumdan ölüme kadar hayatın bütün önemli anlarında bize eşlik eder.",
-      "İlk Hristiyanlar Efkaristiya’yı bir sembol olarak görmedi. Antakyalı İgnatius, onun “Kurtarıcımız İsa Mesih’in bedeni” olduğunu inkâr edenleri eleştiriyordu."
+      "İlk Hristiyanlar Efkaristiya’yı bir sembol olarak görmedi. Antakyalı İgnatius, onun “Kurtarıcımız İsa Mesih’in bedeni” olduğunu inkâr edenleri eleştiriyordu.",
+      "İsa, “Bedenim gerçek yiyecek, kanım gerçek içecektir” dedi (Yuhanna 6:55). Öğrencilerinin birçoğu bu sözü kabul edemeyip O’ndan ayrıldı, ama İsa onları geri çağırıp “Sadece bir semboldü” demedi (Yuhanna 6:66). Son Akşam Yemeği’nde de ekmeği alıp “Bu benim bedenimdir” dedi (Markos 14:22)."
      ],
      "pointsEn": [
-      "Jesus touched people when he healed, used mud and water, and told his disciples to baptize, to offer the bread “in remembrance of me” and to forgive sins.",
+      "Jesus touched people when he healed, used mud and water, and told his disciples to baptize, to offer the bread “in remembrance of me” and to forgive sins: “If you forgive the sins of any, they are forgiven” (John 20:22-23).",
       "The seven sacraments accompany every important moment of life, from birth to death.",
-      "The first Christians didn’t treat the Eucharist as a symbol: Ignatius of Antioch criticized those who denied it was “the flesh of our Saviour Jesus Christ”."
+      "The first Christians didn’t treat the Eucharist as a symbol: Ignatius of Antioch criticized those who denied it was “the flesh of our Saviour Jesus Christ”.",
+      "Jesus said, “My flesh is food indeed, and my blood is drink indeed” (John 6:55). Many of his disciples could not accept this and left him, yet he did not call them back to say he only meant a symbol (John 6:66). At the Last Supper he took the bread and said, “This is my body” (Mark 14:22)."
      ],
      "objection": "Bu bir tür büyü değil mi?",
      "objectionEn": "Isn’t this a kind of magic?",
@@ -277,6 +326,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "skandallar",
      "title": "Kilise’deki Skandallar",
      "en": "Scandals in the Church",
+     "hook": "Havarilerden biri de haindi; Kilise yine de ayakta.",
+     "hookEn": "One of the apostles was a traitor too; the Church still stands.",
      "q": "Bu kadar skandal varken Kilise nasıl kutsal olabilir?",
      "qEn": "How can the Church be holy with so many scandals?",
      "lede": "Kilise’nin kutsallığı üyelerinden değil, Mesih’ten gelir. Kilise azizler için bir müze değil, günahkârlar için bir hastanedir.",
@@ -295,20 +346,13 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objectionEn": "It has survived two thousand years only because it is well organized.",
      "reply": "Hiçbir insan kurumu, yöneticilerinin bu kadar hatasına, bölünmelere ve zulme rağmen aynı öğretiyi koruyarak yirmi yüzyıl ayakta kalmadı. İsa, “Ölüler diyarının kapıları ona karşı direnemeyecek” diye söz vermişti (Matta 16:18).",
      "replyEn": "No human institution has lasted twenty centuries with the same teaching despite so many failures by its own leaders, so many splits and persecutions. Jesus promised, “The gates of hell shall not prevail against it” (Matthew 16:18)."
-    }
-   ]
-  },
-  {
-   "id": "azizler-ve-gunahkarlar",
-   "title": "Azizler ve Günahkârlar",
-   "en": "Saints and Sinners",
-   "thesis": "Ağaç meyvesinden tanınır: Hristiyanlık insanları ve toplumları gerçekten değiştirir.",
-   "thesisEn": "A tree is known by its fruit: Christianity really changes people and societies.",
-   "topics": [
+    },
     {
      "id": "meyvelerinden",
      "title": "Meyvelerinden Tanırsınız",
      "en": "Known by Its Fruit",
+     "hook": "İlk hastaneler ve üniversiteler Kilise’nin içinden doğdu.",
+     "hookEn": "The first hospitals and universities grew out of the Church.",
      "q": "Din insanlığa gerçekten iyi bir şey kattı mı?",
      "qEn": "Has religion really done humanity any good?",
      "lede": "Bugün doğal karşıladığımız pek çok kurum Kilise’nin elinde doğdu.",
@@ -332,6 +376,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "lutuf",
      "title": "Lütuf ve İyi İşler",
      "en": "Grace and Good Works",
+     "hook": "Kurtuluş satın alınmaz, ama gerçek iman boş durmaz.",
+     "hookEn": "Salvation can’t be bought, but real faith doesn’t sit idle.",
      "q": "İyi bir insan olmak cennete gitmek için yeterli mi?",
      "qEn": "Do you get to heaven by being a good person?",
      "lede": "Hayır. Kurtuluş kazanılan bir ödül değil, Tanrı’nın armağanıdır. Ama gerçek iman kendini iyi işlerle gösterir.",
@@ -339,12 +385,14 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "points": [
       "Hiçbirimiz Tanrı’nın kusursuz iyiliğine kendi çabamızla ulaşamayız. Bu yüzden ilk adımı Tanrı attı.",
       "Hristiyanlık, Tanrı’nın insanı aramaya çıkmasının hikâyesidir; tıpkı kaybolan koyununu arayan çoban gibi (Luka 15:4-7).",
-      "“Amelsiz iman ölüdür” (Yakup 2:26). İyi işler kurtuluşu satın almaz; bize gösterilen sevgiye verdiğimiz cevaptır."
+      "“Amelsiz iman ölüdür” (Yakup 2:26). İyi işler kurtuluşu satın almaz; bize gösterilen sevgiye verdiğimiz cevaptır.",
+      "Kurtuluş bir anda bitmiş bir iş değil, süren bir yoldur: “Korku ve titreme içinde kurtuluşunuz için çaba gösterin” (Filipililer 2:12). Bu yüzden Vaftiz’den sonra da Günah Çıkarma vardır: Yolda düşen, tövbe edip yeniden kalkabilir."
      ],
      "pointsEn": [
       "None of us can reach God’s perfect goodness by our own effort, so God took the first step.",
       "Christianity is the story of God setting out to find us, like the shepherd looking for his lost sheep (Luke 15:4-7).",
-      "“Faith without works is dead” (James 2:26): good works don’t buy salvation; they answer a love already received."
+      "“Faith without works is dead” (James 2:26): good works don’t buy salvation; they answer a love already received.",
+      "Salvation is not something finished in a single moment but a road: “Work out your own salvation with fear and trembling” (Philippians 2:12). That is why, after Baptism, there is also Confession: whoever falls on the way can repent and get up again."
      ],
      "objection": "Yani kötü biri son anda tövbe edip kurtulabilir mi? Bu adil mi?",
      "objectionEn": "So a bad person can repent at the last minute and be saved? Is that fair?",
@@ -355,6 +403,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "meryem-ve-azizler",
      "title": "Meryem Ana ve Azizler",
      "en": "Mary and the Saints",
+     "hook": "Arkadaşınızdan dua isteyebiliyorsanız, cennettekinden de isteyebilirsiniz.",
+     "hookEn": "If you can ask a friend to pray for you, you can ask one in heaven.",
      "q": "Katolikler Meryem’e ve azizlere tapıyor mu?",
      "qEn": "Do Catholics worship Mary and the saints?",
      "lede": "Hayır. Tapınma yalnızca Tanrı’ya yapılır. Azizlerden ise, bir arkadaşımızdan ister gibi, bizim için dua etmelerini isteriz.",
@@ -362,54 +412,26 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "points": [
       "“Doğru kişinin duası çok etkilidir” (Yakup 5:16). Ölüm, Mesih’te bir olanları birbirinden ayırmaz.",
       "Meryem’e duyduğumuz saygı, onun İsa’nın annesi ve ilk öğrencisi olmasından gelir. Meryem her zaman Oğlu’nu gösterir: “O size ne derse onu yapın” (Yuhanna 2:5).",
-      "Azizler, Hristiyan hayatının gerçekten yaşanabileceğinin kanıtıdır. Birçoğu, Augustinus gibi, büyük bir günahkârken değişti."
+      "Azizler, Hristiyan hayatının gerçekten yaşanabileceğinin kanıtıdır. Birçoğu, Augustinus gibi, büyük bir günahkârken değişti.",
+      "Meryem, “Bundan böyle bütün kuşaklar beni kutlu sayacak” dedi (Luka 1:48). Tanrı bize anne babamıza saygı göstermeyi buyurur (Mısır’dan Çıkış 20:12); kendi Oğlu’nun annesine saygı gösterilmesini elbette ister."
      ],
      "pointsEn": [
       "“The prayer of a righteous man has great power” (James 5:16); death doesn’t separate those who are one in Christ.",
       "Mary is honored as Jesus’ mother and first disciple; she always points to her Son: “Do whatever he tells you” (John 2:5).",
-      "The saints prove the Christian life can really be lived; many, like Augustine, were great sinners who were changed."
+      "The saints prove the Christian life can really be lived; many, like Augustine, were great sinners who were changed.",
+      "Mary said, “Henceforth all generations will call me blessed” (Luke 1:48). God tells us to honor our father and mother (Exodus 20:12); how much more does he want his own Son’s mother honored."
      ],
      "objection": "Neden doğrudan Tanrı’ya dua etmiyorsunuz?",
      "objectionEn": "Why not pray to God directly?",
      "reply": "Ediyoruz. Katolik duasının merkezi, Mesih aracılığıyla Baba’ya sunulan Kutsal Ayin’dir. Bir arkadaşınızdan sizin için dua etmesini istemek Tanrı’ya olan güveninizi azaltmıyorsa, cennetteki bir arkadaştan istemek de azaltmaz.",
      "replyEn": "We do; the heart of Catholic prayer is the Mass, offered to the Father through Christ. If asking a friend to pray for you doesn’t lessen your trust in God, asking a friend in heaven doesn’t either."
-    }
-   ]
-  },
-  {
-   "id": "ahlak-ve-sonsuz-yazgi",
-   "title": "Ahlak ve Sonsuz Yazgı",
-   "en": "Morality and Destiny",
-   "thesis": "İnsan sonsuz mutluluk için yaratıldı. Kilise’nin ahlak öğretisi bir yasaklar listesi değil, o mutluluğa giden yolun haritasıdır.",
-   "thesisEn": "We were made for everlasting happiness; the Church’s moral teaching isn’t a list of bans but a map of the way there.",
-   "topics": [
-    {
-     "id": "kalbin-ozlemi",
-     "title": "Kalbin Özlemi",
-     "en": "The Heart's Longing",
-     "q": "Tanrı’ya gerçekten ihtiyacım var mı?",
-     "qEn": "Do I really need God?",
-     "lede": "Hiçbir başarı, zenginlik ya da ilişki kalbimizi tam olarak doyurmaz. Bu, başka bir şey için yaratıldığımızın işaretidir.",
-     "ledeEn": "No success, wealth or relationship fully satisfies the heart; a sign we were made for something more.",
-     "points": [
-      "Açlık yemeğin, susuzluk da suyun var olduğunu gösterir. Doğal arzularımızın bir karşılığı vardır.",
-      "C. S. Lewis: “İçimde bu dünyanın karşılayamayacağı bir arzu buluyorsam, en olası açıklama başka bir dünya için yaratılmış olmamdır.”",
-      "Augustinus: “Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”"
-     ],
-     "pointsEn": [
-      "Hunger shows that food exists, thirst that water exists; our natural desires have something that answers them.",
-      "C. S. Lewis: “If I find in myself a desire which no experience in this world can satisfy, the most probable explanation is that I was made for another world.”",
-      "Augustine: “You have made us for yourself, and our heart is restless until it rests in you.”"
-     ],
-     "objection": "Bu sadece bir teselli ihtiyacı; insanlar dini bu yüzden uydurur.",
-     "objectionEn": "That’s just a need for comfort; that’s why people invent religion.",
-     "reply": "Susamamız, suyun bir hayal olduğunu kanıtlamaz. Üstelik Hristiyanlık rahat bir teselli değildir: Düşmanı sevmeyi ve kendini feda etmeyi ister. Kendini iyi hissetmek için din uyduran biri bu kadar zor bir yolu seçmezdi.",
-     "replyEn": "Being thirsty doesn’t prove water is an illusion. And Christianity is no easy comfort: it asks us to love our enemies and give ourselves up; someone inventing a religion to feel good wouldn’t pick one this hard."
     },
     {
      "id": "ahlaki-hakikatler",
      "title": "Ahlaki Hakikatler",
      "en": "Moral Truths",
+     "hook": "Raylar treni hapsetmez; onu gideceği yere götürür.",
+     "hookEn": "Rails don’t imprison a train; they take it where it’s going.",
      "q": "Kilise’nin kuralları neden bu kadar katı?",
      "qEn": "Why are the Church's rules so strict?",
      "lede": "Kilise’nin ahlak öğretisi keyfi yasaklardan oluşmaz. İnsanın ne olduğuna dair tutarlı bir anlayışa dayanır ve amacı insanı özgür kılmaktır.",
@@ -417,12 +439,14 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "points": [
       "Anne karnındaki çocuktan yaşlıya kadar her insanın hayatı dokunulmazdır. İnsanın değeri, ne kadar yararlı olduğuna bağlı değildir.",
       "Beden bir aksesuar değil, kişinin kendisidir. Cinsellik de tam anlamını ömür boyu verilen sözde, yani evlilikte bulur.",
-      "Raylarına bağlı bir trene “özgür değil” denmez; tren rayları sayesinde gideceği yere varır. Ahlak da insanı gerçek mutluluğa yönlendirir."
+      "Raylarına bağlı bir trene “özgür değil” denmez; tren rayları sayesinde gideceği yere varır. Ahlak da insanı gerçek mutluluğa yönlendirir.",
+      "Kilise öğretisini modaya göre değiştirmez. 1930’a kadar bütün büyük Hristiyan kiliseleri doğum kontrolünü ahlaken yanlış sayıyordu. O yıl Anglikan Kilisesi bazı istisnalar tanıdı ve Protestan kiliselerinin çoğu zamanla bu yolu izledi. Katolik Kilisesi ise öğretisini korudu."
      ],
      "pointsEn": [
       "Every human life, from the unborn child to the elderly, is inviolable; a person’s worth doesn’t depend on usefulness.",
       "The body isn’t an accessory but the person; so sexuality finds its full meaning in a lifelong promise, marriage.",
-      "A train isn’t “unfree” because it runs on rails; the rails get it where it is going. Morality likewise leads to real happiness."
+      "A train isn’t “unfree” because it runs on rails; the rails get it where it is going. Morality likewise leads to real happiness.",
+      "The Church doesn’t change its teaching with the times. Until 1930 all the major Christian churches held contraception to be morally wrong. That year the Anglican Church allowed some exceptions, and in time most Protestant churches followed. The Catholic Church kept its teaching."
      ],
      "objection": "Kimseye zarar vermediğim sürece ne yaptığım kimseyi ilgilendirmez.",
      "objectionEn": "As long as I don’t hurt anyone, what I do is nobody’s business.",
@@ -433,6 +457,8 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "id": "cennet-cehennem-araf",
      "title": "Cennet, Cehennem ve Araf",
      "en": "Heaven, Hell and Purgatory",
+     "hook": "Cehennemin kapıları içeriden kilitlidir.",
+     "hookEn": "The doors of hell are locked from the inside.",
      "q": "Sevgi dolu bir Tanrı birini nasıl cehenneme gönderir?",
      "qEn": "How could a loving God send anyone to hell?",
      "lede": "Tanrı kimseyi zorla cennete ya da cehenneme sokmaz. Sonsuzluk, bu hayatta verdiğimiz özgür cevabın kalıcı hâlidir.",
@@ -469,6 +495,6 @@ window.WHY_CATHOLIC = /*JSON-START*/{
   "His Church is still alive today",
   "Our hearts find rest in him"
  ],
- "closing": "Bu beş adım tek başına birer matematik kanıtı değil, birbirini destekleyen ipuçlarıdır. Gerçek diye bir şey varsa onu arayabiliriz. Evren bir Yaratıcı’ya işaret ediyorsa, O kendini bize tanıtmış olabilir. İsa dirildiyse, söyledikleri doğrudur. Ve O’nun kurduğu Kilise, iki bin yıl sonra, azizleri ve günahkârlarıyla bugün de yaşıyor. İmanın son adımı yalnızca akılla atılmaz, ama akıl bizi o adımın eşiğine kadar getirebilir. Sorularınız varsa yalnız değilsiniz: Herhangi bir Katolik kilisesinin kapısını çalabilir ya da bize yazabilirsiniz.",
- "closingEn": "These five steps aren't mathematical proofs on their own, but clues that support one another: if there is real truth, we can seek it; if the universe points to a Creator, he may have made himself known; if Jesus rose, what he said is true; and the Church he founded is still alive today, two thousand years on, with its saints and its sinners. The final step of faith isn't taken by reason alone, but reason can bring us to its threshold. If you have questions, you're not alone: you can knock on the door of any Catholic church, or write to us."
+ "closing": "Bunlar tek başına birer matematik kanıtı değil, birbirini destekleyen ipuçlarıdır. Gerçek diye bir şey varsa onu arayabiliriz. Evren bir Yaratıcı’ya işaret ediyorsa, O kendini bize tanıtmış olabilir. İsa dirildiyse, söyledikleri doğrudur. Ve O’nun kurduğu Kilise, iki bin yıl sonra, azizleri ve günahkârlarıyla bugün de yaşıyor. İmanın son adımı yalnızca akılla atılmaz, ama akıl bizi o adımın eşiğine kadar getirebilir. Sorularınız varsa yalnız değilsiniz: Herhangi bir Katolik kilisesinin kapısını çalabilir ya da bize yazabilirsiniz.",
+ "closingEn": "These aren't mathematical proofs on their own, but clues that support one another: if there is real truth, we can seek it; if the universe points to a Creator, he may have made himself known; if Jesus rose, what he said is true; and the Church he founded is still alive today, two thousand years on, with its saints and its sinners. The final step of faith isn't taken by reason alone, but reason can bring us to its threshold. If you have questions, you're not alone: you can knock on the door of any Catholic church, or write to us."
 }/*JSON-END*/;

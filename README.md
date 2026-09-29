@@ -23,8 +23,9 @@ The old English addresses under `en/` are small forwarding pages (built from `$E
 
 ```
 index.html              Home: search box, section cards, today's saint
-neden-katoligiz.html    Why we're Catholic: a five-step case for the faith, reason to doctrine, one step
-                        at a time (a skeptic's question, short answer, key points, objection per card)
+neden-katoligiz.html    Why we're Catholic: a short case in three parts (God, Jesus, the Church); two
+                        "doors" to start, and 17 one-line hooks that open to the question, answer,
+                        key points and the objection with its reply
 iman-ikrari.html        Compendium Part I · Q 1–217   (reading page: sticky contents sidebar, chapter
 kutsal-sirlar.html      Compendium Part II · Q 218–356  prev/next; the EN switch shows the Vatican's
 mesihte-yasam.html      Compendium Part III · Q 357–533 English original)

@@ -715,7 +715,7 @@ $IcoShield = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 # parts open underneath (open already when the page shown is one of them).
 $SheetNav = @(
   @{ label = 'Öğren'; labelEn = 'Learn'; items = @(
-    @{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?'; s = 'İmanın beş adımda özeti'; te = "Why We're Catholic"; se = 'The faith in five steps'; ico = $IcoCompass },
+    @{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?'; s = 'Tanrı, İsa ve Kilise, kısaca'; te = "Why We're Catholic"; se = 'God, Jesus and the Church, briefly'; ico = $IcoCompass },
     @{ href = 'katekizm.html'; t = 'Katekizm'; s = '598 soru ve yanıt'; te = 'Catechism'; se = '598 questions and answers'; fold = $TextNav },
     @{ href = 'kutsal-kitap.html'; t = 'Kutsal Kitap'; s = 'Onaylı çeviriler'; te = 'The Bible'; se = 'Approved translations' },
     @{ href = 'sss.html'; t = 'Sorular'; s = 'Sıkça sorulan sorular'; te = 'FAQ'; se = 'Frequently asked questions' },
@@ -1628,43 +1628,43 @@ Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadis
   -Path 'islama-cevap.html' -Body $icBody -JsonLd @($icLd, (Breadcrumb-Ld "İslam$($Apos)a Cevap" 'islama-cevap.html'))
 
 # ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html + en/why-were-catholic.html)
-# A guided case in five steps. Each step is a tab panel (script.js shows one at a time; without
-# JavaScript all five simply follow each other), and each topic a card: the skeptic's question,
-# a one-line answer, the key points as a list, and the strongest objection with its answer.
-$IcoSkeptic = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.8 9.6a2.3 2.3 0 0 1 4.4.8c0 1.6-2.2 2-2.2 3.3"/><path d="M12 16.4h.01"/></svg>'
+# A short case in three parts, read in one calm column. Two "doors" at the top send a skeptic to
+# the start and a Christian straight to the Church. Each part lists its topics as one-line hooks;
+# each hook is a <details> that opens to the skeptic's question, a one-line answer, the key points,
+# and an "Ama..." line that opens the objection's reply. On a phone each hook is a row that opens
+# the whole topic as its own screen (script.js, AV_PAGES).
 function Why-Page([string]$lang) {
   $W = $WhyCatholic
   # every text in both languages: a field and its ...En twin
   function F2($o, [string]$k) { T (Inline $o.$k) (Inline $o.($k + 'En')) }
-  $L = @{ steps = @('Adımlar', 'Steps'); prev = @('Önceki adım', 'Previous step'); next = @('Sonraki adım', 'Next step'); ask = @('Bir şüpheci sorabilir', 'A skeptic might ask')
+  $L = @{ doors = @('Nereden başlamak istersiniz?', 'Where would you like to start?'); but = @('Ama', 'But'); q = @('Soru', 'The question')
           together = @('Hepsi bir arada', 'Putting it together'); where = @('Buradan nereye?', 'Where to go from here') }
   function LL([string]$k) { T $L[$k][0] $L[$k][1] }
   $parts = @($W.parts); $n = $parts.Count
-  $tabs = (0..($n - 1) | ForEach-Object {
-    $pt = $parts[$_]
-    "<li><a class=`"why-tab`" href=`"#$($pt.id)`" id=`"tab-$($pt.id)`" data-why-tab=`"$($pt.id)`"><span class=`"why-tab-n`">$($_ + 1)</span><span class=`"why-tab-t`">$(T (Inline $pt.title) (Inline $pt.en))</span></a></li>"
-  }) -join ''
+  $doors = @(
+    @($parts[0].id, "Tanrı$($Apos)ya inanmakta zorlanıyorum", 'Baştan başlayın: Tanrı var mı?', 'I find it hard to believe in God', 'Start at the beginning: is there a God?'),
+    @($parts[$n - 1].id, 'Hristiyanım, ama neden Katolik?', 'Doğrudan Kilise bölümüne geçin', "I$($Apos)m a Christian, but why Catholic?", 'Go straight to the Church')
+  )
+  $doorsHtml = ($doors | ForEach-Object { "<a class=`"why-door`" href=`"#$($_[0])`"><span class=`"why-door-t`">$(T $_[1] $_[3])</span><span class=`"why-door-s`">$(T $_[2] $_[4])</span>$IcoArrowR</a>" }) -join ''
   $panels = (0..($n - 1) | ForEach-Object {
     $k = $_; $pt = $parts[$k]
-    $cards = ($pt.topics | ForEach-Object {
+    $items = ($pt.topics | ForEach-Object {
       $tp = $_
       $pts = (@($tp.points) | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
       $ptsEn = (@($tp.pointsEn) | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
-      "<article class=`"why-card`" id=`"$($tp.id)`">" +
-        "<p class=`"why-kicker`">$(T (Inline $tp.title) (Inline $tp.en))</p>" +
-        "<h3 class=`"why-q`">$(F2 $tp 'q')</h3>" +
-        "<p class=`"why-lede`">$(F2 $tp 'lede')</p>" +
-        (TB "<ul class=`"why-points`">$pts</ul>" "<ul class=`"why-points`">$ptsEn</ul>") +
-        "<div class=`"why-obj`">$IcoSkeptic<p><span class=`"why-obj-label`">$(LL 'ask')</span><span class=`"why-obj-q`">$(F2 $tp 'objection')</span> $(F2 $tp 'reply')</p></div>" +
-      "</article>"
+      "<details class=`"why-item`" id=`"$($tp.id)`">" +
+        "<summary><span class=`"why-hook-k`">$(T (Inline $tp.title) (Inline $tp.en))</span><span class=`"why-hook`">$(F2 $tp 'hook')</span>$IcoChevLg</summary>" +
+        "<div class=`"why-body`">" +
+          "<p class=`"why-q`"><span class=`"why-q-label`">$(LL 'q')</span>$(F2 $tp 'q')</p>" +
+          "<p class=`"why-lede`">$(F2 $tp 'lede')</p>" +
+          (TB "<ul class=`"why-points`">$pts</ul>" "<ul class=`"why-points`">$ptsEn</ul>") +
+          "<details class=`"why-obj`"><summary><span class=`"why-obj-label`">$(LL 'but')</span><span class=`"why-obj-q`">$(F2 $tp 'objection')</span>$IcoChev</summary><p>$(F2 $tp 'reply')</p></details>" +
+        "</div>" +
+      "</details>"
     }) -join "`n"
-    $prevLink = if ($k -gt 0) { $pp = $parts[$k - 1]; "<a class=`"why-go prev`" href=`"#$($pp.id)`" data-why-go=`"$($pp.id)`">$IcoArrowL<span><small>$(LL 'prev')</small>$(T (Inline $pp.title) (Inline $pp.en))</span></a>" } else { '<span></span>' }
-    $nextLink = if ($k -lt $n - 1) { $np = $parts[$k + 1]; "<a class=`"why-go next`" href=`"#$($np.id)`" data-why-go=`"$($np.id)`"><span><small>$(LL 'next')</small>$(T (Inline $np.title) (Inline $np.en))</span>$IcoArrowR</a>" } else { "<a class=`"why-go next`" href=`"#sonuc`" data-why-go=`"sonuc`"><span><small>$(LL 'next')</small>$(LL 'together')</span>$IcoArrowR</a>" }
-    "<section class=`"why-step`" id=`"$($pt.id)`" aria-labelledby=`"h-$($pt.id)`" data-why-panel>" +
-      "<header class=`"why-step-head`"><span class=`"why-num`" aria-hidden=`"true`">$($k + 1)</span><div>" +
-        "<p class=`"label`">$(T "Adım $($k + 1) / $n" "Step $($k + 1) of $n")</p><h2 id=`"h-$($pt.id)`">$(T (Inline $pt.title) (Inline $pt.en))</h2><p class=`"why-thesis`">$(F2 $pt 'thesis')</p></div></header>" +
-      "<div class=`"why-grid`">$cards</div>" +
-      "<nav class=`"why-pager`" $(TA 'aria-label' $L.steps[0] $L.steps[1])>$prevLink$nextLink</nav>" +
+    "<section class=`"why-part`" id=`"$($pt.id)`" aria-labelledby=`"h-$($pt.id)`">" +
+      "<header class=`"why-part-head`"><p class=`"label`">$(T "Bölüm $($k + 1) / $n" "Part $($k + 1) of $n")</p><h2 id=`"h-$($pt.id)`">$(T (Inline $pt.title) (Inline $pt.en))</h2><p class=`"why-thesis`">$(F2 $pt 'thesis')</p></header>" +
+      "<div class=`"why-list`">$items</div>" +
     "</section>"
   }) -join "`n"
   $chain = (@($W.chain) | ForEach-Object -Begin { $i2 = 0 } -Process { $i2++; "<li><span class=`"why-chain-n`">$i2</span>$(T (Inline $_) (Inline @($W.chainEn)[$i2 - 1]))</li>" }) -join ''
@@ -1675,12 +1675,13 @@ function Why-Page([string]$lang) {
   $cta = ($ctaItems | ForEach-Object { "<a class=`"why-cta`" href=`"$($_[0])`"><span class=`"why-cta-t`">$(T $_[1] $_[3])</span><span class=`"why-cta-s`">$(T $_[2] $_[4])</span>$IcoArrowR</a>" }) -join ''
   $crumb = Crumbs 'Neden Katoliğiz?'
   $body = @"
-<div class="wrap why-wrap">
+<div class="wrap why-wrap" data-av-nogh>
   $crumb
   <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$(T $W.title $W.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($W.en)</p>")</header>
-  <nav class="why-tabs" $(TA 'aria-label' $L.steps[0] $L.steps[1])><ol>$tabs</ol></nav>
+  <p class="why-intro">$(F2 $W 'intro')</p>
+  <nav class="why-doors" $(TA 'aria-label' $L.doors[0] $L.doors[1])>$doorsHtml</nav>
 $panels
-  <section class="why-end" id="sonuc" aria-labelledby="h-sonuc" data-why-panel>
+  <section class="why-end" id="sonuc" aria-labelledby="h-sonuc">
     <h2 id="h-sonuc">$(LL 'together')</h2>
     <ol class="why-chain">$chain</ol>
     <p class="why-closing">$(F2 $W 'closing')</p>
@@ -1696,7 +1697,7 @@ $panels
       ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain ($_.lede + ' ' + (@($_.points) -join ' ')))) + '}}'
     }) -join ',') + ']}'
   Write-Page -File $page -Title "$($W.title) | $SiteName" -TitleEn "$($W.en) | $SiteName" `
-    -Description "Katolik inancının akla ve kalbe hitap eden beş adımlık özeti: hakikat ve Tanrı, İsa ve Kutsal Kitap, Kilise ve kutsal sırlar, azizler, ahlak ve sonsuz yazgı." `
+    -Description "Katolik inancının akla ve kalbe hitap eden kısa özeti: Tanrı var mı, İsa kim ve neden Katolik Kilise?" `
     -Path $page -Body $body -JsonLd @((Breadcrumb-Ld 'Neden Katoliğiz?' $page), $faqLdWhy)
 }
 Why-Page 'tr'
@@ -1865,7 +1866,7 @@ $massBody = @"
   $(Crumbs 'Kutsal Ayin')
   <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$(T $Mass.title $Mass.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Mass.en)</p>")</header>
   <p class="faq-intro">$(T (Inline $Mass.intro) (Inline $Mass.introEn))</p>
-  <p class="mass-video-note">$IcoPlay $(T 'Ayinin akışını görsel olarak izleyerek takip etmek isterseniz, <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">bu İngilizce videoyu</a> yardımcı bulabilirsiniz.' 'If you would like to follow the flow of the Mass by watching it, you may find <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">this video</a> helpful.')</p>
+  <p class="mass-video-note">$IcoPlay $(T 'Ayinin akışını izleyerek takip etmek isterseniz <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">bu İngilizce video</a> yardımcı olabilir.' 'If you would like to follow the flow of the Mass by watching it, you may find <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">this video</a> helpful.')</p>
   <nav class="mass-pills" $(TA 'aria-label' 'Ayinin bölümleri' 'The parts of the Mass') data-mass-pills>$massPillsHtml</nav>
   <div class="mass-parts" data-mass-parts>
 $massPartsHtml
@@ -2312,7 +2313,7 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -TitleEn "Pag
 $HomeApps = @(
   @{ id = 'ogren'; t = 'Öğren'; te = 'Learn'; s = 'İnancın ne olduğu ve nedeni'; se = 'What the faith is, and why'; ico = $SmallCross; pages = @(
     @{ f = 'neden-katoligiz.html'; ico = $IcoCompass; t = 'Neden Katoliğiz?'; te = "Why We're Catholic"
-       s = 'İmanın beş adımda, akla ve kalbe birlikte hitap eden özeti.'; se = 'A five-step summary of the faith, speaking to reason and the heart together.' },
+       s = 'Tanrı var mı, İsa kim, neden Katolik Kilise? Kısa cümlelerle.'; se = 'Is there a God, who is Jesus, why the Catholic Church? In short sentences.' },
     @{ f = 'katekizm.html'; ico = $SmallCross; t = 'Katekizm'; te = 'Catechism'
        s = 'İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.'; se = '598 questions and answers on faith, the sacraments, morality and prayer.' },
     @{ f = 'kutsal-kitap.html'; ico = $IcoBook; t = 'Kutsal Kitap'; te = 'The Bible'; s = $KkMeta.short; se = $KkEn.meta.short },

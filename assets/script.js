@@ -2132,9 +2132,8 @@
   }
   var AV_PAGES = {
     'neden-katoligiz.html': function (m) {
-      $$('.why-step', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.why-step-head .label', s))); });
+      $$('.why-item', m).forEach(function (d) { avNode(d, avText($('.why-hook', d)), avText($('.why-hook-k', d))); });
       avNode($('.why-end', m), avHead($('h2', $('.why-end', m))));
-      $$('.why-card', m).forEach(function (c) { avNode(c, avText($('.why-kicker', c)), avText($('.why-q', c))); });
     },
     'sss.html': function (m) {
       $$('.faq-cat', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.faq-cat-en', s))); });
@@ -2496,7 +2495,7 @@
           if (k.hidden) a.hidden = true;
           box.appendChild(a);
         });
-        if (level === main && i === 0 && !$('.cmap', main)) {
+        if (level === main && i === 0 && !$('.cmap, [data-av-nogh]', main)) {
           var gh = document.createElement('p'); gh.className = 'av-gh'; pset(gh, T.sections);
           r.list[0].parentNode.insertBefore(gh, r.list[0]);
         }
@@ -2987,66 +2986,21 @@
   }
 
   /* ---------------------------------------------------------------
-     Neden Katoliğiz? / Why We're Catholic: one step of the five on
-     screen at a time. The stepper links and the Previous / Next links
-     under each step switch panels; the closing summary shows with the
-     last step. A link to a step or to a single topic card (#ince-ayar,
-     say) opens the step that holds it. Without JavaScript nothing is
-     hidden and every link is a plain in-page anchor.
+     Neden Katoliğiz? / Why We're Catholic: every topic is a one-line
+     hook that opens in place. A link to a topic (#ince-ayar, say)
+     opens it and brings it into view; the phone view does its own.
      --------------------------------------------------------------- */
-  function initWhySteps() {
+  function initWhyHooks() {
     var wrap = $('.why-wrap');
     if (!wrap || document.documentElement.classList.contains('av')) return;
-    var tabs = $$('[data-why-tab]', wrap), steps = $$('.why-step', wrap), end = $('.why-end', wrap);
-    var navBox = $('.why-tabs', wrap), last = steps[steps.length - 1];
-    var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    function stepFor(id) {
-      var el = id && document.getElementById(id);
-      if (!el || !wrap.contains(el)) return null;
-      if (el === end) return last;
-      return el.closest('.why-step');
+    function openHash() {
+      var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+      if (!el || !wrap.contains(el) || !el.classList.contains('why-item')) return;
+      el.open = true;
+      requestAnimationFrame(function () { el.scrollIntoView({ block: 'start' }); });
     }
-    function show(step) {
-      var k = steps.indexOf(step);
-      steps.forEach(function (s) { s.classList.toggle('is-active', s === step); });
-      if (end) end.classList.toggle('is-active', step === last);
-      tabs.forEach(function (t, i) {
-        if (i === k) t.setAttribute('aria-current', 'step'); else t.removeAttribute('aria-current');
-        t.classList.toggle('is-done', i < k);
-      });
-      var cur = tabs[k], list = cur && cur.closest('ol');
-      if (list && list.scrollWidth > list.clientWidth) list.scrollTo({ left: Math.max(0, cur.offsetLeft - 16), behavior: smooth ? 'smooth' : 'auto' });
-      document.dispatchEvent(new Event('why:step'));
-    }
-    function go(id, focus) {
-      var step = stepFor(id); if (!step) return false;
-      show(step);
-      /* Scroll so the step (or the linked card) starts just below the pinned stepper. Measure the
-         step itself, never the stepper: once pinned, the stepper's own position is where it is
-         stuck on screen, not where it sits in the page, and scrolling to it would go nowhere. */
-      var target = document.getElementById(id);
-      var top = target.getBoundingClientRect().top + window.pageYOffset;
-      var pinned = navBox && getComputedStyle(navBox).position === 'sticky' && navBox.offsetParent;
-      var offset = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) +
-        (pinned ? navBox.offsetHeight + 8 : 0) + 16;
-      window.scrollTo({ top: Math.max(0, top - offset), behavior: smooth ? 'smooth' : 'auto' });
-      if (focus) { var h = step.querySelector('h2'); if (id === 'sonuc' && end) h = end.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }
-      return true;
-    }
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('[data-why-tab], [data-why-go]');
-      if (!a) return;
-      var id = a.getAttribute('data-why-tab') || a.getAttribute('data-why-go');
-      if (go(id, a.hasAttribute('data-why-go'))) {
-        e.preventDefault();
-        try { history.replaceState(null, '', '#' + id); } catch (err) { /* file:// */ }
-      }
-    });
-    window.addEventListener('hashchange', function () { go(location.hash.slice(1), false); });
-    var start = location.hash && stepFor(decodeURIComponent(location.hash.slice(1)));
-    show(start || steps[0]);
-    wrap.classList.add('why-ready');
-    if (start) requestAnimationFrame(function () { go(decodeURIComponent(location.hash.slice(1)), false); });
+    window.addEventListener('hashchange', openHash);
+    openHash();
   }
 
   /* ---------------------------------------------------------------
@@ -3316,6 +3270,6 @@
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhySteps(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
+    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
   });
 })();
