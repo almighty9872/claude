@@ -7,3 +7,17 @@ Desktop.ini
 
 # Temporary build output used by the GitHub Actions workflow
 _site/
+
+# Everything tools/build.ps1 writes: the deploy builds it fresh from data/ and content/
+/*.html
+/en/
+/kilise/
+/sitemap.xml
+/robots.txt
+/llms.txt
+/[0-9a-f]*.txt
+/.well-known/
+/assets/*.min.css
+/assets/*.min.js
+/data/azizler-adlar.js
+/data/azizler-ozet-*.js

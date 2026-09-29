@@ -1,19 +1,20 @@
 ﻿<#
 .SYNOPSIS
-  Static page generator for katolikdunyasi.com, a Turkish-language Catholic
+  Static page generator for katolikdunyasi.com, a Turkish and English Catholic
   resource site: the Compendium of the Catechism of the Catholic Church,
   the OCIA/RCIA process, the Mass explained, prayers and the Rosary, a
   calendar of the saints, the Bible in Turkish, miracles, and an FAQ.
 
 .DESCRIPTION
   Reads the single source of truth, data/*.js and content/*.md, and writes
-  crawlable static HTML pages (all content pre-rendered for SEO), JSON-LD
-  structured data (FAQPage, WebSite, Book, Article, BreadcrumbList), sitemap.xml
-  and robots.txt into the site root.
+  crawlable static HTML pages (all content pre-rendered for SEO), each in Turkish
+  at the site root and in English under en/, with JSON-LD structured data
+  (WebSite, Book, Article, Church, BreadcrumbList), sitemap.xml, robots.txt and
+  llms.txt into the site root.
 
-  The generated files are committed, so the site works without running this.
-  Run it only after editing data/ (or to set your real domain).
-  No dependencies: Windows PowerShell 5.1 or PowerShell 7+ (Windows/macOS/Linux).
+  The generated files are not committed (see .gitignore): the deploy workflow
+  runs this on every push. Run it locally to preview the site.
+  No dependencies (esbuild is used for minifying when it is installed): Windows PowerShell 5.1 or PowerShell 7+ (Windows/macOS/Linux).
   Keep this file saved as UTF-8 WITH BOM so Windows PowerShell 5.1 reads the
   Turkish text correctly, and do not use typographic quote characters in string
   literals (PowerShell treats them as quotes); use &#8220; &#8221; in markup, and
@@ -45,6 +46,7 @@ $MonthNamesEn = @('January', 'February', 'March', 'April', 'May', 'June', 'July'
 $BuildDateTr = "$((Get-Date).Day) $($MonthNamesTr[(Get-Date).Month - 1]) $((Get-Date).Year)"
 $BuildDateEn = (Get-Date).ToString('d MMMM yyyy', [Globalization.CultureInfo]::GetCultureInfo('en-US'))
 $Utf8 = New-Object System.Text.UTF8Encoding $false
+$script:PageInfo = @()
 # Cache-busting query string for the shared CSS/JS: a short hash of the minified
 # file's own content, so every page automatically requests a fresh copy the
 # moment either one changes, instead of browsers reusing a stale cached
@@ -80,8 +82,22 @@ function Minify-Js([string]$js) {
   $lines = $js -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' -and -not $_.StartsWith('//') }
   return ($lines -join "`n")
 }
+# esbuild, where it is installed (the deploy installs it): a real minifier, a good deal smaller
+# than the simple one above, which stays as the fallback
+function Esbuild-Min([string]$code, [string]$ext) {
+  $eb = Get-Command esbuild -ErrorAction SilentlyContinue
+  if (-not $eb) { return $null }
+  $tmp = Join-Path ([IO.Path]::GetTempPath()) ("kd-" + [guid]::NewGuid().ToString('N'))
+  [IO.File]::WriteAllText("$tmp.$ext", $code, $Utf8)
+  & $eb.Source "$tmp.$ext" --minify --charset=utf8 --log-level=error "--outfile=$tmp.min.$ext" | Out-Null
+  $ok = $LASTEXITCODE -eq 0 -and (Test-Path "$tmp.min.$ext")
+  $r = if ($ok) { [IO.File]::ReadAllText("$tmp.min.$ext").TrimEnd() } else { $null }
+  Remove-Item "$tmp.$ext", "$tmp.min.$ext" -ErrorAction SilentlyContinue
+  return $r
+}
 $CssSrc = [IO.File]::ReadAllText((Join-Path $Root 'assets/styles.css'))
-$CssMin = Minify-Css $CssSrc
+$CssMin = Esbuild-Min $CssSrc 'css'
+if (-not $CssMin) { $CssMin = Minify-Css $CssSrc }
 [IO.File]::WriteAllText((Join-Path $Root 'assets/styles.min.css'), $CssMin, $Utf8)
 $CssVer = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/styles.min.css')))
 # (script.min.js is written further down, once data/azizler-adlar.js exists: it carries a
@@ -97,19 +113,46 @@ $SiteTagEn = 'Turkish Catholic Portal'
 $WorkName = 'Katolik Kilisesi İnanç Esasları Özeti'
 $SiteNameEn = 'Compendium of the Catechism of the Catholic Church'
 
-# en/ holds the (currently partial) English mirror of the site; TR pages live at the root.
+# en/ holds the English site: every Turkish page has an English twin there, with English as its
+# language (lang, title, description, canonical, hreflang), so search engines index both. The
+# page's text is the same pair of TR/EN wrappers; the address decides which one is shown.
+# The folder is rebuilt from scratch on every build.
 $EnDir = Join-Path $Root 'en'
-if (-not (Test-Path $EnDir)) { New-Item -ItemType Directory -Path $EnDir | Out-Null }
-# Maps every page that exists in both languages to its counterpart, keyed both directions
-# (e.g. 'sss.html' -> 'en/faq.html' and 'en/faq.html' -> 'sss.html'). Used for the header/footer
-# language-switcher target and for <link rel="alternate" hreflang> tags. A TR page with no entry
-# here has no English version yet; its switcher falls back to the English homepage.
+if (Test-Path $EnDir) { Remove-Item -Recurse -Force $EnDir }
+New-Item -ItemType Directory -Path $EnDir | Out-Null
+New-Item -ItemType Directory -Path (Join-Path $EnDir 'church') | Out-Null
+# Maps every page to its English twin, keyed both directions (e.g. 'sss.html' -> 'en/faq.html'
+# and 'en/faq.html' -> 'sss.html'). English pages use English slugs, listed explicitly below;
+# the church pages keep their names under en/church/.
 $EnAltMap = @{}
-# English pages use their own English slugs (not a literal mirror of the Turkish filename), so
-# each pair is listed explicitly: Turkish filename -> the English file's name under en/.
 function Add-EnAlt([string]$trFile, [string]$enFile) { $EnAltMap[$trFile] = "en/$enFile"; $EnAltMap["en/$enFile"] = $trFile }
 # The public path of a page: the two homepages are served (and canonical) at / and /en/
 function Page-Path([string]$file) { if ($file -eq 'index.html') { '' } elseif ($file -eq 'en/index.html') { 'en/' } else { $file } }
+# The English twin of a Turkish page ('en/…'), or $null when it has none (404.html)
+function En-Of([string]$file) {
+  if ($file -eq '' -or $file -eq '/') { $file = 'index.html' }
+  if ($file.StartsWith('en/') -or $file -eq '404.html') { return $null }
+  if ($EnAltMap.ContainsKey($file)) { return $EnAltMap[$file] }
+  if ($file -like 'kilise/*.html') { return 'en/church/' + $file.Substring(7) }
+  return $null
+}
+# Root-relative links and form targets to Turkish pages -> their English twins (on English pages)
+$EnLinkEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  $e = En-Of $m.Groups[2].Value
+  if (-not $e) { return $m.Value }
+  return $m.Groups[1].Value + '="/' + (Page-Path $e) + $m.Groups[3].Value + '"'
+}
+function Map-EnLinks([string]$html) {
+  return [regex]::Replace($html, '(href|action)="/((?:kilise/)?[a-z0-9-]*(?:\.html)?)((?:\?[^"#]*)?(?:#[^"]*)?)"', $EnLinkEval)
+}
+# Absolute site URLs inside structured data -> their English twins
+$EnUrlEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  $e = En-Of $m.Groups[1].Value
+  if (-not $e) { return $m.Value }
+  return '"' + $SiteUrl + '/' + (Page-Path $e) + '"'
+}
 Add-EnAlt 'index.html' 'index.html'
 Add-EnAlt 'katekizm.html' 'compendium.html'
 Add-EnAlt 'giris.html' 'introduction.html'
@@ -154,6 +197,9 @@ Add-EnAlt 'kalkutali-aziz-teresa.html' 'mother-teresa.html'
 Add-EnAlt 'aziz-ii-yuhanna-pavlus.html' 'john-paul-ii.html'
 Add-EnAlt 'padre-pio.html' 'padre-pio.html'
 Add-EnAlt 'aziz-hieronymus.html' 'saint-jerome.html'
+Add-EnAlt 'islama-cevap.html' 'answering-islam.html'
+Add-EnAlt 'ateizme-cevap.html' 'answering-atheism.html'
+Add-EnAlt 'kaynaklar-ve-telif.html' 'sources-and-copyright.html'
 
 # ------------------------------------------------------------------ data
 function Read-Data([string]$file) {
@@ -202,12 +248,20 @@ foreach ($month in 1..12) {
     "/* Generated by tools/build.ps1 from data/azizler.js; do not edit. */`nwindow.SAINT_SUMMARY_$month = $sumJson;`n", $Utf8)
 }
 # script.min.js, with a content hash for each data file so the data URLs change with their content
+# (only the data files the browser loads; the rest are build input and are not published, see
+# .github/workflows/deploy.yml)
+$RuntimeData = @('compendium-1.js', 'compendium-2.js', 'compendium-3.js', 'compendium-4.js', 'tespih.js', 'azizler-adlar.js') + (1..12 | ForEach-Object { "azizler-ozet-$_.js" })
 $dataVer = [ordered]@{}
-Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Sort-Object Name | ForEach-Object {
+Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Sort-Object Name | ForEach-Object {
   $dataVer["data/$($_.Name)"] = File-Ver ([IO.File]::ReadAllBytes($_.FullName))
 }
+# and every Turkish page's English twin, for links the script writes on English pages
+$enMap = [ordered]@{}
+foreach ($k in ($EnAltMap.Keys | Sort-Object)) { if (-not $k.StartsWith('en/')) { $enMap[$k] = Page-Path $EnAltMap[$k] } }
 $JsSrc = [IO.File]::ReadAllText((Join-Path $Root 'assets/script.js'))
-$JsMin = (Minify-Js $JsSrc).Replace('{"__DATA_VER__": 1}', (ConvertTo-Json -InputObject $dataVer -Compress))
+$JsFull = $JsSrc.Replace('{"__DATA_VER__": 1}', (ConvertTo-Json -InputObject $dataVer -Compress)).Replace('{"__EN_MAP__": 1}', (ConvertTo-Json -InputObject $enMap -Compress))
+$JsMin = Esbuild-Min $JsFull 'js'
+if (-not $JsMin) { $JsMin = Minify-Js $JsFull }
 [IO.File]::WriteAllText((Join-Path $Root 'assets/script.min.js'), $JsMin, $Utf8)
 $JsVer = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/script.min.js')))
 $GreatSaints = Read-Data 'buyuk-azizler.js'
@@ -261,7 +315,7 @@ function TA([string]$name, [string]$tr, [string]$en) {
 }
 # Shortens text for a <meta name="description"> so search engines don't cut it
 # off mid-sentence; trims at the last full word within the limit. Only for the
-# meta tag, never for text shown on the page (e.g. a blog post's own excerpt).
+# meta tag, never for text shown on the page.
 function Meta-Trim([string]$s, [int]$max = 160) {
   if ($s.Length -le $max) { return $s }
   $cut = $s.Substring(0, $max)
@@ -486,7 +540,7 @@ function Link-Refs([string]$html) {
   foreach ($p in $parts) {
     if ($p.StartsWith('<')) {
       if ($p -match '^<a[\s>]') { $inA++ } elseif ($p -match '^</a>') { $inA = [Math]::Max(0, $inA - 1) }
-      elseif ($p -match '^<(script|style|textarea|title)[\s>]') { $skip++ } elseif ($p -match '^</(script|style|textarea|title)>') { $skip = [Math]::Max(0, $skip - 1) }
+      elseif ($p -match '^<(script|style|textarea|title|summary)[\s>]') { $skip++ } elseif ($p -match '^</(script|style|textarea|title|summary)>') { $skip = [Math]::Max(0, $skip - 1) }
       [void]$sb.Append($p); continue
     }
     if ($inA -or $skip -or $p.Length -lt 6) { [void]$sb.Append($p); continue }
@@ -884,9 +938,15 @@ $A11yWidgetHtml = @"
 
 # The TR | EN switch: a small pill that floats in the corner of every page, over the text, so the
 # reader can flip between the two languages at any point of a long page (script.js, initLang)
-$LangPillHtml = '<div class="lang-pill" role="group" aria-label="Dil / Language"><span class="lp-knob" aria-hidden="true"></span>' +
+# The inline <head> script, around the phone-view flag ($avJs): picks the language (the page's
+# address decides it; a Turkish address sends someone who reads English, by choice or by browser,
+# to the English twin; crawlers are never sent anywhere), the theme and the reading settings,
+# all before the first paint.
+$HeadJs = 'document.documentElement.classList.add(''js'');'
+$HeadJs2 = '(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem(''kd-lang-choice'');if(!L&&localStorage.getItem(''kd-lang'')===''en'')L=''en''}catch(e){}if(!L){var tz='''';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'''').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'''')||/Istanbul$/.test(tz)||nl.slice(0,2)===''tr'')?''tr'':''en''}var U=H.getAttribute(''data-url-lang'');if(U){if(U===''tr''&&L===''en''&&!/bot|crawl|spider|slurp|lighthouse|headless|inspection|preview|facebookexternalhit/i.test(navigator.userAgent||'''')){var a=document.querySelector(''link[hreflang=en]'');if(a){location.replace(a.getAttribute(''href'').replace(/^https?:\/\/[^\/]+/,'''')+location.search+location.hash);return}}L=U}if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
+$LangPillHtml = '<nav class="lang-pill" aria-label="Dil / Language"><span class="lp-knob" aria-hidden="true"></span>' +
   '<button type="button" class="lp-btn" data-set-lang="tr" lang="tr" aria-pressed="true" title="Türkçe">TR</button>' +
-  '<button type="button" class="lp-btn" data-set-lang="en" lang="en" aria-pressed="false" title="English">EN</button></div>'
+  '<button type="button" class="lp-btn" data-set-lang="en" lang="en" aria-pressed="false" title="English">EN</button></nav>'
 function Search-Form([string]$cls, [string]$id, [string]$placeholder, [string]$lang = 'tr', [string]$placeholderEn = 'Search the Catechism: English, Turkish or a question number') {
   $action = if ($lang -eq 'en') { 'en/compendium.html' } else { 'katekizm.html' }
   $label = T "Katekizm$($Apos)de ara (Türkçe veya İngilizce, ya da soru numarası)" 'Search the Catechism (English or Turkish, or a question number)'
@@ -938,9 +998,12 @@ $footKaynaklar = $KaynaklarNav | ForEach-Object { "<li><a href=`"$($_.href)`">$(
 $footDualar = $PrayerNav | ForEach-Object { "<li><a href=`"$($_.href)`">$(T $_.t $_.te)</a></li>" }
 # İletişim, Erişilebilirlik and Gizlilik also open over the page from the footer, like
 # "Kaynaklar ve telif" (their own pages stay, for search engines and links from elsewhere)
-function Foot-Dialog([string]$id, [string]$title, [string]$inner) {
+function Foot-Dialog([string]$id, [string]$title, [string]$inner, [string]$src = '') {
+  # The longer texts (Erişilebilirlik, Gizlilik) aren't repeated in every page: the popup fetches
+  # them from their own page the first time it opens (the link is the fallback)
+  $box = if ($src) { "<div class=`"info-inner`" data-lazy><p><a href=`"$src`" data-no-dlg>$(T 'Sayfayı aç' 'Open the page')</a></p></div>" } else { "<div class=`"info-inner`">$inner</div>" }
   return "<dialog class=`"sources-dialog`" id=`"$id`" aria-labelledby=`"$id-t`"><button type=`"button`" class=`"sources-close`" $(TA 'aria-label' 'Kapat' 'Close')>$IcoClose</button>" +
-    "<h2 class=`"sources-title`" id=`"$id-t`">$title</h2><div class=`"info-inner`">$inner</div></dialog>"
+    "<h2 class=`"sources-title`" id=`"$id-t`">$title</h2>$box</dialog>"
 }
 $FootContactHtml = (TB "<p>Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa ya da sadece merhaba demek istiyorsanız, aşağıdaki e-posta adresinden bize yazabilirsiniz.</p>" "<p>If you've spotted a mistake in a translation, there's a topic, saint or miracle you'd like to see added, or you'd simply like to say hello, you can get in touch at the email address below.</p>") +
   "<p class=`"contact-email`"><a class=`"btn`" href=`"mailto:david@katolikdunyasi.com`">david@katolikdunyasi.com</a></p>" +
@@ -963,8 +1026,8 @@ $FooterHtml = @"
   </div>
 </footer>
 $(Foot-Dialog 'dlg-iletisim' (T 'İletişim' 'Contact') $FootContactHtml)
-$(Foot-Dialog 'dlg-erisilebilirlik' (T $ErMeta.title $ErEn.meta.title) (TB (Convert-Markdown $Er.body) (Convert-Markdown $ErEn.body)))
-$(Foot-Dialog 'dlg-gizlilik' (T $GzMeta.title $GzEn.meta.title) (TB (Convert-Markdown $Gz.body) (Convert-Markdown $GzEn.body)))
+$(Foot-Dialog 'dlg-erisilebilirlik' (T $ErMeta.title $ErEn.meta.title) '' 'erisilebilirlik.html')
+$(Foot-Dialog 'dlg-gizlilik' (T $GzMeta.title $GzEn.meta.title) '' 'gizlilik.html')
 <dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
   <button type="button" class="sources-close" $(TA 'aria-label' 'Kapat' 'Close')>$IcoClose</button>
   <h2 class="sources-title" id="sources-title">$(T $fm['title'] $fmEn['title'])</h2>
@@ -981,73 +1044,116 @@ function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
         [string[]]$JsonLd = @(), [string]$OgType = 'website',
         [string]$Robots = 'index,follow,max-snippet:-1,max-image-preview:large', [bool]$Canonical = $true, [bool]$RootRelative = $false,
-        [string]$Lang = 'tr', [string]$TitleEn = '')
+        [string]$Lang = 'tr', [string]$TitleEn = '', [string]$DescriptionEn = '')
   $Body = Link-Refs $Body
-  $url = "$SiteUrl/$Path"
   # Search results show roughly 60 characters of a title; a long page name keeps its words
   # and drops the site-name suffix instead (og:site_name still carries it).
   $suffix = " | $SiteName"
   if ($Title.Length -gt 62 -and $Title.EndsWith($suffix)) { $Title = $Title.Substring(0, $Title.Length - $suffix.Length) }
-  $ld = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
-  $canon = if ($Canonical) { "<link rel=`"canonical`" href=`"$url`">" } else { '' }
-  # Preload the regular text fonts so they start downloading with the stylesheet instead of
-  # after it. Turkish body text needs both subsets (ç, ö, ü are in the base latin file; ğ, ş, İ
-  # in latin-ext); English pages need only the base one.
-  # The text is set in the device's own San Francisco or Inter (loaded only where needed): nothing to preload
-  $fontFiles = @()
-  $preload = ($fontFiles | Where-Object { Test-Path (Join-Path $Root "assets/fonts/$_") } | ForEach-Object {
-    "<link rel=`"preload`" href=`"assets/fonts/$_`" as=`"font`" type=`"font/woff2`" crossorigin>"
-  }) -join "`n"
-  # /en/ pages need root-relative asset/internal links too, same mechanism as 404.html.
-  $rootRelativeEffective = $RootRelative
-  $rootAttr = if ($rootRelativeEffective) { ' data-root="/"' } else { '' }
-  $ogLocale = 'tr_TR'
+  if ($TitleEn.Length -gt 62 -and $TitleEn.EndsWith($suffix)) { $TitleEn = $TitleEn.Substring(0, $TitleEn.Length - $suffix.Length) }
+  # Every page has an English twin under en/ (404.html excepted). Its description: the one
+  # given, or else the page's first sizeable English paragraph.
+  $enFile = En-Of $File
+  if ($enFile -and -not $DescriptionEn) {
+    foreach ($dm in [regex]::Matches($Body, 'class="l-en"[^>]*>(.*?)</(?:span|div)>', 'Singleline')) {
+      $t = Plain $dm.Groups[1].Value
+      if ($t.Length -ge 70) { $DescriptionEn = $t; break }
+    }
+  }
+  if ($DescriptionEn) { $DescriptionEn = Meta-Trim $DescriptionEn 158 }
+  $trUrl = "$SiteUrl/$Path"
+  $enUrl = if ($enFile) { "$SiteUrl/$(Page-Path $enFile)" } else { '' }
+  $hreflang = if ($enFile) { "<link rel=`"alternate`" hreflang=`"tr`" href=`"$trUrl`">`n<link rel=`"alternate`" hreflang=`"en`" href=`"$enUrl`">`n<link rel=`"alternate`" hreflang=`"x-default`" href=`"$trUrl`">" } else { '' }
   $headerHtml = Header-Html $File
   $footerHtml = $FooterHtml
   # The home screen app a page belongs to (Öğren, Dua Et, Keşfet), for its colour on phones
-  $trOf = $File
-  $appAttr = if ($AppOf -and $AppOf[$trOf]) { " data-app=`"$($AppOf[$trOf])`"" } else { '' }
+  $appAttr = if ($AppOf -and $AppOf[$File]) { " data-app=`"$($AppOf[$File])`"" } else { '' }
   # Every page but the home screen becomes an app screen on phones (see Av-Nav); the class is set
   # before the first paint so the page doesn't jump
   $isHome = $File -match '(^|/)index\.html$'
-  $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches)document.documentElement.classList.add('av');" }
+  $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches){document.documentElement.classList.add('av');setTimeout(function(){document.documentElement.classList.add('av-ready')},3000)}" }
   $avNav = if ($isHome) { '' } else { Av-Nav $File $false }
-  # The home screen's icons live on the home screen only; elsewhere the X beside the gear leads there
-  $avDock = ''
-  $appAttr += if ($isHome) { '' } else { " data-avp=`"$(if ($trOf) { $trOf } else { $File })`"" }
+  $appAttr += if ($isHome) { '' } else { " data-avp=`"$File`"" }
   $a11yHtml = $A11yWidgetHtml
-  $html = @"
+  # The TR | EN switch: links to the page's two addresses (so crawlers find both), a pair of
+  # buttons that switch in place where there is only one (404.html)
+  $pill = if ($enFile) {
+    "<nav class=`"lang-pill`" aria-label=`"Dil / Language`"><span class=`"lp-knob`" aria-hidden=`"true`"></span>" +
+    "<a class=`"lp-btn`" data-set-lang=`"tr`" lang=`"tr`" hreflang=`"tr`" href=`"/$Path`" title=`"Türkçe`">TR</a>" +
+    "<a class=`"lp-btn`" data-set-lang=`"en`" lang=`"en`" hreflang=`"en`" href=`"/$(Page-Path $enFile)`" title=`"English`">EN</a></nav>"
+  } else { $LangPillHtml }
+  # Articles carry an image and a publisher, as search engines ask of them
+  $JsonLd = @($JsonLd | ForEach-Object {
+    if ($_ -match '"@type":"Article"' -and $_ -notmatch '"image"') {
+      $pub = if ($_ -notmatch '"publisher"') { '"publisher":{"@type":"Organization","name":' + (JStr $SiteName) + ',"url":"' + $SiteUrl + '/","logo":{"@type":"ImageObject","url":"' + $SiteUrl + '/apple-touch-icon.png"}},' } else { '' }
+      $_.Replace('"@type":"Article",', '"@type":"Article","image":"' + $SiteUrl + '/assets/og-image.jpg",' + $pub)
+    } else { $_ }
+  })
+  $ldTr = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
+  $csp = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+  # One page, in the language its address gives: $pl ('tr' | 'en'), with that language's head
+  $render = {
+    param([string]$pl)
+    $en = $pl -eq 'en'
+    $t = if ($en -and $TitleEn) { $TitleEn } else { $Title }
+    $d = if ($en -and $DescriptionEn) { $DescriptionEn } else { $Description }
+    $u = if ($en) { $enUrl } else { $trUrl }
+    $canon = if ($Canonical) { "<link rel=`"canonical`" href=`"$u`">" } else { '' }
+    $loc = if ($en) { 'en_US' } else { 'tr_TR' }
+    $locAlt = if ($enFile) { "<meta property=`"og:locale:alternate`" content=`"$(if ($en) { 'tr_TR' } else { 'en_US' })`">" } else { '' }
+    $htmlAttr = if ($en) { ' lang="en" class="lang-en" data-url-lang="en" data-root="/"' }
+      elseif ($enFile) { " lang=`"tr`" data-url-lang=`"tr`"$(if ($RootRelative) { ' data-root="/"' })" }
+      else { " lang=`"$Lang`"$(if ($RootRelative) { ' data-root="/"' })" }
+    $ld = $ldTr
+    if ($en) {
+      $ld = $ld -replace '"inLanguage":"tr"', '"inLanguage":"en"' -replace '"name":"Ana Sayfa"', '"name":"Home"'
+      # The page's own crumb and headline in English (its title without the site name)
+      $tEn = if ($TitleEn) { $TitleEn -replace ([regex]::Escape($suffix) + '$'), '' } else { '' }
+      if ($tEn) {
+        $ld = [regex]::Replace($ld, '("position":\d+,"name":)"[^"]*"(,"item":"[^"]*"\}\]\})', { param($m) $m.Groups[1].Value + (JStr $tEn) + $m.Groups[2].Value })
+        $ld = [regex]::Replace($ld, '"headline":"(?:[^"\\]|\\.)*"', { param($m) '"headline":' + (JStr $tEn) })
+        $ld = [regex]::Replace($ld, '("@type":"Church","name":)"(?:[^"\\]|\\.)*"', { param($m) $m.Groups[1].Value + (JStr $tEn) })
+      }
+      $ld = $ld.Replace('"name":"Katekizm"', '"name":"Compendium"').Replace('"name":"Azizler"', '"name":"Saints"').Replace('"name":"Kilise Bul"', '"name":"Find a Church"').Replace('"Kardinal ', '"Cardinal ').Replace('"Papa XVI. Benediktus"', '"Pope Benedict XVI"')
+      $ld = [regex]::Replace($ld, ('"' + [regex]::Escape($SiteUrl) + '/((?:kilise/)?[a-z0-9-]*(?:\.html)?)"'), $EnUrlEval)
+    }
+    $kdTitleEn = if (-not $en -and $TitleEn) { "<meta name=`"kd-title-en`" content=`"$(Attr $TitleEn)`">" } else { '' }
+@"
 <!DOCTYPE html>
-<html lang="$Lang"$rootAttr>
+<html$htmlAttr>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>$(Attr $Title)</title>
-$(if ($TitleEn) { "<meta name=`"kd-title-en`" content=`"$(Attr $TitleEn)`">" })
-<meta name="description" content="$(Attr $Description)">
+<title>$(Attr $t)</title>
+$kdTitleEn
+<meta name="description" content="$(Attr $d)">
 <meta name="robots" content="$Robots">
 $canon
+$hreflang
 <meta name="theme-color" content="#16161a">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="$csp">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="$OgType">
-<meta property="og:locale" content="$ogLocale">
+<meta property="og:locale" content="$loc">
+$locAlt
 <meta property="og:site_name" content="$(Attr $SiteName)">
-<meta property="og:title" content="$(Attr $Title)">
-<meta property="og:description" content="$(Attr $Description)">
-<meta property="og:url" content="$url">
+<meta property="og:title" content="$(Attr $t)">
+<meta property="og:description" content="$(Attr $d)">
+<meta property="og:url" content="$u">
 <meta property="og:image" content="$SiteUrl/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="$(Attr $SiteName)">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="$(Attr $Title)">
-<meta name="twitter:description" content="$(Attr $Description)">
+<meta name="twitter:title" content="$(Attr $t)">
+<meta name="twitter:description" content="$(Attr $d)">
 <meta name="twitter:image" content="$SiteUrl/assets/og-image.jpg">
+<link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="$Favicon" type="image/svg+xml">
-$preload
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>document.documentElement.classList.add('js');$($avJs)(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem('kd-lang-choice');if(!L&&localStorage.getItem('kd-lang')==='en')L='en'}catch(e){}if(!L){var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'')||/Istanbul$/.test(tz)||nl.slice(0,2)==='tr')?'tr':'en'}if(L==='en'){H.classList.add('lang-en');H.lang='en'}try{var c=JSON.parse(localStorage.getItem('kd-theme-choice')||'null');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem('kd-sun')||'null')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?'light':'dark'}H.setAttribute('data-theme',T);if(T==='light'){var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content','#f7f2e8')}})(document.documentElement);try{var fs=localStorage.getItem('kkio-fontsize');if(fs==='1'||fs==='2')document.documentElement.setAttribute('data-fontsize',fs);var a11y=JSON.parse(localStorage.getItem('kkio-a11y')||'{}');['contrast','saturation','spacing','links','dyslexia','cursor'].forEach(function(k){if(a11y[k])document.documentElement.setAttribute('data-a11y-'+k,'1')})}catch(e){}</script>
+<script>$HeadJs$($avJs)$HeadJs2</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
@@ -1058,15 +1164,18 @@ $avNav
 $Body
 </main>
 $footerHtml
-$avDock
-$LangPillHtml
+<!--KD-PILL-->
 $a11yHtml
 </body>
 </html>
 "@
-  # 404.html and /en/ pages are not at a fixed directory depth (or are one level deep), so their
-  # links must start at the site root rather than being relative to the file's own location.
-  if ($rootRelativeEffective) { $html = [regex]::Replace($html, '(href|src)="(?!https?:|#|/|data:|mailto:|tel:)', '$1="/') }
+  }
+  # 404.html, the church pages and every English page are not at the site's top level (or are
+  # served at any address), so their links start at the site root rather than at the file.
+  $rootRx = '(href|src|action)="(?!https?:|#|/|data:|mailto:|tel:)'
+  $html = & $render 'tr'
+  if ($RootRelative) { $html = [regex]::Replace($html, $rootRx, '$1="/') }
+  $html = $html.Replace('<!--KD-PILL-->', $pill)
   # The contact address is public on every page (footer) and a few others (İletişim, the About
   # panel, Erişilebilirlik, Gizlilik); catching it here once, after every page is assembled,
   # keeps it out of the raw HTML for basic scrapers without touching the markdown/build source
@@ -1074,7 +1183,15 @@ $a11yHtml
   $script:EmailFallback = '(e-posta için JavaScript gerekli)'
   $html = [regex]::Replace($html, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
-  Write-Host "  + $File"
+  if ($enFile) {
+    $h = & $render 'en'
+    $h = (Map-EnLinks ([regex]::Replace($h, $rootRx, '$1="/'))).Replace('<!--KD-PILL-->', $pill)
+    $script:EmailFallback = '(JavaScript is needed for the e-mail address)'
+    $h = [regex]::Replace($h, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
+    [IO.File]::WriteAllText((Join-Path $Root $enFile), $h, $Utf8)
+  }
+  $script:PageInfo += ,@{ File = $File; Path = $Path; En = $enFile; Title = $Title; TitleEn = $TitleEn; Desc = $Description; DescEn = $DescriptionEn; Robots = $Robots }
+  Write-Host "  + $File$(if ($enFile) { " + $enFile" })"
 }
 function Breadcrumb-Ld([string]$name, [string]$path, [string]$parentName = '', [string]$parentPath = '', [string]$lang = 'tr') {
   $homeName = if ($lang -eq 'en') { 'Home' } else { 'Ana Sayfa' }
@@ -1142,13 +1259,8 @@ $(Render-Items $items)
 </div>
 "@
   $qas = $items | Where-Object { $_.type -eq 'qa' }
-  $partFaqLd = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","name":' + (JStr "$($p.tr) - $SiteName") +
-    ',"url":' + (JStr "$SiteUrl/$($meta.file)") + ',"mainEntity":[' + (($qas | ForEach-Object {
-      '{"@type":"Question","name":' + (JStr "$($_.n). $(Plain $_.tr.q)") + ',"url":' + (JStr "$SiteUrl/$($meta.file)#soru-$($_.n)") +
-      ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain (($_.tr.a -split "`n") -join ' '))) + '}}'
-    }) -join ',') + ']}'
-  Write-Page -File $meta.file -Title "$($meta.ord): $($p.tr) (Sorular $($p.from)–$($p.to)) | $SiteName" -TitleEn "$($meta.ordEn): $($p.en) (Questions $($p.from)–$($p.to)) | $SiteName" -Description $meta.desc `
-    -Path $meta.file -Body $body -JsonLd @($partFaqLd, (Breadcrumb-Ld $p.tr $meta.file 'Katekizm' 'katekizm.html')) -OgType 'article'
+  Write-Page -File $meta.file -Title "$($meta.ord): $($p.tr) (Sorular $($p.from)–$($p.to)) | $SiteName" -TitleEn "$($meta.ordEn): $($p.en) (Questions $($p.from)–$($p.to)) | $SiteName" -Description $meta.desc -DescriptionEn $meta.descEn `
+    -Path $meta.file -Body $body -JsonLd @((Breadcrumb-Ld $p.tr $meta.file 'Katekizm' 'katekizm.html')) -OgType 'article'
 }
 
 # ================================================================== HOME (index.html): search + accordion of the four parts
@@ -1228,7 +1340,7 @@ $bookLd = '{"@context":"https://schema.org","@type":"Book","name":' + (JStr $Wor
   '"translationOfWork":{"@type":"Book","name":' + (JStr $SiteNameEn) + ',"inLanguage":"en","datePublished":"2005-06-28","publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"}},' +
   '"hasPart":[' + (($Parts | ForEach-Object { '{"@type":"Chapter","name":' + (JStr $_.tr) + ',"url":' + (JStr "$SiteUrl/$($PartMeta[[int]$_.part].file)") + '}' }) -join ',') + ']}'
 Write-Page -File 'katekizm.html' -Title "$WorkName | $SiteName" -TitleEn "$SiteNameEn | $SiteName" `
-  -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla." `
+  -Description "Katolik Kilisesi Katekizmi Özeti$($Apos)nin (Compendium) Türkçe çevirisi: iman, kutsal sırlar, Hristiyan ahlakı ve dua üzerine 598 soru ve yanıt, İngilizce aslıyla." -DescriptionEn "The Compendium of the Catechism of the Catholic Church in Turkish and English: 598 questions and answers on faith, the sacraments, Christian life and prayer." `
   -Path 'katekizm.html' -Body $katekizmBody -JsonLd @($bookLd, (Breadcrumb-Ld 'Katekizm' 'katekizm.html'))
 
 # ================================================================== ARTICLE PAGES: Motu Proprio, Giriş (Turkish paragraph + English original on demand)
@@ -1240,7 +1352,7 @@ function Parallel-Paragraphs($trList, $enList) {
   }
   return $sb.ToString()
 }
-function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$sub, [string]$bodyHtml, [string]$desc, [string]$ld, [string]$titleOverride = '', [string]$labelEn = '', [string]$titleEn = '') {
+function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1, [string]$sub, [string]$bodyHtml, [string]$desc, [string]$ld, [string]$titleOverride = '', [string]$labelEn = '', [string]$titleEn = '', [string]$descEn = '') {
   $body = @"
 <div class="wrap">
   $(Crumbs $crumb 'Katekizm' 'katekizm.html')
@@ -1251,7 +1363,7 @@ function Article-Page([string]$file, [string]$crumb, [string]$label, [string]$h1
 </div>
 "@
   $pageTitle = if ($titleOverride) { $titleOverride } else { $h1 }
-  Write-Page -File $file -Title "$pageTitle | $SiteName" -TitleEn "$(if ($titleEn) { $titleEn } else { $sub }) | $SiteName" -Description $desc -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Katekizm' 'katekizm.html')) -OgType 'article'
+  Write-Page -File $file -Title "$pageTitle | $SiteName" -TitleEn "$(if ($titleEn) { $titleEn } else { $sub }) | $SiteName" -Description $desc -DescriptionEn $descEn -Path $file -Body $body -JsonLd @($ld, (Breadcrumb-Ld $crumb $file 'Katekizm' 'katekizm.html')) -OgType 'article'
 }
 $mp = $X.motuProprio
 $mpBody = (TB "<p class=`"address`">$($mp.tr.address)</p>" "<p class=`"address`">$($mp.en.address)</p>") +
@@ -1260,8 +1372,9 @@ $mpBody = (TB "<p class=`"address`">$($mp.tr.address)</p>" "<p class=`"address`"
 $mpLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr "Motu Proprio: $($mp.tr.title)") + ',"inLanguage":"tr","datePublished":"2005-06-28","author":{"@type":"Person","name":"Papa XVI. Benediktus"},"publisher":{"@type":"Organization","name":"Libreria Editrice Vaticana"},"mainEntityOfPage":' + (JStr "$SiteUrl/motu-proprio.html") + '}'
 Article-Page 'motu-proprio.html' 'Motu Proprio' 'Motu Proprio' "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Onaylanması ve Yayımlanması İçin Motu Proprio" `
   'Motu Proprio for the approval and publication of the Compendium of the Catechism of the Catholic Church' $mpBody `
-  (Meta-Trim "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması. Türkçe çeviri ve İngilizce asıl metin.") $mpLd `
-  "Motu Proprio: Katekizm Özeti$($Apos)nin Onaylanması" 'Motu Proprio' 'Motu Proprio: Approval of the Compendium'
+  (Meta-Trim "Papa XVI. Benediktus$($Apos)un 28 Haziran 2005 tarihli Motu Proprio$($Apos)su: Katolik Kilisesi Katekizmi Özeti$($Apos)nin onaylanması ve yayımlanması, İngilizce aslıyla.") $mpLd `
+  "Motu Proprio: Katekizm Özeti$($Apos)nin Onaylanması" 'Motu Proprio' 'Motu Proprio: Approval of the Compendium' `
+  'The Motu Proprio of Pope Benedict XVI of 28 June 2005 approving and publishing the Compendium of the Catechism of the Catholic Church, in Turkish and English.'
 
 $in = $X.introduction
 $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
@@ -1269,7 +1382,8 @@ $inBody = (Parallel-Paragraphs $in.tr.paragraphs $in.en.paragraphs) +
   "<div class=`"footnotes`">$(Parallel-Paragraphs $in.tr.footnotes $in.en.footnotes)</div>"
 $inLd = '{"@context":"https://schema.org","@type":"Article","headline":"Giriş","inLanguage":"tr","datePublished":"2005-03-20","author":{"@type":"Person","name":"Kardinal Joseph Ratzinger"},"mainEntityOfPage":' + (JStr "$SiteUrl/giris.html") + '}'
 Article-Page 'giris.html' 'Giriş' 'Önsöz' 'Giriş' 'Introduction' $inBody `
-  (Meta-Trim "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Girişi (Kardinal Joseph Ratzinger, 2005): Özet$($Apos)in hazırlanışı, üç temel özelliği ve dört kısmı. Türkçe çeviri ve İngilizce asıl metin.") $inLd '' 'Preface'
+  (Meta-Trim "Katolik Kilisesi Katekizmi Özeti$($Apos)nin Girişi (Kardinal Joseph Ratzinger, 2005): Özet$($Apos)in hazırlanışı, üç temel özelliği ve dört kısmı, İngilizce aslıyla.") $inLd '' 'Preface' '' `
+  'Introduction to the Compendium of the Catechism by Cardinal Joseph Ratzinger (2005): how it was prepared, its three main features and four parts.'
 
 # ================================================================== APPENDIX (ekler.html)
 $prayers = ($X.appendix.prayers | ForEach-Object { Text-Card $_ $_.id 3 "<div class=`"verse`">$(Verse $_.tr.text)</div>" "<div class=`"verse`">$(Verse $_.en.text)</div>" }) -join "`n"
@@ -1294,7 +1408,7 @@ $formulas
 </div>
 "@
 Write-Page -File 'ekler.html' -Title "Ekler: Dualar ve Katolik Öğreti Formülleri | $SiteName" -TitleEn "Appendix: Prayers and Formulas of Catholic Doctrine | $SiteName" `
-  -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince sık kullanılan dualar ve Katolik öğretinin formülleri." `
+  -Description "Katolik Kilisesi Katekizmi Özeti Ekleri: Türkçe, İngilizce ve Latince sık kullanılan dualar ve Katolik öğretinin formülleri." -DescriptionEn "Appendix to the Compendium of the Catechism: common Catholic prayers in Turkish, English and Latin, and the formulas of Catholic doctrine." `
   -Path 'ekler.html' -Body $eklerBody -JsonLd @((Breadcrumb-Ld 'Ekler' 'ekler.html' 'Katekizm' 'katekizm.html'))
 
 # ================================================================== SSS (sss.html): questions from non-Catholics and newcomers
@@ -1317,11 +1431,6 @@ $faqCats = ($FaqData.categories | ForEach-Object {
     (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") +
     "<div class=`"faq-list`">$qs</div></section>"
 }) -join "`n"
-$faqLd = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","name":' + (JStr $FaqData.title) +
-  ',"url":' + (JStr "$SiteUrl/sss.html") + ',"mainEntity":[' + ((($FaqData.categories | ForEach-Object { $_.items }) | ForEach-Object {
-    '{"@type":"Question","name":' + (JStr (Plain $_.q)) + ',"url":' + (JStr "$SiteUrl/sss.html#$($_.id)") +
-    ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain (($_.a -split "`n") -join ' '))) + '}}'
-  }) -join ',') + ']}'
 $sssBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Sıkça Sorulan Sorular')
@@ -1331,14 +1440,14 @@ $faqCats
 </div>
 "@
 Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" -TitleEn "$($FaqData.en) | $SiteName" `
-  -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, papalık, araf, evrim." `
-  -Path 'sss.html' -Body $sssBody -JsonLd @($faqLd, (Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
+  -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, papalık, araf, evrim." -DescriptionEn "Common questions about the Catholic Church, answered from the Catechism: Mary and the saints, the Trinity, confession, the papacy, purgatory and more." `
+  -Path 'sss.html' -Body $sssBody -JsonLd @((Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 
 # ================================================================== KUTSAL KITAP (kutsal-kitap.html)
 # Three quick answers first (what to read in Turkish, what in English, how to spot a Catholic
 # edition); the guide's sections follow folded away, each opening in place. The closing source
 # note stays outside the folds.
-function Kk-Fold([string]$html) {
+function Kk-Fold([string]$html, [string]$sfx = '') {
   $tail = ''
   $i = $html.IndexOf('<blockquote')
   if ($i -ge 0) { $tail = $html.Substring($i); $html = $html.Substring(0, $i) }
@@ -1346,7 +1455,7 @@ function Kk-Fold([string]$html) {
   $out = ($parts | Where-Object { $_.Trim() } | ForEach-Object {
     $m = [regex]::Match($_, '^<h2 id="([^"]+)">(.*?)</h2>(.*)$', 'Singleline')
     if (-not $m.Success) { return $_ }
-    "<details class=`"kk-sec`" id=`"$($m.Groups[1].Value)`"><summary><h2>$($m.Groups[2].Value)</h2>$IcoChevLg</summary><div class=`"kk-sec-body`">$($m.Groups[3].Value)</div></details>"
+    "<details class=`"kk-sec`" id=`"$($m.Groups[1].Value)$sfx`"><summary><h2>$($m.Groups[2].Value)</h2>$IcoChevLg</summary><div class=`"kk-sec-body`">$($m.Groups[3].Value)</div></details>"
   }) -join "`n"
   return "<div class=`"kk-secs`">$out</div><div class=`"kk-note`">$tail</div>"
 }
@@ -1378,10 +1487,10 @@ $kkBody = @"
   <section class="kk-quick" aria-labelledby="kk-quick-h"><h2 class="visually-hidden" id="kk-quick-h">$(T 'Kısaca' 'In short')</h2>$kkQuickHtml</section>
   <p class="kk-motto">$(T 'En iyi çeviri, okuyacağınız çeviridir.' 'The best translation is the one you will read.')</p>
   <section class="kk-logos" id="logos">$(TB (Inline $kkLogosTr) (Inline $kkLogosEn))</section>
-  <div class="body prose kk-body">$(TB (Kk-Fold (Convert-Markdown $Kk.body)) (Kk-Fold (Convert-Markdown $KkEn.body)))</div>
+  <div class="body prose kk-body">$(TB (Kk-Fold (Convert-Markdown $Kk.body)) (Kk-Fold (Convert-Markdown $KkEn.body) '-en'))</div>
 </div>
 "@
-Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -TitleEn "$($KkEn.meta.title) | $SiteName" -Description $KkMeta.description `
+Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -TitleEn "$($KkEn.meta.title) | $SiteName" -Description $KkMeta.description -DescriptionEn $KkEn.meta.description `
   -Path 'kutsal-kitap.html' -Body $kkBody -JsonLd @((Breadcrumb-Ld 'Kutsal Kitap' 'kutsal-kitap.html'))
 
 $IcoArrowR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
@@ -1427,7 +1536,7 @@ $stageList
 </div>
 "@
 Write-Page -File 'katolik-sureci.html' -Title "$($Sureci.title) | $SiteName" -TitleEn "$($Sureci.en) | $SiteName" `
-  -Description "Katolik olmak isteyenler için: OCIA/RCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler, hangi hazırlık gerekir." `
+  -Description "Katolik olmak isteyenler için: OCIA/RCIA süreci nedir, vaftizli ve vaftizsiz adaylar için adım adım nasıl işler, hangi hazırlık gerekir." -DescriptionEn "How to become Catholic: what OCIA (RCIA) is, how it works step by step for baptized and unbaptized adults, and how to prepare." `
   -Path 'katolik-sureci.html' -Body $sureciBody -JsonLd @((Breadcrumb-Ld 'Katolik Olma Süreci' 'katolik-sureci.html'))
 
 # ================================================================== GUNAH CIKARMA (gunah-cikarma.html)
@@ -1485,7 +1594,7 @@ $confessionSteps
 </div>
 "@
 Write-Page -File 'gunah-cikarma.html' -Title "$($Confession.title) | $SiteName" -TitleEn "$($Confession.en) | $SiteName" `
-  -Description "Günah çıkarma nasıl işler? Adım adım pratik rehber, vicdan muhasebesi listesi ve ilk kez günah çıkaracaklar için sık sorulan sorular." `
+  -Description "Günah çıkarma nasıl işler? Adım adım pratik rehber, vicdan muhasebesi listesi ve ilk kez günah çıkaracaklar için sık sorulan sorular." -DescriptionEn "How to go to confession: a practical step-by-step guide, an examination of conscience and answers for those going for the first time." `
   -Path 'gunah-cikarma.html' -Body $confessionBody -JsonLd @((Breadcrumb-Ld 'Günah Çıkarma' 'gunah-cikarma.html'))
 
 # ================================================================== ANADOLU'DAKI KOKLER HARITASI (on the page below)
@@ -1585,7 +1694,7 @@ $anatoliaSections
 </div>
 "@
 Write-Page -File 'topraklarimizda-hristiyanlik.html' -Title "$($Anatolia.title) | $SiteName" -TitleEn "$($Anatolia.en) | $SiteName" `
-  -Description "Hristiyanlığın Anadolu'daki kökleri: Pavlus'un memleketi Tarsus, Vahiy Kitabı'nın yedi kilisesi, İznik Konsili, Antakya ve İzmir'deki ilk Kilise Babaları." `
+  -Description "Hristiyanlığın Anadolu'daki kökleri: Pavlus'un memleketi Tarsus, Vahiy Kitabı'nın yedi kilisesi, İznik Konsili, Antakya ve İzmir'deki ilk Kilise Babaları." -DescriptionEn "Christianity's roots in Anatolia, today's Turkey: Paul's hometown Tarsus, the seven churches of Revelation, the Council of Nicaea, Antioch and Smyrna." `
   -Path 'topraklarimizda-hristiyanlik.html' -Body $anatoliaBody -JsonLd @((Breadcrumb-Ld 'Topraklarımızda Hristiyanlık' 'topraklarimizda-hristiyanlik.html'))
 
 # ================================================================== İSLAM'A CEVAP (islama-cevap.html)
@@ -1656,7 +1765,8 @@ function Case-Body($Ic, $Ico) {
   function Ic-Nav($k) {
     $prev = if ($k -gt 0) { $p = $icSeq[$k - 1]; "<a class=`"ic-nav-prev`" href=`"#$($p.id)`" data-av-step><span class=`"ic-nav-l`">$IcoArrowL $(T 'Önceki bölüm' 'Previous section')</span><span class=`"ic-nav-t`">$(T $p.title $p.titleEn)</span></a>" } else { '<span></span>' }
     $next = if ($k -lt $icSeq.Count - 1) { $n = $icSeq[$k + 1]; "<a class=`"ic-nav-next`" href=`"#$($n.id)`" data-av-step><span class=`"ic-nav-l`">$(T 'Sonraki bölüm' 'Next section') $IcoArrowR</span><span class=`"ic-nav-t`">$(T $n.title $n.titleEn)</span></a>" } else { '<span></span>' }
-    return "<nav class=`"ic-nav`" aria-label=`"Bölümler arasında`" data-en-aria-label=`"Between sections`">$prev$next<a class=`"ic-nav-start`" href=`"#bas`" data-av-pop=`"bas`">$IcoSections $(T 'Bölümlere dön' 'Back to sections')</a></nav>"
+    $c = $icSeq[$k]
+    return "<nav class=`"ic-nav`" aria-label=`"$(Attr "$(Plain $c.title): bölümler arasında")`" data-en-aria-label=`"$(Attr "$(Plain $c.titleEn): between sections")`">$prev$next<a class=`"ic-nav-start`" href=`"#bas`" data-av-pop=`"bas`">$IcoSections $(T 'Bölümlere dön' 'Back to sections')</a></nav>"
   }
   $script:icN = 0
   $icParts = (@($Ic.parts) | ForEach-Object -Begin { $pi = 0 } -Process {
@@ -1694,7 +1804,7 @@ function Case-Body($Ic, $Ico) {
 $icBody = Case-Body $Ic $IcoAnswer
 $icLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ic.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/islama-cevap.html") + '}'
 Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadislerle | $SiteName" -TitleEn "$($Ic.en): From the Qur$($Apos)an and the Hadith | $SiteName" `
-  -Description (Meta-Trim "İslam'ın iddiaları kendi kaynaklarıyla sınanıyor: İslam ikilemi, Kur'an'ın korunmuşluğu, Muhammed'in karakteri, Kâbe'nin putu Hübel. Kısa özet ve tam tartışma.") `
+  -Description (Meta-Trim "İslam'ın iddiaları kendi kaynaklarıyla sınanıyor: İslam ikilemi, Kur'an'ın korunmuşluğu, Muhammed'in karakteri, Kâbe'nin putu Hübel. Kısa özet ve tam tartışma.") -DescriptionEn "Islam's claims tested by its own sources: the Islamic dilemma, the preservation of the Qur'an, the character of Muhammad and Hubal, the idol of the Kaaba." `
   -Path 'islama-cevap.html' -Body $icBody -JsonLd @($icLd, (Breadcrumb-Ld "İslam$($Apos)a Cevap" 'islama-cevap.html'))
 
 # ================================================================== ATEIZME CEVAP (ateizme-cevap.html)
@@ -1705,7 +1815,7 @@ $Ac = Read-Data 'ateizme-cevap.js'
 $acBody = Case-Body $Ac $IcoCosmos
 $acLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ac.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/ateizme-cevap.html") + '}'
 Write-Page -File 'ateizme-cevap.html' -Title "$(Plain $Ac.title): Akıl ve Kanıtla | $SiteName" -TitleEn "$($Ac.en): Reason and Evidence | $SiteName" `
-  -Description (Meta-Trim "Tanrı var mı? Ateizm ve agnostisizm akıl ve kanıtla sınanıyor: evrenin varlığı, ince ayar, bilinç, ahlak, belgelenmiş mucizeler ve kötülük sorunu. Kısa özet ve tam tartışma.") `
+  -Description (Meta-Trim "Tanrı var mı? Ateizm ve agnostisizm akıl ve kanıtla sınanıyor: evrenin varlığı, ince ayar, bilinç, ahlak, İsa’nın dirilişi, mucizeler ve kötülük sorunu.") -DescriptionEn "Does God exist? Atheism and agnosticism tested by reason and evidence: the universe, fine-tuning, consciousness, the resurrection of Jesus, miracles and evil." `
   -Path 'ateizme-cevap.html' -Body $acBody -JsonLd @($acLd, (Breadcrumb-Ld 'Ateizme Cevap' 'ateizme-cevap.html'))
 
 # ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html + en/why-were-catholic.html)
@@ -1783,14 +1893,9 @@ $panels
 </div>
 "@
   $page = 'neden-katoligiz.html'
-  $faqLdWhy = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","name":' + (JStr $W.title) +
-    ',"url":' + (JStr "$SiteUrl/$page") + ',"mainEntity":[' + ((($parts | ForEach-Object { $_.topics }) | ForEach-Object {
-      '{"@type":"Question","name":' + (JStr (Plain $_.q)) + ',"url":' + (JStr "$SiteUrl/$page#$($_.id)") +
-      ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain ($_.lede + ' ' + (@($_.points) -join ' ')))) + '}}'
-    }) -join ',') + ']}'
   Write-Page -File $page -Title "$($W.title) | $SiteName" -TitleEn "$($W.en) | $SiteName" `
-    -Description "Katolik inancının akla ve kalbe hitap eden kısa özeti: Tanrı var mı, İsa kim ve neden Katolik Kilise?" `
-    -Path $page -Body $body -JsonLd @((Breadcrumb-Ld 'Neden Katoliğiz?' $page), $faqLdWhy)
+    -Description "Katolik inancının akla ve kalbe hitap eden kısa özeti: Tanrı var mı, İsa kim ve neden Katolik Kilise?" -DescriptionEn "A short case for the Catholic faith for mind and heart: does God exist, who is Jesus, and why the Catholic Church?" `
+    -Path $page -Body $body -JsonLd @((Breadcrumb-Ld 'Neden Katoliğiz?' $page))
 }
 Why-Page 'tr'
 
@@ -1844,7 +1949,7 @@ function Saint-Links($s) {
   $q = if ($plain -match '(^|\s)(Aziz|Havari|Havariler|Meryem|Vaftizci|Bazilika)') { $plain } else { "Aziz $plain" }
   $plainEn = if ($s.nameEn) { ($s.nameEn -replace '<[^>]+>', '') } else { $plain }
   $qEn = if ($plainEn -match '(^|\s)(Saint|St\.|Apostle|Mary|Our Lady|Blessed|Basilica)') { $plainEn } else { "Saint $plainEn" }
-  return "<p class=`"s-links`">" + (T "<a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($q))`" target=`"_blank`" rel=`"noopener nofollow`">Google$($Apos)da ara$IcoExternal</a>" "<a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($qEn))`" target=`"_blank`" rel=`"noopener nofollow`">Search on Google$IcoExternal</a>") + "</p>"
+  return "<p class=`"s-links`">" + (T "<a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($q))`" target=`"_blank`" rel=`"noopener nofollow`">Google$($Apos)da ara</a>" "<a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($qEn))`" target=`"_blank`" rel=`"noopener nofollow`">Search on Google</a>") + "</p>"
 }
 $RankEn = @{ 'En Büyük Bayram' = 'The Greatest Solemnity'; 'Büyük Bayram' = 'Solemnity'; 'Bayram' = 'Feast'; 'Anma Günü' = 'Memorial'; 'Anma' = 'Memorial'
   'İhtiyari Anma Günü' = 'Optional Memorial'; 'Roma Azizler Cetveli' = 'Roman Martyrology'; 'Ortaçağ Batı Geleneği' = 'Medieval Western Tradition' }
@@ -1901,7 +2006,7 @@ $movableCardsHtml
 <div class="hover-panel glass" id="saint-panel" role="tooltip" hidden></div>
 "@
 Write-Page -File 'azizler.html' -Title "$($Saints.title) | $SiteName" -TitleEn "$($Saints.en) | $SiteName" `
-  -Description "Katolik ayin takviminin azizleri: bugünün azizini Türkiye saatiyle görün, yılın her günü için Türkçe aziz hayat hikayelerini keşfedin." `
+  -Description "Katolik ayin takviminin azizleri: bugünün azizini Türkiye saatiyle görün, yılın her günü için Türkçe aziz hayat hikayelerini keşfedin." -DescriptionEn "Saints of the Catholic calendar: today's saint, and the life of a saint for every day of the year, in Turkish and English." `
   -Path 'azizler.html' -Body $azizlerBody -JsonLd @((Breadcrumb-Ld 'Azizler' 'azizler.html'))
 
 # ------------------------------------------------------------------ one page per great saint
@@ -1918,7 +2023,7 @@ $GreatSaints.saints | ForEach-Object {
 "@
   $saintLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr $s.name) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/$($s.id).html") + '}'
   Write-Page -File "$($s.id).html" -Title "$($s.name) | $SiteName" -TitleEn "$($s.en) | $SiteName" `
-    -Description (Meta-Trim (Plain $s.summary)) -Path "$($s.id).html" -Body $saintBody `
+    -Description (Meta-Trim (Plain $s.summary)) -DescriptionEn (Plain $s.summaryEn) -Path "$($s.id).html" -Body $saintBody `
     -JsonLd @($saintLd, (Breadcrumb-Ld $s.name "$($s.id).html" 'Azizler' 'azizler.html')) -OgType 'article'
 }
 
@@ -1966,7 +2071,7 @@ $massPartsHtml
 </div>
 "@
 Write-Page -File 'kutsal-ayin.html' -Title "$($Mass.title) | $SiteName" -TitleEn "$($Mass.en) | $SiteName" `
-  -Description "Kutsal Ayin$($Apos)in sırası: cemaatin toplanmasından son takdise, Kutsal Kitabın okunmasından Efkaristiya$($Apos)nın kutsanmasına dek altı bölüm, Türkçe ve İngilizce." `
+  -Description "Kutsal Ayin$($Apos)in sırası: cemaatin toplanmasından son takdise, Kutsal Kitabın okunmasından Efkaristiya$($Apos)nın kutsanmasına dek altı bölüm, Türkçe ve İngilizce." -DescriptionEn "The order of the Catholic Mass, from the gathering of the people to the final blessing: its six parts in Turkish and English, explained step by step." `
   -Path 'kutsal-ayin.html' -Body $massBody -JsonLd @((Breadcrumb-Ld 'Kutsal Ayin' 'kutsal-ayin.html'))
 
 # ================================================================== ISA'NIN MESELLERI (meseller.html)
@@ -2019,7 +2124,7 @@ $meselCats
 </div>
 "@
 Write-Page -File 'meseller.html' -Title "$($Parables.title) | $SiteName" -TitleEn "$($Parables.en) | $SiteName" `
-  -Description "Mesih İsa$($Apos)nın İnciller$($Apos)deki başlıca meselleri: kısaca yeniden anlatılmış ve konularına göre bölümlere ayrılmış, düz bir dille açıklanmış otuz ikisi bir arada." `
+  -Description "Mesih İsa$($Apos)nın İnciller$($Apos)deki başlıca meselleri: kısaca yeniden anlatılmış ve konularına göre bölümlere ayrılmış, düz bir dille açıklanmış otuz ikisi bir arada." -DescriptionEn "The main parables of Jesus in the Gospels, retold briefly, grouped by theme and explained in plain language, with the text of Scripture." `
   -Path 'meseller.html' -Body $meselBody -JsonLd @((Breadcrumb-Ld $MeselTitle 'meseller.html'))
 
 # ================================================================== TESBIH DUASI (tesbih-duasi.html)
@@ -2155,7 +2260,7 @@ $mysterySets
 </div>
 "@
 Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" -TitleEn "$($Rosary.en) | $SiteName" `
-  -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." `
+  -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." -DescriptionEn "How to pray the Rosary: the prayers in Turkish and English, the Joyful, Luminous, Sorrowful and Glorious Mysteries, and a bead-by-bead guide." `
   -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
 
 # ================================================================== MUCIZELER (mucizeler.html)
@@ -2191,7 +2296,7 @@ $miraCats
 </div>
 "@
 Write-Page -File 'mucizeler.html' -Title "Mucizeler | $SiteName" -TitleEn "$($Miracles.en) | $SiteName" `
-  -Description "Katolik Kilisesi$($Apos)nde bilinen mucizeler: Meryem Ana görünmeleri (Fatima, Lourdes, Guadalupe, Zeytun), Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler." `
+  -Description "Katolik Kilisesi$($Apos)nde bilinen mucizeler: Meryem Ana görünmeleri (Fatima, Lourdes, Guadalupe, Zeytun), Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler." -DescriptionEn "Catholic miracles and the evidence: Fatima, Lourdes, Guadalupe, Zeitoun, the Shroud of Turin, Eucharistic miracles such as Lanciano, and Padre Pio." `
   -Path 'mucizeler.html' -Body $mucizelerBody -JsonLd @((Breadcrumb-Ld 'Mucizeler' 'mucizeler.html'))
 
 # ================================================================== KILISELER (kiliseler.html): parish locator
@@ -2268,11 +2373,12 @@ foreach ($city in $Churches.cities) {
   <p class="ch-back"><a class="btn" href="kiliseler.html#harita">$IcoPin $(T 'Kilise Bul haritasına dön' 'Back to the Find a Church map')</a></p>
 </div>
 "@
-    $desc = "$(Plain $ch.name), $(Plain $ch.district), $($cityName): ayin saatleri, ziyaret saatleri, adres, iletişim bilgileri ve kilisenin tarihçesi."
+    $desc = "$(Plain $ch.name), $(Plain $ch.district), $($cityName): ayin saatleri, ziyaret saatleri, adres ve tarihçe."
+    $descEn = "$(Plain $ch.nameEn), $(Plain $ch.district), $($cityEn): Mass times, visiting hours, address and history."
     $ld = '{"@context":"https://schema.org","@type":"Church","name":' + (JStr (Plain $ch.name)) + ',"address":' + (JStr (Plain $ch.address)) +
       $(if (@($ch.phones).Count) { ',"telephone":' + (JStr ((Tel-Href @($ch.phones)[0]) -replace '^tel:', '')) } else { '' }) +
       $(if ($ch.website) { ',"sameAs":' + (JStr $ch.website) } else { '' }) + ',"url":' + (JStr "$SiteUrl/$file") + '}'
-    Write-Page -File $file -Title "$(Plain $ch.name), $cityName | $SiteName" -TitleEn "$(Plain $ch.nameEn), $cityEn | $SiteName" -Description (Meta-Trim $desc) -Path $file -Body $body `
+    Write-Page -File $file -Title "$(Plain $ch.name), $cityName | $SiteName" -TitleEn "$(Plain $ch.nameEn), $cityEn | $SiteName" -Description (Meta-Trim $desc) -Path $file -DescriptionEn $descEn -Body $body `
       -JsonLd @($ld, (Breadcrumb-Ld (Plain $ch.name) $file 'Kilise Bul' 'kiliseler.html')) -OgType 'article' -RootRelative $true
   }
 }
@@ -2338,7 +2444,7 @@ $churchMapHtml
 </div>
 "@
 Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" -TitleEn "$($Churches.en) | $SiteName" `
-  -Description "Türkiye$($Apos)deki Katolik kiliseleri haritası: Latin, Ermeni, Süryani ve Keldani Katolik kiliseleri; her birinin ayin saatleri, ziyaret saatleri, adresi ve tarihçesi." `
+  -Description "Türkiye$($Apos)deki Katolik kiliseleri haritası: Latin, Ermeni, Süryani ve Keldani Katolik kiliseleri; ayin ve ziyaret saatleri, adres ve tarihçe." -DescriptionEn "Map of Catholic churches in Turkey: Latin, Armenian, Syriac and Chaldean Catholic churches, with Mass times, visiting hours, addresses and history." `
   -Path 'kiliseler.html' -Body $kiliselerBody -JsonLd @((Breadcrumb-Ld 'Kilise Bul' 'kiliseler.html'))
 
 # ================================================================== ILETISIM (iletisim.html)
@@ -2354,7 +2460,7 @@ $iletisimBody = @"
 </div>
 "@
 Write-Page -File 'iletisim.html' -Title "İletişim | $SiteName" -TitleEn "Contact | $SiteName" `
-  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." `
+  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." -DescriptionEn "How to reach katolikdunyasi.com: an e-mail address for translation corrections, content suggestions and your questions." `
   -Path 'iletisim.html' -Body $iletisimBody -JsonLd @((Breadcrumb-Ld 'İletişim' 'iletisim.html'))
 
 # ================================================================== ERISILEBILIRLIK (erisilebilirlik.html)
@@ -2365,7 +2471,7 @@ $erBody = @"
   <div class="body prose">$(TB (Convert-Markdown $Er.body) (Convert-Markdown $ErEn.body))</div>
 </div>
 "@
-Write-Page -File 'erisilebilirlik.html' -Title "$($ErMeta.title) | $SiteName" -TitleEn "$($ErEn.meta.title) | $SiteName" -Description $ErMeta.description `
+Write-Page -File 'erisilebilirlik.html' -Title "$($ErMeta.title) | $SiteName" -TitleEn "$($ErEn.meta.title) | $SiteName" -Description $ErMeta.description -DescriptionEn $ErEn.meta.description `
   -Path 'erisilebilirlik.html' -Body $erBody -JsonLd @((Breadcrumb-Ld 'Erişilebilirlik' 'erisilebilirlik.html'))
 
 # ================================================================== GIZLILIK (gizlilik.html)
@@ -2376,7 +2482,7 @@ $gzBody = @"
   <div class="body prose">$(TB (Convert-Markdown $Gz.body) (Convert-Markdown $GzEn.body))</div>
 </div>
 "@
-Write-Page -File 'gizlilik.html' -Title "$($GzMeta.title) | $SiteName" -TitleEn "$($GzEn.meta.title) | $SiteName" -Description $GzMeta.description `
+Write-Page -File 'gizlilik.html' -Title "$($GzMeta.title) | $SiteName" -TitleEn "$($GzEn.meta.title) | $SiteName" -Description $GzMeta.description -DescriptionEn $GzEn.meta.description `
   -Path 'gizlilik.html' -Body $gzBody -JsonLd @((Breadcrumb-Ld 'Gizlilik Politikası' 'gizlilik.html'))
 
 # ================================================================== KAYNAKLAR VE TELIF (kaynaklar-ve-telif.html)
@@ -2389,7 +2495,7 @@ $ktBody = @"
   <div class="body prose">$(TB $InfoHtml $InfoHtmlEn)</div>
 </div>
 "@
-Write-Page -File 'kaynaklar-ve-telif.html' -Title "$($fm['title']) | $SiteName" -TitleEn "$($fmEn['title']) | $SiteName" -Description $fm['description'] `
+Write-Page -File 'kaynaklar-ve-telif.html' -Title "$($fm['title']) | $SiteName" -TitleEn "$($fmEn['title']) | $SiteName" -Description $fm['description'] -DescriptionEn $fmEn['description'] `
   -Path 'kaynaklar-ve-telif.html' -Body $ktBody -JsonLd @((Breadcrumb-Ld $fm['title'] 'kaynaklar-ve-telif.html'))
 
 # ================================================================== 404.html (served by GitHub Pages for unknown URLs)
@@ -2532,31 +2638,14 @@ $apps
   $homePath = ''
   $q = 'katekizm.html'
   $ld = '{"@context":"https://schema.org","@type":"WebSite","name":' + (JStr $SiteName) +
-    ',"url":' + (JStr "$SiteUrl/$homePath") + ',"inLanguage":"tr","description":' + (JStr $SiteTag) +
-    ',"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":' +
-    (JStr "$SiteUrl/$($q)?q={search_term_string}") + '},"query-input":"required name=search_term_string"}}'
+    ',"url":' + (JStr "$SiteUrl/$homePath") + ',"inLanguage":"tr","description":' + (JStr $SiteTag) + '}'
   Write-Page -File 'index.html' -Title "$SiteName | $SiteTag" -TitleEn "$SiteName | $SiteTagEn" `
     -Description "Türkçe Katolik Portalı: Katolik Kilisesi Katekizmi Özeti$($Apos)nin tam çevirisi ve Katolik inancı üzerine sıkça sorulan sorular." `
+    -DescriptionEn "A Turkish Catholic portal in English and Turkish: the Compendium of the Catechism, the saints, prayers, the Mass, churches in Turkey and answers about the faith." `
     -Path '' -Body $body -JsonLd @($ld)
 }
 Home-Page 'tr'
 
-# ---------------- the English site's old addresses
-# The site is Turkish only now. Each old English address forwards to the Turkish page that
-# replaced it, keeping any #section, so links and search results still land somewhere real;
-# search engines read an instant refresh as a permanent move and follow the canonical.
-if (Test-Path $EnDir) { Get-ChildItem $EnDir -Filter *.html | Remove-Item }
-else { New-Item -ItemType Directory -Path $EnDir | Out-Null }
-foreach ($k in @($EnAltMap.Keys)) {
-  if (-not $k.StartsWith('en/')) { continue }
-  $tr = $EnAltMap[$k]
-  $to = if ($tr -eq 'index.html') { '/' } else { "/$tr" }
-  $html = "<!DOCTYPE html>`n<html lang=`"tr`">`n<head>`n<meta charset=`"utf-8`">`n<title>$SiteName</title>`n<meta name=`"robots`" content=`"noindex`">`n" +
-    "<link rel=`"canonical`" href=`"$SiteUrl$to`">`n<meta http-equiv=`"refresh`" content=`"0; url=$to`">`n" +
-    "<script>location.replace('$to' + location.hash)</script>`n</head>`n<body><p><a href=`"$to`">$SiteName</a></p></body>`n</html>`n"
-  [IO.File]::WriteAllText((Join-Path $Root $k), $html, $Utf8)
-}
-Write-Host "  + en/: $(@($EnAltMap.Keys | Where-Object { $_.StartsWith('en/') }).Count) forwarding pages"
 # The Katekizm overview's old address (katesizm.html): forwards with any ?q= search and #question
 $html = "<!DOCTYPE html>`n<html lang=`"tr`">`n<head>`n<meta charset=`"utf-8`">`n<title>Katekizm | $SiteName</title>`n<meta name=`"robots`" content=`"noindex`">`n" +
   "<link rel=`"canonical`" href=`"$SiteUrl/katekizm.html`">`n<meta http-equiv=`"refresh`" content=`"0; url=/katekizm.html`">`n" +
@@ -2577,23 +2666,40 @@ $pages = @(
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }, @{ p = 'kaynaklar-ve-telif.html'; pr = '0.3' }
 ) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) + ($ChurchPages | ForEach-Object { @{ p = $_; pr = '0.5' } })
-$sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
-  (($pages | ForEach-Object {
-    "  <url><loc>$SiteUrl/$($_.p)</loc><lastmod>$BuildDate</lastmod><changefreq>monthly</changefreq><priority>$($_.pr)</priority></url>"
-  }) -join "`n") +
-  "`n</urlset>`n"
+# Both languages, each address listing its twin (hreflang) so search engines pair them. No
+# <lastmod>: every build rewrites every page, and a date that always says "today" is ignored.
+$smUrls = foreach ($pg in $pages) {
+  $tr = if ($pg.p) { $pg.p } else { 'index.html' }
+  $trU = "$SiteUrl/$($pg.p)"
+  $enF = En-Of $tr
+  if (-not $enF) { "  <url><loc>$trU</loc></url>"; continue }
+  $enU = "$SiteUrl/$(Page-Path $enF)"
+  $alts = "<xhtml:link rel=`"alternate`" hreflang=`"tr`" href=`"$trU`"/><xhtml:link rel=`"alternate`" hreflang=`"en`" href=`"$enU`"/><xhtml:link rel=`"alternate`" hreflang=`"x-default`" href=`"$trU`"/>"
+  "  <url><loc>$trU</loc>$alts</url>"
+  "  <url><loc>$enU</loc>$alts</url>"
+}
+$sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' + "`n" +
+  ($smUrls -join "`n") + "`n</urlset>`n"
 [IO.File]::WriteAllText((Join-Path $Root 'sitemap.xml'), $sm, $Utf8)
-# Dedicated AI-training crawlers (not the same user agent as that company's regular search
-# crawler, e.g. Google-Extended vs Googlebot) are blocked by request; ordinary search engines
-# are untouched by the User-agent: * block above them.
-$AiCrawlers = @(
-  'GPTBot', 'ChatGPT-User', 'Google-Extended', 'CCBot', 'anthropic-ai', 'ClaudeBot', 'Claude-Web',
-  'Bytespider', 'Meta-ExternalAgent', 'Meta-ExternalFetcher', 'FacebookBot', 'Applebot-Extended',
-  'Diffbot', 'PerplexityBot', 'cohere-ai', 'cohere-training-data-crawler', 'Omgilibot', 'Omgili',
-  'Amazonbot', 'Timpibot', 'ImagesiftBot', 'Youbot', 'Kangaroo Bot', 'Panscient'
-)
-$aiBlock = ($AiCrawlers | ForEach-Object { "User-agent: $_`nDisallow: /`n" }) -join "`n"
-[IO.File]::WriteAllText((Join-Path $Root 'robots.txt'), "User-agent: *`nAllow: /`nDisallow: /tools/`n`n# AI-training crawlers (search engines above are unaffected)`n$aiBlock`nSitemap: $SiteUrl/sitemap.xml`n", $Utf8)
+# Every crawler is welcome: search engines and the AI assistants that answer people's questions
+# (ChatGPT, Claude, Perplexity, Gemini…) can read and cite the whole site.
+[IO.File]::WriteAllText((Join-Path $Root 'robots.txt'), "User-agent: *`nAllow: /`n`nSitemap: $SiteUrl/sitemap.xml`n", $Utf8)
+
+# llms.txt (llmstxt.org): a plain map of the site for AI assistants, English first, then
+# Turkish, each page with its one-line description.
+$llmSkip = @('404.html', 'katesizm.html')
+$llmPages = @($script:PageInfo | Where-Object { $llmSkip -notcontains $_.File -and $_.Robots -notmatch 'noindex' } | Sort-Object -Stable { if ($_.File -eq 'index.html') { 0 } else { 1 } })
+$llmCut = { param($t) ($t -replace ([regex]::Escape(" | $SiteName") + '$'), '') -replace ('^' + [regex]::Escape($SiteName) + ' \| '), '' }
+$llms = "# $SiteName`n`n> A Turkish Catholic portal with every page in Turkish and English: the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, Catholic churches in Turkey with Mass times, and answers about the faith, Islam and atheism.`n`n" +
+  "Every page has a Turkish address and an English twin under /en/. Quotations of the Catechism follow the official Turkish translation and the English Compendium (Libreria Editrice Vaticana).`n`n## English`n`n" +
+  (($llmPages | Where-Object { $_.En } | ForEach-Object { "- [$(& $llmCut $(if ($_.TitleEn) { $_.TitleEn } else { $_.Title }))]($SiteUrl/$(Page-Path $_.En)): $(if ($_.DescEn) { $_.DescEn } else { $_.Desc })" }) -join "`n") +
+  "`n`n## Türkçe`n`n" +
+  (($llmPages | ForEach-Object { "- [$(& $llmCut $_.Title)]($SiteUrl/$($_.Path)): $($_.Desc)" }) -join "`n") + "`n"
+[IO.File]::WriteAllText((Join-Path $Root 'llms.txt'), $llms, $Utf8)
+# IndexNow: the key file that proves the site is ours when the deploy tells Bing, Yandex and
+# the others which addresses changed (see .github/workflows/deploy.yml)
+$IndexNowKey = '6d932ac291e035e4f4741e45a828f802'
+[IO.File]::WriteAllText((Join-Path $Root "$IndexNowKey.txt"), $IndexNowKey, $Utf8)
 
 # security.txt (RFC 9116): how to report a vulnerability, without publicly guessing at one.
 # Expires a year out from each build, so the file never goes silently stale.
@@ -2602,5 +2708,5 @@ if (-not (Test-Path $wellKnownDir)) { New-Item -ItemType Directory -Path $wellKn
 $secExpires = (Get-Date).AddYears(1).ToString('yyyy-MM-ddT00:00:00.000Z')
 $secTxt = "Contact: mailto:david@katolikdunyasi.com`nExpires: $secExpires`nPreferred-Languages: tr`nCanonical: $SiteUrl/.well-known/security.txt`n"
 [IO.File]::WriteAllText((Join-Path $wellKnownDir 'security.txt'), $secTxt, $Utf8)
-Write-Host "  + sitemap.xml, robots.txt, .well-known/security.txt"
+Write-Host "  + sitemap.xml, robots.txt, llms.txt, IndexNow key, .well-known/security.txt"
 Write-Host "Done."

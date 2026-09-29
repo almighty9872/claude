@@ -24,10 +24,19 @@
   /* Pages served at arbitrary URLs (404.html), and every /en/ page, declare <html data-root="/">
      so data and links resolve from the site root */
   var ROOT = document.documentElement.getAttribute('data-root') || '';
-  /* The language shown (TR | EN switch, initLang). Every page carries both; LANG follows the switch.
-     There are no separate English pages any more, so links never get a prefix. */
+  /* The language shown. Every page carries both languages; its address decides which one is
+     shown (URL_LANG: data-url-lang, 'tr' at the root, 'en' under /en/), and the TR | EN switch
+     goes to the other address. Only 404.html, which has no twin, switches in place. */
   var LANG = document.documentElement.classList.contains('lang-en') ? 'en' : 'tr';
-  var LANG_PREFIX = '';
+  var URL_LANG = document.documentElement.getAttribute('data-url-lang') || '';
+  /* Turkish page -> its English twin's address (written in by tools/build.ps1) */
+  var EN_MAP = {"__EN_MAP__": 1};
+  function enPathOf(file) {
+    if (file === '' || file === 'index.html') return 'en/';
+    if (EN_MAP[file]) return EN_MAP[file];
+    if (/^kilise\/[a-z0-9-]+\.html$/.test(file)) return 'en/church/' + file.slice(7);
+    return null;
+  }
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
@@ -119,7 +128,11 @@
     LANG = en ? 'en' : 'tr';
     if (remember) try { localStorage.setItem(LANG_KEY, LANG); } catch (e) { /* private mode */ }
     swapAttrs(document);
-    $$('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === LANG)); });
+    $$('[data-set-lang]').forEach(function (b) {
+      var on = b.getAttribute('data-set-lang') === LANG;
+      if (b.tagName === 'A') { if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }
+      else b.setAttribute('aria-pressed', String(on));
+    });
     if (a) {
       if (a.pair) {
         var other = a.pair.classList.contains('l-tr') ? a.pair.nextElementSibling : a.pair.previousElementSibling;
@@ -139,8 +152,30 @@
       var want = b.getAttribute('data-set-lang');
       /* a tap on the language already shown flips to the other one, like a switch */
       if (want === LANG && b.closest('.lang-pill')) want = LANG === 'en' ? 'tr' : 'en';
+      if (URL_LANG) {
+        /* the other language lives at the page's other address: go there, keeping the #section */
+        e.preventDefault();
+        try { localStorage.setItem(LANG_KEY, want); } catch (err) { /* private mode */ }
+        if (want === URL_LANG) return;
+        var alt = document.querySelector('link[rel="alternate"][hreflang="' + want + '"]');
+        if (alt) location.href = alt.getAttribute('href').replace(/^https?:\/\/[^\/]+/, '') + location.hash;
+        return;
+      }
       setLang(want, true, true);
     });
+    /* On English pages, links the script writes (or any left pointing at a Turkish page) are sent
+       to the English twin just before they are followed */
+    if (URL_LANG === 'en') {
+      var toEn = function (e) {
+        var a = e.target.closest && e.target.closest('a[href]');
+        if (!a || a.closest('.lang-pill') || a.hasAttribute('hreflang')) return;
+        var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (err) { return; }
+        if (u.origin !== location.origin || /^\/en\//.test(u.pathname)) return;
+        var p = enPathOf(u.pathname.replace(/^\//, ''));
+        if (p) a.setAttribute('href', '/' + p + u.search + u.hash);
+      };
+      ['click', 'auxclick', 'contextmenu', 'focusin', 'touchstart'].forEach(function (t) { document.addEventListener(t, toEn, true); });
+    }
   }
 
   /* ---------------------------------------------------------------
@@ -761,13 +796,30 @@
   }
 
   function initSources() {
-    function open(dlg) { if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
+    function open(dlg) { fill(dlg); if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
+    /* a popup whose text lives on its own page: fetched the first time it opens */
+    function fill(dlg) {
+      var box = $('.info-inner[data-lazy]', dlg), a = box && $('a', box);
+      if (!a || box.getAttribute('data-lazy') === 'busy' || !window.fetch || !window.DOMParser) return;
+      box.setAttribute('data-lazy', 'busy');
+      var url = a.href;
+      fetch(url).then(function (r) { if (!r.ok) throw r; return r.text(); }).then(function (t) {
+        var body = new DOMParser().parseFromString(t, 'text/html').querySelector('#main .body');
+        if (!body) throw body;
+        /* its links were written for that page's folder */
+        $$('a[href]', body).forEach(function (x) { var h = x.getAttribute('href'); if (!/^(#|[a-z]+:)/i.test(h)) x.setAttribute('href', new URL(h, url).href); });
+        box.innerHTML = body.innerHTML;
+        box.removeAttribute('data-lazy');
+        initEmail();
+      }).catch(function () { box.setAttribute('data-lazy', ''); });
+    }
     function close(dlg) { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
     /* Every link to these pages opens its popup (menu, footer columns too); the
        href stays, so the pages are still crawled and open without JS */
-    var DLG_PAGES = { 'iletisim.html': 'dlg-iletisim', 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik', 'kaynaklar-ve-telif.html': 'sources-dialog' };
+    var DLG_PAGES = { 'iletisim.html': 'dlg-iletisim', 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik', 'kaynaklar-ve-telif.html': 'sources-dialog',
+      'contact.html': 'dlg-iletisim', 'accessibility.html': 'dlg-erisilebilirlik', 'privacy.html': 'dlg-gizlilik', 'sources-and-copyright.html': 'sources-dialog' };
     var here = location.pathname.split('/').pop();
-    $$('a[href]').forEach(function (a) {
+    $$('a[href]:not([data-no-dlg])').forEach(function (a) {
       var page = (a.getAttribute('href') || '').split(/[?#]/)[0].split('/').pop();
       var id = a.getAttribute('data-dialog') || DLG_PAGES[page];
       var dlg = id && page !== here && document.getElementById(id);
@@ -1674,7 +1726,7 @@
     app.className = 'cal-app';
     app.innerHTML =
       '<div class="cal-bar"><div class="cal-nav"><button type="button" class="cal-arrow" data-cal-step="-1" ' + pattr('aria-label', TX.prev) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>' +
-      '<h3 class="cal-title" aria-live="polite"></h3><button type="button" class="cal-arrow" data-cal-step="1" ' + pattr('aria-label', TX.next) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>' +
+      '<h2 class="cal-title" aria-live="polite"></h2><button type="button" class="cal-arrow" data-cal-step="1" ' + pattr('aria-label', TX.next) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>' +
       '<button type="button" class="cal-todaybtn">' + phtml(TX.today) + '</button>' +
       '<div class="cal-seg" role="group"><button type="button" data-cal-view="month" aria-pressed="true">' + phtml(TX.month) + '</button><button type="button" data-cal-view="year" aria-pressed="false">' + phtml(TX.year) + '</button></div></div>' +
       '<div class="cal-body"><div class="cal-main"></div><aside class="cal-day" aria-live="polite"></aside></div>' + legend();
@@ -1685,16 +1737,16 @@
     var st = { view: 'month', m: today.month, sel: { m: today.month, d: today.day } };
 
     function monthHtml(m) {
-      var h = '<div class="cal-grid" role="grid" ' + pattr('aria-label', pcat(MONTHS[m - 1], ' ' + Y)) + '><div class="cal-row cal-head" role="row">' +
-        WD.map(function (w, i) { return '<span role="columnheader" class="' + (i > 4 ? 'is-we' : '') + '">' + phtml(w) + '</span>'; }).join('') + '</div><div class="cal-days">';
+      var h = '<div class="cal-grid" role="group" ' + pattr('aria-label', pcat(MONTHS[m - 1], ' ' + Y)) + '><div class="cal-row cal-head" aria-hidden="true">' +
+        WD.map(function (w, i) { return '<span class="' + (i > 4 ? 'is-we' : '') + '">' + phtml(w) + '</span>'; }).join('') + '</div><div class="cal-days">';
       for (var i = 0; i < lead(m); i++) h += '<span class="cal-cell is-out" aria-hidden="true"></span>';
       for (var d = 1; d <= daysIn(m); d++) {
         var c = dayOf(m, d), n = names(c), r = c ? rankOf(c) : 'rk-other';
         var ev = n.slice(0, 2).map(function (x) { return '<span class="cal-ev ' + r + '">' + phtml(x) + '</span>'; }).join('') +
           (n.length > 2 ? '<span class="cal-more">+' + (n.length - 2) + ' ' + phtml(TX.more) + '</span>' : '');
         var sel = st.sel.m === m && st.sel.d === d;
-        h += '<button type="button" role="gridcell" class="cal-cell ' + r + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
-          '" data-m="' + m + '" data-d="' + d + '" aria-selected="' + sel + '" tabindex="' + (sel ? 0 : -1) + '" ' + pattr('aria-label', dayLabel(d, m, true, n)) + '>' +
+        h += '<button type="button" class="cal-cell ' + r + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
+          '" data-m="' + m + '" data-d="' + d + '" aria-pressed="' + sel + '" tabindex="' + (sel ? 0 : -1) + '" ' + pattr('aria-label', dayLabel(d, m, true, n)) + '>' +
           '<span class="cal-n">' + d + '</span>' + ev + '</button>';
       }
       var tail = (7 - (lead(m) + daysIn(m)) % 7) % 7;
@@ -1721,7 +1773,7 @@
       if (!items.length) return h + '<p class="hint">' + phtml(TX.none) + '</p>';
       return h + items.map(function (it) {
         var n = $('.s-name', it), t = $('.s-title', it), b = $('.saint-bio', it);
-        return '<article class="cal-saint"><h4>' + (n ? n.innerHTML : '') + '</h4>' + (t ? '<p class="cal-saint-t">' + t.innerHTML + '</p>' : '') + (b ? '<div class="cal-saint-bio">' + b.innerHTML + '</div>' : '') + '</article>';
+        return '<article class="cal-saint"><h3>' + (n ? n.innerHTML : '') + '</h3>' + (t ? '<p class="cal-saint-t">' + t.innerHTML + '</p>' : '') + (b ? '<div class="cal-saint-bio">' + b.innerHTML + '</div>' : '') + '</article>';
       }).join('');
     }
     function render(focus) {

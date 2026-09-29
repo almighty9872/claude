@@ -29,16 +29,24 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Install esbuild (the build minifies the CSS and JS with it)
+        run: npm install -g esbuild@0.25
+
       - name: Build pages (PowerShell 7 is preinstalled on GitHub runners)
         shell: pwsh
         run: ./tools/build.ps1   # site URL comes from the CNAME file
 
       - name: Collect the public files into _site
+        # Only what the pages load: the minified CSS/JS (not their sources), the fonts and images,
+        # and the few data files the scripts fetch at run time (the rest is built into the HTML).
         run: |
-          mkdir -p _site
-          cp -r ./*.html sitemap.xml robots.txt assets data _site/
-          if [ -d en ]; then cp -r en _site/; fi
-          if [ -d kilise ]; then cp -r kilise _site/; fi
+          mkdir -p _site/assets _site/data
+          cp ./*.html sitemap.xml robots.txt llms.txt favicon.ico apple-touch-icon.png site.webmanifest _site/
+          cp ./[0-9a-f]*.txt _site/                     # the IndexNow key file
+          cp assets/*.min.js assets/*.min.css assets/*.jpg assets/*.png _site/assets/
+          cp -r assets/fonts _site/assets/
+          cp data/compendium-*.js data/tespih.js data/azizler-adlar.js data/azizler-ozet-*.js _site/data/
+          cp -r en kilise _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi
           touch _site/.nojekyll
@@ -58,3 +66,17 @@ jobs:
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Tells Bing, Yandex, Seznam and the other IndexNow engines that every page may have
+      # changed, so they come back sooner (Google reads sitemap.xml instead). The key file
+      # (INDEXNOW_KEY.txt at the site root) is written by tools/build.ps1.
+      - name: Notify search engines (IndexNow)
+        continue-on-error: true
+        env:
+          INDEXNOW_KEY: 6d932ac291e035e4f4741e45a828f802
+        run: |
+          sleep 30
+          urls=$(curl -fsS https://katolikdunyasi.com/sitemap.xml | grep -o '<loc>[^<]*</loc>' | sed 's/<[^>]*>//g' | jq -R . | jq -sc .)
+          curl -sS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"katolikdunyasi.com\",\"key\":\"$INDEXNOW_KEY\",\"keyLocation\":\"https://katolikdunyasi.com/$INDEXNOW_KEY.txt\",\"urlList\":$urls}" \
+            -w 'IndexNow: HTTP %{http_code}\n'

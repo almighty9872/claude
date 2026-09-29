@@ -1,7 +1,7 @@
 ---
 title: Kaynaklar ve Telif
 about: katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini Türkçe olarak erişilebilir kılmak için hazırlanmıştır.
-description: katolikdunyasi.com’un kaynakları ve telif bilgileri.
+description: katolikdunyasi.com’un kaynakları ve telif bilgileri: Katekizm Özeti çevirisi, Kutsal Kitap alıntıları, dualar, azizlerin hayatları ve kilise bilgileri.
 ---
 
 - Katekizm: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Türkçe çeviri © 2026 katolikdunyasi.com; özgün metin © 2005 Libreria Editrice Vaticana.

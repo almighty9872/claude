@@ -1,7 +1,7 @@
 ---
 title: Sources and Copyright
 about: katolikdunyasi.com was built to make the core texts and teaching of the Catholic faith accessible in Turkish, and in English beside it.
-description: katolikdunyasi.com's sources and copyright information.
+description: Sources and copyright on katolikdunyasi.com: where the Compendium translation, Scripture quotations, prayers, lives of the saints and church details come from.
 ---
 
 - Catechism: [Compendium of the Catechism of the Catholic Church](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). The English text shown with the EN switch is the original, © 2005 Libreria Editrice Vaticana; the Turkish translation is © 2026 katolikdunyasi.com.

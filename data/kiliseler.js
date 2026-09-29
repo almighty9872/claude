@@ -2341,7 +2341,7 @@ window.CHURCHES = /*JSON-START*/{
       "0536 029 37 56"
      ],
      "email": "",
-     "website": "https://ndlgoztepe.com",
+     "website": "",
      "mass": [
       [
        "Pazartesi–Cuma",
@@ -2368,10 +2368,6 @@ window.CHURCHES = /*JSON-START*/{
        "İzmir Katolik Başepiskoposluğu: Notre-Dame de Lourdes Kilisesi",
        "https://izmirkatolikkilisesi.com/goztepe/",
        "Catholic Archdiocese of Izmir: Church of Notre-Dame de Lourdes"
-      ],
-      [
-       "Notre-Dame de Lourdes Göztepe",
-       "https://ndlgoztepe.com"
       ],
       [
        "Türkiye Katolik Ruhani Reisler Kurulu (CET), 2023 ayin saatleri listesi",
