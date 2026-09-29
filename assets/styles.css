@@ -549,33 +549,33 @@ html.av .gs-list { display: block; padding: 0; border: 0; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 .prose code { font-family: ui-monospace, Consolas, monospace; font-size: .85em; background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
 .prose a { color: var(--gold); }
-/* Kutsal Kitap (Bible) page: plain markdown-to-prose reads as a flat, monotone
-   wall of text with no visual rhythm. Adds numbered section markers, tinted
-   card-style bullets and highlighted terms purely via CSS so the source
-   markdown (content/kutsal-kitap*.md) stays untouched. */
-.kk-body { counter-reset: kk-section; }
-.kk-body h2 {
-  counter-increment: kk-section; display: flex; align-items: center; gap: .75rem;
-  padding-top: 1.7rem; margin-top: 1.9rem; border-top: 1px solid var(--border);
-}
-.kk-body h2:first-of-type { padding-top: 0; margin-top: 0; border-top: 0; }
-.kk-body h2::before {
-  content: counter(kk-section); flex: none; display: grid; place-items: center;
-  width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--gold-bg);
-  color: var(--gold-active); border: 1px solid var(--gold-soft);
-  font-family: var(--sans); font-size: .95rem; font-weight: 700;
-}
-.kk-body ul { list-style: none; padding-left: 0; display: grid; gap: .55rem; margin: 0 0 1.2rem; }
-.kk-body li {
-  position: relative; padding: .65rem .95rem .65rem 2.15rem; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-sm); margin: 0; line-height: 1.55;
-}
-.kk-body li::before {
-  content: ''; position: absolute; left: .95rem; top: 1.15rem; width: .4rem; height: .4rem;
-  border-radius: 50%; background: var(--gold);
-}
-.kk-body strong { color: var(--gold-active); font-weight: 700; }
-@media (min-width: 720px) { .kk-body ul { grid-template-columns: 1fr 1fr; } }
+/* Kutsal Kitap (Bible) page: three quick answers up top, then the guide's sections folded
+   away (build.ps1 wraps each markdown section in a <details>), so the page reads in seconds
+   and the detail is there for whoever wants it. */
+.kk-quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin: 0 0 1rem; }
+@media (max-width: 720px) { .kk-quick { grid-template-columns: 1fr; } }
+.kk-q { padding: 1rem 1.1rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
+.kk-q p { margin: 0; }
+.kk-q-k { font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+.kk-q-t { margin-top: .3rem !important; font-size: 1.08rem; font-weight: 600; line-height: 1.3; color: var(--text); }
+.kk-q-s { margin-top: .35rem !important; font-size: .95rem; line-height: 1.5; color: var(--text-soft); }
+.kk-q-a { margin-top: .55rem !important; font-family: var(--sans); font-size: .85rem; font-weight: 600; }
+.kk-q-a a { color: var(--gold); text-decoration: none; white-space: nowrap; }
+.kk-q-a svg { width: .8rem; height: .8rem; vertical-align: -.05em; }
+.kk-motto { margin: 0 0 2.2rem; text-align: center; font-style: italic; color: var(--text-soft); }
+.kk-secs { border-top: 1px solid var(--border); }
+.kk-sec { border-bottom: 1px solid var(--border); scroll-margin-top: calc(var(--header-h) + 1rem); }
+.kk-sec > summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem .2rem; cursor: pointer; list-style: none; }
+.kk-sec > summary::-webkit-details-marker { display: none; }
+.kk-sec > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.kk-sec > summary h2 { margin: 0; font-size: 1.2rem; line-height: 1.35; }
+.kk-sec > summary:hover h2 { color: var(--gold-active); }
+.kk-sec[open] > summary .chev { transform: rotate(180deg); color: var(--gold); }
+.kk-sec-body { padding: 0 .2rem 1.2rem; }
+.kk-body ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+.kk-body li { margin: 0 0 .4rem; line-height: 1.55; }
+.kk-body li::marker { color: var(--gold); }
+.kk-note { margin-top: 1.4rem; font-size: .9rem; color: var(--muted); }
 .about-link { text-align: center; margin: 1.6rem 0 0; font-family: var(--sans); font-size: .9rem; }
 .hero .label { margin: 0 0 .4rem; }
 
@@ -907,8 +907,12 @@ body.sheet-open { overflow: hidden; }
    key points, and an "Ama..." line that opens the objection's reply). */
 .why-wrap { max-width: 760px; }
 .why-intro { max-width: 36rem; margin: 0 auto 1.6rem; text-align: center; font-size: 1.12rem; line-height: 1.6; color: var(--text-soft); }
-.why-doors { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 0 0 3rem; }
-@media (max-width: 560px) { .why-doors { grid-template-columns: 1fr; margin-bottom: 2.2rem; } }
+.why-doors {
+  --doors-w: min(980px, calc(100vw - 2rem));
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem;
+  width: var(--doors-w); margin: 0 0 3rem calc((100% - var(--doors-w)) / 2);
+}
+@media (max-width: 700px) { .why-doors { grid-template-columns: 1fr; width: auto; margin: 0 0 2.2rem; } }
 .why-door {
   position: relative; display: grid; gap: .2rem; padding: 1rem 2.6rem 1rem 1.15rem; border-radius: var(--radius);
   background: var(--gold-bg); border: 1px solid var(--gold-soft); text-decoration: none; color: var(--text);
@@ -918,6 +922,8 @@ body.sheet-open { overflow: hidden; }
 .why-door-t { font-weight: 600; font-size: 1.05rem; line-height: 1.3; }
 .why-door-s { font-family: var(--sans); font-size: .82rem; color: var(--muted); line-height: 1.35; }
 .why-door svg { position: absolute; right: 1rem; top: 50%; width: 1.15rem; height: 1.15rem; margin-top: -.575rem; color: var(--gold); }
+.why-aside { margin: 1rem 0 0; font-size: .98rem; color: var(--text-soft); }
+.why-aside a { font-weight: 600; }
 .why-part { margin: 0 0 3rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
 .why-part-head { margin: 0 0 1rem; }
 .why-part-head .label { margin: 0 0 .2rem; }
@@ -2261,7 +2267,7 @@ html.av main details.av-path > summary { display: none; }
 html.av main details.av-cur, html.av main details.av-cur[open], html.av main details.av-path { border: 0; background: none; box-shadow: none; padding: 0; margin: 0; }
 html.av main details.av-path > :not(summary) { padding: 0; margin: 0; border: 0; }
 /* an item's title, as the heading of its own screen */
-html.av main :is(.faq-item, .mira-item, .faq-list > details).av-cur > summary { padding: .2rem 0 .8rem; margin: 0 0 1rem; border-bottom: 1px solid var(--border); }
+html.av main :is(.faq-item, .mira-item, .faq-list > details, .kk-sec).av-cur > summary { padding: .2rem 0 .8rem; margin: 0 0 1rem; border-bottom: 1px solid var(--border); }
 html.av main .faq-item.av-cur .faq-q, html.av main .mira-item.av-cur .mira-name, html.av main .faq-list > details.av-cur > summary { font-size: 1.35rem; line-height: 1.25; font-weight: 600; color: var(--text); }
 html.av main .mira-item.av-cur .mira-place { display: block; margin-top: .35rem; }
 .av-row-sub { padding-left: 1.9rem; }
@@ -2428,12 +2434,6 @@ html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child:has(+ .faq-ca
 html.av.av-leaf main .av-cur > :is(.section-title, h2):first-child + .faq-cat-en { margin: .25rem 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--border); text-align: center; }
 /* Neden Katoliğiz: a step is a list of its questions; a question is plain text */
 /* Kutsal Kitap: no numbered circles or boxed points */
-html.av main .kk-body h2::before { content: none; }
-html.av main .kk-body h2 { display: block; }
-html.av main .kk-body ul { display: block; padding-left: 1.2rem; list-style: disc; }
-html.av main .kk-body li { padding: 0; margin: 0 0 .55rem; border: 0; background: none; }
-html.av main .kk-body li::before { content: none; }
-html.av main .kk-body li::marker { color: var(--gold); }
 /* Günah Çıkarma's steps, Katolik Olma Süreci's two ways: text, one after another */
 html.av main .av-cur .stage-list { gap: 0; }
 html.av main .av-cur .stage { padding: 1rem 0; border: 0; border-top: 1px solid var(--border); border-radius: 0; background: none; box-shadow: none; }
@@ -2913,6 +2913,8 @@ html.av .to-top-wrap { display: none; }
 .ch-notice.is-limited svg { color: var(--gold); }
 .ch-notice p { margin: 0; line-height: 1.55; }
 .ch-sec { margin: 0 0 1.8rem; }
+.ch-ocia { padding: 1rem 1.15rem; border-radius: var(--radius); background: var(--gold-bg); border: 1px solid var(--gold-soft); }
+.ch-ocia p { margin: 0; }
 .ch-h { display: flex; align-items: center; gap: .5rem; margin: 0 0 .7rem; font-size: 1.25rem; }
 .ch-h svg { width: 1.2rem; height: 1.2rem; color: var(--gold); flex: none; }
 .ch-contact { padding: .4rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }

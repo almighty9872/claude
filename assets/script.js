@@ -2175,7 +2175,7 @@
       $$('.myst[id]', m).forEach(function (a) { avNode(a, avText($('h3', a)), avText($('.m-day', a))); });
     },
     'kutsal-kitap.html': function (m) {
-      avWrap($('.kk-body', m) || $('.prose', m), 'h2[id]').forEach(function (w) { avNode(w, avHead($('h2', w))); });
+      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h2', d))); });
     },
     'azizler.html': function (m, T) {
       var wrap = $('.wrap', m), today = $('#bugun-azizi', m);

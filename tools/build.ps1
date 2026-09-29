@@ -1336,11 +1336,42 @@ Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" -TitleEn "$($
   -Path 'sss.html' -Body $sssBody -JsonLd @($faqLd, (Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 
 # ================================================================== KUTSAL KITAP (kutsal-kitap.html)
+# Three quick answers first (what to read in Turkish, what in English, how to spot a Catholic
+# edition); the guide's sections follow folded away, each opening in place. The closing source
+# note stays outside the folds.
+function Kk-Fold([string]$html) {
+  $tail = ''
+  $i = $html.IndexOf('<blockquote')
+  if ($i -ge 0) { $tail = $html.Substring($i); $html = $html.Substring(0, $i) }
+  $parts = [regex]::Split($html, '(?=<h2 id=")')
+  $out = ($parts | Where-Object { $_.Trim() } | ForEach-Object {
+    $m = [regex]::Match($_, '^<h2 id="([^"]+)">(.*?)</h2>(.*)$', 'Singleline')
+    if (-not $m.Success) { return $_ }
+    "<details class=`"kk-sec`" id=`"$($m.Groups[1].Value)`"><summary><h2>$($m.Groups[2].Value)</h2>$IcoChevLg</summary><div class=`"kk-sec-body`">$($m.Groups[3].Value)</div></details>"
+  }) -join "`n"
+  return "<div class=`"kk-secs`">$out</div><div class=`"kk-note`">$tail</div>"
+}
+$kkRead = 'https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar'
+$kkQuick = @(
+  @((T 'Türkçe okumak için' 'To read in Turkish'), (T 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)' 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)'),
+    (T '73 kitabın tamamı, kolay okunur bir dille.' 'All 73 books, in easy modern Turkish.'),
+    "<a href=`"$kkRead`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
+  @((T 'İngilizce için' 'In English'), 'RSV-CE (The Ignatius Bible)',
+    (T 'Özgün metne yakın ama okunur; genel kullanım için en iyi seçim.' 'Close to the original yet readable; the best choice for general use.'), ''),
+  @((T 'Satın alırken' 'When buying one'), (T '73 kitap ve Imprimatur' '73 books and an Imprimatur'),
+    (T 'Katolik baskıda 73 kitap vardır; iç kapakta Nihil obstat ve Imprimatur yazar.' 'A Catholic edition has 73 books, with Nihil obstat and Imprimatur inside the cover.'), '')
+)
+$kkQuickHtml = ($kkQuick | ForEach-Object {
+  $act = if ($_[3]) { '<p class="kk-q-a">' + $_[3] + '</p>' } else { '' }
+  '<div class="kk-q"><p class="kk-q-k">' + $_[0] + '</p><p class="kk-q-t">' + $_[1] + '</p><p class="kk-q-s">' + $_[2] + '</p>' + $act + '</div>'
+}) -join ''
 $kkBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kutsal Kitap')
   <header class="page-head center">$(Page-Ico $IcoBible)<h1>$(T $KkMeta.title $KkEn.meta.title)</h1><p class="sub">$(T $KkMeta.subtitle $KkEn.meta.subtitle)</p></header>
-  <div class="body prose kk-body">$(TB (Convert-Markdown $Kk.body) (Convert-Markdown $KkEn.body))</div>
+  <section class="kk-quick" aria-labelledby="kk-quick-h"><h2 class="visually-hidden" id="kk-quick-h">$(T 'Kısaca' 'In short')</h2>$kkQuickHtml</section>
+  <p class="kk-motto">$(T 'En iyi çeviri, okuyacağınız çeviridir.' 'The best translation is the one you will read.')</p>
+  <div class="body prose kk-body">$(TB (Kk-Fold (Convert-Markdown $Kk.body)) (Kk-Fold (Convert-Markdown $KkEn.body)))</div>
 </div>
 "@
 Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -TitleEn "$($KkEn.meta.title) | $SiteName" -Description $KkMeta.description `
@@ -1643,11 +1674,18 @@ function Why-Page([string]$lang) {
   $parts = @($W.parts); $n = $parts.Count
   $doors = @(
     @($parts[0].id, "Tanrı$($Apos)ya inanmakta zorlanıyorum", 'Baştan başlayın: Tanrı var mı?', 'I find it hard to believe in God', 'Start at the beginning: is there a God?'),
+    @($parts[1].id, "Tanrı$($Apos)ya inanıyorum, ama dinlere güvenemiyorum", 'İsa kim? bölümüne geçin', 'I believe in God, but I struggle with religion', 'Go to: Who is Jesus?'),
     @($parts[$n - 1].id, 'Hristiyanım, ama neden Katolik?', 'Doğrudan Kilise bölümüne geçin', "I$($Apos)m a Christian, but why Catholic?", 'Go straight to the Church')
   )
   $doorsHtml = ($doors | ForEach-Object { "<a class=`"why-door`" href=`"#$($_[0])`"><span class=`"why-door-t`">$(T $_[1] $_[3])</span><span class=`"why-door-s`">$(T $_[2] $_[4])</span>$IcoArrowR</a>" }) -join ''
   $panels = (0..($n - 1) | ForEach-Object {
     $k = $_; $pt = $parts[$k]
+    $aside = ''
+    if ($k -eq 1) {
+      $trA = 'Müslüman bir arka plandan geliyorsanız: <a href="islama-cevap.html">İslam' + $Apos + 'a Cevap</a>'
+      $enA = 'If you come from a Muslim background: <a href="islama-cevap.html">Answering Islam</a>'
+      $aside = '<p class="why-aside">' + (T $trA $enA) + '</p>'
+    }
     $items = ($pt.topics | ForEach-Object {
       $tp = $_
       $pts = (@($tp.points) | ForEach-Object { "<li>$(Inline $_)</li>" }) -join ''
@@ -1665,6 +1703,7 @@ function Why-Page([string]$lang) {
     "<section class=`"why-part`" id=`"$($pt.id)`" aria-labelledby=`"h-$($pt.id)`">" +
       "<header class=`"why-part-head`"><p class=`"label`">$(T "Bölüm $($k + 1) / $n" "Part $($k + 1) of $n")</p><h2 id=`"h-$($pt.id)`">$(T (Inline $pt.title) (Inline $pt.en))</h2><p class=`"why-thesis`">$(F2 $pt 'thesis')</p></header>" +
       "<div class=`"why-list`">$items</div>" +
+      $aside +
     "</section>"
   }) -join "`n"
   $chain = (@($W.chain) | ForEach-Object -Begin { $i2 = 0 } -Process { $i2++; "<li><span class=`"why-chain-n`">$i2</span>$(T (Inline $_) (Inline @($W.chainEn)[$i2 - 1]))</li>" }) -join ''
@@ -2156,6 +2195,7 @@ foreach ($city in $Churches.cities) {
     $massEn = @($ch.massEn)
     $times = (0..(@($ch.mass).Count - 1) | ForEach-Object { $m = @($ch.mass)[$_]; $e = $massEn[$_]; "<tr><th scope=`"row`">$(T (Inline $m[0]) (Inline $e[0]))</th><td>$(T (Inline $m[1]) (Inline $e[1]))</td></tr>" }) -join ''
     $massNote = if ($ch.massNote) { "<p class=`"ch-note`">$(T (Inline $ch.massNote) (Inline $ch.massNoteEn))</p>" } else { '' }
+    $ocia = if ($ch.ocia) { "<section class=`"ch-sec ch-ocia`" id=`"ocia`"><h2 class=`"ch-h`">$IcoCompass $(T 'Katolik Olmak İsteyenler İçin' 'For Those Who Want to Become Catholic')</h2><p>$(T (Inline $ch.ocia) (Inline $ch.ociaEn))</p></section>" } else { '' }
     $visits = if ($ch.visits) { "<section class=`"ch-sec`" id=`"ziyaret`"><h2 class=`"ch-h`">$IcoDoor $(T 'Ziyaret' 'Visiting')</h2><p>$(T (Inline $ch.visits) (Inline $ch.visitsEn))</p></section>" } else { '' }
     $hist = TB ((@($ch.history) | ForEach-Object { "<p>$(Inline $_)</p>" }) -join "`n") ((@($ch.historyEn) | ForEach-Object { "<p>$(Inline $_)</p>" }) -join "`n")
     $srcs = (@($ch.sources) | ForEach-Object { "<li><a href=`"$($_[1])`" target=`"_blank`" rel=`"noopener`">$(T (Inline $_[0]) (Inline $_[2]))</a></li>" }) -join ''
@@ -2167,6 +2207,7 @@ foreach ($city in $Churches.cities) {
     <section class="ch-sec ch-contact"><dl class="ch-list">$($rows.ToString())</dl></section>
     <section class="ch-sec" id="ayin-saatleri"><h2 class="ch-h">$IcoClock $(T 'Ayin Saatleri' 'Mass Times')</h2><table class="ch-times"><tbody>$times</tbody></table>$massNote</section>
     $visits
+    $ocia
     <section class="ch-sec" id="tarihce"><h2 class="ch-h">$IcoBook $(T 'Tarihçe' 'History')</h2><div class="prose">$hist</div></section>
     <section class="ch-sec ch-sources" id="kaynaklar"><h2 class="ch-h">$(T 'Kaynaklar' 'Sources')</h2><ul>$srcs</ul>
       $(TB "<p class=`"conventions`">Son kontrol: $($Churches.updated). Ayin ve ziyaret saatleri bayramlarda ve mevsime göre değişebilir; gitmeden önce kiliseyle teyit edin. Bir hata gördüyseniz <a href=`"iletisim.html`">bize bildirin</a>.</p>" "<p class=`"conventions`">Last checked: $($Churches.updatedEn). Mass and visiting times can change on feast days and with the seasons; check with the church before you go. If you spot a mistake, <a href=`"iletisim.html`">let us know</a>.</p>")</section>

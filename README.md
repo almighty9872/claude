@@ -47,7 +47,7 @@ azizler.html            Calendar of the saints (current month shown, other month
                         each linking to its own page below
 <saint-id>.html         One page per saint in the "20 best-known" list (e.g. meryem-ana.html),
                         a long original Turkish biography
-kutsal-kitap.html       Guide to reading the Bible in Turkish (approved translations, sources)
+kutsal-kitap.html       Choosing a Bible: three quick answers up top, the guide folded below
 mucizeler.html          Catholic miracles: apparitions, relics, Eucharistic miracles, incorrupt saints
 topraklarimizda-hristiyanlik.html  Christianity's roots in Anatolia: an interactive SVG map of 24
                         places (hover for a card that follows the pointer, click to pin it),

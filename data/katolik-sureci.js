@@ -97,9 +97,9 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
   {
    "id": "nasil-baslarim",
    "q": "OCIA sürecine nasıl başlarım?",
-   "a": "Size en yakın Katolik kilisesiyle iletişime geçin. Süreç genellikle eylülde başlar; ağustos başında rahiple görüşürseniz geç kalmış olmazsınız. Rahip, sizi tanımak için büyük olasılıkla yüz yüze görüşmek isteyecektir.",
+   "a": "Size en yakın Katolik kilisesiyle iletişime geçin. Süreç genellikle eylülde başlar; ağustos başında rahiple görüşürseniz geç kalmış olmazsınız. Rahip, sizi tanımak için büyük olasılıkla yüz yüze görüşmek isteyecektir. Türkiye’de bu hazırlık genellikle herkese açık bir kayıtla değil, rahiple birebir görüşülerek her aday için ayrı planlanır. Bu yüzden bir kilisenin sitesinde duyuru görmemeniz, o kilisenin hazırlık yapmadığı anlamına gelmez. Samsun’daki <a href=\"kilise/mater-dolorosa-samsun.html#ocia\">Mater Dolorosa Kilisesi</a>, OCIA hazırlığını sitesinde duyuran kiliselerden biridir.",
    "qEn": "How do I start the OCIA process?",
-   "aEn": "Contact your nearest Catholic parish. The process usually starts in September; if you talk to the priest by early August, you won't be late. He'll most likely want to meet you in person to get to know you."
+   "aEn": "Contact your nearest Catholic parish. The process usually starts in September; if you talk to the priest by early August, you won't be late. He'll most likely want to meet you in person to get to know you. In Turkey this preparation is usually arranged one to one with the priest for each candidate, not through public enrollment. So if a church's website says nothing about it, that doesn't mean it isn't offered. <a href=\"kilise/mater-dolorosa-samsun.html#ocia\">Mater Dolorosa in Samsun</a> is one church that announces its OCIA preparation online."
   },
   {
    "id": "gunah-cikarma-gerekli-mi",

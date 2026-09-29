@@ -37,11 +37,7 @@ Katolik İngilizce baskılar, sözelden dinamiğe:
 - **Ortada:** NABRE, New Jerusalem Bible
 - **Dinamiğe yakın:** NRSV-CE, Good News Translation (Katolik baskısı)
 
-Living Bible gibi serbest anlatımlar çeviri değildir ve kilise onayı taşımaz.
-
-## Hangisini almalıyım? {#oneri}
-
-Genel kullanım için **Revised Standard Version, Catholic Edition (RSV-CE)**; Ignatius Press onu **The Ignatius Bible** adıyla yayımlar. Birkaç çeviriyi yan yana okumak da çok yardımcı olur. Ama en iyi çeviri, **okuyacağınız çeviridir.**
+Living Bible gibi serbest anlatımlar çeviri değildir ve kilise onayı taşımaz. Birkaç çeviriyi yan yana okumak da çok yardımcı olur.
 
 ## Onaylı çeviriler {#onayli}
 

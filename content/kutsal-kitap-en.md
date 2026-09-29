@@ -37,11 +37,7 @@ Catholic English editions, from formal to dynamic:
 - **Middle:** NABRE, New Jerusalem Bible
 - **Closer to dynamic:** NRSV-CE, Good News Translation (Catholic edition)
 
-Paraphrases such as the Living Bible aren't translations and carry no Church approval.
-
-## Which one should I get? {#oneri}
-
-For general use, the **Revised Standard Version, Catholic Edition (RSV-CE)**, published by Ignatius Press as **The Ignatius Bible**. Reading a few translations side by side helps too. But the best translation is **the one you'll read.**
+Paraphrases such as the Living Bible aren't translations and carry no Church approval. Reading a few translations side by side helps too.
 
 ## Approved translations {#onayli}
 
