@@ -741,14 +741,31 @@
      --------------------------------------------------------------- */
   /* The footer's popups: Kaynaklar ve telif, and İletişim, Erişilebilirlik and Gizlilik (which
      are links to their own pages without JS) */
+  /* Tartış pages: the "Kısaca" cards slide sideways; the arrows move one view at a time and
+     grey out at either end */
+  function initCaseCarousel() {
+    $$('.ic-car').forEach(function (car) {
+      var track = $('.ic-tl-list', car), btns = $$('.ic-car-btn', car);
+      if (!track || !btns.length) return;
+      function sync() {
+        var max = track.scrollWidth - track.clientWidth - 2;
+        btns.forEach(function (b) { b.disabled = b.getAttribute('data-car') === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max; });
+      }
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () { track.scrollBy({ left: Number(b.getAttribute('data-car')) * track.clientWidth * 0.9 }); });
+      });
+      track.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync);
+      sync();
+    });
+  }
+
   function initSources() {
     function open(dlg) { if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
     function close(dlg) { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
-    var src = $('#sources-dialog');
-    if (src) $$('.foot-sources').forEach(function (b) { b.addEventListener('click', function () { open(src); }); });
     /* Every link to these pages opens its popup (menu, footer columns too); the
        href stays, so the pages are still crawled and open without JS */
-    var DLG_PAGES = { 'iletisim.html': 'dlg-iletisim', 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik' };
+    var DLG_PAGES = { 'iletisim.html': 'dlg-iletisim', 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik', 'kaynaklar-ve-telif.html': 'sources-dialog' };
     var here = location.pathname.split('/').pop();
     $$('a[href]').forEach(function (a) {
       var page = (a.getAttribute('href') || '').split(/[?#]/)[0].split('/').pop();
@@ -2169,6 +2186,8 @@
       var end = $('.ic-closing', m); if (end) avNode(end, avText($('.ic-part-t', end)));
       avNode($('.ic-sources', m), avHead($('#ic-kaynak-h', m)));
     },
+    /* Ateizme Cevap is built the same way */
+    'ateizme-cevap.html': function (m) { return AV_PAGES['islama-cevap.html'](m); },
     'katolik-sureci.html': function (m) {
       $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
     },
@@ -3281,7 +3300,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
-    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
   });
 })();

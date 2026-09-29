@@ -2979,13 +2979,37 @@ html.av .to-top-wrap { display: none; }
 .ic-tl-more svg { width: .75rem; height: .75rem; transition: transform .2s; }
 .ic-tl:hover .ic-tl-t, .ic-tl:focus-visible .ic-tl-t { color: var(--gold); }
 .ic-tl:hover .ic-tl-more svg, .ic-tl:focus-visible .ic-tl-more svg { transform: translateX(3px); }
-/* on a wide screen the summary steps out of the reading column, three points to a row, so all
-   of it and the way down to the full case fit on one screen */
-@media (min-width: 760px) { .ic-tl-list { grid-template-columns: 1fr 1fr; } }
+/* On a phone the summary is a plain list. From tablet width up it is one row of cards that
+   slides sideways (arrows, swipe or trackpad), about three and a bit in view, so the summary
+   stays short and the full case starts right below it */
+.ic-tl-k, .ic-car-nav { display: none; }
+.ic-car { position: relative; }
+@media (min-width: 760px) {
+  .ic-tldr { padding: .2rem 1.4rem 1.1rem; }
+  .ic-tldr .section-title { margin-bottom: 1rem; }
+  .ic-car-nav { display: flex; gap: .45rem; position: absolute; right: 0; top: -3.3rem; }
+  .ic-car-btn { display: grid; place-items: center; width: 2.3rem; height: 2.3rem; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--bg, transparent); color: var(--text); cursor: pointer; transition: border-color .2s, color .2s, opacity .2s; }
+  .ic-car-btn svg { width: 1rem; height: 1rem; }
+  .ic-car-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+  .ic-car-btn:disabled { opacity: .35; cursor: default; }
+  .ic-car-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .ic-tl-list { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 2rem) / 2.2); gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: .2rem .1rem .3rem; }
+  .ic-tl-list::-webkit-scrollbar { display: none; }
+  .ic-tl-list > li { scroll-snap-align: start; display: flex; }
+  .ic-tl { display: flex; flex-direction: column; gap: .45rem; width: 100%; padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--bg, transparent); font-size: .9rem; transition: border-color .2s, transform .2s; }
+  .ic-tl:hover, .ic-tl:focus-visible { border-color: var(--gold); }
+  .ic-tl-k { display: block; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+  .ic-tl-n { display: none; }
+  .ic-tl-b { display: flex; flex-direction: column; gap: .45rem; flex: 1; }
+  .ic-tl-t { margin: 0; font-size: 1.02rem; line-height: 1.35; }
+  .ic-tl-s { display: flex; flex-direction: column; gap: .7rem; flex: 1; }
+  .ic-tl-more { margin: auto 0 0; }
+}
 @media (min-width: 1100px) {
   .ic-tldr { margin-inline: calc(50% - min(37rem, 50vw - 2rem)); }
-  .ic-tl-list { grid-template-columns: repeat(3, 1fr); }
+  .ic-tl-list { grid-auto-columns: calc((100% - 3rem) / 3.3); }
 }
+@media (prefers-reduced-motion: reduce) { .ic-tl-list { scroll-behavior: auto; } }
 @media (max-width: 759px) { .ic-tl { padding: .6rem .1rem; border-top: 1px solid var(--border); border-radius: 0; font-size: .95rem; } .ic-tl-list li:first-child .ic-tl { border-top: 0; } }
 .ic-full { margin: .5rem 0 0; text-align: center; font-family: var(--sans); }
 .ic-full a { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; }
