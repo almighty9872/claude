@@ -2458,11 +2458,39 @@ $churchMapHtml = @"
   </div>
 </section>
 "@
+# ---------------- The same churches as a dropdown list under the map, grouped by city (and by side
+# of the city where it has two): choosing one opens its page (script.js, initChurchPick). One list
+# per language; the page shows the one in the language being read
+$PickSide = @{ avrupa = @('Avrupa Yakası', 'European side'); anadolu = @('Anadolu Yakası', 'Asian side'); merkez = @('Şehir merkezi', 'City center'); selcuk = @('Selçuk (Efes)', 'Selçuk (Ephesus)') }
+function Church-Pick([string]$lang) {
+  $en = $lang -eq 'en'; $ix = if ($en) { 1 } else { 0 }
+  $sb = New-Object Text.StringBuilder
+  foreach ($city in $Churches.cities) {
+    $cn = $city.name -replace ' \(.*\)$', ''; if ($en -and $city.nameEn) { $cn = $city.nameEn }
+    $sides = @($city.churches | Where-Object { $_.side } | ForEach-Object { $_.side } | Select-Object -Unique)
+    if ($sides.Count -lt 2) { $sides = @('') }
+    foreach ($sd in $sides) {
+      $list = if ($sd) { @($city.churches | Where-Object { $_.side -eq $sd }) } else { @($city.churches) }
+      $gl = if ($sd) { "$cn · $($PickSide[$sd][$ix])" } else { $cn }
+      [void]$sb.Append("<optgroup label=`"$(Attr $gl)`">")
+      foreach ($ch in $list) { $nm = if ($en -and $ch.shortEn) { $ch.shortEn } else { $ch.short }; [void]$sb.Append("<option value=`"$($ch.id)`">$(Attr (Plain $nm))</option>") }
+      [void]$sb.Append('</optgroup>')
+    }
+  }
+  $groups = $sb.ToString()
+  $id = "ch-pick-$lang"
+  $label = if ($en) { 'Or choose from the list' } else { 'Ya da listeden seçin' }
+  $ph = if ($en) { 'Choose a church…' } else { 'Bir kilise seçin…' }
+  $go = if ($en) { 'Go' } else { 'Git' }
+  return "<form class=`"ch-pick`" data-ch-pick action=`"#`"><label for=`"$id`">$label</label><div class=`"ch-pick-row`"><select id=`"$id`" name=`"kilise`" required><option value=`"`" selected disabled>$ph</option>$groups</select><button type=`"submit`" class=`"btn`">$go</button></div></form>"
+}
+$churchPickHtml = TB (Church-Pick 'tr') (Church-Pick 'en')
 $kiliselerBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$(T $Churches.title $Churches.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Churches.en)</p>")</header>
 $churchMapHtml
+  $churchPickHtml
   <p class="conventions">$(T (Inline $Churches.note) (Inline $Churches.noteEn))</p>
   <div class="faq-list">
     <details class="faq-item" id="katolik-bulunamadiginda" open><summary><span class="faq-q">$(T 'Yakınımda Katolik kilisesi yoksa ne yapmalıyım?' 'What if there is no Catholic church near me?')</span>$IcoChevLg</summary>

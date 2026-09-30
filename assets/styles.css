@@ -3179,3 +3179,13 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .ic-tldr-d[open] .ic-car { animation: tldr-open .35s ease-out; }
 @keyframes tldr-open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .ic-tldr-d[open] .ic-car { animation: none; } }
+
+/* Kilise Bul: the list of churches under the map */
+.ch-pick { display: flex; flex-direction: column; align-items: center; gap: .5rem; margin: -.8rem auto 1.8rem; font-family: var(--sans); }
+.ch-pick label { font-size: .9rem; font-weight: 600; color: var(--text-soft); }
+.ch-pick-row { display: flex; gap: .5rem; width: 100%; max-width: 30rem; }
+.ch-pick select { flex: 1; min-width: 0; height: 2.75rem; padding: 0 2.4rem 0 .9rem; border: 1px solid var(--border-strong); border-radius: .75rem; background: var(--surface); color: var(--text); font: inherit; font-size: 1rem; cursor: pointer;
+  -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a07c30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9.5 12 15l6-5.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .8rem center; background-size: 1.1rem; }
+.ch-pick select:hover { border-color: var(--gold-soft); }
+.ch-pick select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ch-pick .btn { flex: none; height: 2.75rem; padding: 0 1.1rem; }

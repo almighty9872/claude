@@ -2462,6 +2462,23 @@
      (on the side with room: to the east of Istanbul, to the west of Trabzon; on a phone, under
      the dot), each name leading to the church's own page. Istanbul's list has two columns, one
      for each side of the Bosphorus. */
+  /* Kilise Bul: the dropdown list of churches under the map opens the chosen church's page */
+  function initChurchPick() {
+    $$('form[data-ch-pick]').forEach(function (f) {
+      var sel = $('select', f);
+      function go() {
+        if (!sel.value) return;
+        var en = /^\/en\//.test(location.pathname);
+        location.href = en ? '/en/church/' + sel.value + '.html' : 'kilise/' + sel.value + '.html';
+      }
+      f.addEventListener('submit', function (e) { e.preventDefault(); go(); });
+      /* a choice made with the pointer opens it at once; with the keyboard, Enter or the button */
+      var byPointer = false;
+      sel.addEventListener('pointerdown', function () { byPointer = true; });
+      sel.addEventListener('keydown', function (e) { byPointer = false; if (e.key === 'Enter') { e.preventDefault(); go(); } });
+      sel.addEventListener('change', function () { if (byPointer) go(); });
+    });
+  }
   function initChurchMap() {
     var sec = $('.cmap'); if (!sec) return;
     var svg = $('.cmap-svg', sec), frame = $('.cmap-frame', sec);
@@ -3484,6 +3501,6 @@
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
     initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
+    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });
 })();
