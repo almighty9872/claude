@@ -791,6 +791,36 @@
       });
       track.addEventListener('scroll', sync, { passive: true });
       window.addEventListener('resize', sync);
+      /* with a mouse the row can be grabbed and dragged; a drag is not a click on a card */
+      var down = null, moved = false;
+      track.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button !== 0 || track.scrollWidth <= track.clientWidth) return;
+        down = { x: e.clientX, left: track.scrollLeft }; moved = false;
+      });
+      track.addEventListener('pointermove', function (e) {
+        if (!down) return;
+        var dx = e.clientX - down.x;
+        if (!moved && Math.abs(dx) < 5) return;
+        if (!moved) { moved = true; track.classList.add('is-drag'); try { track.setPointerCapture(e.pointerId); } catch (x) { /* already released */ } }
+        track.scrollLeft = down.left - dx;
+      });
+      function up(e) {
+        if (!down) return;
+        down = null;
+        if (!moved) return;
+        try { track.releasePointerCapture(e.pointerId); } catch (x) { /* not captured */ }
+        /* let the cards settle on the nearest one again */
+        var left = track.scrollLeft;
+        track.classList.remove('is-drag');
+        track.scrollLeft = left;
+      }
+      track.addEventListener('pointerup', up);
+      track.addEventListener('pointercancel', up);
+      track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+      track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+      /* the summary is folded shut at first: its arrows are set once it opens */
+      var fold = car.closest('details');
+      if (fold) fold.addEventListener('toggle', sync);
       sync();
     });
   }
@@ -2257,6 +2287,8 @@
   var AV_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
   var AV_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M8 11H6.5A1.5 1.5 0 0 0 5 12.5v7A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>';
   function avText(el) { return pstr(el); }
+  /* marks the item that starts the page's usual "Bölümler" group, after a group of its own */
+  var AV_GH_SECTIONS = {};
   /* A heading's text without its small label or English gloss */
   function avHead(h) {
     if (!h) return '';
@@ -2327,8 +2359,11 @@
     /* the summary, then each part holding its sections, the closing and the sources; the
        footnote on the word "Allah" stays under the rows, at the foot of the page's list */
     'islama-cevap.html': function (m) {
-      avNode($('#kisaca', m), avHead($('#kisaca-h', m)), pcat(String($$('.ic-tl-list > li', m).length), ' ', pmake('madde', 'points')));
-      $$('.ic-part', m).forEach(function (p) { avNode(p, avText($('.ic-part-t', p)), avText($('.ic-part-n', p))); });
+      var sum = $('#kisaca', m);
+      avNode(sum, avHead($('#kisaca-h', m)), pcat(String($$('.ic-tl-list > li', m).length), ' ', pmake('madde', 'points')));
+      /* the summary is a group of its own, under its own title; the parts follow as "Bölümler" */
+      if (sum) sum._avGh = avHead($('#kisaca-h', m));
+      $$('.ic-part', m).forEach(function (p, i) { avNode(p, avText($('.ic-part-t', p)), avText($('.ic-part-n', p))); if (i === 0) p._avGh = AV_GH_SECTIONS; });
       $$('.ic-part .ic-sec', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
       var end = $('.ic-closing', m); if (end) avNode(end, avText($('.ic-part-t', end)));
       avNode($('.ic-sources', m), avHead($('#ic-kaynak-h', m)));
@@ -2654,7 +2689,7 @@
       var kids = $$('[data-av-node], [data-av-link]', level).filter(function (k) { return nodeOf(k.parentElement) === (level === main ? null : level) && !k.hasAttribute('data-av-norow'); });
       var runs = [], last = null;
       kids.forEach(function (k) {
-        if (last && last.end.nextElementSibling === k) last.list.push(k);
+        if (last && last.end.nextElementSibling === k && !k._avGh) last.list.push(k);
         else { last = { list: [k] }; runs.push(last); }
         last.end = k;
       });
@@ -2672,8 +2707,9 @@
           if (k.hidden) a.hidden = true;
           box.appendChild(a);
         });
-        if (level === main && i === 0 && !$('.cmap, [data-av-nogh]', main)) {
-          var gh = document.createElement('p'); gh.className = 'av-gh'; pset(gh, T.sections);
+        var own = r.list[0]._avGh;
+        if (level === main && (own || i === 0) && !$('.cmap, [data-av-nogh]', main)) {
+          var gh = document.createElement('p'); gh.className = 'av-gh'; pset(gh, own && own !== AV_GH_SECTIONS ? own : T.sections);
           r.list[0].parentNode.insertBefore(gh, r.list[0]);
         }
         r.list[0].parentNode.insertBefore(box, r.list[0]);

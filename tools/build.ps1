@@ -444,6 +444,17 @@ function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" 
 # Jerusalem cross: large cross potent in the centre, a small cross in each quadrant (100x100 grid)
 $CrossShapes = '<rect x="44" y="12" width="12" height="76"/><rect x="12" y="44" width="76" height="12"/><rect x="33" y="8" width="34" height="9"/><rect x="33" y="83" width="34" height="9"/><rect x="8" y="33" width="9" height="34"/><rect x="83" y="33" width="9" height="34"/><rect x="23.5" y="18" width="5" height="16"/><rect x="18" y="23.5" width="16" height="5"/><rect x="71.5" y="18" width="5" height="16"/><rect x="66" y="23.5" width="16" height="5"/><rect x="23.5" y="66" width="5" height="16"/><rect x="18" y="71.5" width="16" height="5"/><rect x="71.5" y="66" width="5" height="16"/><rect x="66" y="71.5" width="16" height="5"/>'
 $Logo = '<svg class="logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
+
+# The header's mark: a Christian fish (ichthys) facing left with a small cross in its body, softly
+# glowing like the rosary's cross; on hover or focus it turns over to a static Jerusalem cross.
+# The cross: a cross potent (arms ending in bars) with four small crosses, drawn on a 100 grid with
+# every gap the same, so it stays crisp at 28px
+$IchthysSvg = '<svg viewBox="0 0 48 24" focusable="false"><path d="M3 12C13-.5 33-1 45 20.5M3 12C13 24.5 33 25 45 3.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M24 6.5v11M19.5 11h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+$JerusalemSvg = '<svg viewBox="0 0 100 100" focusable="false"><g fill="currentColor"><rect x="44.5" y="10" width="11" height="80" rx="1"/><rect x="10" y="44.5" width="80" height="11" rx="1"/><rect x="32" y="7" width="36" height="9" rx="1"/><rect x="32" y="84" width="36" height="9" rx="1"/><rect x="7" y="32" width="9" height="36" rx="1"/><rect x="84" y="32" width="9" height="36" rx="1"/><rect x="24.5" y="18" width="5" height="18" rx=".6"/><rect x="18" y="24.5" width="18" height="5" rx=".6"/><rect x="70.5" y="18" width="5" height="18" rx=".6"/><rect x="64" y="24.5" width="18" height="5" rx=".6"/><rect x="24.5" y="64" width="5" height="18" rx=".6"/><rect x="18" y="70.5" width="18" height="5" rx=".6"/><rect x="70.5" y="64" width="5" height="18" rx=".6"/><rect x="64" y="70.5" width="18" height="5" rx=".6"/></g></svg>'
+$BrandMark = '<span class="bm" aria-hidden="true"><span class="bm-in"><span class="bm-face bm-fish"><span class="bm-halo"></span>' + $IchthysSvg + '</span><span class="bm-face bm-cross">' + $JerusalemSvg + '</span></span></span>'
+# The name in carved capitals (a tiny Garamond subset holding only these letters, preloaded); read as
+# words by screen readers
+$BrandName = '<span class="brand-name"><span class="visually-hidden">Katolik Dünyası</span><span class="bn" lang="tr" aria-hidden="true"><span class="bn-c">K</span>ATOLİK <span class="bn-c">D</span>ÜNYASI</span></span>'
 $Favicon = 'data:image/svg+xml,' + ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#16161a"/><g fill="#d6b16b" transform="translate(12 12) scale(.76)">' + $CrossShapes + '</g></svg>').Replace('<', '%3C').Replace('>', '%3E').Replace('#', '%23').Replace('"', "'")
 
 # ------------------------------------------------------------------ components
@@ -968,7 +979,7 @@ $Sprite
   <div class="wrap">
     <div class="header-row">
       <div class="brand-group">
-        <a class="brand" href="index.html"$(Cur 'index.html' $current)>$Logo<span class="brand-name">$SiteName</span></a>
+        <a class="brand" href="index.html"$(Cur 'index.html' $current)>$BrandMark<span class="brand-rule" aria-hidden="true"></span>$BrandName</a>
         <button type="button" class="settings-btn" $(TA 'aria-label' 'Ayarlar: erişilebilirlik' 'Settings: accessibility') aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-panel">$IcoGear</button>
       </div>
       <nav class="mainnav" $(TA 'aria-label' 'Ana menü' 'Main menu')>
@@ -1012,7 +1023,7 @@ $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
     <div class="foot-about">
-      <p class="foot-brand">$Logo<span>$SiteName</span></p>
+      <p class="foot-brand"><span class="foot-fish" aria-hidden="true">$IchthysSvg</span>$BrandName</p>
       <p class="foot-tag">$(T $SiteTag $SiteTagEn)</p>
       <p class="foot-desc">$(T $fm['about'] $fmEn['about'])</p>
       <p class="foot-copy foot-src"><a class="foot-sources" href="kaynaklar-ve-telif.html" data-dialog="sources-dialog">$(T $fm['title'] $fmEn['title'])</a><a class="foot-contact" href="iletisim.html" data-dialog="dlg-iletisim">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
@@ -1152,6 +1163,10 @@ $locAlt
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/kd-brand-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
 <script>$HeadJs$($avJs)$HeadJs2</script>
 $ld
@@ -1393,16 +1408,24 @@ $formulas = ($X.appendix.formulas | ForEach-Object {
   $en = "<div class=`"verse`"><ol$cls>" + (($_.en.items | ForEach-Object { "<li>$_</li>" }) -join '') + '</ol></div>'
   Text-Card ([pscustomobject]@{ tr = $_.tr; en = $_.en; la = $null }) $_.id 3 $tr $en
 }) -join "`n"
+# Read like a prayer book: one column, no boxes, a short gold rule between prayers,
+# and a row of links at the top of each part to jump straight to a prayer
+function Pb-Index($items, [string]$label, [string]$labelEn) {
+  $links = ($items | ForEach-Object { "<li><a href=`"#$($_.id)`">$(T (Inline $_.tr.title) (Inline $_.en.title))</a></li>" }) -join ''
+  return "<nav class=`"pb-index`" $(TA 'aria-label' $label $labelEn)><ul>$links</ul></nav>"
+}
 $eklerBody = @"
 <div class="wrap narrow" id="ekler">
   $(Crumbs 'Ekler' 'Katekizm' 'katekizm.html')
   <header class="page-head center"><p class="label">$(T 'Ekler' 'Appendix')</p><h1>$(T 'Ekler' 'Appendix')</h1>$(TO '<p class="sub" lang="en">Appendix</p>')</header>
   <h2 class="section-title" id="ek-a"><span class="label">A</span>$(T 'Sık Kullanılan Dualar' 'Common Prayers')</h2>
-  <div class="text-grid two">
+  $(Pb-Index $X.appendix.prayers 'Dualar' 'Prayers')
+  <div class="prayer-book pb-prayers">
 $prayers
   </div>
   <h2 class="section-title" id="ek-b"><span class="label">B</span>$(T 'Katolik Öğretinin Formülleri' 'Formulas of Catholic Doctrine')</h2>
-  <div class="text-grid two">
+  $(Pb-Index $X.appendix.formulas 'Formüller' 'Formulas')
+  <div class="prayer-book pb-formulas">
 $formulas
   </div>
 </div>
@@ -1792,9 +1815,10 @@ function Case-Body($Ic, $Ico) {
     <header class="page-head center" id="bas">$(Page-Ico $Ico)<h1>$(T $Ic.title $Ic.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Ic.en)</p>")</header>
     <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)<a class="ic-fn-ref" href="#dipnot" aria-label="Dipnot" data-en-aria-label="Footnote">*</a></p>
     <section class="ic-tldr" id="kisaca" aria-labelledby="kisaca-h">
-      <h2 class="section-title" id="kisaca-h">$(T $Ic.tldrTitle $Ic.tldrTitleEn)</h2>
+      <details class="ic-tldr-d"><summary class="ic-tldr-s"><h2 class="section-title" id="kisaca-h">$(T $Ic.tldrTitle $Ic.tldrTitleEn)</h2>$IcoChevDown</summary>
       <div class="ic-car"><div class="ic-car-nav"><button type="button" class="ic-car-btn" data-car="-1" $(TA 'aria-label' 'Önceki maddeler' 'Previous points')>$IcoArrowL</button><button type="button" class="ic-car-btn" data-car="1" $(TA 'aria-label' 'Sonraki maddeler' 'Next points')>$IcoArrowR</button></div>
       <ol class="ic-tl-list">$icTldr</ol></div>
+      </details>
       <p class="ic-full"><a href="#$($Ic.parts[0].id)">$(T 'Tam tartışma aşağıda' 'The full case below') $IcoChevDown</a></p>
     </section>
   $icParts
