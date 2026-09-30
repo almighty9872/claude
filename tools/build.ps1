@@ -1819,7 +1819,6 @@ function Case-Body($Ic, $Ico) {
       <div class="ic-car"><div class="ic-car-nav"><button type="button" class="ic-car-btn" data-car="-1" $(TA 'aria-label' 'Önceki maddeler' 'Previous points')>$IcoArrowL</button><button type="button" class="ic-car-btn" data-car="1" $(TA 'aria-label' 'Sonraki maddeler' 'Next points')>$IcoArrowR</button></div>
       <ol class="ic-tl-list">$icTldr</ol></div>
       </details>
-      <p class="ic-full"><a href="#$($Ic.parts[0].id)">$(T 'Tam tartışma aşağıda' 'The full case below') $IcoChevDown</a></p>
     </section>
   $icParts
     <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$(T $Ic.closing.title $Ic.closing.titleEn)</h2><div class="prose">$(TB (Ic-Blocks $Ic.closing.body) (Ic-Blocks $Ic.closing.bodyEn))</div>$(Ic-Nav ($icSeq.Count - 1))</section>

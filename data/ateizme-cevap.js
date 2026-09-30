@@ -25,7 +25,7 @@ window.ATEIZME_CEVAP = /*JSON-START*/{
  "leadEn": "Does God exist or not? On this page we’ve gathered the strongest answers from famous debates, from philosophers who believed after years as atheists, and from the admissions of sceptical historians themselves.",
  "note": "Buradaki cevapların çoğu, ateistlerle yüz yüze tartışmış kişilerden geliyor: Trent Horn, Cliffe Knechtle, tarihçiler Gary Habermas ve Michael Licona, Kutsal Kitap uzmanı Brant Pitre ile yıllarca ateist ya da agnostik kaldıktan sonra inanan Joe Schmid, Pat Flynn ve rahip Mark Goring. Kaynakların tam listesi sayfanın sonunda yer alıyor. Kutsal Kitap ve Katekizm göndermelerine tıklayarak metinleri kendiniz okuyabilirsiniz.",
  "noteEn": "Most of these answers come from people who have argued with atheists face to face: Trent Horn, Cliffe Knechtle, the historians Gary Habermas and Michael Licona, the biblical scholar Brant Pitre, and Joe Schmid, Pat Flynn and Fr Mark Goring, who believed after years as atheists or agnostics. The full list of sources is at the end of the page. Click any Bible or Catechism reference to read the text yourself.",
- "tldrTitle": "Uzatma Özet Geç :)",
+ "tldrTitle": "Özet Geç :)",
  "tldrTitleEn": "TL;DR",
  "tldr": [
   {

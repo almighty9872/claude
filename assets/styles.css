@@ -207,9 +207,22 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 /* The mark: the fish, glowing softly, turns over to the Jerusalem cross on hover or focus */
 .bm { position: relative; flex: none; width: 44px; height: 30px; perspective: 320px; color: var(--gold); }
 .bm-in { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3, .7, .2, 1); }
-.brand:hover .bm-in, .brand:focus-visible .bm-in { transform: rotateY(180deg); }
 .bm-face { position: absolute; inset: 0; display: grid; place-items: center; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-.bm-cross { transform: rotateY(180deg); }
+/* Each face also fades out at the halfway point of the turn: Safari stops hiding a face's back
+   when something inside it carries a filter (the fish's glow), and would show both at once */
+.bm-fish { transition: opacity 0s .35s; }
+.bm-cross { transform: rotateY(180deg); opacity: 0; transition: opacity 0s .35s; }
+/* Only a real mouse turns it over (and the keyboard). A phone has no hover: Safari takes a touch,
+   or the long press that opens a link preview, as one and keeps it until you tap elsewhere, which
+   left the mark stuck half-turned */
+@media (hover: hover) and (pointer: fine) {
+  .brand:hover .bm-in { transform: rotateY(180deg); }
+  .brand:hover .bm-fish { opacity: 0; }
+  .brand:hover .bm-cross { opacity: 1; }
+}
+.brand:focus-visible .bm-in { transform: rotateY(180deg); }
+.brand:focus-visible .bm-fish { opacity: 0; }
+.brand:focus-visible .bm-cross { opacity: 1; }
 .bm-fish svg { position: relative; width: 44px; height: 22px; animation: bm-shine 2.4s ease-in-out infinite; }
 .bm-cross svg { width: 28px; height: 28px; }
 .bm-halo { position: absolute; left: 50%; top: 50%; width: 58px; height: 38px; margin: -19px 0 0 -29px; border-radius: 50%; pointer-events: none;
@@ -219,7 +232,7 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 @keyframes bm-glow { 0%, 100% { opacity: .35; transform: scale(.82); } 50% { opacity: 1; transform: scale(1.06); } }
 @keyframes bm-shine { 0%, 100% { filter: drop-shadow(0 0 1px var(--bm-shine)); } 50% { filter: drop-shadow(0 0 4px var(--bm-shine)); } }
 @media (prefers-reduced-motion: reduce) {
-  .bm-in { transition: none; }
+  .bm-in, .bm-fish, .bm-cross { transition: none; }
   .bm-halo, .bm-fish svg { animation: none; }
   .bm-halo { opacity: .7; }
 }
@@ -3003,9 +3016,6 @@ html.av .to-top-wrap { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .ic-tl-list { scroll-behavior: auto; } }
 @media (max-width: 759px) { .ic-tl { padding: .6rem .1rem; border-top: 1px solid var(--border); border-radius: 0; font-size: .95rem; } .ic-tl-list li:first-child .ic-tl { border-top: 0; } }
-.ic-full { margin: .5rem 0 0; text-align: center; font-family: var(--sans); }
-.ic-full a { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; }
-.ic-full svg { width: 1.05rem; height: 1.05rem; }
 
 /* The full case: a comfortable reading column, headings that stand apart from the text,
    subheadings as small labels, quotes set off, and room between the steps of an argument */
@@ -3146,18 +3156,26 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .prayer-book .latin summary::before { content: "▸ "; }
 .prayer-book .latin[open] > summary::before { content: "▾ "; }
 
-/* Tartış pages: the summary ("Uzatma Özet Geç :)" / "TL;DR") is folded shut when the page
-   loads; its title opens it. "Tam tartışma aşağıda" stays under it either way. */
+/* Tartış pages: the summary ("Özet Geç :)" / "TL;DR") is folded shut when the page loads, as
+   a small pill holding only its title; clicked, it grows to the full-width box of cards */
 .ic-tldr-s { display: flex; align-items: center; justify-content: center; gap: .45rem; cursor: pointer; list-style: none; border-radius: .8rem; }
 .ic-tldr-s::-webkit-details-marker { display: none; }
 .ic-tldr-s > svg { width: 1.3rem; height: 1.3rem; flex: none; color: var(--gold); transition: transform .25s; }
 .ic-tldr-d[open] > .ic-tldr-s > svg { transform: rotate(180deg); }
 .ic-tldr-s:hover .section-title { color: var(--gold); }
 .ic-tldr-s:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.ic-tldr-d:not([open]) + .ic-full { margin-top: 0; }
 /* on a computer the cards can also be grabbed and dragged sideways with the mouse */
 @media (min-width: 760px) and (hover: hover) and (pointer: fine) {
   .ic-tl-list { cursor: grab; }
   .ic-tl-list.is-drag { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; user-select: none; }
   .ic-tl-list.is-drag .ic-tl { cursor: grabbing; }
 }
+
+/* the folded summary: a small centred pill, not a full-width box */
+.ic-tldr:has(> .ic-tldr-d:not([open])) { width: fit-content; max-width: 100%; margin-inline: auto; padding: .15rem 1.3rem; border-radius: 999px; }
+.ic-tldr:has(> .ic-tldr-d:not([open])) .section-title { margin: .45rem 0; font-size: clamp(1.1rem, 2.4vw, 1.3rem); }
+.ic-tldr:has(> .ic-tldr-d:not([open])):hover { border-color: var(--gold-soft); }
+.ic-tldr { transition: border-color .2s; }
+.ic-tldr-d[open] .ic-car { animation: tldr-open .35s ease-out; }
+@keyframes tldr-open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ic-tldr-d[open] .ic-car { animation: none; } }
