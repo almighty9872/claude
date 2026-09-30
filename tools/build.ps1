@@ -1750,7 +1750,11 @@ $IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 function Case-Body($Ic, $Ico) {
   # Which part each section belongs to, for the small label on each summary card
   $icPartOf = @{}
-  foreach ($pt in @($Ic.parts)) { foreach ($sc in @($pt.sections)) { $icPartOf[$sc.id] = @((($pt.title -split ':')[0]).Trim(), (($pt.titleEn -split ':')[0]).Trim()) } }
+  foreach ($pt in @($Ic.parts)) {
+    # A part may name its label itself ("kicker"); otherwise the part title up to its colon
+    $k = if ($pt.kicker) { @($pt.kicker, $pt.kickerEn) } else { @((($pt.title -split ':')[0]).Trim(), (($pt.titleEn -split ':')[0]).Trim()) }
+    foreach ($sc in @($pt.sections)) { $icPartOf[$sc.id] = $k }
+  }
   $icTotal = @($Ic.tldr).Count
   $icTldr = ($Ic.tldr | ForEach-Object -Begin { $i = 0 } -Process {
     $i++
