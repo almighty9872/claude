@@ -45,7 +45,7 @@ jobs:
           cp ./[0-9a-f]*.txt _site/                     # the IndexNow key file
           cp assets/*.min.js assets/*.min.css assets/*.jpg assets/*.png _site/assets/
           cp -r assets/fonts _site/assets/
-          cp data/compendium-*.js data/tespih.js data/azizler-adlar.js data/azizler-ozet-*.js _site/data/
+          cp data/compendium-*.js data/tespih.js data/azizler-adlar.js data/azizler-ozet-*.js data/refs-*.js _site/data/
           cp -r en kilise _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi

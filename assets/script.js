@@ -839,6 +839,101 @@
     });
   }
 
+  /* A Bible, Qur'an or hadith reference opens its passage in a popup, read from data/refs-*.js
+     (loaded on the first click). The link keeps its href: a modifier-click, or a passage the
+     data doesn't have, still goes to the external site. */
+  function initRefs() {
+    var KINDS = {
+      bref: { file: 'data/refs-bible.js', name: 'REFS_BIBLE', key: function (u) { return (u.searchParams.get('search') || '').replace(/\s*[-–]\s*/g, '-'); } },
+      qref: { file: 'data/refs-quran.js', name: 'REFS_QURAN', key: function (u) { return u.pathname.slice(1).replace('/', ':'); } },
+      hdref: { file: 'data/refs-hadith.js', name: 'REFS_HADITH', key: function (u) { return decodeURIComponent(u.pathname.slice(1)); } }
+    };
+    var HD_BOOK = { bukhari: ['Buhari', 'Bukhari'], muslim: ['Müslim', 'Muslim'], abudawud: ['Ebu Davud', 'Abu Dawud'], tirmidhi: ['Tirmizi', 'Tirmidhi'], ibnmajah: ['İbn Mace', 'Ibn Majah'], nasai: ['Nesai', 'Nasa’i'] };
+    var dlg = null, body, title, foot;
+    function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    function build() {
+      var close = $('.sources-close');
+      dlg = el('dialog', 'sources-dialog ref-dialog'); dlg.id = 'ref-dialog'; dlg.setAttribute('aria-labelledby', 'ref-dialog-t');
+      var x = el('button', 'sources-close'); x.type = 'button'; x.setAttribute('aria-label', isEn() ? 'Close' : 'Kapat');
+      x.innerHTML = close ? close.innerHTML : '×';
+      title = el('h2', 'sources-title'); title.id = 'ref-dialog-t';
+      body = el('div', 'info-inner ref-body'); foot = el('p', 'ref-foot');
+      dlg.appendChild(x); dlg.appendChild(title); dlg.appendChild(body); dlg.appendChild(foot);
+      document.body.appendChild(dlg);
+      x.addEventListener('click', shut);
+      dlg.addEventListener('click', function (e) {
+        var r = dlg.getBoundingClientRect();
+        if (e.target === dlg && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) shut();
+      });
+    }
+    function shut() { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+    /* verses as one paragraph, each number raised; lang marks the text's language for screen readers */
+    function verses(list, lang, pick) {
+      var p = el('p', 'ref-text'); p.lang = lang;
+      list.forEach(function (v, i) {
+        if (list.length > 1) p.appendChild(el('sup', 'ref-v', String(v[0])));
+        p.appendChild(document.createTextNode(pick(v) + (i < list.length - 1 ? ' ' : '')));
+      });
+      return p;
+    }
+    function arabic(text) { var p = el('p', 'ref-ar', text); p.lang = 'ar'; p.dir = 'rtl'; return p; }
+    /* the other language's translation, folded away */
+    function other(label, node) { var d = el('details', 'ref-other'); d.appendChild(el('summary', '', label)); d.appendChild(node); return d; }
+    function fill(kind, key, a) {
+      var en = isEn(), data = window[KINDS[kind].name], item = data && data[key];
+      body.textContent = ''; foot.textContent = '';
+      var label = a.textContent.trim();
+      if (kind === 'qref') label = (en ? 'Qur’an ' : 'Kur’an ') + key;
+      /* "Yuhanna 6:55; 6:66": the second link carries no book name, so borrow the first one's */
+      if (kind === 'bref' && /^\d+:/.test(label)) {
+        for (var prev = a.previousElementSibling; prev; prev = prev.previousElementSibling) {
+          if (prev.matches('a.bref') && !/^\d+:/.test(prev.textContent.trim())) { label = prev.textContent.trim().replace(/\s\d+:[\d\s,\-–]+$/, '') + ' ' + label; break; }
+        }
+      }
+      title.textContent = label;
+      if (!item) {
+        body.appendChild(el('p', 'ref-note', data ? (en ? 'This passage isn’t in our collection yet.' : 'Bu metin henüz koleksiyonumuzda yok.') : (en ? 'Loading…' : 'Yükleniyor…')));
+      } else if (kind === 'bref') {
+        var tr = verses(item.tr, 'tr', function (v) { return v[1]; }), dr = verses(item.en, 'en', function (v) { return v[1]; });
+        body.appendChild(en ? dr : tr);
+        body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Douay-Rheims)', en ? tr : dr));
+      } else if (kind === 'qref') {
+        var ar = el('p', 'ref-ar'); ar.lang = 'ar'; ar.dir = 'rtl';
+        item.forEach(function (v, i) { ar.appendChild(document.createTextNode(v[1] + ' ')); ar.appendChild(el('span', 'ref-ayah', '﴿' + v[0].toLocaleString('ar-EG') + '﴾')); if (i < item.length - 1) ar.appendChild(document.createTextNode(' ')); });
+        body.appendChild(ar);
+        var qtr = verses(item, 'tr', function (v) { return v[2]; }), qen = verses(item, 'en', function (v) { return v[3]; });
+        body.appendChild(en ? qen : qtr);
+        body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Pickthall)', en ? qtr : qen));
+      } else {
+        body.appendChild(arabic(item.ar));
+        var htr = el('p', 'ref-text', item.tr), hen = el('p', 'ref-text', item.en); htr.lang = 'tr'; hen.lang = 'en';
+        body.appendChild(en ? hen : htr);
+        body.appendChild(other(en ? 'Turkish' : 'İngilizcesi', en ? htr : hen));
+      }
+      var src = { bref: en ? 'English: Douay-Rheims. The Turkish is our own translation.' : 'Türkçe çeviri bize aittir. İngilizcesi: Douay-Rheims.',
+        qref: en ? 'Arabic: Tanzil. English: Pickthall. The Turkish is our own translation.' : 'Arapça: Tanzil. Türkçe çeviri bize aittir. İngilizcesi: Pickthall.',
+        hdref: en ? 'Numbering follows sunnah.com. The English and Turkish translations are our own.' : 'Numaralar sunnah.com’a göredir. Türkçe ve İngilizce çeviriler bize aittir.' }[kind];
+      if (item) foot.appendChild(el('span', 'ref-src', src + ' '));
+      var out = el('a', '', en ? 'Open at the source ↗' : 'Kaynağında aç ↗');
+      out.href = a.href; out.target = '_blank'; out.rel = 'noopener';
+      foot.appendChild(out);
+    }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a.bref, a.qref, a.hdref');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return;
+      var kind = a.classList.contains('bref') ? 'bref' : a.classList.contains('qref') ? 'qref' : 'hdref', k = KINDS[kind], key;
+      try { key = k.key(new URL(a.href)); } catch (err) { return; }
+      e.preventDefault();
+      if (!dlg) build();
+      fill(kind, key, a);
+      if (!dlg.open) { if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
+      dlg.scrollTop = 0;
+      if (!window[k.name]) loadDataScript(k.file, k.name).then(function () { if (dlg.open) fill(kind, key, a); }, function () {
+        body.textContent = ''; body.appendChild(el('p', 'ref-note', isEn() ? 'The text couldn’t be loaded.' : 'Metin yüklenemedi.'));
+      });
+    });
+  }
+
   /* ---------------------------------------------------------------
      10. Rosary: highlights today's set of mysteries, in the visitor's
          own local time zone. The prayer cards are plain <details>.
@@ -3352,7 +3447,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
-    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initLayoutSwitch();
   });
 })();

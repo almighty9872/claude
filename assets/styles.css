@@ -3078,3 +3078,15 @@ html.av main .kk-sec.av-cur > summary h3 { font-size: 1.35rem; line-height: 1.25
 .kk-logos p { margin: 0 0 .75rem; line-height: 1.65; }
 .kk-logos p:last-child { margin-bottom: 0; }
 body.sheet-open .hm-apps { display: none; }
+
+/* Reference popups (Bible, Qur'an, hadith): see initRefs() in script.js */
+.ref-dialog .ref-body p.ref-text { margin: 0 0 1rem; font-family: var(--serif, inherit); font-size: 1.05rem; line-height: 1.7; color: var(--text); }
+.ref-dialog .ref-v { margin: 0 .2em 0 .15em; font-family: var(--sans); font-size: .62em; font-weight: 600; color: var(--gold); }
+.ref-dialog .ref-body p.ref-ar { margin: 0 0 1.1rem; font-family: "Amiri", "Noto Naskh Arabic", "Geeza Pro", "Arabic Typesetting", "Traditional Arabic", serif; font-size: 1.5rem; line-height: 2.05; color: var(--text); text-align: right; }
+.ref-dialog .ref-ayah { color: var(--gold); font-size: .85em; white-space: nowrap; }
+.ref-dialog .ref-other { margin: 0 0 1rem; }
+.ref-dialog .ref-other summary { cursor: pointer; font-family: var(--sans); font-size: .85rem; color: var(--gold); }
+.ref-dialog .ref-other p.ref-text { margin-top: .6rem; font-size: .98rem; color: var(--text-soft); }
+.ref-dialog .ref-body p.ref-note { font-size: .95rem; color: var(--muted); }
+.ref-dialog .ref-foot { margin: .4rem 0 0; padding-top: .8rem; border-top: 1px solid var(--border); font-family: var(--sans); font-size: .78rem; color: var(--muted); }
+.ref-dialog .ref-foot a { color: var(--gold); white-space: nowrap; }

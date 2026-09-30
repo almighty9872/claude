@@ -250,7 +250,7 @@ foreach ($month in 1..12) {
 # script.min.js, with a content hash for each data file so the data URLs change with their content
 # (only the data files the browser loads; the rest are build input and are not published, see
 # .github/workflows/deploy.yml)
-$RuntimeData = @('compendium-1.js', 'compendium-2.js', 'compendium-3.js', 'compendium-4.js', 'tespih.js', 'azizler-adlar.js') + (1..12 | ForEach-Object { "azizler-ozet-$_.js" })
+$RuntimeData = @('compendium-1.js', 'compendium-2.js', 'compendium-3.js', 'compendium-4.js', 'tespih.js', 'azizler-adlar.js', 'refs-bible.js', 'refs-quran.js', 'refs-hadith.js') + (1..12 | ForEach-Object { "azizler-ozet-$_.js" })
 $dataVer = [ordered]@{}
 Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Sort-Object Name | ForEach-Object {
   $dataVer["data/$($_.Name)"] = File-Ver ([IO.File]::ReadAllBytes($_.FullName))
