@@ -12,7 +12,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
  "title": "Katolik Olma Süreci",
  "en": "How to Become Catholic",
  "intro": "Katolik olmanın yolu, daha önce vaftiz olup olmadığınıza göre değişir. Varılan yer ise aynıdır: Vaftiz, Konfirmasyon ve Efkaristiya ile Kilise’yle tam birlik.",
- "introEn": "How you become Catholic depends on whether you've already been baptized. Where you arrive is the same: full communion with the Church through Baptism, Confirmation and the Eucharist.",
+ "introEn": "How you become Catholic depends on whether you've already been baptized. The destination is the same: full communion with the Church through Baptism, Confirmation and the Eucharist.",
  "paths": [
   {
    "id": "vaftizsiz",
@@ -62,7 +62,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "title": "Seçilme Ayini",
    "en": "The Rite of Election",
    "text": "Büyük Perhiz’in ilk pazarında Kilise adayı seçer. Adayın adı, o Paskalya’da vaftiz olacakların defterine yazılır.",
-   "textEn": "On the first Sunday of Lent the Church chooses the candidate, and their name is written in the book of those to be baptized that Easter."
+   "textEn": "On the first Sunday of Lent the Church formally elects the candidate, and their name is written in the book of those to be baptized that Easter."
   },
   {
    "title": "Üç Arınma Ayini",
@@ -87,7 +87,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
   "title": "Zaten vaftizli bir Hristiyansanız",
   "titleEn": "If you're already a baptized Christian",
   "body": "Geçerli biçimde vaftiz olmuş biri zaten Hristiyandır ve katekümen sayılmaz. Hazırlık süresi kişiye göre belirlenir: İnancını yaşamış biri için Katolik geleneğini tanımak yeterli olabilir; hiç din eğitimi almamış biri için daha uzun bir hazırlık gerekir.\nKabul genellikle Paskalya Nöbeti’nde değil, olağan bir pazar ayininde yapılır; ardından konfirmasyon ve ilk komünyon gelir. Kabulden önce, vaftizden sonra işlenen ağır günahlar için günah çıkarılır.\nKabulde aday şu ikrarda bulunur: “Kutsal Katolik Kilisesi’nin, Allah tarafından vahyedildiğine inanarak öğrettiği ve duyurduğu her şeye inanıyor ve bunu açıkça ilan ediyorum.”",
-  "bodyEn": "Someone validly baptized is already Christian and isn't counted as a catechumen. Preparation is fitted to the person: someone who has lived the faith may only need to get to know Catholic tradition, while someone with no formation needs a longer preparation.\nReception usually takes place not at the Easter Vigil but at an ordinary Sunday Mass, followed by confirmation and first Communion. Beforehand, the person goes to confession for any serious sins committed since baptism.\nAt the reception the candidate professes: \"I believe and profess all that the holy Catholic Church believes, teaches, and proclaims to be revealed by God.\""
+  "bodyEn": "Someone validly baptized is already Christian and isn't counted as a catechumen. Preparation is tailored to the person: someone who has lived the faith may only need to get to know Catholic tradition, while someone with no formation needs a longer preparation.\nReception usually takes place not at the Easter Vigil but at an ordinary Sunday Mass, followed by confirmation and first Communion. Beforehand, the person goes to confession for any serious sins committed since baptism.\nAt the reception the candidate professes: \"I believe and profess all that the holy Catholic Church believes, teaches, and proclaims to be revealed by God.\""
  },
  "conditional": {
   "title": "Vaftizin geçerliliğinden kuşku duyuluyorsa",

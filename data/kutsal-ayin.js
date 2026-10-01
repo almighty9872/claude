@@ -263,7 +263,7 @@ window.MASS = /*JSON-START*/{
    "title": "Kutsal Kitabın Okunması",
    "en": "The Liturgy of the Word",
    "lead": "Kutsal Kitap’tan okumalar yapılır, İncil okunur ve rahip vaaz eder. Pazar ve bayram günlerinde herkes birlikte İman Açıklaması’nı söyler.",
-   "leadEn": "Readings from Scripture, the Gospel and the homily bring the Church's teaching to the people; together, all profess their faith.",
+   "leadEn": "The Scripture readings, the Gospel and the homily bring the Church's teaching to the people, and then all profess their faith together.",
    "lines": [
     {
      "role": "N",

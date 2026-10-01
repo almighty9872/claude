@@ -29,7 +29,7 @@ window.ANATOLIA = /*JSON-START*/{
    "title": "Pavlus’un Memleketi",
    "en": "Paul's Homeland",
    "body": "Hristiyanlığı Yahudi dünyasının dışına taşıyan ve en çok mektup yazan havari Pavlus, bugünkü Mersin’in Tarsus ilçesinde doğdu (Elçilerin İşleri 22:3). Tarsus, o dönemde Atina ve İskenderiye ile yarışan bir eğitim kentiydi. Pavlus hem Roma vatandaşı hem de iyi yetişmiş bir Yahudiydi. Bu yüzden Müjde’yi iki dünyaya birden anlatabilecek eşsiz bir elçiydi.\nÜç misyon yolculuğunun büyük kısmı bugünkü Türkiye’de geçti: Galatya, Pisidia, Likaonya ve Kilikya’da. Galatyalılar’a Mektup bu bölgedeki cemaatlere yazıldı. İlk misyon merkezi ise öğrencilerin ilk kez “Hristiyan” diye anıldığı Antakya’ydı.",
-   "bodyEn": "Paul, the apostle who carried Christianity beyond the Jewish world and wrote the most letters, was born in Tarsus, in today's Mersin province (Acts 22:3). Tarsus was a center of learning that rivalled Athens and Alexandria. A Roman citizen with a thorough Jewish education, Paul was uniquely placed to bring the Gospel to both worlds.\nMost of his three missionary journeys took place in what is now Turkey: Galatia, Pisidia, Lycaonia, Cilicia. The Letter to the Galatians was written to churches here, and his first missionary base was Antioch, where the disciples were first called \"Christians.\""
+   "bodyEn": "Paul, the apostle who carried Christianity beyond the Jewish world and wrote the most letters, was born in Tarsus, in today's Mersin province (Acts 22:3). Tarsus was a center of learning that rivaled Athens and Alexandria. A Roman citizen with a thorough Jewish education, Paul was uniquely placed to bring the Gospel to both worlds.\nMost of his three missionary journeys took place in what is now Turkey: Galatia, Pisidia, Lycaonia, Cilicia. The Letter to the Galatians was written to churches here, and his first missionary base was Antioch, where the disciples were first called \"Christians.\""
   },
   {
    "id": "yedi-kilise",
@@ -54,5 +54,5 @@ window.ANATOLIA = /*JSON-START*/{
   }
  ],
  "closing": "Türkiye topraklarında Katolik olmak yabancı bir şeye bağlanmak değil, eve dönmektir. Bu iman bu topraklarda doğdu, burada netleşti ve burada kanla mühürlendi.",
- "closingEn": "Being Catholic on Turkish soil isn't joining something foreign; it's coming home. This faith was born, clarified and sealed with blood on this land."
+ "closingEn": "Being Catholic on Turkish soil isn't joining something foreign; it's coming home. This faith was born on this land, defined here, and sealed here with blood."
 }/*JSON-END*/;

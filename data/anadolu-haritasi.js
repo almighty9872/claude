@@ -29,7 +29,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
         "text": "Kudüs’ten sonraki ilk büyük Hristiyan cemaati burada doğdu ve İsa’nın öğrencileri ilk kez burada “Hristiyan” diye anıldı. Pavlus ile Barnabas misyon yolculuklarına buradan gönderildi. Geleneğe göre Petrus da burada vaaz etti; kentin kenarındaki Sen Piyer Mağara Kilisesi bu anıyı yaşatır. “Katolik Kilise” ifadesini ilk kullanan Aziz İgnatius da Antakya episkoposuydu.",
         "refs": ["Elçilerin İşleri 11:19-26", "Elçilerin İşleri 13:1-3", "Galatyalılar 2:11"] },
       "en": { "name": "Antioch", "old": "Antakya", "place": "Hatay province",
-        "text": "After Jerusalem, the first great Christian community grew up here, and it was here that Jesus’s disciples were first called “Christians.” Paul and Barnabas were sent out on their missionary journeys from Antioch. Tradition holds that Peter preached here too; the St. Peter Cave Church on the edge of the city keeps that memory alive. St. Ignatius, the first writer to use the term “Catholic Church,” was bishop of Antioch.",
+        "text": "After Jerusalem, the first great Christian community grew up here, and it was here that Jesus’ disciples were first called “Christians.” Paul and Barnabas were sent out on their missionary journeys from Antioch. Tradition holds that Peter preached here too; the St. Peter Cave Church on the edge of the city keeps that memory alive. St. Ignatius, the first writer to use the term “Catholic Church,” was bishop of Antioch.",
         "refs": ["Acts 11:19-26", "Acts 13:1-3", "Galatians 2:11"] }
     },
     {
@@ -74,7 +74,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
         "text": "Ankara, Roma döneminde Galatya eyaletinin merkeziydi. Pavlus yolculuklarında Galatya bölgesinden birkaç kez geçti ve bu bölgenin kiliselerine, Mesih’teki özgürlüğü anlatan Galatyalılar’a Mektup’u yazdı. Mektubun tam olarak hangi Galatya kentlerine gönderildiği tarihçiler arasında tartışmalıdır. Kentin ortasındaki Augustus Tapınağı sonradan kiliseye dönüştürüldü.",
         "refs": ["Galatyalılar 1:1-2", "Elçilerin İşleri 16:6", "Elçilerin İşleri 18:23"] },
       "en": { "name": "Ankara", "old": "Ancyra, Galatia", "place": "Ankara province",
-        "text": "In Roman times Ankara was the capital of the province of Galatia. Paul passed through the Galatian region several times on his journeys and wrote to its churches the Letter to the Galatians, on freedom in Christ; which Galatian cities it was sent to is still debated by historians. The Temple of Augustus in the city centre was later turned into a church.",
+        "text": "In Roman times Ankara was the capital of the province of Galatia. Paul passed through the Galatian region several times on his journeys and wrote to its churches the Letter to the Galatians, on freedom in Christ; which Galatian cities it was sent to is still debated by historians. The Temple of Augustus in the city center was later turned into a church.",
         "refs": ["Galatians 1:1-2", "Acts 16:6", "Acts 18:23"] }
     },
     {
@@ -155,7 +155,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
         "text": "Vahiy Kitabı, zengin Laodikeia kilisesini “ne soğuk ne sıcak” olduğu için uyarır, ama ardından şu çağrıyı yapar: “İşte kapıda durmuş, kapıyı çalıyorum.” Pavlus’un Koloseliler’e Mektubu yakındaki Kolossai için yazılmış ve Laodikeia’da da okunması istenmiştir. Hemen yakındaki Hierapolis’te (Pamukkale), geleneğe göre Havari Filipus şehit edilmiştir.",
         "refs": ["Vahiy 3:14-22", "Koloseliler 4:13-16"] },
       "en": { "name": "Laodicea", "old": "Laodikeia", "place": "Denizli province",
-        "text": "Revelation warns the wealthy church of Laodicea for being “neither cold nor hot,” then adds the invitation: “Behold, I stand at the door and knock.” Paul’s Letter to the Colossians was written for nearby Colossae, and he asked that it be read in Laodicea too. At neighbouring Hierapolis (Pamukkale), tradition holds that the Apostle Philip was martyred.",
+        "text": "Revelation rebukes the wealthy church of Laodicea for being “neither cold nor hot,” then adds the invitation: “Behold, I stand at the door and knock.” Paul’s Letter to the Colossians was written for nearby Colossae, and he asked that it be read in Laodicea too. At neighboring Hierapolis (Pamukkale), tradition holds that the Apostle Philip was martyred.",
         "refs": ["Revelation 3:14-22", "Colossians 4:13-16"] }
     },
     {
@@ -164,7 +164,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
         "text": "325’te İmparator Konstantin’in çağırdığı ilk ekümenik konsil burada toplandı. Konsil, İsa’nın Baba’yla “aynı özden” olduğunu ilan etti ve bugün de her pazar okuduğumuz İman İkrarı’nın temelini attı. 787’de yine burada toplanan yedinci konsil, kutsal ikonalara gösterilen saygıyı savundu. 2014’te göl kıyısında, sular altında kalmış bir bazilikanın kalıntıları bulundu.",
         "refs": ["Yuhanna 1:1-14", "Yuhanna 10:30"] },
       "en": { "name": "Nicaea", "old": "İznik", "place": "Bursa province",
-        "text": "In 325 the first ecumenical council, summoned by Emperor Constantine, met here and declared Jesus “of the same substance” as the Father, laying the foundation of the Creed we still pray every Sunday. In 787 the seventh council, also held here, defended the veneration of holy icons. In 2014 the remains of a basilica were found under the waters of the lake shore.",
+        "text": "In 325 the first ecumenical council, summoned by Emperor Constantine, met here and declared Jesus “of the same substance” as the Father, laying the foundation of the Creed we still pray every Sunday. In 787 the seventh council, also held here, defended the veneration of holy icons. In 2014 the remains of a basilica were found submerged in the lake, just off the shore.",
         "refs": ["John 1:1-14", "John 10:30"] }
     },
     {
@@ -200,7 +200,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
         "text": "Edessa, Süryani Hristiyanlığının ilk büyük merkezlerinden biriydi. Eski bir geleneğe göre kentin kralı Abgar, İsa’ya mektup yazıp ondan şifa istemişti. Dördüncü yüzyılda burada yaşayıp öğreten Aziz Ephrem, ilahileri yüzünden “Kutsal Ruh’un arpı” diye anılır ve Kilise Doktoru ilan edilmiştir.",
         "refs": ["Elçilerin İşleri 2:9"] },
       "en": { "name": "Edessa", "old": "Şanlıurfa", "place": "Şanlıurfa province",
-        "text": "Edessa was one of the first great centres of Syriac Christianity. An ancient tradition says its king, Abgar, wrote to Jesus asking to be healed. St. Ephrem, who lived and taught here in the fourth century, is called the “Harp of the Holy Spirit” for his hymns and has been declared a Doctor of the Church.",
+        "text": "Edessa was one of the first great centers of Syriac Christianity. An ancient tradition says its king, Abgar, wrote to Jesus asking to be healed. St. Ephrem, who lived and taught here in the fourth century, is called the “Harp of the Holy Spirit” for his hymns and has been declared a Doctor of the Church.",
         "refs": ["Acts 2:9"] }
     },
     {
@@ -236,7 +236,7 @@ window.ANATOLIA_MAP = /*JSON-START*/{
         "text": "Yaratılış Kitabı’na göre Tufan’dan sonra Nuh’un gemisi “Ararat dağlarının üzerine” oturdu. Kutsal Kitap’taki Ararat adı, bugünkü Doğu Anadolu’yu da içine alan eski Urartu ülkesini anlatır. Yüzyıllardır süren gelenek ise bu bölgenin en yüksek zirvesini, yani Türkiye’nin en yüksek dağı olan Ağrı Dağı’nı geminin oturduğu yer olarak bilir.",
         "refs": ["Yaratılış 8:4"] },
       "en": { "name": "Mount Ararat", "old": "Ağrı Dağı", "place": "Ağrı and Iğdır provinces",
-        "text": "According to Genesis, after the Flood Noah’s ark came to rest “upon the mountains of Ararat.” The biblical name Ararat refers to the ancient land of Urartu, which took in much of today’s eastern Anatolia; a tradition centuries old names the region’s highest peak, Mount Ararat, the highest mountain in Turkey, as the place where the ark came to rest.",
+        "text": "According to Genesis, after the Flood Noah’s ark came to rest “upon the mountains of Ararat.” The biblical name Ararat refers to the ancient land of Urartu, which took in much of today’s eastern Anatolia; a centuries-old tradition names the region’s highest peak, Mount Ararat, the highest mountain in Turkey, as the place where the ark came to rest.",
         "refs": ["Genesis 8:4"] }
     }
   ]

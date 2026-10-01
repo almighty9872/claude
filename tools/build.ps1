@@ -968,12 +968,51 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder, [string]$l
     "<input id=`"$id`" type=`"search`" name=`"q`" $(TA 'placeholder' $placeholder $placeholderEn) autocomplete=`"off`" enterkeyhint=`"search`"></div>" +
     "<div class=`"search-results`" hidden></div></form>"
 }
+# Desktop (980px and up): the four groups of the phone's home screen as the bar's own menus,
+# each opening a panel of its pages; a few pages open a further list beside it (the Katekizm's
+# parts, the Rosary's two pages, the saints). Below 980px the hamburger's overlay takes over.
+$DnSubs = @{
+  'katekizm.html' = $KatekizmNav
+  'tesbih-duasi.html' = @(
+    @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Dualar ve gizemler'; te = 'The Rosary'; se = 'Prayers and mysteries' },
+    @{ href = 'tesbih-duasi.html#tesbih-rehberi'; t = 'Adım Adım Tesbih'; s = 'Boncuk boncuk, birlikte dua edin'; te = 'Pray It Bead by Bead'; se = 'Pray along, bead by bead' },
+    @{ href = 'tesbih-tarihi.html'; t = 'Tesbihin Tarihi'; s = "İncil$($Apos)den Fatima$($Apos)ya"; te = 'History of the Rosary'; se = 'From the Gospel to Fatima' })
+  'azizler.html' = @(
+    @{ href = 'azizler.html'; t = 'Azizler Takvimi'; s = 'Yılın her günü için bir aziz'; te = 'Calendar of Saints'; se = 'A saint for every day of the year' },
+    @{ href = 'azizler.html#buyuk-azizler'; t = 'En Çok Bilinen 20 Aziz'; s = 'Hayat hikâyeleri'; te = '20 Best-Known Saints'; se = 'Their lives'; saints = $true })
+}
+$IcoChevDown = '<svg class="dn-chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'
+$IcoChevRight = '<svg class="dn-more" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
+function Dn-Link($it, [string]$current, [string]$cls = 'dn-a', [string]$more = '') {
+  $ico = if ($it.ico) { $it.ico } elseif ($NavIcons[$it.href]) { $NavIcons[$it.href] } else { '' }
+  $icoHtml = if ($ico) { "<span class=`"dn-ico`">$ico</span>" } else { '' }
+  $sHtml = if ($it.s) { "<span class=`"dn-s`">$(T $it.s $it.se)</span>" } else { '' }
+  return "<a class=`"$cls`" href=`"$($it.href)`"$(Cur $it.href $current)>$icoHtml<span class=`"dn-body`"><span class=`"dn-t`">$(T $it.t $it.te)</span>$sHtml</span>$more</a>"
+}
+function Desk-Nav([string]$current) {
+  $ids = @('ogren', 'tartis', 'dua', 'kesfet'); $n = 0
+  $curApp = $AppOf[$current]
+  return (($SheetNav | Select-Object -First 4 | ForEach-Object {
+    $grp = $_; $id = $ids[$n]; $n++
+    $items = ($grp.items | ForEach-Object {
+      $it = $_; $sub = $DnSubs[$it.href]
+      if (-not $sub) { return "<li class=`"dn-item`">$(Dn-Link $it $current)</li>" }
+      $subLis = ($sub | ForEach-Object {
+        $si = $_
+        if (-not $si.saints) { return "<li>$(Dn-Link $si $current 'dn-a dn-sa')</li>" }
+        $gs = ($GreatSaints.saints | ForEach-Object { "<li><a class=`"dn-gs`" href=`"$($_.id).html`"$(Cur "$($_.id).html" $current)>$(T $_.name $_.en)</a></li>" }) -join ''
+        "<li class=`"dn-item has-sub`">$(Dn-Link $si $current 'dn-a dn-sa' $IcoChevRight)<div class=`"dn-sub dn-sub2`"><ul class=`"dn-gs-list`">$gs</ul></div></li>"
+      }) -join ''
+      "<li class=`"dn-item has-sub`">$(Dn-Link $it $current 'dn-a' $IcoChevRight)<div class=`"dn-sub`"><ul class=`"dn-list`">$subLis</ul></div></li>"
+    }) -join ''
+    $sec = if ($curApp -eq $id) { ' is-section' } else { '' }
+    "<li class=`"dn-top`"><button type=`"button`" class=`"nav-link dn-btn$sec`" aria-expanded=`"false`" aria-controls=`"dn-$id`">$(T $grp.label $grp.labelEn)$IcoChevDown</button>" +
+      "<div class=`"dn-panel glass`" id=`"dn-$id`"><ul class=`"dn-list`">$items</ul></div></li>"
+  }) -join '')
+}
 function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
 function Header-Html([string]$current) {
-  $coreMenu = ($CoreNav | ForEach-Object {
-    $cls = if ($_.href -eq 'katekizm.html' -and $KatekizmPages -contains $current) { 'nav-link is-section' } else { 'nav-link' }
-    "<li><a class=`"$cls`" href=`"$($_.href)`"$(Cur $_.href $current)>$(T $_.t $_.te)</a></li>"
-  }) -join ''
+  $coreMenu = Desk-Nav $current
   return @"
 $Sprite
 <a class="skip-link" href="#main">$(T 'İçeriğe geç' 'Skip to content')</a>
@@ -984,7 +1023,7 @@ $Sprite
         <a class="brand" href="index.html"$(Cur 'index.html' $current)>$BrandMark<span class="brand-rule" aria-hidden="true"></span>$BrandName</a>
         <button type="button" class="settings-btn" $(TA 'aria-label' 'Ayarlar: erişilebilirlik' 'Settings: accessibility') aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-panel">$IcoGear</button>
       </div>
-      <nav class="mainnav" $(TA 'aria-label' 'Ana menü' 'Main menu')>
+      <nav class="mainnav dnav" $(TA 'aria-label' 'Ana menü' 'Main menu')>
         <ul>$coreMenu</ul>
       </nav>
       <button type="button" class="icon-btn menu-toggle" $(TA 'aria-label' 'Menü' 'Menu') aria-expanded="false" aria-controls="navsheet" $(TA 'data-tooltip' 'Tüm Menü' 'Full Menu')>$IcoMenuToggle</button>
@@ -1020,7 +1059,7 @@ function Foot-Dialog([string]$id, [string]$title, [string]$inner, [string]$src =
 }
 $FootContactHtml = (TB "<p>Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa ya da sadece merhaba demek istiyorsanız, aşağıdaki e-posta adresinden bize yazabilirsiniz.</p>" "<p>If you've spotted a mistake in a translation, there's a topic, saint or miracle you'd like to see added, or you'd simply like to say hello, you can get in touch at the email address below.</p>") +
   "<p class=`"contact-email`"><a class=`"btn`" href=`"mailto:david@katolikdunyasi.com`">david@katolikdunyasi.com</a></p>" +
-  (TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. Depending on how busy things are, a reply may take a little while, but thank you in advance, sincerely, for any feedback you share.</p>")
+  (TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. Depending on how busy things are, a reply may take a little while, but thank you, sincerely, for any feedback you send.</p>")
 $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
@@ -1053,12 +1092,121 @@ $EmailObfEval = [System.Text.RegularExpressions.MatchEvaluator]{
   $cls = if ($classMatch.Success) { "$($classMatch.Groups[1].Value) email-link" } else { 'email-link' }
   "<a class=`"$cls`" data-u=`"david`" data-d=`"katolikdunyasi.com`" href=`"#`">$($script:EmailFallback)</a>"
 }
+# ---- Links between the site's own pages. The first mention of a saint, a miracle or a topic that
+# has a page of its own becomes a link to it, once per page and language, in running text only
+# (paragraphs and list items; never in headings, links, buttons, prayers or quotations' sources).
+# Each rule: the page it leads to, then the Turkish and the English pattern (.NET regex).
+$XrefRules = @(
+  @('padre-pio.html', 'Padre Pio', 'Padre Pio'),
+  @('aziz-augustinus.html', "(?:Hipponlu (?:Aziz )?|Aziz )Augustinus", "(?:St |Saint )Augustine(?! of Canterbury)|Augustine of Hippo"),
+  @('aziz-thomas-aquinas.html', 'Thomas Aquinas', 'Thomas Aquinas'),
+  @('assisili-aziz-francis.html', 'Assisili (?:Aziz )?Fransuva', 'Francis of Assisi'),
+  @('sienali-aziz-catharina.html', "Sienal$([char]0x131) (?:Azize )?Katerina", 'Catherine of Siena'),
+  @('avilali-aziz-teresa.html', "Avilal$([char]0x131) (?:Azize )?Teresa", "Teresa of [AÁ]vila"),
+  @('lisieuxlu-kucuk-teresa.html', "Lisieux[’']l$([char]0xfc) (?:Azize )?(?:K$([char]0xfc)$([char]0xe7)$([char]0xfc)k )?Teresa", "Th$([char]0xe9)r$([char]0xe8)se of Lisieux"),
+  @('aziz-ignatius-loyola.html', "Loyolal$([char]0x131) (?:Aziz )?$([char]0x130)gnatius", 'Ignatius of Loyola'),
+  @('aziz-benedictus.html', "Nursial$([char]0x131) (?:Aziz )?Benedictus", 'Benedict of Nursia'),
+  @('aziz-patrick.html', 'Aziz Patrick', "(?:St |Saint )Patrick"),
+  @('padovali-aziz-antonius.html', "Padoval$([char]0x131) (?:Aziz )?Antuan", 'Anthony of Padua'),
+  @('kalkutali-aziz-teresa.html', "Kalk$([char]0xfc)tal$([char]0x131) (?:Rahibe |Azize )?Teresa|Rahibe Teresa", "Mother Teresa|Teresa of Calcutta"),
+  @('aziz-ii-yuhanna-pavlus.html', "II\. Ioannes Paulus", 'John Paul II'),
+  @('aziz-hieronymus.html', 'Aziz Hieronymus', "(?:St |Saint )Jerome"),
+  @('aziz-yusuf.html', 'Aziz Yusuf', "(?:St |Saint )Joseph(?! of)"),
+  @('havari-petrus.html', 'Havari Petrus', "(?:St |Saint )Peter(?![’']s)(?! (?:Square|Basilica|Chanel|Claver|Canisius|Damian|Nolasco|Julian))|Peter the Apostle"),
+  @('havari-pavlus.html', 'Havari Pavlus', "(?:St |Saint )Paul(?![’']s)(?! (?:Miki|of the Cross|VI))|Paul the Apostle"),
+  @('vaftizci-yahya.html', 'Vaftizci Yahya', 'John the Baptist'),
+  @('havari-yuhanna.html', 'Havari Yuhanna', 'John the Apostle'),
+  @('mucizeler.html#fatima', "Fatima(?! Duas$([char]0x131))", 'Fatima(?! Prayer)', 'islama-cevap.html'),
+  @('mucizeler.html#lourdes', 'Lourdes', 'Lourdes'),
+  @('mucizeler.html#guadalupe', 'Guadalupe', 'Guadalupe'),
+  @('mucizeler.html#zeytun', 'Zeytun', 'Zeitoun'),
+  @('mucizeler.html#kefen', 'Torino Kefeni', 'Shroud of Turin'),
+  @('mucizeler.html#lanciano', 'Lanciano', 'Lanciano'),
+  @('mucizeler.html#bolsena', 'Bolsena', 'Bolsena'),
+  @('mucizeler.html#bernadette', 'Bernadette', 'Bernadette'),
+  @('mucizeler.html#vianney', "Jean-Marie Vianney|Ars Curesi", "Jean-Marie Vianney|John Vianney|Cur$([char]0xe9) of Ars"),
+  @('tesbih-duasi.html', "[Tt]esbih [Dd]uas$([char]0x131)", 'the Rosary'),
+  @('tesbih-tarihi.html#inebahti', "$([char]0x130)nebaht$([char]0x131)", 'Lepanto'),
+  @('kutsal-ayin.html', "Kutsal Ayin|Pazar Ayini|Ayin(?=[’'])", "(?:Holy )?Mass(?! readings)", 'kilise/*'),
+  @('gunah-cikarma.html', "[Gg]$([char]0xfc)nah [$([char]0xc7)$([char]0xe7)]$([char]0x131)kar\p{L}*", '(?<=(?:go|goes|going|went|come|comes|came) to )confession|hear(?:s|d|ing)? confessions?|[Ss]acrament of (?:Penance|Confession)|Confession(?= and)'),
+  @('katolik-sureci.html', "Katolik olma(?:k|ya|n$([char]0x131)n)?|Katolik olmak isteyen", 'becoming Catholic|become Catholic|OCIA'),
+  @('meseller.html', "[Mm]esel(?:ler|leri|lerinde|leriyle|lerle|i|ini|inde|iyle)?", '[Pp]arables?'),
+  @('topraklarimizda-hristiyanlik.html#iznik', "$([char]0x130)znik Konsili|Efes Konsili", 'Council of Nicaea|Council of Ephesus'),
+  @('topraklarimizda-hristiyanlik.html#yedi-kilise', "[Yy]edi [Kk]ilise", '[Ss]even [Cc]hurches'),
+  @('topraklarimizda-hristiyanlik.html#yer-antakya', 'Antakya', 'Antioch'),
+  @('topraklarimizda-hristiyanlik.html#yer-demre', "Myra|Demre", "Myra"),
+  @('topraklarimizda-hristiyanlik.html#yer-kapadokya', 'Kapadokya', 'Cappadocia'),
+  @('sss.html#araf', 'Araf', 'Purgatory', 'islama-cevap.html'),
+  # plain "tesbih" (and its suffixed forms) for the Rosary; off where it also means Muslim prayer beads
+  @('tesbih-duasi.html', "[Tt]esbih\p{L}*", '(?!)', 'islama-cevap.html'),
+  @('meryem-ana.html', "Meryem Ana(?! Evi)", "(?<!House of the )(?:Blessed )?Virgin Mary"),
+  @('katekizm.html', "(?<!Kilisesi )Katekizm\p{L}*", "Compendium(?: of the Catechism)?|Catechism(?! of the Catholic Church)"),
+  @('kutsal-kitap.html', "Kutsal Kitap|Kutsal Kitab\p{L}+", "(?:the )?Bible")
+) | ForEach-Object {
+  $b = '(?<![\p{L}\d])'; $a = '(?![\p{L}\d])'
+  # a fourth item names the pages (wildcards allowed) where the rule stays off
+  @{ to = $_[0]; file = ($_[0] -split '#')[0]; tr = [regex]"$b(?:$($_[1]))$a"; en = [regex]"$b(?:$($_[2]))$a"; off = $(if ($_.Count -gt 3) { $_[3] } else { '' }) }
+}
+# The official texts (the Compendium and its parts) and the pages that are only lists or forms stay as they are
+$XrefSkipPages = @('index.html', 'katekizm.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html',
+  'motu-proprio.html', 'giris.html', 'ekler.html', '404.html', 'gizlilik.html', 'erisilebilirlik.html', 'kaynaklar-ve-telif.html', 'iletisim.html')
+$XrefBlockTags = @('p', 'li', 'td')
+$XrefSkipTags = @('a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'summary', 'button', 'label', 'select', 'option', 'script', 'style', 'svg', 'nav', 'header', 'footer', 'cite', 'figcaption', 'textarea')
+$XrefSkipClass = [regex]'(?:^|\s)(?:verse|rt-[\w-]+|conventions|gloss|ic-tl[\w-]*|crumbs|text-link|faq-ref|th-link|ref-[\w-]+|m-day|label)(?:\s|$)'
+$XrefVoid = @('br', 'img', 'input', 'meta', 'link', 'hr', 'source', 'wbr', 'col', 'area', 'embed', 'track')
+function Link-Xrefs([string]$html, [string]$file) {
+  if ($XrefSkipPages -contains $file) { return $html }
+  $parts = [regex]::Split($html, '(<[^>]+>)')
+  $stack = New-Object Collections.ArrayList   # each: @(tag, isBlock, isSkip, lang)
+  $used = @{}
+  $sb = [System.Text.StringBuilder]::new()
+  foreach ($p in $parts) {
+    if ($p.StartsWith('<')) {
+      [void]$sb.Append($p)
+      if ($p -match '^<!--') { continue }
+      if ($p -match '^</([a-zA-Z0-9]+)') {
+        $t = $Matches[1].ToLower()
+        for ($i = $stack.Count - 1; $i -ge 0; $i--) { if ($stack[$i][0] -eq $t) { $stack.RemoveRange($i, $stack.Count - $i); break } }
+        continue
+      }
+      if ($p -match '^<([a-zA-Z0-9]+)') {
+        $t = $Matches[1].ToLower()
+        if ($XrefVoid -contains $t -or $p.EndsWith('/>')) { continue }
+        $cls = if ($p -match '\sclass="([^"]*)"') { $Matches[1] } else { '' }
+        $lang = if ($cls -match '(?:^|\s)l-en(?:\s|$)') { 'en' } elseif ($cls -match '(?:^|\s)l-tr(?:\s|$)') { 'tr' } else { $null }
+        $skip = ($XrefSkipTags -contains $t) -or $XrefSkipClass.IsMatch($cls)
+        [void]$stack.Add(@($t, ($XrefBlockTags -contains $t), $skip, $lang))
+      }
+      continue
+    }
+    if (-not $p.Trim()) { [void]$sb.Append($p); continue }
+    $inBlock = $false; $inSkip = $false; $lang = 'tr'
+    foreach ($e in $stack) { if ($e[1]) { $inBlock = $true }; if ($e[2]) { $inSkip = $true }; if ($e[3]) { $lang = $e[3] } }
+    if (-not $inBlock -or $inSkip) { [void]$sb.Append($p); continue }
+    # the earliest mention in this text of a page not linked yet in this language, then the rest after it
+    $rest = $p
+    while ($rest) {
+      $best = $null; $bestRule = $null
+      foreach ($r in $XrefRules) {
+        if ($r.file -eq $file -or ($r.off -and $file -like $r.off) -or $used.ContainsKey("$($r.to)|$lang")) { continue }
+        $m = $r[$lang].Match($rest)
+        if ($m.Success -and ($null -eq $best -or $m.Index -lt $best.Index)) { $best = $m; $bestRule = $r }
+      }
+      if ($null -eq $best) { [void]$sb.Append($rest); break }
+      $used["$($bestRule.to)|$lang"] = $true
+      [void]$sb.Append($rest.Substring(0, $best.Index)).Append("<a class=`"xref`" href=`"$($bestRule.to)`">$($best.Value)</a>")
+      $rest = $rest.Substring($best.Index + $best.Length)
+    }
+  }
+  return $sb.ToString()
+}
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
         [string[]]$JsonLd = @(), [string]$OgType = 'website',
         [string]$Robots = 'index,follow,max-snippet:-1,max-image-preview:large', [bool]$Canonical = $true, [bool]$RootRelative = $false,
         [string]$Lang = 'tr', [string]$TitleEn = '', [string]$DescriptionEn = '')
   $Body = Link-Refs $Body
+  $Body = Link-Xrefs $Body $File
   # Search results show roughly 60 characters of a title; a long page name keeps its words
   # and drops the site-name suffix instead (og:site_name still carries it).
   $suffix = " | $SiteName"
@@ -1591,7 +1739,7 @@ $sealMartyrsItems = ($Confession.sealMartyrs.items | ForEach-Object { '<li><stro
 $sealMartyrsItemsEn = ($Confession.sealMartyrs.itemsEn | ForEach-Object { '<li><strong>' + (Inline $_.name) + '</strong> ' + (Inline $_.detail) + '</li>' }) -join "`n"
 $sealLists = TB ('<ul class="footnote-list">' + $sealMartyrsItems + '</ul>') ('<ul class="footnote-list">' + $sealMartyrsItemsEn + '</ul>')
 $sealMartyrsHtml = '<aside class="footnote-block" id="muhur-sehitleri"><p class="footnote-label">* ' + (T (Inline $Confession.sealMartyrs.title) (Inline $Confession.sealMartyrs.titleEn)) + '</p><p>' + (T (Inline $Confession.sealMartyrs.intro) (Inline $Confession.sealMartyrs.introEn)) + '</p>' + $sealLists + '</aside>'
-$confessionDoors = '<a class="why-door" href="#adim-adim"><span class="why-door-t">' + (T 'İlk kez ya da uzun bir aradan sonra gidiyorum' 'I am going for the first time, or after a long time') + '</span><span class="why-door-s">' + (T 'Adım adım neler olacağını görün' 'See what happens, step by step') + '</span>' + $IcoArrowR + '</a>' +
+$confessionDoors = '<a class="why-door" href="#adim-adim"><span class="why-door-t">' + (T 'İlk kez ya da uzun bir aradan sonra gidiyorum' 'I''m going for the first time, or for the first time in a long time') + '</span><span class="why-door-s">' + (T 'Adım adım neler olacağını görün' 'See what happens, step by step') + '</span>' + $IcoArrowR + '</a>' +
   '<a class="why-door" href="#vicdan-muhasebesi"><span class="why-door-t">' + (T 'Hazırlanmak istiyorum' 'I want to prepare') + '</span><span class="why-door-s">' + (T "On Emir$($Apos)e göre vicdan muhasebesi" 'An examination of conscience by the Ten Commandments') + '</span>' + $IcoArrowR + '</a>'
 $confessionBody = @"
 <div class="wrap narrow sureci-wrap" data-av-nogh>
@@ -2286,7 +2434,7 @@ $mysterySets
   </div>
   <h2 class="section-title" id="nasil">$(T 'Tesbih nasıl dua edilir?' 'How to pray the Rosary')</h2>
   <ol class="steps">$stepList</ol>
-  <p class="conventions">$(T "Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir." "The Turkish prayers follow the tradition used for the Rosary at the Basilica of Saint Anthony of Padua (Sant'Antuan) in Istanbul; the English are the prayers as they are commonly said.")</p>
+  <p class="conventions">$(T "Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir." "The Turkish prayers follow the tradition used for the Rosary at the Basilica of Saint Anthony of Padua (Sant'Antuan) in Istanbul; the English versions are the prayers as they are commonly said in English.")</p>
 </div>
 "@
 Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" -TitleEn "$($Rosary.en) | $SiteName" `
@@ -2705,7 +2853,50 @@ function Home-Page([string]$lang) {
     $rows = ($app.pages | ForEach-Object { "<a class=`"hm-row`" href=`"$(F $_.f)`"><span class=`"hm-ri`">$($_.ico)</span><span class=`"hm-rt`"><span class=`"hm-t`">$(L $_.t $_.te)</span><span class=`"hm-s`">$(L $_.s $_.se)</span></span>$IcoChevR</a>" }) -join ''
     "<section class=`"hm-col`"><h2>$(L $app.t $app.te)</h2><div class=`"hm-list`">$rows</div></section>"
   }) -join ''
-  $lists = "<div class=`"hm-lists`">$cols</div>"
+  # Desktop, under the search: "Choose your own path" (five starting points, each with the pages
+  # that answer it), a featured article, a quotation and the great saints beside it, and a short
+  # timeline of the Church's history whose stops open the pages that tell them.
+  $jSteps = @(
+    @{ t = 'Merak ediyorum'; te = "I'm curious"; d = "Tanrı var mı, İsa kim, neden Katolik Kilise?"; de = 'Is there a God, who is Jesus, why the Catholic Church?'
+       l = @(@('neden-katoligiz.html', 'Neden Katoliğiz?', "Why We're Catholic"), @('ateizme-cevap.html', 'Ateizme Cevap', 'Answering Atheism'), @('mucizeler.html', 'Mucizeler', 'Miracles')) },
+    @{ t = 'Sorularım var'; te = 'I have questions'; d = "En çok sorulan sorular ve Kilise$($Apos)nin öğretisi."; de = 'The most common questions, and what the Church teaches.'
+       l = @(@('sss.html', 'Sorular', 'FAQ'), @('katekizm.html', 'Katekizm', 'Catechism'), @('kutsal-kitap.html', 'Kutsal Kitap', 'The Bible'), @('islama-cevap.html', "İslam$($Apos)a Cevap", 'Answering Islam')) },
+    @{ t = 'Katolik olmak istiyorum'; te = 'I want to become Catholic'; d = 'Vaftizli ya da vaftizsiz, süreç adım adım.'; de = 'Baptized or not, the process step by step.'
+       l = @(@('katolik-sureci.html', 'Katolik Olma Süreci', 'Becoming Catholic'), @('kiliseler.html', 'Kilise Bul', 'Find a Church')) },
+    @{ t = 'Dua etmek istiyorum'; te = 'I want to pray'; d = 'Tesbih, Ayin ve günlük dualar.'; de = 'The Rosary, the Mass and daily prayers.'
+       l = @(@('tesbih-duasi.html', 'Tesbih Duası', 'The Rosary'), @('kutsal-ayin.html', 'Kutsal Ayin', 'The Mass'), @('ekler.html', 'Sık Kullanılan Dualar', 'Common Prayers')) },
+    @{ t = 'Yeniden başlamak istiyorum'; te = 'I want to start again'; d = 'Yıllardır gitmediyseniz bile kapı açık.'; de = "Even if it's been years, the door is open."
+       l = @(@('gunah-cikarma.html', 'Günah Çıkarma', 'Confession'), @('meseller.html#musrif-ogul', 'Müsrif Oğul', 'The Prodigal Son')) }
+  )
+  $n = 0
+  $stepsHtml = ($jSteps | ForEach-Object {
+    $n++
+    $links = ($_.l | ForEach-Object { "<a href=`"$($_[0])`">$(L $_[1] $_[2])$IcoChevR</a>" }) -join ''
+    "<li class=`"hj-step`"><span class=`"hj-dot`" aria-hidden=`"true`">$n</span><div><h3 class=`"hj-st`">$(L $_.t $_.te)</h3><p>$(L $_.d $_.de)</p><div class=`"hj-links`">$links</div></div></li>"
+  }) -join ''
+  $jTimeline = @(
+    @('33', 'Pentikost', 'Pentecost', "Kilise$($Apos)nin doğumu", 'The birth of the Church', 'neden-katoligiz.html'),
+    @('325', 'İznik Konsili', 'Council of Nicaea', 'İman ikrarının temeli', 'The foundation of the Creed', 'topraklarimizda-hristiyanlik.html#iznik'),
+    @('431', 'Efes Konsili', 'Council of Ephesus', "Meryem, Tanrı$($Apos)nın Annesi", 'Mary, Mother of God', 'topraklarimizda-hristiyanlik.html#iznik'),
+    @('1571', 'İnebahtı', 'Lepanto', "Tesbih Meryem$($Apos)i bayramı", 'The feast of Our Lady of the Rosary', 'tesbih-tarihi.html#inebahti'),
+    @('1858', 'Lourdes', 'Lourdes', "$([char]0x201C)Ben Lekesiz Gebe Kalış$($Apos)ım$([char]0x201D)", '“I am the Immaculate Conception”', 'mucizeler.html#lourdes'),
+    @('1917', 'Fatima', 'Fatima', 'Güneşin dansı', 'The dance of the sun', 'mucizeler.html#fatima')
+  )
+  $tlHtml = ($jTimeline | ForEach-Object { "<li><a class=`"hj-ev`" href=`"$($_[5])`"><span class=`"hj-y`">$($_[0])</span><span class=`"hj-tdot`" aria-hidden=`"true`"></span><span class=`"hj-tn`">$(L $_[1] $_[2])</span><span class=`"hj-td`">$(L $_[3] $_[4])</span></a></li>" }) -join ''
+  $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''
+  $lists = @"
+<div class="hm-journey">
+  <div class="hj-grid">
+    <section class="hj-path" aria-labelledby="hj-h"><p class="hj-kick">$(L 'Nereden başlamalı?' 'Where to begin?')</p><h2 class="hj-h" id="hj-h">$(L 'Kendi yolunuzu seçin' 'Choose your own path')</h2><ol class="hj-steps">$stepsHtml</ol></section>
+    <aside class="hj-aside">
+      <a class="hj-feat" href="tesbih-tarihi.html"><span class="hj-kick">$(L 'Öne çıkan yazı' 'Featured')</span><span class="hj-ft">$(L $RosaryHistory.title $RosaryHistory.en)</span><span class="hj-fd">$(L $RosaryHistory.lead $RosaryHistory.leadEn)</span><span class="hj-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
+      <figure class="hj-q"><blockquote><p>$(L '“Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”' '“You have made us for yourself, and our heart is restless until it rests in you.”')</p></blockquote><figcaption>$(L 'Aziz Augustinus, İtiraflar' 'St Augustine, Confessions')</figcaption></figure>
+      <div class="hj-saints"><p class="hj-kick">$(L 'En çok bilinen 20 aziz' 'The 20 best-known saints')</p><div>$gsHtml<a class="hj-all" href="azizler.html#buyuk-azizler">$(L 've diğerleri…' 'and more…')</a></div></div>
+    </aside>
+  </div>
+  <section class="hj-tl" aria-labelledby="hj-tlh"><p class="hj-kick">$(L 'İki bin yıl, altı durak' 'Two thousand years, six stops')</p><h2 class="hj-h" id="hj-tlh">$(L "Kilise$($Apos)nin tarihinden" "From the Church's history")</h2><ol class="hj-track">$tlHtml</ol></section>
+</div>
+"@
   # Phone: the icons, the search overlay and the three apps
   # The bar at the foot of the home screen, as in the App Store: a glyph and a name for each app,
   # the open one in a capsule that glides to it (script.js moves .hm-pill)

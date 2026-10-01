@@ -711,6 +711,48 @@
         shown at every width, that opens the full-site overlay menu.
         Plain DOM, no dependencies.
      --------------------------------------------------------------- */
+  // Desktop menus: Öğren, Tartış, Dua Et, Keşfet open on hover (a mouse), on click and from the
+  // keyboard; Escape or a click elsewhere closes them. A page with more inside opens its own list
+  // beside the panel the same way.
+  function initDeskNav() {
+    var tops = $$('.dn-top'); if (!tops.length) return;
+    var hover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    function setTop(li, on) {
+      li.classList.toggle('is-open', on);
+      var b = li.querySelector('.dn-btn'); if (b) b.setAttribute('aria-expanded', on ? 'true' : 'false');
+      if (!on) $$('.dn-item.is-open', li).forEach(function (x) { x.classList.remove('is-open'); });
+    }
+    function closeAll(except) { tops.forEach(function (t) { if (t !== except) setTop(t, false); }); }
+    tops.forEach(function (li) {
+      var btn = li.querySelector('.dn-btn'), timer = null;
+      btn.addEventListener('click', function () { var on = !li.classList.contains('is-open'); closeAll(li); setTop(li, on); });
+      li.addEventListener('mouseenter', function () { if (!hover.matches) return; clearTimeout(timer); closeAll(li); setTop(li, true); });
+      li.addEventListener('mouseleave', function () { if (!hover.matches) return; clearTimeout(timer); timer = setTimeout(function () { setTop(li, false); }, 220); });
+      li.addEventListener('focusout', function (e) { if (!li.contains(e.relatedTarget)) setTop(li, false); });
+      $$('.dn-item.has-sub', li).forEach(function (it) {
+        var t2 = null;
+        it.addEventListener('mouseenter', function () {
+          if (!hover.matches) return; clearTimeout(t2);
+          Array.prototype.forEach.call(it.parentNode.children, function (sib) { if (sib !== it) sib.classList.remove('is-open'); });
+          it.classList.add('is-open');
+        });
+        it.addEventListener('mouseleave', function () { if (!hover.matches) return; clearTimeout(t2); t2 = setTimeout(function () { it.classList.remove('is-open'); }, 200); });
+        it.addEventListener('focusin', function () {
+          Array.prototype.forEach.call(it.parentNode.children, function (sib) { if (sib !== it) sib.classList.remove('is-open'); });
+          it.classList.add('is-open');
+        });
+        it.addEventListener('focusout', function (e) { if (!it.contains(e.relatedTarget)) it.classList.remove('is-open'); });
+      });
+      li.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { setTop(li, false); btn.focus(); return; }
+        if (e.key === 'ArrowDown' && e.target === btn) { e.preventDefault(); setTop(li, true); var f = li.querySelector('.dn-panel a'); if (f) f.focus(); return; }
+        var links = $$('.dn-panel > .dn-list > .dn-item > a', li), i = links.indexOf(e.target);
+        if (i > -1 && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) { e.preventDefault(); var n = links[(i + (e.key === 'ArrowDown' ? 1 : links.length - 1)) % links.length]; n.focus(); }
+        if (i > -1 && e.key === 'ArrowRight') { var sub = e.target.parentNode.querySelector('.dn-sub a'); if (sub) { e.preventDefault(); sub.focus(); } }
+      });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.dn-top')) closeAll(null); });
+  }
   function initNav() {
     var sheet = $('#navsheet');
     if (!sheet) return;
@@ -3509,7 +3551,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
-    initSearch(); initReader(); initDrawer(); initNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });
 })();

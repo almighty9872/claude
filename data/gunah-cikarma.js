@@ -14,13 +14,13 @@ window.CONFESSION = /*JSON-START*/{
  "title": "Günah Çıkarma",
  "en": "Confession",
  "intro": "Günah çıkarma, Katolik inancında insanların en çok çekindiği ama en çok özgürleştiren kutsal sırdır. İsa bu sırrı, dirilişinin akşamı şu sözlerle başlattı: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip yalnızca bir aracıdır; asıl karşılaştığınız kişi Tanrı’nın kendisidir.",
- "introEn": "Confession is the most dreaded yet the most freeing sacrament of the Catholic faith. Jesus instituted it on the evening of the Resurrection with these words: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is only an instrument; the one you truly meet is God himself.",
+ "introEn": "Confession is the most feared and yet the most freeing sacrament of the Catholic faith. Jesus instituted it on the evening of the Resurrection with these words: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is only an instrument; the one you truly meet is God himself.",
  "steps": [
   {
    "title": "Vicdan Muhasebesi",
    "en": "Examination of Conscience",
    "text": "Sessiz bir anda, son günah çıkarmanızdan bu yana Tanrı’ya, başkalarına ve kendinize karşı nerede yanlış yaptığınızı düşünün. Aşağıdaki liste size yardımcı olur.",
-   "textEn": "In a quiet moment, think back over how you've failed God, others and yourself since your last confession. The list below helps."
+   "textEn": "In a quiet moment, think back over how you've failed God, others and yourself since your last confession. The list below can help."
   },
   {
    "title": "Günah Çıkarma Yerine Girmek",
@@ -44,7 +44,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "Rahibin Öğüdü ve Kefaret",
    "en": "Counsel and Penance",
    "text": "Rahip kısa bir öğüt verebilir ve size bir kefaret verir; bu genellikle bir dua ya da iyi bir davranıştır. Kefaret bir ceza değil, yeniden Tanrı’ya yönelmenin somut bir işaretidir.",
-   "textEn": "The priest may give brief advice, and gives you a penance, usually a prayer or a good deed. It isn't a punishment but a concrete sign of turning back to God."
+   "textEn": "The priest may give you some brief advice, and then gives you a penance, usually a prayer or a good deed. It isn't a punishment but a concrete sign of turning back to God."
   },
   {
    "title": "Pişmanlık Duası",
@@ -130,7 +130,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "4. Annene ve babana saygı göster",
    "titleEn": "4. Honor your father and your mother",
    "about": "Bu emir önce anne babamıza, sonra da ailede, işte ve toplumda sorumluluk taşıyan herkese saygı göstermemizi ister. Ama tek yönlü değildir: Anne babanın çocuğuna, işverenin çalışanına, yetişkin çocukların da yaşlanan anne babalarına karşı görevlerini de kapsar (KKK 2197-2233).",
-   "aboutEn": "It asks for respect first for our parents, then for everyone who carries responsibility in the family, at work and in society. But it runs both ways: it also covers the duties of parents to their children, of employers to their workers, and of grown children to their aging parents (CCC 2197-2233).",
+   "aboutEn": "It asks us to respect first our parents, then everyone who holds responsibility in the family, at work and in society. But it runs both ways: it also covers the duties of parents to their children, of employers to their workers, and of grown children to their aging parents (CCC 2197-2233).",
    "items": [
     "Anne babama kaba, saygısız ya da nankör davrandım mı? Onları aramayı, ziyaret etmeyi ihmal ettim mi?",
     "Yaşlı ya da hasta aile büyüklerimle yeterince ilgilendim mi?",
@@ -140,7 +140,7 @@ window.CONFESSION = /*JSON-START*/{
    ],
    "itemsEn": [
     "Have I been rude, disrespectful or ungrateful to my parents? Have I neglected to call or visit them?",
-    "Have I given aging or sick family members the care they need?",
+    "Have I given elderly or sick family members the care they need?",
     "If I am a parent, have I made time for my children and given them the faith and a good example?",
     "Have I treated my spouse and family with patience and love?",
     "Have I respected my teachers, my superiors and the law, as long as they don’t ask me to act against my conscience?"
@@ -192,7 +192,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "7. Çalmayacaksın",
    "titleEn": "7. You shall not steal",
    "about": "Bu emir, başkasının malına ve emeğine saygı göstermemizi ister. Hırsızlık yalnızca bir şey çalmak değildir: İşte kaytarıp maaşını tam almak, müşteriyi kandırmak, vergi kaçırmak, borcunu ödememek, korsan yazılım ya da film kullanmak ve bulduğu bir şeyi sahibine vermemek de buraya girer. Yoksullara yardım etmek ve doğayı korumak da bu emrin parçasıdır (KKK 2401-2449).",
-   "aboutEn": "It asks for respect for other people’s property and work. Stealing isn’t only taking something: idling at work while taking full pay, cheating customers, tax evasion, not paying debts, using pirated software or films, and keeping something you found also belong here. Helping the poor and caring for creation are part of it too (CCC 2401-2449).",
+   "aboutEn": "It asks for respect for other people’s property and work. Stealing isn’t only taking things: slacking off at work while taking full pay, cheating customers, tax evasion, not paying debts, using pirated software or films, and keeping something you found also belong here. Helping the poor and caring for creation are part of it too (CCC 2401-2449).",
    "items": [
     "Başkasının bir eşyasını izinsiz aldım mı? Ödünç aldığım bir şeyi geri vermedim ya da borcumu ödemedim mi?",
     "İşte kaytarıp mesaiyi boşa geçirdim mi? İş yerinin malzemelerini kendi işim için kullandım mı?",
@@ -214,7 +214,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "8. Komşuna karşı yalan yere tanıklık etmeyeceksin",
    "titleEn": "8. You shall not bear false witness against your neighbor",
    "about": "Bu emir, doğru sözlü olmamızı ister. Yalan söylemek, iftira atmak ve dedikodu yapmak, yani birinin gizli kusurlarını gereksiz yere başkalarına anlatmak bu emre aykırıdır. Birini dinlemeden yargılamak, sır saklamamak ve sosyal medyada doğruluğundan emin olmadığımız şeyleri yaymak da buraya girer (KKK 2475-2492).",
-   "aboutEn": "It asks for respect for the truth. Lying, slander and gossip, that is, needlessly telling others someone’s real but hidden faults, go against it. Judging someone without hearing them out, revealing secrets and spreading unverified things on social media belong here too (CCC 2475-2492).",
+   "aboutEn": "It asks for respect for the truth. Lying, slander and detraction (needlessly telling others about someone’s real but hidden faults) go against it. Judging someone without hearing them out, revealing secrets and spreading unverified claims on social media belong here too (CCC 2475-2492).",
    "items": [
     "Yalan söyledim mi, gerçeği çarpıttım ya da abarttım mı?",
     "Birinin arkasından konuşup kusurlarını başkalarına anlattım mı?",
@@ -267,7 +267,7 @@ window.CONFESSION = /*JSON-START*/{
    "q": "Ne söyleyeceğimi unutursam ya da karıştırırsam ne olur?",
    "qEn": "What if I forget what to say or get confused?",
    "a": "Sorun değil. Bir şeyi unutursanız rahip hatırlatır, gerekirse sorular sorarak size yol gösterir. Söyleyeceklerinizi önceden bir kâğıda ya da telefonunuza yazıp okuyabilirsiniz. Önemli olan kusursuz konuşmak değil, içten olmaktır.",
-   "aEn": "It's fine. If you forget, the priest will prompt you and, if needed, guide you with questions. You can write down what you want to say on paper or your phone and read it; what matters isn't a flawless speech but sincerity."
+   "aEn": "That's fine. If you forget, the priest will prompt you and, if needed, guide you with questions. You can write down what you want to say on paper or your phone and read it; what matters isn't a flawless speech but sincerity."
   },
   {
    "id": "cok-uzun-zaman-oldu",
@@ -295,7 +295,7 @@ window.CONFESSION = /*JSON-START*/{
    "q": "Rahip beni yargılayacak mı, kızacak mı?",
    "qEn": "Will the priest judge me or get angry?",
    "a": "Hayır. Rahip kendi adına değil, Mesih’in kişiliğinde (in persona Christi) hareket eder; duyduğunuz bağışlama Mesih’in bağışlamasıdır. Deneyimli bir rahibi hiçbir şey şaşırtmaz. Çoğu rahip, gösterdiğiniz cesarete içtenlikle sevinir.",
-   "aEn": "No. The priest acts not in his own name but in the person of Christ (in persona Christi); the forgiveness you hear is Christ's. Nothing surprises an experienced priest, and most will be genuinely glad of your courage."
+   "aEn": "No. The priest acts not in his own name but in the person of Christ (in persona Christi); the forgiveness you hear is Christ's. Nothing surprises an experienced priest, and most will be genuinely glad that you had the courage to come."
   },
   {
    "id": "kac-dakika-surer",

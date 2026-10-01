@@ -48,7 +48,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objection": "Ama farklı toplumlar farklı ahlak kuralları benimsedi.",
      "objectionEn": "But different societies have held different moral codes.",
      "reply": "Farklılıkların çoğu, olaylara farklı bakmaktan doğar; neredeyse her kültür cesareti ve adaleti över, ihaneti kınar. Köleliğin kaldırılmasına “ilerleme” dememiz de, ölçü aldığımız gerçek bir iyinin var olduğunu gösterir.",
-     "replyEn": "The differences mostly come from disagreements about facts; nearly every culture praises courage and justice and condemns betrayal. And calling the end of slavery “progress” assumes a real good we measure by."
+     "replyEn": "The differences mostly come from disagreements about facts; nearly every culture praises courage and justice and condemns betrayal. And calling the end of slavery “progress” assumes a real standard of good that we measure it by."
     },
     {
      "id": "evrenin-baslangici",
@@ -109,7 +109,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "q": "İyi bir Tanrı varsa neden bu kadar acı var?",
      "qEn": "If a good God exists, why is there so much suffering?",
      "lede": "Bu, en dürüst ve en ağır sorudur. Hristiyanlık ona bir formülle değil, çarmıhla cevap verir.",
-     "ledeEn": "This is the most honest and heaviest question; Christianity answers it not with a formula but with a cross.",
+     "ledeEn": "This is the hardest and most honest question; Christianity answers it not with a formula but with a cross.",
      "points": [
       "Tanrı bize gerçek bir özgürlük verdi, çünkü zorla sevgi olmaz. Kötülüklerin çoğu, bu özgürlüğün kötüye kullanılmasından doğar.",
       "Tanrı olmadan “kötülük” kelimesi bile anlamını yitirir: kötülüğe duyduğumuz öfke, gerçek bir iyinin var olduğunu varsayar.",
@@ -134,7 +134,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "q": "Tanrı’ya gerçekten ihtiyacım var mı?",
      "qEn": "Do I really need God?",
      "lede": "Hiçbir başarı, zenginlik ya da ilişki kalbimizi tam olarak doyurmaz. Bu, başka bir şey için yaratıldığımızın işaretidir.",
-     "ledeEn": "No success, wealth or relationship fully satisfies the heart; a sign we were made for something more.",
+     "ledeEn": "No success, wealth or relationship fully satisfies the heart, a sign that we were made for something more.",
      "points": [
       "Açlık yemeğin, susuzluk da suyun var olduğunu gösterir. Doğal arzularımızın bir karşılığı vardır.",
       "C. S. Lewis: “İçimde bu dünyanın karşılayamayacağı bir arzu buluyorsam, en olası açıklama başka bir dünya için yaratılmış olmamdır.”",
@@ -148,7 +148,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objection": "Bu sadece bir teselli ihtiyacı; insanlar dini bu yüzden uydurur.",
      "objectionEn": "That’s just a need for comfort; that’s why people invent religion.",
      "reply": "Susamamız, suyun bir hayal olduğunu kanıtlamaz. Üstelik Hristiyanlık rahat bir teselli değildir: Düşmanı sevmeyi ve kendini feda etmeyi ister. Kendini iyi hissetmek için din uyduran biri bu kadar zor bir yolu seçmezdi.",
-     "replyEn": "Being thirsty doesn’t prove water is an illusion. And Christianity is no easy comfort: it asks us to love our enemies and give ourselves up; someone inventing a religion to feel good wouldn’t pick one this hard."
+     "replyEn": "Being thirsty doesn’t prove water is an illusion. And Christianity is no easy comfort: it asks us to love our enemies and to give ourselves for others; someone inventing a religion to feel good wouldn’t pick one this hard."
     }
    ]
   },
@@ -164,7 +164,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "title": "Tarihteki İsa",
      "en": "The Historical Jesus",
      "hook": "İsa’nın yaşadığından inanmayan tarihçiler bile şüphe etmez.",
-     "hookEn": "Even historians who don’t believe do not doubt that Jesus lived.",
+     "hookEn": "Even historians who aren’t believers don’t doubt that Jesus lived.",
      "q": "İsa gerçekten yaşadı mı, yoksa bir efsane mi?",
      "qEn": "Did Jesus really live, or is he a legend?",
      "lede": "İsa’nın yaşadığı ve Pilatus döneminde çarmıha gerildiği, tarihçilerin neredeyse hepsinin kabul ettiği bir gerçektir.",
@@ -207,14 +207,14 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objection": "Belki bu sözleri ona sonraki kuşaklar yakıştırdı.",
      "objectionEn": "Maybe later generations put these words in his mouth.",
      "reply": "Pavlus, İsa’nın ölümünden sonraki otuz yıl içinde yazdığı mektuplarda O’ndan, Tanrı olarak tapınılan Rab diye söz eder (Filipililer 2:6-11). Efsanelerin oluşması için kuşaklar gerekir. Burada ise tanıklar henüz hayattayken, tek Tanrı inancına en sıkı bağlı halkın içinde bir insana tapınılmaya başlanıyor.",
-     "replyEn": "Paul, writing less than thirty years after Jesus’ death, already speaks of him as the Lord worshipped as God (Philippians 2:6-11). Legends take generations; here a man is worshipped while eyewitnesses are alive, among the people most strictly devoted to the one God."
+     "replyEn": "Paul, writing less than thirty years after Jesus’ death, already speaks of him as the Lord worshipped as God (Philippians 2:6-11). Legends take generations; here a man is worshipped while eyewitnesses are still alive, and by the people most strictly devoted to the one God."
     },
     {
      "id": "dirilis",
      "title": "Diriliş",
      "en": "The Resurrection",
      "hook": "Korkup saklanan öğrenciler, bildikleri bir yalan uğruna ölmezdi.",
-     "hookEn": "Frightened disciples in hiding would not die for a lie they knew.",
+     "hookEn": "Frightened disciples in hiding would not die for something they knew was a lie.",
      "q": "Ölümden dirilen bir adama nasıl inanılabilir?",
      "qEn": "How can anyone believe a man rose from the dead?",
      "lede": "Hristiyanlık, sınanabilir tarihsel bir iddiaya dayanır: “Mesih dirilmediyse imanınız boştur” (1 Korintliler 15:17).",
@@ -227,12 +227,12 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "pointsEn": [
       "Even most skeptical historians accept that Jesus died on the cross and was buried, that his tomb was found empty, and that his disciples sincerely believed they had seen him risen.",
       "The creed in 1 Corinthians 15:3-8 goes back to within a few years of the event and names more than five hundred witnesses.",
-      "Frightened, hiding disciples were within weeks proclaiming the resurrection openly in the same city; the skeptic James and the persecutor Paul joined them."
+      "Within weeks, the same frightened disciples who had been hiding were openly proclaiming the resurrection in the same city; the skeptic James and the persecutor Paul joined them."
      ],
      "objection": "Belki halüsinasyon gördüler ya da cesedi çaldılar.",
      "objectionEn": "Maybe they hallucinated, or stole the body.",
      "reply": "Beş yüz kişi aynı halüsinasyonu görmez; halüsinasyon da mezarı boşaltmaz. Cesedi çalmış olsalardı, bildikleri bir yalan uğruna ölüme gitmiş olurlardı. Düşmanları ise cesedi göstererek her şeyi bitirebilirdi, ama bunu hiçbir zaman yapamadılar.",
-     "replyEn": "Five hundred people don’t share one hallucination, and a hallucination doesn’t empty a tomb. Had they stolen the body, they would have died for a lie they knew; and their enemies could have ended it all by producing the body, which they never did."
+     "replyEn": "Five hundred people don’t share one hallucination, and a hallucination doesn’t empty a tomb. Had they stolen the body, they would have died for something they knew was a lie; and their enemies could have ended it all by producing the body, which they never did."
     }
    ]
   },
@@ -264,9 +264,9 @@ window.WHY_CATHOLIC = /*JSON-START*/{
       "Today’s pope is the latest link in a chain of more than 260 that began with Peter and has held for two thousand years."
      ],
      "objection": "Kilise, İsa’nın sade mesajını sonradan kurumsallaştırdı.",
-     "objectionEn": "The Church institutionalized Jesus’ simple message later.",
+     "objectionEn": "The Church later turned Jesus’ simple message into an institution.",
      "reply": "Tam tersine: Kurum, Yeni Ahit’ten önce vardı. İsa kitap yazmadı; on iki havari seçti ve onlara yetki verdi. Antakyalı İgnatius, yaklaşık MS 107’de “Katolik Kilise” ifadesini kullanan ilk kişi oldu.",
-     "replyEn": "The reverse: the institution came before the New Testament; Jesus wrote no book, but chose twelve apostles and gave them authority. Ignatius of Antioch, around AD 107, was the first to use the phrase “the Catholic Church”."
+     "replyEn": "It was the other way around: the institution came before the New Testament; Jesus wrote no book, but chose twelve apostles and gave them authority. Ignatius of Antioch, around AD 107, was the first to use the phrase “the Catholic Church”."
     },
     {
      "id": "kutsal-kitabi-kim-topladi",
@@ -293,7 +293,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objection": "Böylece Kilise kendini Kutsal Kitap’ın üstüne koyuyor.",
      "objectionEn": "So the Church puts itself above the Bible.",
      "reply": "Kilise kendini Kutsal Kitap’ın efendisi değil, hizmetkârı sayar. Onu korur ve açıklar, ama değiştiremez. Bunu, gerçek bir tabloyu sahtelerinden ayırt eden bir müzeye benzetebiliriz: Tabloyu müze yapmadı, ama onu tanıyıp koruyacak olan odur.",
-     "replyEn": "The Church sees itself as the servant of Scripture, not its master; it guards and explains it but cannot change it. Like a museum that tells a painting from its forgeries: it didn’t paint it, but it can recognize and protect it."
+     "replyEn": "The Church sees itself as the servant of Scripture, not its master; it guards and explains it but cannot change it. It is like a museum that can tell an original painting from its forgeries: it didn’t paint it, but it can recognize and protect it."
     },
     {
      "id": "kutsal-sirlar",
@@ -320,14 +320,14 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "objection": "Bu bir tür büyü değil mi?",
      "objectionEn": "Isn’t this a kind of magic?",
      "reply": "Büyü, insanın doğaüstü güçleri kendi isteğine boyun eğdirme çabasıdır. Kutsal sırlarda ise insan hiçbir şeyi kontrol etmez; Tanrı kendi vaadini yerine getirir. Kutsal sırların etkisi rahibin kutsallığına değil, Mesih’in sözüne dayanır.",
-     "replyEn": "Magic is an attempt to bend supernatural powers to one’s will; in the sacraments no one controls anything, God keeps his own promise. Their power rests not on the priest’s holiness but on Christ’s word."
+     "replyEn": "Magic is an attempt to bend supernatural powers to one’s will; in the sacraments no one controls God; God keeps his own promise. Their power rests not on the priest’s holiness but on Christ’s word."
     },
     {
      "id": "skandallar",
      "title": "Kilise’deki Skandallar",
      "en": "Scandals in the Church",
      "hook": "Havarilerden biri de haindi; Kilise yine de ayakta.",
-     "hookEn": "One of the apostles was a traitor too; the Church still stands.",
+     "hookEn": "Even one of the apostles was a traitor; the Church still stands.",
      "q": "Bu kadar skandal varken Kilise nasıl kutsal olabilir?",
      "qEn": "How can the Church be holy with so many scandals?",
      "lede": "Kilise’nin kutsallığı üyelerinden değil, Mesih’ten gelir. Kilise azizler için bir müze değil, günahkârlar için bir hastanedir.",
@@ -471,12 +471,12 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "pointsEn": [
       "Heaven is eternal union with God, the source of all goodness and love.",
       "Hell is the result of freely and stubbornly choosing to stay away from God; as C. S. Lewis put it, its doors are locked from the inside.",
-      "Purgatory is where those who die in God’s grace but not yet fully purified are made ready for heaven; not a punishment but love brought to completion (2 Maccabees 12:45)."
+      "Purgatory is where those who die in God’s grace but are not yet fully purified are made ready for heaven; not a punishment but love brought to completion (2 Maccabees 12:45)."
      ],
      "objection": "Sonsuz bir ceza, kısa bir hayatta işlenen günahlarla orantısız değil mi?",
      "objectionEn": "Isn’t eternal punishment out of proportion to the sins of a finite life?",
      "reply": "Cehennem bir intikam değildir; Tanrı’yı sonuna kadar reddeden bir iradenin bu reddi sürdürmesidir. Tanrı kapıyı son ana kadar açık tutar ve kimsenin kaybolmasını istemez (1 Timoteos 2:4).",
-     "replyEn": "Hell isn’t revenge but a will that rejects God to the end continuing in that rejection. God keeps the door open to the last moment and wants no one to be lost (1 Timothy 2:4)."
+     "replyEn": "Hell isn’t revenge; it is a will that rejects God to the end, remaining in that rejection. God keeps the door open to the last moment and wants no one to be lost (1 Timothy 2:4)."
     }
    ]
   }
