@@ -509,6 +509,8 @@ $Ill = @{
   'monstrance'= '<path d="M48 40a12 12 0 1 0 24 0a12 12 0 1 0-24 0"/><path d="M60 16v-6M60 64v6M36 40h-6M84 40h6M43 23l-4-4M77 23l4-4M43 57l-4 4M77 57l4 4"/><path d="M60 70v24"/><path d="M53 80h14"/><path d="M42 104q18-14 36 0z"/>'
   'cross'     = '<path d="M60 16v88"/><path d="M38 42h44"/><path d="M24 30l8 6M96 30l-8 6"/><path d="M18 62h10M102 62H92"/><path d="M26 92l8-5M94 92l-8-5"/>'
   'shell'     = '<path d="M18 72a42 42 0 0 1 84 0"/><path d="M18 72l42 20 42-20"/><path d="M60 92L26 50M60 92L38 36M60 92L52 29M60 92L68 29M60 92L82 36M60 92L94 50"/><path d="M60 98c-3 4-3 7 0 8 3-1 3-4 0-8z"/><path d="M48 104c-2 3-2 5 0 6 2-1 2-3 0-6zM72 104c-2 3-2 5 0 6 2-1 2-3 0-6z"/>'
+  'trinity'   = '<path d="M38 46a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M21 76a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M55 76a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M60 58l-7 12h14z"/>'
+  'shield'    = '<path d="M60 14l38 14v26c0 26-16 44-38 52-22-8-38-26-38-52V28z"/><path d="M60 34v52M42 52h36"/><path d="M60 22v-8"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
 }
 function Ill-Art([string]$name) {
@@ -1703,13 +1705,14 @@ $faqCats = ($FaqData.categories | ForEach-Object {
         "$(TB (Blocks $_.a) (Blocks $_.aEn))</div>" +
     "</details>"
   }) -join "`n"
-  "<section class=`"faq-cat`" id=`"$($cat.id)`">" +
-    "<h2 class=`"section-title`"><span class=`"label`">$($script:FaqN)</span>$(T (Inline $cat.title) $cat.en)</h2>" +
-    (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") +
-    "<div class=`"faq-list`">$qs</div></section>"
+  $ma = @{ 'teolojik-yanilgilar' = @('trinity', 'blue'); 'kutsal-sirlar-uygulamalar' = @('shell', 'green'); 'otorite-ogretiler' = @('keys', 'gold'); 'akla-gelen-itirazlar' = @('oillamp', 'purple'); 'savunma-ve-guncel-sorular' = @('shield', 'red') }[$cat.id]
+  if (-not $ma) { $ma = @('candle', 'gold') }
+  $cnt = @($cat.items).Count
+  Ill-Sec -Id $cat.id -Art $ma[0] -Tone $ma[1] -Class 'faq-cat' -Kick (T "$cnt soru" "$cnt questions") -Head (T (Inline $cat.title) $cat.en) `
+    -Sub (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") -Body "<div class=`"faq-list`">$qs</div>"
 }) -join "`n"
 $sssBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow ill-page">
   $(Crumbs 'Sıkça Sorulan Sorular')
   <header class="page-head center">$(Page-Ico $IcoQuestion)<h1>$(T (Inline $FaqData.title) $FaqData.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($FaqData.en)</p>")</header>
   <nav class="faq-toc is-sticky" $(TA 'aria-label' 'Kategoriler' 'Categories')><ul>$faqToc</ul></nav>

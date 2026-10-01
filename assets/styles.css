@@ -3409,6 +3409,9 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .ill-sec .mass-lead { margin: 0 0 1.1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text-soft); }
 .ill-sec .mass-text { border-top: 1px solid var(--border); }
 .ill-sec .mass-text .kk-sec-body { padding-bottom: 1rem; }
+.ill-sec .faq-item[open] > summary .faq-q, .ill-sec .faq-item > summary:hover .faq-q { color: var(--tone); }
+.ill-sec .faq-item[open] > summary .chev { color: var(--tone); }
+.ill-sec .faq-item:hover, .ill-sec .faq-item[open] { border-color: color-mix(in srgb, var(--tone) 40%, transparent); }
 /* a page made of them: wide enough for the drawing column beside the text */
 .wrap.ill-page { max-width: 880px; }
 @media (max-width: 899px) {
