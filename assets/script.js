@@ -1049,12 +1049,24 @@
           Enter or an index chip pins it. The card content is the
           server-rendered <article class="amap-card"> for that place.
      --------------------------------------------------------------- */
+  /* Illustrated sections (Ill-Sec in build.ps1): each section's line drawing draws itself as the section
+     scrolls into view (without IntersectionObserver, or with reduced motion, the CSS simply shows it whole) */
+  function initDrawings() {
+    var secs = $$('.ill-sec');
+    if (!secs.length || !window.IntersectionObserver) return;
+    document.documentElement.classList.add('ill-draw');
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); obs.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -20% 0px' });
+    secs.forEach(function (s) { obs.observe(s); });
+  }
+
   function initAnatoliaMap() {
     var root = $('.amap');
     if (!root) return;
-    var svg = $('.amap-svg', root), frame = $('.amap-frame', root), scroller = $('.amap-scroll', root);
+    var svg = $('.amap-svg', root), frame = $('.amap-frame', root);
     var pop = $('.amap-pop', root), body = $('.amap-pop-body', pop), closeBtn = $('.amap-pop-close', pop);
-    var sites = {}, cards = {}, chips = $$('.amap-chip', root), shown = null, pinned = false, returnFocus = null, queued = false, lastX = 0, lastY = 0;
+    var sites = {}, cards = {}, shown = null, pinned = false, returnFocus = null, queued = false, lastX = 0, lastY = 0;
     var sheetMq = window.matchMedia ? window.matchMedia('(max-width: 640px)') : { matches: false };
     $$('.amap-site', svg).forEach(function (g) { sites[g.getAttribute('data-site')] = g; });
     $$('.amap-card', root).forEach(function (c) { cards[c.getAttribute('data-site')] = c; });
@@ -1068,7 +1080,6 @@
       pop.className = 'amap-pop ' + ((card.className.match(/\bc-\w+/) || [''])[0]);
       if (shown && sites[shown]) sites[shown].classList.remove('is-active');
       sites[id].classList.add('is-active');
-      chips.forEach(function (c) { if (c.getAttribute('data-site') === id) c.setAttribute('aria-current', 'true'); else c.removeAttribute('aria-current'); });
       shown = id;
     }
     /* x, y: viewport point to sit beside; flips left/up near the screen edges, like placePanel() */
@@ -1088,7 +1099,6 @@
       pop.hidden = true;
       pop.classList.remove('is-pinned', 'is-sheet');
       if (shown && sites[shown]) sites[shown].classList.remove('is-active');
-      chips.forEach(function (c) { c.removeAttribute('aria-current'); });
       shown = null; pinned = false;
     }
     function hover(id, x, y) {
@@ -1132,11 +1142,6 @@
       });
       return best;
     }
-    /* Keep a pinned place in view inside the sideways-scrolling map (phones) */
-    function reveal(id) {
-      var g = sites[id], sr = scroller.getBoundingClientRect(), r = g.getBoundingClientRect();
-      if (r.left < sr.left + 24 || r.right > sr.right - 24) scroller.scrollLeft += (r.left + r.width / 2) - (sr.left + sr.width / 2);
-    }
 
     svg.addEventListener('pointerover', function (e) {
       if (e.pointerType !== 'mouse') return;
@@ -1170,38 +1175,31 @@
       pin(g.getAttribute('data-site'));
       closeBtn.focus();
     });
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function (e) {
-        e.preventDefault();
-        var id = chip.getAttribute('data-site'), fr = frame.getBoundingClientRect();
-        if (fr.top < 0 || fr.bottom > window.innerHeight) frame.scrollIntoView({ block: 'center', behavior: 'auto' });
-        reveal(id);
-        returnFocus = chip;
-        pin(id);
-        closeBtn.focus();
-      });
-    });
-    /* pointing at a place (or a category heading) in the list lights it up on the map and dims the rest */
-    function light(ids) {
-      Object.keys(sites).forEach(function (k) { sites[k].classList.toggle('is-lit', ids.indexOf(k) > -1); });
-      svg.classList.toggle('has-lit', ids.length > 0);
+    /* the small group list in the map's corner: pointing at a group lights up its places and dims the rest;
+       a click (or tap) keeps it lit until clicked again */
+    var legend = $$('.amap-lg', root), held = null;
+    function light(cat) {
+      Object.keys(sites).forEach(function (k) { sites[k].classList.toggle('is-lit', !!cat && sites[k].classList.contains('c-' + cat)); });
+      svg.classList.toggle('has-lit', !!cat);
+      legend.forEach(function (b) { b.classList.toggle('is-lit', b.getAttribute('data-cat') === cat); });
     }
-    $$('.amap-cat', root).forEach(function (cat) {
-      var mine = $$('.amap-chip', cat).map(function (c) { return c.getAttribute('data-site'); });
-      var head = $('.amap-cat-h', cat);
-      if (head) { head.addEventListener('mouseenter', function () { light(mine); }); head.addEventListener('mouseleave', function () { light([]); }); }
-    });
-    chips.forEach(function (chip) {
-      var id = [chip.getAttribute('data-site')];
-      chip.addEventListener('mouseenter', function () { light(id); });
-      chip.addEventListener('focus', function () { light(id); });
-      chip.addEventListener('mouseleave', function () { light([]); });
-      chip.addEventListener('blur', function () { light([]); });
+    legend.forEach(function (b) {
+      var cat = b.getAttribute('data-cat');
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('mouseenter', function () { light(cat); });
+      b.addEventListener('focus', function () { light(cat); });
+      b.addEventListener('mouseleave', function () { light(held); });
+      b.addEventListener('blur', function () { light(held); });
+      b.addEventListener('click', function () {
+        held = held === cat ? null : cat;
+        legend.forEach(function (o) { o.setAttribute('aria-pressed', String(o.getAttribute('data-cat') === held)); });
+        light(held);
+      });
     });
     closeBtn.addEventListener('click', close);
     pop.addEventListener('click', function (e) { if (e.target.closest('.amap-c-more')) hide(); });
     document.addEventListener('click', function (e) {
-      if (pinned && !pop.contains(e.target) && !svg.contains(e.target) && chips.indexOf(e.target) === -1) hide();
+      if (pinned && !pop.contains(e.target) && !svg.contains(e.target)) hide();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) close(); });
     window.addEventListener('resize', function () { if (!pop.hidden) hide(); });
@@ -2467,6 +2465,7 @@
     },
     'gunah-cikarma.html': function (m) {
       $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
+      $$('.ill-qa[id]', m).forEach(function (q) { avNode(q, avHead($('.ill-q', q))); });
       var a = $('#muhur-sehitleri', m); if (a) avNode(a, pmap(avText($('.footnote-label', a)), function (x) { return x.replace(/^\*\s*/, ''); }));
     },
     'ekler.html': function (m) {
@@ -3601,7 +3600,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
-    initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initSaints(); initMass(); initHome(); initPrintExpand();
+    initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });
 })();

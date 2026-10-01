@@ -477,6 +477,31 @@ $IcoQuestion = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 $IcoSparkle  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M12 2c.9 4.6 3.1 6.8 7.7 7.7-4.6.9-6.8 3.1-7.7 7.7-.9-4.6-3.1-6.8-7.7-7.7C8.9 8.8 11.1 6.6 12 2Z"/></svg>'
 $IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15l6-5.5"/></svg>'
 function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" }
+
+# ---- Illustrated sections: a page section with a line drawing of its own beside it (in the section's
+# colour, "tone"), a small kicker over a large heading. The drawing draws itself as the section scrolls
+# into view (initDrawings in script.js); without JavaScript or with reduced motion it is simply shown.
+# Every drawing is plain strokes on a 120 x 120 grid, one path per stroke so they draw one after another.
+$Ill = @{
+  'ship'      = '<path d="M18 80h84l-9 13H27z"/><path d="M60 80V22"/><path d="M62 26l28 46H62z"/><path d="M58 30L36 70h22"/><path d="M60 22l11 4-11 4"/><path d="M8 104q8-6 16 0t16 0 16 0 16 0 16 0 16 0 16 0"/>'
+  'lampstand' = '<path d="M60 40v56"/><path d="M48 40v4a12 12 0 0 0 24 0v-4"/><path d="M36 40v4a24 24 0 0 0 48 0v-4"/><path d="M24 40v4a36 36 0 0 0 72 0v-4"/><path d="M44 104q16-12 32 0z"/><path d="M24 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/><path d="M36 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/><path d="M48 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/><path d="M60 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/><path d="M72 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/><path d="M84 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/><path d="M96 36c-3-4-3-8 0-12 3 4 3 8 0 12z"/>'
+  'church'    = '<path d="M14 98h92"/><path d="M24 98V60h72v38"/><path d="M36 60a24 24 0 0 1 48 0"/><path d="M60 36V20M53 26h14"/><path d="M54 98V84a6 6 0 0 1 12 0v14"/><path d="M33 80v-8a4 4 0 0 1 8 0v8M79 80v-8a4 4 0 0 1 8 0v8"/><path d="M18 60l42-6 42 6"/>'
+  'book'      = '<path d="M14 88q23-10 46 0 23-10 46 0V46q-23-10-46 0-23-10-46 0z"/><path d="M60 46v42"/><path d="M24 56q14-5 28 0M24 66q14-5 28 0M24 76q14-5 28 0"/><path d="M68 56q14-5 28 0M68 66q14-5 28 0"/><path d="M86 18q18-8 22-4-2 10-20 24l-10 4z"/><path d="M78 42l-8 14"/>'
+  'keys'      = '<path d="M22 30a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path d="M39 37l55 55"/><path d="M86 84l8-8M77 75l6-6"/><path d="M78 30a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path d="M81 37L26 92"/><path d="M34 84l-8-8M43 75l-6-6"/>'
+  'tablets'   = '<path d="M18 102V42a19 19 0 0 1 38 0v60z"/><path d="M64 102V42a19 19 0 0 1 38 0v60z"/><path d="M28 50h18M28 60h18M28 70h18"/><path d="M28 80h18M28 90h18"/><path d="M74 50h18M74 60h18M74 70h18"/><path d="M74 80h18M74 90h18"/>'
+  'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
+}
+function Ill-Art([string]$name) {
+  if (-not $Ill[$name]) { return '' }
+  "<div class=`"ill-art`" aria-hidden=`"true`"><svg viewBox=`"0 0 120 120`">$($Ill[$name] -replace '<path ', '<path pathLength="1" ' -replace '/>', '></path>')</svg></div>"
+}
+# -Kick and -Sub may be empty; -Body is the section's own content, under the heading
+function Ill-Sec([string]$Id, [string]$Art, [string]$Tone, [string]$Kick, [string]$Head, [string]$Body, [string]$Sub = '', [string]$HeadId = '', [string]$Class = '') {
+  $k = if ($Kick) { "<p class=`"ill-kick`">$Kick</p>" } else { '' }
+  $hid = if ($HeadId) { " id=`"$HeadId`"" } else { '' }
+  $lab = if ($HeadId) { " aria-labelledby=`"$HeadId`"" } else { '' }
+  "<section id=`"$Id`" class=`"ill-sec tone-$Tone$(if ($Class) { " $Class" })`"$lab>$(Ill-Art $Art)<div class=`"ill-body`">$k<h2 class=`"ill-h`"$hid>$Head</h2>$Sub$Body</div></section>"
+}
 # Jerusalem cross: large cross potent in the centre, a small cross in each quadrant (100x100 grid)
 $CrossShapes = '<rect x="44" y="12" width="12" height="76"/><rect x="12" y="44" width="76" height="12"/><rect x="33" y="8" width="34" height="9"/><rect x="33" y="83" width="34" height="9"/><rect x="8" y="33" width="9" height="34"/><rect x="83" y="33" width="9" height="34"/><rect x="23.5" y="18" width="5" height="16"/><rect x="18" y="23.5" width="16" height="5"/><rect x="71.5" y="18" width="5" height="16"/><rect x="66" y="23.5" width="16" height="5"/><rect x="23.5" y="66" width="5" height="16"/><rect x="18" y="71.5" width="16" height="5"/><rect x="71.5" y="66" width="5" height="16"/><rect x="66" y="71.5" width="16" height="5"/>'
 $Logo = '<svg class="logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
@@ -1791,8 +1816,9 @@ $examenFolds = ($Confession.examenGroups | ForEach-Object {
   '<details class="kk-sec" id="' + $slug + '"><summary><h3>' + $title + '</h3>' + $IcoChevLg + '</summary><div class="kk-sec-body">' +
     '<p class="examen-about">' + (T (Inline $group.about) (Inline $group.aboutEn)) + '</p>' + $lists + $note + '</div></details>'
 }) -join "`n"
+# the questions are short and all worth reading, so they are simply listed open, question over answer
 $confessionFaq = ($Confession.faq | ForEach-Object {
-  '<details class="kk-sec" id="' + $_.id + '"><summary><h3>' + (T (Inline $_.q) (Inline $_.qEn)) + '</h3>' + $IcoChevLg + '</summary><div class="kk-sec-body"><p>' + (T (Inline $_.a) (Inline $_.aEn)) + '</p></div></details>'
+  '<div class="ill-qa" id="' + $_.id + '"><h3 class="ill-q">' + (T (Inline $_.q) (Inline $_.qEn)) + '</h3><p class="ill-a">' + (T (Inline $_.a) (Inline $_.aEn)) + '</p></div>'
 }) -join "`n"
 $sealMartyrsItems = ($Confession.sealMartyrs.items | ForEach-Object { '<li><strong>' + (Inline $_.name) + '</strong> ' + (Inline $_.detail) + '</li>' }) -join "`n"
 $sealMartyrsItemsEn = ($Confession.sealMartyrs.itemsEn | ForEach-Object { '<li><strong>' + (Inline $_.name) + '</strong> ' + (Inline $_.detail) + '</li>' }) -join "`n"
@@ -1801,27 +1827,17 @@ $sealMartyrsHtml = '<aside class="footnote-block" id="muhur-sehitleri"><p class=
 $confessionDoors = '<a class="why-door" href="#adim-adim"><span class="why-door-t">' + (T 'İlk kez ya da uzun bir aradan sonra gidiyorum' 'I''m going for the first time, or for the first time in a long time') + '</span><span class="why-door-s">' + (T 'Adım adım neler olacağını görün' 'See what happens, step by step') + '</span>' + $IcoArrowR + '</a>' +
   '<a class="why-door" href="#vicdan-muhasebesi"><span class="why-door-t">' + (T 'Hazırlanmak istiyorum' 'I want to prepare') + '</span><span class="why-door-s">' + (T "On Emir$($Apos)e göre vicdan muhasebesi" 'An examination of conscience based on the Ten Commandments') + '</span>' + $IcoArrowR + '</a>'
 $confessionBody = @"
-<div class="wrap narrow sureci-wrap" data-av-nogh>
+<div class="wrap narrow sureci-wrap ill-page" data-av-nogh>
   $(Crumbs 'Günah Çıkarma')
   <header class="page-head center">$(Page-Ico $IcoKey)<h1>$(T $Confession.title $Confession.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Confession.en)</p>")</header>
   <p class="why-intro">$(T (Inline $Confession.intro) (Inline $Confession.introEn))</p>
   <nav class="why-doors two" $(TA 'aria-label' 'Nereden başlamak istersiniz?' 'Where would you like to start?')>$confessionDoors</nav>
-  <section class="sureci-sec" id="adim-adim" aria-labelledby="h-adim">
-    <h2 id="h-adim">$(T 'Adım adım' 'Step by step')</h2>
-    <ol class="stage-list">
-$confessionSteps
-    </ol>
-  </section>
-  <section class="sureci-sec" id="vicdan-muhasebesi" aria-labelledby="h-vicdan">
-    <h2 id="h-vicdan">$(T 'Vicdan muhasebesi' 'Examination of conscience')</h2>
-    <p class="why-thesis">$(T (Inline $Confession.examenIntro) (Inline $Confession.examenIntroEn))</p>
-    <div class="kk-secs">$examenFolds</div>
-  </section>
-  <section class="sureci-sec" id="sorular-ve-korkular" aria-labelledby="h-sorular">
-    <h2 id="h-sorular">$(T 'Sık sorulan sorular ve korkular' 'Common questions and fears')</h2>
-    <div class="kk-secs">$confessionFaq</div>
-    $sealMartyrsHtml
-  </section>
+$(Ill-Sec -Id 'adim-adim' -HeadId 'h-adim' -Art 'keys' -Tone 'purple' -Kick (T 'Ayin nasıl ilerler' 'How the rite unfolds') -Head (T 'Adım adım' 'Step by step') `
+    -Body "<ol class=`"stage-list`">$confessionSteps</ol>")
+$(Ill-Sec -Id 'vicdan-muhasebesi' -HeadId 'h-vicdan' -Art 'tablets' -Tone 'red' -Kick (T 'Hazırlık' 'Preparation') -Head (T 'Vicdan muhasebesi' 'Examination of conscience') `
+    -Body "<p class=`"why-thesis`">$(T (Inline $Confession.examenIntro) (Inline $Confession.examenIntroEn))</p><div class=`"kk-secs`">$examenFolds</div>")
+$(Ill-Sec -Id 'sorular-ve-korkular' -HeadId 'h-sorular' -Art 'candle' -Tone 'green' -Kick (T 'Merak edilenler' 'What people ask') -Head (T 'Sık sorulan sorular ve korkular' 'Common questions and fears') `
+    -Body "<div class=`"ill-qas`">$confessionFaq</div>$sealMartyrsHtml")
   $(TB "<p class=`"conventions`">Bu sayfa, Katolik Kilisesi Katekizmi$($Apos)nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">KKK 1420-1498</a>) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href=`"kiliseler.html`">Kilise Bul</a> sayfası size yardımcı olabilir.</p>" "<p class=`"conventions`">This page is grounded in the Catechism of the Catholic Church's teaching on the Sacrament of Penance and Reconciliation (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">CCC 1420-1498</a>) and canon law; the exact wording of the rite can vary slightly from region to region. For practical details (such as confession times), ask your nearest parish; the <a href=`"kiliseler.html`">Find a Church</a> page can help.</p>")
 </div>
 "@
@@ -1869,12 +1885,9 @@ function Anatolia-Map([string]$lang) {
       "<h3 class=`"amap-c-name`">$(T $c.name $e.name)$old</h3><p class=`"amap-c-place`">$(T $c.place $e.place)</p>" +
       "<p class=`"amap-c-text`">$(T (Inline $c.text) (Inline $e.text))</p>$refs$more</article>")
   }
-  $index = ($AnMap.cats | ForEach-Object {
-    $cid = $_.id
-    $chips = ($AnMap.sites | Where-Object { $_.cat -eq $cid } | ForEach-Object {
-      "<li><a class=`"amap-chip`" href=`"#yer-$($_.id)`" data-site=`"$($_.id)`">$(T $_.tr.name $_.en.name)</a></li>"
-    }) -join ''
-    "<div class=`"amap-cat c-$cid`"><h3 class=`"amap-cat-h`"><span class=`"amap-key`"></span>$($catName[$cid])</h3><ul>$chips</ul></div>"
+  # the groups, listed small in the map's lower right corner: pointing at one lights up its places
+  $legend = ($AnMap.cats | ForEach-Object {
+    "<li><button type=`"button`" class=`"amap-lg c-$($_.id)`" data-cat=`"$($_.id)`"><span class=`"amap-key`"></span>$(T $_.tr $_.en)</button></li>"
   }) -join ''
   return @"
 <section class="amap" id="harita" aria-labelledby="amap-h">
@@ -1891,26 +1904,30 @@ function Anatolia-Map([string]$lang) {
         <g class="amap-sites">$($markers.ToString())</g>
       </svg>
     </div>
-    <p class="amap-swipe">$(T 'Haritanın tamamını görmek için yana kaydırın' 'Swipe the map sideways to see all of it')</p>
+    <ul class="amap-legend" $(TA 'aria-label' 'Haritadaki yer grupları' 'Groups of places on the map')>$legend</ul>
     <div class="amap-pop" id="amap-pop" role="dialog" aria-labelledby="amap-pop-h" hidden>
       <button type="button" class="amap-pop-close" $(TA 'aria-label' 'Kapat' 'Close')>$IcoClose</button>
       <div class="amap-pop-body"></div>
       <p class="amap-pop-hint">$(T 'Kartı açık tutmak için tıklayın' 'Click to keep this card open')</p>
     </div>
   </div>
-  <nav class="amap-index" $(TA 'aria-label' 'Haritadaki bütün yerler' 'All places on the map')>$index</nav>
+  <p class="amap-swipe">$(T 'Haritanın tamamını görmek için yana kaydırın' 'Swipe the map sideways to see all of it')</p>
   <div class="amap-cards">$($cards.ToString())</div>
 </section>
 "@
 }
 
 # ================================================================== TOPRAKLARIMIZDA HRISTIYANLIK (topraklarimizda-hristiyanlik.html)
+# Each section as an illustrated section (Ill-Sec), its kicker naming the map group it belongs to, in that group's colour
+$AnaArt = @{ 'pavlus' = 'ship'; 'yedi-kilise' = 'lampstand'; 'iznik' = 'church'; 'kilise-babalari' = 'book' }
+$AnaCat = @{ 'pavlus' = 'pavlus'; 'yedi-kilise' = 'kilise'; 'iznik' = 'konsil'; 'kilise-babalari' = 'gelenek' }
+$AnaTone = @{ 'pavlus' = 'gold'; 'kilise' = 'red'; 'konsil' = 'blue'; 'gelenek' = 'green' }
 $anatoliaSections = ($Anatolia.sections | ForEach-Object {
-  $i = [array]::IndexOf(@($Anatolia.sections), $_) + 1
-  "<section id=`"$($_.id)`">" +
-    "<h2 class=`"section-title`"><span class=`"label`">$i</span>$(T (Inline $_.title) $_.en)</h2>" +
-    (TO "<p class=`"faq-cat-en`" lang=`"en`">$($_.en)</p>") +
-    "<div class=`"prose`">$(TB (Blocks $_.body) (Blocks $_.bodyEn))</div></section>"
+  $cid = $AnaCat[$_.id]
+  $cat = if ($cid) { $AnMap.cats | Where-Object { $_.id -eq $cid } | Select-Object -First 1 } else { $null }
+  Ill-Sec -Id $_.id -Art $AnaArt[$_.id] -Tone $(if ($cid) { $AnaTone[$cid] } else { 'gold' }) -Kick $(if ($cat) { T $cat.tr $cat.en } else { '' }) `
+    -Head (T (Inline $_.title) $_.en) -Sub (TO "<p class=`"faq-cat-en`" lang=`"en`">$($_.en)</p>") `
+    -Body "<div class=`"prose ill-prose`">$(TB (Blocks $_.body) (Blocks $_.bodyEn))</div>"
 }) -join "`n"
 $anatoliaBody = @"
 <div class="wrap narrow">

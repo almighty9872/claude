@@ -1447,10 +1447,25 @@ html:not(.js) .rt { display: none; }
 /* a place pointed at in the list below: lit up, the others dimmed */
 .amap-site { transition: opacity .2s ease; }
 .amap-svg.has-lit .amap-site:not(.is-lit) { opacity: .28; }
-.amap-site.is-lit .amap-dot { transform: scale(1.7); stroke: var(--cat); stroke-width: 5; stroke-opacity: .35; }
+.amap-site.is-lit .amap-dot { transform: scale(1.5); stroke: var(--cat); stroke-width: 5; stroke-opacity: .35; }
 .amap-site.is-lit .amap-label { fill: var(--cat); }
-.amap-cat-h { cursor: default; }
-@media (prefers-reduced-motion: reduce) { .amap-dot, .amap-site { transition: none; } }
+/* the group list, small, in the map's lower right corner (it stays put while the map scrolls sideways on phones) */
+.amap-legend {
+  position: absolute; right: .5rem; bottom: .5rem; z-index: 2; list-style: none; margin: 0; padding: .25rem .15rem;
+  border-radius: calc(var(--radius) * .75); background: color-mix(in srgb, var(--amap-tr) 82%, transparent);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 1px 6px rgba(0,0,0,.08);
+}
+.amap-lg {
+  display: flex; align-items: center; gap: .4rem; width: 100%; padding: .12rem .5rem; border: 0; border-radius: 99px;
+  background: transparent; font-family: var(--sans); font-size: .66rem; font-weight: 600; line-height: 1.35; color: var(--text-soft);
+  text-align: left; cursor: pointer; transition: color .15s, background-color .15s;
+}
+.amap-lg .amap-key { width: .55rem; height: .55rem; }
+.amap-lg:hover, .amap-lg.is-lit { color: var(--cat); background: color-mix(in srgb, var(--cat) 12%, transparent); }
+.amap-lg:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+@media (max-width: 760px) { .amap-legend { right: .35rem; bottom: .35rem; padding: .15rem .05rem; } .amap-lg { gap: .35rem; font-size: .6rem; padding: .12rem .4rem; } .amap-lg .amap-key { width: .45rem; height: .45rem; } }
+html:not(.js) .amap-legend { display: none; }
+@media (prefers-reduced-motion: reduce) { .amap-dot, .amap-site, .amap-lg { transition: none; } }
 /* Computers: the map a quarter smaller, centred (never so narrow that it needs sideways scrolling) */
 @media (min-width: 980px) { .amap-frame { width: min(100%, max(75%, calc(46rem + 2px))); margin: 0 auto; } }
 .amap-swipe { display: none; margin: .45rem 0 0; text-align: center; font-family: var(--sans); font-size: .78rem; color: var(--muted); }
@@ -1505,19 +1520,6 @@ html:not(.js) .rt { display: none; }
   max-height: 62vh; overflow-y: auto; overscroll-behavior: contain;
 }
 
-.amap-index { display: grid; gap: 1rem 1.5rem; margin: 1.4rem 0 0; }
-@media (min-width: 720px) { .amap-index { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); } }
-.amap-cat-h { display: flex; align-items: center; gap: .5rem; margin: 0 0 .45rem; font-family: var(--sans); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cat); }
-.amap-cat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
-.amap-chip {
-  display: inline-block; padding: .35rem .75rem; min-height: 2.25rem; line-height: 1.5; border-radius: 99px;
-  font-family: var(--sans); font-size: .85rem; color: var(--text); text-decoration: none;
-  background: var(--surface); border: 1px solid var(--border-strong); transition: border-color .18s, background-color .18s;
-}
-.amap-chip:hover { border-color: var(--cat); }
-.amap-chip[aria-current="true"] { background: var(--cat); border-color: var(--cat); color: var(--surface); }
-.amap-chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-
 /* Without JavaScript the cards are simply listed under the map */
 .amap-cards { display: none; }
 html:not(.js) .amap-cards { display: grid; gap: 1rem; margin-top: 1.5rem; }
@@ -1526,7 +1528,7 @@ html:not(.js) .amap-card[hidden] {
   border-radius: var(--radius); background: var(--surface); scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 html:not(.js) .amap-swipe { display: none; }
-@media print { .amap-frame, .amap-index { display: none !important; } .amap-cards { display: grid !important; gap: .6rem; } .amap-card[hidden] { display: block !important; } }
+@media print { .amap-frame { display: none !important; } .amap-cards { display: grid !important; gap: .6rem; } .amap-card[hidden] { display: block !important; } }
 
 /* A parable's English: the Douay-Rheims text as plain text, under a line naming the passage */
 
@@ -3336,3 +3338,68 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .rosary-jump svg { width: 1.05rem; height: 1.05rem; }
 .rosary-note { margin: 0 0 1.1rem; line-height: 1.65; color: var(--text-soft); }
 .steps + .rosary-note { margin-top: 1.2rem; }
+
+/* ---------- Illustrated sections (Ill-Sec in build.ps1) ----------
+   A line drawing per section in the section's tone (it draws itself on scroll, initDrawings in script.js),
+   a small kicker over a large heading. Computers: the drawing in a sticky column on the left;
+   phones: smaller, beside the heading. */
+.ill-sec {
+  --t-gold: #8a6720; --t-red: #9b2f3a; --t-blue: #2c5a8c; --t-green: #3f7a4f; --t-purple: #6c4a86; --tone: var(--gold);
+  position: relative; margin: 3.5rem 0 0; padding-top: 2.75rem; border-top: 1px solid var(--border);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+:root[data-theme="dark"] .ill-sec { --t-gold: #d6b16b; --t-red: #e58b95; --t-blue: #86b6ea; --t-green: #8ccb9b; --t-purple: #c3a2dc; }
+.tone-gold { --tone: var(--t-gold); } .tone-red { --tone: var(--t-red); } .tone-blue { --tone: var(--t-blue); }
+.tone-green { --tone: var(--t-green); } .tone-purple { --tone: var(--t-purple); }
+.ill-sec::before { content: ""; position: absolute; top: -1px; left: 0; width: 4.5rem; height: 3px; border-radius: 0 0 3px 3px; background: var(--tone); }
+.ill-art { width: 7.5rem; margin: 0 0 1rem; color: var(--tone); }
+.ill-art svg {
+  display: block; width: 100%; height: auto; overflow: visible;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--tone) 12%, transparent) 0 58%, transparent 59%);
+}
+.ill-draw .ill-art path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s cubic-bezier(.45,.05,.3,1); }
+.ill-draw .ill-sec.is-in .ill-art path { stroke-dashoffset: 0; }
+.ill-draw .ill-art path:nth-child(2) { transition-delay: .15s; } .ill-draw .ill-art path:nth-child(3) { transition-delay: .3s; }
+.ill-draw .ill-art path:nth-child(4) { transition-delay: .45s; } .ill-draw .ill-art path:nth-child(5) { transition-delay: .6s; }
+.ill-draw .ill-art path:nth-child(n+6) { transition-delay: .75s; }
+.ill-draw .ill-art path:nth-child(n+10) { transition-delay: 1s; }
+.ill-kick { margin: 0 0 .35rem; font-family: var(--sans); font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tone); }
+.ill-h { margin: 0 0 1.1rem; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.15rem); line-height: 1.15; font-weight: 600; text-align: left; }
+.ill-sec .faq-cat-en { text-align: left; margin-top: -.6rem; }
+/* running text: a large first letter in the section's tone */
+.ill-prose > p:first-child::first-letter, .ill-prose > .l-tr > p:first-child::first-letter, .ill-prose > .l-en > p:first-child::first-letter {
+  float: left; margin: .08em .12em 0 0; font-size: 3.4em; line-height: .82; font-weight: 600; color: var(--tone);
+}
+.ill-prose h3 { color: var(--tone); }
+.ill-prose ul li::marker { color: var(--tone); }
+/* what else may sit in one: the numbered steps, folds, questions with their answers */
+.ill-sec .stage-list::before { background: color-mix(in srgb, var(--tone) 22%, transparent); }
+.ill-sec .stage-n { border-color: color-mix(in srgb, var(--tone) 55%, transparent); color: var(--tone); }
+.ill-sec .stage-body h3 { font-size: 1.1rem; }
+.ill-sec .kk-sec > summary h3 { font-weight: 500; }
+.ill-sec .kk-sec > summary:hover h3 { color: var(--tone); }
+.ill-sec .kk-sec > summary svg { color: var(--tone); }
+.ill-sec .examen-about { background: color-mix(in srgb, var(--tone) 9%, transparent); }
+.ill-sec .examen-list li::before { background: var(--tone); }
+.ill-qas { display: grid; }
+.ill-qa { padding: 1.15rem 0 1.25rem 1.2rem; border-left: 2px solid color-mix(in srgb, var(--tone) 28%, transparent); scroll-margin-top: calc(var(--header-h) + 1rem); }
+.ill-qa + .ill-qa { border-top: 1px solid var(--border); }
+.ill-qa:first-child { padding-top: .3rem; }
+.ill-qa:target { border-left-color: var(--tone); }
+.ill-q { margin: 0 0 .4rem; font-size: 1.14rem; line-height: 1.4; font-weight: 500; color: var(--tone); }
+.ill-a { margin: 0; font-size: 1.02rem; line-height: 1.65; color: var(--text-soft); }
+.ill-sec .footnote-block { margin-top: 1.8rem; border-left-color: var(--tone); }
+/* a page made of them: wide enough for the drawing column beside the text */
+.wrap.narrow.ill-page { max-width: 880px; }
+@media (max-width: 899px) {
+  .ill-sec { margin-top: 2.5rem; padding-top: 1.75rem; }
+  .ill-art { float: right; width: 5.5rem; margin: 0 0 .5rem 1rem; }
+  .ill-body > .stage-list, .ill-body > .kk-secs, .ill-body > .ill-qas { clear: both; }
+}
+@media (min-width: 900px) {
+  .ill-sec { display: grid; grid-template-columns: 9rem minmax(0, 1fr); column-gap: 2.5rem; align-items: start; }
+  .ill-art { position: sticky; top: calc(var(--header-h) + 2rem); width: 9rem; margin: .3rem 0 0; }
+}
+@media (prefers-reduced-motion: reduce) { .ill-draw .ill-art path { transition: none; stroke-dashoffset: 0; } }
+@media print { .ill-art { display: none; } }

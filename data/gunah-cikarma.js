@@ -25,8 +25,8 @@ window.CONFESSION = /*JSON-START*/{
   {
    "title": "Günah Çıkarma Yerine Girmek",
    "en": "Entering the Confessional",
-   "text": "Perde arkasından (kimliğinizi göstermeden) ya da yüz yüze günah çıkarabilirsiniz. İkisi de geçerlidir; seçim sizin.",
-   "textEn": "You can confess behind a screen (anonymously) or face to face; both are valid, and the choice is yours."
+   "text": "Perde arkasından (yüzünüzü göstermeden) ya da yüz yüze günah çıkarabilirsiniz. İkisi de geçerlidir; seçim sizin.",
+   "textEn": "You can confess behind a screen (without showing your face) or face to face; both are valid, and the choice is yours."
   },
   {
    "title": "Haç İşareti ve Açılış",
