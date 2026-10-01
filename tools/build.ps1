@@ -508,6 +508,7 @@ $Ill = @{
   'gifts'     = '<path d="M10 92h100"/><path d="M16 92c0-16 12-26 28-26s28 10 28 26"/><path d="M30 76l6 6M42 72l6 6M54 76l6 6"/><path d="M84 38h12M86 38v8c-8 4-10 14-8 26 1 14 6 20 12 20s11-6 12-20c2-12 0-22-8-26v-8"/><path d="M82 64h28"/>'
   'monstrance'= '<path d="M48 40a12 12 0 1 0 24 0a12 12 0 1 0-24 0"/><path d="M60 16v-6M60 64v6M36 40h-6M84 40h6M43 23l-4-4M77 23l4-4M43 57l-4 4M77 57l4 4"/><path d="M60 70v24"/><path d="M53 80h14"/><path d="M42 104q18-14 36 0z"/>'
   'cross'     = '<path d="M60 16v88"/><path d="M38 42h44"/><path d="M24 30l8 6M96 30l-8 6"/><path d="M18 62h10M102 62H92"/><path d="M26 92l8-5M94 92l-8-5"/>'
+  'shell'     = '<path d="M18 72a42 42 0 0 1 84 0"/><path d="M18 72l42 20 42-20"/><path d="M60 92L26 50M60 92L38 36M60 92L52 29M60 92L68 29M60 92L82 36M60 92L94 50"/><path d="M60 98c-3 4-3 7 0 8 3-1 3-4 0-8z"/><path d="M48 104c-2 3-2 5 0 6 2-1 2-3 0-6zM72 104c-2 3-2 5 0 6 2-1 2-3 0-6z"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
 }
 function Ill-Art([string]$name) {
@@ -1791,23 +1792,16 @@ $sureciFolds = @(
   (Sureci-Fold 'beklerken' (T $Sureci.waiting.title $Sureci.waiting.titleEn) (TB (Blocks $Sureci.waiting.body) (Blocks $Sureci.waiting.bodyEn)))
 ) + @($Sureci.faq | ForEach-Object { Sureci-Fold $_.id (T (Inline $_.q) (Inline $_.qEn)) "<p>$(T (Inline $_.a) (Inline $_.aEn))</p>" })
 $sureciBody = @"
-<div class="wrap narrow sureci-wrap" data-av-nogh>
+<div class="wrap narrow sureci-wrap ill-page" data-av-nogh>
   $(Crumbs 'Katolik Olma Süreci')
   <header class="page-head center">$(Page-Ico $IcoDoor)<h1>$(T $Sureci.title $Sureci.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Sureci.en)</p>")</header>
   <p class="why-intro">$(T (Inline $Sureci.intro) (Inline $Sureci.introEn))</p>
   <nav class="why-doors two" $(TA 'aria-label' 'Hangi yol sizin için?' 'Which path is yours?')>$sureciDoors</nav>
   <p class="sureci-first">$(T (Inline $Sureci.firstStep) (Inline $Sureci.firstStepEn)) <a href="kiliseler.html">$IcoPin $(T 'Kilise Bul' 'Find a Church')</a></p>
-  <section class="sureci-sec" id="surec" aria-labelledby="h-surec">
-    <h2 id="h-surec">$(T 'Hazırlık adım adım' 'The preparation, step by step')</h2>
-    <p class="why-thesis">$(T (Inline $Sureci.processIntro) (Inline $Sureci.processIntroEn))</p>
-    <ol class="stage-list">
-$stageList
-    </ol>
-  </section>
-  <section class="sureci-sec" id="sorular" aria-labelledby="h-sorular">
-    <h2 id="h-sorular">$(T 'Merak edilenler' 'Good to know')</h2>
-    <div class="kk-secs">$($sureciFolds -join "`n")</div>
-  </section>
+$(Ill-Sec -Id 'surec' -HeadId 'h-surec' -Art 'shell' -Tone 'blue' -Kick (T 'OCIA · yaklaşık altı ay' 'OCIA · about six months') -Head (T 'Hazırlık adım adım' 'The preparation, step by step') `
+    -Body "<p class=`"why-thesis`">$(T (Inline $Sureci.processIntro) (Inline $Sureci.processIntroEn))</p><ol class=`"stage-list`">$stageList</ol>")
+$(Ill-Sec -Id 'sorular' -HeadId 'h-sorular' -Art 'candle' -Tone 'gold' -Kick (T 'Sorular ve özel durumlar' 'Questions and special cases') -Head (T 'Merak edilenler' 'Good to know') `
+    -Body "<div class=`"kk-secs`">$($sureciFolds -join '')</div>")
   $(TB "<p class=`"conventions`">Bu sayfadaki OCIA süreci, Kilise$($Apos)nin bütün dünyada geçerli düzenlemesidir (1972, Tanrısal Kült Cemaati). Paskalya Nöbeti dışında kabul ve günah çıkarmanın zamanı gibi bazı ayrıntılar, ABD Katolik Episkoposlar Konferansı$($Apos)nın Katekümenlik İçin Ulusal Tüzüğü$($Apos)nden (1986) alınmıştır. Kendi bölgenizdeki uygulama için en yakın kiliseye danışın.</p>" "<p class=`"conventions`">The general OCIA process on this page is a universal Church regulation (1972, Congregation for Divine Worship); some details above (such as reception outside the Easter Vigil, or the timing of confession) are drawn from the U.S. Conference of Catholic Bishops' National Statutes for the Catechumenate (1986). For practice in your own region, ask your nearest parish.</p>")
 </div>
 "@
