@@ -489,6 +489,10 @@ $Ill = @{
   'book'      = '<path d="M14 88q23-10 46 0 23-10 46 0V46q-23-10-46 0-23-10-46 0z"/><path d="M60 46v42"/><path d="M24 56q14-5 28 0M24 66q14-5 28 0M24 76q14-5 28 0"/><path d="M68 56q14-5 28 0M68 66q14-5 28 0"/><path d="M86 18q18-8 22-4-2 10-20 24l-10 4z"/><path d="M78 42l-8 14"/>'
   'keys'      = '<path d="M22 30a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path d="M39 37l55 55"/><path d="M86 84l8-8M77 75l6-6"/><path d="M78 30a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path d="M81 37L26 92"/><path d="M34 84l-8-8M43 75l-6-6"/>'
   'tablets'   = '<path d="M18 102V42a19 19 0 0 1 38 0v60z"/><path d="M64 102V42a19 19 0 0 1 38 0v60z"/><path d="M28 50h18M28 60h18M28 70h18"/><path d="M28 80h18M28 90h18"/><path d="M74 50h18M74 60h18M74 70h18"/><path d="M74 80h18M74 90h18"/>'
+  'cosmos'    = '<path d="M60 18c3 24 9 30 32 33-23 3-29 9-32 33-3-24-9-30-32-33 23-3 29-9 32-33z"/><path d="M96 78c1 8 3 10 10 11-7 1-9 3-10 11-1-8-3-10-10-11 7-1 9-3 10-11z"/><path d="M22 82c1 6 2 7 8 8-6 1-7 2-8 8-1-6-2-7-8-8 6-1 7-2 8-8z"/><path d="M24 22v8M20 26h8"/><path d="M98 18v6M95 21h6"/><path d="M60 100v6M57 103h6"/>'
+  'tomb'      = '<path d="M4 104h112"/><path d="M10 104q12-40 50-42t50 42"/><path d="M44 104V88a16 16 0 0 1 32 0v16"/><path d="M80 94a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path d="M51 32a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M60 14v-6M44 20l-4-4M76 20l4-4M38 34h-6M82 34h6"/>'
+  'basilica'  = '<path d="M14 104h92"/><path d="M22 100V72h76v28"/><path d="M32 78v22M44 78v22M56 78v22M64 78v22M76 78v22M88 78v22"/><path d="M34 72v-8h52v8"/><path d="M38 64a22 22 0 0 1 44 0"/><path d="M56 42v-6h8v6"/><path d="M60 36V24M55 29h10"/>'
+  'door'      = '<path d="M24 104h72"/><path d="M38 104V30h44v74"/><path d="M82 30l16 8v72l-16-6"/><path d="M92 70v4"/><path d="M60 46v12M48 52l-5-5M72 52l5-5M44 66h-7M76 66h7"/><path d="M46 104l-14 12M74 104l14 12"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
 }
 function Ill-Art([string]$name) {
@@ -2116,11 +2120,9 @@ function Why-Page([string]$lang) {
         "</div>" +
       "</details>"
     }) -join "`n"
-    "<section class=`"why-part`" id=`"$($pt.id)`" aria-labelledby=`"h-$($pt.id)`">" +
-      "<header class=`"why-part-head`"><p class=`"label`">$(T "Bölüm $($k + 1) / $n" "Part $($k + 1) of $n")</p><h2 id=`"h-$($pt.id)`">$(T (Inline $pt.title) (Inline $pt.en))</h2><p class=`"why-thesis`">$(F2 $pt 'thesis')</p></header>" +
-      "<div class=`"why-list`">$items</div>" +
-      $aside +
-    "</section>"
+    $art = @('cosmos', 'tomb', 'basilica')[[math]::Min($k, 2)]; $tone = @('blue', 'gold', 'red')[[math]::Min($k, 2)]
+    Ill-Sec -Id $pt.id -HeadId "h-$($pt.id)" -Art $art -Tone $tone -Class 'why-part' -Kick (T "Bölüm $($k + 1) / $n" "Part $($k + 1) of $n") `
+      -Head (T (Inline $pt.title) (Inline $pt.en)) -Body ("<p class=`"why-thesis`">$(F2 $pt 'thesis')</p><div class=`"why-list`">$items</div>" + $aside)
   }) -join "`n"
   $chain = (@($W.chain) | ForEach-Object -Begin { $i2 = 0 } -Process { $i2++; "<li><span class=`"why-chain-n`">$i2</span>$(T (Inline $_) (Inline @($W.chainEn)[$i2 - 1]))</li>" }) -join ''
   $ctaItems = @(@('katolik-sureci.html', 'Katolik Olma Süreci', 'Yol adım adım nasıl ilerler', 'Becoming Catholic', 'What the path looks like, step by step'),
@@ -2130,19 +2132,14 @@ function Why-Page([string]$lang) {
   $cta = ($ctaItems | ForEach-Object { "<a class=`"why-cta`" href=`"$($_[0])`"><span class=`"why-cta-t`">$(T $_[1] $_[3])</span><span class=`"why-cta-s`">$(T $_[2] $_[4])</span>$IcoArrowR</a>" }) -join ''
   $crumb = Crumbs 'Neden Katoliğiz?'
   $body = @"
-<div class="wrap why-wrap" data-av-nogh>
+<div class="wrap why-wrap ill-page" data-av-nogh>
   $crumb
   <header class="page-head center">$(Page-Ico $IcoCompass)<h1>$(T $W.title $W.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($W.en)</p>")</header>
   <p class="why-intro">$(F2 $W 'intro')</p>
   <nav class="why-doors" $(TA 'aria-label' $L.doors[0] $L.doors[1])>$doorsHtml</nav>
 $panels
-  <section class="why-end" id="sonuc" aria-labelledby="h-sonuc">
-    <h2 id="h-sonuc">$(LL 'together')</h2>
-    <ol class="why-chain">$chain</ol>
-    <p class="why-closing">$(F2 $W 'closing')</p>
-    <h3 class="why-where">$(LL 'where')</h3>
-    <div class="why-ctas">$cta</div>
-  </section>
+$(Ill-Sec -Id 'sonuc' -HeadId 'h-sonuc' -Art 'door' -Tone 'green' -Class 'why-end' -Kick (T 'Sonuç' 'In the end') -Head (LL 'together') `
+    -Body "<ol class=`"why-chain`">$chain</ol><p class=`"why-closing`">$(F2 $W 'closing')</p><h3 class=`"why-where`">$(LL 'where')</h3><div class=`"why-ctas`">$cta</div>")
 </div>
 "@
   $page = 'neden-katoligiz.html'

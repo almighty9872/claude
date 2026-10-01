@@ -3390,8 +3390,19 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .ill-q { margin: 0 0 .4rem; font-size: 1.14rem; line-height: 1.4; font-weight: 500; color: var(--tone); }
 .ill-a { margin: 0; font-size: 1.02rem; line-height: 1.65; color: var(--text-soft); }
 .ill-sec .footnote-block { margin-top: 1.8rem; border-left-color: var(--tone); }
+.ill-sec .why-thesis { margin: 0 0 1.2rem; font-size: 1.08rem; }
+.ill-sec .why-hook-k, .ill-sec .why-obj-label { color: var(--tone); }
+.ill-sec .why-item > summary:hover .why-hook, .ill-sec .why-item[open] .why-hook { color: var(--tone); }
+.ill-sec .why-item[open] > summary .chev { color: var(--tone); }
+.ill-sec .why-points li::before { background: var(--tone); opacity: .7; }
+.ill-sec .why-obj { background: color-mix(in srgb, var(--tone) 9%, transparent); }
+.ill-sec .why-obj > summary .ico { color: var(--tone); }
+.ill-sec .why-aside a { color: var(--tone); }
+.ill-sec .why-chain { margin: 0 0 1.6rem; max-width: none; }
+.ill-sec .why-chain-n { background: var(--tone); }
+.ill-sec .why-where { text-align: left; }
 /* a page made of them: wide enough for the drawing column beside the text */
-.wrap.narrow.ill-page { max-width: 880px; }
+.wrap.ill-page { max-width: 880px; }
 @media (max-width: 899px) {
   .ill-sec { margin-top: 2.5rem; padding-top: 1.75rem; }
   .ill-art { float: right; width: 5.5rem; margin: 0 0 .5rem 1rem; }
