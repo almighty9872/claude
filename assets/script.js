@@ -1051,7 +1051,7 @@
   /* Illustrated sections (Ill-Sec in build.ps1): each section's line drawing draws itself as the section
      scrolls into view (without IntersectionObserver, or with reduced motion, the CSS simply shows it whole) */
   function initDrawings() {
-    var secs = $$('.ill-sec');
+    var secs = $$('.ill-sec, .ill-card');
     if (!secs.length || !window.IntersectionObserver) return;
     document.documentElement.classList.add('ill-draw');
     var obs = new IntersectionObserver(function (entries) {
@@ -2445,9 +2445,9 @@
       avNode(sum, avHead($('#kisaca-h', m)), pcat(String($$('.ic-tl-list > li', m).length), ' ', pmake('madde', 'points')));
       /* the summary is a group of its own, under its own title; the parts follow as "Bölümler" */
       if (sum) sum._avGh = avHead($('#kisaca-h', m));
-      $$('.ic-part', m).forEach(function (p, i) { avNode(p, avText($('.ic-part-t', p)), avText($('.ic-part-n', p))); if (i === 0) p._avGh = AV_GH_SECTIONS; });
+      $$('.ic-part', m).forEach(function (p, i) { avNode(p, avText($('.ill-h', p)), avText($('.ill-kick', p))); if (i === 0) p._avGh = AV_GH_SECTIONS; });
       $$('.ic-part .ic-sec', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
-      var end = $('.ic-closing', m); if (end) avNode(end, avText($('.ic-part-t', end)));
+      var end = $('.ic-closing', m); if (end) avNode(end, avText($('.ill-h', end)));
       avNode($('.ic-sources', m), avHead($('#ic-kaynak-h', m)));
     },
     /* Ateizme Cevap is built the same way */

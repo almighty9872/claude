@@ -572,11 +572,16 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .gs-drop[open] > summary .ico { transform: rotate(180deg); }
 .gs-drop > summary:hover, .gs-drop > summary:focus-visible { color: var(--gold); }
 .gs-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); gap: .1rem .8rem; padding: .2rem .8rem .8rem; border-top: 1px solid var(--border); }
-.gs-item { display: grid; padding: .45rem .35rem; border-radius: .5rem; color: var(--text); text-decoration: none; line-height: 1.3; }
+.gs-item { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); column-gap: .7rem; align-items: center; padding: .45rem .35rem; border-radius: .5rem; color: var(--text); text-decoration: none; line-height: 1.3; }
 .gs-item:hover, .gs-item:focus-visible { background: var(--surface-2); }
 .gs-item:hover .gs-n, .gs-item:focus-visible .gs-n { color: var(--gold); }
 .gs-n { font-weight: 600; font-size: .95rem; }
 .gs-s { font-family: var(--sans); font-size: .76rem; color: var(--muted); }
+.gs-item > .gs-n, .gs-item > .gs-s { grid-column: 2; }
+/* the saint's emblem in its tone, on a soft disc of the same colour */
+.gs-ico { grid-row: 1 / span 2; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); }
+.gs-ico svg { width: 1.9rem; height: 1.9rem; fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.gs-item:hover .gs-ico, .gs-item:focus-visible .gs-ico { background: color-mix(in srgb, var(--tone) 22%, transparent); }
 /* on a phone the list is open and its saints are rows */
 html.av .gs-drop { border: 0; background: none; margin: 0; }
 html.av .gs-drop > summary { display: none; }
@@ -3344,12 +3349,12 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
    A line drawing per section in the section's tone (it draws itself on scroll, initDrawings in script.js),
    a small kicker over a large heading. Computers: the drawing in a sticky column on the left;
    phones: smaller, beside the heading. */
+.ill-sec, .ill-card { --t-gold: #8a6720; --t-red: #9b2f3a; --t-blue: #2c5a8c; --t-green: #3f7a4f; --t-purple: #6c4a86; --tone: var(--gold); }
 .ill-sec {
-  --t-gold: #8a6720; --t-red: #9b2f3a; --t-blue: #2c5a8c; --t-green: #3f7a4f; --t-purple: #6c4a86; --tone: var(--gold);
   position: relative; margin: 3.5rem 0 0; padding-top: 2.75rem; border-top: 1px solid var(--border);
   scroll-margin-top: calc(var(--header-h) + 1rem);
 }
-:root[data-theme="dark"] .ill-sec { --t-gold: #d6b16b; --t-red: #e58b95; --t-blue: #86b6ea; --t-green: #8ccb9b; --t-purple: #c3a2dc; }
+:root[data-theme="dark"] :is(.ill-sec, .ill-card) { --t-gold: #d6b16b; --t-red: #e58b95; --t-blue: #86b6ea; --t-green: #8ccb9b; --t-purple: #c3a2dc; }
 .tone-gold { --tone: var(--t-gold); } .tone-red { --tone: var(--t-red); } .tone-blue { --tone: var(--t-blue); }
 .tone-green { --tone: var(--t-green); } .tone-purple { --tone: var(--t-purple); }
 .ill-sec::before { content: ""; position: absolute; top: -1px; left: 0; width: 4.5rem; height: 3px; border-radius: 0 0 3px 3px; background: var(--tone); }
@@ -3360,7 +3365,7 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
   background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--tone) 12%, transparent) 0 58%, transparent 59%);
 }
 .ill-draw .ill-art path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s cubic-bezier(.45,.05,.3,1); }
-.ill-draw .ill-sec.is-in .ill-art path { stroke-dashoffset: 0; }
+.ill-draw .is-in .ill-art path { stroke-dashoffset: 0; }
 .ill-draw .ill-art path:nth-child(2) { transition-delay: .15s; } .ill-draw .ill-art path:nth-child(3) { transition-delay: .3s; }
 .ill-draw .ill-art path:nth-child(4) { transition-delay: .45s; } .ill-draw .ill-art path:nth-child(5) { transition-delay: .6s; }
 .ill-draw .ill-art path:nth-child(n+6) { transition-delay: .75s; }
@@ -3418,16 +3423,41 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .ill-sec .kk-q { border-top: 3px solid var(--tone); }
 .ill-sec .kk-q-a a { display: inline-flex; align-items: center; gap: .3rem; }
 .ill-sec .kk-motto { margin: 0; text-align: left; }
+/* Tesbihin Tarihi: a part's sections inside it, smaller headings; only the first opens with a large letter */
+.ill-sec .th-sub { max-width: none; margin: 2.2rem 0 0; }
+.ill-sec .th-sub:first-child { margin-top: 0; }
+.ill-sec .th-sub .ic-sec-t { font-size: 1.22rem; color: var(--text); border-bottom-color: color-mix(in srgb, var(--tone) 30%, var(--border)); }
+.ill-sec .th-sub + .th-sub .ill-prose > p:first-child::first-letter,
+.ill-sec .th-sub + .th-sub .ill-prose > .l-tr > p:first-child::first-letter,
+.ill-sec .th-sub + .th-sub .ill-prose > .l-en > p:first-child::first-letter { float: none; margin: 0; font-size: inherit; line-height: inherit; font-weight: inherit; color: inherit; }
+.ill-sec .ic-quote { border-left-color: var(--tone); }
+/* İslam'a Cevap, Ateizme Cevap: a part's numbered sections inside it */
+.ill-sec.ic-part, .ill-sec.ic-closing { margin-top: 3.5rem; }
+.ill-sec .ic-sec { max-width: none; margin: 2.4rem 0 0; }
+.ill-sec .ic-sec:first-child { margin-top: .4rem; }
+.ill-sec .ic-sec-t .label { background: color-mix(in srgb, var(--tone) 14%, transparent); color: var(--tone); }
+.ill-sec.ic-closing .prose p:last-child { color: var(--tone); }
+/* Tesbih Duası: each set of mysteries with its drawing in the card's corner and a line in its tone */
+.myst.ill-card { position: relative; border-top: 3px solid var(--tone); }
+.myst.ill-card .ill-art { float: right; width: 4.6rem; margin: -.2rem -.2rem .3rem .8rem; }
+.myst.ill-card .myst-list li::marker { color: var(--tone); }
+.myst.ill-card.is-today { border-top-color: var(--tone); }
+/* the 20 saints: the saint's emblem over the title (in place of the page icon), named under it */
+.emblem { margin: 0 auto 1rem; color: var(--tone); }
+.emblem .ill-art { width: 7rem; margin: 0 auto; }
+.emblem-cap { margin: .35rem 0 0; font-family: var(--sans); font-size: .78rem; letter-spacing: .04em; color: var(--text-soft); }
+.saint-head:has(.emblem) > .page-ico { display: none; }
+@media (max-width: 640px) { .emblem .ill-art { width: 5.5rem; } .emblem { margin-bottom: .6rem; } }
 /* a page made of them: wide enough for the drawing column beside the text */
 .wrap.ill-page { max-width: 880px; }
 @media (max-width: 899px) {
   .ill-sec { margin-top: 2.5rem; padding-top: 1.75rem; }
-  .ill-art { float: right; width: 5.5rem; margin: 0 0 .5rem 1rem; }
+  .ill-sec > .ill-art { float: right; width: 5.5rem; margin: 0 0 .5rem 1rem; }
   .ill-body > .stage-list, .ill-body > .kk-secs, .ill-body > .ill-qas, .ill-body > .kk-quick { clear: both; }
 }
 @media (min-width: 900px) {
   .ill-sec { display: grid; grid-template-columns: 9rem minmax(0, 1fr); column-gap: 2.5rem; align-items: start; }
-  .ill-art { position: sticky; top: calc(var(--header-h) + 2rem); width: 9rem; margin: .3rem 0 0; }
+  .ill-sec > .ill-art { position: sticky; top: calc(var(--header-h) + 2rem); width: 9rem; margin: .3rem 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { .ill-draw .ill-art path { transition: none; stroke-dashoffset: 0; } }
 @media print { .ill-art { display: none; } }

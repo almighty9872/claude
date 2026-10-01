@@ -512,7 +512,27 @@ $Ill = @{
   'trinity'   = '<path d="M38 46a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M21 76a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M55 76a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M60 58l-7 12h14z"/>'
   'shield'    = '<path d="M60 14l38 14v26c0 26-16 44-38 52-22-8-38-26-38-52V28z"/><path d="M60 34v52M42 52h36"/><path d="M60 22v-8"/>'
   'scroll'    = '<path d="M30 30h56a8 8 0 0 1 8 8v52"/><path d="M30 30a8 8 0 0 0 0 16h8V30"/><path d="M38 46v52a8 8 0 0 0 8 8h52a8 8 0 0 0 0-16H46"/><path d="M48 52h34M48 62h34M48 72h24"/><path d="M90 90a8 8 0 0 1-8 8"/>'
+  'rose'      = '<path d="M60 36c-7 0-11 5-9 11 2 5 9 6 13 2 3-3 2-9-3-10"/><path d="M48 46c-9 0-14 8-11 16 4 9 20 11 28 3"/><path d="M72 46c9 0 14 8 11 16-3 8-13 12-22 9"/><path d="M36 58c-7 13 3 28 24 28s31-15 24-28"/><path d="M60 86v26"/><path d="M60 102c-9-1-15-7-17-14 9 0 15 6 17 14z"/><path d="M60 96c8-1 13-6 15-12-8 0-13 5-15 12z"/>'
+  'beads'     = '<path d="M60 78v12"/><path d="M41.5 74.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M30.5 63.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M26.5 48.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M30.5 33.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M41.5 22.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M56.5 18.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M71.5 22.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M82.5 33.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M86.5 48.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M82.5 63.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M71.5 74.0a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"/><path d="M60 92v20M53 99h14"/>'
+  'scales'    = '<path d="M60 18v82"/><path d="M42 104h36"/><path d="M22 34h76"/><path d="M56 22a4 4 0 1 0 8 0a4 4 0 1 0-8 0"/><path d="M22 34L10 66M22 34l12 32"/><path d="M98 34L86 66M98 34l12 32"/><path d="M8 66q14 14 28 0z"/><path d="M84 66q14 14 28 0z"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
+  'star'      = '<path d="M60 12l6 34 32 6-32 6-6 50-6-50-32-6 32-6z"/><path d="M45 37l-7-7M75 37l7-7M45 67l-7 7M75 67l7 7"/><path d="M22 22v6M19 25h6"/><path d="M98 90v6M95 93h6"/><path d="M16 106h88"/>'
+  'thorns'    = '<path d="M16 60a44 20 0 1 0 88 0a44 20 0 1 0-88 0"/><path d="M18 52c20 18 64 20 84 2M18 68c20-18 64-20 84-2"/><path d="M28 46l-5-9M46 42l-2-10M66 41l2-10M84 44l5-9M100 52l9-3M20 54l-9-4M28 75l-5 8M48 80l-2 10M70 80l2 10M90 75l5 8"/>'
+  'dove'      = '<path d="M60 75c-5 0-8-4-8-10 0-12 3-24 8-34 5 10 8 22 8 34 0 6-3 10-8 10z"/><path d="M55 81a5 5 0 1 0 10 0a5 5 0 1 0-10 0"/><path d="M54 48C40 34 24 32 10 38c10 4 18 10 22 18 8-2 16-4 22-6z"/><path d="M66 48c14-14 30-16 44-10-10 4-18 10-22 18-8-2-16-4-22-6z"/><path d="M56 32l-5-16h18l-5 16"/><path d="M60 94v12M46 92l-6 10M74 92l6 10"/>'
+  'tabor'     = '<path d="M6 104L42 58l12 12 20-34 40 68"/><path d="M58 52l8-6M74 36l4 12"/><path d="M74 26v-12M58 30l-7-8M90 30l7-8M54 44h-9M94 44h9"/><path d="M14 112h92"/>'
+  'stars12'   = '<path d="M60.0 12.5v7.0M56.5 16.0h7.0M81.0 18.1v7.0M77.5 21.6h7.0M96.4 33.5v7.0M92.9 37.0h7.0M102.0 54.5v7.0M98.5 58.0h7.0M96.4 75.5v7.0M92.9 79.0h7.0M81.0 90.9v7.0M77.5 94.4h7.0M60.0 96.5v7.0M56.5 100.0h7.0M39.0 90.9v7.0M35.5 94.4h7.0M23.6 75.5v7.0M20.1 79.0h7.0M18.0 54.5v7.0M14.5 58.0h7.0M23.6 33.5v7.0M20.1 37.0h7.0M39.0 18.1v7.0M35.5 21.6h7.0"/><path d="M42 74V44l18 22 18-22v30"/>'
+  'tools'     = '<path d="M22 26h12v62h66v12H22z"/><path d="M58 22h40v14H58z"/><path d="M76 36v44"/><path d="M98 29h8"/>'
+  'sword'     = '<path d="M60 10l6 10v62H54V20z"/><path d="M60 22v56"/><path d="M38 82h44"/><path d="M60 82v16"/><path d="M55 104a5 5 0 1 0 10 0a5 5 0 1 0-10 0"/>'
+  'eagle'     = '<path d="M60 44c-6 0-9 8-9 18s4 20 9 28c5-8 9-18 9-28s-3-18-9-18z"/><path d="M54 34a6 6 0 1 0 12 0a6 6 0 1 0-12 0"/><path d="M66 33l9 3-8 3"/><path d="M48 32a12 12 0 0 1 24 0"/><path d="M52 56C40 34 24 26 8 28c10 6 14 14 16 22-6 1-10 5-12 9 12-3 26-2 40 2z"/><path d="M68 56c12-22 28-30 44-28-10 6-14 14-16 22 6 1 10 5 12 9-12-3-26-2-40 2z"/><path d="M54 88l-8 16h28l-8-16"/>'
+  'heart'     = '<path d="M60 102C32 84 20 68 20 52a20 20 0 0 1 40-8 20 20 0 0 1 40 8c0 16-12 32-40 50z"/><path d="M60 34c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M14 98L104 34"/><path d="M104 34l-11 1M104 34l-2 11"/><path d="M14 98l1-9M14 98l9-1"/>'
+  'sun'       = '<path d="M42 60a18 18 0 1 0 36 0a18 18 0 1 0-36 0"/><path d="M60.0 35.0L60.0 14.0M69.6 36.9L73.8 26.7M77.7 42.3L92.5 27.5M83.1 50.4L93.3 46.2M85.0 60.0L106.0 60.0M83.1 69.6L93.3 73.8M77.7 77.7L92.5 92.5M69.6 83.1L73.8 93.3M60.0 85.0L60.0 106.0M50.4 83.1L46.2 93.3M42.3 77.7L27.5 92.5M36.9 69.6L26.7 73.8M35.0 60.0L14.0 60.0M36.9 50.4L26.7 46.2M42.3 42.3L27.5 27.5M50.4 36.9L46.2 26.7"/>'
+  'tau'       = '<path d="M22 24h76v16H68v66H52V40H22z"/><path d="M60 14v-4M44 16l-3-3M76 16l3-3"/>'
+  'ihs'       = '<path d="M30 60a30 30 0 1 0 60 0a30 30 0 1 0-60 0"/><path d="M60.0 25.0L60.0 8.0M69.1 26.2L71.4 17.5M77.5 29.7L86.0 15.0M84.7 35.3L91.1 28.9M90.3 42.5L105.0 34.0M93.8 50.9L102.5 48.6M95.0 60.0L112.0 60.0M93.8 69.1L102.5 71.4M90.3 77.5L105.0 86.0M84.7 84.7L91.1 91.1M77.5 90.3L86.0 105.0M69.1 93.8L71.4 102.5M60.0 95.0L60.0 112.0M50.9 93.8L48.6 102.5M42.5 90.3L34.0 105.0M35.3 84.7L28.9 91.1M29.7 77.5L15.0 86.0M26.2 69.1L17.5 71.4M25.0 60.0L8.0 60.0M26.2 50.9L17.5 48.6M29.7 42.5L15.0 34.0M35.3 35.3L28.9 28.9M42.5 29.7L34.0 15.0M50.9 26.2L48.6 17.5"/><path d="M45 52v18"/><path d="M52 52v18M52 61h10M62 52v18"/><path d="M77 54c-1-3-9-3-9 1.5s9 3.5 9 8.5-8 5-10 1.5"/><path d="M57 46v-10M53 40h8"/>'
+  'cupsnake'  = '<path d="M38 46h44c0 18-9 28-22 28S38 64 38 46z"/><path d="M60 74v16"/><path d="M44 104q16-14 32 0z"/><path d="M58 46c-8-6 6-12-2-18-6-5 4-12 10-8"/><path d="M66 20l6-2-3 6"/>'
+  'shamrock'  = '<path d="M60 58c-12-4-18-14-12-22 4-5 10-3 12 2 2-5 8-7 12-2 6 8 0 18-12 22z"/><path transform="rotate(120 60 58)" d="M60 58c-12-4-18-14-12-22 4-5 10-3 12 2 2-5 8-7 12-2 6 8 0 18-12 22z"/><path transform="rotate(240 60 58)" d="M60 58c-12-4-18-14-12-22 4-5 10-3 12 2 2-5 8-7 12-2 6 8 0 18-12 22z"/><path d="M60 58q6 26 20 46"/>'
+  'arms'      = '<path d="M22 16h76v44c0 28-18 42-38 50-20-8-38-22-38-50z"/><path d="M70 16v86"/><path d="M22 42h76"/><path d="M32 86V62l9 12 9-12v24"/>'
+  'hand'      = '<path d="M46 108V70l-10-16c-3-5 3-9 7-5l9 11V28c0-5 8-5 8 0v26-32c0-5 8-5 8 0v32-26c0-5 8-5 8 0v30-20c0-5 8-5 8 0v40c0 18-8 30-20 30z"/><path d="M58 80a4 4 0 1 0 8 0a4 4 0 1 0-8 0"/>'
+  'lion'      = '<path d="M60.0 20.0Q71.6 9.3 77.4 24.0Q92.4 19.3 91.3 35.1Q106.9 37.4 99.0 51.1Q112.0 60.0 99.0 68.9Q106.9 82.6 91.3 84.9Q92.4 100.7 77.4 96.0Q71.6 110.7 60.0 100.0Q48.4 110.7 42.6 96.0Q27.6 100.7 28.7 84.9Q13.1 82.6 21.0 68.9Q8.0 60.0 21.0 51.1Q13.1 37.4 28.7 35.1Q27.6 19.3 42.6 24.0Q48.4 9.3 60.0 20.0z"/><path d="M36 54c0-16 10-26 24-26s24 10 24 26c0 18-10 32-24 32S36 72 36 54z"/><path d="M48 52h4M68 52h4"/><path d="M54 66h12l-6 6z"/><path d="M60 72v4M52 80q8 4 16 0"/>'
 }
 function Ill-Art([string]$name) {
   if (-not $Ill[$name]) { return '' }
@@ -2022,7 +2042,13 @@ $IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 # One case page of the Tartış section (İslam'a Cevap, Ateizme Cevap): the summary, the parts, the
 # closing, the sources and the footnote, from one data file of the same shape
 
-function Case-Body($Ic, $Ico) {
+# Each part of a case page, and its closing, as an illustrated section: drawing and colour by part id
+$CaseArt = @{
+  'islama-cevap' = @{ kitap = @('scroll', 'blue'); peygamber = @('scales', 'gold'); tanri = @('cosmos', 'purple'); itirazlar = @('shield', 'red'); sonuc = @('door', 'green') }
+  'ateizme-cevap' = @{ ring = @('scales', 'purple'); tanri = @('cosmos', 'blue'); isa = @('tomb', 'gold'); itirazlar = @('shield', 'red'); sonuc = @('door', 'green') }
+}
+function Case-Body($Ic, $Ico, [string]$Page) {
+  $arts = $CaseArt[$Page]
   # Which part each section belongs to, for the small label on each summary card
   $icPartOf = @{}
   foreach ($pt in @($Ic.parts)) {
@@ -2056,14 +2082,15 @@ function Case-Body($Ic, $Ico) {
         "<div class=`"prose`">$(TB (Ic-Blocks $_.body) (Ic-Blocks $_.bodyEn))</div>$(Ic-Nav ($script:icN - 1))</section>"
     }) -join "`n"
     $pi++
-    "<section class=`"ic-part`" id=`"$($part.id)`" aria-labelledby=`"$($part.id)-h`"><header class=`"ic-part-head`"><p class=`"ic-part-n`">$(T "$($icRoman[$pi - 1]). Bölüm" "Part $($icRoman[$pi - 1])")</p><h2 class=`"ic-part-t`" id=`"$($part.id)-h`">$(T $part.title $part.titleEn)</h2></header>`n$secs</section>"
+    $a = $arts[$part.id]; if (-not $a) { $a = @('candle', 'gold') }
+    Ill-Sec -Id $part.id -HeadId "$($part.id)-h" -Art $a[0] -Tone $a[1] -Class 'ic-part' -Kick (T "$($icRoman[$pi - 1]). Bölüm" "Part $($icRoman[$pi - 1])") -Head (T $part.title $part.titleEn) -Body $secs
   }) -join "`n"
   $icSources = ($Ic.sources | ForEach-Object {
     $t = T $_[0] $_[2]
     if ($_[1]) { "<li><a href=`"$($_[1])`" target=`"_blank`" rel=`"noopener`">$t</a></li>" } else { "<li>$t</li>" }
   }) -join ''
   $icBody = @"
-  <div class="wrap narrow ic-page">
+  <div class="wrap narrow ic-page ill-page">
     <header class="page-head center" id="bas">$(Page-Ico $Ico)<h1>$(T $Ic.title $Ic.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Ic.en)</p>")</header>
     <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)<a class="ic-fn-ref" href="#dipnot" aria-label="Dipnot" data-en-aria-label="Footnote">*</a></p>
     <section class="ic-tldr" id="kisaca" aria-labelledby="kisaca-h">
@@ -2073,14 +2100,14 @@ function Case-Body($Ic, $Ico) {
       </details>
     </section>
   $icParts
-    <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$(T $Ic.closing.title $Ic.closing.titleEn)</h2><div class="prose">$(TB ((Ic-Blocks $Ic.closing.body) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>') ((Ic-Blocks $Ic.closing.bodyEn) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>'))</div>$(Ic-Nav ($icSeq.Count - 1))</section>
+$(Ill-Sec -Id $Ic.closing.id -HeadId "$($Ic.closing.id)-h" -Art $arts['sonuc'][0] -Tone $arts['sonuc'][1] -Class 'ic-closing' -Kick (T 'Sonuç' 'In the end') -Head (T $Ic.closing.title $Ic.closing.titleEn) -Body ("<div class=`"prose`">$(TB ((Ic-Blocks $Ic.closing.body) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>') ((Ic-Blocks $Ic.closing.bodyEn) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>'))</div>" + (Ic-Nav ($icSeq.Count - 1))))
     <section class="ic-sources" aria-labelledby="ic-kaynak-h"><h2 class="section-title" id="ic-kaynak-h">$(T 'Kaynaklar' 'Sources')</h2><ul>$icSources</ul></section>
     <aside class="ic-footnote" id="dipnot" aria-label="Dipnot" data-en-aria-label="Footnote"><p><span class="ic-fn-mark" aria-hidden="true">*</span>$(T (Ic-Link $Ic.note) (Ic-Link $Ic.noteEn))</p></aside>
   </div>
 "@
   return $icBody
 }
-$icBody = Case-Body $Ic $IcoAnswer
+$icBody = Case-Body $Ic $IcoAnswer 'islama-cevap'
 $icLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ic.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/islama-cevap.html") + '}'
 Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadislerle | $SiteName" -TitleEn "$($Ic.en): From the Qur$($Apos)an and the Hadith | $SiteName" `
   -Description (Meta-Trim "İslam'ın iddiaları kendi kaynaklarıyla sınanıyor: İslam ikilemi, Kur'an'ın korunmuşluğu, Muhammed'in karakteri, Kâbe'nin putu Hübel. Kısa özet ve tam tartışma.") -DescriptionEn "Islam's claims tested by its own sources: the Islamic dilemma, the preservation of the Qur'an, the character of Muhammad, and Hubal, the idol of the Kaaba." `
@@ -2091,7 +2118,7 @@ Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadis
 # existence argued from reason and evidence, then the testimony of miracles and converts, then the
 # objections (evil, hiddenness, many religions, science).
 $Ac = Read-Data 'ateizme-cevap.js'
-$acBody = Case-Body $Ac $IcoCosmos
+$acBody = Case-Body $Ac $IcoCosmos 'ateizme-cevap'
 $acLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ac.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/ateizme-cevap.html") + '}'
 Write-Page -File 'ateizme-cevap.html' -Title "$(Plain $Ac.title): Akıl ve Kanıtla | $SiteName" -TitleEn "$($Ac.en): Reason and Evidence | $SiteName" `
   -Description (Meta-Trim "Tanrı var mı? Ateizm ve agnostisizm akıl ve kanıtla sınanıyor: evrenin varlığı, ince ayar, bilinç, ahlak, İsa’nın dirilişi, mucizeler ve kötülük sorunu.") -DescriptionEn "Does God exist? Atheism and agnosticism tested by reason and evidence: the universe, fine-tuning, consciousness, the resurrection of Jesus, miracles and evil." `
@@ -2251,8 +2278,42 @@ $movableCardsHtml = ($Saints.movable | ForEach-Object {
   "<article class=`"movable-card`" data-movable=`"$($_.id)`" data-offset=`"$($_.offset)`" data-rk=`"$(Rank-Class $_.rank)`"><h3>$(T (Inline $_.title) (Inline $_.titleEn))</h3><p class=`"m-rank label`">$(T $_.rank $_.rankEn)<span class=`"m-date`" data-movable-date></span></p><div class=`"m-bio`">$(TB (Blocks $_.bio) (Blocks $_.bioEn))</div></article>"
 }) -join "`n"
 # The twenty best-known saints: one compact list, folded into a dropdown
+# Each saint's page opens with a drawing of the saint's traditional emblem, named under it
+$SaintEmblems = @{
+  'meryem-ana'             = @('stars12', 'blue', 'On iki yıldızlı taç', 'The crown of twelve stars')
+  'aziz-yusuf'             = @('tools', 'gold', 'Marangoz gönyesi ve çekici', "The carpenter's square and hammer")
+  'havari-petrus'          = @('keys', 'gold', 'Cennetin anahtarları', 'The keys of the kingdom')
+  'havari-pavlus'          = @('sword', 'red', 'Kılıç', 'The sword')
+  'vaftizci-yahya'         = @('shell', 'blue', 'Vaftiz kabuğu', 'The baptismal shell')
+  'havari-yuhanna'         = @('eagle', 'purple', 'Kartal', 'The eagle')
+  'aziz-augustinus'        = @('heart', 'red', 'Alevli ve oklu yürek', 'The flaming, pierced heart')
+  'aziz-thomas-aquinas'    = @('sun', 'gold', 'Göğsündeki güneş', 'The sun on his breast')
+  'assisili-aziz-francis'  = @('tau', 'green', 'Tau haçı', 'The tau cross')
+  'sienali-aziz-catharina' = @('thorns', 'red', 'Dikenli taç', 'The crown of thorns')
+  'avilali-aziz-teresa'    = @('book', 'purple', 'Kitap ve kalem', 'The book and quill')
+  'lisieuxlu-kucuk-teresa' = @('rose', 'red', 'Gül', 'The rose')
+  'aziz-ignatius-loyola'   = @('ihs', 'gold', 'IHS mührü', 'The IHS seal')
+  'aziz-benedictus'        = @('cupsnake', 'purple', 'Yılanlı kadeh', 'The cup with the serpent')
+  'aziz-patrick'           = @('shamrock', 'green', 'Yonca', 'The shamrock')
+  'padovali-aziz-antonius' = @('lily', 'gold', 'Zambak', 'The lily')
+  'kalkutali-aziz-teresa'  = @('beads', 'blue', 'Tesbih', 'The rosary')
+  'aziz-ii-yuhanna-pavlus' = @('arms', 'blue', 'Totus Tuus arması', 'The Totus Tuus coat of arms')
+  'padre-pio'              = @('hand', 'red', 'Kutsal yaralar', 'The stigmata')
+  'aziz-hieronymus'        = @('lion', 'gold', 'Aslan', 'The lion')
+}
+function Saint-Emblem([string]$id) {
+  $e = $SaintEmblems[$id]
+  if (-not $e) { return '' }
+  "<div class=`"emblem ill-card tone-$($e[1])`">$(Ill-Art $e[0])<p class=`"emblem-cap`">$(T "Simgesi: $($e[2])" "Emblem: $($e[3])")</p></div>"
+}
+# the list on Azizler: each name with a small copy of the saint's emblem
+function Saint-Mini([string]$id) {
+  $e = $SaintEmblems[$id]
+  if (-not $e) { return '' }
+  "<span class=`"gs-ico ill-card tone-$($e[1])`" aria-hidden=`"true`"><svg viewBox=`"0 0 120 120`">$($Ill[$e[0]] -replace '/>', '></path>')</svg></span>"
+}
 $greatSaintsCardsHtml = ($GreatSaints.saints | ForEach-Object {
-  "<a class=`"gs-item`" href=`"$($_.id).html`"><span class=`"gs-n`">$(T (Inline $_.name) $_.en)</span><span class=`"gs-s`">$(T (Inline $_.epithet) (Inline $_.epithetEn))</span></a>"
+  "<a class=`"gs-item`" href=`"$($_.id).html`">$(Saint-Mini $_.id)<span class=`"gs-n`">$(T (Inline $_.name) $_.en)</span><span class=`"gs-s`">$(T (Inline $_.epithet) (Inline $_.epithetEn))</span></a>"
 }) -join ''
 $azizlerBody = @"
 <div class="wrap narrow">
@@ -2288,7 +2349,7 @@ $GreatSaints.saints | ForEach-Object {
 <div class="wrap narrow">
   $(Crumbs $s.name 'Azizler' 'azizler.html')
   <article class="article" id="article">
-    <header class="page-head center">$(Page-Ico $IcoStar)<p class="label">$(T "$(Inline $s.epithet) · $($s.era)" "$(Inline $s.epithetEn) · $($s.eraEn)")</p><h1>$(T (Inline $s.name) $s.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($s.en)</p>")</header>
+    <header class="page-head center saint-head">$(Page-Ico $IcoStar)$(Saint-Emblem $s.id)<p class="label">$(T "$(Inline $s.epithet) · $($s.era)" "$(Inline $s.epithetEn) · $(if ($s.eraEn) { $s.eraEn } else { $s.era })")</p><h1>$(T (Inline $s.name) $s.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($s.en)</p>")</header>
     <div class="body prose">$(TB (Convert-Markdown $s.body) (Convert-Markdown $s.bodyEn))</div>
   </article>
 </div>
@@ -2506,10 +2567,14 @@ function Rosary-Tracker([string]$lang) {
   </section>
 "@
 }
+# each set of mysteries with a drawing of its own: the star of Bethlehem, Mount Tabor's light, the
+# crown of thorns, the dove of Pentecost
+$MystArt = @{ 'sevinc' = @('star', 'blue'); 'isik' = @('tabor', 'gold'); 'aci' = @('thorns', 'red'); 'yucelik' = @('dove', 'purple') }
 $mysterySets = ($Rosary.sets | ForEach-Object {
   $items = ($_.items | ForEach-Object { "<li><span class=`"m-tr`">$(T (Inline $_.tr) $_.en)</span></li>" }) -join ''
-  "<article class=`"myst`" data-days=`"$($_.days -join ',')`" id=`"gizem-$($_.id)`">" +
-    "<header><h3>$(T (Inline $_.tr) $_.en)</h3><p class=`"m-day label`">$(T $_.dayTr $_.dayEn)</p>$(TO ('<p class="m-en-title" lang="en">' + $_.en + '</p>'))</header>" +
+  $ma = $MystArt[$_.id]
+  "<article class=`"myst ill-card tone-$($ma[1])`" data-days=`"$($_.days -join ',')`" id=`"gizem-$($_.id)`">" +
+    "$(Ill-Art $ma[0])<header><h3>$(T (Inline $_.tr) $_.en)</h3><p class=`"m-day label`">$(T $_.dayTr $_.dayEn)</p>$(TO ('<p class="m-en-title" lang="en">' + $_.en + '</p>'))</header>" +
     "<ol class=`"myst-list`">$items</ol></article>"
 }) -join "`n"
 $stepList = ($Rosary.steps | ForEach-Object {
@@ -2570,17 +2635,33 @@ function Th-Blocks([string]$s) {
 $thToGuide = { param($s, $name) $s.Replace($name, "<a href=`"tesbih-duasi.html#tesbih-rehberi`">$name</a>") }
 $thClosing = @("<p class=`"th-closing`">$(& $thToGuide $RosaryHistory.closing 'Adım Adım Tesbih')</p>", "<p class=`"th-closing`">$(& $thToGuide $RosaryHistory.closingEn 'Pray the Rosary, Bead by Bead')</p>")
 $thAll = @($RosaryHistory.sections)
-$thSecs = ($thAll | ForEach-Object -Begin { $n = 0 } -Process {
-  $n++
-  $end = if ($n -eq $thAll.Count) { $thClosing } else { @('', '') }
-  "<section class=`"ic-sec`" id=`"$($_.id)`"><h2 class=`"ic-sec-t`"><span class=`"label`">$n</span><span>$(T $_.title $_.titleEn)</span></h2>" +
-    "<div class=`"prose`">$(TB ((Th-Blocks $_.body) + $end[0]) ((Th-Blocks $_.bodyEn) + $end[1]))</div></section>"
+# The thirteen sections in six illustrated parts (Ill-Sec); each section keeps its own anchor and heading
+$thParts = @(
+  @{ id = 'baslangic'; art = 'rose'; tone = 'red'; k = @('Başlangıç', 'The beginning'); h = @("Gül bahçesinden İncil$($Apos)e", 'From a rose garden to the Gospel'); s = @('adi', 'kokleri', 'bos-tekrar') },
+  @{ id = 'orta-cag'; art = 'beads'; tone = 'gold'; k = @('Orta Çağ', 'The Middle Ages'); h = @("Çakıl taşlarından Aziz Dominik$($Apos)e", 'From pebbles to St. Dominic'); s = @('cakil-taslari', 'aziz-dominik', 'yeniden-dogus') },
+  @{ id = 'inebahti-ve-sonrasi'; art = 'ship'; tone = 'blue'; k = @('1571 ve sonrası', '1571 and after'); h = @('İnebahtı ve dünyaya yayılış', 'Lepanto and the spread across the world'); s = @('inebahti', 'dunyaya-yayilan') },
+  @{ id = 'gorunmeler'; art = 'mary'; tone = 'purple'; k = @('19. ve 20. yüzyıl', 'The 19th and 20th centuries'); h = @('Bartolo Longo, Lourdes ve Fatima', 'Bartolo Longo, Lourdes and Fatima'); s = @('bartolo-longo', 'lourdes-fatima') },
+  @{ id = 'gunumuz'; art = 'candle'; tone = 'green'; k = @('Bugün', 'Today'); h = @('Işık Gizemleri ve tesbihin özü', 'The Luminous Mysteries and the heart of the Rosary'); s = @('ioannes-paulus', 'tesbihin-ozu') },
+  @{ id = 'savas'; art = 'shield'; tone = 'red'; k = @('Ruhsal savaş', 'Spiritual warfare'); h = @("Şeytan $([char]0x201C)Selam Sana Meryem$([char]0x201D)den neden korkar?", 'Why does the devil fear the Hail Mary?'); s = @('ruhsal-savas') }
+)
+$thById = @{}; foreach ($x in $thAll) { $thById[$x.id] = $x }
+$thLast = $thAll[-1].id
+$thSecs = ($thParts | ForEach-Object {
+  $pt = $_
+  $inner = ($pt.s | ForEach-Object {
+    $x = $thById[$_]
+    $end = if ($x.id -eq $thLast) { $thClosing } else { @('', '') }
+    $head = if (@($pt.s).Count -gt 1) { "<h3 class=`"ic-sec-t`"><span>$(T $x.title $x.titleEn)</span></h3>" } else { "<h3 class=`"ic-sec-t visually-hidden`"><span>$(T $x.title $x.titleEn)</span></h3>" }
+    "<section class=`"ic-sec th-sub`" id=`"$($x.id)`">$head" +
+      "<div class=`"prose ill-prose`">$(TB ((Th-Blocks $x.body) + $end[0]) ((Th-Blocks $x.bodyEn) + $end[1]))</div></section>"
+  }) -join ''
+  Ill-Sec -Id $pt.id -Art $pt.art -Tone $pt.tone -Kick (T $pt.k[0] $pt.k[1]) -Head (T $pt.h[0] $pt.h[1]) -Class 'th-part' -Body $inner
 }) -join "`n"
 $thSources = (@($RosaryHistory.sources) | ForEach-Object {
   "<h3 class=`"th-src-g`">$(T $_.g $_.gEn)</h3><ul>" + ((@($_.items) | ForEach-Object { "<li>$(T (Th-Inline $_[0]) (Th-Inline $_[1]))</li>" }) -join '') + '</ul>'
 }) -join ''
 $thBody = @"
-<div class="wrap narrow ic-page th-page">
+<div class="wrap narrow ic-page th-page ill-page">
   $(Crumbs 'Tesbihin Tarihi' 'Tesbih Duası' 'tesbih-duasi.html')
   <header class="page-head center" id="bas">$(Page-Ico $IcoBeads)<h1>$(T $RosaryHistory.title $RosaryHistory.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($RosaryHistory.en)</p>")</header>
   <figure class="quote th-quote"><blockquote><p>$(T $RosaryHistory.quote $RosaryHistory.quoteEn)</p></blockquote><figcaption class="attr">$(T $RosaryHistory.quoteBy $RosaryHistory.quoteByEn)</figcaption></figure>
