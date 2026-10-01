@@ -7,7 +7,7 @@ short: Sitenin hangi veriyi topladığı (siz yazmadıkça hiçbiri) ve tarayıc
 
 ## Kısaca
 
-Siz bize yazmadıkça bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya da analiz yazılımı kullanmaz, çerez (cookie) kullanmaz. Google Analytics, reklam ağları ya da sosyal medya eklentileri gibi üçüncü taraf araçların hiçbiri sitede yok.
+Siz bize yazmadıkça bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya da analiz yazılımı kullanmaz, çerez (cookie) kullanmaz. Google Analytics, reklam ağları ya da sosyal medya eklentileri gibi üçüncü taraf araçların hiçbiri sitede yok. Tek istisna, yalnızca İletişim sayfasında çalışan ve formu spamdan koruyan Cloudflare Turnstile doğrulamasıdır (aşağıda).
 
 ## Tarayıcınızda saklanan tercihler
 
@@ -25,7 +25,7 @@ Sayfada kullanılan yazı tipleri (Inter, EB Garamond ve disleksi modundaki Lexe
 
 ## İletişim formu
 
-[İletişim](iletisim.html) sayfasındaki formdan bize yazdığınızda, adınız (yazdıysanız), e-posta adresiniz ve mesajınız Cloudflare üzerinden bize e-posta olarak iletilir. Bu bilgiler sitede saklanmaz; yalnızca size yanıt verebilmek için kullanılır, başka hiçbir amaçla kullanılmaz, üçüncü taraflarla paylaşılmaz ve pazarlama amacıyla saklanmaz.
+[İletişim](iletisim.html) sayfasındaki formdan bize yazdığınızda, adınız (yazdıysanız), e-posta adresiniz ve mesajınız Cloudflare üzerinden (Cloudflare Workers ve Email Routing) bize e-posta olarak iletilir; e-posta adresiniz, yanıtlayabilmemiz için mesajın “yanıtla” adresi olur. Bu bilgiler sitede ya da herhangi bir veritabanında saklanmaz, yalnızca gelen kutumuzda durur; yalnızca size yanıt verebilmek için kullanılır, başka hiçbir amaçla kullanılmaz, üçüncü taraflarla paylaşılmaz ve pazarlama amacıyla saklanmaz.
 
 Formu otomatik spam gönderen programlardan korumak için Cloudflare Turnstile kullanılır. Bu doğrulama yalnızca İletişim sayfasında çalışır ve sizi reklam amacıyla izlemez; ayrıntılar için [Cloudflare’in Turnstile gizlilik açıklaması](https://www.cloudflare.com/turnstile-privacy-policy/)’na bakabilirsiniz.
 

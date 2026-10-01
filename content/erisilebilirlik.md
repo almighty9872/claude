@@ -16,7 +16,10 @@ katolikdunyasi.com, ekran okuyucu kullanan görme engelli ziyaretçiler dahil, m
 - **Klavye ile kullanım:** menüler, arama kutusu, Ayarlar paneli ve açılır panellerin tümü fare kullanmadan, yalnızca klavye ile açılıp kapatılabilir; odaklanılan öğe her zaman görsel olarak belirgindir. Bilgisayarda sayfanın üstündeki menülerde Enter menüyü açar, Tab ve ok tuşları menüde gezdirir, Escape kapatır.
 - **Dokunmatik ekranlar:** tablette, kendi alt listesi olan bir menü öğesine ilk dokunuşta o liste açılır, ikinci dokunuşta sayfaya gidilir.
 - **İçeriğe atlama bağlantısı:** her sayfanın başında, menüyü atlayıp doğrudan içeriğe geçen görünmez bir bağlantı bulunur (“İçeriğe geç”).
-- **Hareket azaltma:** işletim sisteminizde “hareketi azalt” tercihi açıksa site buna uyar ve gereksiz geçiş animasyonlarını kapatır.
+- **Hareket azaltma:** işletim sisteminizde “hareketi azalt” tercihi açıksa site buna uyar ve gereksiz geçiş animasyonlarını kapatır. Bazı sayfalardaki bölüm çizimleri siz kaydırdıkça kendini çizer; bu tercih açıksa çizimler baştan tamamlanmış olarak görünür.
+- **Çizimler:** bölümlerin yanındaki çizgi çizimler yalnızca süs amaçlıdır; ekran okuyuculardan gizlenir, bilgi taşımaz. Her bölümün anlamı başlığında ve metninde yazılıdır.
+- **Harita:** Topraklarımızda Hristiyanlık haritasının sağ alt köşesindeki grup adları birer düğmedir. Fareyle üzerine gelince, klavyeyle odaklanınca ya da dokununca o gruptaki yerler vurgulanır; haritadaki her yer de klavyeyle seçilip bilgi kartı açılabilir.
+- **İletişim formu:** her alanın görünür bir etiketi vardır; gönderim sonucu (teşekkür ya da hata mesajı) ekran okuyuculara sesli olarak duyurulur. Spam koruması olan Cloudflare Turnstile çoğu zaman görünmeden çalışır, gerektiğinde tek tıklık bir doğrulama kutusu gösterir.
 - **Koyu ve açık tema:** göz yorgunluğuna ya da ışık hassasiyetine göre seçilebilir, tercihiniz hatırlanır.
 - **Renk kontrastı:** metin renkleri, WCAG 2.2 AA standardının önerdiği kontrast oranları hedeflenerek seçilmiştir; Ayarlar panelindeki “Kontrast Artır” ayarıyla daha da güçlendirilebilir.
 - **Dil:** her sayfanın Türkçe ve İngilizce iki sürümü vardır. Her sayfanın sağ alt köşesindeki TR | EN düğmesi, aynı sayfayı öteki dilde, aynı bölümden açar; seçiminiz hatırlanır. Katekizm’de İngilizce metin, özgün İngilizce metindir.

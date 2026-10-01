@@ -2,9 +2,9 @@
 
 A static Catholic resource site in Turkish and English: every page is written in Turkish, and a TR | EN switch that stays on screen turns the whole page, its text and its buttons, into English in place (Latin originals are shown on request). It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, frequently asked questions, and a directory of active Catholic churches in Turkey.
 
-The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font (and Lexend, used only when a visitor turns on the dyslexia-friendly font) is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
+The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests (the one exception is Cloudflare Turnstile, the spam check, loaded only on the contact page); the EB Garamond font (and Lexend, used only when a visitor turns on the dyslexia-friendly font) is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
-The site makes no outside network calls and never asks for the visitor's location. On a computer the header carries four dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
+Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
 
 ## Two languages: the TR | EN switch
 
@@ -59,7 +59,7 @@ sss.html                Frequently asked questions, grouped by topic
 kiliseler.html          Parish locator: a map of Turkey; a city's dot opens the list of its churches
 kilise/<id>.html        One page per church: Mass and visiting times, address, history, sources
 islama-cevap.html       Tartış (Debate): Answering Islam, a short summary then the full case in four parts
-iletisim.html           Contact page (email)
+iletisim.html           Contact page: a form that posts to the Cloudflare Worker (no address is published)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
 en/                     The English twin of every page (en/index.html, en/mass.html, en/church/<id>.html…)
 sitemap.xml, robots.txt, llms.txt, <IndexNow key>.txt
@@ -93,6 +93,8 @@ content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← Footer text: the one-line "about" sentence and the "Kaynaklar ve Telif" (sources and copyright) dialog (Markdown)
 content/*-en.md         ← The English of each Markdown page (hakkinda, kutsal-kitap, erisilebilirlik, gizlilik)
 tools/build.ps1         Regenerates the static pages from data/ and content/
+cloudflare/contact-worker.js  The contact form's Cloudflare Worker (pasted into the Cloudflare dashboard, not deployed by the workflow)
+cloudflare/README.md    Step-by-step Cloudflare setup for the contact form (Turnstile, Email Routing, Worker, route)
 tools/anadolu-harita-sekli.mjs  Regenerates the map outline (Node; only if the map frame should change)
 tools/kilise-harita-sekli.mjs   Regenerates the parish map's detailed Marmara coast (Node)
 .github/workflows/deploy.yml  Builds and publishes the site on every push to main
@@ -100,6 +102,14 @@ CNAME                   Your domain (one line). Also used for canonical/sitemap 
 ```
 
 Search works on every page: it loads the four data files the first time someone uses it, then searches the Turkish and English text, or jumps straight to a question number. `index.html?q=...` opens the home page with a search already filled in.
+
+## Illustrated sections
+
+Most guide pages (Topraklarımızda Hristiyanlık, Günah Çıkarma, Neden Katoliğiz?, Kutsal Ayin, Katolik Olma Süreci, Mucizeler, Meseller, Sorular, Kutsal Kitap) are built from `Ill-Sec` in `tools/build.ps1`: a section with a line drawing beside it, a small "kicker" line over a large heading, and a colour tone (`gold`, `red`, `blue`, `green`, `purple`). The drawings are plain SVG strokes on a 120 × 120 grid in the `$Ill` table; each one draws itself as its section scrolls into view (`initDrawings` in `assets/script.js`) and appears whole without JavaScript or with "reduce motion" on. They are `aria-hidden`, purely decorative. To add one, add a set of `<path>` strokes to `$Ill` and name it in the page's `Ill-Sec` call. On a computer the drawing sits in a sticky column on the left; on phones it floats beside the heading.
+
+## The contact form
+
+`iletisim.html` has a form instead of an email address. It posts to `/api/contact`, which a Cloudflare Worker (`cloudflare/contact-worker.js`) answers: it checks a hidden trap field and Cloudflare Turnstile, then emails the message to the owner through Cloudflare Email Routing with the sender as Reply-To. The owner's address lives only in the Worker's secrets. The Turnstile site key (public) is `$TurnstileSiteKey` in `tools/build.ps1`; the İletişim page's Content Security Policy alone allows `challenges.cloudflare.com`. Setup and maintenance are in `cloudflare/README.md`.
 
 ## Editing content
 

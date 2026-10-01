@@ -7,7 +7,7 @@ short: What data this site collects (none, unless you write to us) and what it s
 
 ## In short
 
-Unless you write to us, this site collects no user data, uses no tracking or analytics software, and uses no cookies. None of the usual third-party tools, such as Google Analytics, ad networks, or social media plugins, are on this site.
+Unless you write to us, this site collects no user data, uses no tracking or analytics software, and uses no cookies. None of the usual third-party tools, such as Google Analytics, ad networks, or social media plugins, are on this site. The one exception is Cloudflare Turnstile, which runs only on the Contact page and protects the form from spam (see below).
 
 ## Preferences stored in your browser
 
@@ -25,7 +25,7 @@ The typefaces used on the site are loaded from the site's own server; no request
 
 ## The contact form
 
-When you write to us with the form on the [Contact](iletisim.html) page, your name (if you give it), your email address and your message are passed to us by email through Cloudflare. They are not stored on the site; they are used only so we can reply, never for any other purpose, never shared with third parties, and never kept for marketing.
+When you write to us with the form on the [Contact](iletisim.html) page, your name (if you give it), your email address and your message are passed to us by email through Cloudflare (Cloudflare Workers and Email Routing); your email address becomes the message’s reply-to address so we can answer you. They are not stored on the site or in any database, only in our inbox; they are used only so we can reply, never for any other purpose, never shared with third parties, and never kept for marketing.
 
 To protect the form from automated spam, it uses Cloudflare Turnstile. The check runs only on the Contact page and does not track you for advertising; for details see [Cloudflare’s Turnstile privacy statement](https://www.cloudflare.com/turnstile-privacy-policy/).
 
