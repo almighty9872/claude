@@ -44,7 +44,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Büyük Aziz Basileios",
+     "name": "Büyük Basileios",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV. yüzyılda Kapadokya’da, bugünkü Kayseri bölgesinde yaşadı ve Kayseri episkoposu oldu. Manastır hayatı için yazdığı kurallar, Doğu manastırcılığının temelidir. Yoksullar için hastaneleri ve barınakları olan büyük bir yardım merkezi kurdu. Kutsal Ruh’un Tanrı olduğunu savunan yazılarıyla, Arianizme karşı Kilise’nin inancını korudu.",
      "nameEn": "Saint Basil the Great",
@@ -52,7 +52,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A great churchman who lived in fourth-century Cappadocia (in what is now the Kayseri region of Turkey) and became bishop of Caesarea. The rules he wrote for monastic life form the foundation of Eastern monasticism; he also built a large charitable complex of hospitals and shelters for the poor. His writings defending the divinity of the Holy Spirit safeguarded the Church's faith against Arianism."
     },
     {
-     "name": "Nazianzoslu Aziz Gregorios",
+     "name": "Nazianzoslu Gregorios",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "Basileios’un yakın dostu ve IV. yüzyılın bir başka büyük Kapadokyalı teoloğudur. Konstantinopolis episkoposu oldu. Kutsal Üçlü üzerine verdiği vaazlar yüzünden ona “Teolog” dendi. “Kapadokyalı Babalar” diye anılan üç büyük isimden biri olarak, Mesih İsa’nın hem tam Tanrı hem tam insan olduğu öğretisinin netleşmesinde kalıcı bir iz bıraktı.",
      "nameEn": "Saint Gregory of Nazianzus",
@@ -127,7 +127,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Raymond of Penyafort",
+     "name": "Ramon de Penyafort",
      "title": "Rahip",
      "bio": "XIII. yüzyılda Katalonya’da doğan bir Dominikendir. Papa IX. Gregorius’un isteği üzerine Kilise’nin dağınık hukuk metinlerini topladı ve düzenledi; bu derleme yüzyıllarca kilise hukukunun temel kaynağı oldu. Dominiken tarikatının genel başkanlığını da yaptı. Günah çıkarma ve ahlak teolojisi üzerine yazdıklarıyla tanınır.",
      "nameEn": "Raymond of Penyafort",
@@ -142,7 +142,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Severinus",
+     "name": "Noricumlu Severinus",
      "title": "Rahip",
      "bio": "V. yüzyılda bugünkü Avusturya topraklarında (Noricum) yaşamış bir keşiştir. Anlatılana göre Roma yönetiminin bölgeden çekileceğini önceden haber verdi ve halkı barbar akınlarına karşı örgütledi. Avusturya’nın koruyucu azizlerinden biridir.",
      "nameEn": "Severinus of Noricum",
@@ -157,7 +157,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Adrianus of Canterbury",
+     "name": "Canterburyli Adrianus",
      "title": "Başrahip",
      "bio": "VII. yüzyılda Kuzey Afrika’da doğmuş bir Benedikten keşişidir. İngiltere’ye giden Tarsuslu Theodoros’a eşlik etti. Canterbury yakınındaki bir manastırın başrahibi olarak kırk yıl boyunca Latince, Yunanca ve Kutsal Kitap öğretti.",
      "nameEn": "Adrian of Canterbury",
@@ -172,7 +172,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Guilielmus of Bourges",
+     "name": "Bourgesli Guillaume",
      "title": "Episkopos",
      "bio": "XII-XIII. yüzyılda Fransa’da yaşadı. Önce bir Sisterciyen keşişiydi, sonra Bourges başepiskoposu oldu. Episkopos olduktan sonra da sade ve yoksul yaşamaya devam etti; adaleti ve sadeliğiyle anılır.",
      "nameEn": "William of Bourges",
@@ -187,7 +187,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Theodosius Koinobiarhes",
+     "name": "Kenobiark Theodosios",
      "title": "Başrahip",
      "bio": "V-VI. yüzyılda yaşadı. Kapadokya’da doğdu, sonra Filistin çölünde, keşişlerin birlikte yaşadığı büyük bir manastır kurdu. Farklı dillerden gelen keşişler için ayrı şapeller yaptırdı. Doğu manastırcılığının düzene girmesinde öncü oldu.",
      "nameEn": "Theodosius the Cenobiarch",
@@ -202,7 +202,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Margarita Bourgeoys",
+     "name": "Marguerite Bourgeoys",
      "title": "Bakire",
      "bio": "XVII. yüzyılda Fransa’da doğdu ve Yeni Fransa’ya, bugünkü Montreal’e göç etti. Koloninin ilk okulunu açtı. Kızların ve yerli çocukların eğitimi için, köy köy dolaşan öğretmenlerden oluşan Notre-Dame Cemaati’ni kurdu.",
      "nameEn": "Margaret Bourgeoys",
@@ -217,7 +217,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Hilarius of Poitiers",
+     "name": "Poitiersli Hilarius",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV. yüzyılda Galya’da, bugünkü Fransa’da, Poitiers episkoposu oldu. Arianizme karşı Mesih İsa’nın tam anlamıyla Tanrı olduğunu savunduğu için sürgüne gönderildi. Ona “Batı’nın Athanasius’u” denir. Kutsal Üçlü üzerine yazdığı eserler, Latin teolojisinin gelişiminde bir dönüm noktasıdır.",
      "nameEn": "Hilary of Poitiers",
@@ -232,7 +232,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Felix of Nola",
+     "name": "Nolalı Felix",
      "title": "Rahip",
      "bio": "III. yüzyılda İtalya’nın Nola kentinde rahipti. Zulüm sırasında saklanarak hayatta kaldı, sonra yoksullara hizmet ederek yaşlılığına kadar yaşadı. Hayatını, ondan bir yüzyıl sonra yaşayan Nolalı Aziz Paulinus’un şiirleri sayesinde ayrıntılarıyla biliyoruz.",
      "nameEn": "Felix of Nola",
@@ -247,7 +247,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Paulus of Thebes",
+     "name": "Tebli Pavlus",
      "title": "Münzevi",
      "bio": "Geleneğe göre III. yüzyılda Mısır çölüne çekilen ilk Hristiyan münzevidir ve orada doksan yıldan fazla tek başına yaşadı. Ölümünden kısa süre önce Mısırlı Antonius onu ziyaret etti. Efsaneye göre Antonius, iki aslanın yardımıyla onun mezarını kazdı.",
      "nameEn": "Paul of Thebes",
@@ -262,7 +262,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Marcellus I",
+     "name": "I. Marcellus",
      "title": "Papa ve Şehit",
      "bio": "IV. yüzyılın başında kısa bir süre papalık yaptı. İmparator Maxentius döneminde, zulüm sırasında imanını inkâr edenlerin Kilise’ye geri alınması konusunda sert davrandı. Bu yüzden sürgüne gönderildi ve sürgünde öldü.",
      "nameEn": "Marcellus I",
@@ -277,7 +277,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Mısırlı Aziz Antonius",
+     "name": "Mısırlı Büyük Antonius",
      "title": "Başrahip",
      "bio": "III. yüzyılda Mısır’da doğdu. Servetini yoksullara dağıttı ve çöle çekildi. Hristiyan manastırcılığının öncüsü sayılır. Onlarca yıl süren çöl hayatı, kendisinden sonra binlerce kişiyi manastır hayatına yöneltti. Hayatını, Aziz Athanasius’un yazdığı ve manastırcılık geleneğini derinden etkileyen biyografiden biliyoruz.",
      "nameEn": "Anthony of Egypt",
@@ -307,7 +307,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Canutus IV",
+     "name": "Danimarkalı IV. Knud",
      "title": "Kral ve Şehit",
      "bio": "XI. yüzyılda Danimarka kralıydı. İngiltere’yi yeniden fethetmeye hazırlanırken kendi soyluları ona karşı ayaklandı. Bir kilisede sunağın önünde dua ederken öldürüldü. Danimarka’nın koruyucu azizidir.",
      "nameEn": "Canute IV",
@@ -330,7 +330,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "Elected pope in the third century, tradition holds, when a dove landed on his head, uniting the people and clergy in choosing him by acclamation. During his fourteen-year papacy he organized the Church of Rome, and was martyred in 250 during the persecution launched by Emperor Decius."
     },
     {
-     "name": "Sebastianus",
+     "name": "Sebastian",
      "title": "Şehit",
      "bio": "Geleneğe göre Roma ordusunda subaydı ve gizlice Hristiyan olmuştu. İmparator Diocletianus döneminde imanı yüzünden oklarla vuruldu. Yaralı olarak hayatta kaldı, ama sonra yeniden yakalanıp öldürüldü. Sanat tarihinde en çok resmedilen şehitlerden biridir; vebaya karşı koruyucu olarak da anılır.",
      "nameEn": "Sebastian",
@@ -360,7 +360,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Vincentius",
+     "name": "Zaragozalı Vincentius",
      "title": "Diyakoz ve Şehit",
      "bio": "III. yüzyılın sonunda İspanya’da, Saragossa episkoposunun diyakozu olarak hizmet etti. İmparator Diocletianus’un zulmü sırasında ağır işkencelere rağmen imanından dönmedi ve şehit edildi. Adı çok erken dönemden beri ilahilerde ve dualarda anılır; Hristiyanlığın ilk büyük diyakoz şehitlerindendir.",
      "nameEn": "Vincent of Saragossa",
@@ -390,7 +390,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Franciscus de Sales",
+     "name": "Fransuva de Sal",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XVI-XVII. yüzyılda Savoy bölgesinde Cenevre episkoposuydu. Sakin ve nazik yaklaşımıyla, Protestan olmuş bölgeleri yeniden Katolik inancına kazandırdı. “Dindar Yaşama Giriş” adlı kitabında, kutsallığın yalnızca rahiplere ve rahibelere değil, her meslekten sıradan insanlara da açık olduğunu anlattı. Katolik basınının koruyucu azizidir.",
      "nameEn": "Francis de Sales",
@@ -420,7 +420,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Timotheos ve Titos",
+     "name": "Timoteos ve Titus",
      "title": "Episkoposlar",
      "bio": "Havari Pavlus’un en yakın iki öğrencisi ve yol arkadaşıdır. Timotheos Efes’in, Titos da Girit’in ilk episkoposu olarak anılır. Pavlus, Yeni Ahit’teki iki mektubu Timotheos’a, bir mektubu da Titos’a yazdı. Bu mektuplar, genç kiliselerin nasıl yönetileceğini ve bir episkoposun nasıl biri olması gerektiğini anlatan temel kaynaklardır.",
      "nameEn": "Timothy and Titus",
@@ -465,7 +465,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Gildas Bilge",
+     "name": "Bilge Gildas",
      "title": "Rahip",
      "bio": "VI. yüzyılda Britanya’da yaşamış bir keşiş ve tarihçidir. “Britanya’nın Yıkımı ve Fethi Üzerine” adlı eseri, Roma sonrası Britanya hakkında elimizdeki en eski yazılı kaynaklardan biridir.",
      "nameEn": "Gildas the Wise",
@@ -480,7 +480,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Hyacintha Mariscotti",
+     "name": "Giacinta Marescotti",
      "title": "Bakire",
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşamış bir Fransisken rahibesidir. Manastırda uzun süre rahat ve gösterişli bir hayat sürdü. Ağır bir hastalıktan sonra gerçek bir değişim yaşadı ve ömrünün geri kalanını perhiz yaparak ve yoksullara hizmet ederek geçirdi.",
      "nameEn": "Hyacintha Mariscotti",
@@ -495,7 +495,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Bosco",
+     "name": "Don Bosco",
      "title": "Rahip",
      "bio": "XIX. yüzyılda İtalya’nın Turin kentinde, yoksul ve kimsesiz gençlere kendini adamış bir rahiptir. Onlara zanaat öğretmek ve oyunla, eğitimle onları sokaktan uzak tutmak için gençlik merkezleri kurdu; bu çalışmadan Salesyen tarikatı doğdu. Cezaya değil, sevgiye ve akla dayanan eğitim anlayışıyla tanınır. Gençlerin koruyucu azizidir.",
      "nameEn": "John Bosco",
@@ -510,7 +510,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Brigid of Kildare",
+     "name": "Kildareli Brigid",
      "title": "Bakire",
      "bio": "V-VI. yüzyılda İrlanda’da yaşadı ve Aziz Patrick’ten sonra İrlanda’nın en sevilen azizidir. Kildare’de kadınların ve erkeklerin ayrı bölümlerde yaşadığı bir manastır kurdu. Cömertliği hakkında sayısız halk hikâyesi anlatılır. İrlanda’nın koruyucu azizelerinden biridir.",
      "nameEn": "Brigid of Kildare",
@@ -540,7 +540,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Blasius",
+     "name": "Sivaslı Blasius",
      "title": "Episkopos ve Şehit",
      "bio": "IV. yüzyılın başında bugünkü Ermenistan topraklarında episkopostu ve Hristiyanlara yapılan zulüm sırasında şehit edildi. Geleneğe göre boğazına kılçık kaçan bir çocuğu mucizeyle iyileştirdi. Bu yüzden bugün, boğaz hastalıklarından korunmak için iki mum çapraz tutularak insanların boyunları üzerine dua edilir.",
      "nameEn": "Blaise",
@@ -563,7 +563,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes de Britto",
+     "name": "João de Brito",
      "title": "Rahip ve Şehit",
      "bio": "XVII. yüzyılda yaşamış Portekizli bir Cizvit misyonerdir. Hindistan’ın Madurai bölgesinde yerel kıyafetler giydi ve yerel yaşam tarzını benimseyerek vaaz etti. Sonunda yerel bir prensin emriyle şehit edildi.",
      "nameEn": "John de Britto",
@@ -608,7 +608,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Coletta",
+     "name": "Colette",
      "title": "Bakire",
      "bio": "XIV-XV. yüzyılda Fransa’da yaşamış bir rahibedir. Klaris rahibelerini tarikatın ilk başlardaki sıkı yoksulluk idealine geri döndürdü. Bugün de var olan Colettine Klarisler onun adını taşır.",
      "nameEn": "Colette",
@@ -623,7 +623,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Hieronymus Emiliani",
+     "name": "Girolamo Emiliani",
      "title": "Kurucu",
      "bio": "XVI. yüzyılda Venedik’te önce askerdi. Esir düştükten sonra hayatı değişti ve kendini yetim ve yoksul çocuklara adadı. Onlar için yetimhaneler ve hastaneler kurdu; Somasca Rahipleri Cemaati’nin temelini attı. Terk edilmiş çocukların koruyucu azizidir.",
      "nameEn": "Jerome Emiliani",
@@ -631,7 +631,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "First a soldier in sixteenth-century Venice, he underwent a conversion after being taken captive and devoted his life to orphaned and poor children. He founded orphanages and hospitals for them and laid the foundation of the Somaschi Fathers. He is the patron saint of abandoned children."
     },
     {
-     "name": "Josephina Bakhita",
+     "name": "Josephine Bakhita",
      "title": "Bakire",
      "bio": "Sudan’da doğdu. Çocukken köle tüccarları tarafından kaçırıldı ve yıllarca köle olarak alınıp satıldı. İtalya’ya götürüldüğünde özgürlüğüne kavuştu, Katolik oldu ve Kanossa Rahibeleri’ne katıldı. Yaşadığı bütün acılara rağmen bağışlayıcı ve neşeli biri olarak tanındı. Köleliğe karşı mücadelenin ve insan ticareti mağdurlarının koruyucu azizesidir.",
      "nameEn": "Josephine Bakhita",
@@ -691,7 +691,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Humilitas of Faenza",
+     "name": "Faenzalı Umiltà",
      "title": "Rahibe",
      "bio": "XIII. yüzyılda İtalya’da yaşadı. Kocasının rızasıyla evliliğini bırakıp manastıra girdi. Daha sonra Vallombrosa keşişlerine bağlı ilk kadın manastırını kurdu.",
      "nameEn": "Humility of Faenza",
@@ -706,7 +706,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Catharina dei Ricci",
+     "name": "Caterina de’ Ricci",
      "title": "Bakire",
      "bio": "XVI. yüzyılda İtalya’da yaşamış bir Dominiken rahibesidir. Mesih İsa’nın çektiği acılara derin bir bağlılığı vardı ve her hafta saatlerce süren vecd hâlleri yaşamasıyla tanınır.",
      "nameEn": "Catherine dei Ricci",
@@ -736,9 +736,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Claudius La Colombière",
+     "name": "Claude La Colombière",
      "title": "Rahip",
-     "bio": "XVII. yüzyılda Fransa’da yaşamış bir Cizvit rahibidir. Azize Margarita Maria Alacoque’un ruhani rehberiydi ve Mesih İsa’nın Kutsal Yüreği’ne bağlılığın Kilise’ye yayılmasında önemli bir rol oynadı.",
+     "bio": "XVII. yüzyılda Fransa’da yaşamış bir Cizvit rahibidir. Azize Marguerite-Marie Alacoque’un ruhani rehberiydi ve Mesih İsa’nın Kutsal Yüreği’ne bağlılığın Kilise’ye yayılmasında önemli bir rol oynadı.",
      "nameEn": "Claude La Colombière",
      "titleEn": "Priest",
      "bioEn": "A Jesuit priest in seventeenth-century France. He became the spiritual director of Saint Margaret Mary Alacoque and played a key role in spreading devotion to the Sacred Heart of Christ throughout the Church."
@@ -781,7 +781,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Simeon of Ierusalem",
+     "name": "Kudüslü Simeon",
      "title": "Episkopos ve Şehit",
      "bio": "Kudüs’ün ilk episkoposu Yakup öldükten sonra Kudüs Kilisesi’nin ikinci episkoposu oldu. Mesih İsa’nın akrabası olduğu kabul edilir. İleri yaşta, İmparator Traianus döneminde çarmıha gerilerek şehit edildi.",
      "nameEn": "Simeon of Jerusalem",
@@ -796,7 +796,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Conradus of Piacenza",
+     "name": "Piacenzalı Corrado",
      "title": "Münzevi",
      "bio": "XIV. yüzyılda İtalya’da soylu bir avcıydı. Kazayla bir yangın çıkardı ve bu yangın yüzünden suçsuz bir adam suçlanıp idama mahkûm edildi. Bu olay onu derinden değiştirdi: Suçunu itiraf etti ve ömrünün geri kalanını ıssız bir yerde, inzivada geçirdi.",
      "nameEn": "Conrad of Piacenza",
@@ -811,7 +811,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Wulfricus of Haselbury",
+     "name": "Haselburyli Wulfric",
      "title": "Münzevi",
      "bio": "XII. yüzyılda İngiltere’de bir köy papazıydı. Bir hac yolculuğundan sonra kilisesinin yanındaki küçük bir hücreye kapandı ve ömrünün geri kalanını orada geçirdi. Bilgeliği o kadar ünlendi ki krallar bile ona danışmaya geldi.",
      "nameEn": "Wulfric of Haselbury",
@@ -826,7 +826,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Petrus Damiani",
+     "name": "Pietro Damiani",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XI. yüzyılda İtalya’da önce münzevi bir keşiş olarak yaşadı, sonra kardinal ve episkopos oldu ve Kilise reformunda önemli bir rol oynadı. Din adamları arasındaki gevşekliği ve yolsuzluğu sert bir dille eleştirdi. Döneminde Kilise disiplinini yeniden sıkılaştırmaya çalışanların önde gelenlerindendir.",
      "nameEn": "Peter Damian",
@@ -856,7 +856,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Polykarpos",
+     "name": "İzmirli Polikarpos",
      "title": "Episkopos ve Şehit",
      "bio": "II. yüzyılda İzmir (Smyrna) episkoposuydu ve Havari Yuhanna’nın öğrencisi olduğu kabul edilir. İlk Kilise’nin en önemli isimlerinden biridir. Doksan yaşını geçmişken imanını inkâr etmesi için baskı yapıldı. “Seksen altı yıldır O’na hizmet ediyorum, bana hiç kötülük etmedi” diyerek reddetti ve diri diri yakılarak şehit edildi. Şehitliği, Kilise tarihindeki en eski ve en ayrıntılı şehitlik anlatılarından birinde yazılıdır.",
      "nameEn": "Polycarp",
@@ -871,7 +871,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Praetextatus of Rouen",
+     "name": "Rouenli Praetextatus",
      "title": "Episkopos ve Şehit",
      "bio": "VI. yüzyılda Rouen episkoposuydu. Frank kraliçesi Fredegund’un emriyle, kendi kilisesinde Ayin sırasında öldürüldü.",
      "nameEn": "Praetextatus of Rouen",
@@ -901,7 +901,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Nestor of Magydos",
+     "name": "Magydoslu Nestor",
      "title": "Episkopos ve Şehit",
      "bio": "III. yüzyılda bugünkü Türkiye’nin güneyinde, Pamfilya bölgesindeki Magydos’ta episkopostu. İmparator Decius’un zulmü sırasında çarmıha gerilerek şehit edildi.",
      "nameEn": "Nestor of Magydos",
@@ -931,7 +931,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Romanus of Condat",
+     "name": "Condatlı Romanus",
      "title": "Başrahip",
      "bio": "V. yüzyılda Galya’da, bugünkü Fransa-İsviçre sınırındaki Jura Dağları’nda inzivaya çekildi. Zamanla çevresinde bir manastır topluluğu oluştu ve onun başrahibi oldu. Kız kardeşi de yakınlarda bir kadın manastırı kurdu.",
      "nameEn": "Romanus of Condat",
@@ -946,7 +946,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Oswald of Worcester",
+     "name": "Worcesterli Oswald",
      "title": "Episkopos",
      "bio": "X. yüzyılda İngiltere’de York başepiskoposu oldu. Benedikten manastırlarını yenileyen üç öncüden (Dunstan, Aethelwold ve Oswald) biridir. Anma günü dört yılda bir gelen 29 Şubat olduğu için, genellikle 28 Şubat’ta anılır.",
      "nameEn": "Oswald of Worcester",
@@ -961,7 +961,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "David of Wales",
+     "name": "Gallerli David",
      "title": "Episkopos",
      "bio": "VI. yüzyılda Galler’de yaşamış ve bölgenin en önemli manastırlarından birini kurmuş bir episkopostur. Sade bir hayat sürdü ve keşişlerine yalnızca ekmek, sebze ve suyla yetinmelerini öğütledi. Galler’in koruyucu azizidir.",
      "nameEn": "David of Wales",
@@ -976,7 +976,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Chad of Mercia",
+     "name": "Mercialı Chad",
      "title": "Episkopos",
      "bio": "VII. yüzyılda İngiltere’de Mercia ve Lindsey episkoposu olan bir Anglosaksondur. Alçakgönüllülüğüyle ve her yere yaya gitmekte ısrar etmesiyle tanınır; anlatılana göre kendisine at verildiğinde bile yürümeyi tercih etti.",
      "nameEn": "Chad of Mercia",
@@ -1006,7 +1006,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Casimirus",
+     "name": "Kazimierz",
      "title": "Prens",
      "bio": "XV. yüzyılda Polonya-Litvanya kraliyet ailesinden bir prensti. Kral olabilecekken derin dindarlığı ve yoksullara düşkünlüğüyle tanındı. Genç yaşta veremden öldü. Saraydaki lükse rağmen sade ve dua dolu bir hayat sürdüğü için örnek gösterilir. Polonya’nın ve Litvanya’nın koruyucu azizidir.",
      "nameEn": "Casimir",
@@ -1021,7 +1021,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes Iosephus of the Cross",
+     "name": "Giovanni Giuseppe della Croce",
      "title": "Rahip",
      "bio": "XVII-XVIII. yüzyılda İtalya’da yaşamış bir Fransisken rahibidir. Çok sıkı bir perhiz hayatı ve derin bir dua hayatı sürdü. Napoli bölgesinde büyük saygı gördü.",
      "nameEn": "John Joseph of the Cross",
@@ -1036,7 +1036,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Chrodegangus of Metz",
+     "name": "Metzli Chrodegang",
      "title": "Episkopos",
      "bio": "VIII. yüzyılda Metz episkoposu olan bir Frank din adamıdır. Din adamlarının bir arada yaşaması için yazdığı kurallar, Batı’da ortak hayat süren din adamları geleneğinin temellerinden biri oldu.",
      "nameEn": "Chrodegang of Metz",
@@ -1066,7 +1066,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes de Deo",
+     "name": "Juan de Dios",
      "title": "Kurucu",
      "bio": "XVI. yüzyılda Portekiz’de doğdu ve İspanya’da yaşadı. Askerlik ve başıboş geçen yıllardan sonra hayatı tamamen değişti ve kendini hastalara ve yoksullara adadı. Granada’da kurduğu hastane, bugün dünyanın her yerinde hastanelerde hizmet veren Hastabakıcı Kardeşler Tarikatı’nın başlangıcı oldu. Hastanelerin ve hastaların koruyucu azizlerindendir.",
      "nameEn": "John of God",
@@ -1096,7 +1096,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Macarius of Ierosolyma",
+     "name": "Kudüslü Makarios",
      "title": "Episkopos",
      "bio": "IV. yüzyılda Kudüs episkoposuydu ve I. İznik Konsili’ne katıldı. Anlatılana göre İmparator Konstantin’in annesi Helena’ya, İsa’nın mezarının yerini bulma çalışmalarında yol gösterdi.",
      "nameEn": "Macarius of Jerusalem",
@@ -1111,7 +1111,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Eulogius of Corduba",
+     "name": "Kurtubalı Eulogius",
      "title": "Rahip ve Şehit",
      "bio": "IX. yüzyılda İslam yönetimindeki İspanya’da, Kurtuba’da (Kordoba) yaşamış bir rahiptir. Zulüm döneminde şehit edilen Hristiyanların hikâyelerini yazıya geçirdi. Sonunda kendisi de Hristiyan olmuş bir kızı sakladığı için idam edildi.",
      "nameEn": "Eulogius of Córdoba",
@@ -1141,7 +1141,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Patricia of Neapolis",
+     "name": "Napolili Patricia",
      "title": "Bakire",
      "bio": "VIII. yüzyılda yaşadı ve Bizans imparatorluk ailesinden geldiğine inanılır. Servetini bırakıp Napoli’ye gitti ve orada dindar bir hayat sürdü. Napoli’nin koruyucu azizelerinden biridir; kanının da Aziz Ianuarius’unki gibi sıvılaştığına inanılır.",
      "nameEn": "Patricia of Naples",
@@ -1171,9 +1171,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ludovica de Marillac",
+     "name": "Louise de Marillac",
      "title": "Bakire",
-     "bio": "XVI-XVII. yüzyılda Fransa’da yaşadı ve Aziz Vincentius de Paul ile birlikte Merhamet Kızları cemaatini kurdu. Manastıra kapanmadan, doğrudan sokaklarda ve evlerde yoksullara hizmet eden yeni bir kadın cemaati modeli geliştirdi.",
+     "bio": "XVI-XVII. yüzyılda Fransa’da yaşadı ve Aziz Vincent de Paul ile birlikte Merhamet Kızları cemaatini kurdu. Manastıra kapanmadan, doğrudan sokaklarda ve evlerde yoksullara hizmet eden yeni bir kadın cemaati modeli geliştirdi.",
      "nameEn": "Louise de Marillac",
      "titleEn": "Virgin",
      "bioEn": "A saint in sixteenth- and seventeenth-century France who, together with Saint Vincent de Paul, founded the Daughters of Charity. She developed a model of a women's community that served the poor directly in the streets and in homes, without being cloistered in a convent."
@@ -1186,7 +1186,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Heribertus of Colonia",
+     "name": "Kölnlü Heribert",
      "title": "Episkopos",
      "bio": "X-XI. yüzyılda Köln başepiskoposuydu ve İmparator III. Otto’nun baş danışmanlığını yaptı; hem devlet adamı hem din adamıydı. Bir kuraklık sırasında halk için yağmur duası ettiği ve yağmurun yağdığı anlatılır.",
      "nameEn": "Heribert of Cologne",
@@ -1201,7 +1201,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Patricius",
+     "name": "Patrick",
      "title": "Episkopos",
      "bio": "V. yüzyılda Britanya’da doğdu. Gençken korsanlar tarafından kaçırıldı ve İrlanda’ya köle olarak götürüldü. Kaçtı, yıllar sonra rahip oldu ve kendi isteğiyle İrlanda’ya geri döndü. Adanın büyük bölümünü Hristiyanlığa kazandırdı. Geleneğe göre Kutsal Üçlü’yü üç yapraklı yonca ile anlattı. İrlanda’nın koruyucu azizidir.",
      "nameEn": "Patrick",
@@ -1216,7 +1216,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Kyrillos of Ierosolyma",
+     "name": "Kudüslü Kyrillos",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV. yüzyılda Kudüs episkoposuydu. Arianizm tartışmaları yüzünden üç kez sürgüne gönderildi. Vaftiz olacaklara vaftizden önce ve sonra verdiği din dersleri günümüze ulaştı; bunlar ilk yüzyıllarda insanların Hristiyanlığa nasıl kabul edildiğini gösteren en değerli kaynaklardandır.",
      "nameEn": "Cyril of Jerusalem",
@@ -1246,7 +1246,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Cuthbertus of Lindisfarne",
+     "name": "Lindisfarneli Cuthbert",
      "title": "Episkopos",
      "bio": "VII. yüzyılda İngiltere’de çoban bir çocukken keşiş oldu, sonra Lindisfarne episkoposu oldu. Issız bir adada münzevi olarak yaşamayı tercih etti. Doğaya ve deniz kuşlarına olan sevgisiyle tanınır. Kuzey İngiltere’nin en sevilen azizlerinden biridir.",
      "nameEn": "Cuthbert of Lindisfarne",
@@ -1261,7 +1261,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Nicolaus of Flüe",
+     "name": "Flüeli Nikolaus",
      "title": "Münzevi",
      "bio": "XV. yüzyılda İsviçre’de on çocuklu bir çiftçiydi. Ailesinin rızasıyla münzevi olarak inzivaya çekildi. İsviçre kantonları arasındaki bir anlaşmazlıkta arabuluculuk yaparak ülkeyi iç savaştan korudu. İsviçre’nin koruyucu azizidir.",
      "nameEn": "Nicholas of Flüe",
@@ -1276,7 +1276,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Nicolaus Owen",
+     "name": "Nicholas Owen",
      "title": "Rahip Kardeş ve Şehit",
      "bio": "XVI-XVII. yüzyılda İngiltere’de yaşamış bir Cizvit kardeştir. Katoliklere zulmedilen o dönemde, rahipleri saklamak için evlerde gizli bölmeler yaptı. Sonunda yakalandı ve işkence altında öldü; ama kimseyi ele vermedi.",
      "nameEn": "Nicholas Owen",
@@ -1291,7 +1291,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Turibius of Mogrovejo",
+     "name": "Toribio de Mogrovejo",
      "title": "Episkopos",
      "bio": "XVI. yüzyılda İspanyol bir hukukçuydu. Daha rahip bile değilken Peru’ya gönderildi ve Lima başepiskoposu oldu. Yirmi beş yıldan uzun bir süre, sarp And Dağları’nı aşarak piskoposluk bölgesini defalarca dolaştı. Yerli halkların dillerini öğrendi ve onların haklarını savundu. Latin Amerika episkoposlarının öncüsü sayılır.",
      "nameEn": "Turibius of Mogrovejo",
@@ -1306,7 +1306,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Catharina of Suecia",
+     "name": "İsveçli Katarina",
      "title": "Bakire",
      "bio": "XIV. yüzyılda yaşamış, İsveçli Azize Birgitta’nın kızıdır. Annesinin Roma’ya ve hac yerlerine yaptığı yolculuklarda ona eşlik etti. Annesi öldükten sonra kurduğu tarikatın başına geçti ve tarikatın kurallarının Kilise tarafından onaylanması için çalıştı.",
      "nameEn": "Catherine of Sweden",
@@ -1336,7 +1336,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ludgerus",
+     "name": "Ludger",
      "title": "Episkopos",
      "bio": "VIII-IX. yüzyılda Frizya ve Saksonya bölgelerinde misyonerlik yaptı ve Münster’in ilk episkoposu oldu.",
      "nameEn": "Ludger",
@@ -1351,7 +1351,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes of Aegyptus",
+     "name": "Mısırlı Yuhanna",
      "title": "Münzevi",
      "bio": "IV. yüzyılda Mısır’da elli yıldan fazla bir mağarada inzivada yaşamış bir çöl babasıdır. Geleceği önceden bilmesi ve hastaları iyileştirmesiyle ünlendi; İmparator Theodosius bile ona danışmaya adam gönderdi.",
      "nameEn": "John of Egypt",
@@ -1366,7 +1366,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Sixtus III",
+     "name": "III. Sixtus",
      "title": "Papa",
      "bio": "V. yüzyılda papalık yaptı. Efes Konsili Meryem’i Tanrı Anası ilan ettikten hemen sonra, Roma’daki Santa Maria Maggiore Bazilikası’nın yeniden yapımını tamamlattı.",
      "nameEn": "Sixtus III",
@@ -1396,7 +1396,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes Climacus",
+     "name": "Yuhanna Klimakos",
      "title": "Rahip",
      "bio": "VI-VII. yüzyılda Sina Dağı’nda yaşamış bir keşiştir. Erdemleri otuz basamaklı bir merdiven gibi anlattığı “Cennete Çıkan Merdiven” adlı kitabı, Doğu manastırcılığının en etkili el kitaplarından biridir.",
      "nameEn": "John Climacus",
@@ -1426,7 +1426,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Hugo of Gratianopolis",
+     "name": "Grenoble Piskoposu Hugues",
      "title": "Episkopos",
      "bio": "XI-XII. yüzyılda Fransa’da Grenoble episkoposuydu ve elli yıldan fazla bu görevde kaldı. Aziz Bruno’ya Chartreuse bölgesinde manastır kurması için arazi verdi ve böylece Kartüzyen tarikatının doğmasına katkıda bulundu.",
      "nameEn": "Hugh of Grenoble",
@@ -1441,7 +1441,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Franciscus of Paola",
+     "name": "Paolalı Francesco",
      "title": "Münzevi",
      "bio": "XV. yüzyılda İtalya’nın Kalabriya bölgesinde yaşadı. Genç yaşta bir mağaraya çekilip münzevi olarak yaşadı. Çevresinde toplanan öğrencilerle Minim Kardeşler Tarikatı’nı kurdu. Çok sıkı perhizi ve yoksul hayatıyla tanınır; bilgeliği ve mucizeleriyle o kadar ünlendi ki krallar bile ona danıştı.",
      "nameEn": "Francis of Paola",
@@ -1456,7 +1456,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Richardus of Cicestre",
+     "name": "Chichester Piskoposu Richard",
      "title": "Episkopos",
      "bio": "XIII. yüzyılda İngiltere’de Chichester episkoposuydu. Ona ait olduğu söylenen ünlü dua (“Seni daha açık görmek, daha çok sevmek ve daha yakından izlemek için”) bugün de çok kullanılır.",
      "nameEn": "Richard of Chichester",
@@ -1471,7 +1471,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Isidorus of Hispalis",
+     "name": "Sevillalı Isidorus",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "VI-VII. yüzyılda İspanya’da Sevilla episkoposuydu. “Etymologiae” adlı dev ansiklopedisiyle, Roma İmparatorluğu çöktükten sonra antik dünyanın bilgisini toplayıp Orta Çağ’a aktardı. Bu geniş kapsamlı çalışması yüzünden internetin ve bilgisayar kullanıcılarının koruyucu azizi olarak da anılır.",
      "nameEn": "Isidore of Seville",
@@ -1486,7 +1486,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Vincentius Ferrer",
+     "name": "Vicente Ferrer",
      "title": "Rahip",
      "bio": "XIV-XV. yüzyılda İspanya’da yaşamış bir Dominiken vaizidir. Avrupa’yı dolaşıp tövbe ve Mesih İsa’ya dönüş üzerine verdiği ateşli vaazlarla tanınır. Aynı anda birden fazla papanın olduğu Büyük Batı Bölünmesi döneminde Kilise’nin birliği için çalıştı. Anlatılana göre vaazlarını dinleyen binlerce kişi imana geldi.",
      "nameEn": "Vincent Ferrer",
@@ -1501,7 +1501,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Notker Kekeme",
+     "name": "Kekeme Notker",
      "title": "Rahip",
      "bio": "IX. yüzyılda İsviçre’deki Sankt Gallen Manastırı’nda yaşamış bir Benedikten keşişi, şair ve müzisyendir. Ayinde okunan bir ilahi türü olan sekansın öncülerinden sayılır.",
      "nameEn": "Notker the Stammerer",
@@ -1516,7 +1516,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Baptista de la Salle",
+     "name": "Jean-Baptiste de La Salle",
      "title": "Rahip",
      "bio": "XVII-XVIII. yüzyılda Fransa’da yaşamış, soylu bir aileden gelen bir rahiptir. Servetini bırakıp kendini yoksul çocukların ücretsiz eğitimine adadı ve öğretmen yetiştiren ilk düzenli okullardan birini açtı. Kurduğu Hristiyan Okulları Kardeşleri (La Salle Kardeşleri) bugün de dünyanın her yerinde okullar işletiyor. Öğretmenlerin koruyucu azizidir.",
      "nameEn": "John Baptist de la Salle",
@@ -1531,7 +1531,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Iulia Billiart",
+     "name": "Julie Billiart",
      "title": "Bakire",
      "bio": "XVIII-XIX. yüzyılda Fransa’da yaşadı. Yirmi yıldan uzun süre felçli kaldıktan sonra mucizevi biçimde iyileşti. Kızların eğitimi için Notre Dame Rahibeleri cemaatini kurdu.",
      "nameEn": "Julie Billiart",
@@ -1546,7 +1546,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Waldetrudis",
+     "name": "Waltrude",
      "title": "Rahibe",
      "bio": "VII. yüzyılda bugünkü Belçika’da yaşamış soylu bir kadındır; kocası da aziz olarak anılır. Evliliğinden sonra manastıra çekildi. Mons şehrinin koruyucu azizesidir.",
      "nameEn": "Waltrude",
@@ -1561,7 +1561,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Fulbertus of Carnotum",
+     "name": "Chartres Piskoposu Fulbert",
      "title": "Episkopos",
      "bio": "X-XI. yüzyılda Chartres episkoposuydu ve ünlü Chartres Katedrali’nin yeniden yapımını başlattı. Bir bilgin olarak Chartres okulunu Avrupa’nın önde gelen eğitim merkezlerinden biri hâline getirdi.",
      "nameEn": "Fulbert of Chartres",
@@ -1576,7 +1576,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Stanislaus",
+     "name": "Stanisław",
      "title": "Episkopos ve Şehit",
      "bio": "XI. yüzyılda Polonya’da Krakov episkoposuydu. Kral II. Bolesław’ın haksızlıklarını açıkça eleştirdiği için kralın emriyle öldürüldü. Polonya’nın koruyucu azizlerinden biridir ve adaletsizliğe karşı çıkan din adamlarına örnek gösterilir.",
      "nameEn": "Stanislaus",
@@ -1591,7 +1591,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Iulius I",
+     "name": "I. Julius",
      "title": "Papa",
      "bio": "IV. yüzyılda papalık yaptı. Arianizme karşı mücadele eden Athanasius’a sürgündeyken kucak açtı ve onu savundu. Roma’da birkaç kilisenin yapımını başlattı.",
      "nameEn": "Julius I",
@@ -1606,7 +1606,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Martinus I",
+     "name": "I. Martinus",
      "title": "Papa ve Şehit",
      "bio": "VII. yüzyılda papaydı. Bizans imparatorunun desteklediği Monotelizm’e, yani Mesih İsa’da yalnızca tek bir irade olduğunu söyleyen yanlış öğretiye karşı çıktı. Bu yüzden tutuklanıp Konstantinopolis’e götürüldü; kötü muamele gördü ve sürgün edildiği Kırım’da öldü. Şehit olarak anılan son papadır.",
      "nameEn": "Martin I",
@@ -1621,7 +1621,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Lidwina of Schiedam",
+     "name": "Schiedamlı Lidwina",
      "title": "Bakire",
      "bio": "XIV-XV. yüzyılda Hollanda’da yaşadı. On beş yaşında buz pateni yaparken kaza geçirdi ve ömür boyu yatağa bağlı kaldı. Uzun yıllar süren acısını Mesih İsa’nın çektiği acılarla birleştirerek yaşadı. Kronik hastalığı olanların koruyucu azizesidir.",
      "nameEn": "Lidwina of Schiedam",
@@ -1636,7 +1636,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Paternus of Abrincae",
+     "name": "Avranches Piskoposu Paternus",
      "title": "Episkopos",
      "bio": "VI. yüzyılda Galya’da, bugünkü Fransa’da episkopostu. Episkopos olmadan önce münzevi olarak yaşamıştı.",
      "nameEn": "Paternus of Avranches",
@@ -1666,7 +1666,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Stephanus Harding",
+     "name": "Stephen Harding",
      "title": "Başrahip",
      "bio": "XI-XII. yüzyılda İngiltere’de doğdu. Cîteaux Manastırı’nın üçüncü başrahibi ve Sisterciyen tarikatının asıl kurucularından biridir. Tarikatın temel kuralı olan Carta Caritatis’i (Sevgi Fermanı) yazdı.",
      "nameEn": "Stephen Harding",
@@ -1681,7 +1681,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Galdinus of Mediolanum",
+     "name": "Milanolu Galdinus",
      "title": "Episkopos",
      "bio": "XII. yüzyılda Milano episkoposuydu. Şehirde yayılan Katarizm adlı yanlış öğretiye karşı ateşli vaazlarıyla mücadele etti ve bir vaaz verirken öldü.",
      "nameEn": "Galdinus of Milan",
@@ -1696,7 +1696,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Alphegus of Canterbury",
+     "name": "Canterburyli Alphege",
      "title": "Episkopos ve Şehit",
      "bio": "XI. yüzyılda Canterbury başepiskoposuydu. Viking akıncıları onu rehin aldı. Halkının daha fazla sömürülmesini istemediği için, kendisi için fidye toplanmasını yasakladı ve bu yüzden öldürüldü.",
      "nameEn": "Alphege of Canterbury",
@@ -1711,9 +1711,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Agnes of Montepulciano",
+     "name": "Montepulcianolu Agnes",
      "title": "Bakire",
-     "bio": "XIII-XIV. yüzyılda İtalya’da yaşamış bir Dominiken rahibesidir. Daha on beş yaşındayken bir manastırın başrahibesi seçildi. Mucizeleriyle ünlendi; Sienalı Azize Catharina ona büyük hayranlık duyardı.",
+     "bio": "XIII-XIV. yüzyılda İtalya’da yaşamış bir Dominiken rahibesidir. Daha on beş yaşındayken bir manastırın başrahibesi seçildi. Mucizeleriyle ünlendi; Sienalı Azize Katerina ona büyük hayranlık duyardı.",
      "nameEn": "Agnes of Montepulciano",
      "titleEn": "Virgin",
      "bioEn": "A Dominican sister in thirteenth- and fourteenth-century Italy, elected abbess of a convent at only fifteen. She was greatly admired by Saint Catherine of Siena, and gained fame for her miracles."
@@ -1726,7 +1726,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Anselmus of Canterbury",
+     "name": "Canterburyli Anselmus",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XI-XII. yüzyılda yaşamış, İtalya kökenli bir Benedikten keşişidir. Canterbury başepiskoposu olarak, İngiltere’de kral ile Kilise arasındaki çatışmalarda Kilise’nin özgürlüğünü savundu. “Anlamak için inanıyorum” sözüyle bilinir. Allah’ın varlığına dair ünlü “ontolojik kanıtı” ile Orta Çağ felsefesinin öncülerindendir.",
      "nameEn": "Anselm of Canterbury",
@@ -1741,7 +1741,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Opportuna of Monasteriolum",
+     "name": "Montreuilli Opportuna",
      "title": "Bakire",
      "bio": "VIII. yüzyılda Normandiya’da bir manastırın başrahibesiydi. Anlatılana göre kardeşi episkopos Chrodegangus’un hac dönüşü öldürüldüğünü duyunca büyük acı çekti.",
      "nameEn": "Opportuna of Montreuil",
@@ -1756,7 +1756,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Georgius",
+     "name": "Georgios",
      "title": "Şehit",
      "bio": "Geleneğe göre III-IV. yüzyılda Roma ordusunda subaydı ve Hristiyan olduğu için İmparator Diocletianus döneminde şehit edildi. Hayatı hakkında kesin tarihsel bilgi azdır, ama imanı uğruna canını vermeye hazır cesur bir asker olarak çok erken dönemden beri büyük saygı görür. Ejderha efsanesiyle özdeşleşmiştir ve birçok ülkenin koruyucu azizidir.",
      "nameEn": "George",
@@ -1764,7 +1764,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A soldier who, tradition holds, served as an officer in the Roman army around the third to fourth century and was martyred for being Christian under Emperor Diocletian. Few certain historical details about him survive, but he has been greatly venerated since the early period as a courageous soldier ready to give his life for his faith. Identified with the legend of the dragon, he became the patron saint of many countries."
     },
     {
-     "name": "Adalbertus",
+     "name": "Prağlı Adalbert",
      "title": "Episkopos ve Şehit",
      "bio": "X. yüzyılda Prag episkoposuydu ve Orta ve Doğu Avrupa’da misyonerlik yaptı. Baltık kıyısındaki putperest Prusyalılara Müjde’yi anlatmaya çalışırken şehit edildi. Polonya’nın, Çekya’nın ve Macaristan’ın koruyucu azizlerindendir.",
      "nameEn": "Adalbert of Prague",
@@ -1779,7 +1779,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Fidelis of Sigmaringen",
+     "name": "Sigmaringenli Fidelis",
      "title": "Rahip ve Şehit",
      "bio": "XVI-XVII. yüzyılda Almanya’da önce avukatlık yaptı, sonra Kapuçin rahibi oldu. İsviçre’de, Protestanlarla Katolikler arasındaki gerginliğin çok yüksek olduğu bir bölgede misyonerlik yaparken öfkeli bir kalabalık tarafından öldürüldü. Kapuçin misyonerlerinin ilk şehididir.",
      "nameEn": "Fidelis of Sigmaringen",
@@ -1839,7 +1839,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Petrus Chanel",
+     "name": "Pierre Chanel",
      "title": "Rahip ve Şehit",
      "bio": "XIX. yüzyılda Fransa’da rahipti, sonra misyoner olarak Pasifik’teki Futuna adasına gönderildi. Adanın şefi, oğlunun vaftiz olmasından rahatsız oldu ve şefin adamları onu öldürdü. Okyanusya’nın ilk şehididir. Ölümünden kısa süre sonra adanın halkı topluca Hristiyan oldu.",
      "nameEn": "Peter Chanel",
@@ -1847,7 +1847,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A priest in nineteenth-century France, later a missionary sent to the island of Futuna in the Pacific. He was killed by the men of a local chief who was disturbed by his son's baptism. He is the first martyr of Oceania; the people of his island converted to Christianity en masse shortly after his death."
     },
     {
-     "name": "Ludovicus Grignion de Montfort",
+     "name": "Louis-Marie Grignion de Montfort",
      "title": "Rahip",
      "bio": "XVII-XVIII. yüzyılda Fransa’da yoksullar arasında vaaz eden gezici bir misyonerdir. Meryem Ana aracılığıyla kendini Mesih İsa’ya adamayı anlatan “Meryem’e Gerçek Bağlılık” adlı kitabıyla tanınır. Bu kitap sonraki yüzyıllarda birçok azizi ve papayı etkiledi.",
      "nameEn": "Louis de Montfort",
@@ -1862,7 +1862,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Catharina of Siena",
+     "name": "Sienalı Katerina",
      "title": "Bakire ve Kilise Doktoru",
      "bio": "XIV. yüzyılda İtalya’da, yirmi beşten fazla çocuklu sıradan bir ailede doğdu. Manastıra girmeden, evinde derin bir dua hayatı sürdü. Papaların Avignon’dan Roma’ya dönmesi için çok çalıştı. Okuma yazması sınırlı olduğu hâlde, mektupları ve “Diyalog” adlı eseriyle Kilise tarihinin en etkili mistiklerinden biri sayılır. Avrupa’nın koruyucu azizelerindendir.",
      "nameEn": "Catherine of Siena",
@@ -1877,7 +1877,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Pius V",
+     "name": "V. Pius",
      "title": "Papa",
      "bio": "XVI. yüzyılda papa olan bir Dominikendir. Trento Konsili’nin kararlarını uygulamaya koydu; Roma Missali’ni (Ayin kitabı) ve Roma Katekizmi’ni yayımlattı. Papalığı, Katolik yenilenmesinin en kararlı dönemlerinden biridir.",
      "nameEn": "Pius V",
@@ -1922,9 +1922,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havariler Philippus ve Iacobus",
+     "name": "Havariler Filipus ve Yakup",
      "title": "",
-     "bio": "İki havariyi birlikte anarız. Philippus, Yuhanna İncili’nde İsa’ya “Bize Peder’i göster, bu bize yeter” diyen ve “Beni gören Peder’i görmüştür” cevabını alan havaridir. Iacobus (Küçük Yakup) ise gelenekte Kudüs’ün ilk episkoposu ve Yakup’un Mektubu’nun yazarı sayılır.",
+     "bio": "İki havariyi birlikte anarız. Filipus, Yuhanna İncili’nde İsa’ya “Bize Peder’i göster, bu bize yeter” diyen ve “Beni gören Peder’i görmüştür” cevabını alan havaridir. Yakup (Küçük Yakup) ise gelenekte Kudüs’ün ilk episkoposu ve Yakup’un Mektubu’nun yazarı sayılır.",
      "nameEn": "The Apostles Philip and James",
      "titleEn": "",
      "bioEn": "Two apostles. Philip is the apostle in the Gospel of John who says to Jesus, \"Show us the Father, and it is enough for us,\" and receives the answer, \"He that seeth me seeth the Father also.\" James (the Less) is traditionally held to be the first bishop of Jerusalem and the author of the Letter of James."
@@ -1937,7 +1937,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Florianus of Lauriacum",
+     "name": "Lorchlu Florian",
      "title": "Şehit",
      "bio": "III-IV. yüzyılda Roma ordusunda subaydı. Hristiyan olduğu için İmparator Diocletianus döneminde boynuna değirmen taşı bağlanıp nehre atıldı ve şehit edildi. Avusturya’da ve Polonya’da itfaiyecilerin koruyucu azizidir.",
      "nameEn": "Florian of Lorch",
@@ -1952,7 +1952,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Hilarius of Arelate",
+     "name": "Arlesli Hilarius",
      "title": "Episkopos",
      "bio": "V. yüzyılda Arles episkoposu oldu. Bu göreve daha yirmi dokuz yaşındayken geldi ve etkileyici bir vaiz olarak tanındı.",
      "nameEn": "Hilary of Arles",
@@ -1997,7 +1997,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Petrus of Tarantasia",
+     "name": "Tarentaise Piskoposu Pierre",
      "title": "Episkopos",
      "bio": "XII. yüzyılda Fransa’nın Tarentaise bölgesinde episkopos olan bir Sisterciyen keşişidir. Anlatılana göre episkoposluğun getirdiği zenginlikten rahatsız oldu ve bir süre kimliğini gizleyerek sıradan bir keşiş gibi yaşadı.",
      "nameEn": "Peter of Tarentaise",
@@ -2012,7 +2012,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Pachomius Büyük",
+     "name": "Büyük Pakomios",
      "title": "Başrahip",
      "bio": "IV. yüzyılda Mısır’da yaşadı. Keşişlerin tek başına değil, bir topluluk hâlinde birlikte yaşadığı manastır hayatının kurucusu sayılır. Yazdığı kurallar, sonraki bütün Batı manastır kurallarını etkiledi.",
      "nameEn": "Pachomius the Great",
@@ -2035,9 +2035,9 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A missionary priest born in Belgium; he volunteered to go to the forcibly isolated leprosy colony on the island of Molokai in Hawaii, personally caring for the sick for sixteen years and building a church and shelters. He eventually contracted leprosy himself and died on the island. He is the patron saint of people with leprosy and the outcast."
     },
     {
-     "name": "Ioannes of Ávila",
+     "name": "Juan de Ávila",
      "title": "Rahip ve Kilise Doktoru",
-     "bio": "XVI. yüzyılda İspanya’nın Endülüs bölgesinde etkili bir vaiz ve ruhani rehberdi. Ignatius Loyola ve Avilalı Teresa gibi dönemin büyük azizlerine ruhani danışmanlık yaptı. İspanyol din adamlarının eğitiminin yenilenmesinde önemli bir rol oynadığı için “Endülüs’ün Havarisi” olarak da anılır.",
+     "bio": "XVI. yüzyılda İspanya’nın Endülüs bölgesinde etkili bir vaiz ve ruhani rehberdi. Loyolalı İgnatius ve Avilalı Teresa gibi dönemin büyük azizlerine ruhani danışmanlık yaptı. İspanyol din adamlarının eğitiminin yenilenmesinde önemli bir rol oynadığı için “Endülüs’ün Havarisi” olarak da anılır.",
      "nameEn": "John of Ávila",
      "titleEn": "Priest and Doctor of the Church",
      "bioEn": "A powerful preacher and spiritual director in the Andalusia region of sixteenth-century Spain. He served as spiritual advisor to great saints of his time, such as Ignatius of Loyola and Teresa of Ávila. He is called \"the Apostle of Spanish Clergy\" for the important role he played in reforming the education of Spanish priests."
@@ -2050,7 +2050,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ignatius of Laconi",
+     "name": "Laconili Ignazio",
      "title": "Rahip Kardeş",
      "bio": "XVII-XVIII. yüzyılda İtalya’nın Sardinya adasında yaşamış bir Kapuçin kardeşidir. Kırk yıldan fazla adanın köylerini dolaşıp sadaka topladı ve bunu yoksullara dağıttı. Alçakgönüllülüğü ve esprili konuşmasıyla çok sevildi.",
      "nameEn": "Ignatius of Laconi",
@@ -2065,7 +2065,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Nereus ve Achilleus",
+     "name": "Nereus ve Akilleus",
      "title": "Şehitler",
      "bio": "Geleneğe göre Roma ordusunda asker olan iki kişidir. Hristiyan olunca ordudan ayrıldılar ve imanları uğruna şehit edildiler. Mezarları Roma’da, onların adıyla anılan bir katakombdadır.",
      "nameEn": "Nereus and Achilleus",
@@ -2103,7 +2103,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havari Matthias",
+     "name": "Havari Mattias",
      "title": "",
      "bio": "Elçilerin İşleri’ne göre, İsa’ya ihanet eden Yahuda İskariot’un yerine kurayla seçilip on iki havariye katılan kişidir. İsa’nın vaftizinden göğe çıkışına kadar O’nunla birlikte olan öğrencilerden biriydi. Bunun dışında hayatı hakkında kesin bilgi azdır.",
      "nameEn": "Matthias the Apostle",
@@ -2118,7 +2118,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Isidorus Labrador",
+     "name": "Çiftçi Isidro",
      "title": "",
      "bio": "XI-XII. yüzyılda İspanya’da, Madrid yakınlarında sıradan bir tarım işçisiydi. Sabahları kiliseye gidip dua eder, sonra tarlada çalışır, ekmeğini yoksullarla paylaşırdı. Çiftçilerin ve tarım işçilerinin koruyucu azizidir. Kutsallığın en sıradan gündelik işlerde bile yaşanabileceğinin güzel bir örneğidir.",
      "nameEn": "Isidore the Farmer",
@@ -2148,7 +2148,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Paschalis Baylon",
+     "name": "Pascual Baylón",
      "title": "Rahip Kardeş",
      "bio": "XVI. yüzyılda İspanya’da çobanken Fransisken kardeşi oldu. Efkaristiya’ya olan derin bağlılığıyla tanınır; Efkaristiya kongrelerinin ve derneklerinin koruyucu azizidir.",
      "nameEn": "Paschal Baylón",
@@ -2163,7 +2163,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes I",
+     "name": "I. Ioannes",
      "title": "Papa ve Şehit",
      "bio": "VI. yüzyılda papaydı. Ariusçu Ostrogot kralı Theodoricus onu diplomatik bir görevle Konstantinopolis’e gönderdi. Dönüşte kral ondan şüphelenip onu hapse attırdı. Hapisteki kötü koşullar yüzünden öldü ve şehit olarak anılır.",
      "nameEn": "John I",
@@ -2178,7 +2178,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ivo Hélory",
+     "name": "Yves Hélory",
      "title": "Rahip",
      "bio": "XIII. yüzyılda Fransa’nın Bretanya bölgesinde hem hukukçu hem de rahipti. Yoksulları ücretsiz savunduğu ve asla rüşvet almadığı için “yoksulların avukatı” diye anılır. Hukukçuların koruyucu azizidir.",
      "nameEn": "Ivo Hélory",
@@ -2193,7 +2193,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Bernardinus of Siena",
+     "name": "Sienalı Bernardino",
      "title": "Rahip",
      "bio": "XIV-XV. yüzyılda İtalya’da yaşamış bir Fransisken vaizidir. Mesih İsa’nın adına bağlılığı yayan vaazlarıyla tanınır; bu adı IHS harfleriyle simgeledi. İtalya’nın birçok şehrinde binlerce kişi onu dinlemeye gelirdi; döneminin en etkili vaizlerinden biri sayılır.",
      "nameEn": "Bernardine of Siena",
@@ -2208,7 +2208,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Christophorus Magallanes ve Yoldaşları",
+     "name": "Cristóbal Magallanes ve Yoldaşları",
      "title": "Rahip, Şehit",
      "bio": "1915-1937 yılları arasında Meksika’da, hükümetin Kilise’ye zulmettiği Cristero döneminde şehit edilen yirmi beş din adamı ve sıradan Katoliği anarız. Christophorus Magallanes bir rahipti; idam edileceğini bildiği hâlde tutuklandığında bile onu öldürecekleri affetti. Bu şehitler, XX. yüzyıl Meksika’sında inanç özgürlüğü mücadelesini temsil eder.",
      "nameEn": "Christopher Magallanes and Companions",
@@ -2223,7 +2223,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Rita of Cascia",
+     "name": "Cascialı Rita",
      "title": "Rahibe",
      "bio": "XIV-XV. yüzyılda İtalya’da yaşadı. Genç yaşta, şiddete eğilimli bir adamla zorla evlendirildi. Kocası ve iki oğlu öldükten sonra manastıra kabul edildi. Zor bir evlilik, yas ve hastalıkla dolu bir hayata rağmen bağışlayıcılığı ve sabrıyla tanınır. İmkânsız ve çaresiz durumların azizesi olarak anılır.",
      "nameEn": "Rita of Cascia",
@@ -2238,7 +2238,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes Baptista Rossi",
+     "name": "Giovanni Battista de’ Rossi",
      "title": "Rahip",
      "bio": "XVIII. yüzyılda Roma’nın sokaklarındaki evsizlere ve göçmen işçilere hizmet eden bir rahiptir. Kendisi de çok sade bir hayat sürdü.",
      "nameEn": "John Baptist Rossi",
@@ -2268,7 +2268,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Beda Venerabilis",
+     "name": "Muhterem Beda",
      "title": "Rahip ve Kilise Doktoru",
      "bio": "VII-VIII. yüzyılda İngiltere’de yaşamış bir Benedikten keşişidir. “İngiliz Halkının Kilise Tarihi” adlı eseri, Anglosakson tarihinin temel kaynağıdır. Tarihlerin “Milattan Sonra” diye yazılmasını da yaygınlaştırdı. “Saygıdeğer” unvanıyla anılır ve İngiltere’nin tek Kilise Doktoru’dur.",
      "nameEn": "The Venerable Bede",
@@ -2284,7 +2284,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "Pope in the eleventh century, one of the most resolute defenders of Church reform. He entered a long struggle with Emperor Henry IV over the appointment of bishops (the Investiture Controversy), defending the Church's independence from worldly powers."
     },
     {
-     "name": "Maria Magdalena de’ Pazzi",
+     "name": "Maria Maddalena de’ Pazzi",
      "title": "Bakire",
      "bio": "XVI-XVII. yüzyılda Floransa’da yaşamış bir Karmelit rahibesidir. Yaşadığı derin mistik deneyimler ve vecd hâlleriyle tanınır; acı ve dua konusundaki yoğun deneyimleri onu döneminin en dikkat çekici mistiklerinden biri yaptı.",
      "nameEn": "Mary Magdalene de' Pazzi",
@@ -2299,7 +2299,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Philippus Neri",
+     "name": "Filippo Neri",
      "title": "Rahip",
      "bio": "XVI. yüzyılda Roma’da yaşamış, neşesi ve espri anlayışıyla tanınan bir rahiptir. Gençleri dua, müzik ve dostluk yoluyla imana çekti ve Oratoryo Cemaati’ni kurdu. “Roma’nın İkinci Havarisi” diye anılır. Kutsallığın kasvetli değil, neşeli olabileceğinin canlı bir örneğidir.",
      "nameEn": "Philip Neri",
@@ -2314,7 +2314,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Augustinus of Canterbury",
+     "name": "Canterburyli Augustinus",
      "title": "Episkopos",
      "bio": "VI. yüzyılda Papa I. Gregorius’un misyoner olarak İngiltere’ye gönderdiği bir Benedikten keşişidir. Canterbury’de ilk episkoposluğu kurdu ve İngiltere’nin Hristiyanlaşmasında öncü oldu. “İngilizlerin Havarisi” diye anılır.",
      "nameEn": "Augustine of Canterbury",
@@ -2329,7 +2329,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Bernardus of Augusta Praetoria",
+     "name": "Menthonlu Bernard",
      "title": "Rahip",
      "bio": "XI. yüzyılda, Alpler’i aşan hacıları korumak için dağ geçidinde bir barınak ve manastır kurdu; bugün Büyük ve Küçük Saint-Bernard geçitleri onun adını taşır. Dağcıların koruyucu azizidir.",
      "nameEn": "Bernard of Menthon",
@@ -2344,7 +2344,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Paulus VI",
+     "name": "VI. Paulus",
      "title": "Papa",
      "bio": "1963-1978 yılları arasında papalık yaptı. II. Vatikan Konsili’nin büyük bölümünü yönetip sonuçlandırdı ve konsil kararlarını uygulamaya koydu. Ayin reformunu gerçekleştirdi ve Kilise’nin çağdaş dünyayla ilişkisi üzerine önemli genelgeler yazdı.",
      "nameEn": "Paul VI",
@@ -2359,7 +2359,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioanna d’Arc",
+     "name": "Jeanne d’Arc",
      "title": "Bakire",
      "bio": "XV. yüzyılda Fransa’da yaşamış genç bir köylü kızıdır. On yedi yaşında, gördüğü görümlere uyarak Yüz Yıl Savaşları’nda Fransız ordusunu zafere taşıdı. İngilizler onu yakaladı, sapkınlıkla suçladı ve diri diri yaktı. Yirmi beş yıl sonra aklandı. Fransa’nın koruyucu azizelerindendir.",
      "nameEn": "Joan of Arc",
@@ -2389,7 +2389,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Iustinus",
+     "name": "Şehit Iustinus",
      "title": "Şehit",
      "bio": "II. yüzyılda putperest bir ailede doğdu. Farklı felsefe okullarını dolaştıktan sonra Hristiyanlığı “gerçek felsefe” olarak benimsedi. Roma’da bir felsefe okulu açtı ve Hristiyan inancını putperest okurlara akılla savunan ilk apolojistlerden biri oldu. İmanı uğruna başı kesilerek şehit edildi.",
      "nameEn": "Justin Martyr",
@@ -2419,7 +2419,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Carolus Lwanga ve Yoldaşları",
+     "name": "Charles Lwanga ve Yoldaşları",
      "title": "Şehitler",
      "bio": "1886’da Uganda kralı Mwanga’nın sarayında hizmet eden yirmi iki genç adamdır. Hristiyan olmuşlardı ve kral imanlarından dönmelerini istediğinde reddettiler. Diri diri yakılarak şehit edildiler. Modern dönemde aziz ilan edilen ilk Afrikalı şehitlerdir. İmanları, Hristiyanlığın Uganda’da hızla yayılmasını sağladı.",
      "nameEn": "Charles Lwanga and Companions",
@@ -2434,7 +2434,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Franciscus Caracciolo",
+     "name": "Francesco Caracciolo",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşamış bir rahiptir. Efkaristiya’ya tapınmaya adanmış Küçük Rahipler Tarikatı’nı kurdu.",
      "nameEn": "Francis Caracciolo",
@@ -2464,7 +2464,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Norbertus",
+     "name": "Norbert",
      "title": "Episkopos",
      "bio": "XI-XII. yüzyılda Almanya’da önce saraya bağlı bir din adamı olarak rahat bir hayat sürdü. Hayatı değiştikten sonra yoksul, gezici bir vaiz oldu. Premonstre (Norbertin) tarikatını kurdu, sonra Magdeburg episkoposu olarak Kilise reformunu savundu.",
      "nameEn": "Norbert",
@@ -2479,7 +2479,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Robertus of Novum Monasterium",
+     "name": "Newminsterli Robert",
      "title": "Başrahip",
      "bio": "XII. yüzyılda İngiltere’de bir Sisterciyen manastırının kurucu başrahibiydi. Sade ve sıkı bir manastır disiplini uygulamasıyla tanınır.",
      "nameEn": "Robert of Newminster",
@@ -2494,7 +2494,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Guilielmus of Eboracum",
+     "name": "Yorklu William",
      "title": "Episkopos",
      "bio": "XII. yüzyılda York başepiskoposuydu. Göreve gelişi tartışmalı olsa da sonradan aziz ilan edildi. Şehre dönüşünde onu karşılayan kalabalığın ağırlığıyla bir köprü çöktü, ama kimse ölmedi; bu olay onun mucizesi olarak anılır.",
      "nameEn": "William of York",
@@ -2509,7 +2509,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ephrem",
+     "name": "Süryani Efrem",
      "title": "Diyakoz ve Kilise Doktoru",
      "bio": "IV. yüzyılda bugünkü Suriye topraklarında yaşamış Süryani bir diyakozdur. Süryanice yazdığı ilahiler ve şiir biçimindeki teolojik eserleriyle tanınır; “Kutsal Ruh’un Arpı” diye anılır. Doğu Hristiyanlığının en verimli ve etkili ilahi yazarlarından biridir.",
      "nameEn": "Ephrem the Syrian",
@@ -2524,7 +2524,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Landericus of Parisiis",
+     "name": "Parisli Landry",
      "title": "Episkopos",
      "bio": "VII. yüzyılda Paris episkoposuydu. Şehirdeki ilk hastanelerden birini, bugünkü Hôtel-Dieu’nün öncülünü kurdurdu.",
      "nameEn": "Landry of Paris",
@@ -2554,7 +2554,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes of Sagunto",
+     "name": "Juan de Sahagún",
      "title": "Rahip",
      "bio": "XV. yüzyılda İspanya’da yaşamış bir Augustinus tarikatı rahibidir. Vaazlarında yerel soyluların haksızlıklarını eleştirdi; geleneğe göre bu yüzden zehirlenerek öldürüldü.",
      "nameEn": "John of Sahagún",
@@ -2569,7 +2569,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Antonius of Padua",
+     "name": "Padovalı Antuan",
      "title": "Rahip ve Kilise Doktoru",
      "bio": "Portekiz’de doğdu, XIII. yüzyılda İtalya’da yaşayan bir Fransisken rahibi oldu. Kutsal Kitap’ı çok iyi bilmesi ve etkileyici vaazlarıyla tanınır. Assisili Aziz Francis’in teoloji öğretmesine izin verdiği ilk Fransiskenlerden biridir. Kaybolan eşyaların bulunması için ona dua edilir; dünyanın her yerinde çok sevilen bir azizdir.",
      "nameEn": "Anthony of Padua",
@@ -2584,7 +2584,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Methodius I",
+     "name": "I. Methodios",
      "title": "Episkopos",
      "bio": "IX. yüzyılda Konstantinopolis episkoposuydu. İkonaları kırmak isteyenlere karşı ikonaları savunanların önde gelenlerindendi ve bu yüzden işkence gördü.",
      "nameEn": "Methodius I",
@@ -2614,7 +2614,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes Franciscus Regis",
+     "name": "Jean-François Régis",
      "title": "Rahip",
      "bio": "XVII. yüzyılda Fransa’nın kırsal bölgelerinde, yoksullar ve dantel işçisi kadınlar arasında yıllarca vaaz eden bir Cizvit misyonerdir.",
      "nameEn": "John Francis Regis",
@@ -2629,7 +2629,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Rainerius of Pisa",
+     "name": "Pisalı Ranieri",
      "title": "Münzevi",
      "bio": "XII. yüzyılda zengin bir tüccardı. Servetini dağıtıp hacı olarak Kutsal Topraklar’ı dolaştı, sonra Pisa’ya dönüp sade bir hayat sürdü. Pisa’nın koruyucu azizidir.",
      "nameEn": "Rainerius of Pisa",
@@ -2659,7 +2659,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Romualdus",
+     "name": "Romuald",
      "title": "Başrahip",
      "bio": "X-XI. yüzyılda İtalya’da yaşamış bir Benedikten keşişidir. Gençliğinde bir şiddet olayına karıştıktan sonra manastıra çekildi. Camaldoli tarikatını kurdu ve topluluk hayatıyla münzevi hayatı bir arada yaşatan bir manastır modeli geliştirdi.",
      "nameEn": "Romuald",
@@ -2689,7 +2689,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Aloysius Gonzaga",
+     "name": "Luigi Gonzaga",
      "title": "Rahip",
      "bio": "XVI. yüzyılda İtalya’da soylu bir ailede doğdu. Mirasından vazgeçip Cizvit tarikatına girdi. Roma’daki bir salgın sırasında hastalara bakarken kendisi de hastalandı ve yirmi üç yaşında öldü. Gençlerin koruyucu azizidir.",
      "nameEn": "Aloysius Gonzaga",
@@ -2704,7 +2704,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Paulinus of Nola",
+     "name": "Nolalı Paulinus",
      "title": "Episkopos",
      "bio": "IV-V. yüzyılda yaşadı ve Roma’nın zengin bir senatör ailesinden geliyordu. Servetini yoksullara dağıttı ve Nola şehrinin episkoposu oldu. Döneminin büyük Hristiyan yazarlarıyla, Augustinus ve Hieronymus ile mektuplaştı.",
      "nameEn": "Paulinus of Nola",
@@ -2712,7 +2712,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A saint from a wealthy Roman senatorial family in the fourth and fifth centuries who gave away his fortune to the poor and became a bishop. He served as bishop in the city of Nola, and carried on close correspondence with the great Christian writers of his time (Augustine, Jerome)."
     },
     {
-     "name": "Ioannes Fisher ve Thomas More",
+     "name": "John Fisher ve Thomas More",
      "title": "Episkopos ve Laik, Şehitler",
      "bio": "XVI. yüzyılda İngiltere’de yaşamış iki şehittir. Kral VIII. Henricus’un kendini Kilise’nin başı ilan etmesini ve boşanmasını kabul etmedikleri için idam edildiler. Fisher bir episkopostu. More ise kralın başbakanlığını yapmış bir hukukçu ve düşünürdü. İkisi de vicdanlarını krala teslim etmeyi reddetti ve şehit oldu.",
      "nameEn": "John Fisher and Thomas More",
@@ -2727,7 +2727,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Etheldreda of Ely",
+     "name": "Elyli Etheldreda",
      "title": "Bakire",
      "bio": "VII. yüzyılda İngiltere’de bir kraliçeydi. İki kez evlendiği hâlde kendini Allah’a adamış olarak yaşadı. Sonunda manastıra girdi ve Ely Manastırı’nı kurdu.",
      "nameEn": "Etheldreda of Ely",
@@ -2757,7 +2757,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Guilielmus of Vercellis",
+     "name": "Vercellili Guglielmo",
      "title": "Başrahip",
      "bio": "XI-XII. yüzyılda İtalya’da, Monte Vergine’de bir manastır kuran bir keşiştir. Anlatılana göre keşişlerine çok sıkı bir disiplin uyguladığı için bazıları onu bırakıp gitti.",
      "nameEn": "William of Vercelli",
@@ -2772,7 +2772,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Iosemaria Escrivá",
+     "name": "Josemaría Escrivá",
      "title": "Rahip",
      "bio": "XX. yüzyılda İspanya’da yaşamış bir rahiptir. Opus Dei’yi kurdu. Bu topluluğun temel fikri şudur: Sıradan insanlar da günlük işlerini kutsallığa giden bir yol hâline getirebilir. Kutsallığın yalnızca manastırda değil, iş hayatında ve ailede de yaşanabileceğini vurguladı.",
      "nameEn": "Josemaría Escrivá",
@@ -2787,7 +2787,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Kyrillos of Alexandria",
+     "name": "İskenderiyeli Kyrillos",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "V. yüzyılda İskenderiye episkoposuydu. Nestorius, Meryem Ana’nın “Tanrı Anası” değil yalnızca “Mesih’in Anası” olduğunu öğretiyordu; Kyrillos buna karşı çıktı. Bu tartışma, Meryem’in Theotokos (Tanrı Anası) unvanını resmen onaylayan 431 Efes Konsili’ne yol açtı.",
      "nameEn": "Cyril of Alexandria",
@@ -2802,7 +2802,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Irenaeus",
+     "name": "Lyonlu Irenaeus",
      "title": "Episkopos ve Şehit",
      "bio": "II. yüzyılda Küçük Asya’da, bugünkü Türkiye topraklarında doğdu, sonra Galya’da Lyon episkoposu oldu. “Sapkınlıklara Karşı” adlı büyük eseriyle, erken dönemin gnostik yanlış öğretilerine karşı havarilerden gelen imanı düzenli olarak savunan ilk büyük teologlardandır. Havari Yuhanna’nın öğrencisi Polikarp’ın öğrencisiydi. Bu zincir, havarilerden gelen geleneğin kesintisiz sürdüğünün canlı bir kanıtıdır.",
      "nameEn": "Irenaeus",
@@ -2847,7 +2847,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Iuniperus Serra",
+     "name": "Junípero Serra",
      "title": "Rahip",
      "bio": "İspanya’nın Mayorka adasında doğmuş bir Fransisken misyonerdir. XVIII. yüzyılda bugünkü Kaliforniya’da dokuz misyon kurdu ve yerli halklara Müjde’yi anlattı. Hayatı ve misyonu, dönemin sömürgecilik ortamı yüzünden bugün de tartışılır; Kilise onu misyonerlik gayreti için aziz ilan etti.",
      "nameEn": "Junípero Serra",
@@ -2862,7 +2862,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Bernardinus Realino",
+     "name": "Bernardino Realino",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda İtalya’da önce hukukçuydu, sonra Cizvit rahibi oldu. Lecce şehrinin ruhani rehberi olarak tanındı.",
      "nameEn": "Bernardine Realino",
@@ -2877,9 +2877,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havari Thomas",
+     "name": "Havari Tomas",
      "title": "",
-     "bio": "Yuhanna İncili’ne göre dirilmiş İsa’yı kendi gözleriyle görmeden inanmayacağını söyleyen havaridir. İsa ona göründüğünde yaralarını gördü ve “Rabbim ve Tanrım!” dedi; bu yüzden “Şüpheci Thomas” diye bilinir. Geleneğe göre Müjde’yi Hindistan’a götürdü ve orada şehit edildi. Hindistan’daki Aziz Thomas Hristiyanları kökenlerini ona dayandırır.",
+     "bio": "Yuhanna İncili’ne göre dirilmiş İsa’yı kendi gözleriyle görmeden inanmayacağını söyleyen havaridir. İsa ona göründüğünde yaralarını gördü ve “Rabbim ve Tanrım!” dedi; bu yüzden “Şüpheci Tomas” diye bilinir. Geleneğe göre Müjde’yi Hindistan’a götürdü ve orada şehit edildi. Hindistan’daki Aziz Tomas Hristiyanları kökenlerini ona dayandırır.",
      "nameEn": "Thomas the Apostle",
      "titleEn": "",
      "bioEn": "In the Gospel of John, the apostle who refuses to believe without seeing the risen Jesus, then, on touching his wounds, cries out, \"My Lord and my God\"; he is thus known as \"Doubting Thomas.\" Tradition holds that he carried the Gospel to India and was martyred there; the Saint Thomas Christian community of India traces its origin to him."
@@ -2892,7 +2892,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Elizabeth of Portugal",
+     "name": "Portekizli İzabel",
      "title": "Kraliçe",
      "bio": "XIII-XIV. yüzyılda Portekiz kraliçesiydi. Zor bir evlilikte bile sabrı ve barışseverliğiyle tanındı. Kocası ile oğlu arasındaki bir savaşı önlemek için bizzat araya girdi. Hayatı boyunca yoksullara ve hastalara cömertçe yardım etti. Barışı sağlamaya çalışanların koruyucu azizesidir.",
      "nameEn": "Elizabeth of Portugal",
@@ -2907,7 +2907,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Antonius Maria Zaccaria",
+     "name": "Antonio Maria Zaccaria",
      "title": "Rahip",
      "bio": "XVI. yüzyılda İtalya’da önce tıp okudu, sonra rahip oldu. Barnabitler tarikatını kurdu ve halkı sık sık ve içtenlikle Efkaristiya almaya teşvik etti. Bu yönüyle Katolik yenilenmesinin öncülerinden sayılır.",
      "nameEn": "Anthony Mary Zaccaria",
@@ -2997,7 +2997,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Benedictus",
+     "name": "Nursialı Benedictus",
      "title": "Başrahip",
      "bio": "V-VI. yüzyılda İtalya’da yaşadı ve Batı manastırcılığının kurucusu sayılır. Monte Cassino’da bir manastır kurdu. Yazdığı “Kural”, dua ile çalışmayı (“ora et labora”, yani “dua et ve çalış”) dengeleyen ölçülü ve düzenli bir topluluk hayatı anlatır. Bu kural, sonraki bin yıl boyunca Batı manastırcılığının temeli oldu. Avrupa’nın koruyucu azizidir.",
      "nameEn": "Benedict of Nursia",
@@ -3012,7 +3012,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes Gualbertus",
+     "name": "Giovanni Gualberto",
      "title": "Başrahip",
      "bio": "XI. yüzyılda İtalya’da yaşadı. Kardeşinin katilini affettikten sonra manastıra girdi. Vallombrosa tarikatını kurdu ve kilise görevlerinin parayla satılmasına karşı mücadele etti.",
      "nameEn": "John Gualbert",
@@ -3027,7 +3027,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Henricus II",
+     "name": "II. Heinrich",
      "title": "İmparator",
      "bio": "X-XI. yüzyılda Kutsal Roma-Germen İmparatoru’ydu ve gücünü Kilise’yi güçlendirmek ve yenilemek için kullandı. Eşi Azize Kunigunde ile birlikte, iktidardayken de dindarlığını koruyabilen bir hükümdar örneği olarak anılır.",
      "nameEn": "Henry II",
@@ -3042,7 +3042,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Camillus de Lellis",
+     "name": "Camillo de Lellis",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda İtalya’da önce asker ve kumarbazdı. Hayatı değiştikten sonra kendini hastalara adadı. Hastalara hizmet için bir tarikat kurdu ve ekibiyle savaş alanlarında bile yaralılara baktı; ambulans hizmetinin ve hasta bakımının öncülerinden sayılır. Hastaların ve hemşirelerin koruyucu azizidir.",
      "nameEn": "Camillus de Lellis",
@@ -3125,7 +3125,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Arsenius Büyük",
+     "name": "Büyük Arsenios",
      "title": "Münzevi",
      "bio": "IV-V. yüzyılda Roma imparatorunun sarayında prenslerin öğretmeniydi. Her şeyi bırakıp Mısır çölüne çekildi. Çöl geleneğinin önemli isimlerindendir; “Kaç, sus ve sükûnet içinde ol” öğüdüyle tanınır.",
      "nameEn": "Arsenius the Great",
@@ -3155,7 +3155,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Laurentius of Brindisi",
+     "name": "Brindisili Lorenzo",
      "title": "Rahip ve Kilise Doktoru",
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşamış bir Kapuçin rahibidir. İbraniceyi, Yunancayı ve birçok Avrupa dilini bilmesiyle, yani olağanüstü dil yeteneğiyle tanınır. Kapuçin tarikatının genel başkanlığını yaptı; hem vaiz hem diplomat olarak Kilise’ye hizmet etti.",
      "nameEn": "Lawrence of Brindisi",
@@ -3170,7 +3170,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Maria Magdalena",
+     "name": "Mecdelli Meryem",
      "title": "",
      "bio": "İncillere göre Mesih İsa’nın yedi cinden kurtardığı, O’nu Celile’den beri izleyen ve çarmıhın dibinde bulunan kadınlardan biridir. Diriliş sabahı boş mezarı ilk gören ve dirilmiş İsa ile ilk karşılaşan kişi oldu. İsa ona gidip havarilere haber vermesini söyledi; bu yüzden gelenekte “havarilerin havarisi” diye anılır.",
      "nameEn": "Mary Magdalene",
@@ -3185,7 +3185,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Birgitta of Sweden",
+     "name": "İsveçli Birgitta",
      "title": "Rahibe",
      "bio": "XIV. yüzyılda İsveç’te yaşamış, sekiz çocuklu soylu bir kadındır. Kocası öldükten sonra derin görümler yaşadı ve bu görümlere dayanarak Birgitta tarikatını kurdu. Papaların Roma’ya dönmesi için ısrarla çalıştı. Avrupa’nın koruyucu azizelerindendir.",
      "nameEn": "Bridget of Sweden",
@@ -3200,7 +3200,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Sharbel Makhlūf",
+     "name": "Şarbel Mahluf",
      "title": "Rahip",
      "bio": "XIX. yüzyılda Lübnan’da yaşamış bir Maruni keşişidir. Hayatının son yirmi üç yılını neredeyse tam bir sessizlik ve inziva içinde geçirdi. Ölümünden sonra mezarından ışık yayıldığı ve pek çok şifa gerçekleştiği bildirildi. Lübnan’ın en sevilen azizlerinden biridir.",
      "nameEn": "Sharbel Makhlouf",
@@ -3215,9 +3215,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havari Iacobus",
+     "name": "Havari Yakup",
      "title": "",
-     "bio": "Zebedi’nin oğlu, Havari Yuhanna’nın kardeşidir ve İsa’nın en yakın üç öğrencisinden biridir (Petrus, Iacobus ve Yuhanna). İsa’nın dağda görünüşünün değiştiği anda ve Getsemani bahçesinde O’nun yanındaydı. Elçilerin İşleri’ne göre havarilerden şehit edilen ilk kişidir. Geleneğe göre mezarı İspanya’nın Santiago de Compostela şehrindedir; burası büyük bir hac merkezidir.",
+     "bio": "Zebedi’nin oğlu, Havari Yuhanna’nın kardeşidir ve İsa’nın en yakın üç öğrencisinden biridir (Petrus, Yakup ve Yuhanna). İsa’nın dağda görünüşünün değiştiği anda ve Getsemani bahçesinde O’nun yanındaydı. Elçilerin İşleri’ne göre havarilerden şehit edilen ilk kişidir. Geleneğe göre mezarı İspanya’nın Santiago de Compostela şehrindedir; burası büyük bir hac merkezidir.",
      "nameEn": "James the Apostle",
      "titleEn": "",
      "bioEn": "The son of Zebedee, brother of John the Apostle, and one of Jesus's three closest disciples (Peter, James, and John); he is with Jesus at the Transfiguration on Mount Tabor and in the Garden of Gethsemane. According to the Acts of the Apostles, he is the first of the apostles to be martyred; the Spanish city of Santiago de Compostela is traditionally held to be the site of his tomb and is a great pilgrimage center."
@@ -3230,7 +3230,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ioachim ve Anna",
+     "name": "Yoakim ve Anna",
      "title": "Meryem Ana’nın Ebeveynleri",
      "bio": "Kutsal Kitap’ta adları geçmez, ama ilk Kilise geleneği Meryem Ana’nın anne ve babasını Anna ve Ioachim olarak anar. Uzun süre çocuksuz kaldıktan sonra dua ederek Meryem’i bir armağan olarak aldıklarına inanılır. Büyükannelerin ve büyükbabaların koruyucu azizleridir.",
      "nameEn": "Joachim and Anne",
@@ -3275,7 +3275,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Martha, Maria ve Lazarus",
+     "name": "Marta, Meryem ve Lazar",
      "title": "",
      "bio": "Beytanya’da yaşayan ve İncillerde Mesih İsa’nın yakın dostları olarak anlatılan üç kardeştir. Marta ev işleriyle uğraşırken Meryem İsa’nın ayaklarının dibine oturup O’nu dinledi. Lazar ise İsa’nın ölümden dirilttiği kişidir. Bu aile, Mesih İsa’nın insanlarla kurduğu dostluğun ve misafirperverliğin İncil’deki en canlı örneklerinden biridir.",
      "nameEn": "Martha, Mary, and Lazarus",
@@ -3305,7 +3305,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ignatius of Loyola",
+     "name": "Loyolalı İgnatius",
      "title": "Rahip",
      "bio": "XVI. yüzyılda İspanya’da önce askerdi. Bir savaşta ağır yaralandı; iyileşirken okuduğu dinî kitaplar hayatını değiştirdi. Cizvit tarikatını kurdu. Yazdığı “Ruhani Egzersizler” kitabı, Katolik maneviyatının en etkili metinlerinden biri oldu. Eğitim ve misyonerlik alanında Kilise tarihini derinden etkiledi.",
      "nameEn": "Ignatius of Loyola",
@@ -3320,7 +3320,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Alphonsus Maria de Liguori",
+     "name": "Alfonso Maria de’ Liguori",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XVII-XVIII. yüzyılda İtalya’da önce avukattı, sonra rahip oldu. Redemptorist tarikatını kurdu. Ahlak teolojisinde aşırı katılık ile aşırı gevşeklik arasında dengeli bir yol izleyen yazılarıyla tanınır; ayrıca pek çok ilahi ve dua kitabı yazdı. Günah çıkarma dinleyen rahiplerin ve ahlak teologlarının koruyucu azizidir.",
      "nameEn": "Alphonsus Liguori",
@@ -3335,7 +3335,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Eusebius of Vercelli",
+     "name": "Vercellili Eusebius",
      "title": "Episkopos",
      "bio": "IV. yüzyılda İtalya’da Vercelli episkoposuydu. Athanasius ile birlikte Arianizme karşı mücadele ettiği için sürgüne gönderildi. Batı’da rahiplerin bir arada yaşamasını teşvik eden ilk episkoposlardan biri sayılır.",
      "nameEn": "Eusebius of Vercelli",
@@ -3343,7 +3343,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A saint who became bishop of Vercelli in Italy in the fourth century, exiled for fighting Arianism alongside Athanasius. He is considered one of the first bishops in the West to encourage priests to live in community."
     },
     {
-     "name": "Petrus Iulianus Eymard",
+     "name": "Pierre-Julien Eymard",
      "title": "Rahip",
      "bio": "XIX. yüzyılda Fransa’da yaşamış, Efkaristiya’ya derin bir bağlılıkla bağlı bir rahiptir. Efkaristiya’ya tapınmaya adanmış tarikatlar kurdu ve Efkaristiya’nın Kilise hayatının merkezi olduğunu vurguladı.",
      "nameEn": "Peter Julian Eymard",
@@ -3373,7 +3373,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Maria Vianney",
+     "name": "Arslı Jean-Marie Vianney",
      "title": "Rahip",
      "bio": "XVIII-XIX. yüzyılda Fransa’da yaşamış bir köylü çocuğudur. Öğrenmekte çok zorlandı ve güçlükle rahip olabildi. Ars adlı küçük bir köyün papazı oldu. Günde on altı saate varan sürelerle günah çıkarma dinledi ve binlerce kişiyi imana geri kazandırdı. Bütün papazların koruyucu azizidir.",
      "nameEn": "John Vianney",
@@ -3405,7 +3405,7 @@ window.SAINTS = /*JSON-START*/{
     {
      "name": "Rab’bin Başkalaşımı",
      "title": "",
-     "bio": "İsa, Petrus’u, Iacobus’u ve Yuhanna’yı yanına alıp yüksek bir dağa çıktı. Orada gözlerinin önünde görünüşü değişti ve ışıl ışıl parladı. Musa ve İlyas O’nunla konuştu, Peder’in sesi de şöyle dedi: “Bu benim sevgili Oğlum’dur, O’nu dinleyin.” Bu bayram o anı anar. İsa, çektiği acılardan önce tanrısal yüceliğini havarilerine bir kez göstermiş oldu.",
+     "bio": "İsa, Petrus’u, Yakup’u ve Yuhanna’yı yanına alıp yüksek bir dağa çıktı. Orada gözlerinin önünde görünüşü değişti ve ışıl ışıl parladı. Musa ve İlyas O’nunla konuştu, Peder’in sesi de şöyle dedi: “Bu benim sevgili Oğlum’dur, O’nu dinleyin.” Bu bayram o anı anar. İsa, çektiği acılardan önce tanrısal yüceliğini havarilerine bir kez göstermiş oldu.",
      "nameEn": "The Transfiguration of the Lord",
      "titleEn": "",
      "bioEn": "This commemorates Jesus's appearance being transformed into radiant light on Mount Tabor before Peter, James, and John, and the Father's voice saying, while Jesus spoke with Moses and Elijah, \"This is my beloved Son, hear ye him.\" This moment is a single revelation of Jesus's divine glory to his apostles before his Passion."
@@ -3426,7 +3426,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A pope captured while celebrating Mass during Emperor Valerian's persecution in the third century, and executed together with his deacons. One of his deacons, Lawrence, was himself martyred a few days later."
     },
     {
-     "name": "Caietanus",
+     "name": "Gaetano",
      "title": "Rahip",
      "bio": "XV-XVI. yüzyılda İtalya’da yaşamış bir rahiptir. Din adamlarının hayatını yenilemek için Theatin tarikatını kurdu. Yoksullar için hastaneler ve yardım kuruluşları açtı.",
      "nameEn": "Cajetan",
@@ -3441,7 +3441,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Dominicus",
+     "name": "Dominik",
      "title": "Rahip",
      "bio": "XII-XIII. yüzyılda İspanya’da yaşadı. Güney Fransa’da yayılan Katarizm adlı yanlış öğretiye karşı vaaz ve öğretimle mücadele etmek için Dominiken tarikatını, yani Vaizler Tarikatı’nı kurdu. Sağlam teoloji eğitimini, yoksul ve gezici bir vaizlik hayatıyla birleştiren anlayışı, Kilise’nin öğretim geleneğini derinden etkiledi.",
      "nameEn": "Dominic",
@@ -3456,7 +3456,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Teresia Benedicta a Cruce (Edith Stein)",
+     "name": "Edith Stein (Haçın Teresa Benedicta’sı)",
      "title": "Bakire ve Şehit",
      "bio": "Almanya’da Yahudi bir ailede doğdu ve önemli bir filozof oldu. Yetişkin yaşta Katolik oldu ve Karmelit rahibesi oldu. Nazi Almanyası’nda Yahudi kökeni yüzünden tutuklandı ve Auschwitz’te öldürüldü. Hem bir filozof hem bir şehit olarak XX. yüzyılın en dikkat çekici azizelerinden biridir. Avrupa’nın koruyucu azizelerindendir.",
      "nameEn": "Teresa Benedicta of the Cross (Edith Stein)",
@@ -3486,7 +3486,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Clara of Assisi",
+     "name": "Assisili Klara",
      "title": "Bakire",
      "bio": "XII-XIII. yüzyılda İtalya’da soylu bir ailede doğdu. Assisili Aziz Francis’in vaazlarından etkilendi ve on sekiz yaşında evinden ayrılarak onun yolunu izledi. Kadınlar için Yoksul Kızkardeşler (Klarisler) tarikatını kurdu ve sıkı yoksulluk idealini ısrarla savundu. Anlatılana göre hastayken uzaktaki bir Ayin’i duvarda bir görüntü olarak izledi; bu yüzden televizyonun koruyucu azizesi ilan edildi.",
      "nameEn": "Clare of Assisi",
@@ -3501,9 +3501,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioanna Francisca de Chantal",
+     "name": "Jeanne-Françoise de Chantal",
      "title": "Rahibe",
-     "bio": "XVI-XVII. yüzyılda Fransa’da yaşamış, dul kalmış soylu bir kadındır. Aziz Franciscus de Sales’in ruhani rehberliğinde, dul kadınların ve başka manastırlara kabul edilmeyen kadınların da girebileceği Ziyaret Rahibeleri tarikatını kurdu.",
+     "bio": "XVI-XVII. yüzyılda Fransa’da yaşamış, dul kalmış soylu bir kadındır. Aziz Fransuva de Sal’ın ruhani rehberliğinde, dul kadınların ve başka manastırlara kabul edilmeyen kadınların da girebileceği Ziyaret Rahibeleri tarikatını kurdu.",
      "nameEn": "Jane Frances de Chantal",
      "titleEn": "Religious Sister",
      "bioEn": "A widowed noblewoman in sixteenth- and seventeenth-century France. Under the spiritual guidance of Saint Francis de Sales, she founded the Visitation Sisters, an order for widows and women who could not otherwise be accepted into a convent."
@@ -3531,7 +3531,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Maximilianus Maria Kolbe",
+     "name": "Maximilian Kolbe",
      "title": "Rahip ve Şehit",
      "bio": "XX. yüzyılda Polonya’da yaşamış bir Fransisken rahibidir. Auschwitz toplama kampında, ailesi olan bir mahkûmun yerine kendi isteğiyle açlık hücresine girdi ve orada öldü. “Sevginin şehidi” diye anılır; ailelerin ve gazetecilerin koruyucu azizlerindendir.",
      "nameEn": "Maximilian Kolbe",
@@ -3561,7 +3561,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Stephanus of Hungary",
+     "name": "Macaristanlı István",
      "title": "Kral",
      "bio": "X-XI. yüzyılda Macaristan’ın ilk kralıydı. Ülkesini Hristiyanlığa kazandırmak için episkoposluklar ve manastırlar kurdu. Krallığını papanın gönderdiği bir tacla kurması, Macaristan’ı kalıcı olarak Hristiyan Avrupa’ya bağladı. Macaristan’ın koruyucu azizidir.",
      "nameEn": "Stephen of Hungary",
@@ -3576,9 +3576,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Hyacinthus of Poland",
+     "name": "Polonyalı Jacek",
      "title": "Rahip",
-     "bio": "XII-XIII. yüzyılda Polonya’da yaşadı. Aziz Dominicus’un Dominiken tarikatına bizzat kabul ettiği ilk Polonyalılardan biridir. Tarikatın Orta ve Doğu Avrupa’da yayılmasında öncü oldu.",
+     "bio": "XII-XIII. yüzyılda Polonya’da yaşadı. Aziz Dominik’in Dominiken tarikatına bizzat kabul ettiği ilk Polonyalılardan biridir. Tarikatın Orta ve Doğu Avrupa’da yayılmasında öncü oldu.",
      "nameEn": "Hyacinth of Poland",
      "titleEn": "Priest",
      "bioEn": "One of the first Poles whom Saint Dominic himself admitted to the Dominican order, in twelfth- and thirteenth-century Poland. He played a pioneering role in spreading the order across Central and Eastern Europe."
@@ -3606,7 +3606,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Eudes",
+     "name": "Jean Eudes",
      "title": "Rahip",
      "bio": "XVII. yüzyılda Fransa’da, rahiplerin eğitimi için ilk düzenli seminerlerden bazılarını kuran bir rahiptir. Mesih İsa’nın ve Meryem Ana’nın Kutsal Yürekleri’ne bağlılığın öncülerindendir; bu bağlılık sonraki yüzyıllarda bütün Kilise’ye yayıldı.",
      "nameEn": "John Eudes",
@@ -3621,7 +3621,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Bernardus of Clairvaux",
+     "name": "Bernard de Clairvaux",
      "title": "Başrahip ve Kilise Doktoru",
      "bio": "XI-XII. yüzyılda Fransa’da yaşamış bir keşiştir ve Sisterciyen tarikatını en çok yayan kişidir. Kısa sürede altmışa yakın manastır kurdurdu; papalara ve krallara danışmanlık yaptı. Meryem Ana’ya derin bağlılığı ve akıcı vaazları yüzünden “Bal Dilli Doktor” diye anılır.",
      "nameEn": "Bernard of Clairvaux",
@@ -3636,7 +3636,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Pius X",
+     "name": "X. Pius",
      "title": "Papa",
      "bio": "1903-1914 yılları arasında papalık yaptı. Sade bir köylü ailesinden geliyordu. Çocukların erken yaşta ilk Komünyon almasını teşvik etti, din eğitimini yaygınlaştırdı ve Ayin müziğini yeniledi. Sade yaşamıyla da tanınır.",
      "nameEn": "Pius X",
@@ -3666,7 +3666,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Rosa of Lima",
+     "name": "Limalı Rosa",
      "title": "Bakire",
      "bio": "XVI-XVII. yüzyılda Peru’nun Lima şehrinde yaşadı. Evlenmesi için yapılan baskılara rağmen kendini Allah’a adadı. Evinin bahçesinde inzivaya çekilerek yoğun bir dua ve perhiz hayatı sürdü. Amerika kıtasında aziz ilan edilen ilk kişidir; Latin Amerika’nın koruyucu azizesidir.",
      "nameEn": "Rose of Lima",
@@ -3681,7 +3681,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havari Bartholomaeus",
+     "name": "Havari Bartalmay",
      "title": "",
      "bio": "Gelenek onu, Yuhanna İncili’nde İsa’nın “içinde hile olmayan gerçek bir İsrailli” dediği Natanael ile aynı kişi sayar. Geleneğe göre Müjde’yi Ermenistan’a ve Hindistan’a götürdü ve Ermenistan’da derisi yüzülerek şehit edildi. Bu yüzden resimlerde genellikle kendi derisini elinde tutarken gösterilir.",
      "nameEn": "Bartholomew the Apostle",
@@ -3696,7 +3696,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ludovicus IX",
+     "name": "IX. Louis",
      "title": "Fransa Kralı",
      "bio": "XIII. yüzyılda Fransa kralıydı. Adaleti, dindarlığı ve yoksullara düşkünlüğüyle döneminin en saygın hükümdarlarından biri sayılır. İki kez Haçlı Seferi’ne katıldı; ikincisinde Tunus’ta hastalanarak öldü. Fransa’nın koruyucu azizidir.",
      "nameEn": "Louis IX",
@@ -3704,7 +3704,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "King of France in the thirteenth century, considered one of the most respected rulers of his time for his justice, piety, and devotion to the poor. He took part in two Crusades, and died of illness in Tunisia on the second. He is the patron saint of France."
     },
     {
-     "name": "Iosephus Calasanctius",
+     "name": "José de Calasanz",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda yaşamış İspanyol bir rahiptir. Roma’da yoksul çocuklar için Avrupa’nın ilk ücretsiz halk okullarından birini açtı. Piyarist tarikatını kurdu ve eğitimin, sınıf farkı gözetmeden her çocuğun hakkı olduğunu savundu.",
      "nameEn": "Joseph Calasanz",
@@ -3749,7 +3749,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Augustinus of Hippo",
+     "name": "Hipponlu Augustinus",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV-V. yüzyılda Kuzey Afrika’da yaşadı. Gençliğinde zevke düşkün ve şüpheci bir hayat sürdü. Annesi Monica’nın duaları ve Ambrosius’un vaazları sayesinde otuz iki yaşında hayatı değişti. Hippo episkoposu oldu. “İtiraflar” ve “Tanrı Devleti” gibi eserleriyle Batı Hristiyan düşüncesini en derinden etkileyen teologlardan biridir.",
      "nameEn": "Augustine of Hippo",
@@ -3779,7 +3779,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Fiacrius",
+     "name": "Fiacre",
      "title": "Münzevi",
      "bio": "VII. yüzyılda İrlanda’da doğmuş bir keşiştir. Fransa’ya gitti ve orada bir bahçe ve misafirhane kurarak yoksullara ve yolculara hizmet etti. Bahçıvanların koruyucu azizidir.",
      "nameEn": "Fiacre",
@@ -3794,7 +3794,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Raymundus Nonnatus",
+     "name": "Ramón Nonato",
      "title": "Rahip",
      "bio": "XIII. yüzyılda İspanya’da yaşamış bir Mercedarian rahibidir. Annesi doğum sırasında öldüğü ve karnından alınarak doğduğu için “doğmamış” anlamına gelen Nonnatus lakabıyla anılır. Müslümanların elinde esir olan Hristiyanları kurtarmak için kendini rehin olarak bıraktı. Ebelerin koruyucu azizidir.",
      "nameEn": "Raymond Nonnatus",
@@ -3809,7 +3809,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Aegidius",
+     "name": "Gilles",
      "title": "Münzevi",
      "bio": "VII-VIII. yüzyılda yaşadı. Yunanistan’da doğdu, Fransa’da bir ormanda inzivaya çekildi. Geleneğe göre yaralı bir geyiği korudu. Orta Çağ’ın en sevilen on dört “yardımcı aziz”inden biri oldu. Sakatların koruyucu azizidir.",
      "nameEn": "Giles",
@@ -3824,7 +3824,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Agricolus of Avenio",
+     "name": "Avignonlu Agricol",
      "title": "Episkopos",
      "bio": "VII. yüzyılda Avignon episkoposuydu. Şehri sel felaketlerinden koruduğuna inanılır. Avignon’un koruyucu azizidir.",
      "nameEn": "Agricol of Avignon",
@@ -3839,7 +3839,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Gregorius I (Büyük Gregorius)",
+     "name": "Büyük Gregorius (I. Gregorius)",
      "title": "Papa ve Kilise Doktoru",
      "bio": "VI-VII. yüzyılda yaşadı. Roma valiliğini bırakıp keşiş oldu, sonra papa seçildi. İngiltere’ye misyonerler gönderdi ve Ayin müziğinin düzenlenmesinde etkili oldu; Gregoryen ilahileri onun adını taşır. Kendini “Allah’ın kullarının kulu” diye tanıtan alçakgönüllülüğüyle de tanınır. İlk büyük papa-teologlardan biridir.",
      "nameEn": "Gregory I (Gregory the Great)",
@@ -3869,7 +3869,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Teresa of Calcutta",
+     "name": "Kalkütalı Rahibe Teresa",
      "title": "Rahibe",
      "bio": "Arnavut kökenli bir rahibedir ve Hindistan’da hizmet etti. Kalküta’nın en yoksul ve terk edilmiş insanlarına, ölmek üzere olanlara hizmet etmek için Sevgi Misyonerleri cemaatini kurdu. 1979’da Nobel Barış Ödülü’nü aldı. “En küçüklerde” Mesih İsa’yı görme çağrısıyla XX. yüzyılın en tanınan azizelerinden biri oldu.",
      "nameEn": "Teresa of Calcutta",
@@ -3884,7 +3884,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Magnus of Faucia",
+     "name": "Füssenli Magnus",
      "title": "Rahip",
      "bio": "VIII. yüzyılda bugünkü Almanya’nın Bavyera bölgesinde misyonerlik yapmış bir keşiştir. Bölgedeki ejderha efsaneleriyle birlikte anılır; çiftçilerin koruyucu azizlerindendir.",
      "nameEn": "Magnus of Füssen",
@@ -3929,7 +3929,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Petrus Claver",
+     "name": "Pedro Claver",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda yaşamış İspanyol bir Cizvit rahibidir. Bugünkü Kolombiya’daki Cartagena limanına gelen köle gemilerini karşıladı. İnsanlık dışı koşullarda taşınan Afrikalı kölelere tıbbi bakım, yiyecek ve ruhani teselli verdi. Kendini “Afrikalıların sonsuza dek kölesi” diye tanıttı. Köleleştirilmiş halkların koruyucu azizidir.",
      "nameEn": "Peter Claver",
@@ -3944,7 +3944,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Nicolaus of Tolentino",
+     "name": "Tolentinolu Nicola",
      "title": "Rahip",
      "bio": "XIII-XIV. yüzyılda İtalya’da yaşamış bir Augustinus tarikatı rahibidir. Araftaki ruhlar için özel bir bağlılıkla dua etti. Anlatılana göre ölüler için ekmek kutsayıp dağıtırdı.",
      "nameEn": "Nicholas of Tolentino",
@@ -3989,7 +3989,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Chrysostomus",
+     "name": "Altın Ağızlı Yuhanna",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV-V. yüzyılda Konstantinopolis episkoposuydu. Olağanüstü vaazları yüzünden “Altın Ağızlı” anlamına gelen Chrysostomos lakabını aldı. Saraydaki ahlaksızlığı ve zenginlerin yoksullara duyarsızlığını sert bir dille eleştirdiği için sürgüne gönderildi ve sürgünde öldü. Doğu Kilisesi’nin en büyük vaizlerinden ve teologlarından biridir.",
      "nameEn": "John Chrysostom",
@@ -4049,7 +4049,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Robertus Bellarminus",
+     "name": "Roberto Bellarmino",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşamış Cizvit bir kardinaldir. Protestan Reformu’na karşı Katolik inancını akılla ve düzenli bir şekilde savunan yazılarıyla tanınır. Ayrıca din eğitiminde uzun süre kullanılan, sade ve açık bir katekizm yazdı.",
      "nameEn": "Robert Bellarmine",
@@ -4057,7 +4057,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A Jesuit cardinal who lived in sixteenth- and seventeenth-century Italy. He is known for his writings defending the Catholic faith rationally and systematically against the Protestant Reformation; he also wrote a simple, clear catechism used in catechetical education."
     },
     {
-     "name": "Hildegardis of Bingen",
+     "name": "Bingenli Hildegard",
      "title": "Bakire ve Kilise Doktoru",
      "bio": "XII. yüzyılda Almanya’da yaşamış bir Benedikten başrahibesidir. Mistik görümleri, teoloji, tıp, müzik ve doğa bilimleri üzerine eserler bıraktı. Bestelediği ilahiler bugün de söylenir. 2012’de Papa XVI. Benedictus onu Kilise Doktoru ilan etti.",
      "nameEn": "Hildegard of Bingen",
@@ -4072,7 +4072,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioseph of Cupertino",
+     "name": "Cupertinolu Giuseppe",
      "title": "Rahip",
      "bio": "XVII. yüzyılda İtalya’da yaşamış bir Fransiskendir. Çocukken beceriksiz ve dalgın biri olarak görüldü ve güçlükle rahip olabildi. Dua ederken sık sık vecde gelip yerden yükseldiği anlatılır; bu olaylar birçok tanığın önünde yaşandı ve kayıtlara geçti. Bu yüzden “Uçan Aziz” diye anılır. Havacıların, pilotların ve sınava girecek öğrencilerin koruyucu azizidir.",
      "nameEn": "Joseph of Cupertino",
@@ -4117,7 +4117,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havari ve İncil Yazarı Matthaeus",
+     "name": "Havari ve İncil Yazarı Matta",
      "title": "",
      "bio": "İncillere göre vergi toplayıcısıydı. İsa ona “Ardımdan gel” deyince her şeyi bırakıp O’nu izledi. Gelenek onu Matta İncili’nin yazarı sayar. Bu İncil, özellikle Yahudi okurlara Mesih İsa’nın Eski Ahit peygamberliklerini yerine getirdiğini göstermeyi amaçlar.",
      "nameEn": "Matthew the Apostle and Evangelist",
@@ -4132,7 +4132,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Thomas of Villanova",
+     "name": "Tomás de Villanueva",
      "title": "Episkopos",
      "bio": "XVI. yüzyılda İspanya’da Valencia başepiskoposu olan bir Augustinus tarikatı keşişidir. Anlatılana göre gelirinin neredeyse tamamını yoksullara dağıttı ve sarayını yetimhaneye çevirdi. “Yoksulların Babası” diye anılır.",
      "nameEn": "Thomas of Villanova",
@@ -4147,7 +4147,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Pio of Pietrelcina (Padre Pio)",
+     "name": "Padre Pio (Pietrelcinalı Pio)",
      "title": "Rahip",
      "bio": "XIX-XX. yüzyılda İtalya’da yaşamış bir Kapuçin rahibidir. Elli yıldan fazla, Mesih İsa’nın çarmıh yaralarına benzeyen yaralar (stigmata) taşıdığı bildirilir. Günde saatlerce günah çıkarma dinledi ve hastalar için büyük bir hastane kurdurdu. XX. yüzyılın en sevilen azizlerinden biridir ve dünyanın her yerinde hâlâ ona büyük bir bağlılık vardır.",
      "nameEn": "Pio of Pietrelcina (Padre Pio)",
@@ -4164,7 +4164,7 @@ window.SAINTS = /*JSON-START*/{
     {
      "name": "Meryem Ana, Tutsakların Kurtarıcısı",
      "title": "",
-     "bio": "XIII. yüzyılda Aziz Petrus Nolascus, Müslümanların elinde esir olan Hristiyanları fidye ödeyerek kurtarmak için Mercedarian tarikatını kurdu. Bu gün, tarikatın kuruluşuna yol açan görümü anar. Bu bağlılık bugün de esirlerin özgürlüğü için dua etmeye vesile olur.",
+     "bio": "XIII. yüzyılda Aziz Pedro Nolasco, Müslümanların elinde esir olan Hristiyanları fidye ödeyerek kurtarmak için Mercedarian tarikatını kurdu. Bu gün, tarikatın kuruluşuna yol açan görümü anar. Bu bağlılık bugün de esirlerin özgürlüğü için dua etmeye vesile olur.",
      "nameEn": "Our Lady of Ransom",
      "titleEn": "",
      "bioEn": "This commemorates the founding vision of the Mercedarian order, established by Saint Peter Nolasco in the thirteenth century to ransom Christian captives held by Muslims. This devotion is still an occasion for prayer for the freedom of captives."
@@ -4177,7 +4177,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Sergius of Radonezh",
+     "name": "Radonejli Sergiy",
      "title": "Başrahip",
      "bio": "XIV. yüzyılda Rusya’da, bugün de önemli bir hac merkezi olan Kutsal Üçlü Manastırı’nı (Troitse-Sergiyeva Lavra) kuran bir keşiştir. Rus manastırcılığının babası ve Rusya’nın koruyucu azizlerinden biri sayılır.",
      "nameEn": "Sergius of Radonezh",
@@ -4192,7 +4192,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Cosmas ve Damianus",
+     "name": "Kozmas ve Damianos",
      "title": "Şehitler",
      "bio": "Geleneğe göre III-IV. yüzyılda Küçük Asya’da, bugünkü Türkiye topraklarında yaşamış ikiz kardeşlerdir. İkisi de hekimdi ve hastaları para almadan tedavi ettikleri için “parasız hekimler” diye anılırlar. İmparator Diocletianus’un zulmü sırasında şehit edildiler. Hekimlerin ve eczacıların koruyucu azizleridir.",
      "nameEn": "Cosmas and Damian",
@@ -4207,7 +4207,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Vincentius de Paul",
+     "name": "Vincent de Paul",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda Fransa’da yaşadı. Genç bir rahipken korsanlar tarafından yakalanıp bir süre köle olarak tutuldu. Sonra hayatını yoksullara, mahkûmlara ve terk edilmiş çocuklara adadı. Rahiplerin yetiştirilmesi için Lazaristleri, kadınların yoksullara hizmet etmesi için de Merhamet Kızları’nı kurdu. Bütün yardım kuruluşlarının koruyucu azizidir.",
      "nameEn": "Vincent de Paul",
@@ -4222,7 +4222,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Wenceslaus",
+     "name": "Václav",
      "title": "Şehit",
      "bio": "X. yüzyılda Bohemya’nın, yani bugünkü Çekya’nın dükü oldu ve ülkesinde Hristiyanlığı güçlendirmeye çalıştı. Tahtı ele geçirmek isteyen kendi kardeşi tarafından öldürüldü. Çekya’nın koruyucu azizidir ve adil, dindar bir hükümdarın simgesi olmuştur.",
      "nameEn": "Wenceslaus",
@@ -4230,9 +4230,9 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "Duke of Bohemia (modern Czech Republic) in the tenth century, killed by his own brother, who wanted to seize the throne, while he worked to strengthen Christianity in his country. He is the patron saint of the Czech Republic, and became a symbol of the ideal of a just and pious ruler."
     },
     {
-     "name": "Laurentius Ruiz ve Yoldaşları",
+     "name": "Lorenzo Ruiz ve Yoldaşları",
      "title": "Şehitler",
-     "bio": "1633-1637 yılları arasında Japonya’da şehit edilen bir grup misyoneri ve yerli Hristiyanı anarız. Aralarında Filipinli bir aile babası olan Laurentius Ruiz de vardı. Ruiz, Filipinler’in aziz ilan edilen ilk şehididir.",
+     "bio": "1633-1637 yılları arasında Japonya’da şehit edilen bir grup misyoneri ve yerli Hristiyanı anarız. Aralarında Filipinli bir aile babası olan Lorenzo Ruiz de vardı. Ruiz, Filipinler’in aziz ilan edilen ilk şehididir.",
      "nameEn": "Lorenzo Ruiz and Companions",
      "titleEn": "Martyrs",
      "bioEn": "A group of missionaries and native Christians martyred in Japan between 1633 and 1637, among them Lorenzo Ruiz, a Filipino lay father. Ruiz is the first canonized martyr from the Philippines."
@@ -4305,7 +4305,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Gerardus of Broniensis",
+     "name": "Brogneli Gérard",
      "title": "Başrahip",
      "bio": "X. yüzyılda bugünkü Belçika’da yaşamış bir başrahiptir. Cluny’den bağımsız, ama ona benzer bir manastır yenileme hareketi başlattı.",
      "nameEn": "Gerard of Brogne",
@@ -4320,7 +4320,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Franciscus of Assisi",
+     "name": "Assisili Fransuva",
      "title": "",
      "bio": "XII-XIII. yüzyılda İtalya’da zengin bir tüccarın oğlu olarak doğdu. Gençliğinde savaşa katıldı ve esir düştü; bundan sonra hayatı değişti. Her şeyi bırakıp Müjde’yi yoksulluk içinde yaşamaya karar verdi. Fransisken tarikatını kurdu. Bütün yaratılışa duyduğu sevgiyle tanınır: Güneş’e “Güneş Kardeş”, suya “Su Kızkardeş” derdi. Çevrenin ve hayvanların koruyucu azizidir; İtalya’nın da koruyucu azizidir.",
      "nameEn": "Francis of Assisi",
@@ -4381,7 +4381,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Tespih Duası Meryem Anası",
+     "name": "Tesbih Meryem’i",
      "title": "",
      "bio": "1571’de Lepanto Deniz Savaşı’nda Hristiyan donanması beklenmedik bir zafer kazandı. Bu zafer, o gün Roma’da topluca edilen tesbih duasına bağlandı ve Papa V. Pius bu bayramı koydu. Bayram, Mesih İsa’nın hayatındaki olayları Meryem Ana ile birlikte düşünmenin bir yolu olan tesbih duasının Kilise’deki önemini vurgular.",
      "nameEn": "Our Lady of the Rosary",
@@ -4396,7 +4396,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Pelagia the Penitent",
+     "name": "Tövbekâr Pelagia",
      "title": "",
      "bio": "Geleneğe göre Antakya’da dansçıyken bir episkoposun vaazından etkilenip tövbe etti. Sonra erkek kılığına girip Kudüs yakınlarında bir mağarada inzivaya çekildi.",
      "nameEn": "Pelagia the Penitent",
@@ -4411,7 +4411,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Henricus Newman",
+     "name": "John Henry Newman",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XIX. yüzyılda İngiltere’de önde gelen bir Anglikan din adamıydı. Uzun bir teolojik arayışın sonunda Katolik oldu ve daha sonra kardinal oldu. Vicdanın önceliği ve öğretinin zaman içindeki gelişimi üzerine yazdığı eserlerle modern Katolik düşüncesini derinden etkiledi. 2019’da aziz ilan edildi, 2025’te de Kilise Doktoru ilan edildi.",
      "nameEn": "John Henry Newman",
@@ -4427,7 +4427,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A saint sent as a missionary from Rome to Gaul (France) in the third century, considered the first bishop of Paris, martyred there."
     },
     {
-     "name": "Ioannes Leonardi",
+     "name": "Giovanni Leonardi",
      "title": "Rahip",
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşamış bir rahiptir. Din adamlarının yenilenmesi için Tanrı Anası Rahipleri Cemaati’ni kurdu. Halka yönelik misyonların ve misyoner yetiştirmenin öncülerinden sayılır.",
      "nameEn": "John Leonardi",
@@ -4442,7 +4442,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Franciscus Borgia",
+     "name": "Francisco de Borja",
      "title": "Rahip",
      "bio": "XVI. yüzyılda İspanya’da önce bir dük ve devlet adamıydı. İmparatoriçe Isabella’nın cenazesinde onun bozulmuş yüzünü görünce dünyevi hırslardan vazgeçti. Cizvit oldu ve tarikatın genel başkanlığına kadar yükseldi.",
      "nameEn": "Francis Borgia",
@@ -4457,7 +4457,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes XXIII",
+     "name": "XXIII. Ioannes",
      "title": "Papa",
      "bio": "1958-1963 yılları arasında papalık yaptı. Sade ve sevecen kişiliği yüzünden “İyi Papa Yuhanna” diye anılır. Herkesi şaşırtarak II. Vatikan Konsili’ni topladı ve Kilise’nin çağdaş dünyaya açılmasının yolunu açtı. Konsilin sonuçlarını göremeden öldü.",
      "nameEn": "John XXIII",
@@ -4472,7 +4472,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Wilfridus of Eboracum",
+     "name": "Yorklu Wilfrid",
      "title": "Episkopos",
      "bio": "VII. yüzyılda İngiltere’de York episkoposuydu. Kelt ve Roma gelenekleri arasında Paskalya’nın tarihi konusunda bir anlaşmazlık vardı. 664’teki Whitby Sinodu’nda Roma tarafını savundu ve kararda belirleyici oldu.",
      "nameEn": "Wilfrid of York",
@@ -4487,7 +4487,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Eduardus Confessor",
+     "name": "İtirafçı Edward",
      "title": "Kral",
      "bio": "XI. yüzyılda İngiltere kralıydı ve Westminster Manastırı’nı yeniden yaptırdı. Dindar bir hükümdar olarak tanınır. Normanlar İngiltere’yi fethetmeden önceki son Anglosakson krallarındandır.",
      "nameEn": "Edward the Confessor",
@@ -4502,7 +4502,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Callistus I",
+     "name": "I. Callistus",
      "title": "Papa ve Şehit",
      "bio": "III. yüzyılda yaşadı. Gençliğinde köle ve mahkûm olarak zor bir hayat sürdü, sonra papa oldu. Roma’da bugün onun adını taşıyan büyük bir katakomb yaptırdı. Papalığı sırasında çıkan bir ayaklanmada öldürüldü ve şehit olarak anılır.",
      "nameEn": "Callixtus I",
@@ -4517,7 +4517,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Teresia of Ávila",
+     "name": "Avilalı Teresa",
      "title": "Bakire ve Kilise Doktoru",
      "bio": "XVI. yüzyılda İspanya’da yaşamış bir Karmelit rahibesidir. Manastırlarda disiplinin gevşediğini gördü ve Haçlı Yuhanna ile birlikte tarikatı yenilemeye girişti; on yedi yeni manastır kurdu. “İç Kale” ve “Hayatımın Kitabı” gibi eserleriyle Hristiyan mistik yazarlarının en büyüklerinden biri sayılır. Kilise Doktoru ilan edilen ilk kadındır.",
      "nameEn": "Teresa of Ávila",
@@ -4540,7 +4540,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "Duchess of Silesia in the twelfth and thirteenth centuries; after her husband's death she gave away her fortune to hospitals and monasteries and lived a simple life. She is one of the patron saints of Poland."
     },
     {
-     "name": "Margarita Maria Alacoque",
+     "name": "Marguerite-Marie Alacoque",
      "title": "Bakire",
      "bio": "XVII. yüzyılda Fransa’da yaşamış bir Ziyaret Rahibesi’dir. Mesih İsa’nın ona göründüğü ve Kutsal Yüreği’ne bağlılığı yaymasını istediği görümlerle tanınır. Bu bağlılık onun aracılığıyla bütün Kilise’ye yayıldı.",
      "nameEn": "Margaret Mary Alacoque",
@@ -4555,7 +4555,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ignatius of Antioch",
+     "name": "Antakyalı İgnatius",
      "title": "Episkopos ve Şehit",
      "bio": "I-II. yüzyılda Antakya episkoposuydu. Geleneğe göre Havari Yuhanna’nın öğrencisidir. Vahşi hayvanlara atılmak üzere Roma’ya götürülürken yedi mektup yazdı. Bu mektuplar, Kilise’nin birliği, episkoposun önemi ve Efkaristiya hakkında ilk dönemden kalan en değerli tanıklıklardandır. Kendini “Allah’ın buğdayı” diye tanıttı.",
      "nameEn": "Ignatius of Antioch",
@@ -4570,7 +4570,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "İncil Yazarı Lukas",
+     "name": "İncil Yazarı Luka",
      "title": "",
      "bio": "Havari Pavlus’un yol arkadaşıdır ve geleneğe göre hekimdi. Luka İncili’ni ve Elçilerin İşleri’ni yazdı. İncili’nde Allah’ın merhameti, yoksullar ve kadınlar özellikle öne çıkar. Gelenek onu ilk ikonaları yapan kişi olarak da anar ve ikona ressamlarının koruyucusu sayar.",
      "nameEn": "Luke the Evangelist",
@@ -4585,7 +4585,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Paulus a Cruce",
+     "name": "Paolo della Croce",
      "title": "Rahip",
      "bio": "XVII-XVIII. yüzyılda İtalya’da yaşamış bir rahiptir. Mesih İsa’nın çektiği acılar üzerine derin bir dindarlığı yaymak için Passionist tarikatını kurdu.",
      "nameEn": "Paul of the Cross",
@@ -4593,7 +4593,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "A priest in seventeenth- and eighteenth-century Italy who founded the Passionist order to spread deep devotion to the Passion of Christ."
     },
     {
-     "name": "Ioannes de Brébeuf, Isaac Jogues ve Yoldaşları",
+     "name": "Jean de Brébeuf, Isaac Jogues ve Yoldaşları",
      "title": "Şehitler",
      "bio": "XVII. yüzyılda bugünkü Kanada’da ve ABD’nin kuzeydoğusunda, Huron ve İrokua halkları arasında misyonerlik yapan Fransız Cizvitlerdir. Bölgedeki savaşlar sırasında işkenceyle şehit edildiler. Hikâyeleri, Kuzey Amerika’nın ilk misyon tarihinin en dramatik anlatılarındandır.",
      "nameEn": "John de Brébeuf, Isaac Jogues, and Companions",
@@ -4638,7 +4638,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Paulus II",
+     "name": "II. Ioannes Paulus",
      "title": "Papa",
      "bio": "1978-2005 yılları arasında papalık yaptı ve ilk Polonyalı papadır. Uzun papalığı boyunca dünyanın dört bir yanını dolaştı ve komünizmin çöküşünde etkili oldu. Dünya Gençlik Günleri aracılığıyla gençlerle özel bir bağ kurdu. Hayatının son yıllarında Parkinson hastalığıyla herkesin gözü önünde mücadele etti ve acının da anlamlı olabileceğine tanıklık etti.",
      "nameEn": "John Paul II",
@@ -4653,7 +4653,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes of Capistrano",
+     "name": "Capestranolu Giovanni",
      "title": "Rahip",
      "bio": "XIV-XV. yüzyılda İtalya’da önce hukukçuydu, sonra Fransisken rahibi oldu. Yaşlılığında, Osmanlı ordusuna karşı Belgrad’ı savunan askerlere ruhani destek verdi ve zaferde rol oynadı. Askeri rahiplerin koruyucu azizlerindendir.",
      "nameEn": "John of Capistrano",
@@ -4668,7 +4668,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Antonius Maria Claret",
+     "name": "Antonio María Claret",
      "title": "Episkopos",
      "bio": "XIX. yüzyılda İspanya’da önce dokumacıydı, sonra rahip oldu ve Klaretyen tarikatını kurdu. Küba başepiskoposu olarak görev yaptı. Hayatı boyunca binlerce vaaz verdi ve çok sayıda ucuz dinî kitap bastırıp dağıttı.",
      "nameEn": "Anthony Mary Claret",
@@ -4728,7 +4728,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havariler Simon ve Iudas",
+     "name": "Havariler Simun ve Yahuda",
      "title": "",
      "bio": "İki havariyi birlikte anarız. Simon “Gayretkeş” lakabıyla anılır. Yahuda ise İskariot’tan ayırt etmek için Taddeus diye de bilinir. İncil’de onun hakkında çok az şey anlatılır, ama halk arasında “umutsuz davaların azizi” olarak çok sevilir ve ona çok dua edilir.",
      "nameEn": "The Apostles Simon and Jude",
@@ -4743,7 +4743,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Narcissus of Ierosolyma",
+     "name": "Kudüslü Narkissos",
      "title": "Episkopos",
      "bio": "II-III. yüzyılda yüz yaşını geçene kadar Kudüs episkoposu olarak hizmet ettiği anlatılır. Paskalya gecesi lambalar için yağ bulunamayınca suyu yağa dönüştürdüğü mucizeyle anılır.",
      "nameEn": "Narcissus of Jerusalem",
@@ -4758,7 +4758,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Marcellus the Centurion",
+     "name": "Yüzbaşı Marcellus",
      "title": "Şehit",
      "bio": "III-IV. yüzyılda Roma ordusunda yüzbaşıydı. İmparatorun doğum günü için yapılan putperest bir törende rütbe işaretlerini yere attı ve Hristiyan olduğunu ilan etti. Bu yüzden idam edildi.",
      "nameEn": "Marcellus the Centurion",
@@ -4773,7 +4773,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Wolfgangus of Ratisbona",
+     "name": "Regensburglu Wolfgang",
      "title": "Episkopos",
      "bio": "X. yüzyılda Regensburg episkoposuydu. Döneminde din eğitiminin ve manastır hayatının yenilenmesinde öncü oldu.",
      "nameEn": "Wolfgang of Regensburg",
@@ -4818,7 +4818,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Martinus de Porres",
+     "name": "Martín de Porres",
      "title": "",
      "bio": "XVI-XVII. yüzyılda Peru’da, İspanyol soylu bir baba ile özgürlüğüne kavuşmuş Afrikalı bir annenin oğlu olarak doğdu. Döneminin ırkçı önyargılarına rağmen bir Dominiken manastırına kabul edildi. Hastalara, hayvanlara ve yoksullara gösterdiği sınırsız şefkatle tanınır. Amerika kıtasının ilk melez azizidir ve ırklar arası adaletin simgesi olmuştur.",
      "nameEn": "Martin de Porres",
@@ -4833,7 +4833,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Carolus Borromeo",
+     "name": "Carlo Borromeo",
      "title": "Episkopos",
      "bio": "XVI. yüzyılda İtalya’da genç yaşta kardinal ve Milano başepiskoposu oldu. Trento Konsili’nin kararlarının uygulanmasına öncülük etti ve seminerler kurdurdu. Veba salgını sırasında hastalara bizzat hizmet etti. Episkoposların ve din eğitiminin yenilenmesinde örnek gösterilir.",
      "nameEn": "Charles Borromeo",
@@ -4848,7 +4848,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Zacharias ve Elizabeth",
+     "name": "Zekeriya ve Elizabet",
      "title": "",
      "bio": "Luka İncili’ne göre rahip Zekeriya ve eşi Elizabet ileri yaşa kadar çocuksuz kaldılar, sonra mucizevi bir şekilde Vaftizci Yahya’nın anne babası oldular. Zekeriya meleğin sözüne inanmadığı için dilsiz kaldı ve oğlu doğduğunda yeniden konuşmaya başladı.",
      "nameEn": "Zechariah and Elizabeth",
@@ -4863,7 +4863,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Leonardus of Noblacum",
+     "name": "Noblaclı Leonard",
      "title": "Münzevi",
      "bio": "VI. yüzyılda Fransa’da yaşamış bir keşiştir. Anlatılana göre bir Frank kralının vaftiz babasıydı ve kraldan, istediği her mahkûmu serbest bırakma hakkını aldı. Mahkûmların koruyucu azizidir.",
      "nameEn": "Leonard of Noblac",
@@ -4878,7 +4878,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Willibrordus",
+     "name": "Willibrord",
      "title": "Episkopos",
      "bio": "VII-VIII. yüzyılda İngiltere’de doğdu. Misyoner olarak Frizya’ya, bugünkü Hollanda’ya gitti ve Utrecht’in ilk episkoposu oldu. Hollanda’nın koruyucu azizlerindendir.",
      "nameEn": "Willibrord",
@@ -4893,7 +4893,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Godefridus of Ambianis",
+     "name": "Amiens Piskoposu Godefroy",
      "title": "Episkopos",
      "bio": "XI-XII. yüzyılda Fransa’da Amiens episkoposuydu. Din adamları arasında kilise görevlerinin parayla satılmasına karşı mücadele etti.",
      "nameEn": "Godfrey of Amiens",
@@ -4923,7 +4923,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Leo I (Büyük Leo)",
+     "name": "Büyük Leo (I. Leo)",
      "title": "Papa ve Kilise Doktoru",
      "bio": "V. yüzyılda papaydı. Mesih İsa’nın tek bir kişide hem tam Tanrı hem tam insan olduğunu anlatan mektubu (Tomus), 451’deki Kadıköy Konsili’nde Kilise’nin resmî öğretisi olarak kabul edildi. Anlatılana göre Roma’ya yürüyen Hun kralı Attila’yı bizzat karşıladı ve onu şehri yağmalamaktan vazgeçirdi.",
      "nameEn": "Leo I (Leo the Great)",
@@ -4938,7 +4938,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Martinus of Tours",
+     "name": "Tourslu Martinus",
      "title": "Episkopos",
      "bio": "IV. yüzyılda Roma ordusunda askerdi. Anlatılana göre kışın ortasında soğuktan donmak üzere olan bir dilenciyle pelerinini ikiye bölüp paylaştı. O gece rüyasında o dilencinin Mesih İsa olduğunu gördü. Bundan sonra vaftiz oldu, askerliği bıraktı ve sonra Tours episkoposu oldu. Fransa’nın kırsal bölgelerinde Hristiyanlığın yayılmasında öncü oldu.",
      "nameEn": "Martin of Tours",
@@ -4953,7 +4953,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Iosaphat",
+     "name": "Josafat Kunceviç",
      "title": "Episkopos ve Şehit",
      "bio": "XVI-XVII. yüzyılda bugünkü Ukrayna ve Belarus topraklarında, Bizans ayinini izleyen Katolik bir episkopostu. Roma ile birlik içindeki Doğu Kilisesi’nin birliğini savunurken, bu birliğe karşı çıkan bir kalabalık tarafından öldürüldü. Doğu ve Batı Hristiyanlığı arasındaki birliğin şehidi olarak anılır.",
      "nameEn": "Josaphat",
@@ -4968,7 +4968,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Francisca Xaveria Cabrini",
+     "name": "Francesca Saverio Cabrini",
      "title": "Bakire",
      "bio": "İtalya’da doğdu ve Amerika’ya göç eden bir rahibedir. İtalyan göçmenler için hastaneler, yetimhaneler ve okullar kurmak amacıyla Kutsal Yürek Misyoner Rahibeleri’ni kurdu ve Amerika kıtasını defalarca dolaştı. ABD vatandaşı olan ilk azizedir ve göçmenlerin koruyucu azizesidir.",
      "nameEn": "Frances Xavier Cabrini",
@@ -4983,7 +4983,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Laurentius O’Toole",
+     "name": "Laurence O’Toole",
      "title": "Episkopos",
      "bio": "XII. yüzyılda İrlanda’da Dublin başepiskoposuydu. İngilizlerin İrlanda’yı istilası sırasında halkı için arabuluculuk yapmaya çalıştı.",
      "nameEn": "Lawrence O'Toole",
@@ -4998,7 +4998,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Albertus Magnus",
+     "name": "Büyük Albertus",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "XIII. yüzyılda Almanya’da yaşamış bir Dominiken bilginidir. Hem teoloji hem de doğa bilimleri alanında çok büyük bir eser bıraktı. Thomas Aquinas’ın hocasıydı ve Aristoteles felsefesinin Hristiyan düşüncesine kazandırılmasında öncü oldu. Doğa bilimcilerinin koruyucu azizidir.",
      "nameEn": "Albert the Great",
@@ -5013,7 +5013,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Margarita of Scotland",
+     "name": "İskoçyalı Margaret",
      "title": "Kraliçe",
      "bio": "XI. yüzyılda İskoç kralı III. Malcolm ile evlenen İngiliz bir prensestir. Yoksullara cömertliği, Kilise’nin yenilenmesini desteklemesi ve sekiz çocuğunu dindar bir şekilde yetiştirmesiyle tanınır. İskoçya’nın koruyucu azizesidir.",
      "nameEn": "Margaret of Scotland",
@@ -5021,7 +5021,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "An English princess who became the wife of King Malcolm III of Scotland in the eleventh century. She is known for her generosity to the poor, her support of Church reform, and raising her eight children devoutly. She is the patron saint of Scotland."
     },
     {
-     "name": "Gertrudis Magna",
+     "name": "Büyük Gertrud",
      "title": "Bakire",
      "bio": "XIII. yüzyılda Almanya’da yaşamış bir Benedikten rahibesidir. Mesih İsa’nın Kutsal Yüreği’ne duyduğu derin mistik bağlılıkla tanınır; bu konudaki yazıları, sonraki yüzyıllarda Kutsal Yürek bağlılığının gelişmesini etkiledi.",
      "nameEn": "Gertrude the Great",
@@ -5036,7 +5036,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Elizabeth of Hungary",
+     "name": "Macaristanlı Elizabeth",
      "title": "",
      "bio": "XIII. yüzyılda Macaristan kralının kızı olarak doğdu ve genç yaşta Thüringen hükümdarı ile evlendirildi. Kocası öldükten sonra servetini yoksullara ve hastalara dağıttı, bir hastane kurdu ve kendisi de sade bir hayat sürerek hastalara bizzat baktı. Yirmi dört yaşında öldü. Yardım işlerinin ve Fransisken üçüncü tarikat üyelerinin koruyucu azizesidir.",
      "nameEn": "Elizabeth of Hungary",
@@ -5059,7 +5059,7 @@ window.SAINTS = /*JSON-START*/{
      "bioEn": "This commemorates the dedication of the basilicas built over the tombs of the two great apostles in Rome: St. Peter's Basilica and the Basilica of St. Paul Outside the Walls. These two buildings are tangible reminders of the martyrdom of the two great apostles and of the apostolic roots of the Church of Rome."
     },
     {
-     "name": "Rosa Philippina Duchesne",
+     "name": "Rose Philippine Duchesne",
      "title": "Bakire",
      "bio": "Fransa’da doğmuş bir rahibedir ve XIX. yüzyılda misyoner olarak Amerika’ya gitti. Kızların eğitimi için okullar kurdu. Yaşlılığında bile yerli halklar arasında çalışmak istedi. Yerliler, sessizce ve uzun uzun dua ettiği için ona “her zaman dua eden kadın” adını verdi.",
      "nameEn": "Rose Philippine Duchesne",
@@ -5074,7 +5074,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Nerses I Büyük",
+     "name": "Büyük Nerses",
      "title": "Episkopos",
      "bio": "IV. yüzyılda Ermeni Kilisesi’nin patriğiydi. Hastaneler ve yetimhaneler kurdurdu; toplumsal reformlarıyla tanınır.",
      "nameEn": "Nerses I the Great",
@@ -5089,7 +5089,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Edmundus",
+     "name": "Edmund",
      "title": "Kral ve Şehit",
      "bio": "IX. yüzyılda İngiltere’de Doğu Anglia kralıydı. İstilacı Vikinglere teslim olmayı ve onların tanrılarına tapmayı reddetti. Oklarla vuruldu ve başı kesilerek şehit edildi. Orta Çağ İngiltere’sinin en sevilen azizlerinden biriydi.",
      "nameEn": "Edmund",
@@ -5119,7 +5119,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Caecilia",
+     "name": "Cecilia",
      "title": "Bakire ve Şehit",
      "bio": "İlk yüzyıllarda Roma’da yaşadı. Geleneğe göre soylu bir aileden geliyordu ve kendini Mesih İsa’ya adamıştı. Evlendirildiğinde eşini de imana kazandırdı. Şehitliğiyle ilgili anlatılar zamanla efsaneleşti. Geleneğe göre şehit edilirken yüreğinde Allah’a ilahiler söylüyordu; bu yüzden kilise müziğinin koruyucu azizesidir.",
      "nameEn": "Cecilia",
@@ -5134,7 +5134,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Clemens I",
+     "name": "I. Clemens",
      "title": "Papa ve Şehit",
      "bio": "I. yüzyılın sonunda papaydı; geleneğe göre Havari Petrus’un ardıllarından biridir. Korint Kilisesi’ndeki bölünmeler üzerine yazdığı mektup (Clemens’in Birinci Mektubu), Yeni Ahit dışında yazılmış en eski Hristiyan metinlerinden biridir.",
      "nameEn": "Clement I",
@@ -5180,7 +5180,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Catharina of Alexandria",
+     "name": "İskenderiyeli Katerina",
      "title": "Bakire ve Şehit",
      "bio": "Geleneğe göre IV. yüzyılın başında İskenderiye’de yaşamış, bilgisiyle tanınan soylu bir genç kadındır. Anlatılana göre Hristiyanlığa karşı çıkan filozofları tartışmada susturdu ve bu yüzden İmparator Maxentius’un emriyle şehit edildi. Orta Çağ boyunca öğrencilerin ve filozofların koruyucu azizesi olarak büyük saygı gördü.",
      "nameEn": "Catherine of Alexandria",
@@ -5195,7 +5195,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Silvester Gozzolini",
+     "name": "Silvestro Gozzolini",
      "title": "Başrahip",
      "bio": "XIII. yüzyılda İtalya’da yaşadı. Kırk yaşından sonra kariyerini bırakıp inzivaya çekildi ve daha sonra Benedikten tarikatının Silvestrin kolunu kurdu.",
      "nameEn": "Sylvester Gozzolini",
@@ -5210,7 +5210,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Virgilius of Salisburgum",
+     "name": "Salzburglu Virgilius",
      "title": "Episkopos",
      "bio": "VIII. yüzyılda İrlanda’da doğmuş, Salzburg episkoposu olmuş bir bilgindir. Dünyanın yuvarlak olduğunu ve Dünya’nın öbür yarısında da insanların yaşayabileceğini savunduğu için döneminin bazı din adamlarıyla tartışmaya girdi.",
      "nameEn": "Virgilius of Salzburg",
@@ -5225,7 +5225,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Iacobus of the Marches",
+     "name": "Giacomo della Marca",
      "title": "Rahip",
      "bio": "XV. yüzyılda İtalya’da yaşamış bir Fransisken vaizidir. Capistranolu Aziz Yuhanna ile birlikte, Fransiskenler arasında kuralı daha sıkı uygulamayı savunan yenilenme hareketinin öncülerindendir.",
      "nameEn": "James of the Marches",
@@ -5240,7 +5240,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Saturninus of Tolosa",
+     "name": "Toulouse Piskoposu Saturninus",
      "title": "Episkopos ve Şehit",
      "bio": "III. yüzyılda Fransa’daki Toulouse’un ilk episkoposuydu. Putperest bir tapınağın önünden geçerken yakalandı. Kurban sunmayı reddedince bir boğaya bağlanıp sürüklendi ve şehit edildi.",
      "nameEn": "Saturninus of Toulouse",
@@ -5300,9 +5300,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Franciscus Xaverius",
+     "name": "Fransuva Ksaviyer",
      "title": "Rahip",
-     "bio": "XVI. yüzyılda İspanya’nın Bask bölgesinde doğdu. Paris’te Ignatius Loyola’nın ilk arkadaşlarından biri ve Cizvit tarikatının kurucu üyelerinden oldu. Hindistan’da, Endonezya adalarında ve Japonya’da on yıl boyunca yorulmak bilmeden misyonerlik yaptı ve on binlerce kişiyi vaftiz etti. Çin’e girmeyi beklerken bir adada öldü. Bütün misyonların koruyucu azizidir.",
+     "bio": "XVI. yüzyılda İspanya’nın Bask bölgesinde doğdu. Paris’te Loyolalı İgnatius’un ilk arkadaşlarından biri ve Cizvit tarikatının kurucu üyelerinden oldu. Hindistan’da, Endonezya adalarında ve Japonya’da on yıl boyunca yorulmak bilmeden misyonerlik yaptı ve on binlerce kişiyi vaftiz etti. Çin’e girmeyi beklerken bir adada öldü. Bütün misyonların koruyucu azizidir.",
      "nameEn": "Francis Xavier",
      "titleEn": "Priest",
      "bioEn": "Born in sixteenth-century Spain (the Basque Country), he was one of Saint Ignatius of Loyola's first companions in Paris and a founding member of the Jesuit order. He did tireless missionary work for ten years in India, the islands of Indonesia, and Japan, baptizing tens of thousands of people. He died on an island while waiting to enter China. He is the patron saint of all foreign missions."
@@ -5315,7 +5315,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Damascenus",
+     "name": "Şamlı Yuhanna",
      "title": "Rahip ve Kilise Doktoru",
      "bio": "VII-VIII. yüzyılda İslam halifeliğinin yönetimindeki Şam’da önce yüksek bir devlet görevlisiydi, sonra keşiş oldu. Kutsal ikonaları savunan yazıları ve Doğu teolojisini düzenli bir şekilde özetleyen eseriyle, Doğu Hristiyanlığının son büyük Kilise Babası sayılır.",
      "nameEn": "John Damascene",
@@ -5330,7 +5330,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Sabbas the Sanctified",
+     "name": "Sabas",
      "title": "Başrahip",
      "bio": "V-VI. yüzyılda Filistin çölünde, bugün de faal olan Mar Saba Manastırı’nı kurdu. Doğu Kilisesi’nin ayin geleneğinin şekillenmesinde büyük etkisi oldu.",
      "nameEn": "Sabbas the Sanctified",
@@ -5345,7 +5345,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Nicolaus",
+     "name": "Myralı Nikolaos (Noel Baba)",
      "title": "Episkopos",
      "bio": "IV. yüzyılda bugünkü Antalya’nın Demre ilçesinde, eski adıyla Myra’da episkopostu. Anlatılana göre çeyiz parası olmadığı için köle olarak satılma tehlikesiyle karşı karşıya kalan üç kızın evine gece gizlice altın attı. Bu hikâye onu gizli cömertliğin simgesi yaptı ve Noel Baba figürünün kökeni oldu. Çocukların, denizcilerin ve Anadolu’nun koruyucu azizlerindendir.",
      "nameEn": "Nicholas",
@@ -5360,7 +5360,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ambrosius",
+     "name": "Milanolu Ambrosius",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV. yüzyılda Milano’da Roma valisiydi. Henüz vaftiz bile olmamışken halkın ısrarıyla episkopos seçildi. Vaazları, Augustinus’un imana gelmesinde belirleyici oldu. Kilise’nin özgürlüğünü cesaretle savundu: İmparator Theodosius’u bile, yaptırdığı bir katliam yüzünden kilise kapısında tövbe etmeye zorladı.",
      "nameEn": "Ambrose",
@@ -5390,7 +5390,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Diego Cuauhtlatoatzin",
+     "name": "Juan Diego Cuauhtlatoatzin",
      "title": "",
      "bio": "XVI. yüzyılda bugünkü Meksika’da yaşamış, yeni Katolik olmuş Nahuatl bir yerlidir. Geleneğe göre 1531’de Guadalupe Meryem Anası ona birkaç kez göründü ve episkoposa bir mesaj iletmesini istedi. Bunun kanıtı olarak pelerininde mucizevi bir Meryem resmi belirdi. Bu görünme, Latin Amerika’nın Hristiyanlaşmasında çok büyük bir etki yaptı.",
      "nameEn": "Juan Diego Cuauhtlatoatzin",
@@ -5420,7 +5420,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Damasus I",
+     "name": "I. Damasus",
      "title": "Papa",
      "bio": "IV. yüzyılda papaydı. Roma’daki şehit mezarlarını onarttı ve üzerlerine yazıtlar yazdırdı. Aziz Hieronymus’u Kutsal Kitap’ı Latinceye çevirmekle (Vulgata) görevlendirdi. Roma’nın Hristiyan kimliğinin güçlenmesine önemli katkılarda bulundu.",
      "nameEn": "Damasus I",
@@ -5450,7 +5450,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Lucia of Syracuse",
+     "name": "Sirakuzalı Lucia",
      "title": "Bakire ve Şehit",
      "bio": "IV. yüzyılın başında Sicilya’da yaşamış genç bir kızdır. Kendini Mesih İsa’ya adamıştı; onunla evlenmek isteyen bir adam onu ihbar etti ve İmparator Diocletianus’un zulmü sırasında şehit edildi. Adı “ışık” anlamına gelen kelimeden türediği için gözlerin koruyucu azizesi olarak da anılır. Kuzey Avrupa’da onun günü ışık şenlikleriyle kutlanır.",
      "nameEn": "Lucy of Syracuse",
@@ -5465,7 +5465,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Ioannes a Cruce (Haçlı Yuhanna)",
+     "name": "Haçlı Yuhanna",
      "title": "Rahip ve Kilise Doktoru",
      "bio": "XVI. yüzyılda İspanya’da yaşamış bir rahiptir. Avilalı Teresa ile birlikte Karmelit tarikatını yenilemeye girişti. Yenilenmeye karşı çıkanlar onu hapsetti ve işkence etti. Hapiste yazdığı şiirler, Hristiyan mistik edebiyatının en büyük eserleri arasında sayılır. “Ruhun Karanlık Gecesi” kavramıyla tanınır.",
      "nameEn": "John of the Cross",
@@ -5510,7 +5510,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Ioannes de Matha",
+     "name": "Jean de Matha",
      "title": "Rahip",
      "bio": "XII-XIII. yüzyılda Fransa’da yaşamış bir rahiptir. Müslümanların elinde esir olan Hristiyanları fidye ödeyerek kurtarmak için Trinitarian tarikatını kurdu.",
      "nameEn": "John of Matha",
@@ -5525,7 +5525,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Gatianus of Turones",
+     "name": "Tourslu Gatianus",
      "title": "Episkopos",
      "bio": "III. yüzyılda Fransa’daki Tours’un ilk episkoposuydu ve Roma’dan gönderilen ilk misyonerlerdendir.",
      "nameEn": "Gatian of Tours",
@@ -5540,7 +5540,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Anastasius I",
+     "name": "I. Anastasius",
      "title": "Papa",
      "bio": "IV-V. yüzyılda kısa bir süre papalık yaptı. Aziz Hieronymus mektuplarında ondan övgüyle söz eder.",
      "nameEn": "Anastasius I",
@@ -5555,9 +5555,9 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Dominicus of Silos",
+     "name": "Domingo de Silos",
      "title": "Başrahip",
-     "bio": "XI. yüzyılda İspanya’da bir manastırı yeniden canlandıran bir başrahiptir. Dominiken tarikatının kurucusu Aziz Dominicus’un annesi, onun türbesinde dua ettikten sonra hamile kaldığına inanır; Dominicus’un adı buradan gelir.",
+     "bio": "XI. yüzyılda İspanya’da bir manastırı yeniden canlandıran bir başrahiptir. Dominiken tarikatının kurucusu Aziz Dominik’in annesi, onun türbesinde dua ettikten sonra hamile kaldığına inanır; Dominik’in adı buradan gelir.",
      "nameEn": "Dominic of Silos",
      "titleEn": "Abbot",
      "bioEn": "An abbot in eleventh-century Spain who revived a monastery; his name later became associated with the birth of Saint Dominic (founder of the Dominican order) as well, since his mother is believed to have become pregnant after praying at his shrine."
@@ -5600,7 +5600,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Ioannes Cantius",
+     "name": "Jan Kanty",
      "title": "Rahip",
      "bio": "XIV-XV. yüzyılda Polonya’da üniversite hocası olan bir rahiptir. Kazandığı parayı hep yoksullara dağıttığı için çoğu zaman kendisinin elinde neredeyse hiçbir şey kalmazdı. Alçakgönüllülüğü ve cömertliğiyle tanınır.",
      "nameEn": "John Cantius",
@@ -5645,7 +5645,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Stephanus",
+     "name": "İstefanos",
      "title": "İlk Şehit",
      "bio": "Elçilerin İşleri’ne göre ilk Kilise’de yoksullara hizmet için seçilen yedi diyakozdan biridir. Yüksek Kurul önünde yaptığı ateşli konuşma yüzünden taşlanarak öldürüldü. Ölürken onu öldürenleri affetti. Olaya, sonradan Pavlus olacak genç bir Ferisi olan Saul da tanık oldu. Kilise’nin ilk şehididir.",
      "nameEn": "Stephen",
@@ -5660,7 +5660,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Bayram",
    "saints": [
     {
-     "name": "Havari ve İncil Yazarı Ioannes",
+     "name": "Havari ve İncil Yazarı Yuhanna",
      "title": "",
      "bio": "Zebedi’nin oğludur ve İsa’nın en çok sevdiği öğrenci olarak anılır. Yuhanna İncili’ni, üç mektubu ve geleneğe göre Vahiy Kitabı’nı yazdı. İsa çarmıhtayken Meryem Ana’yı ona emanet etti. On iki havari arasında şehit edilmeden, ileri yaşta eceliyle ölen tek kişi olduğu kabul edilir.",
      "nameEn": "John the Apostle and Evangelist",
@@ -5705,7 +5705,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Roma Azizler Cetveli",
    "saints": [
     {
-     "name": "Anysia",
+     "name": "Selanikli Anysia",
      "title": "Bakire ve Şehit",
      "bio": "III-IV. yüzyılda Yunanistan’daki Selanik’te yaşamış genç bir kızdır. Zulüm döneminde gizlenmeye çalışırken bir Roma askeri onu fark etti ve öldürdü.",
      "nameEn": "Anysia",
@@ -5720,7 +5720,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Aziz I. Sylvester",
+     "name": "I. Silvester",
      "title": "Papa",
      "bio": "IV. yüzyılın başında yirmi yıldan fazla Roma episkoposu olarak görev yaptı. Papalığı, Hristiyanlığın Roma İmparatorluğu’nda serbest bırakıldığı 313 tarihli Milano Fermanı’ndan hemen sonraki döneme denk gelir. Bu dönemde Roma’da, Lateran Bazilikası ve eski Aziz Petrus Bazilikası dahil ilk büyük bazilikalar yapılmaya başlandı. 325’teki I. İznik Konsili’ne temsilciler gönderdi. Yıl onun anmasıyla kapanır; Batı’da yılbaşı gecesi geleneksel olarak onun adıyla anılır.",
      "nameEn": "Saint Sylvester I",
@@ -5846,7 +5846,7 @@ window.SAINTS = /*JSON-START*/{
    "offset": 68,
    "title": "Mesih İsa’nın Kutsal Yüreği",
    "rank": "En Büyük Bayram",
-   "bio": "Mesih İsa’nın insanlığa duyduğu sonsuz ve kendini feda eden sevgisini, yüreği simgesiyle kutlar. Bu bağlılık özellikle XVII. yüzyılda Azize Margarita Maria Alacoque’un gördüğü görümlerle yaygınlaştı. Corpus Christi bayramından sonraki cuma günü kutlanır; aynı zamanda rahiplerin kutsallığı için dua günüdür.",
+   "bio": "Mesih İsa’nın insanlığa duyduğu sonsuz ve kendini feda eden sevgisini, yüreği simgesiyle kutlar. Bu bağlılık özellikle XVII. yüzyılda Azize Marguerite-Marie Alacoque’un gördüğü görümlerle yaygınlaştı. Corpus Christi bayramından sonraki cuma günü kutlanır; aynı zamanda rahiplerin kutsallığı için dua günüdür.",
    "titleEn": "The Sacred Heart of Jesus",
    "rankEn": "The Greatest Solemnity",
    "bioEn": "This celebrates, under the symbol of his heart, Christ's infinite and self-sacrificing love for humanity. This devotion spread widely especially through the visions given to Saint Margaret Mary Alacoque in the seventeenth century. It is celebrated on the Friday after the feast of Corpus Christi, and is also observed as a day of prayer for the sanctification of priests."
