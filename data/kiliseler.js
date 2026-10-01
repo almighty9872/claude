@@ -478,7 +478,7 @@ window.CHURCHES = /*JSON-START*/{
      "email": "",
      "website": "http://www.st-louis-des-francais-istanbul.org",
      "status": "active",
-     "notice": "",
+     "notice": "Saint-Louis des Français Kilisesi 1 Eylül 2025’te kapanınca Fransızca konuşan cemaat buraya taşındı. Fransızca ayin hafta içi her gün 18:00, cumartesi 09:00 ve pazar 11:00’de; ayinleri Lazarist rahip Peder Cristinel Andrei yönetiyor.",
      "mass": [
       [
        "Pazartesi–Cuma",
@@ -493,7 +493,7 @@ window.CHURCHES = /*JSON-START*/{
        "11:00 Fransızca"
       ]
      ],
-     "massNote": "Saint-Louis des Français kapandığından beri Fransızca konuşan cemaat burada toplanıyor; ayinleri Lazarist rahip Peder Cristinel Andrei yönetiyor.",
+     "massNote": "",
      "visits": "Ayin saatlerinde açıktır; kilise Saint Benoît Lisesi’nin yerleşkesinde olduğu için başka saatlerde ziyaret önceden izin gerektirir.",
      "history": [
       "Saint Benoît, İstanbul’da hâlâ kullanılan en eski Katolik kiliselerinden biridir. Kökleri, 13. yüzyılın başındaki bir manastıra ve Cenevizlilerin 1362’de yaptırdığı çan kulesiyle birlikte Pera’daki Santa Maria della Cisterna manastırına dayanır. Bugün ayakta duran çan kulesi, bu 14. yüzyıl yapısıdır.",
@@ -533,9 +533,8 @@ window.CHURCHES = /*JSON-START*/{
        "11:00 French"
       ]
      ],
-     "massNoteEn": "Since Saint-Louis des Français closed, the French-speaking parish has met here; Mass is celebrated by Fr. Cristinel Andrei, a Lazarist priest.",
      "visitsEn": "Open at Mass times; because the church is on the grounds of the Saint Benoît High School, a visit at other times needs permission in advance.",
-     "noticeEn": "",
+     "noticeEn": "When the Church of Saint-Louis des Français closed on 1 September 2025, the French-speaking parish moved here. Mass in French is on weekdays at 18:00, Saturday at 09:00 and Sunday at 11:00, celebrated by Fr. Cristinel Andrei, a Lazarist priest.",
      "historyEn": [
       "Saint Benoît is one of the oldest Catholic churches in Istanbul still in use. Its roots go back to an early 13th-century monastery and to the monastery of Santa Maria della Cisterna in Pera, whose bell tower the Genoese built in 1362. That 14th-century bell tower still stands today.",
       "Between 1427 and 1450 the complex passed to French Benedictine monks and was dedicated to St. Benedict (Saint Benoît). At the time of the conquest, the church’s relics and liturgical objects were taken first to Chios and then to Genoa. In the 17th and 18th centuries the church belonged to the Jesuits; in 1783 it was handed over to the French Lazarist priests.",
@@ -555,14 +554,14 @@ window.CHURCHES = /*JSON-START*/{
      "email": "",
      "website": "http://www.st-louis-des-francais-istanbul.org",
      "status": "closed",
-     "notice": "Kilise, deprem riski değerlendirmelerinin ardından 1 Eylül 2025’ten bu yana kapalıdır; ayinler bir sonraki duyuruya kadar askıya alınmıştır.",
+     "notice": "Kilise, deprem riski değerlendirmelerinin ardından 1 Eylül 2025’ten bu yana kapalıdır; ayinler bir sonraki duyuruya kadar askıya alınmıştır. Fransızca konuşan cemaat artık Karaköy’deki <a href=\"kilise/saint-benoit.html\">Saint Benoît Kilisesi</a>’nde toplanıyor: hafta içi 18:00, cumartesi 09:00 ve pazar 11:00’de Fransızca ayin var.",
      "mass": [
       [
        "Şu anda",
        "Ayin yapılmıyor (1 Eylül 2025’ten beri kapalı)."
       ]
      ],
-     "massNote": "Fransızca konuşan cemaat artık Karaköy’deki Saint Benoît Kilisesi’nde toplanıyor: hafta içi 18:00, cumartesi 09:00 ve pazar 11:00’de Fransızca ayin var.",
+     "massNote": "",
      "visits": "Kapalı.",
      "history": [
       "Saint-Louis des Français, Beyoğlu’ndaki Fransız Sarayı’nın (eski Fransa Büyükelçiliği, bugün başkonsolosluk) bahçesinde bulunan kilisedir. Fransa’nın Osmanlı İmparatorluğu’ndaki elçiliğinin kilisesi olarak, İstanbul’daki Katolik varlığın en eski kurumlarından biriyle bağlantılıdır ve uzun yıllar Fransızca konuşan cemaatin buluşma yeri oldu.",
@@ -587,9 +586,8 @@ window.CHURCHES = /*JSON-START*/{
        "No Mass (closed since 1 September 2025)."
       ]
      ],
-     "massNoteEn": "The French-speaking parish now meets at the Church of Saint Benoît in Karaköy, with Mass in French on weekdays at 18:00, Saturday at 09:00 and Sunday at 11:00.",
      "visitsEn": "Closed.",
-     "noticeEn": "The church has been closed since 1 September 2025 following earthquake risk assessments; Masses are suspended until further notice.",
+     "noticeEn": "The church has been closed since 1 September 2025 following earthquake risk assessments; Masses are suspended until further notice. The French-speaking parish now meets at the <a href=\"kilise/saint-benoit.html\">Church of Saint Benoît</a> in Karaköy, with Mass in French on weekdays at 18:00, Saturday at 09:00 and Sunday at 11:00.",
      "historyEn": [
       "Saint-Louis des Français is the church in the garden of the Palais de France in Beyoğlu (the former French Embassy, today the consulate general). As the church of France’s embassy in the Ottoman Empire, it is linked to one of the oldest institutions of the Catholic presence in Istanbul, and for many years it was the meeting place of the French-speaking community.",
       "On 1 September 2025 the parish announced that, following new assessments of earthquake risk, Masses had been suspended and the church closed. No date has been given for its reopening."

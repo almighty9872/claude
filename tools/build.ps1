@@ -1082,9 +1082,22 @@ $(Nav-Sheet 'tr' $current)
 </div>
 "@
 }
-$footKatekizm = (@(@{ href = 'katekizm.html'; t = 'Katekizm'; te = 'Catechism' }) + $TextNav) | ForEach-Object { "<li><a href=`"$($_.href)`">$(T $_.t $_.te)</a></li>" }
-$footKaynaklar = $KaynaklarNav | ForEach-Object { "<li><a href=`"$($_.href)`">$(T $_.t $_.te)</a></li>" }
-$footDualar = $PrayerNav | ForEach-Object { "<li><a href=`"$($_.href)`">$(T $_.t $_.te)</a></li>" }
+# The footer's site map follows the header's menus (Öğren, Tartış, Dua Et, Keşfet, Site), with the
+# Katekizm's parts as a column of their own and the Rosary's history beside the Rosary
+function Foot-Group([string]$label, [string]$labelEn, $items) {
+  $lis = ($items | ForEach-Object { "<li><a href=`"$($_.href)`">$(T $_.t $_.te)</a></li>" }) -join ''
+  return "<p class=`"foot-label`">$(T $label $labelEn)</p><ul>$lis</ul>"
+}
+$fgLearn = $SheetNav[0]; $fgDebate = $SheetNav[1]; $fgPray = $SheetNav[2]; $fgExplore = $SheetNav[3]; $fgSite = $SheetNav[4]
+$footLearn = @($fgLearn.items | Where-Object { $_.href -ne 'katekizm.html' })
+$footCat = @(@{ href = 'katekizm.html'; t = 'Genel Bakış'; te = 'Overview' }) + @($TextNav | Where-Object { $_.href -ne 'ekler.html' })
+$footPray = foreach ($it in $fgPray.items) { $it; if ($it.href -eq 'tesbih-duasi.html') { @{ href = 'tesbih-tarihi.html'; t = 'Tesbihin Tarihi'; te = 'History of the Rosary' } } }
+$footSite = @($fgSite.items) + @(@{ href = 'kaynaklar-ve-telif.html'; t = $fm['title']; te = $fmEn['title'] })
+$FootCols = "      <div class=`"foot-col`">$(Foot-Group $fgLearn.label $fgLearn.labelEn $footLearn)</div>`n" +
+  "      <div class=`"foot-col`">$(Foot-Group 'Katekizm' 'Catechism' $footCat)</div>`n" +
+  "      <div class=`"foot-col`">$(Foot-Group $fgDebate.label $fgDebate.labelEn $fgDebate.items)$(Foot-Group $fgPray.label $fgPray.labelEn $footPray)</div>`n" +
+  "      <div class=`"foot-col`">$(Foot-Group $fgExplore.label $fgExplore.labelEn $fgExplore.items)$(Foot-Group $fgSite.label $fgSite.labelEn $footSite)</div>"
+
 # İletişim, Erişilebilirlik and Gizlilik also open over the page from the footer, like
 # "Kaynaklar ve telif" (their own pages stay, for search engines and links from elsewhere)
 function Foot-Dialog([string]$id, [string]$title, [string]$inner, [string]$src = '') {
@@ -1107,10 +1120,7 @@ $FooterHtml = @"
       <p class="foot-copy foot-src"><a class="foot-sources" href="kaynaklar-ve-telif.html" data-dialog="sources-dialog">$(T $fm['title'] $fmEn['title'])</a><a class="foot-contact" href="iletisim.html" data-dialog="dlg-iletisim">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
     </div>
     <nav class="foot-sitemap" $(TA 'aria-label' 'Site haritası' 'Sitemap')>
-      <div class="foot-col"><p class="foot-label">$(T 'Katekizm' 'Catechism')</p><ul>$($footKatekizm -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">$(T 'Kaynaklar' 'Resources')</p><ul>$($footKaynaklar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">$(T 'Dualar' 'Prayers')</p><ul>$($footDualar -join '')</ul></div>
-      <div class="foot-col"><p class="foot-label">$(T 'Diğer' 'Other')</p><ul><li><a href="neden-katoligiz.html">$(T 'Neden Katoliğiz?' "Why We're Catholic")</a></li><li><a href="islama-cevap.html">$(T "İslam$($Apos)a Cevap" 'Answering Islam')</a></li><li><a href="ateizme-cevap.html">$(T 'Ateizme Cevap' 'Answering Atheism')</a></li><li><a href="mucizeler.html">$(T 'Mucizeler' 'Miracles')</a></li><li><a href="azizler.html">$(T 'Azizler' 'Saints')</a></li><li><a href="sss.html">$(T 'Sorular' 'FAQ')</a></li><li><a href="iletisim.html">$(T 'İletişim' 'Contact')</a></li><li><a href="erisilebilirlik.html">$(T 'Erişilebilirlik' 'Accessibility')</a></li><li><a href="gizlilik.html">$(T 'Gizlilik Politikası' 'Privacy Policy')</a></li></ul></div>
+$FootCols
     </nav>
   </div>
 </footer>
@@ -2470,19 +2480,26 @@ $stepList = ($Rosary.steps | ForEach-Object {
 
 $PrayerById = @{}
 $Rosary.prayers | ForEach-Object { $PrayerById[$_.id] = $_ }
+# Two short plain paragraphs around the steps (the prayers themselves come from the script),
+# so search engines see what the page is about; the history page carries the long story
+$rosaryLead = if ($Rosary.about) { '<p class="rosary-note">' + (T $Rosary.about.tr $Rosary.about.en) + '</p>' } else { '' }
+$rosaryTip = if ($Rosary.about.tipTr) { '<p class="rosary-note">' + (T $Rosary.about.tipTr $Rosary.about.tipEn) + '</p>' } else { '' }
 $tespihBody = @"
 <div class="wrap narrow">
   $(Crumbs 'Tesbih Duası')
   <header class="page-head center">$(Page-Ico $IcoBeads)<h1>$(T $Rosary.title $Rosary.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Rosary.en)</p>")</header>
+  <p class="rosary-jump"><a class="btn" href="#tesbih-rehberi">$(T 'Hemen dua etmeye başlayın' 'Start praying now')<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></p>
   <p class="faq-intro">$(T (Inline $Rosary.intro) (Inline $Rosary.introEn))</p>
-  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">$(T 'Okuyun' 'Read')</span><span class="t-title">$(T 'Tesbihin Tarihi' 'The History of the Rosary')</span><span class="t-sub">$(T "İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya" 'From its roots in the Gospel to St Dominic, from Lepanto to Fatima')</span></a>
+  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">$(T 'Okuyun' 'Read')</span><span class="t-title">$(T 'Tesbihin Tarihi' 'The History of the Rosary')</span><span class="t-sub">$(T "İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya" 'From its roots in the Gospel to St. Dominic, from Lepanto to Fatima')</span></a>
 $(Rosary-Tracker 'tr')
   <h2 class="section-title" id="gizemler">$(T 'Gizemler' 'The Mysteries')</h2>
   <div class="myst-grid">
 $mysterySets
   </div>
   <h2 class="section-title" id="nasil">$(T 'Tesbih nasıl dua edilir?' 'How to pray the Rosary')</h2>
+  $rosaryLead
   <ol class="steps">$stepList</ol>
+  $rosaryTip
   <p class="conventions">$(T "Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir." "The Turkish prayers follow the tradition used for the Rosary at the Basilica of Saint Anthony of Padua (Sant'Antuan) in Istanbul; the English versions are the prayers as they are commonly said in English.")</p>
 </div>
 "@
@@ -2535,7 +2552,7 @@ $thSecs
 "@
 $thLd = '{"@context":"https://schema.org","@type":"Article","headline":"Tesbihin Tarihi","inLanguage":"tr","mainEntityOfPage":' + (JStr "$SiteUrl/tesbih-tarihi.html") + '}'
 Write-Page -File 'tesbih-tarihi.html' -Title "Tesbihin Tarihi | $SiteName" -TitleEn "The History of the Rosary | $SiteName" `
-  -Description "Tesbihin tarihi: Kutsal Kitap'taki kökleri, çakıl taşlarından boncuklara, Aziz Dominik, İnebahtı, Lourdes, Fatima, Işık Gizemleri ve ruhsal savaş." -DescriptionEn "The history of the Rosary: its roots in Scripture, from pebbles to beads, St Dominic, Lepanto, Lourdes, Fatima, the Luminous Mysteries and spiritual warfare." `
+  -Description "Tesbihin tarihi: Kutsal Kitap'taki kökleri, çakıl taşlarından boncuklara, Aziz Dominik, İnebahtı, Lourdes, Fatima, Işık Gizemleri ve ruhsal savaş." -DescriptionEn "The history of the Rosary: its roots in Scripture, from pebbles to beads, St. Dominic, Lepanto, Lourdes, Fatima, the Luminous Mysteries and spiritual warfare." `
   -Path 'tesbih-tarihi.html' -Body $thBody -JsonLd @($thLd, (Breadcrumb-Ld 'Tesbihin Tarihi' 'tesbih-tarihi.html' 'Tesbih Duası' 'tesbih-duasi.html')) -OgType 'article'
 
 # ================================================================== MUCIZELER (mucizeler.html)
@@ -2612,8 +2629,8 @@ foreach ($city in $Churches.cities) {
     $file = "kilise/$($ch.id).html"
     # the notice: closed, or something to know before going
     $notice = ''
-    if ($ch.status -ne 'active' -and $ch.notice) {
-      $head = if ($ch.status -eq 'closed') { T 'Şu anda kapalı.' 'Currently closed.' } else { T 'Gitmeden önce.' 'Before you go.' }
+    if ($ch.notice) {
+      $head = if ($ch.status -eq 'closed') { T 'Şu anda kapalı.' 'Currently closed.' } elseif ($ch.status -eq 'active') { T 'Duyuru.' 'Notice.' } else { T 'Gitmeden önce.' 'Before you go.' }
       $notice = "<div class=`"ch-notice is-$($ch.status)`" role=`"note`">$IcoWarn<p><strong>$head</strong> $(T (Inline $ch.notice) (Inline $ch.noticeEn))</p></div>"
     }
     # contact: address (with a map link), phones, e-mail, website
@@ -2940,7 +2957,7 @@ function Home-Page([string]$lang) {
     <section class="hj-path" aria-labelledby="hj-h"><p class="hj-kick">$(L 'Nereden başlamalı?' 'Where to begin?')</p><h2 class="hj-h" id="hj-h">$(L 'Kendi yolunuzu seçin' 'Choose your own path')</h2><ol class="hj-steps">$stepsHtml</ol></section>
     <aside class="hj-aside">
       <a class="hj-feat" href="tesbih-tarihi.html"><span class="hj-kick">$(L 'Öne çıkan yazı' 'Featured')</span><span class="hj-ft">$(L $RosaryHistory.title $RosaryHistory.en)</span><span class="hj-fd">$(L $RosaryHistory.lead $RosaryHistory.leadEn)</span><span class="hj-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
-      <figure class="hj-q"><blockquote><p>$(L '“Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”' '“You have made us for yourself, and our heart is restless until it rests in you.”')</p></blockquote><figcaption>$(L 'Aziz Augustinus, İtiraflar' 'St Augustine, Confessions')</figcaption></figure>
+      <figure class="hj-q"><blockquote><p>$(L '“Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”' '“You have made us for yourself, and our heart is restless until it rests in you.”')</p></blockquote><figcaption>$(L 'Aziz Augustinus, İtiraflar' 'St. Augustine, Confessions')</figcaption></figure>
       <div class="hj-saints"><p class="hj-kick">$(L 'En çok bilinen 20 aziz' 'The 20 best-known saints')</p><div>$gsHtml<a class="hj-all" href="azizler.html#buyuk-azizler">$(L 've diğerleri…' 'and more…')</a></div></div>
     </aside>
   </div>

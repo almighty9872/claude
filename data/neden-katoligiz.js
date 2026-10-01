@@ -363,14 +363,14 @@ window.WHY_CATHOLIC = /*JSON-START*/{
       "Her insanın Tanrı’nın suretinde yaratıldığı ve eşit onura sahip olduğu fikri, insan hakları düşüncesinin köklerinden biridir."
      ],
      "pointsEn": [
-      "In the fourth century St Basil of Caesarea founded a large complex for the sick and the poor; many historians count it among the first hospitals.",
+      "In the fourth century St. Basil of Caesarea founded a large complex for the sick and the poor; many historians count it among the first hospitals.",
       "The first great universities (Paris, Oxford, Bologna) grew up under the Church; Mendel, the father of genetics, was a friar, and Lemaître a priest.",
       "The idea that every person is made in God’s image and has equal dignity is one of the roots of human rights."
      ],
      "objection": "Ama Haçlı Seferleri ve Engizisyon da vardı.",
      "objectionEn": "But there were the Crusades and the Inquisition.",
      "reply": "Kilise o dönemlerin günahlarını açıkça kabul etti; Aziz II. Yuhanna Pavlus 2000 yılında bunlar için af diledi. Bu kötülükleri mahkûm etmemizi sağlayan ölçü de, düşmanı bile sevmeyi emreden Mesih’in öğretisidir.",
-     "replyEn": "The Church has openly admitted the sins of those times; St John Paul II publicly asked forgiveness for them in 2000. And the standard by which we condemn them is Christ’s own teaching to love even our enemies."
+     "replyEn": "The Church has openly admitted the sins of those times; St. John Paul II publicly asked forgiveness for them in 2000. And the standard by which we condemn them is Christ’s own teaching to love even our enemies."
     },
     {
      "id": "lutuf",

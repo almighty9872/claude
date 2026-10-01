@@ -9,8 +9,9 @@
 window.COMPENDIUM_ROSARY = /*JSON-START*/{
   "title": "Meryem Ana Tesbih Duası",
   "en": "The Holy Rosary",
-  "intro": "Tesbih duası, Meryem Ana ile birlikte İsa Mesih’in yaşamındaki gizemler üzerine derinlemesine düşünmenin bir yoludur. Aşağıda duaların Türkçe ve İngilizce karşılıklarını, gizemleri ve tesbihin nasıl çekileceğini bulabilirsiniz. İçinde bulunduğunuz güne ait gizem otomatik olarak işaretlenmektedir.",
-  "introEn": "The Rosary is a way of meditating deeply, together with Mary, on the mysteries of the life of Jesus Christ. Below you will find the prayers in English and Turkish, the mysteries, and how to pray the Rosary. The mystery for today is marked automatically.",
+  "intro": "Tesbih duası, Meryem Ana ile birlikte İsa Mesih’in yaşamındaki gizemler üzerine derinlemesine düşünmenin bir yoludur. Aşağıda duaları, gizemleri ve tesbihin nasıl çekileceğini bulabilirsiniz. İçinde bulunduğunuz güne ait gizem otomatik olarak işaretlenmektedir.",
+  "introEn": "The Rosary is a way of meditating deeply, together with Mary, on the mysteries of the life of Jesus Christ. Below you will find the prayers, the mysteries, and how to pray the Rosary. The mystery for today is marked automatically.",
+  "about": {"tr": "Tesbih beş onluktan oluşur: her onlukta bir Göklerdeki Pederimiz, on Selam Sana Meryem ve bir Peder’e Şan okunur, İsa Mesih’in hayatından bir gizem anılır. Bütün tesbih yaklaşık 15-20 dakika sürer; elinizde tesbih yoksa parmaklarınızla da sayabilirsiniz.", "en": "The Rosary has five decades: each is one Our Father, ten Hail Marys and one Glory Be, prayed while recalling a mystery from the life of Jesus Christ. A whole Rosary takes about 15 to 20 minutes, and you can count on your fingers if you have no beads.", "tipTr": "Tesbih tek başına, ailecek ya da kilisede toplu olarak okunabilir; zamanınız azsa tek bir onlukla başlamak da olur. Kilise ekim ayını tesbihe adar ve 7 Ekim’de Tesbih Meryem Ana’sını anar.", "tipEn": "The Rosary can be prayed alone, as a family or together in church; if time is short, a single decade is a good start. The Church dedicates October to the Rosary and celebrates Our Lady of the Rosary on 7 October."},
   "prayers": [
     {
       "id": "hac-isareti",

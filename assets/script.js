@@ -1181,6 +1181,23 @@
         closeBtn.focus();
       });
     });
+    /* pointing at a place (or a category heading) in the list lights it up on the map and dims the rest */
+    function light(ids) {
+      Object.keys(sites).forEach(function (k) { sites[k].classList.toggle('is-lit', ids.indexOf(k) > -1); });
+      svg.classList.toggle('has-lit', ids.length > 0);
+    }
+    $$('.amap-cat', root).forEach(function (cat) {
+      var mine = $$('.amap-chip', cat).map(function (c) { return c.getAttribute('data-site'); });
+      var head = $('.amap-cat-h', cat);
+      if (head) { head.addEventListener('mouseenter', function () { light(mine); }); head.addEventListener('mouseleave', function () { light([]); }); }
+    });
+    chips.forEach(function (chip) {
+      var id = [chip.getAttribute('data-site')];
+      chip.addEventListener('mouseenter', function () { light(id); });
+      chip.addEventListener('focus', function () { light(id); });
+      chip.addEventListener('mouseleave', function () { light([]); });
+      chip.addEventListener('blur', function () { light([]); });
+    });
     closeBtn.addEventListener('click', close);
     pop.addEventListener('click', function (e) { if (e.target.closest('.amap-c-more')) hide(); });
     document.addEventListener('click', function (e) {

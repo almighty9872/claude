@@ -169,6 +169,11 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 
 **5. HTTPS.** Once Settings → Pages shows the DNS check passed and the certificate is ready (minutes to a few hours), tick **Enforce HTTPS**. After that you may switch the Cloudflare records to **Proxied** (orange cloud) if you want Cloudflare's CDN. If you do, set Cloudflare **SSL/TLS mode to "Full (strict)"**. Never use "Flexible", which causes a redirect loop.
 
+**6. Cloudflare caching (current setup).** The records are **Proxied**, with SSL/TLS **Full (strict)**, **Always Use HTTPS** and **HSTS** (6 months, no preload). Two Cache Rules keep the files that rarely change at Cloudflare's edge; pages themselves are not cached, so a deploy shows up at once:
+- `/assets/*` (CSS, JS, fonts, images): Edge TTL and Browser TTL 1 year. Safe because every CSS/JS link carries a content hash (`?v=…`); if you replace a font or an image under the same name, purge that URL (Caching → Configuration → Purge Cache).
+- `/data/*` (the Catechism text and the verse popups the scripts fetch): Edge TTL and Browser TTL 2 hours, so data edits are visible within a couple of hours.
+- Keep **Block AI bots** and Cloudflare's **managed robots.txt** off (the site's own `robots.txt` and `llms.txt` invite crawlers), and leave **Rocket Loader** off. If GitHub's Pages settings ever show a certificate warning, switch the records to DNS only for an hour, then back.
+
 **Updating later:** edit `data/*.js`, `content/hakkinda.md` or the assets, then commit. The workflow rebuilds and republishes. The pages, `sitemap.xml` and the minified CSS/JS are not kept in the repository (see `.gitignore`): the workflow builds them on every push, so you only run `tools/build.ps1` yourself to preview locally.
 
 ## Translation conventions
