@@ -1695,16 +1695,9 @@
   function initMass() {
     var pills = $$('.mass-pills a');
     if (!pills.length) return;
-    pills.forEach(function (a) {
-      a.addEventListener('click', function () {
-        var target = document.getElementById(a.getAttribute('href').slice(1));
-        if (target && target.tagName === 'DETAILS') target.open = true;
-      });
-    });
-    /* All six parts start closed. Opening one (by clicking its own summary/icon, or via a
-       pill above, which also fires this same native toggle event) closes every other part,
-       so only one part's text is ever on screen at a time -- a plain accordion. */
-    var parts = $$('.mass-part');
+    /* Each part's words fold beneath its explanation; opening one closes the others, so only
+       one part's words are on screen at a time -- a plain accordion. */
+    var parts = $$('.mass-text');
     parts.forEach(function (part) {
       part.addEventListener('toggle', function () {
         if (!part.open) return;
@@ -1719,7 +1712,7 @@
         pills.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-part-link') === n); });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    $$('.mass-part').forEach(function (sec) { obs.observe(sec); });
+    $$('.mass-sec').forEach(function (sec) { obs.observe(sec); });
   }
 
   /* ---------------------------------------------------------------
@@ -2444,7 +2437,7 @@
       $$('.mira-item', m).forEach(function (d) { avNode(d, avText($('.mira-name', d)), avText($('.mira-place', d))); });
     },
     'kutsal-ayin.html': function (m) {
-      $$('.mass-part', m).forEach(function (d) { avNode(d, avText($('h2, .mass-part-h', d)), avText($('.mass-part-n', d))); });
+      $$('.mass-sec', m).forEach(function (d) { avNode(d, avText($('.ill-h', d)), avText($('.ill-kick', d))); });
     },
     /* the summary, then each part holding its sections, the closing and the sources; the
        footnote on the word "Allah" stays under the rows, at the foot of the page's list */

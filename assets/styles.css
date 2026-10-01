@@ -3406,6 +3406,9 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .ill-sec .mira-item[open] > summary .mira-name, .ill-sec .mira-item > summary:hover .mira-name { color: var(--tone); }
 .ill-sec .mira-item[open] > summary .chev { color: var(--tone); }
 .ill-sec .mira-item:hover, .ill-sec .mira-item[open] { border-color: color-mix(in srgb, var(--tone) 40%, transparent); }
+.ill-sec .mass-lead { margin: 0 0 1.1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text-soft); }
+.ill-sec .mass-text { border-top: 1px solid var(--border); }
+.ill-sec .mass-text .kk-sec-body { padding-bottom: 1rem; }
 /* a page made of them: wide enough for the drawing column beside the text */
 .wrap.ill-page { max-width: 880px; }
 @media (max-width: 899px) {

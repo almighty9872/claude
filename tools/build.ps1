@@ -503,6 +503,11 @@ $Ill = @{
   'oillamp'   = '<path d="M18 76q40-26 80-6q-38 18-80 6z"/><path d="M18 76c-10-2-10-14 0-14"/><path d="M50 62c0-6 14-6 14 0"/><path d="M98 64c-6-6-6-14 0-22 6 8 6 16 0 22z"/><path d="M48 84h28l-4 10H52z"/><path d="M98 34v-6M86 40l-4-4M110 40l4-4"/>'
   'grapes'    = '<path d="M60 14v14"/><path d="M60 22c10-8 24-6 30 2-10 6-22 6-30-2z"/><path d="M39 40a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M53 40a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M67 40a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M46 53a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M60 53a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M39 66a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M53 66a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M67 66a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M46 79a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M60 79a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M53 92a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/>'
   'feast'     = '<path d="M10 82h100"/><path d="M20 82v22M100 82v22"/><path d="M28 60h14l-2 14h-10z"/><path d="M35 74v8M30 82h10"/><path d="M52 82c0-12 9-18 20-18s20 6 20 18"/><path d="M62 70l4 4M72 68l4 4M82 70l4 4"/><path d="M40 40v-6M60 30v-8M80 40v6"/>'
+  'bell'      = '<path d="M60 18v10"/><path d="M38 78c0-26 7-48 22-48s22 22 22 48z"/><path d="M32 78h56"/><path d="M55 84a5 5 0 0 0 10 0"/><path d="M22 44q-7 12 0 24M98 44q7 12 0 24"/>'
+  'lectern'   = '<path d="M24 58q18-9 36 0 18-9 36 0V34q-18-9-36 0-18-9-36 0z"/><path d="M60 34v24"/><path d="M32 42q10-4 20 0M32 50q10-4 20 0M68 42q10-4 20 0M68 50q10-4 20 0"/><path d="M60 60v36"/><path d="M48 96h24M42 104h36"/>'
+  'gifts'     = '<path d="M10 92h100"/><path d="M16 92c0-16 12-26 28-26s28 10 28 26"/><path d="M30 76l6 6M42 72l6 6M54 76l6 6"/><path d="M84 38h12M86 38v8c-8 4-10 14-8 26 1 14 6 20 12 20s11-6 12-20c2-12 0-22-8-26v-8"/><path d="M82 64h28"/>'
+  'monstrance'= '<path d="M48 40a12 12 0 1 0 24 0a12 12 0 1 0-24 0"/><path d="M60 16v-6M60 64v6M36 40h-6M84 40h6M43 23l-4-4M77 23l4-4M43 57l-4 4M77 57l4 4"/><path d="M60 70v24"/><path d="M53 80h14"/><path d="M42 104q18-14 36 0z"/>'
+  'cross'     = '<path d="M60 16v88"/><path d="M38 42h44"/><path d="M24 30l8 6M96 30l-8 6"/><path d="M18 62h10M102 62H92"/><path d="M26 92l8-5M94 92l-8-5"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
 }
 function Ill-Art([string]$name) {
@@ -2310,16 +2315,17 @@ $massPartsHtml = ($Mass.parts | ForEach-Object {
   $icon = $MassIcons[$p.icon]
   $trHtml = Mass-Lines $p.lines 'tr'
   $enHtml = Mass-Lines $p.lines 'en'
-  "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
-    "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><span class=`"mass-part-txt`"><span class=`"mass-part-n label`">$(T "Bölüm $($p.n)" "Part $($p.n)")</span><span class=`"mass-part-h`" role=`"heading`" aria-level=`"2`">$(T (Inline $p.title) $p.en)</span>$('<span class="l-tr"><span class="sub" lang="en">' + $p.en + '</span></span>')</span>$IcoChevLg</summary>" +
-    "<div class=`"mass-part-body`">" +
-    "<p class=`"mass-lead`">$(T (Inline $p.lead) (Inline $p.leadEn))</p>" +
-    "<div class=`"mass-dialogue`" data-tr>$(TB $trHtml $enHtml)</div>" +
-    "</div>" +
-  "</details>"
+  $ma = @{ 'gather' = @('bell', 'gold'); 'book' = @('lectern', 'blue'); 'gifts' = @('gifts', 'green'); 'chalice' = @('chalice', 'red'); 'host' = @('monstrance', 'gold'); 'blessing' = @('cross', 'purple') }[$p.icon]
+  if (-not $ma) { $ma = @('candle', 'gold') }
+  # the part's short explanation is always on screen; its words (priest and people) fold away beneath it
+  $words = "<details class=`"kk-sec mass-text`"><summary><h3>$(T 'Ayinin sözleri' 'The words of the Mass')</h3>$IcoChevLg</summary>" +
+    "<div class=`"kk-sec-body`"><div class=`"mass-dialogue`" data-tr>$(TB $trHtml $enHtml)</div></div></details>"
+  (Ill-Sec -Id $p.id -Art $ma[0] -Tone $ma[1] -Class 'mass-sec' -Kick (T "Bölüm $($p.n)" "Part $($p.n)") -Head (T (Inline $p.title) $p.en) `
+    -Sub (TO "<p class=`"faq-cat-en`" lang=`"en`">$($p.en)</p>") `
+    -Body ("<p class=`"mass-lead`">$(T (Inline $p.lead) (Inline $p.leadEn))</p>" + $words)) -replace '^<section ', "<section data-part=`"$($p.n)`" "
 }) -join "`n"
 $massBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow ill-page">
   $(Crumbs 'Kutsal Ayin')
   <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$(T $Mass.title $Mass.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Mass.en)</p>")</header>
   <p class="faq-intro">$(T (Inline $Mass.intro) (Inline $Mass.introEn))</p>
