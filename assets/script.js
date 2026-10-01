@@ -905,14 +905,13 @@
         $$('a[href]', body).forEach(function (x) { var h = x.getAttribute('href'); if (!/^(#|[a-z]+:)/i.test(h)) x.setAttribute('href', new URL(h, url).href); });
         box.innerHTML = body.innerHTML;
         box.removeAttribute('data-lazy');
-        initEmail();
       }).catch(function () { box.setAttribute('data-lazy', ''); });
     }
     function close(dlg) { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
     /* Every link to these pages opens its popup (menu, footer columns too); the
        href stays, so the pages are still crawled and open without JS */
-    var DLG_PAGES = { 'iletisim.html': 'dlg-iletisim', 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik', 'kaynaklar-ve-telif.html': 'sources-dialog',
-      'contact.html': 'dlg-iletisim', 'accessibility.html': 'dlg-erisilebilirlik', 'privacy.html': 'dlg-gizlilik', 'sources-and-copyright.html': 'sources-dialog' };
+    var DLG_PAGES = { 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik', 'kaynaklar-ve-telif.html': 'sources-dialog',
+      'accessibility.html': 'dlg-erisilebilirlik', 'privacy.html': 'dlg-gizlilik', 'sources-and-copyright.html': 'sources-dialog' };
     var here = location.pathname.split('/').pop();
     $$('a[href]:not([data-no-dlg])').forEach(function (a) {
       var page = (a.getAttribute('href') || '').split(/[?#]/)[0].split('/').pop();
@@ -2480,7 +2479,7 @@
       avNode($('.ic-sources', m), avHead($('#th-kaynak-h', m)));
     },
     'kutsal-kitap.html': function (m) {
-      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h2', d))); });
+      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
     },
     'azizler.html': function (m, T) {
       var wrap = $('.wrap', m), today = $('#bugun-azizi', m);
@@ -3212,14 +3211,38 @@
     try { if (window.top !== window.self) window.top.location = window.self.location.href; } catch (e) { /* cross-origin top: assume framed and bail the same way */ window.top.location = window.self.location.href; }
   }
 
-  /* Build.ps1 writes the public contact address as a placeholder with the user/domain split
-     across two data attributes, not as plain "name@domain" text, so a basic scraper reading
-     the raw HTML finds nothing to harvest. Real visitors with JS never notice the difference. */
-  function initEmail() {
-    $$('.email-link').forEach(function (a) {
-      var addr = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
-      a.href = 'mailto:' + addr;
-      a.textContent = addr;
+  /* İletişim: the form posts to the Cloudflare Worker on /api/contact (cloudflare/contact-worker.js),
+     which checks Cloudflare Turnstile's token and emails the message on. Sent here with fetch so the
+     visitor stays on the page; without JavaScript the Worker sends the browser back with ?gonderildi
+     or ?hata, read below. */
+  function initContactForm() {
+    var form = $('form.cform');
+    if (!form) return;
+    var status = $('.cf-status', form), btn = $('.cf-send', form);
+    var langIn = form.querySelector('input[name="lang"]');
+    if (langIn) langIn.value = (document.documentElement.lang || 'tr').slice(0, 2) === 'en' ? 'en' : 'tr';
+    function show(key) {
+      $$('.cf-msg', status).forEach(function (p) { p.hidden = p.getAttribute('data-msg') !== key; });
+    }
+    var q = location.search;
+    if (/[?&]gonderildi=1/.test(q)) show('ok');
+    else { var m = q.match(/[?&]hata=(\w+)/); if (m) show(m[1] === 'fields' || m[1] === 'check' ? m[1] : 'error'); }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      btn.disabled = true; form.classList.add('is-sending'); show('');
+      fetch(form.getAttribute('action'), { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json().catch(function () { return { ok: false, error: 'error' }; }); })
+        .then(function (d) {
+          if (d && d.ok) { form.classList.add('is-sent'); form.reset(); show('ok'); }
+          else { show(d && (d.error === 'fields' || d.error === 'check') ? d.error : 'error'); }
+        })
+        .catch(function () { show('error'); })
+        .then(function () {
+          btn.disabled = false; form.classList.remove('is-sending');
+          if (window.turnstile) try { window.turnstile.reset(); } catch (x) { /* widget not ready */ }
+          var shown = $('.cf-msg:not([hidden])', status); if (shown) shown.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        });
     });
   }
 
@@ -3592,7 +3615,7 @@
   function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initEmail(); initNavToday();
+    initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday();
     initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });

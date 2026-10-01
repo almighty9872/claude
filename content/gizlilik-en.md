@@ -1,13 +1,13 @@
 ---
 title: Privacy Policy
-subtitle: In short, we don't collect anything
+subtitle: In short, we collect nothing unless you write to us
 description: katolikdunyasi.com's privacy approach: no tracking or cookies; your browser only keeps your display preferences and your place in the Rosary.
-short: What data this site collects (none) and what it stores in your browser.
+short: What data this site collects (none, unless you write to us) and what it stores in your browser.
 ---
 
 ## In short
 
-This site collects no user data, uses no tracking or analytics software, and uses no cookies. None of the usual third-party tools, such as Google Analytics, ad networks, or social media plugins, are on this site.
+Unless you write to us, this site collects no user data, uses no tracking or analytics software, and uses no cookies. None of the usual third-party tools, such as Google Analytics, ad networks, or social media plugins, are on this site.
 
 ## Preferences stored in your browser
 
@@ -23,10 +23,12 @@ The site is hosted on GitHub Pages and delivered through Cloudflare's network, w
 
 The typefaces used on the site are loaded from the site's own server; no requests are sent to third-party services like Google Fonts.
 
-## Contact by email
+## The contact form
 
-When you reach us by email, we see your message and email address only so we can reply. This information is never used for any other purpose, never shared with third parties, and never kept for marketing.
+When you write to us with the form on the [Contact](iletisim.html) page, your name (if you give it), your email address and your message are passed to us by email through Cloudflare. They are not stored on the site; they are used only so we can reply, never for any other purpose, never shared with third parties, and never kept for marketing.
+
+To protect the form from automated spam, it uses Cloudflare Turnstile. The check runs only on the Contact page and does not track you for advertising; for details see [Cloudflare’s Turnstile privacy statement](https://www.cloudflare.com/turnstile-privacy-policy/).
 
 ## Changes
 
-This page may be updated as needed. For questions: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com).
+This page may be updated as needed. For questions, please use the form on the [Contact](iletisim.html) page.

@@ -2736,7 +2736,6 @@ html.av .av-dock.av-dock-solid {
 }
 html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-bottom)); }
 
-.sources-dialog .contact-email { margin: 1rem 0; text-align: center; }
 
 /* ---------- The home screen's bar, as in the App Store ----------
    A pill with a glyph and a name for each app; the open app in a capsule that glides to it.
@@ -3268,6 +3267,8 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
   .dn-top:last-child .dn-sub { left: auto; right: calc(100% + .35rem); }
   .dn-top:last-child .dn-sub::before { left: auto; right: -.5rem; }
   .dn-sub.dn-flip { left: auto; right: calc(100% + .35rem); }
+  /* İletişim: a small heading over the pages about the site */
+  .dn-head { margin: .45rem .65rem .2rem; padding-top: .55rem; border-top: 1px solid var(--border); font-family: var(--sans); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .dn-sub.dn-flip::before { left: auto; right: -.5rem; }
   [data-theme="dark"] .dn-panel, [data-theme="dark"] .dn-sub { box-shadow: 0 18px 44px -14px rgba(0, 0, 0, .6); }
 }
@@ -3412,12 +3413,17 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .ill-sec .faq-item[open] > summary .faq-q, .ill-sec .faq-item > summary:hover .faq-q { color: var(--tone); }
 .ill-sec .faq-item[open] > summary .chev { color: var(--tone); }
 .ill-sec .faq-item:hover, .ill-sec .faq-item[open] { border-color: color-mix(in srgb, var(--tone) 40%, transparent); }
+.ill-sec .kk-quick { grid-template-columns: 1fr; }
+@media (min-width: 560px) { .ill-sec .kk-quick { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); } }
+.ill-sec .kk-q { border-top: 3px solid var(--tone); }
+.ill-sec .kk-q-a a { display: inline-flex; align-items: center; gap: .3rem; }
+.ill-sec .kk-motto { margin: 0; text-align: left; }
 /* a page made of them: wide enough for the drawing column beside the text */
 .wrap.ill-page { max-width: 880px; }
 @media (max-width: 899px) {
   .ill-sec { margin-top: 2.5rem; padding-top: 1.75rem; }
   .ill-art { float: right; width: 5.5rem; margin: 0 0 .5rem 1rem; }
-  .ill-body > .stage-list, .ill-body > .kk-secs, .ill-body > .ill-qas { clear: both; }
+  .ill-body > .stage-list, .ill-body > .kk-secs, .ill-body > .ill-qas, .ill-body > .kk-quick { clear: both; }
 }
 @media (min-width: 900px) {
   .ill-sec { display: grid; grid-template-columns: 9rem minmax(0, 1fr); column-gap: 2.5rem; align-items: start; }
@@ -3425,3 +3431,37 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 }
 @media (prefers-reduced-motion: reduce) { .ill-draw .ill-art path { transition: none; stroke-dashoffset: 0; } }
 @media print { .ill-art { display: none; } }
+
+/* ---------- İletişim: the contact form (it posts to the Cloudflare Worker on /api/contact) ---------- */
+.contact-wrap { max-width: 40rem; margin: 0 auto 3rem; }
+.contact-intro p, .contact-outro p { margin: 0 0 1rem; font-size: 1.05rem; line-height: 1.65; color: var(--text-soft); }
+.contact-outro p { margin: 1.4rem 0 0; font-size: .98rem; color: var(--muted); }
+.cform {
+  display: grid; gap: 1rem; margin: 1.6rem 0 0; padding: 1.5rem; border-radius: calc(var(--radius) * 1.4);
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+.cf-row { display: grid; gap: 1rem; }
+@media (min-width: 640px) { .cf-row { grid-template-columns: 1fr 1fr; } }
+.cf-field { display: grid; gap: .4rem; }
+.cf-label { font-family: var(--sans); font-size: .82rem; font-weight: 600; color: var(--text); }
+.cf-label em { font-style: normal; font-weight: 400; color: var(--muted); }
+.cform input[type="text"], .cform input[type="email"], .cform textarea {
+  width: 100%; padding: .75rem .9rem; border: 1px solid var(--border-strong); border-radius: 12px;
+  background: var(--bg, var(--surface)); color: var(--text); font: inherit; font-size: 1rem; line-height: 1.5;
+  transition: border-color .15s, box-shadow .15s;
+}
+.cform textarea { resize: vertical; min-height: 9rem; }
+.cform input:focus, .cform textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-bg); }
+.cf-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.cf-turnstile { min-height: 65px; }
+.cf-foot { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; }
+.cf-send { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.4rem; }
+.cf-send svg { width: 1.1rem; height: 1.1rem; }
+.cform.is-sending .cf-send { opacity: .6; cursor: progress; }
+.cf-note { flex: 1 1 14rem; margin: 0; font-family: var(--sans); font-size: .8rem; line-height: 1.5; color: var(--muted); }
+.cf-status:empty { display: none; }
+.cf-msg { margin: 0; padding: .8rem 1rem; border-radius: 12px; font-family: var(--sans); font-size: .92rem; line-height: 1.5; }
+.cf-ok { background: color-mix(in srgb, #3f7a4f 14%, transparent); color: var(--text); border: 1px solid color-mix(in srgb, #3f7a4f 40%, transparent); }
+.cf-fields, .cf-check, .cf-error { background: color-mix(in srgb, #9b2f3a 10%, transparent); color: var(--text); border: 1px solid color-mix(in srgb, #9b2f3a 35%, transparent); }
+@media (max-width: 560px) { .cform { padding: 1.1rem; } }

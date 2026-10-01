@@ -27,4 +27,4 @@ Site tek bir kişi tarafından hazırlanıp bakımı yapılıyor ve resmî bir e
 
 ## Bir sorun mu fark ettiniz?
 
-Bir sayfanın ekran okuyucuyla beklediğiniz gibi çalışmadığını, okunması zor bir renk kullanıldığını ya da klavyeyle ulaşamadığınız bir yer olduğunu fark ederseniz, lütfen yazın: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com). Hangi sayfada, hangi cihaz ve yardımcı teknolojiyle karşılaştığınızı belirtirseniz sorunu bulmak çok daha kolay olur.
+Bir sayfanın ekran okuyucuyla beklediğiniz gibi çalışmadığını, okunması zor bir renk kullanıldığını ya da klavyeyle ulaşamadığınız bir yer olduğunu fark ederseniz, lütfen [İletişim](iletisim.html) sayfasındaki formdan bize yazın. Hangi sayfada, hangi cihaz ve yardımcı teknolojiyle karşılaştığınızı belirtirseniz sorunu bulmak çok daha kolay olur.

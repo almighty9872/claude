@@ -27,4 +27,4 @@ This site is written and maintained by one person, and hasn't gone through a for
 
 ## Noticed a problem?
 
-If a page doesn't work the way you'd expect with a screen reader, uses a color that's hard to read, or has something you can't reach with the keyboard, please write to us: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com). Telling us which page, and which device and assistive technology you ran into it with, makes the problem much easier to find.
+If a page doesn't work the way you'd expect with a screen reader, uses a color that's hard to read, or has something you can't reach with the keyboard, please write to us with the form on the [Contact](iletisim.html) page. Telling us which page, and which device and assistive technology you ran into it with, makes the problem much easier to find.

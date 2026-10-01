@@ -511,6 +511,7 @@ $Ill = @{
   'shell'     = '<path d="M18 72a42 42 0 0 1 84 0"/><path d="M18 72l42 20 42-20"/><path d="M60 92L26 50M60 92L38 36M60 92L52 29M60 92L68 29M60 92L82 36M60 92L94 50"/><path d="M60 98c-3 4-3 7 0 8 3-1 3-4 0-8z"/><path d="M48 104c-2 3-2 5 0 6 2-1 2-3 0-6zM72 104c-2 3-2 5 0 6 2-1 2-3 0-6z"/>'
   'trinity'   = '<path d="M38 46a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M21 76a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M55 76a22 22 0 1 0 44 0a22 22 0 1 0-44 0"/><path d="M60 58l-7 12h14z"/>'
   'shield'    = '<path d="M60 14l38 14v26c0 26-16 44-38 52-22-8-38-26-38-52V28z"/><path d="M60 34v52M42 52h36"/><path d="M60 22v-8"/>'
+  'scroll'    = '<path d="M30 30h56a8 8 0 0 1 8 8v52"/><path d="M30 30a8 8 0 0 0 0 16h8V30"/><path d="M38 46v52a8 8 0 0 0 8 8h52a8 8 0 0 0 0-16H46"/><path d="M48 52h34M48 62h34M48 72h24"/><path d="M90 90a8 8 0 0 1-8 8"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
 }
 function Ill-Art([string]$name) {
@@ -891,7 +892,7 @@ $SheetNav = @(
   @{ label = 'Site'; labelEn = 'Site'; items = @(
     @{ href = 'iletisim.html'; t = 'İletişim'; s = 'Bize ulaşın'; te = 'Contact'; se = 'Get in touch' },
     @{ href = 'erisilebilirlik.html'; t = 'Erişilebilirlik'; s = 'Herkes için okunur bir site'; te = 'Accessibility'; se = 'A site everyone can read'; ico = $IcoA11yPerson },
-    @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Kişisel veri toplanmaz'; te = 'Privacy Policy'; se = 'No personal data collected'; ico = $IcoShield }) }
+    @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Hangi veri, nasıl korunur'; te = 'Privacy Policy'; se = 'What data, and how it is kept'; ico = $IcoShield }) }
 )
 $IcoFold = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'
 function Ns-Item($it, [string]$current, [string]$cls = 'ns-item') {
@@ -1092,7 +1093,20 @@ function Desk-Nav([string]$current) {
     $sec = if ($curApp -eq $id) { ' is-section' } else { '' }
     "<li class=`"dn-top`"><button type=`"button`" class=`"nav-link dn-btn$sec`" aria-expanded=`"false`" aria-controls=`"dn-$id`">$(T $grp.label $grp.labelEn)$IcoChevDown</button>" +
       "<div class=`"dn-panel glass`" id=`"dn-$id`"><ul class=`"dn-list`">$items</ul></div></li>"
-  }) -join '')
+  }) -join '') + (Dn-Contact $current)
+}
+# The last menu, İletişim: the contact page first, then the pages about the site itself under a small heading
+$DnSitePages = @(
+  @{ href = 'erisilebilirlik.html'; t = 'Erişilebilirlik'; s = 'Herkes için okunur bir site'; te = 'Accessibility'; se = 'A site everyone can read'; ico = $IcoA11yPerson },
+  @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Hangi veri, nasıl korunur'; te = 'Privacy Policy'; se = 'What data, and how it is kept'; ico = $IcoShield },
+  @{ href = 'kaynaklar-ve-telif.html'; t = 'Kaynaklar ve Telif'; s = 'Metinler ve izinler'; te = 'Sources and Copyright'; se = 'Texts and permissions'; ico = $IcoBook })
+function Dn-Contact([string]$current) {
+  $contact = @{ href = 'iletisim.html'; t = 'Bize Ulaşın'; s = 'Sorularınızı bize yazın'; te = 'Contact Us'; se = 'Write to us with your questions' }
+  $site = ($DnSitePages | ForEach-Object { "<li class=`"dn-item`">$(Dn-Link $_ $current)</li>" }) -join ''
+  $sec = if ((@('iletisim.html') + @($DnSitePages | ForEach-Object { $_.href })) -contains $current) { ' is-section' } else { '' }
+  "<li class=`"dn-top`"><button type=`"button`" class=`"nav-link dn-btn$sec`" aria-expanded=`"false`" aria-controls=`"dn-iletisim`">$(T 'İletişim' 'Contact')$IcoChevDown</button>" +
+    "<div class=`"dn-panel glass`" id=`"dn-iletisim`"><ul class=`"dn-list`"><li class=`"dn-item`">$(Dn-Link $contact $current)</li>" +
+    "<li class=`"dn-head`" role=`"presentation`">$(T 'Site Hakkında' 'About the Site')</li>$site</ul></div></li>"
 }
 function Cur([string]$href, [string]$current) { if ($href -eq $current) { return ' aria-current="page"' }; return '' }
 function Header-Html([string]$current) {
@@ -1154,9 +1168,13 @@ function Foot-Dialog([string]$id, [string]$title, [string]$inner, [string]$src =
   return "<dialog class=`"sources-dialog`" id=`"$id`" aria-labelledby=`"$id-t`"><button type=`"button`" class=`"sources-close`" $(TA 'aria-label' 'Kapat' 'Close')>$IcoClose</button>" +
     "<h2 class=`"sources-title`" id=`"$id-t`">$title</h2>$box</dialog>"
 }
-$FootContactHtml = (TB "<p>Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa ya da sadece merhaba demek istiyorsanız, aşağıdaki e-posta adresinden bize yazabilirsiniz.</p>" "<p>If you've spotted a mistake in a translation, there's a topic, saint or miracle you'd like to see added, or you'd simply like to say hello, you can get in touch at the email address below.</p>") +
-  "<p class=`"contact-email`"><a class=`"btn`" href=`"mailto:david@katolikdunyasi.com`">david@katolikdunyasi.com</a></p>" +
-  (TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. Depending on how busy things are, a reply may take a little while, but thank you, sincerely, for any feedback you send.</p>")
+# İletişim: no address is published anywhere; the form posts to a Cloudflare Worker on
+# /api/contact (cloudflare/contact-worker.js), which checks it with Turnstile and emails it on.
+# $TurnstileSiteKey is the widget's public site key (Cloudflare > Turnstile); the one below is
+# katolikdunyasi.com's own key.
+$TurnstileSiteKey = '0x4AAAAAAFLZFP4-Scpg6ov1'
+$ContactIntro = TB "<p>Bir çeviride hata fark ettiyseniz, eklenmesini istediğiniz bir konu, aziz ya da mucize varsa ya da sadece merhaba demek istiyorsanız, aşağıdaki formdan bize yazabilirsiniz.</p>" "<p>If you've spotted a mistake in a translation, there's a topic, saint or miracle you'd like to see added, or you'd simply like to say hello, you can write to us with the form below.</p>"
+$ContactOutro = TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. Depending on how busy things are, a reply may take a little while, but thank you, sincerely, for any feedback you send.</p>"
 $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
@@ -1164,14 +1182,13 @@ $FooterHtml = @"
       <p class="foot-brand"><span class="foot-fish" aria-hidden="true">$IchthysSvg</span>$BrandName</p>
       <p class="foot-tag">$(T $SiteTag $SiteTagEn)</p>
       <p class="foot-desc">$(T $fm['about'] $fmEn['about'])</p>
-      <p class="foot-copy foot-src"><a class="foot-sources" href="kaynaklar-ve-telif.html" data-dialog="sources-dialog">$(T $fm['title'] $fmEn['title'])</a><a class="foot-contact" href="iletisim.html" data-dialog="dlg-iletisim">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
+      <p class="foot-copy foot-src"><a class="foot-sources" href="kaynaklar-ve-telif.html" data-dialog="sources-dialog">$(T $fm['title'] $fmEn['title'])</a><a class="foot-contact" href="iletisim.html">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
     </div>
     <nav class="foot-sitemap" $(TA 'aria-label' 'Site haritası' 'Sitemap')>
 $FootCols
     </nav>
   </div>
 </footer>
-$(Foot-Dialog 'dlg-iletisim' (T 'İletişim' 'Contact') $FootContactHtml)
 $(Foot-Dialog 'dlg-erisilebilirlik' (T $ErMeta.title $ErEn.meta.title) '' 'erisilebilirlik.html')
 $(Foot-Dialog 'dlg-gizlilik' (T $GzMeta.title $GzEn.meta.title) '' 'gizlilik.html')
 <dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
@@ -1180,12 +1197,6 @@ $(Foot-Dialog 'dlg-gizlilik' (T $GzMeta.title $GzEn.meta.title) '' 'gizlilik.htm
   <div class="info-inner">$(TB $InfoHtml $InfoHtmlEn)</div>
 </dialog>
 "@
-$EmailObfEval = [System.Text.RegularExpressions.MatchEvaluator]{
-  param($m)
-  $classMatch = [regex]::Match($m.Groups[1].Value, 'class="([^"]*)"')
-  $cls = if ($classMatch.Success) { "$($classMatch.Groups[1].Value) email-link" } else { 'email-link' }
-  "<a class=`"$cls`" data-u=`"david`" data-d=`"katolikdunyasi.com`" href=`"#`">$($script:EmailFallback)</a>"
-}
 # ---- Links between the site's own pages. The first mention of a saint, a miracle or a topic that
 # has a page of its own becomes a link to it, once per page and language, in running text only
 # (paragraphs and list items; never in headings, links, buttons, prayers or quotations' sources).
@@ -1357,6 +1368,7 @@ function Write-Page {
   })
   $ldTr = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
   $csp = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+  if ($File -eq 'iletisim.html') { $csp = $csp.Replace("script-src 'self' 'unsafe-inline'", "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com") + "; frame-src https://challenges.cloudflare.com" }
   # One page, in the language its address gives: $pl ('tr' | 'en'), with that language's head
   $render = {
     param([string]$pl)
@@ -1447,18 +1459,10 @@ $a11yHtml
   $html = & $render 'tr'
   if ($RootRelative) { $html = [regex]::Replace($html, $rootRx, '$1="/') }
   $html = $html.Replace('<!--KD-PILL-->', $pill)
-  # The contact address is public on every page (footer) and a few others (İletişim, the About
-  # panel, Erişilebilirlik, Gizlilik); catching it here once, after every page is assembled,
-  # keeps it out of the raw HTML for basic scrapers without touching the markdown/build source
-  # that writes it in plainly. JS reassembles the real mailto link on page load (see initEmail).
-  $script:EmailFallback = '(e-posta için JavaScript gerekli)'
-  $html = [regex]::Replace($html, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
   if ($enFile) {
     $h = & $render 'en'
     $h = (Map-EnLinks ([regex]::Replace($h, $rootRx, '$1="/'))).Replace('<!--KD-PILL-->', $pill)
-    $script:EmailFallback = '(JavaScript is needed to show the email address)'
-    $h = [regex]::Replace($h, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
     [IO.File]::WriteAllText((Join-Path $Root $enFile), $h, $Utf8)
   }
   $script:PageInfo += ,@{ File = $File; Path = $Path; En = $enFile; Title = $Title; TitleEn = $TitleEn; Desc = $Description; DescEn = $DescriptionEn; Robots = $Robots }
@@ -1735,7 +1739,7 @@ function Kk-Fold([string]$html, [string]$sfx = '') {
   $out = ($parts | Where-Object { $_.Trim() } | ForEach-Object {
     $m = [regex]::Match($_, '^<h2 id="([^"]+)">(.*?)</h2>(.*)$', 'Singleline')
     if (-not $m.Success) { return $_ }
-    "<details class=`"kk-sec`" id=`"$($m.Groups[1].Value)$sfx`"><summary><h2>$($m.Groups[2].Value)</h2>$IcoChevLg</summary><div class=`"kk-sec-body`">$($m.Groups[3].Value)</div></details>"
+    "<details class=`"kk-sec`" id=`"$($m.Groups[1].Value)$sfx`"><summary><h3>$($m.Groups[2].Value)</h3>$IcoChevLg</summary><div class=`"kk-sec-body`">$($m.Groups[3].Value)</div></details>"
   }) -join "`n"
   return "<div class=`"kk-secs`">$out</div><div class=`"kk-note`">$tail</div>"
 }
@@ -1760,14 +1764,20 @@ $kkLogosTr = @'
 $kkLogosEn = @'
 <h2>Why translation matters so much</h2><p>The New Testament was written in Greek. Ancient Greek can fit a whole philosophy into a single word, which makes it hard to carry into languages with narrower words. John’s Gospel opens: <em>“In the beginning was the Word, and the Word was with God, and the Word was God”</em> (John 1:1). The word translated “Word” is the Greek <em lang="grc">logos</em>.</p><p>In ancient Greek philosophy, logos is the reason and divine intelligence that orders the cosmos: the universal principle that connects and governs all things. For the Stoics it was an active, rational, spiritual principle, equated with nature, fate or providence. By choosing this word, John says that this Reason, the meaning and order of the universe, is God himself, and became man in Jesus (John 1:14).</p><p>Renderings such as “Söz” (“Word”) or “Tanrısal Söz” (“Divine Word”) in Turkish cannot carry this depth; to many readers they barely make sense. Greek’s semantic breadth means every word must be read carefully in its context. That is why a good translation, and the Church’s guidance, matter so much.</p>
 '@
+# the Logos note: its heading becomes the section's, the rest its body
+function Kk-Split([string]$h) { $m = [regex]::Match($h.Trim(), '^<h2>(.*?)</h2>(.*)$', 'Singleline'); return @($m.Groups[1].Value, $m.Groups[2].Value) }
+$kkLT = Kk-Split $kkLogosTr; $kkLE = Kk-Split $kkLogosEn
+$kkGuideN = ([regex]::Matches((Convert-Markdown $Kk.body), '<h2 id="')).Count
 $kkBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow ill-page">
   $(Crumbs 'Kutsal Kitap')
   <header class="page-head center">$(Page-Ico $IcoBible)<h1>$(T $KkMeta.title $KkEn.meta.title)</h1><p class="sub">$(T $KkMeta.subtitle $KkEn.meta.subtitle)</p></header>
-  <section class="kk-quick" aria-labelledby="kk-quick-h"><h2 class="visually-hidden" id="kk-quick-h">$(T 'Kısaca' 'In short')</h2>$kkQuickHtml</section>
-  <p class="kk-motto">$(T 'En iyi çeviri, okuyacağınız çeviridir.' 'The best translation is the one you will read.')</p>
-  <section class="kk-logos" id="logos">$(TB (Inline $kkLogosTr) (Inline $kkLogosEn))</section>
-  <div class="body prose kk-body">$(TB (Kk-Fold (Convert-Markdown $Kk.body)) (Kk-Fold (Convert-Markdown $KkEn.body) '-en'))</div>
+$(Ill-Sec -Id 'kisaca' -HeadId 'kk-quick-h' -Art 'book' -Tone 'gold' -Kick (T 'Hangi Kutsal Kitap?' 'Which Bible?') -Head (T 'Kısaca' 'In short') `
+    -Body "<div class=`"kk-quick`">$kkQuickHtml</div><p class=`"kk-motto`">$(T 'En iyi çeviri, okuyacağınız çeviridir.' 'The best translation is the one you will read.')</p>")
+$(Ill-Sec -Id 'logos' -Art 'scroll' -Tone 'blue' -Kick (T 'Logos' 'Logos') -Head (T (Inline $kkLT[0]) (Inline $kkLE[0])) `
+    -Body "<div class=`"prose ill-prose`">$(TB (Inline $kkLT[1]) (Inline $kkLE[1]))</div>")
+$(Ill-Sec -Id 'rehber' -Art 'lectern' -Tone 'red' -Kick (T "$kkGuideN bölüm" "$kkGuideN sections") -Head (T 'Rehberin tamamı' 'The full guide') `
+    -Body "<div class=`"body prose kk-body`">$(TB (Kk-Fold (Convert-Markdown $Kk.body)) (Kk-Fold (Convert-Markdown $KkEn.body) '-en'))</div>")
 </div>
 "@
 Write-Page -File 'kutsal-kitap.html' -Title "$($KkMeta.title) | $SiteName" -TitleEn "$($KkEn.meta.title) | $SiteName" -Description $KkMeta.description -DescriptionEn $KkEn.meta.description `
@@ -2800,19 +2810,41 @@ Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" -Title
   -Path 'kiliseler.html' -Body $kiliselerBody -JsonLd @((Breadcrumb-Ld 'Kilise Bul' 'kiliseler.html'))
 
 # ================================================================== ILETISIM (iletisim.html)
+$cfMsgs = @(
+  @('ok', 'Teşekkürler, mesajınız bize ulaştı. En kısa sürede yanıt vereceğim.', 'Thank you, your message has reached us. I will reply as soon as I can.'),
+  @('fields', 'Lütfen geçerli bir e-posta adresi ve bir mesaj yazın.', 'Please enter a valid email address and a message.'),
+  @('check', 'Güvenlik doğrulaması tamamlanamadı. Lütfen kutunun yüklenmesini bekleyip yeniden deneyin.', 'The security check could not be completed. Please wait for the box to load and try again.'),
+  @('error', 'Mesajınız şu an gönderilemedi. Lütfen biraz sonra yeniden deneyin.', 'Your message could not be sent just now. Please try again a little later.'))
+$cfMsgHtml = ($cfMsgs | ForEach-Object { "<p class=`"cf-msg cf-$($_[0])`" data-msg=`"$($_[0])`" hidden>$(T $_[1] $_[2])</p>" }) -join ''
 $iletisimBody = @"
 <div class="wrap narrow">
   $(Crumbs 'İletişim')
   <header class="page-head center">$(Page-Ico $IcoMail)<h1>$(T 'İletişim' 'Contact')</h1></header>
-  <div class="placeholder-page contact-page">
-    $IcoMail
-    <p class="placeholder-lead">$(T 'Bize ulaşın' 'Get in touch')</p>
-    $FootContactHtml
+  <div class="contact-wrap">
+    <div class="contact-intro">$ContactIntro</div>
+    <form class="cform" id="mesaj" action="/api/contact" method="post">
+      <div class="cf-row">
+        <label class="cf-field"><span class="cf-label">$(T 'Adınız' 'Your name') <em>$(T '(isteğe bağlı)' '(optional)')</em></span><input type="text" name="name" autocomplete="name" maxlength="100"></label>
+        <label class="cf-field"><span class="cf-label">$(T 'E-posta adresiniz' 'Your email address')</span><input type="email" name="email" autocomplete="email" maxlength="200" required></label>
+      </div>
+      <label class="cf-field"><span class="cf-label">$(T 'Mesajınız' 'Your message')</span><textarea name="message" rows="7" minlength="5" maxlength="5000" required></textarea></label>
+      <div class="cf-trap" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <input type="hidden" name="lang" value="tr">
+      <div class="cf-turnstile" data-sitekey="$TurnstileSiteKey" data-theme="auto" data-size="flexible"></div>
+      <div class="cf-foot">
+        <button type="submit" class="btn cf-send">$IcoMail<span>$(T 'Gönder' 'Send')</span></button>
+        <p class="cf-note">$(T 'E-posta adresiniz yalnızca size yanıt vermek için kullanılır. Ayrıntılar: <a href="gizlilik.html" data-no-dlg>Gizlilik Politikası</a>.' 'Your email address is used only to reply to you. Details: <a href="gizlilik.html" data-no-dlg>Privacy Policy</a>.')</p>
+      </div>
+      <div class="cf-status" role="status" aria-live="polite">$cfMsgHtml</div>
+      <noscript><p class="cf-msg cf-error">$(T 'Formun çalışması için JavaScript gerekir.' 'The form needs JavaScript to work.')</p></noscript>
+    </form>
+    <div class="contact-outro">$ContactOutro</div>
   </div>
 </div>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 "@
 Write-Page -File 'iletisim.html' -Title "İletişim | $SiteName" -TitleEn "Contact | $SiteName" `
-  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." -DescriptionEn "How to reach katolikdunyasi.com: an email address for translation corrections, content suggestions and your questions." `
+  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için iletişim formu." -DescriptionEn "How to reach katolikdunyasi.com: a contact form for translation corrections, content suggestions and your questions." `
   -Path 'iletisim.html' -Body $iletisimBody -JsonLd @((Breadcrumb-Ld 'İletişim' 'iletisim.html'))
 
 # ================================================================== ERISILEBILIRLIK (erisilebilirlik.html)
@@ -3103,7 +3135,7 @@ $IndexNowKey = '6d932ac291e035e4f4741e45a828f802'
 $wellKnownDir = Join-Path $Root '.well-known'
 if (-not (Test-Path $wellKnownDir)) { New-Item -ItemType Directory -Path $wellKnownDir | Out-Null }
 $secExpires = (Get-Date).AddYears(1).ToString('yyyy-MM-ddT00:00:00.000Z')
-$secTxt = "Contact: mailto:david@katolikdunyasi.com`nExpires: $secExpires`nPreferred-Languages: tr`nCanonical: $SiteUrl/.well-known/security.txt`n"
+$secTxt = "Contact: $SiteUrl/iletisim.html`nExpires: $secExpires`nPreferred-Languages: tr`nCanonical: $SiteUrl/.well-known/security.txt`n"
 [IO.File]::WriteAllText((Join-Path $wellKnownDir 'security.txt'), $secTxt, $Utf8)
 Write-Host "  + sitemap.xml, robots.txt, llms.txt, IndexNow key, .well-known/security.txt"
 Write-Host "Done."

@@ -1,13 +1,13 @@
 ---
 title: Gizlilik Politikası
-subtitle: Kısacası, hiçbir şey toplamıyoruz
+subtitle: Kısacası, siz bize yazmadıkça hiçbir şey toplamıyoruz
 description: katolikdunyasi.com’un gizlilik yaklaşımı: izleme aracı ya da çerez yok; tarayıcınızda yalnızca görünüm tercihleriniz ve tesbihte kaldığınız yer saklanır.
-short: Sitenin hangi veriyi topladığı (hiçbiri) ve tarayıcınızda ne sakladığı.
+short: Sitenin hangi veriyi topladığı (siz yazmadıkça hiçbiri) ve tarayıcınızda ne sakladığı.
 ---
 
 ## Kısaca
 
-Bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya da analiz yazılımı kullanmaz, çerez (cookie) kullanmaz. Google Analytics, reklam ağları ya da sosyal medya eklentileri gibi üçüncü taraf araçların hiçbiri sitede yok.
+Siz bize yazmadıkça bu site hiçbir kullanıcı verisi toplamaz, hiçbir izleme (tracking) aracı ya da analiz yazılımı kullanmaz, çerez (cookie) kullanmaz. Google Analytics, reklam ağları ya da sosyal medya eklentileri gibi üçüncü taraf araçların hiçbiri sitede yok.
 
 ## Tarayıcınızda saklanan tercihler
 
@@ -23,10 +23,12 @@ Site GitHub Pages üzerinde barındırılıyor ve Cloudflare ağı üzerinden su
 
 Sayfada kullanılan yazı tipleri (Inter, EB Garamond ve disleksi modundaki Lexend) sitenin kendi sunucusundan yükleniyor; Google Fonts gibi üçüncü taraf servislere hiçbir istek gönderilmez.
 
-## E-posta ile iletişim
+## İletişim formu
 
-Bize e-posta ile ulaştığınızda mesajınızı ve e-posta adresinizi yalnızca yanıt verebilmek için görürüz. Bu bilgi başka hiçbir amaçla kullanılmaz, üçüncü taraflarla paylaşılmaz ve pazarlama amacıyla saklanmaz.
+[İletişim](iletisim.html) sayfasındaki formdan bize yazdığınızda, adınız (yazdıysanız), e-posta adresiniz ve mesajınız Cloudflare üzerinden bize e-posta olarak iletilir. Bu bilgiler sitede saklanmaz; yalnızca size yanıt verebilmek için kullanılır, başka hiçbir amaçla kullanılmaz, üçüncü taraflarla paylaşılmaz ve pazarlama amacıyla saklanmaz.
+
+Formu otomatik spam gönderen programlardan korumak için Cloudflare Turnstile kullanılır. Bu doğrulama yalnızca İletişim sayfasında çalışır ve sizi reklam amacıyla izlemez; ayrıntılar için [Cloudflare’in Turnstile gizlilik açıklaması](https://www.cloudflare.com/turnstile-privacy-policy/)’na bakabilirsiniz.
 
 ## Değişiklikler
 
-Bu sayfa gerektiğinde güncellenebilir. Sorularınız için: [david@katolikdunyasi.com](mailto:david@katolikdunyasi.com).
+Bu sayfa gerektiğinde güncellenebilir. Sorularınız için [İletişim](iletisim.html) sayfasındaki formu kullanabilirsiniz.

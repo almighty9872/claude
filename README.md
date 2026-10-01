@@ -194,4 +194,4 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 
 ## Contact
 
-Translation corrections, content suggestions and general feedback are welcome at **david@katolikdunyasi.com**, or through the site's own [İletişim page](https://katolikdunyasi.com/iletisim.html).
+Translation corrections, content suggestions and general feedback are welcome through the contact form on the site's [İletişim page](https://katolikdunyasi.com/iletisim.html).
