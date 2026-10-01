@@ -1237,6 +1237,9 @@ function Link-Xrefs([string]$html, [string]$file) {
   }
   return $sb.ToString()
 }
+$ShortTitles = @{
+  'kilise/verapokhumin-buyukada.html' = @('Verapokhumin Ermeni Katolik Kilisesi, Büyükada', 'Verapokhumin Armenian Catholic Church, Büyükada')
+}
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
         [string[]]$JsonLd = @(), [string]$OgType = 'website',
@@ -1249,6 +1252,12 @@ function Write-Page {
   $suffix = " | $SiteName"
   if ($Title.Length -gt 60 -and $Title.EndsWith($suffix)) { $Title = $Title.Substring(0, $Title.Length - $suffix.Length) }
   if ($TitleEn.Length -gt 60 -and $TitleEn.EndsWith($suffix)) { $TitleEn = $TitleEn.Substring(0, $TitleEn.Length - $suffix.Length) }
+  # Still too long: a hand-made short form where one exists, else drop the bracketed part
+  # (an alternate name, a question range)
+  $short = $ShortTitles[$File]
+  if ($short) { if ($Title.Length -gt 60) { $Title = $short[0] }; if ($TitleEn.Length -gt 60) { $TitleEn = $short[1] } }
+  if ($Title.Length -gt 60) { $Title = ($Title -replace '\s*\([^)]*\)', '').Trim() }
+  if ($TitleEn.Length -gt 60) { $TitleEn = ($TitleEn -replace '\s*\([^)]*\)', '').Trim() }
   # Every page has an English twin under en/ (404.html excepted). Its description: the one
   # given, or else the page's first sizeable English paragraph.
   $enFile = En-Of $File
