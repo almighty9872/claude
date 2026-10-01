@@ -350,7 +350,7 @@
       advent: 'Advent', christmas: 'Christmas Season', ordinary: 'Ordinary Time', lent: 'Lent', easter: 'Easter Season',
       week: function (n) { return 'Week ' + n; }, ash: 'Ash Wednesday', palm: 'Palm Sunday', holyWeek: 'Holy Week',
       thu: 'Holy Thursday', fri: 'Good Friday', sat: 'Holy Saturday', easterDay: 'Easter Sunday', pentecost: 'Pentecost',
-      trinity: 'The Holy Trinity', king: 'Christ the King', colour: 'Liturgical colour',
+      trinity: 'The Holy Trinity', king: 'Christ the King', colour: 'Liturgical color',
       colours: { green: 'green', violet: 'violet', white: 'white', red: 'red', rose: 'rose' }
     }
   };
@@ -2242,7 +2242,7 @@
      --------------------------------------------------------------- */
   var AV_TX = {
     tr: { top: 'Sayfanın başına dön', sections: 'Bölümler', share: 'Paylaş', copied: 'Bağlantı kopyalandı', text: 'Metin', q: 'Soru', swipe: 'Kaydırarak geçin', prev: 'Önceki', next: 'Sonraki', toc: 'İçindekiler', done: 'Bitti', today: 'Bugünün Azizi', calendar: 'Takvim', church: 'kilise', churches: 'kilise' },
-    en: { top: 'Back to the start of the page', sections: 'Sections', share: 'Share', copied: 'Link copied', text: 'Text', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done', today: 'Saint of the Day', calendar: 'Calendar', church: 'church', churches: 'churches' }
+    en: { top: 'Back to top', sections: 'Sections', share: 'Share', copied: 'Link copied', text: 'Text', q: 'Question', swipe: 'Swipe for the next one', prev: 'Previous', next: 'Next', toc: 'Contents', done: 'Done', today: 'Saint of the Day', calendar: 'Calendar', church: 'church', churches: 'churches' }
   };
   /* ---------------------------------------------------------------
      Katekizm: which questions this reader has read. A question counts

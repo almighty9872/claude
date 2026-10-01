@@ -47,7 +47,7 @@ window.SAINTS = /*JSON-START*/{
      "name": "Büyük Basileios",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "IV. yüzyılda Kapadokya’da, bugünkü Kayseri bölgesinde yaşadı ve Kayseri episkoposu oldu. Manastır hayatı için yazdığı kurallar, Doğu manastırcılığının temelidir. Yoksullar için hastaneleri ve barınakları olan büyük bir yardım merkezi kurdu. Kutsal Ruh’un Tanrı olduğunu savunan yazılarıyla, Arianizme karşı Kilise’nin inancını korudu.",
-     "nameEn": "Saint Basil the Great",
+     "nameEn": "Basil the Great",
      "titleEn": "Bishop and Doctor of the Church",
      "bioEn": "A great churchman who lived in fourth-century Cappadocia (in what is now the Kayseri region of Turkey) and became bishop of Caesarea. The rules he wrote for monastic life form the foundation of Eastern monasticism; he also built a large charitable complex of hospitals and shelters for the poor. His writings defending the divinity of the Holy Spirit safeguarded the Church's faith against Arianism."
     },
@@ -55,7 +55,7 @@ window.SAINTS = /*JSON-START*/{
      "name": "Nazianzoslu Gregorios",
      "title": "Episkopos ve Kilise Doktoru",
      "bio": "Basileios’un yakın dostu ve IV. yüzyılın bir başka büyük Kapadokyalı teoloğudur. Konstantinopolis episkoposu oldu. Kutsal Üçlü üzerine verdiği vaazlar yüzünden ona “Teolog” dendi. “Kapadokyalı Babalar” diye anılan üç büyük isimden biri olarak, Mesih İsa’nın hem tam Tanrı hem tam insan olduğu öğretisinin netleşmesinde kalıcı bir iz bıraktı.",
-     "nameEn": "Saint Gregory of Nazianzus",
+     "nameEn": "Gregory of Nazianzus",
      "titleEn": "Bishop and Doctor of the Church",
      "bioEn": "A close friend of Basil, and another great fourth-century Cappadocian theologian. He served as bishop of Constantinople and earned the title \"the Theologian\" through his sermons on the Holy Trinity. As one of the Cappadocian Fathers, he left a lasting mark on the clarification of Christian theology, especially on Christ's full divinity and full humanity."
     }
@@ -86,7 +86,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "New York’ta doğdu. Dul kaldıktan sonra Katolik oldu. 1809’da Maryland’de Sisters of Charity rahibe cemaatini kurdu ve Amerika Birleşik Devletleri’nde Katolik okul sisteminin temelini attı. 1975’te aziz ilan edildi; Amerika’da doğmuş ilk azizedir.",
      "nameEn": "Elizabeth Ann Seton",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "An American born in New York who converted to Catholicism after being widowed. In 1809 she founded the Sisters of Charity in Maryland and laid the foundations of the Catholic school system in the United States. Canonized in 1975, she is the first American-born saint."
     }
    ]
@@ -116,7 +116,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahip Kardeş",
      "bio": "Kanada’nın Québec bölgesinde yoksul bir ailede doğdu. Sağlığı zayıf olduğu için hiçbir işte tutunamadı; sonunda Sainte-Croix cemaatine kapıcı olarak kabul edildi. Aziz Yusuf’a derin bir bağlılığı vardı. Ona dua isteyerek gelenlerin şifa bulduğuna dair sayısız tanıklık vardır; bugün de ziyaret edilen Montreal’deki büyük Saint Joseph Oratuvarı bu sayede kuruldu.",
      "nameEn": "André Bessette",
-     "titleEn": "Religious Brother",
+     "titleEn": "Religious",
      "bioEn": "Born to a poor family in Quebec, his frail health made it hard for him to hold down a job until he was finally accepted as a doorkeeper by the Congregation of Holy Cross. He is known for his deep devotion to Saint Joseph; countless testimonies of healing among those who sought his intercession led to the founding of the great Saint Joseph's Oratory in Montreal, still visited today."
     }
    ]
@@ -379,7 +379,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "Almanya’da doğdu, Amerika’ya göç etti ve Fransisken rahibesi oldu. Hawaii’deki cüzzam hastalarına bakmak için gönüllü oldu. Molokai adasındaki hasta kolonisi için hastaneler ve yetimhaneler kurdu ve otuz yıldan fazla orada hizmet etti. Aynı adada çalışan Aziz Damien öldükten sonra onun işini sürdürdü.",
      "nameEn": "Marianne Cope",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A Franciscan sister born in Germany who emigrated to America. She volunteered to care for leprosy patients in Hawaii, founding hospitals and orphanages for the patient colony on the island of Molokai, where she served for more than thirty years. She continued the work of Saint Damien, who served on the same island, after his death."
     }
    ]
@@ -695,7 +695,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "XIII. yüzyılda İtalya’da yaşadı. Kocasının rızasıyla evliliğini bırakıp manastıra girdi. Daha sonra Vallombrosa keşişlerine bağlı ilk kadın manastırını kurdu.",
      "nameEn": "Humility of Faenza",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A saint in thirteenth-century Italy who, with her husband's consent, left her marriage to enter a convent, and later founded the first convent of Vallombrosan nuns."
     }
    ]
@@ -1085,7 +1085,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "XIV-XV. yüzyılda Roma’da soylu bir aileye gelin gitti. Evli bir kadın ve anne olarak kendini yoksullara hizmete adadı. Kocası öldükten sonra, kadınların evdeki görevlerini bırakmadan dindar bir hayat sürebilmesi için bir topluluk kurdu. Roma’nın koruyucu azizesidir.",
      "nameEn": "Frances of Rome",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A woman in fourteenth- and fifteenth-century Rome who married into a noble family, and, while remaining a wife and mother, devoted herself to serving the poor. After her husband's death, she founded a community so that married women could live a devout life without abandoning their earthly duties. She is the patron saint of the city of Rome."
     }
    ]
@@ -1129,7 +1129,7 @@ window.SAINTS = /*JSON-START*/{
      "name": "Büyük Gregorius’un Ölüm Yıl Dönümü",
      "title": "",
      "bio": "Bu gün, 3 Eylül’de Kilise Doktoru olarak anılan Papa Büyük Gregorius’un 604’teki ölüm günüdür. Eski Roma takviminde asıl anma günü buydu; sonradan papa olarak kutsandığı gün olan 3 Eylül’e taşındı.",
-     "nameEn": "The Death Anniversary of Gregory the Great",
+     "nameEn": "The Anniversary of the Death of Gregory the Great",
      "titleEn": "",
      "bioEn": "Today, March 12, is the anniversary of the death, in 604, of Pope Gregory the Great, who is commemorated as a Doctor of the Church on September 3. This was his original commemoration in the old Roman calendar; it was later moved to the date of his episcopal ordination, September 3."
     }
@@ -1280,7 +1280,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahip Kardeş ve Şehit",
      "bio": "XVI-XVII. yüzyılda İngiltere’de yaşamış bir Cizvit kardeştir. Katoliklere zulmedilen o dönemde, rahipleri saklamak için evlerde gizli bölmeler yaptı. Sonunda yakalandı ve işkence altında öldü; ama kimseyi ele vermedi.",
      "nameEn": "Nicholas Owen",
-     "titleEn": "Religious Brother and Martyr",
+     "titleEn": "Religious and Martyr",
      "bioEn": "A Jesuit brother in sixteenth- and seventeenth-century England who built hidden compartments in houses to shelter priests during a period of persecution. He was eventually captured and died under torture, without betraying anyone."
     }
    ]
@@ -1550,7 +1550,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "VII. yüzyılda bugünkü Belçika’da yaşamış soylu bir kadındır; kocası da aziz olarak anılır. Evliliğinden sonra manastıra çekildi. Mons şehrinin koruyucu azizesidir.",
      "nameEn": "Waltrude",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A noblewoman in seventh-century Belgium, canonized together with her husband. After her marriage she withdrew into a convent and became the patron saint of the city of Mons."
     }
    ]
@@ -2040,7 +2040,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI. yüzyılda İspanya’nın Endülüs bölgesinde etkili bir vaiz ve ruhani rehberdi. Loyolalı İgnatius ve Avilalı Teresa gibi dönemin büyük azizlerine ruhani danışmanlık yaptı. İspanyol din adamlarının eğitiminin yenilenmesinde önemli bir rol oynadığı için “Endülüs’ün Havarisi” olarak da anılır.",
      "nameEn": "John of Ávila",
      "titleEn": "Priest and Doctor of the Church",
-     "bioEn": "A powerful preacher and spiritual director in the Andalusia region of sixteenth-century Spain. He served as spiritual advisor to great saints of his time, such as Ignatius of Loyola and Teresa of Ávila. He is called \"the Apostle of Spanish Clergy\" for the important role he played in reforming the education of Spanish priests."
+     "bioEn": "A powerful preacher and spiritual director in the Andalusia region of sixteenth-century Spain. He served as spiritual advisor to great saints of his time, such as Ignatius of Loyola and Teresa of Ávila. He is called \"the Apostle of the Spanish Clergy\" for the important role he played in reforming the education of Spanish priests."
     }
    ]
   },
@@ -2054,7 +2054,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahip Kardeş",
      "bio": "XVII-XVIII. yüzyılda İtalya’nın Sardinya adasında yaşamış bir Kapuçin kardeşidir. Kırk yıldan fazla adanın köylerini dolaşıp sadaka topladı ve bunu yoksullara dağıttı. Alçakgönüllülüğü ve esprili konuşmasıyla çok sevildi.",
      "nameEn": "Ignatius of Laconi",
-     "titleEn": "Religious Brother",
+     "titleEn": "Religious",
      "bioEn": "A Capuchin begging brother in seventeenth- and eighteenth-century Sardinia (Italy). For more than forty years he traveled the island's villages collecting alms to distribute to the poor, beloved for his humility and witty speech."
     }
    ]
@@ -2152,7 +2152,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahip Kardeş",
      "bio": "XVI. yüzyılda İspanya’da çobanken Fransisken kardeşi oldu. Efkaristiya’ya olan derin bağlılığıyla tanınır; Efkaristiya kongrelerinin ve derneklerinin koruyucu azizidir.",
      "nameEn": "Paschal Baylón",
-     "titleEn": "Religious Brother",
+     "titleEn": "Religious",
      "bioEn": "A saint in sixteenth-century Spain who became a Franciscan brother after having been a shepherd. He is known for his deep devotion to the Eucharist; he has been declared the patron saint of Eucharistic congresses and associations."
     }
    ]
@@ -2227,7 +2227,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "XIV-XV. yüzyılda İtalya’da yaşadı. Genç yaşta, şiddete eğilimli bir adamla zorla evlendirildi. Kocası ve iki oğlu öldükten sonra manastıra kabul edildi. Zor bir evlilik, yas ve hastalıkla dolu bir hayata rağmen bağışlayıcılığı ve sabrıyla tanınır. İmkânsız ve çaresiz durumların azizesi olarak anılır.",
      "nameEn": "Rita of Cascia",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A widow in fourteenth- and fifteenth-century Italy, admitted to a convent after the deaths of her violent husband, whom she had been forced to marry, and her two sons. Despite a difficult marriage and a life full of grief and illness, she is known for her forgiveness and patience. She is remembered as the saint of impossible and desperate situations."
     }
    ]
@@ -3189,7 +3189,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "XIV. yüzyılda İsveç’te yaşamış, sekiz çocuklu soylu bir kadındır. Kocası öldükten sonra derin görümler yaşadı ve bu görümlere dayanarak Birgitta tarikatını kurdu. Papaların Roma’ya dönmesi için ısrarla çalıştı. Avrupa’nın koruyucu azizelerindendir.",
      "nameEn": "Bridget of Sweden",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A noblewoman and mother of eight children in fourteenth-century Sweden. After her husband's death she experienced profound visions, and founded the Bridgettine order based on them. She worked persistently for the papacy's return to Rome. She is one of the co-patron saints of Europe."
     }
    ]
@@ -3505,7 +3505,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "XVI-XVII. yüzyılda Fransa’da yaşamış, dul kalmış soylu bir kadındır. Aziz Fransuva de Sal’ın ruhani rehberliğinde, dul kadınların ve başka manastırlara kabul edilmeyen kadınların da girebileceği Ziyaret Rahibeleri tarikatını kurdu.",
      "nameEn": "Jane Frances de Chantal",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "A widowed noblewoman in sixteenth- and seventeenth-century France. Under the spiritual guidance of Saint Francis de Sales, she founded the Visitation Sisters, an order for widows and women who could not otherwise be accepted into a convent."
     }
    ]
@@ -3873,7 +3873,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "Arnavut kökenli bir rahibedir ve Hindistan’da hizmet etti. Kalküta’nın en yoksul ve terk edilmiş insanlarına, ölmek üzere olanlara hizmet etmek için Sevgi Misyonerleri cemaatini kurdu. 1979’da Nobel Barış Ödülü’nü aldı. “En küçüklerde” Mesih İsa’yı görme çağrısıyla XX. yüzyılın en tanınan azizelerinden biri oldu.",
      "nameEn": "Teresa of Calcutta",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "An Albanian-born sister who served in India. She founded the Missionaries of Charity to serve Calcutta's poorest and most abandoned people, and those who were dying. She received the 1979 Nobel Peace Prize, and became one of the twentieth century's most recognized saints for her call to see Christ in \"the least of these.\""
     }
    ]
@@ -4536,7 +4536,7 @@ window.SAINTS = /*JSON-START*/{
      "title": "Rahibe",
      "bio": "XII-XIII. yüzyılda Silezya düşesiydi. Kocası öldükten sonra servetini hastanelere ve manastırlara bağışladı ve sade bir hayat sürdü. Polonya’nın koruyucu azizelerinden biridir.",
      "nameEn": "Hedwig",
-     "titleEn": "Religious Sister",
+     "titleEn": "Religious",
      "bioEn": "Duchess of Silesia in the twelfth and thirteenth centuries; after her husband's death she gave away her fortune to hospitals and monasteries and lived a simple life. She is one of the patron saints of Poland."
     },
     {
@@ -5723,7 +5723,7 @@ window.SAINTS = /*JSON-START*/{
      "name": "I. Silvester",
      "title": "Papa",
      "bio": "IV. yüzyılın başında yirmi yıldan fazla Roma episkoposu olarak görev yaptı. Papalığı, Hristiyanlığın Roma İmparatorluğu’nda serbest bırakıldığı 313 tarihli Milano Fermanı’ndan hemen sonraki döneme denk gelir. Bu dönemde Roma’da, Lateran Bazilikası ve eski Aziz Petrus Bazilikası dahil ilk büyük bazilikalar yapılmaya başlandı. 325’teki I. İznik Konsili’ne temsilciler gönderdi. Yıl onun anmasıyla kapanır; Batı’da yılbaşı gecesi geleneksel olarak onun adıyla anılır.",
-     "nameEn": "Saint Sylvester I",
+     "nameEn": "Sylvester I",
      "titleEn": "Pope",
      "bioEn": "He served as bishop of Rome for more than twenty years from the early fourth century. His papacy falls in the period immediately following the Edict of Milan of 313, which freed Christianity within the Roman Empire; during this time the first great basilicas of Rome, including the Lateran and the old St. Peter's Basilica, began to be built. He sent representatives to the First Council of Nicaea in 325. The year closes with his feast; in the West, New Year's Eve is traditionally named after him."
     }
@@ -5788,7 +5788,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Hristiyan inancının kalbidir: Mesih İsa’nın ölümden dirilişi. Kilise’nin en eski ve en büyük bayramıdır; bütün ayin yılı bu bayramın etrafında şekillenir. Elli günlük Paskalya dönemi bu günden Pentekost’a kadar sürer.",
    "titleEn": "Easter, the Resurrection of the Lord",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "The heart of the Christian faith: the resurrection of Christ from the dead. It is the Church's oldest and greatest feast; the entire liturgical year is shaped around it. The fifty-day Easter season runs from this day until Pentecost."
   },
   {
@@ -5798,7 +5798,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Paskalya’nın sekizinci günü kutlanır ve dirilmiş Mesih İsa’nın havarilere görünüp Tomas’ın şüphesini gidermesini anar. Azize Faustina Kowalska’nın görümlerine dayanan bu anmayı Papa II. Yuhanna Pavlus 2000 yılında bütün Kilise için ilan etti. Allah’ın sonsuz merhametini vurgular.",
    "titleEn": "Divine Mercy Sunday",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "Celebrated on the eighth day of Easter, this commemorates Christ appearing to the apostles and resolving Thomas's doubt. Based on the visions of Saint Faustina Kowalska, this commemoration was declared an official feast for the whole Church by Pope John Paul II in 2000; it emphasizes God's infinite mercy."
   },
   {
@@ -5808,7 +5808,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Mesih İsa’nın dirilişinden kırk gün sonra, havarilerinin gözü önünde göğe yükselişini anar. İncil’e göre İsa onlara Kutsal Ruh’u göndereceğini söyledi ve Müjde’yi bütün uluslara duyurma görevini verdi. Bu bayram, Mesih İsa’nın insan doğasının da Allah’ın yanındaki yüceliğe girişini kutlar.",
    "titleEn": "The Ascension of the Lord",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "This commemorates Christ's ascension into heaven before his apostles' eyes, forty days after the Resurrection. According to the Gospel, he promised them he would send the Holy Spirit and gave them the task of spreading the Gospel to all nations. This feast celebrates Christ's human nature entering into the glory of God."
   },
   {
@@ -5818,7 +5818,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Paskalya’dan elli gün sonra Kutsal Ruh’un, Meryem Ana’nın ve havarilerin üzerine ateşten diller gibi inişini anar. Elçilerin İşleri’ne göre bu olay Kilise’nin doğuşudur; havariler o günden itibaren korkmadan vaaz etmeye başladı. Paskalya dönemi bu bayramla sona erer.",
    "titleEn": "Pentecost",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "This commemorates the Holy Spirit descending as tongues of fire upon Mary and the apostles, fifty days after Easter. According to the Acts of the Apostles, this event is the birth of the Church; from that day the apostles began to preach fearlessly. It marks the end of the Easter season."
   },
   {
@@ -5828,7 +5828,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Hristiyan inancının merkezindeki sırrı kutlar: Tek Allah’ın Peder, Oğul ve Kutsal Ruh olarak üç kişide var olması. Bu sır akılla tam olarak kavranamaz; Kilise bu gerçeği, Mesih İsa’nın kendisini, Peder’i ve Kutsal Ruh’u bize açıklamasıyla bilir. Pentekost’tan sonraki ilk pazar kutlanır.",
    "titleEn": "The Holy Trinity",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "This celebrates the central mystery of the Christian faith: the one God existing in three persons, Father, Son, and Holy Spirit. This mystery cannot be fully grasped by reason; the Church knows this truth through what Christ revealed about himself and his relationship with the Father and the Holy Spirit. It is celebrated on the first Sunday after Pentecost."
   },
   {
@@ -5838,7 +5838,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Efkaristiya’da, ekmek ve şarap görünümü altında gerçekten bulunan Mesih İsa’nın Bedeni’ni ve Kanı’nı kutlar. Birçok ülkede bu gün Kutsal Efkaristiya sokaklarda alayla taşınır. Kutsal Üçlü pazarından sonraki perşembe günü kutlanır; birçok ülkede ise ondan sonraki pazara alınır.",
    "titleEn": "The Body and Blood of Christ (Corpus Christi)",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "This celebrates the Body and Blood of Christ, truly present under the appearance of bread and wine in the Eucharist. In many countries this day is celebrated with a traditional ceremony in which the Blessed Sacrament is carried in procession through the streets. It is celebrated on the Thursday after Trinity Sunday."
   },
   {
@@ -5848,7 +5848,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "En Büyük Bayram",
    "bio": "Mesih İsa’nın insanlığa duyduğu sonsuz ve kendini feda eden sevgisini, yüreği simgesiyle kutlar. Bu bağlılık özellikle XVII. yüzyılda Azize Marguerite-Marie Alacoque’un gördüğü görümlerle yaygınlaştı. Corpus Christi bayramından sonraki cuma günü kutlanır; aynı zamanda rahiplerin kutsallığı için dua günüdür.",
    "titleEn": "The Sacred Heart of Jesus",
-   "rankEn": "The Greatest Solemnity",
+   "rankEn": "Principal Solemnity",
    "bioEn": "This celebrates, under the symbol of his heart, Christ's infinite and self-sacrificing love for humanity. This devotion spread widely especially through the visions given to Saint Margaret Mary Alacoque in the seventeenth century. It is celebrated on the Friday after the feast of Corpus Christi, and is also observed as a day of prayer for the sanctification of priests."
   },
   {

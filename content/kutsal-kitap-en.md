@@ -16,7 +16,7 @@ Check two things before buying:
 
 ## Which Turkish edition? {#turkce}
 
-There's no printed, Church-approved Turkish Catholic edition yet. The closest option is the Bible Society in Turkey's 2003 translation, **Kutsal Kitap ve Deuterokanonik Kitaplar** ("The Bible and the Deuterocanonical Books"): it includes the seven deuterocanonical books and reads easily. To read it free:
+There's no printed, Church-approved Turkish Catholic edition yet. The closest option is the Bible Society in Turkey's 2003 translation, **Kutsal Kitap ve Deuterokanonik Kitaplar** ("The Bible and the Deuterocanonical Books"): it includes the seven deuterocanonical books and reads easily. Read it free online:
 
 - [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU), Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
 - [kitabimukaddes.com](https://kitabimukaddes.com/tr/kutsal-kitap)
@@ -41,6 +41,6 @@ English translations approved by the US Conference of Catholic Bishops (USCCB) s
 - Good News Translation (Today's English Version, Second Edition), American Bible Society
 - Translation for Early Youth, A Translation of the New Testament for Children, Contemporary English Version, American Bible Society
 
-The Douay-Rheims isn't on this list because it covers only contemporary translations; it carries its own historical approval and is still fine to use. If you live in another country, check your own bishops' conference's list.
+The Douay-Rheims isn't on this list because the list covers only contemporary translations; it carries its own historical approval and is still fine to use. If you live in another country, check your own bishops' conference's list.
 
 > The sections on translation are adapted from Catholic Answers' Bible Translations Guide pamphlet; the list of approved translations comes from the USCCB.

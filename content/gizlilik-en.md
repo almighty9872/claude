@@ -21,7 +21,7 @@ The site is hosted on GitHub Pages. Like any web server, GitHub's servers may ke
 
 ## Fonts
 
-Even the typeface used on the page (EB Garamond) is loaded from the site's own server; no requests are sent to third-party services like Google Fonts.
+The typefaces used on the site are loaded from the site's own server; no requests are sent to third-party services like Google Fonts.
 
 ## Contact by email
 

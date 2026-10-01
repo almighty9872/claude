@@ -16,7 +16,7 @@ katolikdunyasi.com is designed to be usable comfortably by as wide an audience a
 - **Keyboard use:** menus, the search box, the Settings panel, and every popup panel can be opened and closed with the keyboard alone, with no mouse required; the focused element is always visible.
 - **Skip-to-content link:** every page begins with an invisible link that skips the menu and jumps straight to the content ("Skip to content").
 - **Reduced motion:** if your operating system's "reduce motion" preference is on, the site respects it and turns off unnecessary transition animations.
-- **Dark and light theme:** selectable for eye strain or light sensitivity, and your choice is remembered.
+- **Dark and light themes:** choose whichever is easier on your eyes, for example if you have eye strain or light sensitivity; your choice is remembered.
 - **Color contrast:** text colors were chosen to target the contrast ratios recommended by the WCAG 2.1 AA standard, and can be strengthened further with the "Increase Contrast" setting in the Settings panel.
 - **Language:** the TR | EN button in the bottom corner of every page turns the whole page from Turkish into English (and back) in place, without losing your place; your choice is remembered. In the Catechism, the English is the original English text.
 

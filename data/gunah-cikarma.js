@@ -286,7 +286,7 @@ window.CONFESSION = /*JSON-START*/{
   {
    "id": "perde-mi-yuz-yuze-mi",
    "q": "Perde arkasını mı, yüz yüze olanı mı seçmeliyim?",
-   "qEn": "Should I choose behind the screen, or face to face?",
+   "qEn": "Should I confess behind a screen or face to face?",
    "a": "Size kalmış. İkisi de geçerlidir ve ikisi de yaygındır.",
    "aEn": "It's up to you; both are valid and common."
   },

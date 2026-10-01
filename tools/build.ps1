@@ -477,7 +477,7 @@ function Ccc-Link([string]$text, [string]$lang) {
   $title = TA 'title' "Katolik Kilisesi Katekizmi, vatican.va (yeni pencerede açılır)" 'Catechism of the Catholic Church, vatican.va (opens in a new window)'
   $parts = $text -split ' · '
   $out = foreach ($part in $parts) {
-    if ($part -match '^\s*CIC') { $part; continue }
+    if ($part -match '^\s*CIC') { if ($part -match 'kan\.') { T $part ($part -replace 'kan\.', 'can.') } else { $part }; continue }
     $pre = ''; $body = $part
     if ($part -match '^(\s*(?:CCC|KKK)\s)(.*)$') { $pre = $Matches[1]; $body = $Matches[2] }
     $items = $body -split ',\s*'
@@ -975,7 +975,7 @@ $DnSubs = @{
   'katekizm.html' = $KatekizmNav
   'tesbih-duasi.html' = @(
     @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Dualar ve gizemler'; te = 'The Rosary'; se = 'Prayers and mysteries' },
-    @{ href = 'tesbih-duasi.html#tesbih-rehberi'; t = 'Adım Adım Tesbih'; s = 'Boncuk boncuk, birlikte dua edin'; te = 'Pray It Bead by Bead'; se = 'Pray along, bead by bead' },
+    @{ href = 'tesbih-duasi.html#tesbih-rehberi'; t = 'Adım Adım Tesbih'; s = 'Boncuk boncuk, birlikte dua edin'; te = 'Pray It Bead by Bead'; se = 'A guided rosary, on screen' },
     @{ href = 'tesbih-tarihi.html'; t = 'Tesbihin Tarihi'; s = "İncil$($Apos)den Fatima$($Apos)ya"; te = 'History of the Rosary'; se = 'From the Gospel to Fatima' })
   'azizler.html' = @(
     @{ href = 'azizler.html'; t = 'Azizler Takvimi'; s = 'Yılın her günü için bir aziz'; te = 'Calendar of Saints'; se = 'A saint for every day of the year' },
@@ -1028,7 +1028,7 @@ $Sprite
       </nav>
       <button type="button" class="icon-btn menu-toggle" $(TA 'aria-label' 'Menü' 'Menu') aria-expanded="false" aria-controls="navsheet" $(TA 'data-tooltip' 'Tüm Menü' 'Full Menu')>$IcoMenuToggle</button>
       <div class="header-tools">
-        <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Koyu temaya geç">$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
+        <button type="button" class="theme-toggle" role="switch" aria-checked="false" $(TA 'aria-label' 'Koyu temaya geç' 'Switch to dark theme')>$IcoSun$IcoMoon<span class="knob" aria-hidden="true"></span></button>
       </div>
     </div>
   </div>
@@ -1351,7 +1351,7 @@ $a11yHtml
   if ($enFile) {
     $h = & $render 'en'
     $h = (Map-EnLinks ([regex]::Replace($h, $rootRx, '$1="/'))).Replace('<!--KD-PILL-->', $pill)
-    $script:EmailFallback = '(JavaScript is needed for the e-mail address)'
+    $script:EmailFallback = '(JavaScript is needed to show the email address)'
     $h = [regex]::Replace($h, '<a([^>]*)href="mailto:david@katolikdunyasi\.com"[^>]*>.*?</a>', $EmailObfEval)
     [IO.File]::WriteAllText((Join-Path $Root $enFile), $h, $Utf8)
   }
@@ -1634,13 +1634,13 @@ function Kk-Fold([string]$html, [string]$sfx = '') {
 }
 $kkRead = 'https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar'
 $kkQuick = @(
-  @((T 'Türkçe okumak için' 'To read in Turkish'), (T 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)' 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)'),
+  @((T 'Türkçe okumak için' 'In Turkish'), (T 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)' 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)'),
     (T '73 kitabın tamamı, kolay okunur bir dille.' 'All 73 books, in easy modern Turkish.'),
     "<a href=`"$kkRead`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
   @((T 'İngilizce için' 'In English'), 'RSV-CE (The Ignatius Bible)',
     (T 'Özgün metne yakın ama okunur; genel kullanım için en iyi seçim.' 'Close to the original yet readable; the best choice for general use.'),
     "<a href=`"https://www.ewtn.com/bible`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
-  @((T 'Satın alırken' 'When buying one'), (T '73 kitap ve Imprimatur' '73 books and an Imprimatur'),
+  @((T 'Satın alırken' 'When buying a Bible'), (T '73 kitap ve Imprimatur' '73 books and an Imprimatur'),
     (T 'Katolik baskıda 73 kitap vardır; iç kapakta Nihil obstat ve Imprimatur yazar.' 'A Catholic edition has 73 books, with Nihil obstat and Imprimatur inside the cover.'), '')
 )
 $kkQuickHtml = ($kkQuick | ForEach-Object {
@@ -1740,7 +1740,7 @@ $sealMartyrsItemsEn = ($Confession.sealMartyrs.itemsEn | ForEach-Object { '<li><
 $sealLists = TB ('<ul class="footnote-list">' + $sealMartyrsItems + '</ul>') ('<ul class="footnote-list">' + $sealMartyrsItemsEn + '</ul>')
 $sealMartyrsHtml = '<aside class="footnote-block" id="muhur-sehitleri"><p class="footnote-label">* ' + (T (Inline $Confession.sealMartyrs.title) (Inline $Confession.sealMartyrs.titleEn)) + '</p><p>' + (T (Inline $Confession.sealMartyrs.intro) (Inline $Confession.sealMartyrs.introEn)) + '</p>' + $sealLists + '</aside>'
 $confessionDoors = '<a class="why-door" href="#adim-adim"><span class="why-door-t">' + (T 'İlk kez ya da uzun bir aradan sonra gidiyorum' 'I''m going for the first time, or for the first time in a long time') + '</span><span class="why-door-s">' + (T 'Adım adım neler olacağını görün' 'See what happens, step by step') + '</span>' + $IcoArrowR + '</a>' +
-  '<a class="why-door" href="#vicdan-muhasebesi"><span class="why-door-t">' + (T 'Hazırlanmak istiyorum' 'I want to prepare') + '</span><span class="why-door-s">' + (T "On Emir$($Apos)e göre vicdan muhasebesi" 'An examination of conscience by the Ten Commandments') + '</span>' + $IcoArrowR + '</a>'
+  '<a class="why-door" href="#vicdan-muhasebesi"><span class="why-door-t">' + (T 'Hazırlanmak istiyorum' 'I want to prepare') + '</span><span class="why-door-s">' + (T "On Emir$($Apos)e göre vicdan muhasebesi" 'An examination of conscience based on the Ten Commandments') + '</span>' + $IcoArrowR + '</a>'
 $confessionBody = @"
 <div class="wrap narrow sureci-wrap" data-av-nogh>
   $(Crumbs 'Günah Çıkarma')
@@ -1981,7 +1981,7 @@ function Case-Body($Ic, $Ico) {
 $icBody = Case-Body $Ic $IcoAnswer
 $icLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Ic.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/islama-cevap.html") + '}'
 Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadislerle | $SiteName" -TitleEn "$($Ic.en): From the Qur$($Apos)an and the Hadith | $SiteName" `
-  -Description (Meta-Trim "İslam'ın iddiaları kendi kaynaklarıyla sınanıyor: İslam ikilemi, Kur'an'ın korunmuşluğu, Muhammed'in karakteri, Kâbe'nin putu Hübel. Kısa özet ve tam tartışma.") -DescriptionEn "Islam's claims tested by its own sources: the Islamic dilemma, the preservation of the Qur'an, the character of Muhammad and Hubal, the idol of the Kaaba." `
+  -Description (Meta-Trim "İslam'ın iddiaları kendi kaynaklarıyla sınanıyor: İslam ikilemi, Kur'an'ın korunmuşluğu, Muhammed'in karakteri, Kâbe'nin putu Hübel. Kısa özet ve tam tartışma.") -DescriptionEn "Islam's claims tested by its own sources: the Islamic dilemma, the preservation of the Qur'an, the character of Muhammad, and Hubal, the idol of the Kaaba." `
   -Path 'islama-cevap.html' -Body $icBody -JsonLd @($icLd, (Breadcrumb-Ld "İslam$($Apos)a Cevap" 'islama-cevap.html'))
 
 # ================================================================== ATEIZME CEVAP (ateizme-cevap.html)
@@ -2005,7 +2005,7 @@ function Why-Page([string]$lang) {
   $W = $WhyCatholic
   # every text in both languages: a field and its ...En twin
   function F2($o, [string]$k) { T (Inline $o.$k) (Inline $o.($k + 'En')) }
-  $L = @{ doors = @('Nereden başlamak istersiniz?', 'Where would you like to start?'); but = @('Ama', 'But'); q = @('Soru', 'The question')
+  $L = @{ doors = @('Nereden başlamak istersiniz?', 'Where would you like to start?'); but = @('Ama', 'Objection'); q = @('Soru', 'The question')
           together = @('Hepsi bir arada', 'Putting it together'); where = @('Buradan nereye?', 'Where to go from here') }
   function LL([string]$k) { T $L[$k][0] $L[$k][1] }
   $parts = @($W.parts); $n = $parts.Count
@@ -2128,7 +2128,7 @@ function Saint-Links($s) {
   $qEn = if ($plainEn -match '(^|\s)(Saint|St\.|Apostle|Mary|Our Lady|Blessed|Basilica)') { $plainEn } else { "Saint $plainEn" }
   return "<p class=`"s-links`">" + (T "<a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($q))`" target=`"_blank`" rel=`"noopener nofollow`">Google$($Apos)da ara</a>" "<a class=`"s-google`" href=`"https://www.google.com/search?q=$([uri]::EscapeDataString($qEn))`" target=`"_blank`" rel=`"noopener nofollow`">Search on Google</a>") + "</p>"
 }
-$RankEn = @{ 'En Büyük Bayram' = 'The Greatest Solemnity'; 'Büyük Bayram' = 'Solemnity'; 'Bayram' = 'Feast'; 'Anma Günü' = 'Memorial'; 'Anma' = 'Memorial'
+$RankEn = @{ 'En Büyük Bayram' = 'Principal Solemnity'; 'Büyük Bayram' = 'Solemnity'; 'Bayram' = 'Feast'; 'Anma Günü' = 'Memorial'; 'Anma' = 'Memorial'
   'İhtiyari Anma Günü' = 'Optional Memorial'; 'Roma Azizler Cetveli' = 'Roman Martyrology'; 'Ortaçağ Batı Geleneği' = 'Medieval Western Tradition' }
 function Saint-Item($s) {
   $titlePart = if ($s.title) { "<span class=`"s-title`">$(T (Inline $s.title) (Inline $s.titleEn))</span>" } else { '' }
@@ -2563,7 +2563,7 @@ foreach ($city in $Churches.cities) {
     # the notice: closed, or something to know before going
     $notice = ''
     if ($ch.status -ne 'active' -and $ch.notice) {
-      $head = if ($ch.status -eq 'closed') { T 'Şu anda kapalı.' 'Closed at present.' } else { T 'Gitmeden önce.' 'Before you go.' }
+      $head = if ($ch.status -eq 'closed') { T 'Şu anda kapalı.' 'Currently closed.' } else { T 'Gitmeden önce.' 'Before you go.' }
       $notice = "<div class=`"ch-notice is-$($ch.status)`" role=`"note`">$IcoWarn<p><strong>$head</strong> $(T (Inline $ch.notice) (Inline $ch.noticeEn))</p></div>"
     }
     # contact: address (with a map link), phones, e-mail, website
@@ -2575,7 +2575,7 @@ foreach ($city in $Churches.cities) {
       [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoPhone<span>$(T 'Telefon' 'Phone')</span></dt><dd>$ph</dd></div>")
     }
     if ($ch.email) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoMailSm<span>$(T 'E-posta' 'Email')</span></dt><dd><a href=`"mailto:$($ch.email)`">$($ch.email)</a></dd></div>") }
-    if ($ch.website) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoGlobe<span>Web</span></dt><dd><a href=`"$($ch.website)`" target=`"_blank`" rel=`"noopener`">$(Site-Host $ch.website) $IcoExternal</a></dd></div>") }
+    if ($ch.website) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoGlobe<span>$(T 'Web' 'Website')</span></dt><dd><a href=`"$($ch.website)`" target=`"_blank`" rel=`"noopener`">$(Site-Host $ch.website) $IcoExternal</a></dd></div>") }
     $massEn = @($ch.massEn)
     $times = (0..(@($ch.mass).Count - 1) | ForEach-Object { $m = @($ch.mass)[$_]; $e = $massEn[$_]; "<tr><th scope=`"row`">$(T (Inline $m[0]) (Inline $e[0]))</th><td>$(T (Inline $m[1]) (Inline $e[1]))</td></tr>" }) -join ''
     $massNote = if ($ch.massNote) { "<p class=`"ch-note`">$(T (Inline $ch.massNote) (Inline $ch.massNoteEn))</p>" } else { '' }
@@ -2714,7 +2714,7 @@ $iletisimBody = @"
 </div>
 "@
 Write-Page -File 'iletisim.html' -Title "İletişim | $SiteName" -TitleEn "Contact | $SiteName" `
-  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." -DescriptionEn "How to reach katolikdunyasi.com: an e-mail address for translation corrections, content suggestions and your questions." `
+  -Description "katolikdunyasi.com$($Apos)a nasıl ulaşabileceğiniz: çeviri düzeltmeleri, içerik önerileri ve sorularınız için e-posta adresi." -DescriptionEn "How to reach katolikdunyasi.com: an email address for translation corrections, content suggestions and your questions." `
   -Path 'iletisim.html' -Body $iletisimBody -JsonLd @((Breadcrumb-Ld 'İletişim' 'iletisim.html'))
 
 # ================================================================== ERISILEBILIRLIK (erisilebilirlik.html)
@@ -2790,7 +2790,7 @@ $HomeApps = @(
        s = 'Katolik olmak isteyenler için OCIA süreci, adım adım.'; se = 'The OCIA process for those who want to become Catholic, step by step.' },
     @{ f = 'meseller.html'; ico = $IcoScroll; t = "İsa$($Apos)nın Meselleri"; te = 'The Parables of Jesus'
        s = 'Otuz iki mesel, düz bir dille açıklanmış.'; se = 'Thirty-two parables, plainly explained.' }) },
-  @{ id = 'tartis'; t = 'Tartış'; te = 'Debate'; s = 'İtirazlara cevap, inancın savunusu'; se = 'Answers to objections, a defence of the faith'; ico = $IcoDebate; pages = @(
+  @{ id = 'tartis'; t = 'Tartış'; te = 'Debate'; s = 'İtirazlara cevap, inancın savunusu'; se = 'Answers to objections, a defense of the faith'; ico = $IcoDebate; pages = @(
     @{ f = 'islama-cevap.html'; ico = $IcoAnswer; t = "İslam$($Apos)a Cevap"; te = 'Answering Islam'
        s = "İslam$($Apos)ın iddiaları, Kur$($Apos)an ve hadislerle sınanıyor."; se = "Islam's claims, tested by the Qur'an and the hadith." },
     @{ f = 'ateizme-cevap.html'; ico = $IcoCosmos; t = 'Ateizme Cevap'; te = 'Answering Atheism'
@@ -2803,16 +2803,16 @@ $HomeApps = @(
     @{ f = 'ekler.html'; ico = $IcoPrayers; t = 'Sık Kullanılan Dualar'; te = 'Common Prayers'
        s = 'Günlük dualar ve formüller, tek sayfada.'; se = 'Daily prayers and formulas of Catholic doctrine, on one page.' },
     @{ f = 'gunah-cikarma.html'; ico = $IcoKey; t = 'Günah Çıkarma'; te = 'Confession'
-       s = 'Nasıl işler, adım adım; vicdan muhasebesi ve sık sorulan sorular.'; se = 'How it works, step by step; an examination of conscience and FAQ.' }) },
+       s = 'Nasıl işler, adım adım; vicdan muhasebesi ve sık sorulan sorular.'; se = 'How it works, step by step; an examination of conscience and common questions.' }) },
   @{ id = 'kesfet'; t = 'Keşfet'; te = 'Explore'; s = 'Azizler, mucizeler ve bu toprakların kökleri'; se = "Saints, miracles and our faith's roots in this land"; ico = $IcoCompass; pages = @(
     @{ f = 'azizler.html'; ico = $IcoStar; t = 'Azizler'; te = 'Saints'
        s = 'Bugünün azizini görün, yılın her günü için hayat hikâyeleri.'; se = 'A saint for every day of the year, and the twenty best-known names.' },
     @{ f = 'mucizeler.html'; ico = $IcoRadiance; t = 'Mucizeler'; te = 'Miracles'
        s = 'Meryem Ana görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler.'; se = 'Marian apparitions, the Shroud of Turin, Eucharistic miracles and the incorrupt saints.' },
-    @{ f = 'topraklarimizda-hristiyanlik.html'; ico = $IcoRoots; t = 'Topraklarımızda Hristiyanlık'; te = 'Christianity in Our Land'
+    @{ f = 'topraklarimizda-hristiyanlik.html'; ico = $IcoRoots; t = 'Topraklarımızda Hristiyanlık'; te = 'Christianity in Anatolia'
        s = "Pavlus$($Apos)un memleketi, Vahiy$($Apos)in yedi kilisesi, İznik Konsili."; se = "Paul's homeland, the seven churches of Revelation, the Council of Nicaea." },
     @{ f = 'kiliseler.html'; ico = $IcoPin; t = 'Kilise Bul'; te = 'Find a Church'
-       s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches you can attend Mass at in Turkey, city by city.' }) }
+       s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches in Turkey where you can attend Mass, city by city.' }) }
 )
 
 # The faint religious images in the corners of the home page's three cards

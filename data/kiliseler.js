@@ -226,7 +226,7 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Last Sunday of the month",
-       "A single Mass: 10:30"
+       "One Mass only: 10:30"
       ],
       [
        "Monday–Saturday",
@@ -562,7 +562,7 @@ window.CHURCHES = /*JSON-START*/{
      "shortEn": "Saint-Louis (French)",
      "massEn": [
       [
-       "At present",
+       "Currently",
        "No Mass (closed since 1 September 2025)."
       ]
      ],
@@ -1012,7 +1012,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time.",
+     "visitsEn": "Open during Mass times.",
      "historyEn": [
       "The Surp Asdvadzadzin (Holy Mother of God) Cathedral in Sakızağacı is the spiritual center of the Armenian Catholic Patriarchate in Turkey and of the Armenian Catholic community of Istanbul. The church stands at the very heart of a compound made up of the patriarchal residence, the priests’ house, a library and a printing house.",
       "An imperial firman for its construction was obtained on 15 June 1864. Built at the expense of Bedros Bey Mısırlıyan and designed by the architect Andon Tülbentçiyan, the church had its foundations laid in January 1865; completed in about 18 months, it was consecrated on 6 November 1866.",
@@ -1066,7 +1066,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time.",
+     "visitsEn": "Open during Mass times.",
      "historyEn": [
       "Surp Hovhan Vosgeperan (St. John Chrysostom), near Taksim Square behind the French Consulate, holds 600 people and is the largest Armenian Catholic church in Turkey.",
       "The wooden church built here in 1837 deteriorated over time and later burned down. The foundations of the new masonry building were laid in 1860; after the death of the architect Garabet Tülbentçiyan in 1861, Andon Tülbentçiyan completed the work, and the church was finished in 1863. A school building was also put up beside it.",
@@ -1120,7 +1120,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time.",
+     "visitsEn": "Open during Mass times.",
      "historyEn": [
       "Surp Pırgiç (Holy Savior) in Galata is the first Armenian Catholic church built in Istanbul. It was built by the Armenian Catholic community of Galata in 1832–1834, and from 1850 to 1928 it was the seat of the Armenian Catholic patriarchate.",
       "According to tradition, while it was being built a plague broke out in the city, and on 25 March the icon of the Virgin Mary was carried in procession through the streets; after the epidemic subsided, Sultan Mahmud II is said to have sent the church a gift set with diamonds.",
@@ -1174,7 +1174,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time.",
+     "visitsEn": "Open during Mass times.",
      "historyEn": [
       "The Anarad Hığutyun (Immaculate Conception) Church is one of the few Armenian Catholic churches on the historic peninsula, inside the city walls. Its roots go back to the Mesrobyan School, founded in 1845 to educate the children of the Armenian Catholic community.",
       "The church opened in 1856 with the permission of Sultan Abdülmecid. Its construction was undertaken by Patriarch Andon Bedros IX Hasunyan, the first Armenian Catholic cardinal from the Ottoman lands; its architect was Andon Tülbentçiyan, who also designed Surp Hovhan Vosgeperan in Taksim and the cathedral in Sakızağacı.",
@@ -1227,7 +1227,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time.",
+     "visitsEn": "Open during Mass times.",
      "historyEn": [
       "The building of the Surp Krikor Lusavoriç (St. Gregory the Illuminator) Church in Ortaköy was permitted by a firman dated 5 November 1837. Built at the expense of Krikor Hekimyan, the church opened for worship on 6 January 1839.",
       "The building, whose architecture recalls the basilicas of Rome, has two stacked galleries for women and four small altars inside. Today the church is run by the Ortaköy Surp Krikor Lusavoriç Armenian Catholic Church Foundation."
@@ -1279,7 +1279,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time during the summer months.",
+     "visitsEn": "Open during Mass times in the summer months.",
      "historyEn": [
       "Surp Boğos (St. Paul) in Büyükdere was first built as a wooden chapel in 1847. As the community grew, the wooden building became too small; it was taken down in 1882 and replaced by the larger masonry church built at the expense of Boğos Amira Bilezikçiyan, which opened for worship in 1885.",
       "East of the church, which stands in a garden and looks two-storied, are the priest’s house and the bell tower; the compound has an old well. The building was listed in 1978. As at many churches in the Bosphorus summer neighborhoods, Mass is held here in the summer months."
@@ -1397,7 +1397,7 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Summer: Sunday",
-       "09:30 (a single Mass)"
+       "09:30 (one Mass only)"
       ],
       [
        "First Friday of every month",
@@ -1648,7 +1648,7 @@ window.CHURCHES = /*JSON-START*/{
        "10:00 (Turkish / French)"
       ]
      ],
-     "visitsEn": "Open for the Sunday Mass.",
+     "visitsEn": "Open for Sunday Mass.",
      "historyEn": [
       "The St. Augustine chapel in Fenerbahçe is part of a building put up in 1889–1892 as a house of formation for the Assumptionist priests. The building was blessed by Bishop Bonetti on 1 May 1890; of the two side wings added in 1892, the left one was fitted out as a chapel dedicated to St. Augustine of Hippo.",
       "Between 1890 and 1914 the building served in turn as a novitiate, a house of studies and a student hostel; from 1895 to 1914 it was a seminary, a role it kept on a small scale until the Second World War. From 1914 to 1919 it served as a hospital. After 1920 the chapel became an annex of the Kadıköy parish, and the priests from Moda went on celebrating Mass here regularly.",
@@ -1701,7 +1701,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open for the Sunday Mass.",
+     "visitsEn": "Open for Sunday Mass.",
      "historyEn": [
       "The Surp Levon Church in Altıyol, Kadıköy, takes its name from St. Leo the Great (Surp Levon), pope from 440 to 461. A wooden chapel was built here in 1890, on the grounds of the Armenian cemetery.",
       "The wooden building was taken down, and in 1908 the foundations of the present masonry church were laid; the church was completed and opened for worship in 1911. Its plan follows the basilicas of Rome. On the high altar in the apse is a painting of Surp Levon by Giovanni Cingolani, dated 1890; the bell tower has four bells of different sizes and a rooster figure on top."
@@ -1753,7 +1753,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "For the Polish community’s Masses, see duszpasterstwowstambule.pl.",
-     "visitsEn": "Open at Mass time and on the village’s event days.",
+     "visitsEn": "Open during Mass times and on village festival days.",
      "historyEn": [
       "Polonezköy (Adampol) is a village founded in 1842 by Polish émigrés. The village’s first place of worship was the Church of St. Anne, built in 1842. That church was destroyed in the Istanbul earthquake of 1894, and the present Church of Our Lady of Częstochowa was built in its place in 1914.",
       "During the First World War the church was used as a headquarters by the Turkish army; after the war it was repaired and reopened for worship in 1918. Inside is a copy of the famous icon of the Virgin Mary at Częstochowa, Poland’s most important place of pilgrimage. The church is still the meeting place of the village’s people of Polish descent and of the Polish Catholics of Istanbul."
@@ -1872,7 +1872,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "In Armenian Catholic churches, Mass is celebrated in Armenian and Turkish. Times vary with the season; in some churches Mass is held only in summer or only in winter.",
-     "visitsEn": "Open at Mass time during the summer months.",
+     "visitsEn": "Open during Mass times in the summer months.",
      "historyEn": [
       "The Verapokhumin Surp Asdvadzadzin (Assumption of the Virgin Mary) Church is the only Armenian Catholic church on the Princes’ Islands. It was built in 1856–1858 at the expense of the benefactor Andon Ağa Apelyan; it was consecrated and opened on 15 August 1858, the feast of the Assumption.",
       "In the prayer hall, whose vaulted ceiling rests on columns, is a marble plaque commemorating Andon Ağa Apelyan, who at his request was buried inside the church. Above the entrance is a circular rose window, and inside are a choir gallery and an organ. The bell tower dates from 1895; the church was repaired in 1956 and 1985."
@@ -2183,7 +2183,7 @@ window.CHURCHES = /*JSON-START*/{
      "massEn": [
       [
        "Catholic Mass",
-       "None at present (the church is open for Orthodox worship)."
+       "None at the moment; the church is currently used for Orthodox worship."
       ]
      ],
      "visitsEn": "Ask in advance before visiting.",
@@ -2666,7 +2666,7 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNoteEn": "The CET’s 2023 list gave the Sunday Mass as 10:00; the archdiocese’s website gives 15:00.",
-     "visitsEn": "Open at Mass time.",
+     "visitsEn": "Open during Mass times.",
      "historyEn": [
       "This small Catholic place of worship in Selçuk was founded under the name “Selçuk Catholic Church Association” and holds Sunday Masses for pilgrims visiting Ephesus and for the Catholics living in the town. The church is served by the same community of priests as the House of the Virgin Mary.",
       "Selçuk is held to be the place where the Apostle John spent the last years of his life and was buried; the remains of the great Basilica of St. John on Ayasuluk Hill are near the church. It was here, at the Council of Ephesus in 431, that Mary was proclaimed “Mother of God” (Theotokos)."
@@ -2735,7 +2735,7 @@ window.CHURCHES = /*JSON-START*/{
      "shortEn": "St. Mary (French Church)",
      "massEn": [
       [
-       "At present",
+       "Currently",
        "No Mass (the church is closed)."
       ]
      ],
@@ -2824,7 +2824,7 @@ window.CHURCHES = /*JSON-START*/{
        "18:00 Turkish"
       ]
      ],
-     "massNoteEn": "Times change at feasts such as Easter and Christmas; they are announced on the church’s “Announcements” page.",
+     "massNoteEn": "Times change for feasts such as Easter and Christmas; they are announced on the church’s “Announcements” page.",
      "visitsEn": "Open to visitors Tuesday to Saturday from 14:00 to 17:00.",
      "historyEn": [
       "The Church of St. Thérèse is on Kardeşler Street in Ulus, the historic center of Ankara. In 1915 the St. Clement French College, run by the Brothers of the Christian Schools (Frères des Écoles Chrétiennes), stood here; at the time the area was also close to the old Armenian quarter. The street took the name “Kardeşler Sokağı” (Brothers’ Street) in memory of these brothers, who taught French.",
@@ -2909,7 +2909,7 @@ window.CHURCHES = /*JSON-START*/{
       ],
       [
        "Third Sunday of every month",
-       "A single Mass: 10:00 (international)"
+       "One Mass only: 10:00 (international)"
       ],
       [
        "Monday and Friday",
@@ -2924,7 +2924,7 @@ window.CHURCHES = /*JSON-START*/{
        "12:00"
       ]
      ],
-     "massNoteEn": "The church is open to people from outside only during Mass times.",
+     "massNoteEn": "The church is open to the public only during Mass times.",
      "visitsEn": "Open only during Mass times.",
      "historyEn": [
       "The Church of Our Lady is the place of worship of the international Catholic community living in Ankara. It stands in the garden of the Holy See’s embassy to Turkey (the Apostolic Nunciature) and brings together people from all over the world, from different cultures and walks of life.",
@@ -3296,7 +3296,7 @@ window.CHURCHES = /*JSON-START*/{
        "Monday–Saturday 08:30 · Sunday 17:00 (October–April) / 18:00 (May–September), Turkish"
       ]
      ],
-     "massNoteEn": "These times are the schedule from before the earthquake.",
+     "massNoteEn": "These are the times from before the earthquake.",
      "visitsEn": "May be closed to visitors while the restoration continues.",
      "noticeEn": "The church was damaged in the earthquakes of 6 February 2023 and, as a listed cultural property, was taken into the state’s restoration program. The pre-earthquake Mass schedule is not currently valid; to find out where the community meets today, consult the Apostolic Vicariate of Anatolia.",
      "historyEn": [
@@ -3356,7 +3356,7 @@ window.CHURCHES = /*JSON-START*/{
        "Sunday 11:30"
       ]
      ],
-     "massNoteEn": "This time is the schedule from before the earthquake.",
+     "massNoteEn": "This is the schedule from before the earthquake.",
      "visitsEn": "Closed.",
      "noticeEn": "The cathedral was badly damaged in the earthquakes of 6 February 2023; most of it collapsed. Funds are being sought for its restoration, and the building is currently closed for worship.",
      "historyEn": [
@@ -3811,6 +3811,6 @@ window.CHURCHES = /*JSON-START*/{
   }
  ],
  "noteEn": "This information has been compiled from the churches’ own websites, the Catholic Archdiocese of Izmir, the Mass times list of the Bishops’ Conference of Turkey, the Istanbul Governorship’s Dijital İstanbul inventory and other public sources; it is not an official or complete register of churches. If you spot a mistake, you can let us know through the Contact page.",
- "orthodoxNoteEn": "If there is no Catholic church near you, there may be an Orthodox one. Under Canon Law (Canon 844 §2), when it is impossible to reach a Catholic priest and there is genuine need, a Catholic may receive the Eucharist, Confession and the Anointing of the Sick from the Orthodox Church, whose sacraments are valid. This is an exceptional permission, not the ordinary rule; each community has its own discipline, and the priest may not always give Communion.",
+ "orthodoxNoteEn": "If there is no Catholic church near you, there may be an Orthodox one. Under Canon Law (Canon 844 §2), when it is impossible to reach a Catholic priest and there is genuine need, a Catholic may receive the Eucharist, Confession and the Anointing of the Sick from the Orthodox Church, whose sacraments are valid. This is an exceptional permission, not the ordinary rule; each community has its own discipline, and an Orthodox priest may not always agree to give Communion.",
  "updatedEn": "September 2026"
 }/*JSON-END*/;

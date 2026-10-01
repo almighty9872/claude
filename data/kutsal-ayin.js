@@ -464,7 +464,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip adaklar üzerine o güne ait duayı söyler. Duanın sonunda cemaat şöyle der,",
-     "en": "The Priest prays the day’s prayer over the offerings. At its end the people say,"
+     "en": "The Priest says the Prayer over the Offerings. At its end the people say,"
     },
     {
      "role": "C",
@@ -747,7 +747,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "P",
      "tr": "Allah’ın sevgisi ve barışı içinde gidiniz.",
-     "en": "Go in the love and peace of God."
+     "en": "Go in peace."
     },
     {
      "role": "C",

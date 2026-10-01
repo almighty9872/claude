@@ -76,7 +76,7 @@ window.COMPENDIUM_FAQ = /*JSON-START*/{
         {
           "id": "efkaristiya-sembol",
           "q": "Ayindeki ekmek ve şarap sadece İsa’nın bir sembolü müdür?",
-          "qEn": "Is the bread and wine at Mass just a symbol of Jesus?",
+          "qEn": "Are the bread and wine at Mass just a symbol of Jesus?",
           "ccc": "1374–1377, 1413",
           "a": "Hayır. Kilise’nin öğretisi bu konuda çok açıktır: Kutsamadan sonra ekmeğin ve şarabın görünüşleri (tadı, biçimi, kimyası) aynı kalır, ama tözleri artık Mesih’in Bedeni ve Kanı’dır. Buna <em>transsubstantiatio</em> (töz değişimi) denir.\nMesih orada gerçekten, hakikaten ve tözsel olarak bulunur: Bedeni ve Kanı, Ruhu ve Tanrılığıyla, Mesih’in bütünü. Bir parçası değil, bütünü; bir temsil değil, kendisi.\nBu, metni zorlayan bir yorum değildir. İsa “Bu benim bedenimdir” dedi (Matta 26:26). Yuhanna 6. bölümde “Benim etimi yiyip kanımı içmedikçe sizde yaşam olmaz” dediğinde, dinleyenlerin çoğu bu sözü fazla sert bulup ondan ayrıldı. İsa da onları “Yanlış anladınız, bir sembolden söz ediyorum” diyerek geri çağırmadı.",
           "aEn": "No. The Church's teaching is as clear as it can be here: after the consecration, the appearances of the bread and wine (taste, shape, chemistry) remain, but their substance is now the Body and Blood of Christ. This is called <em>transubstantiation</em> (change of substance).\nChrist is present there truly, really and substantially: his Body and Blood, Soul and Divinity, whole and entire. Not a part, but the whole; not a representation, but himself.\nThis isn't a strained reading of the text. Jesus said, \"This is my body\" (Matthew 26:26). In John 6, when he said, \"Unless you eat my flesh and drink my blood, you have no life in you,\" most of his listeners found this too hard and left; Jesus didn't call them back to say, \"You've misunderstood, I'm speaking symbolically.\""
@@ -212,7 +212,7 @@ window.COMPENDIUM_FAQ = /*JSON-START*/{
     {
       "id": "savunma-ve-guncel-sorular",
       "title": "Kilise Savunması ve Güncel Sorular",
-      "en": "Church Apologetics and Questions from Today",
+      "en": "Apologetics and Today's Questions",
       "items": [
         {
           "id": "kilise-kutsal-kitap-temeli",
