@@ -4275,7 +4275,7 @@ window.SAINTS = /*JSON-START*/{
    "rank": "Anma Günü",
    "saints": [
     {
-     "name": "Teresia of Çocuk İsa (Lisieux’lü Küçük Teresa)",
+     "name": "Lisieux’lü Küçük Teresa",
      "title": "Bakire ve Kilise Doktoru",
      "bio": "XIX. yüzyılda Fransa’da yaşamış bir Karmelit rahibesidir. On beş yaşında manastıra girdi ve yirmi dört yaşında veremden öldü. “Küçük Yol” dediği anlayışla tanınır: Büyük işler yapmak yerine, günlük küçük işleri büyük bir sevgiyle yapmak. Ölümünden sonra yayımlanan “Bir Ruhun Hikâyesi” adlı hatıraları dünyanın her yerinde büyük etki yarattı. Misyonların koruyucu azizesi ve Kilise Doktoru’dur.",
      "nameEn": "Thérèse of the Child Jesus (Thérèse of Lisieux)",

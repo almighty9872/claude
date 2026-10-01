@@ -2382,9 +2382,18 @@
       $$('.text-card[id]', m).forEach(function (c) { avNode(c, avText($('.t-title', c))); });
     },
     'tesbih-duasi.html': function (m) {
+      /* the history page first, under a heading of its own; the page's sections follow as "Bölümler" */
+      var hl = $('.th-link', m); avLink(hl, avText($('.t-title', hl)), avText($('.t-sub', hl)));
+      if (hl) hl._avGh = pmake('Okuyun', 'Read');
       var rt = $('#tesbih-rehberi', m); avNode(rt, avHead($('h2', rt)));
+      if (rt) rt._avGh = AV_GH_SECTIONS;
       avWrap($('.wrap', m), 'h2.section-title[id]:not(#rt-h)', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
       $$('.myst[id]', m).forEach(function (a) { avNode(a, avText($('h3', a)), avText($('.m-day', a))); });
+    },
+    /* Tesbihin Tarihi: its numbered sections, then the sources */
+    'tesbih-tarihi.html': function (m) {
+      $$('.ic-sec[id]', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
+      avNode($('.ic-sources', m), avHead($('#th-kaynak-h', m)));
     },
     'kutsal-kitap.html': function (m) {
       $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h2', d))); });

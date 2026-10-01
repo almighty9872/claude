@@ -3053,6 +3053,16 @@ html.av .to-top-wrap { display: none; }
 .ic-closing .prose p:last-child { margin-top: 1.4rem; text-align: center; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
 .ic-sources { max-width: 40rem; margin: 3.4rem auto 0; }
 .ic-sources ul { padding-left: 1.2rem; color: var(--text-soft); font-size: .92rem; line-height: 1.6; }
+/* Tesbihin Tarihi: the link to it on the Rosary page, its folding Bible lists, closing line and sources */
+.th-link { max-width: 34rem; margin: -.4rem auto 2.4rem; text-align: center; }
+.th-page .th-fold { margin: 1.4rem 0; font-size: 1rem; }
+.th-page .th-fold > summary .faq-q { font-family: var(--sans); font-size: 1rem; }
+.th-page .th-fold .faq-a ul { margin-bottom: .9em; }
+.th-page .th-fold .faq-a p { margin: .4rem 0 .5rem; }
+.th-page .th-fold .faq-a > p:first-child { margin-top: 0; }
+.th-page .prose .th-closing { margin-top: 2rem; text-align: center; font-weight: 600; }
+html.av main .av-cur > h2.ic-sec-t > .label { display: none; }
+.th-src-g { margin: 1.4rem 0 .4rem; font-family: var(--sans); font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
 .ic-footnote { max-width: 40rem; margin: 2.4rem auto 0; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-soft); font-size: .88rem; line-height: 1.65; }
 .ic-footnote p { margin: 0; }
 .ic-fn-mark { margin-right: .3em; font-family: var(--sans); font-weight: 700; color: var(--gold); }

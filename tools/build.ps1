@@ -171,6 +171,7 @@ Add-EnAlt 'iletisim.html' 'contact.html'
 Add-EnAlt 'erisilebilirlik.html' 'accessibility.html'
 Add-EnAlt 'gizlilik.html' 'privacy.html'
 Add-EnAlt 'tesbih-duasi.html' 'rosary.html'
+Add-EnAlt 'tesbih-tarihi.html' 'history-of-the-rosary.html'
 Add-EnAlt 'kutsal-kitap.html' 'bible.html'
 Add-EnAlt 'neden-katoligiz.html' 'why-were-catholic.html'
 Add-EnAlt 'topraklarimizda-hristiyanlik.html' 'anatolia.html'
@@ -840,7 +841,7 @@ $TbChurch = & $TbSvg '<path d="M12 2.4v4.2M10.1 4.3h3.8"/><path d="M5.6 21v-9.3L
 $AppOf = @{}
 foreach ($f in @('neden-katoligiz.html', 'katekizm.html', 'kutsal-kitap.html', 'sss.html', 'katolik-sureci.html', 'meseller.html',
                  'motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html')) { $AppOf[$f] = 'ogren' }
-foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'ekler.html', 'gunah-cikarma.html')) { $AppOf[$f] = 'dua' }
+foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'tesbih-tarihi.html', 'ekler.html', 'gunah-cikarma.html')) { $AppOf[$f] = 'dua' }
 $AppOf['islama-cevap.html'] = 'tartis'
 $AppOf['ateizme-cevap.html'] = 'tartis'
 foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
@@ -855,6 +856,7 @@ $KatekizmSub = @('motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-
 function Av-Parent([string]$trFile, [bool]$en) {
   if ($trFile -like 'kilise/*') { return @{ href = 'kiliseler.html'; t = 'Kilise Bul'; te = 'Find a Church' } }
   if ($KatekizmSub -contains $trFile) { return @{ href = 'katekizm.html'; t = 'Katekizm'; te = 'Catechism' } }
+  if ($trFile -eq 'tesbih-tarihi.html') { return @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; te = 'The Rosary' } }
   if ($GreatSaints.saints | Where-Object { "$($_.id).html" -eq $trFile }) { return @{ href = 'azizler.html#buyuk-azizler'; t = 'Azizler'; te = 'Saints' } }
   $app = $AppOf[$trFile]
   if ($app) { return @{ href = "index.html#app-$app"; t = $AppNames[$app][0]; te = $AppNames[$app][1] } }
@@ -2276,6 +2278,7 @@ $tespihBody = @"
   $(Crumbs 'Tesbih Duası')
   <header class="page-head center">$(Page-Ico $IcoBeads)<h1>$(T $Rosary.title $Rosary.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Rosary.en)</p>")</header>
   <p class="faq-intro">$(T (Inline $Rosary.intro) (Inline $Rosary.introEn))</p>
+  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">$(T 'Okuyun' 'Read')</span><span class="t-title">$(T 'Tesbihin Tarihi' 'The History of the Rosary')</span><span class="t-sub">$(T "İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya" 'From its roots in the Gospel to St Dominic, from Lepanto to Fatima')</span></a>
 $(Rosary-Tracker 'tr')
   <h2 class="section-title" id="gizemler">$(T 'Gizemler' 'The Mysteries')</h2>
   <div class="myst-grid">
@@ -2289,6 +2292,54 @@ $mysterySets
 Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" -TitleEn "$($Rosary.en) | $SiteName" `
   -Description "Meryem Ana Tesbih Duası: duaların Türkçesi ve İngilizcesi, Sevinç, Işık, Acı ve Yücelik gizemleri ve tesbihin nasıl dua edileceği." -DescriptionEn "How to pray the Rosary: the prayers in Turkish and English, the Joyful, Luminous, Sorrowful and Glorious Mysteries, and a bead-by-bead guide." `
   -Path 'tesbih-duasi.html' -Body $tespihBody -JsonLd @((Breadcrumb-Ld 'Tesbih Duası' 'tesbih-duasi.html'))
+
+# ================================================================== TESBIHIN TARIHI (tesbih-tarihi.html)
+# The history of the Rosary, linked from the Tesbih Duası page under its intro. Read like the
+# Tartış pages (numbered sections, quotes, sources); the two lists of Bible references fold away.
+$RosaryHistory = Read-Data 'tesbih-tarihi.js'
+function Th-Inline([string]$s) { return [regex]::Replace([regex]::Replace($s, '\*\*(.+?)\*\*', '<strong>$1</strong>'), '(?<![\*\w])\*([^*]+)\*(?!\*)', '<em>$1</em>') }
+# One paragraph per line; "- " list item, "> " quotation, "[[+ Title]] ... [[-]]" a part that folds away
+function Th-Blocks([string]$s) {
+  $sb = New-Object Text.StringBuilder; $list = New-Object Collections.ArrayList
+  $flush = { if ($list.Count) { [void]$sb.Append('<ul>' + (($list | ForEach-Object { "<li>$(Th-Inline $_)</li>" }) -join '') + '</ul>'); $list.Clear() } }
+  foreach ($line in ($s -split "`n")) {
+    $l = $line.Trim(); if (-not $l) { continue }
+    if ($l.StartsWith('- ')) { [void]$list.Add($l.Substring(2)); continue }
+    . $flush
+    if ($l -match '^\[\[\+ (.+)\]\]$') { [void]$sb.Append("<details class=`"faq-item th-fold`"><summary><span class=`"faq-q`">$($Matches[1])</span>$IcoChevLg</summary><div class=`"faq-a`">"); continue }
+    if ($l -eq '[[-]]') { [void]$sb.Append('</div></details>'); continue }
+    if ($l.StartsWith('> ')) { [void]$sb.Append("<blockquote class=`"ic-quote`"><p>$(Th-Inline $l.Substring(2))</p></blockquote>"); continue }
+    [void]$sb.Append("<p>$(Th-Inline $l)</p>")
+  }
+  . $flush
+  return $sb.ToString()
+}
+# The closing line (to the bead-by-bead guide) ends the last section
+$thToGuide = { param($s, $name) $s.Replace($name, "<a href=`"tesbih-duasi.html#tesbih-rehberi`">$name</a>") }
+$thClosing = @("<p class=`"th-closing`">$(& $thToGuide $RosaryHistory.closing 'Adım Adım Tesbih')</p>", "<p class=`"th-closing`">$(& $thToGuide $RosaryHistory.closingEn 'Pray the Rosary, Bead by Bead')</p>")
+$thAll = @($RosaryHistory.sections)
+$thSecs = ($thAll | ForEach-Object -Begin { $n = 0 } -Process {
+  $n++
+  $end = if ($n -eq $thAll.Count) { $thClosing } else { @('', '') }
+  "<section class=`"ic-sec`" id=`"$($_.id)`"><h2 class=`"ic-sec-t`"><span class=`"label`">$n</span><span>$(T $_.title $_.titleEn)</span></h2>" +
+    "<div class=`"prose`">$(TB ((Th-Blocks $_.body) + $end[0]) ((Th-Blocks $_.bodyEn) + $end[1]))</div></section>"
+}) -join "`n"
+$thSources = (@($RosaryHistory.sources) | ForEach-Object {
+  "<h3 class=`"th-src-g`">$(T $_.g $_.gEn)</h3><ul>" + ((@($_.items) | ForEach-Object { "<li>$(T (Th-Inline $_[0]) (Th-Inline $_[1]))</li>" }) -join '') + '</ul>'
+}) -join ''
+$thBody = @"
+<div class="wrap narrow ic-page th-page">
+  $(Crumbs 'Tesbihin Tarihi' 'Tesbih Duası' 'tesbih-duasi.html')
+  <header class="page-head center" id="bas">$(Page-Ico $IcoBeads)<h1>$(T $RosaryHistory.title $RosaryHistory.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($RosaryHistory.en)</p>")</header>
+  <p class="ic-lead">$(T $RosaryHistory.lead $RosaryHistory.leadEn)</p>
+$thSecs
+  <section class="ic-sources" aria-labelledby="th-kaynak-h"><h2 class="section-title" id="th-kaynak-h">$(T 'Kaynaklar' 'Sources')</h2>$thSources</section>
+</div>
+"@
+$thLd = '{"@context":"https://schema.org","@type":"Article","headline":"Tesbihin Tarihi","inLanguage":"tr","mainEntityOfPage":' + (JStr "$SiteUrl/tesbih-tarihi.html") + '}'
+Write-Page -File 'tesbih-tarihi.html' -Title "Tesbihin Tarihi | $SiteName" -TitleEn "The History of the Rosary | $SiteName" `
+  -Description "Tesbihin tarihi: Kutsal Kitap'taki kökleri, çakıl taşlarından boncuklara, Aziz Dominik, İnebahtı, Lourdes, Fatima, Işık Gizemleri ve ruhsal savaş." -DescriptionEn "The history of the Rosary: its roots in Scripture, from pebbles to beads, St Dominic, Lepanto, Lourdes, Fatima, the Luminous Mysteries and spiritual warfare." `
+  -Path 'tesbih-tarihi.html' -Body $thBody -JsonLd @($thLd, (Breadcrumb-Ld 'Tesbihin Tarihi' 'tesbih-tarihi.html' 'Tesbih Duası' 'tesbih-duasi.html')) -OgType 'article'
 
 # ================================================================== MUCIZELER (mucizeler.html)
 $Miracles = Read-Data 'mucizeler.js'
@@ -2712,7 +2763,7 @@ $pages = @(
   @{ p = ''; pr = '1.0' }, @{ p = 'katekizm.html'; pr = '0.9' },
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
-  @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
+  @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'tesbih-tarihi.html'; pr = '0.8' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' },
   @{ p = 'neden-katoligiz.html'; pr = '0.9' }, @{ p = 'islama-cevap.html'; pr = '0.8' }, @{ p = 'ateizme-cevap.html'; pr = '0.8' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
