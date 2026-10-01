@@ -493,6 +493,16 @@ $Ill = @{
   'tomb'      = '<path d="M4 104h112"/><path d="M10 104q12-40 50-42t50 42"/><path d="M44 104V88a16 16 0 0 1 32 0v16"/><path d="M80 94a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path d="M51 32a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M60 14v-6M44 20l-4-4M76 20l4-4M38 34h-6M82 34h6"/>'
   'basilica'  = '<path d="M14 104h92"/><path d="M22 100V72h76v28"/><path d="M32 78v22M44 78v22M56 78v22M64 78v22M76 78v22M88 78v22"/><path d="M34 72v-8h52v8"/><path d="M38 64a22 22 0 0 1 44 0"/><path d="M56 42v-6h8v6"/><path d="M60 36V24M55 29h10"/>'
   'door'      = '<path d="M24 104h72"/><path d="M38 104V30h44v74"/><path d="M82 30l16 8v72l-16-6"/><path d="M92 70v4"/><path d="M60 46v12M48 52l-5-5M72 52l5-5M44 66h-7M76 66h7"/><path d="M46 104l-14 12M74 104l14 12"/>'
+  'mary'      = '<path d="M46 26a14 14 0 1 0 28 0a14 14 0 1 0-28 0"/><path d="M60 16c-11 0-15 11-15 21 0 15-9 36-15 66h60c-6-30-15-51-15-66 0-10-4-21-15-21z"/><path d="M54 36a6 7 0 1 0 12 0a6 7 0 1 0-12 0"/><path d="M55 70l5-9 5 9"/><path d="M24 30v6M21 33h6"/><path d="M96 30v6M93 33h6"/><path d="M18 62v4M16 64h4M102 62v4M100 64h4"/>'
+  'reliquary' = '<path d="M28 104h64"/><path d="M36 104V62h48v42"/><path d="M32 62l28-20 28 20"/><path d="M60 42V22M53 29h14"/><path d="M50 72h20v22H50z"/><path d="M60 78v10M56 83h8"/>'
+  'chalice'   = '<path d="M38 52h44c0 20-9 32-22 32S38 72 38 52z"/><path d="M60 84v12"/><path d="M42 104q18-14 36 0z"/><path d="M48 30a12 12 0 1 0 24 0a12 12 0 1 0-24 0"/><path d="M60 23v14M53 30h14"/><path d="M60 10V6M42 16l-3-3M78 16l3-3M34 30h-4M86 30h4"/>'
+  'lily'      = '<path d="M60 106V58"/><path d="M60 96c-8-1-14-6-17-14 8 0 14 5 17 14z"/><path d="M60 58c-8-6-10-24-2-40 2 14 6 26 2 40z"/><path d="M60 58c-14 2-30-8-36-24 14 0 28 8 36 24z"/><path d="M60 58c14 2 30-8 36-24-14 0-28 8-36 24z"/><path d="M57 46l-5-12M63 46l5-12M60 46V32"/><path d="M51 33h2M67 33h2M59 31h2"/>'
+  'wheat'     = '<path d="M60 108V22"/><path d="M60 40c-7 -2 -10 -8 -10 -14 7 2 10 8 10 14z"/><path d="M60 40c7 -2 10 -8 10 -14 -7 2 -10 8 -10 14z"/><path d="M60 54c-7 -2 -10 -8 -10 -14 7 2 10 8 10 14z"/><path d="M60 54c7 -2 10 -8 10 -14 -7 2 -10 8 -10 14z"/><path d="M60 68c-7 -2 -10 -8 -10 -14 7 2 10 8 10 14z"/><path d="M60 68c7 -2 10 -8 10 -14 -7 2 -10 8 -10 14z"/><path d="M60 30c-4-4-4-10 0-14 4 4 4 10 0 14z"/><path d="M60 108q-6-30-28-52"/><path d="M60 108q6-30 28-52"/><path d="M32 56c-1-8 2-14 8-16 1 7-2 13-8 16z M88 56c1-8-2-14-8-16-1 7 2 13 8 16z"/>'
+  'sheep'     = '<path d="M34 58a6 6 0 0 1 12 0a6 6 0 0 1 12 0a6 6 0 0 1 12 0a6 6 0 0 1 12 0a8 8 0 0 1 0 16a6 6 0 0 1 -12 0a6 6 0 0 1 -12 0a6 6 0 0 1 -12 0a6 6 0 0 1 -12 0a8 8 0 0 1 0 -16z"/><path d="M84 60c3-7 15-8 18 0 2 8-4 13-12 11"/><path d="M88 58l-5-7"/><path d="M97 63v1"/><path d="M42 74v16M52 74v16M66 74v16M76 74v16"/><path d="M16 92h88"/>'
+  'knock'     = '<path d="M30 104h60"/><path d="M38 104V40a22 22 0 0 1 44 0v64"/><path d="M60 22v82"/><path d="M68 64a5 5 0 1 0 10 0a5 5 0 1 0-10 0"/><path d="M92 54q6 6 0 12M98 48q10 12 0 24"/>'
+  'oillamp'   = '<path d="M18 76q40-26 80-6q-38 18-80 6z"/><path d="M18 76c-10-2-10-14 0-14"/><path d="M50 62c0-6 14-6 14 0"/><path d="M98 64c-6-6-6-14 0-22 6 8 6 16 0 22z"/><path d="M48 84h28l-4 10H52z"/><path d="M98 34v-6M86 40l-4-4M110 40l4-4"/>'
+  'grapes'    = '<path d="M60 14v14"/><path d="M60 22c10-8 24-6 30 2-10 6-22 6-30-2z"/><path d="M39 40a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M53 40a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M67 40a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M46 53a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M60 53a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M39 66a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M53 66a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M67 66a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M46 79a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M60 79a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M53 92a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/>'
+  'feast'     = '<path d="M10 82h100"/><path d="M20 82v22M100 82v22"/><path d="M28 60h14l-2 14h-10z"/><path d="M35 74v8M30 82h10"/><path d="M52 82c0-12 9-18 20-18s20 6 20 18"/><path d="M62 70l4 4M72 68l4 4M82 70l4 4"/><path d="M40 40v-6M60 30v-8M80 40v6"/>'
   'candle'    = '<path d="M34 104h52"/><path d="M47 104V58h26v46"/><path d="M60 58v-8"/><path d="M60 48c-7-6-7-15 0-24 7 9 7 18 0 24z"/><path d="M60 14V6M40 22l-5-5M80 22l5-5M32 38h-7M88 38h7"/>'
 }
 function Ill-Art([string]$name) {
@@ -1228,7 +1238,7 @@ $XrefSkipPages = @('index.html', 'katekizm.html', 'iman-ikrari.html', 'kutsal-si
   'motu-proprio.html', 'giris.html', 'ekler.html', '404.html', 'gizlilik.html', 'erisilebilirlik.html', 'kaynaklar-ve-telif.html', 'iletisim.html')
 $XrefBlockTags = @('p', 'li', 'td')
 $XrefSkipTags = @('a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'summary', 'button', 'label', 'select', 'option', 'script', 'style', 'svg', 'nav', 'header', 'footer', 'cite', 'figcaption', 'textarea')
-$XrefSkipClass = [regex]'(?:^|\s)(?:verse|rt-[\w-]+|conventions|gloss|ic-tl[\w-]*|crumbs|text-link|faq-ref|th-link|ref-[\w-]+|m-day|label)(?:\s|$)'
+$XrefSkipClass = [regex]'(?:^|\s)(?:verse|rt-[\w-]+|conventions|gloss|ic-tl[\w-]*|crumbs|text-link|faq-ref|th-link|ref-[\w-]+|m-day|label|th-quote)(?:\s|$)'
 $XrefVoid = @('br', 'img', 'input', 'meta', 'link', 'hr', 'source', 'wbr', 'col', 'area', 'embed', 'track')
 function Link-Xrefs([string]$html, [string]$file) {
   if ($XrefSkipPages -contains $file) { return $html }
@@ -2357,15 +2367,16 @@ $meselCats = ($Parables.categories | ForEach-Object {
     $bioEn = (Blocks $_.bioEn) + '<div class="p-en">' + (Dr-Source $_.en.ref) + (Verse $_.en.text) + '</div>'
     "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(T (Inline $_.name) (Inline $_.nameEn))</span><span class=`"mira-place label`">$(T $_.ref $_.refEn)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(TB (Blocks $_.bio) $bioEn)</div></details>"
   }) -join "`n"
-  "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
-    "<h2 class=`"section-title`"><span class=`"label`">$($script:MeselN)</span>$(T (Inline $cat.title) $cat.en)</h2>" +
-    (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") +
-    "<p class=`"faq-intro`">$(T (Inline $cat.lead) (Inline $cat.leadEn))</p>" +
-    "<div class=`"mira-list`">$items</div></section>"
+  $ma = @{ 'hukumdarlik' = @('wheat', 'gold'); 'merhamet' = @('sheep', 'green'); 'dua' = @('knock', 'purple'); 'uyaniklik' = @('oillamp', 'blue'); 'sorumluluk' = @('grapes', 'red'); 'cagri' = @('feast', 'gold') }[$cat.id]
+  if (-not $ma) { $ma = @('book', 'gold') }
+  $cnt = @($cat.items).Count
+  Ill-Sec -Id $cat.id -Art $ma[0] -Tone $ma[1] -Class 'mira-cat' -Kick (T "$cnt mesel" "$cnt parables") -Head (T (Inline $cat.title) $cat.en) `
+    -Sub (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") `
+    -Body ("<p class=`"faq-intro`">$(T (Inline $cat.lead) (Inline $cat.leadEn))</p>" + "<div class=`"mira-list`">$items</div>")
 }) -join "`n"
 $MeselTitle = "İsa$($Apos)nın Meselleri"
 $meselBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow ill-page">
   $(Crumbs $MeselTitle)
   <header class="page-head center">$(Page-Ico $IcoBookOpen)<h1>$(T $Parables.title $Parables.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Parables.en)</p>")</header>
   <p class="faq-intro">$(T (Inline $Parables.intro) (Inline $Parables.introEn))</p>
@@ -2559,7 +2570,7 @@ $thBody = @"
 <div class="wrap narrow ic-page th-page">
   $(Crumbs 'Tesbihin Tarihi' 'Tesbih Duası' 'tesbih-duasi.html')
   <header class="page-head center" id="bas">$(Page-Ico $IcoBeads)<h1>$(T $RosaryHistory.title $RosaryHistory.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($RosaryHistory.en)</p>")</header>
-  <p class="ic-lead">$(T $RosaryHistory.lead $RosaryHistory.leadEn)</p>
+  <figure class="quote th-quote"><blockquote><p>$(T $RosaryHistory.quote $RosaryHistory.quoteEn)</p></blockquote><figcaption class="attr">$(T $RosaryHistory.quoteBy $RosaryHistory.quoteByEn)</figcaption></figure>
 $thSecs
   <section class="ic-sources" aria-labelledby="th-kaynak-h"><h2 class="section-title" id="th-kaynak-h">$(T 'Kaynaklar' 'Sources')</h2>$thSources</section>
 </div>
@@ -2587,14 +2598,17 @@ $miraCats = ($Miracles.categories | ForEach-Object {
     $more = if ($GreatSaintIds.ContainsKey($mid)) { $gsN = @($GreatSaints.saints | Where-Object { $_.id -eq $mid })[0]; '<a class="today-more-link" href="' + $mid + '.html">' + (T 'Devamını oku' 'Read more') + '<span class="visually-hidden">: ' + (T $gsN.name $gsN.en) + '</span>' + $IcoNext + '</a>' } else { '' }
     "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(T (Inline $_.name) (Inline $_.nameEn))</span><span class=`"mira-place label`">$(T $_.place $_.placeEn)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(TB (Blocks $_.bio) (Blocks $_.bioEn))$more</div></details>"
   }) -join "`n"
-  "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
-    "<h2 class=`"section-title`"><span class=`"label`">$($script:MiraN)</span>$(T (Inline $cat.title) $cat.en)</h2>" +
-    (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") +
-    "<p class=`"faq-intro`">$(T (Inline $cat.lead) (Inline $cat.leadEn))</p>" +
-    "<div class=`"mira-list`">$items</div></section>"
+  $ma = @{ 'gorunmeler' = @('mary', 'blue'); 'kalintilar' = @('reliquary', 'gold'); 'efkaristiya' = @('chalice', 'red'); 'curumeyen-azizler' = @('lily', 'green') }[$cat.id]
+  if (-not $ma) { $ma = @('candle', 'gold') }
+  # the kicker names the places the section goes to
+  $kTr = (@($cat.items) | ForEach-Object { ($_.place -split ',')[0].Trim() }) -join ' · '
+  $kEn = (@($cat.items) | ForEach-Object { ($(if ($_.placeEn) { $_.placeEn } else { $_.place }) -split ',')[0].Trim() }) -join ' · '
+  Ill-Sec -Id $cat.id -Art $ma[0] -Tone $ma[1] -Class 'mira-cat' -Kick (T $kTr $kEn) -Head (T (Inline $cat.title) $cat.en) `
+    -Sub (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") `
+    -Body ("<p class=`"faq-intro`">$(T (Inline $cat.lead) (Inline $cat.leadEn))</p>" + "<div class=`"mira-list`">$items</div>")
 }) -join "`n"
 $mucizelerBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow ill-page">
   $(Crumbs 'Mucizeler')
   <header class="page-head center">$(Page-Ico $IcoSparkle)<h1>$(T $Miracles.title $Miracles.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Miracles.en)</p>")</header>
   <p class="faq-intro">$(T (Inline $Miracles.intro) (Inline $Miracles.introEn))</p>

@@ -1,9 +1,13 @@
-/* Tesbihin Tarihi / The History of the Rosary (tesbih-tarihi.html). Body markup: one paragraph per line, "- " list item, "> " quotation, "[[+ Title]] … [[-]]" a collapsible part, **bold**, *italic*. */
+/* Tesbihin Tarihi / The History of the Rosary (tesbih-tarihi.html). "quote" opens the page; "lead" is the summary on the home page. Body markup: one paragraph per line, "- " list item, "> " quotation, "[[+ Title]] … [[-]]" a collapsible part, **bold**, *italic*. */
 /*JSON-START*/{
  "title": "Tesbihin Tarihi",
  "en": "The History of the Rosary",
  "lead": "Tesbih bir gecede ortaya çıkmamıştır. Kökü İncil’de, Cebrail meleğin Meryem’e verdiği selamda yatar. Bugünkü hâlini ise yüzyıllar içinde çöl keşişlerinin, okuma yazma bilmeyen köylülerin, azizlerin ve papaların elinde almıştır.",
  "leadEn": "The Rosary did not appear overnight. It is rooted in the Gospel, in the angel Gabriel’s greeting to Mary, and it took its present shape over many centuries in the hands of desert monks, peasants who could not read, saints and popes.",
+ "quote": "Tesbihin onlukları bir makineli tüfeğin mermi şeridi gibidir: Her tane bir atıştır; ruhun her sevgi dolu yönelişi, Şeytan’ı dehşete düşüren bir iman patlamasıdır ve Meryem bir kez daha onun başını ezer.",
+ "quoteEn": "The decades of the Rosary are like the belt of a machine gun: every bead is a shot, every affection of the soul is an explosion of faith that frightens off Satan, and Mary once more crushes his head.",
+ "quoteBy": "Peder Dolindo Ruotolo",
+ "quoteByEn": "Fr. Dolindo Ruotolo",
  "sections": [
   {
    "id": "adi",
@@ -163,6 +167,10 @@
     [
      "Rahibe Lucia, Fatima’yı Anlatıyor (Fatima görünümleri)",
      "Sister Lucia, Fatima in Lucia’s Own Words (the Fatima apparitions)"
+    ],
+    [
+     "Peder Dolindo Ruotolo, *Riflessioni sul Santo Rosario di Maria* (Apostolato Stampa, Napoli) (açılıştaki söz)",
+     "Fr. Dolindo Ruotolo, *Riflessioni sul Santo Rosario di Maria* (Apostolato Stampa, Naples) (the opening quote)"
     ]
    ]
   }
