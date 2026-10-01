@@ -17,7 +17,7 @@ On your first visit the language and theme are chosen for you: the site opens in
 
 ## Server logs
 
-The site is hosted on GitHub Pages. Like any web server, GitHub's servers may keep standard access logs for technical purposes (security, performance). These logs are operated by GitHub, not by this site; see [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement) for details.
+The site is hosted on GitHub Pages. Like any web server, GitHub's servers may keep standard access logs for technical purposes (security, performance). These logs are operated by GitHub, not by this site; see [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) for details.
 
 ## Fonts
 

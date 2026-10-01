@@ -1,0 +1,10 @@
+{
+  "extends": ["html-validate:standard"],
+  "rules": {
+    "no-inline-style": "off", "long-title": "off", "no-trailing-whitespace": "off",
+    "attribute-boolean-style": "off", "attribute-empty-style": "off", "void-style": "off",
+    "no-raw-characters": "off", "doctype-style": "off", "attr-quotes": "off", "attr-case": "off",
+    "prefer-native-element": "off", "no-redundant-role": "off", "valid-id": "off",
+    "no-implicit-button-type": "off", "tel-non-breaking": "off"
+  }
+}

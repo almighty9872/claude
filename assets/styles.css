@@ -587,7 +587,7 @@ html.av .gs-list { display: block; padding: 0; border: 0; }
 /* About page (Markdown content from content/hakkinda.md) */
 .prose h2 { font-size: clamp(1.45rem, 3vw, 1.75rem); font-weight: 600; line-height: 1.25; margin: 2rem 0 .7rem; }
 .prose h3 { font-size: 1.3rem; font-weight: 600; margin: 1.6rem 0 .5rem; }
-.prose h4, .prose h5 { font-size: 1.1rem; font-weight: 600; margin: 1.3rem 0 .4rem; }
+.prose h4, .prose h5, .prose h3.ic-sub { font-size: 1.1rem; font-weight: 600; margin: 1.3rem 0 .4rem; }
 .prose ul, .prose ol { margin: 0 0 1em; padding-left: 1.4rem; }
 .prose li { margin-bottom: .3em; }
 .prose li::marker { color: var(--gold); }
@@ -1724,8 +1724,10 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
   background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-soft);
 }
 .mass-ico svg { width: 1.5rem; height: 1.5rem; }
-.mass-part-n { margin: 0 0 .1rem; }
-.mass-part-head h2 { margin: 0; font-size: 1.4rem; }
+.mass-part-txt { display: block; min-width: 0; }
+.mass-part-n { display: block; margin: 0 0 .1rem; }
+.mass-part-head .sub { display: block; }
+.mass-part-head h2, .mass-part-h { display: block; margin: 0; font-size: 1.4rem; font-weight: 700; line-height: 1.25; }
 .mass-part-head .sub { margin: .15rem 0 0; }
 .mass-lead { margin: .8rem 0 1.1rem; color: var(--text-soft); }
 .mass-dialogue { display: grid; gap: .5rem; }
@@ -2461,7 +2463,7 @@ html.av main .av-cur .text-grid > .text-card:first-child { border-top: 0; paddin
 html.av main .mass-part.av-cur { border: 0; background: none; box-shadow: none; }
 html.av main .mass-part.av-cur > .mass-part-head { display: block; padding: .2rem 0 .8rem; margin: .4rem 0 1rem; border-bottom: 1px solid var(--border); }
 html.av main .mass-part.av-cur :is(.mass-ico, .mass-part-n) { display: none; }
-html.av main .mass-part.av-cur .mass-part-head h2 { font-size: 1.35rem; line-height: 1.25; }
+html.av main .mass-part.av-cur .mass-part-head h2, html.av main .mass-part.av-cur .mass-part-h { font-size: 1.35rem; line-height: 1.25; }
 html.av main .mass-part.av-cur > .mass-part-body { padding: 0; }
 html.av main .mira-item.av-cur .mira-ico { display: none; }
 html.av main .mira-item.av-cur > summary { display: block; }
@@ -2782,6 +2784,8 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
    closest to Apple's San Francisco, with full Turkish (ç ğ ı İ ö ş ü). Both files are preloaded
    in every page's head, so the first page already paints in Inter; "swap" only matters on a very
    slow connection, where the text shows in the system font first rather than not at all ---------- */
+/* Arial, scaled to Inter's metrics: text keeps its place while Inter loads (no layout shift) */
+@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"); size-adjust: 107.06%; ascent-override: 90.49%; descent-override: 22.56%; line-gap-override: 0%; }
 @font-face {
   font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
   src: url("fonts/inter-latin.woff2") format("woff2");
@@ -2794,8 +2798,8 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
 }
 /* the same on a computer */
 html:not([data-a11y-dyslexia="1"]) {
-  --serif: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
-  --sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --serif: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --sans: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
 }
 html:not([data-a11y-dyslexia="1"]) body { letter-spacing: -.005em; }
 :root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) { --serif: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif; --sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
@@ -3028,7 +3032,7 @@ html.av .to-top-wrap { display: none; }
 .ic-sec-t .label { flex: none; display: grid; place-items: center; min-width: 1.9rem; height: 1.9rem; margin-top: .05rem; padding: 0 .35rem; border-radius: 999px; background: var(--gold-bg); color: var(--gold); font-family: var(--sans); font-size: .85rem; font-weight: 700; line-height: 1; }
 .ic-page .prose { font-size: 1.08rem; line-height: 1.74; }
 .ic-page .prose p { margin: 0 0 1.15em; }
-.ic-page .prose h4 { margin: 2.1rem 0 .7rem; font-family: var(--sans); font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.4; color: var(--gold); }
+.ic-page .prose h4, .ic-page .prose h3.ic-sub { margin: 2.1rem 0 .7rem; font-family: var(--sans); font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.4; color: var(--gold); }
 .ic-page .prose ul { margin: 0 0 1.3em; padding-left: 1.3rem; }
 .ic-page .prose li { margin-bottom: .6em; padding-left: .2rem; }
 .ic-page .prose .ic-quote { margin: 1.6rem 0; padding: 1rem 1.2rem; border-left: 3px solid var(--gold); border-radius: 0 .8rem .8rem 0; background: var(--surface); color: var(--text); font-style: italic; line-height: 1.7; }
@@ -3252,6 +3256,8 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
   /* Keşfet sits at the right edge: its further lists open to the left */
   .dn-top:last-child .dn-sub { left: auto; right: calc(100% + .35rem); }
   .dn-top:last-child .dn-sub::before { left: auto; right: -.5rem; }
+  .dn-sub.dn-flip { left: auto; right: calc(100% + .35rem); }
+  .dn-sub.dn-flip::before { left: auto; right: -.5rem; }
   [data-theme="dark"] .dn-panel, [data-theme="dark"] .dn-sub { box-shadow: 0 18px 44px -14px rgba(0, 0, 0, .6); }
 }
 @media (min-width: 980px) and (prefers-reduced-motion: reduce) {
@@ -3307,3 +3313,9 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
   [data-theme="dark"] .hj-ft { color: #fff3d6; } [data-theme="dark"] .hj-fd { color: #e8d9b5; } [data-theme="dark"] .hj-more { color: #e2bf6e; }
 }
 @media (min-width: 980px) and (prefers-reduced-motion: reduce) { .hj-feat, .hj-tdot { transition: none; } }
+
+/* Section labels sit on a tinted band when their section is highlighted: keep 4.5:1 */
+html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
+
+/* closed dropdowns are laid out off to the side; never let them widen the page (touch browsers would allow sideways panning) */
+html { overflow-x: clip; }

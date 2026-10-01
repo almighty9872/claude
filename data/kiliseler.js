@@ -476,17 +476,25 @@ window.CHURCHES = /*JSON-START*/{
      "address": "Kemeraltı Caddesi, Saint Benoît Lisesi yerleşkesi, 34425 Karaköy, İstanbul",
      "phones": [],
      "email": "",
-     "website": "",
-     "status": "limited",
-     "notice": "Düzenli halka açık ayin yapılmamaktadır; kilise, Saint Benoît Lisesi’nin yerleşkesi içindedir ve yalnızca bazı tören ve ayinler için açılır.",
+     "website": "http://www.st-louis-des-francais-istanbul.org",
+     "status": "active",
+     "notice": "",
      "mass": [
       [
-       "Düzenli ayin",
-       "Yok; özel günlerde ve okulun törenlerinde ayin yapılır."
+       "Pazartesi–Cuma",
+       "18:00 Fransızca"
+      ],
+      [
+       "Cumartesi",
+       "09:00 Fransızca"
+      ],
+      [
+       "Pazar",
+       "11:00 Fransızca"
       ]
      ],
-     "massNote": "",
-     "visits": "Okul yerleşkesinde olduğu için ziyaret önceden izin almayı gerektirir.",
+     "massNote": "Saint-Louis des Français kapandığından beri Fransızca konuşan cemaat burada toplanıyor; ayinleri Lazarist rahip Peder Cristinel Andrei yönetiyor.",
+     "visits": "Ayin saatlerinde açıktır; kilise Saint Benoît Lisesi’nin yerleşkesinde olduğu için başka saatlerde ziyaret önceden izin gerektirir.",
      "history": [
       "Saint Benoît, İstanbul’da hâlâ kullanılan en eski Katolik kiliselerinden biridir. Kökleri, 13. yüzyılın başındaki bir manastıra ve Cenevizlilerin 1362’de yaptırdığı çan kulesiyle birlikte Pera’daki Santa Maria della Cisterna manastırına dayanır. Bugün ayakta duran çan kulesi, bu 14. yüzyıl yapısıdır.",
       "Yapı grubu 1427 ile 1450 arasında Fransız Benedikten rahiplerinin eline geçti ve Aziz Benedikt’e (Saint Benoît) adandı. Fetih sırasında kilisenin rölikleri ve dinî eşyaları önce Sakız Adası’na, sonra Ceneviz’e götürüldü. 17. ve 18. yüzyıllarda kilise Cizvitlerin elindeydi; 1783’te Fransız Lazarist rahiplerine devredildi.",
@@ -503,18 +511,31 @@ window.CHURCHES = /*JSON-START*/{
        "Vikipedi: Saint Benoît Latin Katolik Kilisesi",
        "https://tr.wikipedia.org/wiki/Saint_Beno%C3%AEt_Latin_Katolik_Kilisesi",
        "Wikipedia (Turkish): Church of Saint Benoît"
+      ],
+      [
+       "Paroisse Saint-Louis-des-Français Istanbul",
+       "http://www.st-louis-des-francais-istanbul.org/"
       ]
      ],
      "nameEn": "Church of Saint Benoît",
      "shortEn": "Saint Benoît (Karaköy)",
      "massEn": [
       [
-       "Regular Mass",
-       "None; Mass is celebrated on special days and at the school’s ceremonies."
+       "Monday–Friday",
+       "18:00 French"
+      ],
+      [
+       "Saturday",
+       "09:00 French"
+      ],
+      [
+       "Sunday",
+       "11:00 French"
       ]
      ],
-     "visitsEn": "Because it is on school grounds, a visit requires permission in advance.",
-     "noticeEn": "There is no regular public Mass; the church stands inside the grounds of the Saint Benoît High School and opens only for certain ceremonies and services.",
+     "massNoteEn": "Since Saint-Louis des Français closed, the French-speaking parish has met here; Mass is celebrated by Fr. Cristinel Andrei, a Lazarist priest.",
+     "visitsEn": "Open at Mass times; because the church is on the grounds of the Saint Benoît High School, a visit at other times needs permission in advance.",
+     "noticeEn": "",
      "historyEn": [
       "Saint Benoît is one of the oldest Catholic churches in Istanbul still in use. Its roots go back to an early 13th-century monastery and to the monastery of Santa Maria della Cisterna in Pera, whose bell tower the Genoese built in 1362. That 14th-century bell tower still stands today.",
       "Between 1427 and 1450 the complex passed to French Benedictine monks and was dedicated to St. Benedict (Saint Benoît). At the time of the conquest, the church’s relics and liturgical objects were taken first to Chios and then to Genoa. In the 17th and 18th centuries the church belonged to the Jesuits; in 1783 it was handed over to the French Lazarist priests.",
@@ -541,7 +562,7 @@ window.CHURCHES = /*JSON-START*/{
        "Ayin yapılmıyor (1 Eylül 2025’ten beri kapalı)."
       ]
      ],
-     "massNote": "Fransızca konuşan cemaat için diğer kiliselerdeki Fransızca ayinlere bakabilirsiniz (örneğin Kutsal Ruh Katedrali, pazar 11:15).",
+     "massNote": "Fransızca konuşan cemaat artık Karaköy’deki Saint Benoît Kilisesi’nde toplanıyor: hafta içi 18:00, cumartesi 09:00 ve pazar 11:00’de Fransızca ayin var.",
      "visits": "Kapalı.",
      "history": [
       "Saint-Louis des Français, Beyoğlu’ndaki Fransız Sarayı’nın (eski Fransa Büyükelçiliği, bugün başkonsolosluk) bahçesinde bulunan kilisedir. Fransa’nın Osmanlı İmparatorluğu’ndaki elçiliğinin kilisesi olarak, İstanbul’daki Katolik varlığın en eski kurumlarından biriyle bağlantılıdır ve uzun yıllar Fransızca konuşan cemaatin buluşma yeri oldu.",
@@ -566,7 +587,7 @@ window.CHURCHES = /*JSON-START*/{
        "No Mass (closed since 1 September 2025)."
       ]
      ],
-     "massNoteEn": "French speakers can attend the French Masses at other churches (for example the Cathedral of the Holy Spirit, Sunday 11:15).",
+     "massNoteEn": "The French-speaking parish now meets at the Church of Saint Benoît in Karaköy, with Mass in French on weekdays at 18:00, Saturday at 09:00 and Sunday at 11:00.",
      "visitsEn": "Closed.",
      "noticeEn": "The church has been closed since 1 September 2025 following earthquake risk assessments; Masses are suspended until further notice.",
      "historyEn": [
@@ -1717,7 +1738,7 @@ window.CHURCHES = /*JSON-START*/{
      "address": "Polonezköy, 34827 Beykoz, İstanbul",
      "phones": [],
      "email": "",
-     "website": "http://www.duszpasterstwowstambule.pl",
+     "website": "https://duszpasterstwowstambule.pl",
      "mass": [
       [
        "Cumartesi",
@@ -3651,12 +3672,12 @@ window.CHURCHES = /*JSON-START*/{
      "sources": [
       [
        "Rudaw: Diyarbakır’da restore edilen kilise Dicle Üniversitesi’ne verildi",
-       "https://www.rudaw.net/turkish/kurdistan/061220212",
+       "https://www.rudaw.net/turkish/categories/kurdistan/1219051",
        "Rudaw: church restored in Diyarbakır given to Dicle University (in Turkish)"
       ],
       [
        "Agos: Diyarbakır Surp Hovsep Kilisesi’nde ayin",
-       "https://www.agos.com.tr/tr/yazi/26489/diyarbakir-surp-hovsep-kilisesi-nde-ayin",
+       "https://www.agos.com.tr/tr/yazi/diyarbakir-surp-hovsep-kilisesi-nde-ayin-26489",
        "Agos: Mass at the Surp Hovsep Church in Diyarbakır (in Turkish)"
       ],
       [

@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history: the sitemap's <lastmod> dates come from git
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -35,6 +37,9 @@ jobs:
       - name: Build pages (PowerShell 7 is preinstalled on GitHub runners)
         shell: pwsh
         run: ./tools/build.ps1   # site URL comes from the CNAME file
+
+      - name: Check the built HTML (fails the deploy on broken markup)
+        run: npx --yes html-validate@9 --config .htmlvalidate.json "./*.html" "en/**/*.html" "kilise/*.html"
 
       - name: Collect the public files into _site
         # Only what the pages load: the minified CSS/JS (not their sources), the fonts and images,
@@ -49,7 +54,7 @@ jobs:
           cp -r en kilise _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi
-          touch _site/.nojekyll
+          touch _site/.nojekyll   # serve the files as they are, without Jekyll
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3

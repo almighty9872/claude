@@ -17,7 +17,7 @@ Açık/koyu tema ve Türkçe/İngilizce dil seçiminiz, erişilebilirlik menüs�
 
 ## Sunucu günlükleri
 
-Site, GitHub Pages üzerinde barındırılıyor. Herhangi bir web sunucusu gibi, GitHub’ın sunucuları teknik amaçlarla (güvenlik, performans) standart erişim günlükleri tutabilir. Bu günlükler bu site tarafından değil, GitHub tarafından işletilir; ayrıntılar için [GitHub’ın Gizlilik Bildirimi](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)’ne bakabilirsiniz.
+Site, GitHub Pages üzerinde barındırılıyor. Herhangi bir web sunucusu gibi, GitHub’ın sunucuları teknik amaçlarla (güvenlik, performans) standart erişim günlükleri tutabilir. Bu günlükler bu site tarafından değil, GitHub tarafından işletilir; ayrıntılar için [GitHub’ın Gizlilik Bildirimi](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)’ne bakabilirsiniz.
 
 ## Yazı tipleri
 

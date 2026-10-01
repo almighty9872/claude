@@ -742,6 +742,17 @@
           it.classList.add('is-open');
         });
         it.addEventListener('focusout', function (e) { if (!it.contains(e.relatedTarget)) it.classList.remove('is-open'); });
+        /* touch screens have no hover: the first tap on an item with a sub-list opens the list, the second follows the link */
+        var a1 = it.querySelector('a');
+        /* (the open state is read at pointerdown: a tap also fires mouseenter, which opens the list before the click) */
+        if (a1) a1.addEventListener('pointerdown', function (e) { a1._touch = e.pointerType === 'touch' || e.pointerType === 'pen'; a1._wasOpen = it.classList.contains('is-open'); });
+        if (a1) a1.addEventListener('click', function (e) {
+          var touch = a1._touch || !hover.matches, wasOpen = a1._touch ? a1._wasOpen : it.classList.contains('is-open'); a1._touch = false;
+          if (!touch || wasOpen) return;
+          e.preventDefault();
+          Array.prototype.forEach.call(it.parentNode.children, function (sib) { if (sib !== it) sib.classList.remove('is-open'); });
+          it.classList.add('is-open');
+        });
       });
       li.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') { setTop(li, false); btn.focus(); return; }
@@ -752,6 +763,18 @@
       });
     });
     document.addEventListener('click', function (e) { if (!e.target.closest('.dn-top')) closeAll(null); });
+    /* a sub-list that would run past the right edge of the window opens to the left instead */
+    function placeSubs() {
+      var w = document.documentElement.clientWidth;
+      $$('.dn-sub').forEach(function (s) {
+        s.classList.remove('dn-flip');
+        if (s.getBoundingClientRect().right > w - 8) s.classList.add('dn-flip');
+      });
+    }
+    placeSubs();
+    var rz = null;
+    window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(placeSubs, 150); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeSubs);
   }
   function initNav() {
     var sheet = $('#navsheet');
@@ -1562,7 +1585,7 @@
           });
         items.forEach(function (it) {
           var moreSlug = top20Id || null;
-          var more = moreSlug ? '<a class="today-more-link" href="' + ROOT + moreSlug + '.html">' + LT('Devamını oku', 'Read more') +
+          var more = moreSlug ? '<a class="today-more-link" href="' + ROOT + moreSlug + '.html">' + LT('Devamını oku', 'Read more') + '<span class="visually-hidden">: ' + it.name.replace(/<[^>]*>/g, '') + '</span>' +
             '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></a>' : '';
           pieces.push('<div class="today-more"><span class="today-name">' + it.name + '</span>' +
             (it.title ? '<span class="today-title">' + it.title + '</span>' : '') +
@@ -1869,7 +1892,10 @@
         year.classList.remove('is-open'); now.classList.remove('is-hidden'); nst.m = today.month; nst.sel = { m: today.month, d: today.day }; nowRender();
       });
       year.parentNode.insertBefore(now, year);
-      $$('.month', cal).forEach(function (sec) {
+      /* each month's small grid is built when the month comes near the screen, not all twelve at load */
+      function buildMonthGrid(sec) {
+        if (sec.hasAttribute('data-grid')) return;
+        sec.setAttribute('data-grid', '');
         var m = +sec.getAttribute('data-month'), g = '';
         WD.forEach(function (w, i) { g += '<span class="cal-wd' + (i > 4 ? ' is-we' : '') + '">' + wdShort(w) + '</span>'; });
         for (var i = 0; i < lead(m); i++) g += '<span></span>';
@@ -1884,7 +1910,14 @@
         var t = $('.month-title', sec);
         sec.insertBefore(legendBox, t.nextSibling);
         sec.insertBefore(grid, t.nextSibling);
-      });
+      }
+      var months = $$('.month', cal);
+      if ('IntersectionObserver' in window) {
+        var mio = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) { buildMonthGrid(e.target); mio.unobserve(e.target); } });
+        }, { rootMargin: '800px 0px' });
+        months.forEach(function (sec) { mio.observe(sec); });
+      } else months.forEach(buildMonthGrid);
       return;
     }
 
@@ -2396,7 +2429,7 @@
       $$('.mira-item', m).forEach(function (d) { avNode(d, avText($('.mira-name', d)), avText($('.mira-place', d))); });
     },
     'kutsal-ayin.html': function (m) {
-      $$('.mass-part', m).forEach(function (d) { avNode(d, avText($('h2', d)), avText($('.mass-part-n', d))); });
+      $$('.mass-part', m).forEach(function (d) { avNode(d, avText($('h2, .mass-part-h', d)), avText($('.mass-part-n', d))); });
     },
     /* the summary, then each part holding its sections, the closing and the sources; the
        footnote on the word "Allah" stays under the rows, at the foot of the page's list */

@@ -4,7 +4,7 @@ A static Catholic resource site in Turkish and English: every page is written in
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests; the EB Garamond font (and Lexend, used only when a visitor turns on the dyslexia-friendly font) is self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
-The site makes no outside network calls and never asks for the visitor's location. The full-menu overlay (opened from the header's hamburger icon) shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
+The site makes no outside network calls and never asks for the visitor's location. On a computer the header carries four dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
 
 ## Two languages: the TR | EN switch
 
@@ -12,11 +12,13 @@ There is no separate English site. Each page carries both languages, and the TR 
 
 - In the build, `T` (a phrase), `TB` (a block), `TS` (SVG text) and `TA` (an attribute) in `tools/build.ps1` write a Turkish and an English version side by side: `<span class="l-tr">…</span><span class="l-en" lang="en">…</span>`, or `aria-label="…" data-en-aria-label="…"` for an attribute. `TO` marks something shown only in Turkish (the small English glosses under Turkish titles). CSS shows one language and hides the other (`html.lang-en`); the wrappers are `display: contents`, so they don't change the layout.
 - Every page has two addresses: the Turkish one at the site root and an English twin under `en/` (`en/mass.html`, `en/church/<id>.html`; the names are in `$EnAltMap` in `tools/build.ps1`). The twin is the same page with an English `<html lang>`, title, description, canonical and structured data, so search engines index both languages; `hreflang` links and `sitemap.xml` pair them. The TR | EN switch is a pair of links between the two.
-- A visitor who arrives at a Turkish address but prefers English (their earlier choice, stored as `kd-lang-choice` in localStorage, or else a browser and time zone outside Turkey) is sent to the English twin by `<head>` before the page is drawn. Search engines and other bots are never redirected.
+- A visitor who opens the Turkish home page but prefers English (their earlier choice, stored as `kd-lang-choice` in localStorage, or else a browser and time zone outside Turkey) is sent to the English home page by `<head>` before the page is drawn. Deeper Turkish pages are never redirected (someone arriving there came from a Turkish link or search result, and a redirect would cost them a second page load); search engines and other bots are never redirected either.
 - The theme follows the sun: light from sunrise to sunset at the visitor's place, dark after. The place comes from the device's time zone only (a table in `script.js`, or the zone's offset); today's times are kept in `kd-sun` so `<head>` can pick the theme before the first paint. The theme switch overrides the sun until the next sunrise or sunset (`kd-theme-choice`).
 - Text the scripts write (the calendar, search results, the phone's app screens, the rosary) is paired the same way: `LT(tr, en)` for HTML, and "pair strings" (`pmake`, `pstr`, `pset` and friends in `assets/script.js`) for labels taken from the page.
 - Switching keeps the paragraph under the reading line in place, so a reader can flip back and forth in the middle of a long text.
 - Content in `data/` has its English beside the Turkish: `en`/`textEn`/`bodyEn`/`historyEn` and so on (each file's header says which), and `content/<name>-en.md` for the Markdown pages.
+
+`sitemap.xml` gives each page a `<lastmod>`: the date its data file last changed in git (the deploy fetches the full history for this). After the build, the deploy checks every page's HTML with html-validate (`.htmlvalidate.json`) and stops before publishing if the markup is broken.
 
 Search engines and AI assistants are all welcome (`robots.txt` allows every crawler). `llms.txt` lists every page with its one-line description for AI assistants, and after each deploy the workflow tells the IndexNow search engines (Bing, Yandex and others) that the pages changed.
 
@@ -150,7 +152,7 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 
 ## Publishing on GitHub Pages with your Cloudflare domain
 
-**1. Put the files in the repository.** The *contents* of this folder go at the root of the repository, so `index.html` is at the top level. Include the hidden files (`.github/`, `.nojekyll`, `.gitignore`, `.gitattributes`). The branch must be called `main`.
+**1. Put the files in the repository.** The *contents* of this folder go at the root of the repository, so `index.html` is at the top level. Include the hidden files (`.github/`, `.gitignore`, `.gitattributes`, `.htmlvalidate.json`). The branch must be called `main`.
 - With GitHub Desktop or git: add everything, commit, push.
 - In the browser: repository → **Add file → Upload files**, drag in everything *inside* this folder (not the folder itself), then commit.
 
@@ -183,7 +185,7 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 ## Notes before publishing
 
 - This is an **unofficial translation**. The original text is © Libreria Editrice Vaticana, and publishing a translation publicly normally requires LEV's permission. You may also want a Turkish Catholic reviewer (for example, someone connected to the Episcopal Conference of Türkiye) to check the terminology before launch.
-- Serve the files with gzip or brotli. Most hosts do this automatically. With compression, the largest page (Part 1) is about 110 KB. The deploy minifies the CSS and JS with esbuild (`npm install -g esbuild` to get the same result locally; without it the build falls back to a simpler minifier).
+- Serve the files with gzip or brotli. Most hosts do this automatically. With compression, the largest page (the Saints calendar) is about 140 KB. The deploy minifies the CSS and JS with esbuild (`npm install -g esbuild` to get the same result locally; without it the build falls back to a simpler minifier).
 
 ## Contact
 

@@ -41,6 +41,41 @@ if (-not $SiteUrl) {
 }
 $SiteUrl = $SiteUrl.TrimEnd('/')
 $BuildDate = (Get-Date).ToString('yyyy-MM-dd')
+# Last-changed date of a page: the newest git commit touching the data it is built from
+# (sitemap <lastmod>, Article dateModified). Template-only changes don't count, and with no
+# git history (a plain folder, a shallow clone) pages simply carry no date.
+$PageSources = @{
+  'katekizm.html' = @('data/compendium-1.js', 'data/compendium-2.js', 'data/compendium-3.js', 'data/compendium-4.js')
+  'iman-ikrari.html' = @('data/compendium-1.js'); 'kutsal-sirlar.html' = @('data/compendium-2.js')
+  'mesihte-yasam.html' = @('data/compendium-3.js'); 'hristiyan-duasi.html' = @('data/compendium-4.js', 'data/extras.js')
+  'ekler.html' = @('data/extras.js'); 'motu-proprio.html' = @('data/extras.js'); 'giris.html' = @('data/extras.js')
+  'sss.html' = @('data/sss.js'); 'katolik-sureci.html' = @('data/katolik-sureci.js'); 'gunah-cikarma.html' = @('data/gunah-cikarma.js')
+  'topraklarimizda-hristiyanlik.html' = @('data/topraklarimizda-hristiyanlik.js', 'data/anadolu-haritasi.js')
+  'neden-katoligiz.html' = @('data/neden-katoligiz.js'); 'azizler.html' = @('data/azizler.js', 'data/buyuk-azizler.js')
+  'kutsal-ayin.html' = @('data/kutsal-ayin.js'); 'meseller.html' = @('data/meseller.js'); 'mucizeler.html' = @('data/mucizeler.js')
+  'tesbih-duasi.html' = @('data/tespih.js'); 'tesbih-tarihi.html' = @('data/tesbih-tarihi.js'); 'kiliseler.html' = @('data/kiliseler.js')
+  'islama-cevap.html' = @('data/islama-cevap.js'); 'ateizme-cevap.html' = @('data/ateizme-cevap.js')
+  'kutsal-kitap.html' = @('content/kutsal-kitap.md', 'content/kutsal-kitap-en.md'); 'erisilebilirlik.html' = @('content/erisilebilirlik.md', 'content/erisilebilirlik-en.md')
+  'gizlilik.html' = @('content/gizlilik.md', 'content/gizlilik-en.md'); 'kaynaklar-ve-telif.html' = @('content/hakkinda.md', 'content/hakkinda-en.md')
+}
+$script:GitDates = @{}
+$script:HasGit = [bool](Get-Command git -ErrorAction SilentlyContinue) -and (Test-Path (Join-Path $Root '.git'))
+function Page-LastMod([string]$file) {
+  if (-not $script:HasGit) { return '' }
+  $src = $PageSources[$file]
+  if (-not $src) {
+    if ($file -like 'kilise/*') { $src = @('data/kiliseler.js') }
+    elseif ($file -match '^[a-z0-9-]+\.html$' -and $GreatSaintIds -and $GreatSaintIds.ContainsKey(($file -replace '\.html$', ''))) { $src = @('data/buyuk-azizler.js') }
+    else { return '' }
+  }
+  $key = $src -join '|'
+  if (-not $script:GitDates.ContainsKey($key)) {
+    $d = ''
+    try { $d = (& git -C $Root log -1 --format=%cs -- @src 2>$null | Select-Object -First 1) } catch {}
+    $script:GitDates[$key] = if ($d) { "$d".Trim() } else { '' }
+  }
+  return $script:GitDates[$key]
+}
 $MonthNamesTr = @('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
 $MonthNamesEn = @('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
 $BuildDateTr = "$((Get-Date).Day) $($MonthNamesTr[(Get-Date).Month - 1]) $((Get-Date).Year)"
@@ -623,7 +658,9 @@ function Special-Html([string]$ref, [int]$hl) {
     }
     'our-father' {
       $o = $X.ourFather
-      return "<div class=`"text-grid`">$(Text-Card $o 'goklerdeki-babamiz-duasi' $hl "<div class=`"verse`">$(Verse $o.tr.text)</div>" "<div class=`"verse`">$(Verse $o.en.text)</div>")</div>"
+      $trV = '<div class="verse">' + (Verse $o.tr.text) + '</div>'
+      $enV = '<div class="verse">' + (Verse $o.en.text) + '</div>'
+      return '<div class="text-grid">' + (Text-Card $o 'goklerdeki-babamiz-duasi' $hl $trV $enV) + '</div>'
     }
   }
   return ''
@@ -952,11 +989,11 @@ $A11yWidgetHtml = @"
 # The TR | EN switch: a small pill that floats in the corner of every page, over the text, so the
 # reader can flip between the two languages at any point of a long page (script.js, initLang)
 # The inline <head> script, around the phone-view flag ($avJs): picks the language (the page's
-# address decides it; a Turkish address sends someone who reads English, by choice or by browser,
-# to the English twin; crawlers are never sent anywhere), the theme and the reading settings,
+# address decides it; the Turkish home page sends someone who reads English, by choice or by browser,
+# to the English home page, deep links are never redirected; crawlers are never sent anywhere), the theme and the reading settings,
 # all before the first paint.
 $HeadJs = 'document.documentElement.classList.add(''js'');'
-$HeadJs2 = '(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem(''kd-lang-choice'');if(!L&&localStorage.getItem(''kd-lang'')===''en'')L=''en''}catch(e){}if(!L){var tz='''';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'''').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'''')||/Istanbul$/.test(tz)||nl.slice(0,2)===''tr'')?''tr'':''en''}var U=H.getAttribute(''data-url-lang'');if(U){if(U===''tr''&&L===''en''&&!/bot|crawl|spider|slurp|lighthouse|headless|inspection|preview|facebookexternalhit/i.test(navigator.userAgent||'''')){var a=document.querySelector(''link[hreflang=en]'');if(a){location.replace(a.getAttribute(''href'').replace(/^https?:\/\/[^\/]+/,'''')+location.search+location.hash);return}}L=U}if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
+$HeadJs2 = '(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem(''kd-lang-choice'');if(!L&&localStorage.getItem(''kd-lang'')===''en'')L=''en''}catch(e){}if(!L){var tz='''';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'''').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'''')||/Istanbul$/.test(tz)||nl.slice(0,2)===''tr'')?''tr'':''en''}var U=H.getAttribute(''data-url-lang'');if(U){if(U===''tr''&&L===''en''&&/^\/(index\.html)?$/.test(location.pathname)&&!/bot|crawl|spider|slurp|lighthouse|headless|inspection|preview|facebookexternalhit/i.test(navigator.userAgent||'''')){var a=document.querySelector(''link[hreflang=en]'');if(a){location.replace(a.getAttribute(''href'').replace(/^https?:\/\/[^\/]+/,'''')+location.search+location.hash);return}}L=U}if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
 $LangPillHtml = '<nav class="lang-pill" aria-label="Dil / Language"><span class="lp-knob" aria-hidden="true"></span>' +
   '<button type="button" class="lp-btn" data-set-lang="tr" lang="tr" aria-pressed="true" title="Türkçe">TR</button>' +
   '<button type="button" class="lp-btn" data-set-lang="en" lang="en" aria-pressed="false" title="English">EN</button></nav>'
@@ -1210,8 +1247,8 @@ function Write-Page {
   # Search results show roughly 60 characters of a title; a long page name keeps its words
   # and drops the site-name suffix instead (og:site_name still carries it).
   $suffix = " | $SiteName"
-  if ($Title.Length -gt 62 -and $Title.EndsWith($suffix)) { $Title = $Title.Substring(0, $Title.Length - $suffix.Length) }
-  if ($TitleEn.Length -gt 62 -and $TitleEn.EndsWith($suffix)) { $TitleEn = $TitleEn.Substring(0, $TitleEn.Length - $suffix.Length) }
+  if ($Title.Length -gt 60 -and $Title.EndsWith($suffix)) { $Title = $Title.Substring(0, $Title.Length - $suffix.Length) }
+  if ($TitleEn.Length -gt 60 -and $TitleEn.EndsWith($suffix)) { $TitleEn = $TitleEn.Substring(0, $TitleEn.Length - $suffix.Length) }
   # Every page has an English twin under en/ (404.html excepted). Its description: the one
   # given, or else the page's first sizeable English paragraph.
   $enFile = En-Of $File
@@ -1247,7 +1284,9 @@ function Write-Page {
   $JsonLd = @($JsonLd | ForEach-Object {
     if ($_ -match '"@type":"Article"' -and $_ -notmatch '"image"') {
       $pub = if ($_ -notmatch '"publisher"') { '"publisher":{"@type":"Organization","name":' + (JStr $SiteName) + ',"url":"' + $SiteUrl + '/","logo":{"@type":"ImageObject","url":"' + $SiteUrl + '/apple-touch-icon.png"}},' } else { '' }
-      $_.Replace('"@type":"Article",', '"@type":"Article","image":"' + $SiteUrl + '/assets/og-image.jpg",' + $pub)
+      $mod = Page-LastMod $File
+      $dm = if ($mod -and $_ -notmatch '"dateModified"') { '"dateModified":"' + $mod + '",' } else { '' }
+      $_.Replace('"@type":"Article",', '"@type":"Article","image":"' + $SiteUrl + '/assets/og-image.jpg",' + $pub + $dm)
     } else { $_ }
   })
   $ldTr = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
@@ -1277,6 +1316,7 @@ function Write-Page {
       }
       $ld = $ld.Replace('"name":"Katekizm"', '"name":"Compendium"').Replace('"name":"Azizler"', '"name":"Saints"').Replace('"name":"Kilise Bul"', '"name":"Find a Church"').Replace('"Kardinal ', '"Cardinal ').Replace('"Papa XVI. Benediktus"', '"Pope Benedict XVI"')
       $ld = [regex]::Replace($ld, ('"' + [regex]::Escape($SiteUrl) + '/((?:kilise/)?[a-z0-9-]*(?:\.html)?)"'), $EnUrlEval)
+      $ld = $ld.Replace('"description":' + (JStr $SiteTag), '"description":' + (JStr $SiteTagEn))
     }
     $kdTitleEn = if (-not $en -and $TitleEn) { "<meta name=`"kd-title-en`" content=`"$(Attr $TitleEn)`">" } else { '' }
 @"
@@ -1803,7 +1843,7 @@ function Anatolia-Map([string]$lang) {
       "<circle class=`"amap-hit`" r=`"11`"></circle><circle class=`"amap-dot`" r=`"6`"></circle>" +
       "<text class=`"amap-label`" x=`"$(if ($null -ne $c.lx) { $c.lx } else { $s.lx })`" y=`"$(if ($null -ne $c.ly) { $c.ly } else { $s.ly })`" text-anchor=`"$(if ($c.la) { $c.la } else { $s.la })`">$(TS $label $labelEn)</text></g>")
     $old = if ($c.old) { " <span class=`"amap-c-old`">($(T $c.old $e.old))</span>" } else { '' }
-    $refs = if (@($c.refs).Count) { "<p class=`"amap-c-refs`"><span class=`"label`">$(T "Kutsal Kitap$($Apos)ta" 'In Scripture')</span>" + (TB ((@($c.refs) | ForEach-Object { "<span class=`"amap-ref`">$_</span>" }) -join '') ((@($e.refs) | ForEach-Object { "<span class=`"amap-ref`">$_</span>" }) -join '')) + '</p>' } else { '' }
+    $refs = if (@($c.refs).Count) { "<div class=`"amap-c-refs`"><span class=`"label`">$(T "Kutsal Kitap$($Apos)ta" 'In Scripture')</span>" + (TB ((@($c.refs) | ForEach-Object { "<span class=`"amap-ref`">$_</span>" }) -join '') ((@($e.refs) | ForEach-Object { "<span class=`"amap-ref`">$_</span>" }) -join '')) + '</div>' } else { '' }
     $more = if ($s.section) { "<a class=`"amap-c-more`" href=`"#$($s.section)`">$(T 'Bu sayfada devamını okuyun' 'Read more on this page')$IcoChevDown</a>" } else { '' }
     [void]$cards.Append("<article class=`"amap-card c-$($s.cat)`" id=`"yer-$($s.id)`" data-site=`"$($s.id)`" hidden>" +
       "<p class=`"amap-c-cat`"><span class=`"amap-key`"></span>$($catName[$s.cat])</p>" +
@@ -1971,7 +2011,7 @@ function Case-Body($Ic, $Ico) {
       </details>
     </section>
   $icParts
-    <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$(T $Ic.closing.title $Ic.closing.titleEn)</h2><div class="prose">$(TB (Ic-Blocks $Ic.closing.body) (Ic-Blocks $Ic.closing.bodyEn))</div>$(Ic-Nav ($icSeq.Count - 1))</section>
+    <section class="ic-sec ic-closing" id="$($Ic.closing.id)" aria-labelledby="$($Ic.closing.id)-h"><h2 class="ic-part-t" id="$($Ic.closing.id)-h">$(T $Ic.closing.title $Ic.closing.titleEn)</h2><div class="prose">$(TB ((Ic-Blocks $Ic.closing.body) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>') ((Ic-Blocks $Ic.closing.bodyEn) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>'))</div>$(Ic-Nav ($icSeq.Count - 1))</section>
     <section class="ic-sources" aria-labelledby="ic-kaynak-h"><h2 class="section-title" id="ic-kaynak-h">$(T 'Kaynaklar' 'Sources')</h2><ul>$icSources</ul></section>
     <aside class="ic-footnote" id="dipnot" aria-label="Dipnot" data-en-aria-label="Footnote"><p><span class="ic-fn-mark" aria-hidden="true">*</span>$(T (Ic-Link $Ic.note) (Ic-Link $Ic.noteEn))</p></aside>
   </div>
@@ -2117,7 +2157,7 @@ function Saint-Links($s) {
     return '<p class="s-links">' + (($pages | ForEach-Object {
       $id = $_
       $gs = $GreatSaints.saints | Where-Object { $_.id -eq $id } | Select-Object -First 1
-      $label = if ($pages.Count -gt 1) { T $gs.name $gs.en } else { T 'Devamını oku' 'Read more' }
+      $label = if ($pages.Count -gt 1) { T $gs.name $gs.en } else { (T 'Devamını oku' 'Read more') + '<span class="visually-hidden">: ' + (T $gs.name $gs.en) + '</span>' }
       "<a class=`"s-page`" href=`"$id.html`">$label$IcoNext</a>"
     }) -join '') + '</p>'
   }
@@ -2228,7 +2268,7 @@ $massPartsHtml = ($Mass.parts | ForEach-Object {
   $trHtml = Mass-Lines $p.lines 'tr'
   $enHtml = Mass-Lines $p.lines 'en'
   "<details class=`"mass-part`" id=`"$($p.id)`" data-part=`"$($p.n)`">" +
-    "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><div><p class=`"mass-part-n label`">$(T "Bölüm $($p.n)" "Part $($p.n)")</p><h2>$(T (Inline $p.title) $p.en)</h2>$(TO "<p class=`"sub`" lang=`"en`">$($p.en)</p>")</div>$IcoChevLg</summary>" +
+    "<summary class=`"mass-part-head`"><span class=`"mass-ico`">$icon</span><span class=`"mass-part-txt`"><span class=`"mass-part-n label`">$(T "Bölüm $($p.n)" "Part $($p.n)")</span><span class=`"mass-part-h`" role=`"heading`" aria-level=`"2`">$(T (Inline $p.title) $p.en)</span>$('<span class="l-tr"><span class="sub" lang="en">' + $p.en + '</span></span>')</span>$IcoChevLg</summary>" +
     "<div class=`"mass-part-body`">" +
     "<p class=`"mass-lead`">$(T (Inline $p.lead) (Inline $p.leadEn))</p>" +
     "<div class=`"mass-dialogue`" data-tr>$(TB $trHtml $enHtml)</div>" +
@@ -2412,7 +2452,7 @@ function Rosary-Tracker([string]$lang) {
 $mysterySets = ($Rosary.sets | ForEach-Object {
   $items = ($_.items | ForEach-Object { "<li><span class=`"m-tr`">$(T (Inline $_.tr) $_.en)</span></li>" }) -join ''
   "<article class=`"myst`" data-days=`"$($_.days -join ',')`" id=`"gizem-$($_.id)`">" +
-    "<header><h3>$(T (Inline $_.tr) $_.en)</h3><p class=`"m-day label`">$(T $_.dayTr $_.dayEn)</p>$(TO "<p class=`"m-en-title`" lang=`"en`">$($_.en)</p>")</header>" +
+    "<header><h3>$(T (Inline $_.tr) $_.en)</h3><p class=`"m-day label`">$(T $_.dayTr $_.dayEn)</p>$(TO ('<p class="m-en-title" lang="en">' + $_.en + '</p>'))</header>" +
     "<ol class=`"myst-list`">$items</ol></article>"
 }) -join "`n"
 $stepList = ($Rosary.steps | ForEach-Object {
@@ -2503,7 +2543,8 @@ $miraCats = ($Miracles.categories | ForEach-Object {
   $script:MiraN++; $cat = $_
   $icon = $MiracleIcons[$cat.icon]
   $items = ($cat.items | ForEach-Object {
-    $more = if ($GreatSaintIds.ContainsKey($_.id)) { "<a class=`"today-more-link`" href=`"$($_.id).html`">$(T 'Devamını oku' 'Read more')$IcoNext</a>" } else { '' }
+    $mid = $_.id
+    $more = if ($GreatSaintIds.ContainsKey($mid)) { $gsN = @($GreatSaints.saints | Where-Object { $_.id -eq $mid })[0]; '<a class="today-more-link" href="' + $mid + '.html">' + (T 'Devamını oku' 'Read more') + '<span class="visually-hidden">: ' + (T $gsN.name $gsN.en) + '</span>' + $IcoNext + '</a>' } else { '' }
     "<details class=`"mira-item`" id=`"$($_.id)`"><summary><span class=`"mira-ico`">$icon</span><span class=`"mira-head`"><span class=`"mira-name`">$(T (Inline $_.name) (Inline $_.nameEn))</span><span class=`"mira-place label`">$(T $_.place $_.placeEn)</span></span>$IcoChevLg</summary><div class=`"mira-bio`">$(TB (Blocks $_.bio) (Blocks $_.bioEn))$more</div></details>"
   }) -join "`n"
   "<section class=`"mira-cat`" id=`"$($cat.id)`">" +
@@ -2601,7 +2642,7 @@ foreach ($city in $Churches.cities) {
 "@
     $desc = "$(Plain $ch.name), $(Plain $ch.district), $($cityName): ayin saatleri, ziyaret saatleri, adres ve tarihçe."
     $descEn = "$(Plain $ch.nameEn), $(Plain $ch.district), $($cityEn): Mass times, visiting hours, address and history."
-    $ld = '{"@context":"https://schema.org","@type":"Church","name":' + (JStr (Plain $ch.name)) + ',"address":' + (JStr (Plain $ch.address)) +
+    $ld = '{"@context":"https://schema.org","@type":"Church","name":' + (JStr (Plain $ch.name)) + ',"address":{"@type":"PostalAddress","streetAddress":' + (JStr (Plain $ch.address)) + ',"addressLocality":' + (JStr $cityName) + ',"addressCountry":"TR"}' +
       $(if (@($ch.phones).Count) { ',"telephone":' + (JStr ((Tel-Href @($ch.phones)[0]) -replace '^tel:', '')) } else { '' }) +
       $(if ($ch.website) { ',"sameAs":' + (JStr $ch.website) } else { '' }) + ',"url":' + (JStr "$SiteUrl/$file") + '}'
     Write-Page -File $file -Title "$(Plain $ch.name), $cityName | $SiteName" -TitleEn "$(Plain $ch.nameEn), $cityEn | $SiteName" -Description (Meta-Trim $desc) -Path $file -DescriptionEn $descEn -Body $body `
@@ -2963,17 +3004,19 @@ $pages = @(
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }, @{ p = 'kaynaklar-ve-telif.html'; pr = '0.3' }
 ) + ($GreatSaints.saints | ForEach-Object { @{ p = "$($_.id).html"; pr = '0.6' } }) + ($ChurchPages | ForEach-Object { @{ p = $_; pr = '0.5' } })
-# Both languages, each address listing its twin (hreflang) so search engines pair them. No
-# <lastmod>: every build rewrites every page, and a date that always says "today" is ignored.
+# Both languages, each address listing its twin (hreflang) so search engines pair them. <lastmod>
+# is the date the page's data last changed in git (Page-LastMod), never simply the build date.
 $smUrls = foreach ($pg in $pages) {
   $tr = if ($pg.p) { $pg.p } else { 'index.html' }
   $trU = "$SiteUrl/$($pg.p)"
   $enF = En-Of $tr
-  if (-not $enF) { "  <url><loc>$trU</loc></url>"; continue }
+  $lm = Page-LastMod $tr
+  $lmTag = if ($lm) { "<lastmod>$lm</lastmod>" } else { '' }
+  if (-not $enF) { "  <url><loc>$trU</loc>$lmTag</url>"; continue }
   $enU = "$SiteUrl/$(Page-Path $enF)"
   $alts = "<xhtml:link rel=`"alternate`" hreflang=`"tr`" href=`"$trU`"/><xhtml:link rel=`"alternate`" hreflang=`"en`" href=`"$enU`"/><xhtml:link rel=`"alternate`" hreflang=`"x-default`" href=`"$trU`"/>"
-  "  <url><loc>$trU</loc>$alts</url>"
-  "  <url><loc>$enU</loc>$alts</url>"
+  "  <url><loc>$trU</loc>$lmTag$alts</url>"
+  "  <url><loc>$enU</loc>$lmTag$alts</url>"
 }
 $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' + "`n" +
   ($smUrls -join "`n") + "`n</urlset>`n"
