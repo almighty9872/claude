@@ -49,10 +49,9 @@ jobs:
           cp ./*.html sitemap.xml robots.txt llms.txt favicon.ico apple-touch-icon.png site.webmanifest _site/
           cp ./[0-9a-f]*.txt _site/                     # the IndexNow key file
           cp assets/*.min.js assets/*.min.css assets/*.jpg assets/*.png _site/assets/
-          cp -r assets/fonts _site/assets/
+          cp -r assets/fonts assets/art _site/assets/
           cp data/compendium-*.js data/tespih.js data/azizler-adlar.js data/azizler-ozet-*.js data/refs-*.js _site/data/
           cp -r en kilise _site/
-          mkdir -p _site/app && cp app/index.html _site/app/   # the phone app (built from app/src)
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi
           touch _site/.nojekyll   # serve the files as they are, without Jekyll

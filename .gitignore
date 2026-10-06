@@ -22,6 +22,3 @@ _site/
 /data/azizler-adlar.js
 /data/azizler-ozet-*.js
 
-# The app's intermediate data file (app/src/build.py writes it on every build)
-/app/src/data5.json
-/app/src/__pycache__/

@@ -27,7 +27,10 @@
 param(
   # Absolute site root for canonical, og:url and sitemap URLs (no trailing slash).
   # Leave empty to use the domain in the CNAME file (https://<domain>).
-  [string]$SiteUrl = ''
+  [string]$SiteUrl = '',
+  # The live site is Turkish, with English only on the Katekizm pages. -WithEnglish builds every
+  # page in both languages, with its English twin under en/, as the site was before.
+  [switch]$WithEnglish
 )
 
 $ErrorActionPreference = 'Stop'
@@ -160,7 +163,12 @@ New-Item -ItemType Directory -Path (Join-Path $EnDir 'church') | Out-Null
 # and 'en/faq.html' -> 'sss.html'). English pages use English slugs, listed explicitly below;
 # the church pages keep their names under en/church/.
 $EnAltMap = @{}
-function Add-EnAlt([string]$trFile, [string]$enFile) { $EnAltMap[$trFile] = "en/$enFile"; $EnAltMap["en/$enFile"] = $trFile }
+# The pages that keep their English on the Turkish-only site: the Katekizm and its parts
+$BilingualPages = @('katekizm.html', 'giris.html', 'motu-proprio.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html', 'ekler.html')
+function Add-EnAlt([string]$trFile, [string]$enFile) {
+  if (-not $WithEnglish -and $BilingualPages -notcontains $trFile) { return }
+  $EnAltMap[$trFile] = "en/$enFile"; $EnAltMap["en/$enFile"] = $trFile
+}
 # The public path of a page: the two homepages are served (and canonical) at / and /en/
 function Page-Path([string]$file) { if ($file -eq 'index.html') { '' } elseif ($file -eq 'en/index.html') { 'en/' } else { $file } }
 # The English twin of a Turkish page ('en/…'), or $null when it has none (404.html)
@@ -168,7 +176,7 @@ function En-Of([string]$file) {
   if ($file -eq '' -or $file -eq '/') { $file = 'index.html' }
   if ($file.StartsWith('en/') -or $file -eq '404.html') { return $null }
   if ($EnAltMap.ContainsKey($file)) { return $EnAltMap[$file] }
-  if ($file -like 'kilise/*.html') { return 'en/church/' + $file.Substring(7) }
+  if ($WithEnglish -and $file -like 'kilise/*.html') { return 'en/church/' + $file.Substring(7) }
   return $null
 }
 # Root-relative links and form targets to Turkish pages -> their English twins (on English pages)
@@ -343,7 +351,19 @@ function TB([string]$tr, [string]$en) {
 }
 # TO: something that belongs to the Turkish only (an English gloss under a Turkish title would say
 # the same thing twice in English)
-function TO([string]$html) { if (-not $html) { return '' }; return "<div class=`"l-tr`">$html</div>" }
+function TO([string]$html) { if (-not $html) { return '' }; return "<div class=`"l-tr l-sub-en`">$html</div>" }
+# A page without an English twin, on the Turkish-only site: its English taken out, the Turkish
+# left as plain text (the l-tr / l-en wrappers nest, so the patterns balance their own tags)
+function Strip-En([string]$h) {
+  foreach ($t in 'div', 'span', 'tspan') {
+    $bal = "(?>(?<o><$t\b)|(?<-o></$t>)|(?!</?$t\b)[\s\S])*(?(o)(?!))"
+    $h = [regex]::Replace($h, "<$t class=`"l-en`"[^>]*>$bal</$t>", '')
+    $h = [regex]::Replace($h, "<$t class=`"l-tr l-sub-en`">$bal</$t>", '')
+    $rx = [regex]"<$t class=`"l-tr`">(?<c>$bal)</$t>"
+    do { $before = $h; $h = $rx.Replace($h, '${c}') } while ($h -ne $before)
+  }
+  return [regex]::Replace($h, ' data-en-[a-z-]+="[^"]*"', '')
+}
 function TA([string]$name, [string]$tr, [string]$en) {
   $a = "$name=`"$(Attr $tr)`""
   if ($en -and $en -cne $tr) { $a += " data-en-$name=`"$(Attr $en)`"" }
@@ -477,6 +497,38 @@ $IcoQuestion = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 $IcoSparkle  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M12 2c.9 4.6 3.1 6.8 7.7 7.7-4.6.9-6.8 3.1-7.7 7.7-.9-4.6-3.1-6.8-7.7-7.7C8.9 8.8 11.1 6.6 12 2Z"/></svg>'
 $IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15l6-5.5"/></svg>'
 function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" }
+
+# The paintings (data/tablolar.json): which page's header shows which painting, and each
+# painting's title, painter, home and source. The images are in assets/art (1600 and 800 wide).
+$Tablolar = Get-Content -Raw -Encoding UTF8 (Join-Path $Root 'data/tablolar.json') | ConvertFrom-Json
+# The home page's strip of Church history and the credits of its pictures
+$Tarih = Get-Content -Raw -Encoding UTF8 (Join-Path $Root 'data/kilise-tarihi.json') | ConvertFrom-Json
+$tgFile = Join-Path $Root 'data/tarih-gorseller.json'
+$TarihImg = if (Test-Path $tgFile) { Get-Content -Raw -Encoding UTF8 $tgFile | ConvertFrom-Json } else { [pscustomobject]@{} }
+function Art-Img([string]$key, [string]$cls, [string]$sizes = '100vw', [string]$prio = 'auto') {
+  $a = $Tablolar.art.$key
+  $fp = if ($prio -eq 'high') { ' fetchpriority="high"' } else { ' loading="lazy"' }
+  return "<img class=`"$cls`" src=`"assets/art/$key.jpg`" srcset=`"/assets/art/$key-800.jpg 800w, /assets/art/$key.jpg 1600w`" sizes=`"$sizes`" width=`"$($a.w)`" height=`"$($a.h)`" alt=`"`" decoding=`"async`" style=`"object-position:50% $($a.y)%`"$fp>"
+}
+function Art-Cap([string]$key) {
+  $a = $Tablolar.art.$key
+  return "<p class=`"ph-cap`">$(T "$($a.a) · <cite>$($a.t)</cite>" "$($a.a) · <cite>$($a.te)</cite>")</p>"
+}
+# A page whose header has a painting: the painting behind the title, its name underneath. A
+# painting smaller than the screen is shown whole, in a frame, over a blurred copy of itself.
+function Paint-Head([string]$body, [string]$file) {
+  $key = $Tablolar.pages.$file
+  if (-not $key) { return $body }
+  $m = [regex]::Match($body, '<header class="page-head([^"]*)"([^>]*)>')
+  if (-not $m.Success) { return $body }
+  $framed = $Tablolar.art.$key.w -lt 1000
+  $cls = "page-head$($m.Groups[1].Value) painted$(if ($framed) { ' art-framed' })"
+  $imgs = (Art-Img $key 'ph-art' '100vw' 'high') + $(if ($framed) { Art-Img $key 'ph-frame' '360px' 'high' } else { '' })
+  $open = "<header class=`"$cls`" data-art=`"$key`"$($m.Groups[2].Value)>$imgs"
+  $end = $body.IndexOf('</header>', $m.Index)
+  $inner = $body.Substring($m.Index + $m.Length, $end - $m.Index - $m.Length)
+  return $body.Substring(0, $m.Index) + $open + "<div class=`"ph-text`">$inner</div>" + (Art-Cap $key) + $body.Substring($end)
+}
 
 # ---- Illustrated sections: a page section with a line drawing of its own beside it (in the section's
 # colour, "tone"), a small kicker over a large heading. The drawing draws itself as the section scrolls
@@ -1060,10 +1112,6 @@ $A11yWidgetHtml = @"
 # address decides it; the Turkish home page sends someone who reads English, by choice or by browser,
 # to the English home page, deep links are never redirected; crawlers are never sent anywhere), the theme and the reading settings,
 # all before the first paint.
-# Phones get the app (app/index.html, built from app/src): every page sends a touch screen at the
-# phone breakpoint to the same thing in the app (/app/?p=havari-pavlus). Crawlers stay on the pages,
-# and ?site=1 (the app's links to a page) keeps the visitor on the site for the rest of the session.
-$MobJs = '(function(){try{var q=location.search,s=window.sessionStorage;if(/[?&]site=1(&|$)/.test(q)){s.setItem(''kd-site'',''1'');return}if(s.getItem(''kd-site'')||!(window.matchMedia&&matchMedia(''(max-width: 979px) and (pointer: coarse)'').matches)||/bot|crawl|spider|slurp|lighthouse|headless|preview/i.test(navigator.userAgent))return;var p=location.pathname.replace(/^\/+/,'''').replace(/\.html$/,'''').replace(/(^|\/)index$/,''$1'');location.replace(''/app/?p=''+encodeURIComponent(p))}catch(e){}})();'
 $HeadJs = 'document.documentElement.classList.add(''js'');'
 $HeadJs2 = '(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem(''kd-lang-choice'');if(!L&&localStorage.getItem(''kd-lang'')===''en'')L=''en''}catch(e){}if(!L){var tz='''';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'''').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'''')||/Istanbul$/.test(tz)||nl.slice(0,2)===''tr'')?''tr'':''en''}var U=H.getAttribute(''data-url-lang'');if(U){if(U===''tr''&&L===''en''&&/^\/(index\.html)?$/.test(location.pathname)&&!/bot|crawl|spider|slurp|lighthouse|headless|inspection|preview|facebookexternalhit/i.test(navigator.userAgent||'''')){var a=document.querySelector(''link[hreflang=en]'');if(a){location.replace(a.getAttribute(''href'').replace(/^https?:\/\/[^\/]+/,'''')+location.search+location.hash);return}}L=U}if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
 $LangPillHtml = '<nav class="lang-pill" aria-label="Dil / Language"><span class="lp-knob" aria-hidden="true"></span>' +
@@ -1339,6 +1387,7 @@ function Write-Page {
         [string]$Lang = 'tr', [string]$TitleEn = '', [string]$DescriptionEn = '')
   $Body = Link-Refs $Body
   $Body = Link-Xrefs $Body $File
+  $Body = Paint-Head $Body $File
   # Search results show roughly 60 characters of a title; a long page name keeps its words
   # and drops the site-name suffix instead (og:site_name still carries it).
   $suffix = " | $SiteName"
@@ -1353,6 +1402,8 @@ function Write-Page {
   # Every page has an English twin under en/ (404.html excepted). Its description: the one
   # given, or else the page's first sizeable English paragraph.
   $enFile = En-Of $File
+  $trOnly = -not $enFile -and -not $WithEnglish
+  if ($trOnly) { $TitleEn = ''; $DescriptionEn = '' }
   if ($enFile -and -not $DescriptionEn) {
     foreach ($dm in [regex]::Matches($Body, 'class="l-en"[^>]*>(.*?)</(?:span|div)>', 'Singleline')) {
       $t = Plain $dm.Groups[1].Value
@@ -1370,7 +1421,6 @@ function Write-Page {
   # Every page but the home screen becomes an app screen on phones (see Av-Nav); the class is set
   # before the first paint so the page doesn't jump
   $isHome = $File -match '(^|/)index\.html$'
-  $mobJs = if ($File -eq '404.html') { '' } else { $MobJs }
   $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches){document.documentElement.classList.add('av');setTimeout(function(){document.documentElement.classList.add('av-ready')},3000)}" }
   $avNav = if ($isHome) { '' } else { Av-Nav $File $false }
   $appAttr += if ($isHome) { '' } else { " data-avp=`"$File`"" }
@@ -1381,7 +1431,7 @@ function Write-Page {
     "<nav class=`"lang-pill`" aria-label=`"Dil / Language`"><span class=`"lp-knob`" aria-hidden=`"true`"></span>" +
     "<a class=`"lp-btn`" data-set-lang=`"tr`" lang=`"tr`" hreflang=`"tr`" href=`"/$Path`" title=`"Türkçe`">TR</a>" +
     "<a class=`"lp-btn`" data-set-lang=`"en`" lang=`"en`" hreflang=`"en`" href=`"/$(Page-Path $enFile)`" title=`"English`">EN</a></nav>"
-  } else { $LangPillHtml }
+  } elseif ($trOnly) { '' } else { $LangPillHtml }
   # Articles carry an image and a publisher, as search engines ask of them
   $JsonLd = @($JsonLd | ForEach-Object {
     if ($_ -match '"@type":"Article"' -and $_ -notmatch '"image"') {
@@ -1405,7 +1455,7 @@ function Write-Page {
     $loc = if ($en) { 'en_US' } else { 'tr_TR' }
     $locAlt = if ($enFile) { "<meta property=`"og:locale:alternate`" content=`"$(if ($en) { 'tr_TR' } else { 'en_US' })`">" } else { '' }
     $htmlAttr = if ($en) { ' lang="en" class="lang-en" data-url-lang="en" data-root="/"' }
-      elseif ($enFile) { " lang=`"tr`" data-url-lang=`"tr`"$(if ($RootRelative) { ' data-root="/"' })" }
+      elseif ($enFile -or $trOnly) { " lang=`"tr`" data-url-lang=`"tr`"$(if ($RootRelative) { ' data-root="/"' })" }
       else { " lang=`"$Lang`"$(if ($RootRelative) { ' data-root="/"' })" }
     $ld = $ldTr
     if ($en) {
@@ -1461,7 +1511,7 @@ $locAlt
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>$($mobJs)$HeadJs$($avJs)$HeadJs2</script>
+<script>$HeadJs$($avJs)$HeadJs2</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
@@ -1484,6 +1534,7 @@ $a11yHtml
   $html = & $render 'tr'
   if ($RootRelative) { $html = [regex]::Replace($html, $rootRx, '$1="/') }
   $html = $html.Replace('<!--KD-PILL-->', $pill)
+  if ($trOnly) { $html = Strip-En $html }
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
   if ($enFile) {
     $h = & $render 'en'
@@ -2958,11 +3009,26 @@ Write-Page -File 'gizlilik.html' -Title "$($GzMeta.title) | $SiteName" -TitleEn 
 # ================================================================== KAYNAKLAR VE TELIF (kaynaklar-ve-telif.html)
 # The same text as the footer's "Kaynaklar ve telif" popup, as a page of its own for search
 # engines, shared links and visitors without JavaScript
+$ArtListHtml = (($Tablolar.art.PSObject.Properties | Sort-Object { $_.Value.a }, { $_.Value.t }) | ForEach-Object {
+  $a = $_.Value
+  "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`">$(T "<cite>$($a.t)</cite>" "<cite>$($a.te)</cite>")</a><br>$($a.a) · $(T $a.loc $a.loce)</span></li>"
+}) -join ''
+$seenImg = @{}
+$TarihListHtml = (($Tarih.items | ForEach-Object { $_.img } | Where-Object { if ($seenImg[$_]) { $false } else { $seenImg[$_] = 1; $true } }) | ForEach-Object {
+  $g = $TarihImg.$_
+  if ($g) { "<li><span><a href=`"$($g.src)`" target=`"_blank`" rel=`"noopener`"><cite>$(Attr $g.t)</cite></a><br>$(Attr $g.a) · $($g.lic)</span></li>" }
+}) -join ''
 $ktBody = @"
 <div class="wrap narrow">
   $(Crumbs $fm['title'])
   <header class="page-head center">$(Page-Ico $IcoBook)<h1>$(T $fm['title'] $fmEn['title'])</h1></header>
-  <div class="body prose">$(TB $InfoHtml $InfoHtmlEn)</div>
+  <div class="body prose">$(TB $InfoHtml $InfoHtmlEn)
+  <h2 id="tablolar">$(T 'Tablolar' 'Paintings')</h2>
+  <p>$(T 'Sayfa başlıklarında ve ana sayfada kullanılan tablolar. Hepsi kamu malıdır; bağlantılar, görüntülerin alındığı Web Gallery of Art sayfalarını açar.' 'The paintings used in the page headers and on the home page. All are in the public domain; the links open the Web Gallery of Art pages the images come from.')</p>
+  <ul class="art-list">$ArtListHtml</ul>
+  <h2 id="tarih-gorselleri">Kilise tarihi şeridindeki görseller</h2>
+  <p>Ana sayfadaki Kilise tarihi şeridinde kullanılan görseller, sırasıyla. Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır; bağlantılar görsellerin kaynak sayfalarını açar.</p>
+  <ul class="art-list">$TarihListHtml</ul></div>
 </div>
 "@
 Write-Page -File 'kaynaklar-ve-telif.html' -Title "$($fm['title']) | $SiteName" -TitleEn "$($fmEn['title']) | $SiteName" -Description $fm['description'] -DescriptionEn $fmEn['description'] `
@@ -3037,6 +3103,10 @@ $DecoDove = & $DecoSvg '<path d="M32 42c-2.6 0-4.6-2-4.6-4.6 0-4.2 2.4-8.6 4.6-1
 $DecoCross = & $DecoSvg '<path d="M32 6v52M18 20h28"/><path d="M32 20m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0" stroke-width="1.4"/><path d="M26 58h12" stroke-width="1.6"/>'
 $DecoChalice = & $DecoSvg '<circle cx="32" cy="9" r="5"/><path d="M32 6.4v5.2M29.4 9h5.2" stroke-width="1.4"/><path d="M18 18h28c0 11-5.6 18-14 18S18 29 18 18Z"/><path d="M32 36v12"/><path d="M22 58c0-5.6 4.4-10 10-10s10 4.4 10 10Z"/>'
 $IcoChevR = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
+# The home page's saint and mystery cards take the painting of the day's saint page (Azizler's
+# when the saint has none) and of the day's mysteries; script.js picks it from these maps
+$SaintArtJson = '{' + (($Tablolar.pages.PSObject.Properties | ForEach-Object { "`"$($_.Name)`":`"$($_.Value)`"" }) -join ',') + ',"*":"05franc"}'
+$SetArtJson = '{"sevinc":"66annunc","isik":"47emmau","aci":"55flagel","yucelik":"45death","*":"58rosar"}'
 function Home-Page([string]$lang) {
   # Every text in both languages (T), the TR | EN switch shows one
   function L([string]$tr, [string]$enText) { T $tr $enText }
@@ -3044,17 +3114,17 @@ function Home-Page([string]$lang) {
   $loading = L 'Yükleniyor…' 'Loading…'
   $cards = @"
   <div class="hm-today" id="bugun">
-    <a class="hm-card hm-saint" href="$(F 'azizler.html')" data-home-saint>$DecoChalice
+    <a class="hm-card hm-saint" href="$(F 'azizler.html')" data-home-saint data-art-map="$(Attr $SaintArtJson)"><span class="hm-art" aria-hidden="true"></span>$DecoChalice
       <span class="hm-label">$IcoStar $(L 'Bugünün Azizi' 'Saint of the Day')</span>
       <span class="hm-sn" data-hs-name>$loading</span><span class="hm-sub" data-hs-title></span><span class="hm-bio" data-hs-bio></span>
       <span class="hm-go">$(L 'Hayatını oku' 'Read their life') $IcoChevR</span>
     </a>
-    <div class="hm-card hm-date" data-home-lit>$DecoDove
+    <div class="hm-card hm-date" data-home-lit>$(Art-Img '13fligh' 'hm-art' '(min-width: 980px) 40vw, 100vw' 'high')$DecoDove
       <span class="hm-label">$(L 'Bugün' 'Today')</span>
       <span class="hm-day" data-hd-day>$loading</span><span class="hm-year" data-hd-year></span><time class="hm-time" data-hd-time></time>
       <span class="hm-season" data-hd-season></span><span class="hm-sub" data-hd-colour></span>
     </div>
-    <a class="hm-card hm-myst" href="$(F 'tesbih-duasi.html')#tesbih-rehberi" data-home-mystery>$DecoCross
+    <a class="hm-card hm-myst" href="$(F 'tesbih-duasi.html')#tesbih-rehberi" data-home-mystery data-art-map="$(Attr $SetArtJson)"><span class="hm-art" aria-hidden="true"></span>$DecoCross
       <span class="hm-label">$IcoBeads $(L 'Günün Gizemi' 'Mysteries')</span>
       <span class="hm-mn" data-hm-name>$loading</span><span class="hm-sub" data-hm-days></span>
       <span class="hm-go">$(L 'Tesbihe başla' 'Pray the Rosary') $IcoChevR</span>
@@ -3090,27 +3160,39 @@ function Home-Page([string]$lang) {
     $links = ($_.l | ForEach-Object { "<a href=`"$($_[0])`">$(L $_[1] $_[2])$IcoChevR</a>" }) -join ''
     "<li class=`"hj-step`"><span class=`"hj-dot`" aria-hidden=`"true`">$n</span><div><h3 class=`"hj-st`">$(L $_.t $_.te)</h3><p>$(L $_.d $_.de)</p><div class=`"hj-links`">$links</div></div></li>"
   }) -join ''
-  $jTimeline = @(
-    @('33', 'Pentikost', 'Pentecost', "Kilise$($Apos)nin doğumu", 'The birth of the Church', 'neden-katoligiz.html'),
-    @('325', 'İznik Konsili', 'Council of Nicaea', 'İman ikrarının temeli', 'The foundation of the Creed', 'topraklarimizda-hristiyanlik.html#iznik'),
-    @('431', 'Efes Konsili', 'Council of Ephesus', "Meryem, Tanrı$($Apos)nın Annesi", 'Mary, Mother of God', 'topraklarimizda-hristiyanlik.html#iznik'),
-    @('1571', 'İnebahtı', 'Lepanto', "Tesbih Meryem$($Apos)i bayramı", 'The feast of Our Lady of the Rosary', 'tesbih-tarihi.html#inebahti'),
-    @('1858', 'Lourdes', 'Lourdes', "$([char]0x201C)Ben Lekesiz Gebe Kalış$($Apos)ım$([char]0x201D)", '“I am the Immaculate Conception”', 'mucizeler.html#lourdes'),
-    @('1917', 'Fatima', 'Fatima', 'Güneşin dansı', 'The dance of the sun', 'mucizeler.html#fatima')
-  )
-  $tlHtml = ($jTimeline | ForEach-Object { "<li><a class=`"hj-ev`" href=`"$($_[5])`"><span class=`"hj-y`">$($_[0])</span><span class=`"hj-tdot`" aria-hidden=`"true`"></span><span class=`"hj-tn`">$(L $_[1] $_[2])</span><span class=`"hj-td`">$(L $_[3] $_[4])</span></a></li>" }) -join ''
+  # The Church's history as a strip of cards, oldest first (data/kilise-tarihi.json): each era
+  # opens with a title card, each card has its picture (assets/art/tl), year, title and a line or
+  # three; the chips above jump to an era, the arrows page through (script.js, initHistory)
+  $prevEra = ''; $tlCards = New-Object System.Collections.Generic.List[string]; $n = 0
+  foreach ($it in $Tarih.items) {
+    if ($it.era -ne $prevEra) {
+      $era = $Tarih.eras | Where-Object { $_.id -eq $it.era }
+      $tlCards.Add("<li class=`"hx-era`" id=`"tarih-$($it.era)`"><span class=`"hx-era-n`">$($era.t)</span><span class=`"hx-era-y`">$($it.y)</span></li>")
+      $prevEra = $it.era
+    }
+    $n++
+    $more = if ($it.link) { "<a class=`"hx-more`" href=`"$($it.link)`">Devamı$IcoChevR</a>" } else { '' }
+    $tlCards.Add("<li class=`"hx-card`" data-era=`"$($it.era)`"><figure class=`"hx-img`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`"></figure><div class=`"hx-body`"><p class=`"hx-y`">$($it.y)</p><h3 class=`"hx-t`">$($it.t)</h3><p class=`"hx-d`">$($it.d)</p>$more</div></li>")
+  }
+  $tlChips = ($Tarih.eras | ForEach-Object { "<button type=`"button`" class=`"hx-chip`" data-hx-era=`"$($_.id)`">$($_.t)</button>" }) -join ''
   $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''
   $lists = @"
 <div class="hm-journey">
   <div class="hj-grid">
     <section class="hj-path" aria-labelledby="hj-h"><p class="hj-kick">$(L 'Nereden başlamalı?' 'Where to begin?')</p><h2 class="hj-h" id="hj-h">$(L 'Kendi yolunuzu seçin' 'Choose your own path')</h2><ol class="hj-steps">$stepsHtml</ol></section>
     <aside class="hj-aside">
-      <a class="hj-feat" href="tesbih-tarihi.html"><span class="hj-kick">$(L 'Öne çıkan yazı' 'Featured')</span><span class="hj-ft">$(L $RosaryHistory.title $RosaryHistory.en)</span><span class="hj-fd">$(L $RosaryHistory.lead $RosaryHistory.leadEn)</span><span class="hj-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
+      <a class="hj-feat" href="tesbih-tarihi.html">$(Art-Img '42loreto' 'hj-art' '30vw')<span class="hj-kick">$(L 'Öne çıkan yazı' 'Featured')</span><span class="hj-ft">$(L $RosaryHistory.title $RosaryHistory.en)</span><span class="hj-fd">$(L $RosaryHistory.lead $RosaryHistory.leadEn)</span><span class="hj-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
       <figure class="hj-q"><blockquote><p>$(L '“Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”' '“You have made us for yourself, and our heart is restless until it rests in you.”')</p></blockquote><figcaption>$(L 'Aziz Augustinus, İtiraflar' 'St. Augustine, Confessions')</figcaption></figure>
       <div class="hj-saints"><p class="hj-kick">$(L 'En çok bilinen 20 aziz' 'The 20 best-known saints')</p><div>$gsHtml<a class="hj-all" href="azizler.html#buyuk-azizler">$(L 've diğerleri…' 'and more…')</a></div></div>
     </aside>
   </div>
-  <section class="hj-tl" aria-labelledby="hj-tlh"><p class="hj-kick">$(L 'İki bin yıl, altı durak' 'Two thousand years, six stops')</p><h2 class="hj-h" id="hj-tlh">$(L "Kilise$($Apos)nin tarihinden" "From the Church's history")</h2><ol class="hj-track">$tlHtml</ol></section>
+  <section class="hx" aria-labelledby="hx-h">
+    <div class="hx-head"><div><p class="hj-kick">Tarih</p><h2 class="hj-h" id="hx-h">Kilise$($Apos)nin tarihi</h2><p class="hx-lead">Havarilerden bugüne, Kilise tarihinin önemli olayları ve belgeleri.</p></div>
+    <div class="hx-ctl"><button type="button" class="hx-btn" data-hx-step="-1" aria-label="Önceki"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button><button type="button" class="hx-btn" data-hx-step="1" aria-label="Sonraki">$IcoChevR</button></div></div>
+    <div class="hx-chips" role="group" aria-label="Dönemler">$tlChips</div>
+    <ol class="hx-track" tabindex="0" aria-label="Kilise tarihi, $n olay, eskiden yeniye">$($tlCards -join '')</ol>
+    <div class="hx-bar" aria-hidden="true"><span class="hx-fill"></span></div>
+  </section>
 </div>
 "@
   # Phone: the icons, the search overlay and the three apps
@@ -3205,8 +3287,10 @@ $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://w
 $llmSkip = @('404.html', 'katesizm.html')
 $llmPages = @($script:PageInfo | Where-Object { $llmSkip -notcontains $_.File -and $_.Robots -notmatch 'noindex' } | Sort-Object -Stable { if ($_.File -eq 'index.html') { 0 } else { 1 } })
 $llmCut = { param($t) ($t -replace ([regex]::Escape(" | $SiteName") + '$'), '') -replace ('^' + [regex]::Escape($SiteName) + ' \| '), '' }
-$llms = "# $SiteName`n`n> A Turkish Catholic portal with every page in Turkish and English: the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, Catholic churches in Turkey with Mass times, and answers about the faith, Islam and atheism.`n`n" +
-  "Every page has a Turkish address and an English twin under /en/. Quotations of the Catechism follow the official Turkish translation and the English Compendium (Libreria Editrice Vaticana).`n`n## English`n`n" +
+$llmLangs = if ($WithEnglish) { 'with every page in Turkish and English' } else { 'in Turkish (the Catechism also in English)' }
+$llmTwins = if ($WithEnglish) { 'Every page has a Turkish address and an English twin under /en/.' } else { 'The Catechism pages have English twins under /en/.' }
+$llms = "# $SiteName`n`n> A Turkish Catholic portal $($llmLangs): the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, Catholic churches in Turkey with Mass times, and answers about the faith, Islam and atheism.`n`n" +
+  "$llmTwins Quotations of the Catechism follow the official Turkish translation and the English Compendium (Libreria Editrice Vaticana).`n`n## English`n`n" +
   (($llmPages | Where-Object { $_.En } | ForEach-Object { "- [$(& $llmCut $(if ($_.TitleEn) { $_.TitleEn } else { $_.Title }))]($SiteUrl/$(Page-Path $_.En)): $(if ($_.DescEn) { $_.DescEn } else { $_.Desc })" }) -join "`n") +
   "`n`n## Türkçe`n`n" +
   (($llmPages | ForEach-Object { "- [$(& $llmCut $_.Title)]($SiteUrl/$($_.Path)): $($_.Desc)" }) -join "`n") + "`n"

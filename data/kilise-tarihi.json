@@ -1,0 +1,478 @@
+{
+ "eras": [
+  {
+   "id": "havariler",
+   "t": "Havariler Çağı"
+  },
+  {
+   "id": "babalar",
+   "t": "Kilise Babaları"
+  },
+  {
+   "id": "orta",
+   "t": "Orta Çağ"
+  },
+  {
+   "id": "reform",
+   "t": "Reform Çağı"
+  },
+  {
+   "id": "modern",
+   "t": "Modern Çağ"
+  }
+ ],
+ "items": [
+  {
+   "era": "havariler",
+   "y": "Yaklaşık 33",
+   "t": "Pentikost",
+   "img": "i-pentec",
+   "d": "Kutsal Ruh, Kudüs’te toplanan havarilerin üzerine iner. Petrus o gün konuşur, üç bin kişi vaftiz olur. Kilise bu günü doğum günü sayar.",
+   "link": "neden-katoligiz.html"
+  },
+  {
+   "era": "havariler",
+   "y": "67 ve sonrası",
+   "t": "Roma’nın ilk önderleri",
+   "img": "c-clement",
+   "d": "Petrus ile Pavlus Roma’da şehit edildikten sonra Roma Kilisesi’ni sırasıyla Linus, Anaklitus ve Klemens yönetir. Linus’un adı Pavlus’un mektubunda geçer (2 Tim 4:21). Irenaeus bu listeyi yaklaşık 180’de yazıya geçirir."
+  },
+  {
+   "era": "havariler",
+   "y": "Yaklaşık 96",
+   "t": "Klemens Korint’e yazıyor",
+   "img": "c-1clement",
+   "d": "Roma piskoposu Klemens, Korint Kilisesi’ndeki bir anlaşmazlığa müdahale eder ve görevden alınan rahiplerin yerine iade edilmesini ister. Bu sırada Havari Yuhanna büyük olasılıkla hâlâ hayattadır."
+  },
+  {
+   "era": "havariler",
+   "y": "1. yüzyıl sonu",
+   "t": "Didakhe",
+   "img": "c-didache",
+   "d": "Havarilerin öğretisi diye bilinen bu küçük el kitabı ilk Hristiyanların yaşamını anlatır: kürtajı ve bebek öldürmeyi açıkça yasaklar, akan su yoksa başa üç kez su dökülerek vaftiz edilebileceğini söyler, Çarşamba ve Cuma günleri oruç tutulmasını ister."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 107",
+   "t": "“Katolik Kilise”",
+   "img": "c-ignatius",
+   "d": "Antakya piskoposu İgnatius, şehit edilmek üzere Roma’ya götürülürken yazdığı mektuplarda “Katolik Kilise” ifadesini kullanan bilinen ilk kişi olur ve piskopos, rahip ve diyakozlardan oluşan düzeni anlatır. Gelenek onu Havari Yuhanna’nın öğrencisi sayar.",
+   "link": "topraklarimizda-hristiyanlik.html#yer-antakya"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 107",
+   "t": "Efkaristiya’yı reddedenler",
+   "img": "i-eucha",
+   "d": "İgnatius, İzmir Kilisesi’ne şöyle yazar: sapkınlar Efkaristiya’dan ve duadan uzak dururlar, çünkü Efkaristiya’nın Kurtarıcımız İsa Mesih’in bedeni olduğunu kabul etmezler."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 112",
+   "t": "Bir Romalı valinin raporu",
+   "img": "i-shepherd",
+   "d": "Pagan vali Genç Plinius, İmparator Trajan’a yazdığı mektupta Hristiyanların belirli bir günde, şafaktan önce toplandıklarını, Mesih’e bir tanrıya söyler gibi ilahiler okuduklarını ve kendilerini bir yeminle (sacramentum) bağladıklarını anlatır."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 155",
+   "t": "Pazar Ayini’nin en eski tarifi",
+   "img": "c-justin",
+   "d": "Filozof İustinus, imparatora yazdığı savunmada Pazar toplantısını anlatır: havarilerin ve peygamberlerin yazıları okunur, vaaz verilir, dua edilir, ekmek ve şarap sunulur. Bu yiyecek sıradan ekmek değildir, der; beden alan İsa’nın bedeni ve kanıdır."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 155",
+   "t": "Polikarp Roma’da",
+   "img": "c-polycarp",
+   "d": "Havari Yuhanna’nın öğrencisi İzmir piskoposu Polikarp, Paskalya’nın tarihini konuşmak için Roma’ya gidip Papa Anicetus’la görüşür. Anlaşamasalar da birlik bozulmaz: Anicetus, Polikarp’ın Efkaristiya’yı kendi kilisesinde kutlamasına izin verir.",
+   "link": "topraklarimizda-hristiyanlik.html#yer-izmir"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 156",
+   "t": "Altından değerli kemikler",
+   "img": "c-polycarp2",
+   "d": "Polikarp’ın şehitliğini anlatan metin, İzmirli Hristiyanların onun kemiklerini “değerli taşlardan daha kıymetli, altından daha saf” sayarak topladıklarını ve şehadet gününü her yıl andıklarını yazar."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 160",
+   "t": "Petrus’un mezarı üzerinde",
+   "img": "i-keys",
+   "d": "Roma’da Vatikan tepesinde, Petrus’un mezarının hemen üzerine küçük bir anıt (tropaion) yapılır. Konstantin’in bazilikasının sunağı ve bugünkü ana sunak tam bu noktanın üzerindedir. Sunakların şehit mezarları üzerine kurulması ve kalıntıların sunak taşına konması bu geleneğe dayanır."
+  },
+  {
+   "era": "babalar",
+   "y": "2. ve 3. yüzyıl",
+   "t": "Katakombların tanıklığı",
+   "img": "c-priscilla",
+   "d": "Roma katakomblarındaki yazıtlarda şehitlerden yaşayanlar için dua etmeleri istenir, ölen yakınlar için dua edilir. Priscilla Katakombu’ndaki bir freskte Meryem, kucağında Çocuk İsa’yla görünür: Hristiyanlık devletin dini olmadan çok önce."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 180",
+   "t": "Irenaeus ve Roma",
+   "img": "i-petpaul",
+   "d": "İzmirli Irenaeus, Lyon piskoposuyken yazdığı eserde her kilisenin, Petrus ve Pavlus’un kurduğu Roma Kilisesi’yle, onun üstün yetkisinden ötürü uyum içinde olması gerektiğini söyler ve Roma piskoposlarını Petrus’tan kendi gününe kadar tek tek sayar."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 204",
+   "t": "Haç işareti",
+   "img": "c-tertullian",
+   "d": "Tertullianus, Hristiyanların her işe başlarken, yola çıkarken, yıkanırken, sofraya otururken alınlarına haç işareti yaptıklarını yazar."
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 215",
+   "t": "Bugünkü Ayin’in duası",
+   "img": "c-hippolytus",
+   "d": "Roma’da yazılan ve Hippolitus’a atfedilen Apostolik Gelenek, Efkaristiya’nın kutsama duasını kelimesi kelimesine verir. Bugün Ayin’de okunan II. Efkaristiya Duası büyük ölçüde bu metne dayanır.",
+   "link": "kutsal-ayin.html"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 244",
+   "t": "Bebek vaftizi",
+   "img": "i-bapt",
+   "d": "İskenderiyeli Origenes, Kilise’nin bebekleri de vaftiz etme geleneğini doğrudan havarilerden aldığını yazar."
+  },
+  {
+   "era": "babalar",
+   "y": "3. yüzyıl",
+   "t": "Meryem’e yapılan en eski dua",
+   "img": "c-subtuum",
+   "d": "Mısır’da bulunan bir papirüs parçasında, Meryem’e yapılmış bilinen en eski dua yazılıdır: “Merhametinin altına sığınıyoruz, ey Tanrı’nın Annesi.” Bu dua bugün de okunur.",
+   "link": "meryem-ana.html"
+  },
+  {
+   "era": "babalar",
+   "y": "251",
+   "t": "Kilise’yi anne bilmeyen",
+   "img": "i-mercy",
+   "d": "Kartaca piskoposu Kiprianus, Kilise’nin birliği üzerine yazdığı eserde şöyle der: Kilise’yi annesi bilmeyen, Tanrı’yı babası bilemez."
+  },
+  {
+   "era": "babalar",
+   "y": "325",
+   "t": "İznik Konsili",
+   "img": "i-trinity",
+   "d": "İznik’te toplanan piskoposlar, Arius’a karşı Oğul’un Baba’yla “aynı özden” (homoousios) olduğunu ilan eder. Kutsal Kitap’ta geçmeyen bu Yunanca kelime, Kilise’nin imanı korumak için kendi diliyle konuşabildiğini gösterir. İman ikrarı bu konsilde doğar.",
+   "link": "topraklarimizda-hristiyanlik.html#iznik"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 325",
+   "t": "Eusebius’un Kilise Tarihi",
+   "img": "c-eusebius",
+   "d": "Kayserili Eusebius, ilk Kilise tarihinde Roma, Kudüs, Antakya ve İskenderiye piskoposlarını havarilerden kendi gününe kadar kesintisiz sıralar. Yeni Ahit kitaplarının nasıl tartışılıp ayırt edildiğini de kaydeder."
+  },
+  {
+   "era": "babalar",
+   "y": "4. yüzyıl",
+   "t": "En eski tam Kutsal Kitaplar",
+   "img": "c-sinaiticus",
+   "d": "Sina ve Vatikan elyazmaları, elimizdeki en eski büyük Kutsal Kitap nüshalarıdır. Eski Ahit bölümlerinde Tobit, Yudit, Bilgelik gibi Protestanların sonradan çıkardığı kitaplar diğerleriyle iç içe yer alır.",
+   "link": "kutsal-kitap.html"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 350",
+   "t": "“Katolik Kilise’yi sor”",
+   "img": "c-cyril",
+   "d": "Kudüslü Kirillos, vaftiz adaylarına şöyle öğütler: bir şehre gittiğinizde sadece “Rab’bin evi nerede” diye sormayın, çünkü sapkınlar da kendi yerlerine öyle der; “Katolik Kilise nerede” diye sorun."
+  },
+  {
+   "era": "babalar",
+   "y": "393 ve 397",
+   "t": "Yeni Ahit’in 27 kitabı",
+   "img": "c-carthage",
+   "d": "Hippo ve Kartaca’da toplanan konsiller, bugünkü Yeni Ahit’in 27 kitabını ve Eski Ahit’in döteronomik kitaplarla birlikte listesini onaylar. Aynı liste Floransa (1442) ve Trento (1546) konsillerinde yeniden ilan edilir."
+  },
+  {
+   "era": "babalar",
+   "y": "397",
+   "t": "Augustinus’un sözü",
+   "img": "i-august",
+   "d": "Hippolu Augustinus şöyle yazar: Katolik Kilise’nin yetkisi beni ikna etmeseydi, İncil’e de inanmazdım.",
+   "link": "aziz-augustinus.html"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 400",
+   "t": "Yazılı ve sözlü gelenek",
+   "img": "c-chrysostom",
+   "d": "Altın Ağızlı Yuhanna, havarilerin her şeyi mektupla aktarmadığını, pek çok şeyi yazısız teslim ettiklerini ve ikisinin de aynı ölçüde inanılmaya değer olduğunu söyler. “Gelenektir, başka bir şey arama.”",
+   "link": "topraklarimizda-hristiyanlik.html#yer-istanbul"
+  },
+  {
+   "era": "babalar",
+   "y": "Yaklaşık 427",
+   "t": "Sonuna kadar sebat",
+   "img": "c-augustine2",
+   "d": "Augustinus, vaftiz edilmiş ve yeniden doğmuş birinin bile ağır günahla kurtuluşu yitirebileceğini, sonuna kadar sebat etmenin ayrıca dilenmesi gereken bir lütuf olduğunu yazar."
+  },
+  {
+   "era": "babalar",
+   "y": "431",
+   "t": "Efes Konsili",
+   "img": "c-ephesus",
+   "d": "Efes’te toplanan konsil, Meryem’in “Tanrı’nın Annesi” (Theotokos) olduğunu ilan eder. Çünkü doğurduğu çocuk, tek bir kişi olan İsa’dır: hem Tanrı hem insan.",
+   "link": "topraklarimizda-hristiyanlik.html#yer-efes"
+  },
+  {
+   "era": "orta",
+   "y": "451",
+   "t": "Kadıköy Konsili",
+   "img": "i-doctors",
+   "d": "Bugünkü Kadıköy’de, Kalkedon’da toplanan 500’ü aşkın piskopos, İsa’nın tek kişide iki doğası olduğunu anlatan Papa Leo’nun mektubunu okuyunca şöyle haykırır: “Petrus, Leo’nun ağzından konuştu!”"
+  },
+  {
+   "era": "orta",
+   "y": "Yaklaşık 529",
+   "t": "Benedictus ve manastırlar",
+   "img": "c-benedict",
+   "d": "Nursialı Benedictus, Monte Cassino’da manastırını kurar ve “Dua et ve çalış” ilkesine dayanan kuralını yazar. Batı’nın manastırları, Roma yıkıldıktan sonra kitapları ve bilgiyi yüzyıllar boyunca bu kurala göre korur.",
+   "link": "aziz-benedictus.html"
+  },
+  {
+   "era": "orta",
+   "y": "590",
+   "t": "Büyük Gregorius",
+   "img": "i-greg",
+   "d": "Papa olan Gregorius, vebayla ve savaşla boğuşan Roma’yı ayakta tutar, ayin ilahilerini düzenletir ve 597’de İngilizlere misyonerler gönderir. Kendine “Tanrı’nın kullarının kulu” der; papalar bu unvanı bugün de kullanır."
+  },
+  {
+   "era": "orta",
+   "y": "787",
+   "t": "II. İznik Konsili",
+   "img": "c-nicaea2",
+   "d": "Yine İznik’te toplanan konsil, ikonalara saygı gösterilmesini savunur: saygı resme değil, resmin gösterdiği kişiye yöneliktir. Tapınma yalnızca Tanrı’ya aittir.",
+   "link": "topraklarimizda-hristiyanlik.html#yer-iznik"
+  },
+  {
+   "era": "orta",
+   "y": "1054",
+   "t": "Doğu ile Batı ayrılıyor",
+   "img": "i-deesis",
+   "d": "Roma ile Konstantinopolis arasındaki gerginlik, karşılıklı aforozlarla kopuşa döner. Aforozlar 1965’te Papa VI. Paulus ile Patrik Athenagoras tarafından kaldırılır; birlik için dua bugün de sürer."
+  },
+  {
+   "era": "orta",
+   "y": "1215",
+   "t": "IV. Lateran Konsili",
+   "img": "i-disputa",
+   "d": "Konsil, ekmek ve şarabın özünün Mesih’in bedenine ve kanına dönüştüğünü anlatmak için “transubstantiatio” kelimesini kullanır ve her Katoliğin yılda en az bir kez günah çıkarıp Paskalya’da komünyon almasını ister.",
+   "link": "gunah-cikarma.html"
+  },
+  {
+   "era": "orta",
+   "y": "1265 – 1274",
+   "t": "Summa Theologiae",
+   "img": "i-aquinas",
+   "d": "Akuinolu Thomas, iman ile aklın çatışmadığını gösteren büyük eserini yazar. Altı yüz yıl sonra Papa XIII. Leo, onun düşüncesini Katolik eğitimin temeli yapacaktır.",
+   "link": "aziz-thomas-aquinas.html"
+  },
+  {
+   "era": "orta",
+   "y": "1442",
+   "t": "Floransa Konsili",
+   "img": "c-florence",
+   "d": "Konsil, Kutsal Kitap’ın kitaplarını tek tek sayar: Tobit, Yudit, Bilgelik, Sirak, Baruk ve Makabeler de listededir. Yani 73 kitaplık Kutsal Kitap, Reform’dan bir yüzyıl önce de Kilise’nin resmî listesidir."
+  },
+  {
+   "era": "orta",
+   "y": "Yaklaşık 1455",
+   "t": "Gutenberg İncili",
+   "img": "c-gutenberg",
+   "d": "Matbaada basılan ilk büyük kitap, Latince Vulgata Kutsal Kitabı’dır; Katolik Kilise’nin kitabı. Döteronomik kitaplar da içindedir."
+  },
+  {
+   "era": "reform",
+   "y": "1517",
+   "t": "95 Tez",
+   "img": "c-theses",
+   "d": "Augustinusçu rahip Martin Luther, Wittenberg’de endüljanslar üzerine 95 tezini yayımlar. Bir tartışma çağrısı olarak başlayan bu adım, Batı Hristiyanlığını bölecek bir sürecin başlangıcı olur."
+  },
+  {
+   "era": "reform",
+   "y": "1522",
+   "t": "Luther’in Yeni Ahit’i",
+   "img": "c-septembertestament",
+   "d": "Luther, Almanca Yeni Ahit’inde Yakup’un mektubunu “saman bir mektup” diye niteler; İbraniler, Yakup, Yahuda ve Vahiy’i numarasız olarak kitabın sonuna koyar. Romalılar 3:28’e de Yunanca metinde olmayan “yalnız” (allein) kelimesini ekler: “yalnız imanla aklanır.”"
+  },
+  {
+   "era": "reform",
+   "y": "1529",
+   "t": "Luther ve Zwingli",
+   "img": "c-marburg",
+   "d": "Marburg’daki görüşmede Luther, Rab’bin Sofrası’nı yalnızca bir simge sayan Zwingli’ye karşı Mesih’in ekmekte gerçekten bulunduğunu savunur ve masaya tebeşirle yazar: “Hoc est corpus meum”, bu benim bedenimdir."
+  },
+  {
+   "era": "reform",
+   "y": "1520’ler ve 1530’lar",
+   "t": "Reformcular ve Meryem",
+   "img": "c-luther",
+   "d": "Luther ömrü boyunca Meryem’in doğumdan önce, doğumda ve doğumdan sonra bakire kaldığına inandı. Zwingli de Meryem’in hep bakire kaldığını savundu ve ona “Tanrı’nın Annesi” dedi."
+  },
+  {
+   "era": "reform",
+   "y": "1534",
+   "t": "Luther İncili",
+   "img": "c-lutherbible",
+   "d": "Luther’in tam Almanca Kutsal Kitabı döteronomik kitapları atmaz; onları “Kutsal Yazı’yla eşit tutulmayan ama okunması yararlı kitaplar” başlığıyla iki Ahit arasına koyar."
+  },
+  {
+   "era": "reform",
+   "y": "1536",
+   "t": "Tyndale’in ölümü",
+   "img": "c-tyndale",
+   "d": "Kutsal Kitap’ı İngilizceye çeviren William Tyndale, sapkınlık suçlamasıyla bugünkü Belçika’da, Vilvoorde’de imparatorluk yetkililerince idam edilir. İngiltere iki yıl önce VIII. Henry’nin boşanması yüzünden Roma’dan kopmuştur; Henry de Tyndale’in çevirisini yasaklamıştı."
+  },
+  {
+   "era": "reform",
+   "y": "1541 – 1564",
+   "t": "Kalvin’in Cenevre’si",
+   "img": "c-calvin",
+   "d": "Kalvin, İsa’nın “kardeşleri”nin akrabaları olduğunu ve Meryem’in bakire kaldığını yazar. Yönettiği Cenevre’de ayine gitmemek, dans etmek ya da öğretisine karşı çıkmak para cezası, hapis ya da sürgünle cezalandırılır; Servetus 1553’te sapkınlıktan yakılır."
+  },
+  {
+   "era": "reform",
+   "y": "1545 – 1563",
+   "t": "Trento Konsili",
+   "img": "i-trent",
+   "d": "Kilise, Reform’a cevap olarak kendi içinde büyük bir yenilenmeye girişir: 73 kitaplık Kutsal Kitap, yedi kutsal sır ve iman ile işlerin birlikteliği yeniden ilan edilir, rahiplerin eğitimi için seminerler kurulur."
+  },
+  {
+   "era": "reform",
+   "y": "1571",
+   "t": "İnebahtı",
+   "img": "c-lepanto",
+   "d": "İnebahtı’daki deniz savaşında Papa V. Pius bütün Hristiyanları tesbih duasına çağırır. Zaferin ardından 7 Ekim’i Tesbih Meryemi bayramı ilan eder.",
+   "link": "tesbih-tarihi.html#inebahti"
+  },
+  {
+   "era": "modern",
+   "y": "1826",
+   "t": "Kutsal Kitap’tan çıkarılan kitaplar",
+   "img": "c-bfbs",
+   "d": "Protestan dünyasının en büyük Kutsal Kitap derneği, uzun bir tartışmanın ardından döteronomik kitapları içeren baskıları artık desteklememeye karar verir. Protestan Kutsal Kitapları o tarihten sonra 73 değil 66 kitapla basılır."
+  },
+  {
+   "era": "modern",
+   "y": "1845",
+   "t": "Newman Katolik oluyor",
+   "img": "c-newman",
+   "d": "Anglikanlığın en parlak savunucularından John Henry Newman, ilk Kilise’yi incelerken Katolik olur ve şöyle yazar: “Tarihi derinlemesine bilmek, Protestan olmaktan çıkmaktır.”"
+  },
+  {
+   "era": "modern",
+   "y": "1854",
+   "t": "Lekesiz Gebelik",
+   "img": "i-immac",
+   "d": "Papa IX. Pius, Meryem’in ana rahmine düştüğü ilk andan itibaren ilk günahın her lekesinden korunduğunu iman esası olarak ilan eder. Dört yıl sonra Lourdes’da Meryem, Bernadette’e kendini “Ben Lekesiz Gebe Kalış’ım” diye tanıtır.",
+   "link": "mucizeler.html#lourdes"
+  },
+  {
+   "era": "modern",
+   "y": "1870",
+   "t": "I. Vatikan Konsili",
+   "img": "c-vatican1",
+   "d": "Konsil, papanın yanılmazlığını tanımlar: papa yalnızca Petrus’un makamından, iman ya da ahlak konusunda bütün Kilise’yi bağlayan bir öğreti ilan ettiğinde yanılmaktan korunur. Kişisel görüşleri ya da günlük kararları bunun dışındadır."
+  },
+  {
+   "era": "modern",
+   "y": "1879",
+   "t": "Aeterni Patris",
+   "img": "c-leo13",
+   "d": "Papa XIII. Leo, Thomas Aquinas’ın felsefesini seminer eğitiminin ve imanı savunmanın temeli olarak yeniden öne çıkarır.",
+   "link": "aziz-thomas-aquinas.html"
+  },
+  {
+   "era": "modern",
+   "y": "1891",
+   "t": "Rerum Novarum",
+   "img": "c-quartostato",
+   "d": "XIII. Leo’nun bu genelgesi Katolik sosyal öğretiyi başlatır: işçilerin adil ücret ve örgütlenme hakkını savunur; hem dizginsiz kapitalizmi hem de devlet sosyalizmini reddeder."
+  },
+  {
+   "era": "modern",
+   "y": "1893",
+   "t": "Providentissimus Deus",
+   "img": "i-jerome",
+   "d": "XIII. Leo, Katolik Kutsal Kitap araştırmacılarını çağın tarih ve dil çalışmalarıyla ilgilenmeye çağırırken Kutsal Yazı’nın esinlenmiş ve yanılmaz olduğunu yeniden vurgular."
+  },
+  {
+   "era": "modern",
+   "y": "1896",
+   "t": "Apostolicae Curae",
+   "img": "c-canterbury",
+   "d": "XIII. Leo, İngiliz Reformu sırasında rahiplik takdis töreninin biçiminde ve niyetinde yapılan değişiklikler yüzünden Anglikan rahipliğinin “tamamen geçersiz ve hükümsüz” olduğunu ilan eder."
+  },
+  {
+   "era": "modern",
+   "y": "1910",
+   "t": "Modernizme karşı yemin",
+   "img": "c-pius10",
+   "d": "Papa X. Pius, rahiplerin, cemaat önderlerinin ve ilahiyat hocalarının imanı göreceleştiren akımlara karşı bir sadakat yemini etmesini ister."
+  },
+  {
+   "era": "modern",
+   "y": "1917",
+   "t": "Kilise Hukuku",
+   "img": "c-cic",
+   "d": "Yüzyıllar boyunca biriken dağınık kararların yerine, Kilise’nin ilk tek parça hukuk kitabı (Codex Iuris Canonici) yayımlanır."
+  },
+  {
+   "era": "modern",
+   "y": "1929",
+   "t": "Lateran Antlaşması",
+   "img": "c-lateran1929",
+   "d": "Vatikan ile İtalya arasında imzalanan antlaşma, Vatikan Şehri’ni bağımsız bir devlet olarak kurar ve 1870’te Papalık Devleti’nin düşüşüyle başlayan “Roma Sorunu”nu çözer."
+  },
+  {
+   "era": "modern",
+   "y": "1931",
+   "t": "Vatikan Radyosu",
+   "img": "c-radio",
+   "d": "Guglielmo Marconi’nin kurduğu Vatikan Radyosu, Papa XI. Pius’un sesini hiçbir devletin süzgecinden geçmeden bütün dünyaya ulaştırır."
+  },
+  {
+   "era": "modern",
+   "y": "1937",
+   "t": "Mit brennender Sorge",
+   "img": "c-pius11",
+   "d": "XI. Pius, Latince yerine Almanca yazdığı genelgeyi Almanya’ya gizlice sokturur ve bütün Katolik kiliselerinde aynı Pazar okutur. Genelge Nazi ırkçılığını ve totaliter devleti açıkça kınar."
+  },
+  {
+   "era": "modern",
+   "y": "1939 – 1950",
+   "t": "Petrus’un mezarı bulunuyor",
+   "img": "c-necropolis",
+   "d": "Aziz Petrus Bazilikası’nın altındaki kazılar, ana sunağın tam altında 2. yüzyıldan kalma anıtı ve ona saygıyla yazılmış yazıtları ortaya çıkarır. Papa XII. Pius 1950’de Petrus’un mezarının bulunduğunu duyurur."
+  },
+  {
+   "era": "modern",
+   "y": "1943",
+   "t": "Divino Afflante Spiritu",
+   "img": "c-pius12",
+   "d": "Papa XII. Pius, Katolik araştırmacıları Kutsal Kitap’ı özgün dillerinde, arkeoloji, dil bilimi ve tarih yöntemleriyle incelemeye teşvik eder."
+  },
+  {
+   "era": "modern",
+   "y": "1950",
+   "t": "Meryem’in Göğe Alınışı",
+   "img": "i-assunt",
+   "d": "XII. Pius, Meryem’in dünyadaki hayatının sonunda bedeni ve ruhuyla göğün yüceliğine alındığını iman esası olarak ilan eder.",
+   "link": "meryem-ana.html"
+  },
+  {
+   "era": "modern",
+   "y": "1962 – 1965",
+   "t": "II. Vatikan Konsili",
+   "img": "c-vatican2",
+   "d": "Dünyanın dört bir yanından gelen piskoposlar, ayinde yerel dillerin kullanılmasına izin verir, diğer Hristiyanlarla diyaloğu güçlendirir ve herkesin kutsallığa çağrıldığını vurgular."
+  }
+ ]
+}

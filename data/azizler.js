@@ -4335,20 +4335,20 @@ window.SAINTS = /*JSON-START*/{
    "rank": "İhtiyari Anma Günü",
    "saints": [
     {
-     "name": "Franciscus Xaverius Seelos",
-     "title": "Rahip",
-     "bio": "Almanya’da doğmuş, XIX. yüzyılda Amerika’da hizmet etmiş bir Redemptorist rahiptir. Özellikle günah çıkarma dinlerken gösterdiği sabır ve nezaketle tanınır. Bir sarıhumma salgınında hastalara bakarken kendisi de hastalandı ve öldü.",
-     "nameEn": "Francis Xavier Seelos",
-     "titleEn": "Priest",
-     "bioEn": "A Redemptorist priest born in Germany who served in America in the nineteenth century. He is known especially for his patience and kindness in the confessional; he caught yellow fever while caring for the sick during an epidemic, and died."
+     "name": "Faustina Kowalska",
+     "title": "Rahibe",
+     "bio": "XX. yüzyılda Polonya’da yaşamış bir rahibedir. Mesih İsa’nın ona göründüğü ve İlahi Merhamet mesajını dünyaya duyurmasını istediği görümlerle tanınır. “İlahi Merhamet” resmi ve ona bağlı dua, onun tuttuğu günlüğe dayanır. Papa II. Yuhanna Pavlus onu 2000 yılında aziz ilan etti ve aynı gün Paskalya’dan sonraki ilk Pazar’ı İlahi Merhamet Pazarı olarak bütün Kilise’ye verdi.",
+     "nameEn": "Faustina Kowalska",
+     "titleEn": "Religious",
+     "bioEn": "A sister who lived in twentieth-century Poland. She is known for the visions in which Christ appeared to her and asked her to proclaim the message of Divine Mercy to the world; the \"Divine Mercy\" image and the Chaplet of Divine Mercy come from the diary she kept. Pope John Paul II canonized her in 2000 and on the same day gave the whole Church the Sunday after Easter as Divine Mercy Sunday."
     },
     {
-     "name": "Faustina Kowalska",
-     "title": "Bakire",
-     "bio": "XX. yüzyılda Polonya’da yaşamış bir rahibedir. Mesih İsa’nın ona göründüğü ve İlahi Merhamet mesajını dünyaya duyurmasını istediği görümlerle tanınır. “İlahi Merhamet” resmi ve ona bağlı dua, onun tuttuğu günlüğe dayanır. Papa II. Yuhanna Pavlus onu aziz ilan etti.",
-     "nameEn": "Faustina Kowalska",
-     "titleEn": "Virgin",
-     "bioEn": "A sister who lived in twentieth-century Poland. She is known for the visions in which Christ appeared to her and asked her to proclaim the message of Divine Mercy to the world; the \"Divine Mercy\" image and the Chaplet of Divine Mercy come from the diary she kept. She was canonized by Pope John Paul II."
+     "name": "Plasidus ve Maurus",
+     "title": "Aziz Benedictus’un öğrencileri",
+     "bio": "VI. yüzyılda Roma’nın soylu ailelerinden iki çocuk olarak Subiaco’da Aziz Benedictus’un yanına verildiler. Büyük Gregorius’un anlattığına göre Plasidus göle düşüp boğulmak üzereyken Benedictus’un sözüyle Maurus suyun üzerinde koşarak onu kurtardı. Gelenek, Maurus’un Benedictus’un kuralını Fransa’ya taşıdığını anlatır.",
+     "nameEn": "Placidus and Maurus",
+     "titleEn": "Disciples of Saint Benedict",
+     "bioEn": "Two boys from noble Roman families, they were entrusted to Saint Benedict at Subiaco in the sixth century. As Gregory the Great tells it, when Placidus fell into the lake and was about to drown, Maurus, at Benedict's word, ran across the water and pulled him out. Tradition says Maurus brought Benedict's Rule to France."
     }
    ]
   },

@@ -1,0 +1,374 @@
+{
+ "i-pentec": {
+  "t": "Pentekost",
+  "a": "El Greco",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/g/greco_el/12/1214grec.html"
+ },
+ "c-clement": {
+  "t": "The Martyrdom of Saint Clement I, Pope",
+  "a": "Agostino Ciampelli",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/338517"
+ },
+ "c-1clement": {
+  "t": "Photographic Facsimiles of the Remains of the Epistles of Clement of Rome.  Made from the ",
+  "a": "Roger Fenton",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/290386"
+ },
+ "c-didache": {
+  "t": "Papyrus letter in Greek",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/251788"
+ },
+ "c-ignatius": {
+  "t": "S. Ignace, martyr (St. Ignatius, Martyr), February 1st, from \"Les Images De Tous Les Sainc",
+  "a": "Jacques Callot",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/420248"
+ },
+ "i-eucha": {
+  "t": "Efkaristiya’nın Kuruluşu",
+  "a": "Fra Angelico",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/a/angelico/09/cells/35_eucha.html"
+ },
+ "i-shepherd": {
+  "t": "İyi Çoban",
+  "a": "Erken Hristiyan ressam",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/zearly/1/2mural/3priscil/2velati7.html"
+ },
+ "c-justin": {
+  "t": "The Glorification of the Eucharist",
+  "a": "Peter Paul Rubens",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/437527"
+ },
+ "c-polycarp": {
+  "t": "S. Polycarpe (St. Polycarp), February 23rd, from \"Les Images De Tous Les Saincts et Sainte",
+  "a": "Jacques Callot",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/420305"
+ },
+ "c-polycarp2": {
+  "t": "Glass bowl fragment with gold leaf and painted decoration",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/250487"
+ },
+ "i-keys": {
+  "t": "İsa Anahtarları Petrus’a Veriyor",
+  "a": "Perugino",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/p/perugino/sistina/keys.html"
+ },
+ "c-priscilla": {
+  "t": "Bowl Base with Miracle Scenes",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/463713"
+ },
+ "i-petpaul": {
+  "t": "Havariler Petrus ve Pavlus",
+  "a": "El Greco",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/g/greco_el/10/1003grec.html"
+ },
+ "c-tertullian": {
+  "t": "Crucifix with Scenes of the Passion",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (Cleveland Museum of Art, CC0)",
+  "src": "https://clevelandart.org/art/1995.5"
+ },
+ "c-hippolytus": {
+  "t": "Saint Hippolytus of Rome, martyr",
+  "a": "Anonymous Mexican Artist",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/736596"
+ },
+ "i-bapt": {
+  "t": "İsa’nın Vaftizi",
+  "a": "Piero della Francesca",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/p/piero/3/02bapti1.html"
+ },
+ "c-subtuum": {
+  "t": "Icon of the Virgin and Child, Hodegetria variant",
+  "a": "Byzantine or Crusader",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/831188"
+ },
+ "i-mercy": {
+  "t": "Merhamet Meryemi",
+  "a": "Enguerrand Quarton",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/c/charonto/v_mercy.html"
+ },
+ "i-trinity": {
+  "t": "Kutsal Üçlü",
+  "a": "Andrey Rublyov",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/r/rublyov/trinity.html"
+ },
+ "c-eusebius": {
+  "t": "Leaf from a Gospel Book with Four Standing Evangelists",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/468539"
+ },
+ "c-sinaiticus": {
+  "t": "Gospel Book",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/693765"
+ },
+ "c-cyril": {
+  "t": "Icon with Three Church Fathers",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/464011"
+ },
+ "c-carthage": {
+  "t": "Carthage",
+  "a": "William Linton (British, 1791–1876)",
+  "lic": "Kamu malı (Cleveland Museum of Art, CC0)",
+  "src": "https://clevelandart.org/art/1916.1040"
+ },
+ "i-august": {
+  "t": "Aziz Augustinus",
+  "a": "Botticelli",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/b/botticel/21/5augustu.html"
+ },
+ "c-chrysostom": {
+  "t": "Medallion of St. John Chrysostom",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/464533"
+ },
+ "c-augustine2": {
+  "t": "Saint Augustine",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/466652"
+ },
+ "c-ephesus": {
+  "t": "Portable Icon with the Virgin Eleousa",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/474336"
+ },
+ "i-doctors": {
+  "t": "İsa Din Bilginleri Arasında",
+  "a": "Giotto",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris06.html"
+ },
+ "c-benedict": {
+  "t": "Saint Benedict",
+  "a": "Francisco de Zurbarán",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/437970"
+ },
+ "i-greg": {
+  "t": "Aziz Gregorius’un Ayini",
+  "a": "Hans Baldung Grien",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/b/baldung/2/02altar2.html"
+ },
+ "c-nicaea2": {
+  "t": "Icon with Christ Pantokrator",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/466046"
+ },
+ "i-deesis": {
+  "t": "Deesis mozaiği",
+  "a": "Bizans mozaik ustası",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/zgothic/mosaics/9/8istanbu1.html"
+ },
+ "i-disputa": {
+  "t": "Kutsal Sır Üzerine Tartışma",
+  "a": "Raffaello",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/r/raphael/4stanze/1segnatu/2/00disput.html"
+ },
+ "i-aquinas": {
+  "t": "Aziz Tomas Aquinas’ın Zaferi",
+  "a": "Andrea da Firenze",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/a/andrea/firenze/spanish/3west.html"
+ },
+ "c-florence": {
+  "t": "Title Page of the Gospel of John",
+  "a": "Sargis",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/449536"
+ },
+ "c-gutenberg": {
+  "t": "Bible",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/466297"
+ },
+ "c-theses": {
+  "t": "Martin Luther as an Augustinian Monk",
+  "a": "Lucas Cranach the Elder",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/358260"
+ },
+ "c-septembertestament": {
+  "t": "The Lord on the Throne Surrounded by Four Evangelists, plate 2 from \"The Apocalypse\"",
+  "a": "Hans Burgkmair",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/430639"
+ },
+ "c-marburg": {
+  "t": "M. Ulrich Zwingli",
+  "a": "Library of Congress",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2004669603/"
+ },
+ "c-luther": {
+  "t": "Martin Luther (1483–1546)",
+  "a": "Lucas Cranach the Elder",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/436047"
+ },
+ "c-lutherbible": {
+  "t": "Martin Luther, Bust to the Left",
+  "a": "Lucas Cranach the Elder",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/625361"
+ },
+ "c-tyndale": {
+  "t": "The Bible, The Book of Common Prayer, The Book of Psalms with Royal Stuart arms",
+  "a": "Robert Barker",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/228992"
+ },
+ "c-calvin": {
+  "t": "John Calvin (1509–1564)",
+  "a": "Sebastian Dadler",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/855731"
+ },
+ "i-trent": {
+  "t": "Trento Konsili",
+  "a": "Pasquale Cati",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/c/cati/trent_co.html"
+ },
+ "c-lepanto": {
+  "t": "The entry of Marcantonio Colonna and the Christian army in Rome after victory at the battl",
+  "a": "Francesco Tramezzino",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/712570"
+ },
+ "c-bfbs": {
+  "t": "Certificate of Bible Society",
+  "a": "Asher Brown Durand",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/394441"
+ },
+ "c-newman": {
+  "t": "Cardinal John Henry Newman, 1801-1890",
+  "a": "Library of Congress",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2002723274/"
+ },
+ "i-immac": {
+  "t": "Lekesiz Gebelik",
+  "a": "Murillo",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/m/murillo/2/211muril.html"
+ },
+ "c-vatican1": {
+  "t": "The oecumenical council of the Vatican, convened December 8th 1869",
+  "a": "Library of Congress",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2006677480/"
+ },
+ "c-leo13": {
+  "t": "Pope Leo XIII",
+  "a": "schile, h. (henry)",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2006678610/"
+ },
+ "c-quartostato": {
+  "t": "A Group of Laborers",
+  "a": "Jan Toorop (Dutch, 1858–1928)",
+  "lic": "Kamu malı (Cleveland Museum of Art, CC0)",
+  "src": "https://clevelandart.org/art/1938.37"
+ },
+ "i-jerome": {
+  "t": "Aziz Hieronymus",
+  "a": "Ribera",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/r/ribera/1/jerome.html"
+ },
+ "c-canterbury": {
+  "t": "Northeast Transept of Canterbury Cathedral (recto); Architectural Details (verso)",
+  "a": "Anonymous, British, late 18th–early 19th century",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/363312"
+ },
+ "c-pius10": {
+  "t": "Pope Pius X",
+  "a": "Library of Congress",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2018697179/"
+ },
+ "c-cic": {
+  "t": "Bifolium with the Decretals of Gratian",
+  "a": "Master Honore",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/466179"
+ },
+ "c-lateran1929": {
+  "t": "View of St. John Lateran, Rome",
+  "a": "Gillis van Coninxloo",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/335111"
+ },
+ "c-radio": {
+  "t": "Pope Pius XI",
+  "a": "bain news service",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2014714013/"
+ },
+ "c-pius11": {
+  "t": "Pius XI, Pope, 1857-1939 (Achille Ratti - Pope, 1922-39)",
+  "a": "Library of Congress",
+  "lic": "Kamu malı (Library of Congress)",
+  "src": "https://www.loc.gov/item/2004678728/"
+ },
+ "c-necropolis": {
+  "t": "Ivory Panel with Saint Peter",
+  "a": "Bilinmiyor",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/464497"
+ },
+ "c-pius12": {
+  "t": "Saint Jerome as Scholar",
+  "a": "El Greco (Domenikos Theotokopoulos)",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/459088"
+ },
+ "i-assunt": {
+  "t": "Meryem’in Göğe Alınışı",
+  "a": "Tiziano",
+  "lic": "Kamu malı",
+  "src": "https://www.wga.hu/html/t/tiziano/01a/1assunt0.html"
+ },
+ "c-vatican2": {
+  "t": "View of St. Peter's and the Vatican from the Janiculum",
+  "a": "Richard Wilson",
+  "lic": "Kamu malı (The Met, CC0)",
+  "src": "https://www.metmuseum.org/art/collection/search/359425"
+ }
+}

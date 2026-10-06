@@ -3495,3 +3495,174 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .cf-ok { background: color-mix(in srgb, #3f7a4f 14%, transparent); color: var(--text); border: 1px solid color-mix(in srgb, #3f7a4f 40%, transparent); }
 .cf-fields, .cf-check, .cf-error { background: color-mix(in srgb, #9b2f3a 10%, transparent); color: var(--text); border: 1px solid color-mix(in srgb, #9b2f3a 35%, transparent); }
 @media (max-width: 560px) { .cform { padding: 1.1rem; } }
+
+/* =========================================================================
+   The app's look on the website: cream paper, Caravaggio and the old masters behind the page
+   titles and on the home page's cards, tall Anton capitals for headings, EB Garamond to read.
+   ========================================================================= */
+/* Anton (SIL OFL 1.1, see fonts/OFL-Anton.txt), the headings' typeface, as "KD Display" */
+@font-face {
+  font-family: "KD Display"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/anton-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "KD Display"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/anton-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root { --display: "KD Display", Impact, "Arial Narrow", sans-serif; }
+/* reading text in EB Garamond again (Inter stays for menus, labels and buttons) */
+html:not([data-a11y-dyslexia="1"]) { --serif: "EB Garamond", Garamond, Georgia, "Times New Roman", serif; }
+html:not([data-a11y-dyslexia="1"]) body { letter-spacing: 0; }
+/* light: the app's cream, plain, with navy ink */
+:root:not([data-theme="dark"]) {
+  --bg: #f7f3ea; --wall: none; --surface: #fffdf8; --header-bg: rgba(247, 243, 234, .9); --chrome: #f7f3ea;
+  --text: #1d2433; --text-soft: #3d4352; --muted: #6b6559;
+}
+/* headings: tall capitals */
+main h1, main h2, .hj-h, .hm-col h2 {
+  font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; line-height: 1.04;
+}
+main h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); }
+main .prose h2, main h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+/* the dyslexia setting keeps its own, easier letters */
+:root[data-a11y-dyslexia="1"] main h1, :root[data-a11y-dyslexia="1"] main h2, :root[data-a11y-dyslexia="1"] .hj-h { font-family: inherit; text-transform: none; }
+/* reading: EB Garamond, a size up on wide screens */
+@media (min-width: 980px) {
+  .prose { font-size: 1.24rem; line-height: 1.6; }
+}
+
+/* ---- A painted page header: the painting behind the title, darker towards the words ---- */
+html:not(.av) .page-head.painted {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center;
+  min-height: clamp(20rem, 46vh, 30rem);
+  margin: calc(-1 * var(--ph-top, 0px)) calc(50% - 50vw) 2.4rem;
+  padding: 7rem calc(50vw - 50% + var(--gutter)) 3rem;
+  border: 0; color: #fff; background: #1a1712;
+}
+html:not(.av) .page-head.painted .ph-art {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: center 30%;
+}
+html:not(.av) .page-head.painted::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(12, 10, 8, .18) 0%, rgba(12, 10, 8, .3) 40%, rgba(12, 10, 8, .86) 100%);
+}
+html:not(.av) .page-head.painted .ph-text { display: flex; flex-direction: column; align-items: center; gap: .3rem; max-width: 52rem; }
+html:not(.av) .page-head.painted h1 {
+  margin: 0; color: #fff; font-size: clamp(3rem, 6.4vw, 5.4rem); line-height: .98; text-shadow: 0 2px 28px rgba(0, 0, 0, .45);
+}
+html:not(.av) .page-head.painted .label { color: #f1d38c; font-family: var(--sans); font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+html:not(.av) .page-head.painted .sub { color: rgba(255, 255, 255, .86); }
+html:not(.av) .page-head.painted .roman { color: #f1d38c; }
+html:not(.av) .page-head.painted .page-ico, html:not(.av) .page-head.painted .emblem { display: none; }
+html:not(.av) .page-head.painted .ph-text > div:not(.emblem) { display: contents; }
+/* the painting's name, small, in the corner */
+.ph-cap { display: none; }
+html:not(.av) .page-head.painted .ph-cap {
+  display: block; position: absolute; right: calc(50vw - 50% + var(--gutter)); bottom: .75rem; margin: 0;
+  font-family: var(--sans); font-size: .72rem; letter-spacing: .02em; color: rgba(255, 255, 255, .8); text-shadow: 0 1px 6px rgba(0, 0, 0, .6);
+}
+.ph-cap cite { font-style: italic; }
+/* a painting smaller than the screen: whole, framed, beside the title, over a blurred copy */
+.ph-frame { display: none; }
+html:not(.av) .page-head.painted.art-framed { align-items: flex-start; text-align: left; justify-content: center; }
+html:not(.av) .page-head.painted.art-framed .ph-art { filter: blur(26px) saturate(1.15) brightness(.8); transform: scale(1.2); }
+html:not(.av) .page-head.painted.art-framed::after { background: linear-gradient(90deg, rgba(12, 10, 8, .82) 0%, rgba(12, 10, 8, .55) 55%, rgba(12, 10, 8, .25) 100%); }
+html:not(.av) .page-head.painted.art-framed .ph-text { align-items: flex-start; max-width: min(36rem, 58%); }
+html:not(.av) .page-head.painted.art-framed .ph-frame {
+  display: block; position: absolute; top: 50%; right: calc(50vw - 50% + var(--gutter) + 1rem); transform: translateY(-52%);
+  width: auto; height: 78%; max-width: 36%; object-fit: contain;
+  border: 6px solid #f3ead6; border-radius: 4px; box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .7);
+}
+@media (max-width: 719px) {
+  html:not(.av) .page-head.painted.art-framed .ph-frame { display: none; }
+  html:not(.av) .page-head.painted.art-framed .ph-text { max-width: none; }
+}
+
+/* ---- The home page's cards: a painting each ---- */
+:root .hm-today > .hm-card.hm-card.hm-card, :root .hm-journey .hj-feat.hj-feat {
+  --hc-ink: #fff; --hc-title: #fff; color: #fff; border: 0; background: #1a1712;
+}
+.hm-card .hm-art, .hj-feat .hj-art {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: center 30%; background: center 30% / cover no-repeat;
+}
+.hm-card::after, .hj-feat::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(12, 10, 8, .5) 0%, rgba(12, 10, 8, .25) 45%, rgba(12, 10, 8, .8) 100%);
+}
+.hm-today .hm-deco { display: none; }
+.hm-card .hm-day, .hm-card .hm-sn, .hm-card .hm-mn { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; line-height: 1; text-shadow: 0 1px 14px rgba(0, 0, 0, .4); }
+.hm-card .hm-day { font-size: 3.1rem; }
+.hm-today .hm-saint .hm-sn { font-size: 1.9rem; }
+.hm-card .hm-mn { font-size: 1.6rem; }
+.hm-card .hm-season { font-weight: 600; }
+.hm-card .hm-label, .hm-card .hm-sub, .hm-card .hm-year, .hm-card .hm-time { text-shadow: 0 1px 8px rgba(0, 0, 0, .5); }
+a.hm-card:hover { color: #fff; }
+.hj-feat { position: relative; overflow: hidden; isolation: isolate; min-height: 17rem; justify-content: flex-end; }
+:root .hm-journey .hj-feat .hj-ft { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 2.3rem; line-height: 1; color: #fff; }
+:root .hm-journey .hj-feat .hj-fd { color: rgba(255, 255, 255, .9); }
+:root .hm-journey .hj-feat .hj-more, :root .hm-journey .hj-feat .hj-kick { color: #f1d38c; }
+.hm-journey .hj-step p { font-size: 1.08rem; }
+.hj-step .hj-st { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; font-size: 1.4rem; }
+
+/* ---- The sources page's list of paintings ---- */
+.art-list { list-style: none; padding: 0; columns: 2 18rem; column-gap: 2rem; }
+.art-list li { break-inside: avoid; margin: 0 0 .8rem; font-size: .95rem; line-height: 1.4; }
+.art-list cite { font-style: italic; }
+/* the phone-style view of narrow windows keeps its own plain header */
+html.av .page-head .ph-art, html.av .page-head .ph-frame { display: none; }
+
+/* ---- The home page's strip of Church history: a card per event, oldest first, era by era ---- */
+.hx { margin-top: 2.6rem; }
+.hx-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+.hx-lead { margin: 0; max-width: 38rem; color: var(--text-soft); font-size: 1.08rem; line-height: 1.5; }
+.hx-ctl { display: flex; gap: .5rem; flex: none; }
+.hx-btn { display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); cursor: pointer; transition: background .2s, transform .2s, opacity .2s; }
+.hx-btn svg { width: 1.2rem; height: 1.2rem; }
+.hx-btn:hover:not(:disabled) { background: var(--gold-bg); transform: translateY(-1px); }
+.hx-btn:disabled { opacity: .35; cursor: default; }
+.hx-btn:focus-visible, .hx-chip:focus-visible, .hx-track:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hx-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.2rem 0 1rem; }
+.hx-chip { padding: .42rem .95rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: 600 .82rem var(--sans); letter-spacing: .02em; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.hx-chip:hover { border-color: var(--gold-soft); color: var(--text); }
+.hx-chip[aria-current="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+.hx-track {
+  list-style: none; margin: 0 calc(-1 * var(--gutter)); padding: .4rem var(--gutter) 1.4rem;
+  display: flex; gap: 1.1rem; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - 3rem), transparent);
+          mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - 3rem), transparent);
+}
+.hx-track::-webkit-scrollbar { display: none; }
+.hx-card, .hx-era { flex: none; scroll-snap-align: start; border-radius: 20px; }
+.hx-card {
+  width: 19rem; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: 0 14px 30px -24px rgba(29, 36, 51, .5);
+  transition: transform .25s, box-shadow .25s;
+}
+.hx-card:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -26px rgba(29, 36, 51, .6); }
+.hx-img { position: relative; margin: 0; aspect-ratio: 3 / 2; overflow: hidden; background: #1a1712; }
+.hx-img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; transition: transform .6s; }
+.hx-card:hover .hx-img img { transform: scale(1.04); }
+.hx-body { display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.15rem 1.15rem; flex: 1; }
+.hx-y { margin: 0; font: 700 .76rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+main .hx-t { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 1.45rem; line-height: 1.05; letter-spacing: .01em; }
+.hx-d { margin: .1rem 0 0; font-size: 1rem; line-height: 1.5; color: var(--text-soft); }
+.hx-more { display: inline-flex; align-items: center; gap: .2rem; margin-top: auto; padding-top: .4rem; font: 600 .82rem var(--sans); color: var(--gold); text-decoration: none; }
+.hx-more svg { width: .95rem; height: .95rem; }
+.hx-era {
+  width: 11rem; display: flex; flex-direction: column; justify-content: flex-end; gap: .4rem; padding: 1.3rem 1.2rem;
+  background: var(--text); color: var(--bg);
+}
+.hx-era-n { font-family: var(--display); text-transform: uppercase; font-size: 1.75rem; line-height: 1.02; overflow-wrap: anywhere; }
+.hx-era { justify-content: center; }
+.hx-track { align-items: stretch; }
+.hx-era-y { font: 600 .8rem var(--sans); letter-spacing: .06em; opacity: .7; }
+.hx-bar { height: 3px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.hx-fill { display: block; height: 100%; width: 10%; border-radius: 3px; background: var(--gold); transform-origin: left; transition: margin-left .15s linear; }
+:root[data-theme="dark"] .hx-era { background: #efe6d3; color: #131316; }
+@media (prefers-reduced-motion: reduce) { .hx-card, .hx-img img, .hx-btn { transition: none; } .hx-card:hover { transform: none; } .hx-card:hover .hx-img img { transform: none; } }

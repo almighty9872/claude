@@ -179,6 +179,41 @@
   }
 
   /* ---------------------------------------------------------------
+     The home page's strip of Church history: the arrows page through it, the chips jump to an
+     era and show the era in view, the bar under it shows how far along the reader is
+     --------------------------------------------------------------- */
+  function initHistory() {
+    var box = $('.hx'), track = box && $('.hx-track', box);
+    if (!track) return;
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var prev = $('[data-hx-step="-1"]', box), next = $('[data-hx-step="1"]', box), fill = $('.hx-fill', box);
+    var chips = $$('.hx-chip', box), eras = $$('.hx-era', track);
+    var go = function (x) { track.scrollTo({ left: x, behavior: still ? 'auto' : 'smooth' }); };
+    $$('[data-hx-step]', box).forEach(function (b) {
+      b.addEventListener('click', function () { go(track.scrollLeft + (+b.getAttribute('data-hx-step')) * track.clientWidth * .85); });
+    });
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () {
+        var e = document.getElementById('tarih-' + c.getAttribute('data-hx-era'));
+        if (e) go(e.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0));
+      });
+    });
+    var update = function () {
+      var max = track.scrollWidth - track.clientWidth, x = track.scrollLeft, part = max > 0 ? x / max : 0;
+      prev.disabled = x <= 2; next.disabled = x >= max - 2;
+      if (fill) { var w = Math.max(.06, track.clientWidth / track.scrollWidth); fill.style.width = (w * 100) + '%'; fill.style.marginLeft = (part * (1 - w) * 100) + '%'; }
+      /* the era whose title card is last passed on the left */
+      var cur = eras[0], edge = x + track.clientWidth * .35;
+      eras.forEach(function (e) { if (e.offsetLeft - track.offsetLeft <= edge) cur = e; });
+      chips.forEach(function (c) { c.setAttribute('aria-current', cur && cur.id === 'tarih-' + c.getAttribute('data-hx-era') ? 'true' : 'false'); });
+    };
+    var raf = 0;
+    track.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; update(); }); }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* ---------------------------------------------------------------
      1. Theme (navy/gold dark, ivory/gold light) follows the sun: light from sunrise to sunset
         where the reader is, dark after. Where that is comes from the device's time zone alone
         (a table of zones below, or the zone's offset), worked out here and never sent anywhere.
@@ -2036,18 +2071,29 @@
     litCard.setAttribute('data-lit', lit.colour);
     /* the saint */
     var saintCard = $('[data-home-saint]'), m = now.getMonth() + 1, key = m + '-' + now.getDate();
+    /* a card's painting: the one its map gives for the key, else the map's default ("*") */
+    var paint = function (card, k) {
+      var el = $('.hm-art', card), map;
+      if (!el) return;
+      try { map = JSON.parse(card.getAttribute('data-art-map') || '{}'); } catch (e) { map = {}; }
+      var art = map[k] || map['*'];
+      if (art) el.style.backgroundImage = 'url("' + ROOT + 'assets/art/' + art + (card === saintCard ? '' : '-800') + '.jpg")';
+    };
     getTodaySaint().then(function (sn) {
       $('[data-hs-name]', saintCard).innerHTML = sn.html;
       saintCard.setAttribute('href', sn.href);
+      paint(saintCard, String(sn.href || '').split('/').pop().split('#')[0]);
       return loadDataScript('data/azizler-ozet-' + m + '.js', 'SAINT_SUMMARY_' + m);
     }).then(function () {
       var x = (window['SAINT_SUMMARY_' + m] || {})[key];
       if (!x) return;
       $('[data-hs-title]', saintCard).innerHTML = LT(esc(x[0] || ''), esc(x[1] || x[0] || ''));
       $('[data-hs-bio]', saintCard).innerHTML = LT(esc(x[2] || ''), esc(x[3] || x[2] || ''));
-    })['catch'](function () { $('[data-hs-name]', saintCard).innerHTML = LT('Yılın azizleri', 'Saints of the year'); });
+    })['catch'](function () { $('[data-hs-name]', saintCard).innerHTML = LT('Yılın azizleri', 'Saints of the year'); paint(saintCard, ''); });
     /* the mysteries */
     var myst = $('[data-home-mystery]');
+    /* the day's mysteries: joyful Monday and Saturday, luminous Thursday, sorrowful Tuesday and Friday, glorious Wednesday and Sunday */
+    paint(myst, ['yucelik', 'sevinc', 'aci', 'yucelik', 'isik', 'aci', 'sevinc'][now.getDay()]);
     loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
       var set = window.COMPENDIUM_ROSARY.sets.filter(function (x) { return x.days.indexOf(now.getDay()) !== -1; })[0];
       if (!set) return;
@@ -3615,7 +3661,7 @@
   function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday();
+    initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday(); initHistory();
     initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });

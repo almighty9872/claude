@@ -19,7 +19,8 @@ description: Sources and copyright on katolikdunyasi.com: where the Compendium t
 - **Other pages:** Becoming Catholic, Confession, Why We're Catholic, Christianity in Anatolia, the Bible guide and the FAQ are written for this site, grounded in the Catechism and reliable Catholic sources.
 - **The English site:** the English of the Compendium, the Motu Proprio and the Introduction is the Vatican's original text. The English of every other page is written for this site.
 - **Drawings:** the line drawings beside the sections and the site's icons were drawn for this site.
-- **Fonts:** Inter, EB Garamond and Lexend (dyslexia mode), self-hosted and used under the SIL Open Font License.
+- **Paintings:** the paintings in the page headers and on the home page cards, most of them by Caravaggio, are public domain works; the images come from the Web Gallery of Art. Each painting is named under its header; the full list is on the [Sources and Copyright](kaynaklar-ve-telif.html#tablolar) page.
+- **Fonts:** Inter, EB Garamond, Anton for headings, and Lexend (dyslexia mode), self-hosted and used under the SIL Open Font License.
 - This site is not an official Church publication; it is a personal project.
 
 Translations and original content © 2026 katolikdunyasi.com.
