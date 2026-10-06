@@ -3666,3 +3666,44 @@ main .hx-t { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .hx-fill { display: block; height: 100%; width: 10%; border-radius: 3px; background: var(--gold); transform-origin: left; transition: margin-left .15s linear; }
 :root[data-theme="dark"] .hx-era { background: #efe6d3; color: #131316; }
 @media (prefers-reduced-motion: reduce) { .hx-card, .hx-img img, .hx-btn { transition: none; } .hx-card:hover { transform: none; } .hx-card:hover .hx-img img { transform: none; } }
+
+/* ---- A section's painting in place of its line drawing ---- */
+.ill-art.ill-photo { width: 100%; max-width: 30rem; margin: 0 0 1.2rem; }
+.ill-photo .ill-img { display: block; width: 100%; height: auto; max-height: 22rem; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 34px -24px rgba(29, 36, 51, .6); }
+.ill-photo figcaption { margin-top: .45rem; font: .74rem var(--sans); color: var(--muted); }
+.ill-photo cite { font-style: italic; }
+@media (min-width: 980px) {
+  .ill-sec:has(.ill-photo) { display: grid; grid-template-columns: minmax(15rem, 22rem) 1fr; gap: 2.2rem; align-items: start; }
+  .ill-sec .ill-photo { position: sticky; top: calc(var(--header-h) + 1.5rem); margin: 0; }
+}
+
+/* ---- Home: the two debate pages, each with its painting ---- */
+.hd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .4rem; }
+.hd-card { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: .45rem; min-height: 24rem; padding: 1.4rem 1.4rem 1.3rem; border-radius: 20px; color: #fff; text-decoration: none; background: #1a1712; transition: transform .25s, box-shadow .25s; }
+.hd-card .hd-art { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; max-width: none; object-fit: cover; transition: transform .6s; }
+.hd-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(12, 10, 8, .05) 25%, rgba(12, 10, 8, .88) 100%); }
+.hd-card:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 24px 40px -26px rgba(29, 36, 51, .7); }
+.hd-card:hover .hd-art { transform: scale(1.04); }
+.hd-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hd-t { font: 400 2rem/1 var(--display); text-transform: uppercase; }
+.hd-d { font-size: 1rem; line-height: 1.45; color: rgba(255, 255, 255, .9); }
+.hd-more { display: inline-flex; align-items: center; gap: .2rem; font: 600 .82rem var(--sans); color: #f1d38c; }
+.hd-more svg { width: .95rem; height: .95rem; }
+@media (prefers-reduced-motion: reduce) { .hd-card, .hd-card .hd-art { transition: none; } .hd-card:hover { transform: none; } }
+
+/* ---- Phones: the page's painting at the top of the screen; no line-drawn emblem beside it ---- */
+html.av .page-head.painted .ph-art { display: block; width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover; border-radius: 18px; margin: 0 0 1rem; box-shadow: 0 16px 34px -24px rgba(0, 0, 0, .6); }
+html.av .page-head.painted .emblem, html.av .page-head.painted .page-ico { display: none; }
+html.av .page-head.painted .ph-cap { display: block; order: 9; margin: .3rem 0 0; font: .72rem var(--sans); color: var(--muted); }
+:root .hm-journey .hd-card .hd-t { color: #fff; text-shadow: 0 2px 18px rgba(0, 0, 0, .5); }
+/* paintings are shown whole, never cropped to a detail */
+.ill-photo .ill-img { width: auto; max-width: 100%; height: auto; max-height: 34rem; object-fit: contain; margin: 0 auto; }
+@media (max-width: 979px) { .ill-photo .ill-img { max-height: 70vh; } .ill-art.ill-photo { max-width: none; text-align: center; } }
+html.av .page-head.painted .ph-art { width: auto; max-width: 100%; height: auto; max-height: 62vh; aspect-ratio: auto; object-fit: contain; margin-inline: auto; }
+/* a saint or a mystery: the upper part of the painting, where the faces are */
+.hm-saint .hm-art, .hm-myst .hm-art { background-position: center 18%; }
+/* bold reads as semibold: EB Garamond and Inter at 600 instead of 700 */
+strong, b { font-weight: 600; }
+:root[data-a11y-dyslexia="1"] :is(strong, b) { font-weight: 700; }
+:root:not([data-a11y-dyslexia="1"]) :is(.mira-name, .faq-q, .why-lede, .why-obj-q, .why-door-t, .why-cta-t, .why-hook-t, main h3:not(.hx-t):not(.hj-st), main h4, .bref, .gloss, .kk-sec > summary h3) { font-weight: 500; }
+:root:not([data-a11y-dyslexia="1"]) :is(.mass-role, .hx-y, .ill-kick, .why-hook-k, .why-q-label, .why-obj-label, .stage-n, .why-chain-n, .hm-label, .hj-kick, .hm-go, .label, .hj-more, .rt-c-myst strong) { font-weight: 600; }

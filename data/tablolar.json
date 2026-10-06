@@ -34,7 +34,15 @@
   "aziz-augustinus.html": "i-august",
   "aziz-thomas-aquinas.html": "i-aquinas",
   "avilali-aziz-teresa.html": "i-teresa",
-  "sienali-aziz-catharina.html": "i-cather"
+  "sienali-aziz-catharina.html": "i-cather",
+  "padre-pio.html": "49franci",
+  "aziz-patrick.html": "i-shepherd",
+  "kalkutali-aziz-teresa.html": "i-mercy",
+  "aziz-ii-yuhanna-pavlus.html": "i-keys",
+  "aziz-benedictus.html": "i-greg",
+  "padovali-aziz-antonius.html": "i-francis",
+  "lisieuxlu-kucuk-teresa.html": "i-rosary",
+  "aziz-ignatius-loyola.html": "i-trent"
  },
  "art": {
   "05franc": {
@@ -112,7 +120,7 @@
    "src": "https://www.wga.hu/html/c/caravagg/06/33isaac.html",
    "w": 1700,
    "h": 1310,
-   "y": 35
+   "y": 22
   },
   "34thomas": {
    "t": "Kuşkucu Tomas",
@@ -123,7 +131,7 @@
    "src": "https://www.wga.hu/html/c/caravagg/06/34thomas.html",
    "w": 1246,
    "h": 900,
-   "y": 30
+   "y": 12
   },
   "35emmau": {
    "t": "Emmaus’ta Akşam Yemeği",
@@ -156,7 +164,7 @@
    "src": "https://www.wga.hu/html/c/caravagg/07/40baptis.html",
    "w": 1073,
    "h": 774,
-   "y": 35
+   "y": 6
   },
   "42loreto": {
    "t": "Loreto Meryemi",
@@ -299,7 +307,7 @@
    "src": "https://www.wga.hu/html/c/caravagg/11/72denial.html",
    "w": 1030,
    "h": 764,
-   "y": 40
+   "y": 30
   },
   "i-agony": {
    "t": "Bahçedeki Istırap",
@@ -432,6 +440,487 @@
    "w": 750,
    "h": 932,
    "y": 35
+  },
+  "12magda": {
+   "t": "Tövbekâr Mecdelli Meryem",
+   "te": "The Penitent Magdalene",
+   "a": "Caravaggio",
+   "loc": "Galleria Doria Pamphilj, Roma",
+   "loce": "Galleria Doria Pamphilj, Rome",
+   "src": "https://www.wga.hu/html/c/caravagg/02/12magda.html",
+   "w": 1353,
+   "h": 1700,
+   "y": 35
+  },
+  "64lucy": {
+   "t": "Azize Lucia’nın Defni",
+   "te": "The Burial of Saint Lucy",
+   "a": "Caravaggio",
+   "loc": "Santa Lucia alla Badia, Siraküza",
+   "loce": "Santa Lucia alla Badia, Syracuse",
+   "src": "https://www.wga.hu/html/c/caravagg/10/64lucy.html",
+   "w": 1318,
+   "h": 1800,
+   "y": 35
+  },
+  "67sheph": {
+   "t": "Çobanların Tapınması",
+   "te": "The Adoration of the Shepherds",
+   "a": "Caravaggio",
+   "loc": "Museo Regionale, Messina",
+   "loce": "Museo Regionale, Messina",
+   "src": "https://www.wga.hu/html/c/caravagg/10/67sheph.html",
+   "w": 1346,
+   "h": 2000,
+   "y": 35
+  },
+  "i-annunc": {
+   "t": "Müjde",
+   "te": "The Annunciation",
+   "a": "Fra Angelico",
+   "loc": "Museo del Prado, Madrid",
+   "loce": "Museo del Prado, Madrid",
+   "src": "https://www.wga.hu/html/a/angelico/01/1prado.html",
+   "w": 680,
+   "h": 667,
+   "y": 35
+  },
+  "i-ascens": {
+   "t": "İsa’nın Göğe Yükselişi",
+   "te": "The Ascension",
+   "a": "Giotto",
+   "loc": "Scrovegni Şapeli, Padova",
+   "loce": "Scrovegni Chapel, Padova",
+   "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris22.html",
+   "w": 680,
+   "h": 629,
+   "y": 35
+  },
+  "i-athens": {
+   "t": "Atina Okulu",
+   "te": "The School of Athens",
+   "a": "Raffaello",
+   "loc": "Vatikan Sarayı",
+   "loce": "Apostolic Palace, Vatican",
+   "src": "https://www.wga.hu/html/r/raphael/4stanze/1segnatu/1/athens.html",
+   "w": 680,
+   "h": 464,
+   "y": 35
+  },
+  "i-bapt": {
+   "t": "İsa’nın Vaftizi",
+   "te": "The Baptism of Christ",
+   "a": "Piero della Francesca",
+   "loc": "National Gallery, Londra",
+   "loce": "National Gallery, London",
+   "src": "https://www.wga.hu/html/p/piero/3/02bapti1.html",
+   "w": 492,
+   "h": 680,
+   "y": 35
+  },
+  "i-calvary": {
+   "t": "Golgota Yolu",
+   "te": "The Road to Calvary",
+   "a": "Giotto",
+   "loc": "Scrovegni Şapeli, Padova",
+   "loce": "Scrovegni Chapel, Padova",
+   "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris18.html",
+   "w": 680,
+   "h": 629,
+   "y": 35
+  },
+  "i-confess": {
+   "t": "Günah Çıkarma",
+   "te": "Confession",
+   "a": "Giuseppe Maria Crespi",
+   "loc": "Gemäldegalerie, Dresden",
+   "loce": "Gemäldegalerie, Dresden",
+   "src": "https://www.wga.hu/html/c/crespi/giuseppe/sacramen/sacrame2.html",
+   "w": 505,
+   "h": 680,
+   "y": 35
+  },
+  "i-disputa": {
+   "t": "Kutsal Sır Üzerine Tartışma",
+   "te": "The Disputation of the Holy Sacrament",
+   "a": "Raffaello",
+   "loc": "Vatikan Sarayı",
+   "loce": "Apostolic Palace, Vatican",
+   "src": "https://www.wga.hu/html/r/raphael/4stanze/1segnatu/2/00disput.html",
+   "w": 680,
+   "h": 513,
+   "y": 35
+  },
+  "i-francis": {
+   "t": "Aziz Fransuva",
+   "te": "Saint Francis",
+   "a": "Zurbarán",
+   "loc": "Alte Pinakothek, Münih",
+   "loce": "Alte Pinakothek, Munich",
+   "src": "https://www.wga.hu/html/z/zurbaran/2/sfrancis.html",
+   "w": 542,
+   "h": 680,
+   "y": 35
+  },
+  "i-george": {
+   "t": "Aziz Yorgi ve Ejderha",
+   "te": "Saint George and the Dragon",
+   "a": "Raffaello",
+   "loc": "National Gallery of Art, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.wga.hu/html/r/raphael/2firenze/1/25drago1.html",
+   "w": 516,
+   "h": 680,
+   "y": 35
+  },
+  "i-greg": {
+   "t": "Aziz Gregorius’un Ayini",
+   "te": "The Mass of Saint Gregory",
+   "a": "Hans Baldung Grien",
+   "loc": "Kunsthalle, Karlsruhe",
+   "loce": "Kunsthalle, Karlsruhe",
+   "src": "https://www.wga.hu/html/b/baldung/2/02altar2.html",
+   "w": 680,
+   "h": 485,
+   "y": 35
+  },
+  "i-instros": {
+   "t": "Tesbihin Kuruluşu",
+   "te": "The Institution of the Rosary",
+   "a": "Tiepolo",
+   "loc": "Gesuati Kilisesi, Venedik",
+   "loce": "Gesuati Church, Venice",
+   "src": "https://www.wga.hu/html/t/tiepolo/gianbatt/2_gesuat/02gesuat.html",
+   "w": 268,
+   "h": 680,
+   "y": 35
+  },
+  "i-jerome": {
+   "t": "Aziz Hieronymus",
+   "te": "Saint Jerome",
+   "a": "Ribera",
+   "loc": "Galleria Doria Pamphilj, Roma",
+   "loce": "Galleria Doria Pamphilj, Rome",
+   "src": "https://www.wga.hu/html/r/ribera/1/jerome.html",
+   "w": 537,
+   "h": 680,
+   "y": 35
+  },
+  "i-lamb": {
+   "t": "Kuzu’ya Tapınma",
+   "te": "The Adoration of the Lamb",
+   "a": "Jan van Eyck",
+   "loc": "Aziz Bavo Katedrali, Gent",
+   "loce": "St. Bavo’s Cathedral, Gent",
+   "src": "https://www.wga.hu/html/e/eyck_van/jan/09ghent/1open3/l3adora.html",
+   "w": 680,
+   "h": 414,
+   "y": 35
+  },
+  "i-lastjud": {
+   "t": "Son Yargı",
+   "te": "The Last Judgement",
+   "a": "Hans Memling",
+   "loc": "Ulusal Müze, Gdańsk",
+   "loce": "National Museum, Gdańsk",
+   "src": "https://www.wga.hu/html/m/memling/1early3/02last.html",
+   "w": 680,
+   "h": 483,
+   "y": 35
+  },
+  "i-mercy": {
+   "t": "Merhamet Meryemi",
+   "te": "The Virgin of Mercy",
+   "a": "Enguerrand Quarton",
+   "loc": "Musée Condé, Chantilly",
+   "loce": "Musée Condé, Chantilly",
+   "src": "https://www.wga.hu/html/c/charonto/v_mercy.html",
+   "w": 680,
+   "h": 230,
+   "y": 35
+  },
+  "i-michael": {
+   "t": "Başmelek Mikail",
+   "te": "Saint Michael the Archangel",
+   "a": "Raffaello",
+   "loc": "Louvre, Paris",
+   "loce": "Louvre, Paris",
+   "src": "https://www.wga.hu/html/r/raphael/5roma/5/03satan.html",
+   "w": 412,
+   "h": 680,
+   "y": 35
+  },
+  "i-nativ": {
+   "t": "İsa’nın Doğuşu",
+   "te": "The Nativity",
+   "a": "Giotto",
+   "loc": "Scrovegni Şapeli, Padova",
+   "loce": "Scrovegni Chapel, Padova",
+   "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris01.html",
+   "w": 672,
+   "h": 680,
+   "y": 35
+  },
+  "i-nicholas": {
+   "t": "Myralı Aziz Nikola",
+   "te": "Saint Nicholas of Myra",
+   "a": "Fra Angelico",
+   "loc": "San Domenico, Fiesole",
+   "loce": "San Domenico, Fiesole",
+   "src": "https://www.wga.hu/html/a/angelico/00/11fieso3.html",
+   "w": 231,
+   "h": 680,
+   "y": 35
+  },
+  "i-pantoc": {
+   "t": "Mesih Pantokrator (ikon)",
+   "te": "Christ Pantocrator (icon)",
+   "a": "Bilinmeyen ikon ressamı",
+   "loc": "Hermitage, St. Petersburg",
+   "loce": "Hermitage, St. Petersburg",
+   "src": "https://www.wga.hu/html/m/master/zunk_y/01icon5.html",
+   "w": 529,
+   "h": 680,
+   "y": 35
+  },
+  "i-patmos": {
+   "t": "Patmos’ta Aziz Yuhanna",
+   "te": "Saint John on Patmos",
+   "a": "Hieronymus Bosch",
+   "loc": "Gemäldegalerie, Berlin",
+   "loce": "Gemäldegalerie, Berlin",
+   "src": "https://www.wga.hu/html/b/bosch/5panels/05patmos.html",
+   "w": 458,
+   "h": 680,
+   "y": 35
+  },
+  "i-paulath": {
+   "t": "Pavlus Atina’da Vaaz Ediyor",
+   "te": "Paul Preaching in Athens",
+   "a": "Raffaello",
+   "loc": "Victoria and Albert Museum, Londra",
+   "loce": "Victoria and Albert Museum, London",
+   "src": "https://www.wga.hu/html/r/raphael/6tapestr/3athens.html",
+   "w": 680,
+   "h": 528,
+   "y": 35
+  },
+  "i-petpaul": {
+   "t": "Havariler Petrus ve Pavlus",
+   "te": "The Apostles Peter and Paul",
+   "a": "El Greco",
+   "loc": "Hermitage, St. Petersburg",
+   "loce": "Hermitage, St. Petersburg",
+   "src": "https://www.wga.hu/html/g/greco_el/10/1003grec.html",
+   "w": 579,
+   "h": 680,
+   "y": 35
+  },
+  "i-prodig": {
+   "t": "Savurgan Oğulun Dönüşü",
+   "te": "The Return of the Prodigal Son",
+   "a": "Rembrandt",
+   "loc": "Hermitage, St. Petersburg",
+   "loce": "Hermitage, St. Petersburg",
+   "src": "https://www.wga.hu/html/r/rembrand/14biblic/69newtes.html",
+   "w": 509,
+   "h": 680,
+   "y": 35
+  },
+  "i-resur": {
+   "t": "Diriliş",
+   "te": "The Resurrection",
+   "a": "Piero della Francesca",
+   "loc": "Museo Civico, Sansepolcro",
+   "loce": "Museo Civico, Sansepolcro",
+   "src": "https://www.wga.hu/html/p/piero/3/08resur1.html",
+   "w": 640,
+   "h": 680,
+   "y": 35
+  },
+  "i-rosary": {
+   "t": "Tesbihli Meryem ve Çocuk",
+   "te": "Virgin and Child with a Rosary",
+   "a": "Murillo",
+   "loc": "Museo del Prado, Madrid",
+   "loce": "Museo del Prado, Madrid",
+   "src": "https://www.wga.hu/html/m/murillo/1/109muril.html",
+   "w": 456,
+   "h": 680,
+   "y": 35
+  },
+  "i-rosegar": {
+   "t": "Gül Çelenkleri Bayramı",
+   "te": "The Feast of the Rosary",
+   "a": "Albrecht Dürer",
+   "loc": "Ulusal Galeri, Prag",
+   "loce": "National Gallery, Prague",
+   "src": "https://www.wga.hu/html/d/durer/1/05/3rose.html",
+   "w": 680,
+   "h": 571,
+   "y": 35
+  },
+  "i-shepherd": {
+   "t": "İyi Çoban",
+   "te": "The Good Shepherd",
+   "a": "Erken Hristiyan ressam",
+   "loc": "Priscilla Katakombu, Roma",
+   "loce": "Catacomb of Priscilla, Rome",
+   "src": "https://www.wga.hu/html/zearly/1/2mural/3priscil/2velati7.html",
+   "w": 487,
+   "h": 680,
+   "y": 35
+  },
+  "i-sultan": {
+   "t": "Aziz Fransuva Sultanın Huzurunda",
+   "te": "Saint Francis before the Sultan",
+   "a": "Giotto",
+   "loc": "San Francesco Bazilikası, Assisi",
+   "loce": "Basilica of San Francesco, Assisi",
+   "src": "https://www.wga.hu/html/g/giotto/assisi/upper/legend/franc11.html",
+   "w": 628,
+   "h": 680,
+   "y": 35
+  },
+  "i-transf": {
+   "t": "Suretin Değişmesi",
+   "te": "The Transfiguration",
+   "a": "Raffaello",
+   "loc": "Vatikan Pinakotek",
+   "loce": "Vatican Pinacoteca",
+   "src": "https://www.wga.hu/html/r/raphael/5roma/5/10trans.html",
+   "w": 463,
+   "h": 680,
+   "y": 35
+  },
+  "i-trent": {
+   "t": "Trento Konsili",
+   "te": "The Council of Trent",
+   "a": "Pasquale Cati",
+   "loc": "Santa Maria in Trastevere, Roma",
+   "loce": "Santa Maria in Trastevere, Rome",
+   "src": "https://www.wga.hu/html/c/cati/trent_co.html",
+   "w": 629,
+   "h": 680,
+   "y": 35
+  },
+  "i-barocci": {
+   "t": "Efkaristiya’nın Kuruluşu",
+   "te": "The Institution of the Eucharist",
+   "a": "Federico Barocci",
+   "loc": "Santa Maria sopra Minerva, Roma",
+   "loce": "Santa Maria sopra Minerva, Rome",
+   "src": "https://www.wga.hu/html/b/barocci/eucharis.html",
+   "w": 419,
+   "h": 680,
+   "y": 35
+  },
+  "i-comm": {
+   "t": "Aziz Hieronymus’un Son Komünyonu",
+   "te": "The Last Communion of Saint Jerome",
+   "a": "Domenichino",
+   "loc": "Vatikan Pinakotek",
+   "loce": "Vatican Pinacoteca",
+   "src": "https://www.wga.hu/html/d/domenich/1/lastcomm.html",
+   "w": 417,
+   "h": 680,
+   "y": 35
+  },
+  "i-matha": {
+   "t": "Matalı Aziz Yuhanna’nın İlk Ayini",
+   "te": "The First Mass of Saint John of Matha",
+   "a": "Juan Carreño de Miranda",
+   "loc": "Louvre, Paris",
+   "loce": "Louvre, Paris",
+   "src": "https://www.wga.hu/html/c/carreno/mass_mat.html",
+   "w": 462,
+   "h": 680,
+   "y": 35
+  }
+ },
+ "sections": {
+  "meseller.html": {
+   "hukumdarlik": "67sheph",
+   "merhamet": "53mercy",
+   "sorumluluk": "23conta",
+   "uyaniklik": "72denial",
+   "cagri": "i-lastjud",
+   "dua": "49franci"
+  },
+  "mucizeler.html": {
+   "gorunmeler": "42loreto",
+   "kalintilar": "37depos",
+   "efkaristiya": "47emmau",
+   "curumeyen-azizler": "64lucy"
+  },
+  "ateizme-cevap.html": {
+   "ring": "i-athens",
+   "tanri": "i-pantoc",
+   "isa": "i-resur",
+   "itirazlar": "i-disputa",
+   "sonuc": "i-ascens"
+  },
+  "islama-cevap.html": {
+   "kitap": "26conta",
+   "peygamber": "i-transf",
+   "tanri": "i-trinity",
+   "itirazlar": "i-sultan",
+   "sonuc": "i-lamb"
+  },
+  "gunah-cikarma.html": {
+   "adim-adim": "i-confess",
+   "vicdan-muhasebesi": "12magda",
+   "sorular-ve-korkular": "i-prodig"
+  },
+  "katolik-sureci.html": {
+   "surec": "i-bapt",
+   "sorular": "i-pentec"
+  },
+  "kutsal-kitap.html": {
+   "kisaca": "43jerome",
+   "logos": "i-nativ",
+   "rehber": "i-jerome"
+  },
+  "neden-katoligiz.html": {
+   "tanri-var-mi": "i-sermon",
+   "isa-kim": "i-calvary",
+   "neden-katolik": "i-keys",
+   "sonuc": "i-petpaul"
+  },
+  "sss.html": {
+   "teolojik-yanilgilar": "i-doctors",
+   "kutsal-sirlar-uygulamalar": "i-sevens",
+   "otorite-ogretiler": "i-trent",
+   "akla-gelen-itirazlar": "34thomas",
+   "savunma-ve-guncel-sorular": "i-michael"
+  },
+  "tesbih-tarihi.html": {
+   "baslangic": "i-annunc",
+   "orta-cag": "i-rosegar",
+   "inebahti-ve-sonrasi": "i-instros",
+   "gorunmeler": "i-rosary",
+   "gunumuz": "58rosar",
+   "savas": "i-george"
+  },
+  "topraklarimizda-hristiyanlik.html": {
+   "pavlus": "i-paulath",
+   "yedi-kilise": "i-patmos",
+   "iznik": "i-trinity",
+   "kilise-babalari": "i-nicholas"
+  },
+  "kutsal-ayin.html": {
+   "toplanma": "i-matha",
+   "soz-liturjisi": "i-sermon",
+   "sunus": "i-greg",
+   "sukran-duasi": "i-barocci",
+   "komunyon": "i-comm",
+   "son-takdis": "i-pentec"
+  },
+  "tesbih-duasi.html": {
+   "gizem-sevinc": "66annunc",
+   "gizem-isik": "47emmau",
+   "gizem-aci": "55flagel",
+   "gizem-yucelik": "45death"
   }
  }
 }

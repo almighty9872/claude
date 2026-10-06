@@ -516,12 +516,26 @@ function Art-Cap([string]$key) {
 }
 # A page whose header has a painting: the painting behind the title, its name underneath. A
 # painting smaller than the screen is shown whole, in a frame, over a blurred copy of itself.
+# A section that has a painting (data/tablolar.json "sections"): the painting, with its name, in
+# place of the section's line drawing
+function Paint-Sections([string]$body, [string]$file) {
+  $map = $Tablolar.sections.$file
+  if (-not $map) { return $body }
+  foreach ($p in $map.PSObject.Properties) {
+    $key = $p.Value; $a = $Tablolar.art.$key
+    $fig = "<figure class=`"ill-art ill-photo`">$(Art-Img $key 'ill-img' '(min-width: 980px) 22rem, 100vw')<figcaption>$(T "$($a.a) · <cite>$($a.t)</cite>" "$($a.a) · <cite>$($a.te)</cite>")</figcaption></figure>"
+    $rx = '(<(?:section|article)\b[^>]*\bid="' + [regex]::Escape($p.Name) + '"[^>]*>)<div class="ill-art" aria-hidden="true"><svg[\s\S]*?</svg></div>'
+    $body = [regex]::Replace($body, $rx, { param($m) $m.Groups[1].Value + $fig })
+  }
+  return $body
+}
 function Paint-Head([string]$body, [string]$file) {
   $key = $Tablolar.pages.$file
   if (-not $key) { return $body }
   $m = [regex]::Match($body, '<header class="page-head([^"]*)"([^>]*)>')
   if (-not $m.Success) { return $body }
-  $framed = $Tablolar.art.$key.w -lt 1000
+  # small or not clearly wide: shown whole, framed (a full-width band would show only a slice of it)
+  $framed = ($Tablolar.art.$key.w -lt 1000) -or ($Tablolar.art.$key.h / $Tablolar.art.$key.w -gt 0.8)
   $cls = "page-head$($m.Groups[1].Value) painted$(if ($framed) { ' art-framed' })"
   $imgs = (Art-Img $key 'ph-art' '100vw' 'high') + $(if ($framed) { Art-Img $key 'ph-frame' '360px' 'high' } else { '' })
   $open = "<header class=`"$cls`" data-art=`"$key`"$($m.Groups[2].Value)>$imgs"
@@ -1388,6 +1402,7 @@ function Write-Page {
   $Body = Link-Refs $Body
   $Body = Link-Xrefs $Body $File
   $Body = Paint-Head $Body $File
+  $Body = Paint-Sections $Body $File
   # Search results show roughly 60 characters of a title; a long page name keeps its words
   # and drops the site-name suffix instead (og:site_name still carries it).
   $suffix = " | $SiteName"
@@ -3179,7 +3194,12 @@ function Home-Page([string]$lang) {
   $lists = @"
 <div class="hm-journey">
   <div class="hj-grid">
-    <section class="hj-path" aria-labelledby="hj-h"><p class="hj-kick">$(L 'Nereden başlamalı?' 'Where to begin?')</p><h2 class="hj-h" id="hj-h">$(L 'Kendi yolunuzu seçin' 'Choose your own path')</h2><ol class="hj-steps">$stepsHtml</ol></section>
+    <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">Tartış</p><h2 class="hj-h" id="hj-h">Sorular ve itirazlar</h2>
+      <div class="hd-grid">
+        <a class="hd-card" href="islama-cevap.html">$(Art-Img '46ecceho' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+      </div>
+    </section>
     <aside class="hj-aside">
       <a class="hj-feat" href="tesbih-tarihi.html">$(Art-Img '42loreto' 'hj-art' '30vw')<span class="hj-kick">$(L 'Öne çıkan yazı' 'Featured')</span><span class="hj-ft">$(L $RosaryHistory.title $RosaryHistory.en)</span><span class="hj-fd">$(L $RosaryHistory.lead $RosaryHistory.leadEn)</span><span class="hj-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
       <figure class="hj-q"><blockquote><p>$(L '“Bizi kendin için yarattın ve kalbimiz sende huzur bulana dek huzursuzdur.”' '“You have made us for yourself, and our heart is restless until it rests in you.”')</p></blockquote><figcaption>$(L 'Aziz Augustinus, İtiraflar' 'St. Augustine, Confessions')</figcaption></figure>
