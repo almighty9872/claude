@@ -1,0 +1,60 @@
+/* ---- version 6 ---- */
+/* the round menu items: the ring is a block, so it is drawn whole */
+.mi .o,.hl .o{display:block}
+.nempty{padding:2px 16px 18px;margin:0;color:var(--mute);font-size:13.5px;line-height:1.45}
+/* small screens: the label on text slides moves to the top, out of the text's way */
+.app .sl.pt.tx .ptb{top:16px;bottom:auto;left:20px;right:auto}
+/* text size reaches the sheets, the stories and the tab bar too */
+.app .sheet>*:not(.gb),.app .ov .sh,.app .ov .sbody,.app .ov .sfoot,.app .ros .stage,.app .ros .hint,.app .glass .gsheet,.app .tabs{zoom:var(--z)}
+/* stronger gold for small text on ivory */
+.app .xh button,.app .xk,.app .rp2 .cmeta button,.app .lnote a,.app .dl a,.app .rd.doc a,.app .cmf button,.app .hidpost button,.app .crow small,.app .xqb button:not(.xqt),.app .linkbtn{color:var(--link)}
+/* comfortable tap targets */
+.app .post .act{gap:2px;padding:2px 4px 0}
+.app .post .act>button{min-width:44px;min-height:44px;display:grid;place-items:center}
+.app .post .ph>button:last-child{min-width:44px;min-height:44px;display:grid;place-items:center;margin-right:-8px}
+.app .hd .r>button{min-width:40px;min-height:40px;display:grid;place-items:center}
+.app .more,.app .pcl{padding-top:6px;padding-bottom:6px}.app .linkbtn{padding:8px 0}
+/* logo menu: same rows as the menu page */
+.gsheet6{padding:8px 0 6px}.gsheet6 .sgrp{border-bottom:1px solid var(--line)}
+.gsheet6 #lnote,.gsheet6 .lnote{margin:-4px 16px 6px 53px;font:13px/1.45 var(--sans);color:var(--mute)}
+/* notifications */
+.dpill{flex:none;width:44px;height:44px;border-radius:12px;background:var(--chip);display:grid;place-items:center;align-content:center;line-height:1}
+.dpill b{font:700 16px var(--sans)}.dpill i{font:600 10px var(--sans);font-style:normal;color:var(--mute);text-transform:uppercase}
+.nt.hl6{background:linear-gradient(90deg,var(--chip),transparent)}
+/* home: reminder bar, resume cards, history card, end of feed, pull to refresh */
+.rembar{display:flex;align-items:center;gap:10px;margin:4px 12px 8px;padding:10px 12px;border-radius:12px;background:var(--chip);font:14px/1.4 var(--sans)}
+.rembar .i{width:20px;height:20px;color:var(--link);flex:none}.rembar span{flex:1}.rembar button{flex:none;min-width:36px;min-height:36px;display:grid;place-items:center;color:var(--mute)}
+.resumes{display:grid;gap:8px;margin:2px 12px 10px}
+.resume{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:14px;background:var(--sheet);border:1px solid var(--line2);text-align:left}
+.rsi{flex:none;width:52px;height:52px;border-radius:10px;background-size:cover;background-position:center;display:grid;place-items:center;background-color:var(--chip)}
+.rst{flex:1;min-width:0;display:grid;gap:3px}.rst small{font:700 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--link)}
+.rst b{font:600 14.5px/1.25 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.resume em{font:600 13px var(--sans);font-style:normal;color:var(--link);flex:none}
+.hcard{display:grid;gap:4px;width:calc(100% - 24px);margin:4px 12px 18px;padding:16px;border-radius:16px;background:var(--k1);color:var(--k1i);text-align:left}
+.hcard small{font:700 10.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.hcard b{font:400 40px/1 var(--disp)}.hcard span{font:16px/1.45 var(--serif)}.hcard i{font:13px/1.4 var(--sans);font-style:normal;opacity:.75;margin-top:4px}
+.feedend{margin:18px 12px 30px;padding:18px 14px;border-radius:16px;border:1px solid var(--line2);background:var(--sheet);text-align:center;display:grid;gap:6px}
+.feedend>b{font:600 16px var(--sans)}.feedend>span{font:13.5px/1.45 var(--sans);color:var(--mute)}
+.fe3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.fe1{aspect-ratio:3/4;border-radius:12px;background-size:cover;background-position:center;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:8px;text-align:left}
+.fe1::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.8))}
+.fe1 b{position:relative;color:#fff;font:400 15px/1.05 var(--disp)}
+.ferf{justify-self:center;display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;background:var(--blue);color:var(--onpri);font:600 13.5px var(--sans)}.ferf .i{width:16px;height:16px}
+.view{overscroll-behavior-y:contain}
+.ptr{height:0;overflow:hidden;display:grid;place-items:center;transition:height .2s}
+.ptr span{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--line2);border-top-color:var(--link)}
+.ptr.ready span{border-color:var(--link)}.ptr.spin{height:44px!important}.ptr.spin span{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* double tap */
+.burst{position:absolute;z-index:5;width:96px;height:96px;margin:-48px 0 0 -48px;color:#fff;pointer-events:none;animation:burst .8s ease-out forwards;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
+.burst .i{width:100%;height:100%;fill:#fff;stroke:#fff}
+@keyframes burst{0%{transform:scale(.2);opacity:0}15%{transform:scale(1.15);opacity:1}30%{transform:scale(.95)}70%{opacity:1}100%{transform:scale(1.1) translateY(-30px);opacity:0}}
+:root[data-still] .burst{animation:none;opacity:0}
+/* image card */
+.cardimg{display:block;width:calc(100% - 32px);margin:6px auto 0;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.cardhint{text-align:center;font-size:13px;margin:10px 16px 0}.cardsh .dbtns{margin:12px 16px 4px}
+.cdl{flex:1;display:grid;place-items:center;background:var(--blue);color:var(--onpri);border-radius:10px;padding:11px 8px;font:600 14px var(--sans);text-decoration:none}
+.app .logo{padding:9px 8px}
+.app .cap .more,.app .pcl{min-height:36px}.app .ferf{min-height:40px}
+.app .car:focus-visible{outline:2px solid var(--link);outline-offset:-2px}
+.app .story .sh b{min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.app .story .sh .x,.app .story .sh small,.app .story .sh .av{flex:none}

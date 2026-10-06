@@ -1,0 +1,111 @@
+/* ---- version 8 ---- */
+/* home header: the logo on the left, so its arrow never slides under the icons */
+.app .hd.hm{grid-template-columns:0 minmax(0,1fr) auto;column-gap:0}
+.app .hd.hm .logo{justify-self:start;margin-left:-6px;min-width:0;max-width:100%}
+.app .hd.hm .logo .lg-t{overflow:hidden;text-overflow:ellipsis}
+.app .hd.hm .r{gap:4px}
+/* Katekizm search results, as on the website */
+.app #kres .sr-head{margin:6px 16px 4px;font:13px var(--sans);color:var(--mute)}
+.app .qres.sr{display:flex;gap:12px;align-items:flex-start;text-align:left}
+.app .qres.sr .srn{flex:none;min-width:34px;height:28px;padding:0 6px;border-radius:9px;background:var(--chip);display:grid;place-items:center;font:700 13px var(--sans);color:var(--link)}
+.app .qres.sr .srb{display:grid;gap:3px;min-width:0}
+.app .qres.sr .srb>span{font:13.5px/1.45 var(--sans);color:var(--mute)}
+.app .qres.sr small{font:600 11.5px var(--sans);color:var(--link)}
+.app .qres mark{background:rgba(201,162,74,.35);color:inherit;border-radius:3px;padding:0 1px}
+/* a question over a blurred screen */
+.kmod{position:absolute;inset:0;z-index:60;display:grid;place-items:center;padding:24px;animation:kmin .16s ease-out}
+.kmod.out{opacity:0;transition:opacity .15s}
+@keyframes kmin{from{opacity:0}}
+.kmbg{position:absolute;inset:0;background:rgba(12,14,22,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.kmc{position:relative;width:100%;max-width:320px;background:var(--sheet);color:var(--fg);border-radius:20px;padding:20px 18px 14px;display:grid;gap:8px;justify-items:center;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3);animation:kmup .2s ease-out}
+@keyframes kmup{from{transform:translateY(10px) scale(.97)}}
+.kmi{width:46px;height:46px;border-radius:14px;background:var(--chip);display:grid;place-items:center;color:var(--link)}.kmi .i{width:24px;height:24px}
+.kmc b{font:600 17px/1.3 var(--sans)}.kmc p{margin:0;font:14px/1.45 var(--sans);color:var(--mute)}
+.kmb{display:grid;gap:8px;width:100%;margin-top:8px}
+.kmb button{min-height:46px;border-radius:12px;background:var(--chip);font:600 15px var(--sans);color:var(--fg)}
+.kmb .pri{background:var(--blue);color:var(--onpri)}.kmb .warn{background:#b3261e;color:#fff}.kmb .ghost{background:transparent;color:var(--mute)}
+.app .hd .r .kzrd .i{width:21px;height:21px;opacity:.8}
+/* Katekizm main: reset beside Devam; arches with a soft blur behind the words */
+.kzgow{display:flex;align-items:center;gap:6px;flex:none}
+.kzreset{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--mute);background:var(--chip)}.kzreset .i{width:17px;height:17px}
+.app .kzp::after,.app .kph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:58%;-webkit-backdrop-filter:blur(7px) saturate(1.05);backdrop-filter:blur(7px) saturate(1.05);-webkit-mask-image:linear-gradient(180deg,transparent,#000 38%);mask-image:linear-gradient(180deg,transparent,#000 38%);pointer-events:none}
+.app .kph::after{height:62%}
+.app .kzp>*,.app .kph>*{z-index:1}
+.app .kzp .kzn,.app .kph .kzn{z-index:1}
+/* Keşfet: the two debates, the four rites */
+.xlead{margin:12px 16px 10px;font:14px/1.45 var(--sans);color:var(--mute)}
+.xdeb{position:relative;display:flex;align-items:flex-end;width:calc(100% - 24px);min-height:380px;margin:0 12px 14px;border-radius:22px;overflow:hidden;background-size:cover;background-position:center;color:#fff;text-align:left}
+.xdeb::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.88))}
+.xdt{position:relative;display:grid;gap:6px;padding:18px}
+.xdt small{font:700 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#f1d48f}
+.xdt b{font:400 34px/1 var(--disp)}.xdt>span{font:14.5px/1.45 var(--sans);opacity:.92}.xdt em{font:600 14px var(--sans);font-style:normal;color:#f1d48f}
+.xcap{position:absolute;top:10px;right:12px;font:11px var(--sans);font-style:italic;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.xrites{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 20px}
+.xrite{display:flex;flex-direction:column;justify-content:flex-end;gap:2px;aspect-ratio:3/4;border-radius:18px;padding:12px;background-size:cover;background-position:center;color:#fff;text-align:left}
+.xrite b{font:400 26px/1 var(--disp)}.xrite small{font:600 12px var(--sans);color:#f1d48f}.xrite span{font:12px/1.35 var(--sans);opacity:.9}
+.nearbtn{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);margin:12px 12px 4px;padding:12px 14px;border-radius:16px;background:var(--blue);color:var(--onpri);text-align:left}
+.nearbtn>.i{width:26px;height:26px;flex:none}.nearbtn span{display:grid}.nearbtn b{font:600 15px var(--sans)}.nearbtn small{font:12.5px var(--sans);opacity:.85}
+/* profile tabs with words; their content */
+.app .ptabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 4px;min-height:46px;color:var(--mute);border-bottom:1.5px solid transparent;font:600 12.5px var(--sans)}
+.app .ptabs button.on{color:var(--fg);border-bottom-color:var(--fg)}
+.app .ptabs button .i{width:22px;height:22px;flex:none}
+.ptpane{padding:4px 0 24px}
+.ptl{display:grid;margin:0 12px}
+.ptl h5{margin:16px 4px 6px;font:700 11.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--link)}
+.ptr2{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:10px 6px;text-align:left;border-bottom:1px solid var(--line)}
+.ptr2>span:not(.av){flex:1;min-width:0;display:grid;gap:2px;font:600 14.5px/1.3 var(--sans)}
+.ptr2 small{font:12.5px/1.35 var(--sans);color:var(--mute);font-weight:400}
+.ptr2>small{flex:none;max-width:40%;text-align:right}
+.ptr2>.i:last-child{width:16px;height:16px;color:var(--mute);flex:none}
+.ptq>.i:first-child{width:20px;height:20px;color:var(--link);flex:none}
+.ptnote{margin:10px 4px;font:13.5px/1.45 var(--sans);color:var(--mute)}
+.pday{display:flex;align-items:center;gap:12px;padding:9px 6px;border-bottom:1px solid var(--line)}
+.pday b{flex:none;width:34px;height:34px;border-radius:10px;background:var(--chip);display:grid;place-items:center;font:700 14px var(--sans)}
+.pday span{flex:1;display:grid;font:14px/1.3 var(--sans)}.pday small{font:12px var(--sans);color:var(--mute)}
+.pday.today b{background:var(--blue);color:var(--onpri)}.pday button{flex:none;font:600 13px var(--sans);color:var(--link);padding:8px}
+.pid{display:grid;justify-items:center;gap:10px;margin:14px 16px;padding:18px;border-radius:18px;background:var(--sheet);border:1px solid var(--line2)}
+.pid dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;width:100%;font:14px/1.4 var(--sans)}
+.pid dt{color:var(--mute)}.pid dd{margin:0;font-weight:600}
+.pid .pri{width:100%;min-height:44px;border-radius:12px;background:var(--blue);color:var(--onpri);font:600 14px var(--sans)}
+.rites{display:grid;gap:10px;margin:8px 12px}
+.rite{border-radius:16px;border:1px solid var(--line2);background:var(--sheet);overflow:hidden}
+.rite summary{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;list-style:none}
+.rite summary::-webkit-details-marker{display:none}
+.rite summary>.i{width:16px;height:16px;color:var(--mute);transition:transform .2s}.rite[open] summary>.i{transform:rotate(90deg)}
+.rimg{flex:none;width:52px;height:52px;border-radius:12px;background-size:cover;background-position:center}
+.rtx{flex:1;display:grid}.rtx b{font:600 16px var(--sans)}.rtx small{font:12.5px var(--sans);color:var(--mute)}
+.rdesc{margin:0 14px 4px;font:13.5px/1.45 var(--sans);color:var(--mute)}
+.rite h5{margin:12px 14px 2px;font:700 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--link)}
+.rite .ptr2{padding:10px 14px}
+/* the nearest churches */
+.nearsh .dbtns{margin:6px 16px}.nearsh .dbtns .pri{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:12px;background:var(--blue);color:var(--onpri);font:600 15px var(--sans)}
+.nearsh .ptnote{margin:10px 16px}.nerr{margin:10px 16px;padding:10px 12px;border-radius:12px;background:rgba(179,38,30,.1);color:#b3261e;font:13.5px/1.45 var(--sans)}
+.ncity{display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 18px}.ncity button{padding:8px 14px;border-radius:18px;background:var(--chip);font:600 13.5px var(--sans)}
+.nrow{display:flex;align-items:center;gap:6px;margin:0 12px;border-bottom:1px solid var(--line)}
+.nrow .ptr2{border-bottom:0;flex:1;min-width:0}
+.nimg{flex:none;width:46px;height:46px;border-radius:10px;background-size:cover;background-position:center}
+.nkm{flex:none;font:700 14px var(--sans);color:var(--link)}
+.ndir{flex:none;padding:8px 10px;border-radius:10px;background:var(--chip);font:600 12.5px var(--sans);color:var(--fg);text-decoration:none}
+/* our profile: the site's sections */
+.mepr .btns button{display:flex;align-items:center;justify-content:center;gap:6px}.mepr .btns .i{width:17px;height:17px}
+.mesecs{display:grid;gap:18px;padding:6px 12px 10px}
+.mesec h3{display:flex;align-items:center;gap:8px;margin:0 4px 8px;font:700 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--link)}.mesec h3 .i{width:16px;height:16px}
+.mecards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mecard{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-height:96px;padding:12px;border-radius:16px;background:var(--sheet);border:1px solid var(--line2);text-align:left;overflow:hidden;background-size:cover;background-position:center 30%}
+.mecard[class*="pa-"]{color:#fff;border:0}
+.mecard[class*="pa-"]::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.78))}
+.mecard>*{position:relative}.mecard b{font:600 15px/1.2 var(--sans)}.mecard small{font:12px/1.3 var(--sans);opacity:.8}
+.mecard .mci{position:absolute;top:10px;left:12px}
+.mecard:not([class*="pa-"]) b{margin-top:42px}
+.mefoot{margin:16px;text-align:center;font:13px var(--sans);color:var(--mute)}.mefoot a{color:var(--link)}
+/* messages */
+.dmus{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);margin:10px 12px 6px;padding:12px;border-radius:16px;background:var(--chip);text-align:left}
+.dmui{flex:none;width:46px;height:46px;border-radius:50%;background:var(--blue);color:var(--onpri);display:grid;place-items:center}.dmui .i{width:22px;height:22px}
+.dmus>span:nth-child(2){flex:1;display:grid}.dmus b{font:600 15px var(--sans)}.dmus small{font:12.5px var(--sans);color:var(--mute)}.dmus>.i{width:16px;height:16px;color:var(--mute)}
+#markall{display:flex;align-items:center;gap:6px;font:600 13.5px var(--sans);color:var(--link)}#markall .i{width:18px;height:18px}
+.app .grid[hidden],.ptpane[hidden]{display:none!important}
+.app .ptabs button span{white-space:nowrap;font-size:12px}
+.nrow .ptr2>span{font-size:14px}.nkm{font:700 12.5px var(--sans)}
+.ptr2>.av{flex:none}
+.app .ptabs button span{color:var(--fg);font-weight:500}.app .ptabs button.on span{font-weight:700}
+.dmus small{color:var(--fg)}

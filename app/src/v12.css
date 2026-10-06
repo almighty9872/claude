@@ -1,0 +1,36 @@
+
+/* ===== v12 ===== */
+/* the profile photo without a story ring */
+.app .pr .top .prav{flex:none;display:flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:50%}
+.app .pr .top .prav .av{box-shadow:0 0 0 1px var(--line2)}
+/* the current pope: a gold ring with a soft glow */
+.app .pr .top .prav.curpope .av,.app .lcur .lav .av{box-shadow:0 0 0 3px var(--bg),0 0 0 6px #c9971f,0 0 22px 6px rgba(232,186,72,.55);animation:popeglow 3.2s ease-in-out infinite}
+@keyframes popeglow{0%,100%{box-shadow:0 0 0 3px var(--bg),0 0 0 6px #c9971f,0 0 16px 3px rgba(232,186,72,.38)}50%{box-shadow:0 0 0 3px var(--bg),0 0 0 6px #d9aa35,0 0 30px 10px rgba(240,198,92,.62)}}
+@media (prefers-reduced-motion:reduce){.app .pr .top .prav.curpope .av,.app .lcur .lav .av{animation:none}}
+html[data-still] .app .pr .top .prav.curpope .av,html[data-still] .app .lcur .lav .av{animation:none}
+/* highlights and stories as posts in the grid, marked like a multi-photo post */
+.app .grid .tile.hlt{position:relative}
+.app .grid .tile .mpi{position:absolute;top:7px;right:7px;z-index:2;width:20px;height:20px;color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
+.app .grid .tile .mpi .i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
+.app .grid .tile.hlt[style*="background-image"]{background-size:cover;background-position:center 25%}
+/* papal documents on papalencyclicals.net */
+.app .pdoc .pelink{display:inline-block;margin-top:6px;font:600 13px var(--sans);color:var(--link);text-decoration:underline;text-underline-offset:2px}
+.app .ptpane .pe12{display:block;margin-top:2px;font:12px var(--sans);color:var(--link)}
+/* italics only where something is quoted or a source is named */
+.app .sl .sub,.app .rd .lead,.app .rd .la,.app .chs .mn,.app .kzc span,.app .kx .kq.it{font-style:normal}
+.app .xcap,.app .ifig figcaption{font-style:italic}
+.app em:not(.rd em):not(blockquote em):not(cite em){font-style:normal}
+.app .rd em,.app blockquote,.app cite,.app .q9t,.app .sl.q p,.app .sbody .q,.app .kx .kquote,.app .xc.xquote .xtt,.app .nclip p{font-style:italic}
+/* tile titles wrap between words, and very long Latin titles shrink instead of splitting */
+.app .grid .tile .tp9t{word-break:normal;overflow-wrap:normal;hyphens:manual}
+.app .grid .tile .tp9t.s{font-size:15px;line-height:1.05}
+/* fold-out blocks and lists from the page sources */
+.app .rd details.md12{margin:14px 0 18px;border:1px solid var(--line2);border-radius:14px;padding:4px 16px;background:var(--sheet)}
+.app .rd details.md12>summary{cursor:pointer;padding:12px 0;font:600 16px/1.3 var(--sans);color:var(--link);list-style-position:outside}
+.app .rd details.md12[open]>summary{border-bottom:1px solid var(--line2);margin-bottom:10px}
+.app .rd ul.md12{margin:6px 0 14px;padding-left:22px}
+.app .rd ul.md12 li{margin:0 0 8px}
+/* an expanded caption shows every line */
+.app .cap .txt{white-space:normal;overflow:visible;display:inline}
+.app .nw12{white-space:nowrap}
+.app .nw12 .rf9{white-space:normal}

@@ -1,0 +1,8 @@
+/* v11 */
+html.relang .app{opacity:.4;transition:opacity .12s}
+.app .lnote,.app [data-ln]{display:none!important}
+
+/* English labels run longer ("Introduction") */
+html[lang=en] .ktn{width:auto;min-width:58px;max-width:96px;letter-spacing:.03em;overflow-wrap:anywhere}
+/* the watermark on the slides reads katolikdunyasi.com, in lower case */
+.app .ptb{text-transform:none;letter-spacing:.04em}

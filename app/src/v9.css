@@ -1,0 +1,182 @@
+/* ===== v9 ===== */
+/* the cross beside a name sits on the same line as the letters */
+.app .ver{display:inline-block!important;vertical-align:middle!important;transform:translateY(-1.5px)}
+/* story circles for the sections: the painting, darkened a little, with a white sign */
+.app .sto.sec9 .av.rpaint{position:relative;overflow:hidden}
+.app .sto.sec9 .av.rpaint::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(0,0,0,.18),rgba(0,0,0,.55))}
+.app .secic{position:absolute;inset:0;display:grid;place-items:center;color:#fff}
+.app .secic .i{width:26px;height:26px;stroke-width:1.8;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+.app .sto .ring.seen{background:conic-gradient(from 210deg,#f1d48f,#c9971f,#8e5a14,#f1d48f)!important}
+/* the feed: words over paintings */
+.app .sl.pt.q9{display:flex;flex-direction:column;justify-content:center;padding:28px 26px}
+.app .q9g{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,6,4,.62),rgba(8,6,4,.42) 40%,rgba(8,6,4,.78))}
+.app .q9c{position:relative;z-index:1;display:grid;gap:14px}
+.app .q9m{font:400 92px/.6 var(--serif);color:#f1d48f;height:40px;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.app .q9t{margin:0;font:italic 400 26px/1.32 var(--serif);color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.7);text-wrap:pretty}
+.app .q9t.qm{font-size:22px}.app .q9t.qs{font-size:18.5px;line-height:1.38}
+.app .q9by{display:inline-flex;align-items:center;gap:8px;font:700 11.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#f1d48f}
+.app .q9by::before{content:"";width:26px;height:1.5px;background:#f1d48f}
+.app .q9by i{display:inline-flex}.app .q9by .i{width:15px;height:15px}
+.app .f9k{display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;padding:6px 11px;border-radius:999px;background:rgba(241,212,143,.95);color:#2a1d05;font:700 11.5px var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.app .f9k .i{width:15px;height:15px}
+.app .sl.pt.f9{justify-content:flex-end}
+/* Katekizm panels: a blurred copy of the painting sits behind the words, never over them */
+.app .kzp::after,.app .kph::after{display:none!important}
+.app .kzbl{position:absolute;inset:0;background:inherit;background-size:cover;background-position:inherit;filter:blur(7px) saturate(1.05);-webkit-mask-image:linear-gradient(180deg,transparent 38%,#000 66%);mask-image:linear-gradient(180deg,transparent 38%,#000 66%);z-index:0!important;transform:scale(1.04);pointer-events:none}
+.app .kzp::before,.app .kph::before{z-index:1}
+.app .kzp>*:not(.kzbl),.app .kph>*:not(.kzbl){z-index:2}
+/* notes */
+.app .nt9{padding:4px 16px 40px}
+.app .nt9l{margin:6px 0 14px;font:14px/1.45 var(--sans);color:var(--mute)}
+.app .nt9a{display:grid;gap:6px}.app .nt9a>span{font:600 14px var(--sans)}
+.app .nt9a textarea{width:100%;box-sizing:border-box;min-height:140px;padding:12px 14px;border-radius:14px;border:1px solid var(--line2);background:var(--sheet);color:var(--fg);font:16px/1.5 var(--serif);resize:vertical}
+.app .nt9a textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.app .nt9a small{font:12.5px var(--sans);color:var(--mute)}
+.app .nt9b{display:flex;gap:8px;margin:14px 0 6px}
+.app .nt9b button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;border-radius:12px;background:var(--chip);color:var(--fg);font:600 14px var(--sans)}
+.app .nt9b .pri{background:var(--gold);color:var(--onpri,#1d1405)}
+.app .nt9b .i{width:18px;height:18px}
+.app .nt9h{display:flex;align-items:center;gap:8px;margin:22px 0 10px;font:600 16px var(--sans)}
+.app .nt9h span{padding:1px 8px;border-radius:999px;background:var(--chip);font-size:12.5px}
+.app .nclip{margin:0 0 10px;padding:12px 14px;border-radius:14px;background:var(--sheet);border:1px solid var(--line2);border-left:4px solid var(--gold)}
+.app .nclip p{margin:0 0 8px;font:italic 15.5px/1.5 var(--serif)}
+.app .nclb{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.app .nclb>button:first-child,.app .nclb>span{font:600 13px var(--sans);color:var(--link);text-align:left}
+.app .nclb>span{color:var(--mute)}
+.app .ndel{min-width:40px;min-height:40px;display:grid;place-items:center;color:var(--mute)}
+.app .ndel .i{width:18px;height:18px}
+.app .nt9e{font:14px/1.5 var(--sans);color:var(--mute)}
+.app .nt9x{margin-top:18px;min-height:44px;padding:0 14px;border-radius:12px;color:#c0392b;font:600 14px var(--sans);border:1px solid var(--line2)}
+.app .nclip.hc-sari{border-left-color:#f2c94c}.app .nclip.hc-yesil{border-left-color:#5cc98a}.app .nclip.hc-mavi{border-left-color:#5aa8f0}.app .nclip.hc-pembe{border-left-color:#f08bb4}.app .nclip.hc-mor{border-left-color:#a98bf0}
+/* highlights: distinct colours that keep the text readable in both themes */
+.app mark.hl9{color:inherit;border-radius:3px;padding:0 1px;-webkit-box-decoration-break:clone;box-decoration-break:clone;cursor:pointer}
+.app .hc-sari:is(mark){background:rgba(242,201,76,.5)}.app .hc-yesil:is(mark){background:rgba(92,201,138,.42)}.app .hc-mavi:is(mark){background:rgba(90,168,240,.42)}.app .hc-pembe:is(mark){background:rgba(240,139,180,.45)}.app .hc-mor:is(mark){background:rgba(169,139,240,.45)}
+.app .selbar{position:absolute;z-index:80;display:flex;align-items:center;gap:6px;padding:7px 8px;border-radius:16px;background:#1d1a16;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.35);animation:sb9 .16s ease-out}
+@keyframes sb9{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.app .selbar .hcb{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.9)}
+.app .selbar .hcb.hc-sari{background:#f2c94c}.app .selbar .hcb.hc-yesil{background:#5cc98a}.app .selbar .hcb.hc-mavi{background:#5aa8f0}.app .selbar .hcb.hc-pembe{background:#ec5f9b}.app .selbar .hcb.hc-mor{background:#a98bf0}
+.app .selbar .sbsep{width:1px;height:24px;background:rgba(255,255,255,.25);margin:0 2px}
+.app .selbar .sbn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 10px;border-radius:10px;color:#fff;font:600 13px var(--sans)}
+.app .selbar .sbn:hover,.app .selbar .sbn:focus-visible{background:rgba(255,255,255,.12)}
+.app .selbar .i{width:18px;height:18px}
+.app .hltip{display:flex;align-items:center;gap:10px;margin:14px 0;padding:10px 8px 10px 12px;border-radius:12px;background:var(--chip);font:13.5px/1.4 var(--sans);color:var(--fg2,var(--fg))}
+.app .hltip>.i{flex:none;width:20px;height:20px;color:var(--gold)}
+.app .hltip span{flex:1}.app .hltip button{min-width:36px;min-height:36px;display:grid;place-items:center;color:var(--mute)}.app .hltip button .i{width:16px;height:16px}
+.app .nbtn9{position:relative}
+.app .nbtn9 i{position:absolute;top:2px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--gold);color:#1d1405;font:700 10px/16px var(--sans);font-style:normal;text-align:center;box-sizing:border-box}
+.app .kznote>span:first-child{background:var(--gold)!important;color:#1d1405!important}
+.app #r-notes{width:100%;text-align:left}
+.app #r-notes .sv2{margin-left:auto;margin-right:6px;font:13px var(--sans);color:var(--mute)}
+/* printing the notes: only the notes page is printed */
+#nprint{display:none}
+@media print{
+ html.printing9 body>*:not(#nprint){display:none!important}
+ html.printing9 #nprint{display:block!important;color:#000;background:#fff;font:12pt/1.5 Georgia,serif;padding:0 8mm}
+ #nprint h1{font:700 22pt Georgia,serif;margin:0 0 2pt}#nprint .np-s{color:#555;font:10pt sans-serif;margin:0 0 14pt}
+ #nprint .np-t{margin:0 0 14pt;white-space:normal}
+ #nprint blockquote{margin:0 0 10pt;padding:0 0 0 10pt;border-left:3pt solid #c9971f;font-style:italic;break-inside:avoid}
+ #nprint cite{display:block;margin-top:3pt;font:normal 9.5pt sans-serif;color:#555}
+}
+/* Keşfet: Sizin için */
+.app .xdeb2{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px}
+.app .xdb{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;min-height:170px;padding:12px;border-radius:16px;overflow:hidden;background-size:cover;background-position:center;color:#fff;text-align:left}
+.app .xdeb2.sm .xdb{min-height:118px}
+.app .xdb::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 20%,rgba(0,0,0,.86))}
+.app .xdb>*{position:relative}
+.app .xdb small{font:700 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#f1d48f}
+.app .xdb b{font:400 19px/1.04 var(--disp);letter-spacing:.01em}
+.app .xdb span{font:12.5px/1.35 var(--sans);opacity:.9}
+.app .xq4{display:grid;gap:8px;padding:0 12px}
+.app .xq1{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--sheet);border:1px solid var(--line2);text-align:left}
+.app .xq1>span:nth-child(2){flex:1;min-width:0;display:grid;gap:2px}
+.app .xq1 b{font:600 14.5px/1.3 var(--sans)}.app .xq1 small{font:12.5px var(--sans);color:var(--mute)}
+.app .xq1i{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#1d1405;font:400 19px var(--disp)}
+.app .xq1>.i{flex:none;width:16px;height:16px;color:var(--mute)}
+.app .xs3,.app .xm3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 12px}
+.app .xs1,.app .xm1{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;aspect-ratio:3/4;padding:9px;border-radius:14px;overflow:hidden;background-size:cover;background-position:center 25%;color:#fff;text-align:left}
+.app .xm1{aspect-ratio:1/1.05}
+.app .xs1::before,.app .xm1::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.86))}
+.app .xs1>*,.app .xm1>*{position:relative}
+.app .xs1 b,.app .xm1 b{font:600 13px/1.2 var(--sans)}.app .xs1 small,.app .xm1 small{font:11px/1.25 var(--sans);opacity:.85}
+.app .xfoot9{margin:18px 16px 30px;text-align:center;font:12.5px var(--sans);color:var(--mute)}
+/* Keşfet: Papalar, a line from Peter to today */
+.app .lin{list-style:none;margin:6px 0 40px;padding:0 16px 0 18px;position:relative}
+.app .lin::before{content:"";position:absolute;left:44px;top:20px;bottom:40px;width:2px;background:linear-gradient(180deg,#c9971f,var(--line2) 12%,var(--line2) 88%,#c9971f)}
+.app .lnode button{position:relative;display:flex;align-items:center;gap:14px;width:100%;padding:7px 0;text-align:left}
+.app .lav{flex:none;width:54px;display:grid;place-items:center}
+.app .lav .av{box-shadow:0 0 0 3px var(--bg),0 0 0 4.5px var(--line2)}
+.app .ltx{display:grid;gap:1px;min-width:0}.app .ltx small{font:600 11.5px var(--sans);color:var(--mute);letter-spacing:.02em}.app .ltx b{font:600 15px var(--sans)}
+.app .lgap{position:relative;height:30px;margin-left:15px}
+.app .lgap span{position:absolute;left:40px;top:50%;transform:translateY(-50%);padding:2px 9px;border-radius:999px;background:var(--chip);font:600 11px var(--sans);color:var(--mute)}
+.app .lgap::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;border-left:2px dotted var(--mute2,var(--mute))}
+.app .lcur button{margin-top:6px;padding:12px 12px 12px 0;border-radius:18px;background:linear-gradient(90deg,transparent 0,rgba(201,151,31,.16) 40px)}
+.app .lcur .lav{width:54px}.app .lcur .lav .av{box-shadow:0 0 0 3px var(--bg),0 0 0 6px #c9971f,0 6px 20px rgba(201,151,31,.45)}
+.app .lcur .ltx b{font:400 22px/1.05 var(--disp)}.app .lcur em{font:700 11px var(--sans);font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:#a87a12}
+/* Keşfet: Katekizm, questions on paintings */
+.app .xkc{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px}
+.app .xk1{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;min-height:200px;padding:12px;border-radius:18px;overflow:hidden;background-size:cover;background-position:center 30%;color:#fff;text-align:left}
+.app .xk1:nth-child(3n+1){grid-column:span 2;min-height:230px}
+.app .xk1::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.25) 35%,rgba(0,0,0,.88))}
+.app .xk1>*{position:relative}
+.app .xk1 small{font:700 10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#f1d48f}
+.app .xk1 b{font:400 21px/1.05 var(--disp);letter-spacing:.01em;text-wrap:balance}
+.app .xk1:nth-child(3n+1) b{font-size:27px}
+.app .xkall{display:block;margin:16px auto 36px;padding:12px 18px;border-radius:12px;background:var(--chip);font:600 14px var(--sans);color:var(--fg)}
+/* the site-wide search */
+.app .gsec{margin:4px 0 14px}.app .gsec h3{display:flex;align-items:center;gap:8px;margin:10px 16px 6px;font:600 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.app .gsec h3 span{padding:1px 7px;border-radius:999px;background:var(--chip);letter-spacing:0}
+.app .gres{display:flex;gap:12px;align-items:flex-start}
+.app .gav{flex:none;padding-top:2px}
+.app .gmore{margin:2px 16px 0 64px;font:12.5px var(--sans);color:var(--mute)}
+/* popes: only the living pope in colour */
+.app img.pgray{filter:grayscale(1) contrast(1.05)}
+/* churches that are closed or limited */
+.app .chst{display:inline-block;vertical-align:middle;margin-left:4px;padding:1px 7px;border-radius:999px;font:700 10.5px/1.6 var(--sans);letter-spacing:.02em;white-space:nowrap}
+.app .chst.st-closed{background:#b3261e;color:#fff}.app .chst.st-limited{background:#f2c94c;color:#3a2a00}
+.app .tile .chst{position:absolute;top:8px;right:8px;margin:0;z-index:2}
+.app .chwarn{display:flex;gap:10px;margin:10px 0 4px;padding:11px 12px;border-radius:14px;font:13.5px/1.45 var(--sans);text-align:left}
+.app .chwarn .i{flex:none;width:20px;height:20px;margin-top:1px}
+.app .chwarn b{display:block;margin-bottom:2px;font-weight:700}
+.app .chwarn.st-closed{background:rgba(179,38,30,.12);color:var(--fg);border:1px solid rgba(179,38,30,.45)}.app .chwarn.st-closed .i{color:#d0402f}
+.app .chwarn.st-limited,.app .chwarn.st-note{background:rgba(242,201,76,.16);color:var(--fg);border:1px solid rgba(201,151,31,.45)}.app .chwarn.st-limited .i,.app .chwarn.st-note .i{color:#b8860b}
+/* city circles: a map of Turkey with the city glowing */
+.app .cmav{display:block;border-radius:50%;overflow:hidden;background:#0d1b2a}
+.app .cmap{display:block;width:100%;height:100%}
+.app .cmsea{fill:#0d1b2a}.app .cmland{fill:#2c4a63;stroke:#5f86a6;stroke-width:1}
+.app .cmdot{fill:#ffd36b}.app .cmtx{fill:#fff3cf;font:700 21px var(--sans);letter-spacing:.02em}
+.app .hl.hlwarn .o{position:relative}
+.app .hl.hlwarn .o::after{content:"!";position:absolute;right:-1px;top:-1px;width:18px;height:18px;border-radius:50%;background:#b3261e;color:#fff;font:700 12px/18px var(--sans);text-align:center;box-shadow:0 0 0 2px var(--bg)}
+.app .nearav{display:grid!important;place-items:center;border-radius:50%;background:radial-gradient(circle at 50% 40%,#2b2116,#120d08);color:#f1d48f}
+.app .nearav .i{width:30px;height:30px;stroke-width:1.7}
+/* profile grids: a painting and clean type on every tile */
+.app .tile.tp9{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:3px;padding:9px;background-color:#120d08;background-size:cover;background-position:center 30%;color:#fff;text-align:left;overflow:hidden}
+.app .tp9g{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 25%,rgba(0,0,0,.9))}
+.app .tp9n,.app .tp9t{position:relative}
+.app .tp9n{font:700 9.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#f1d48f}
+.app .tp9t{font:400 17px/1.02 var(--disp);letter-spacing:.01em;text-wrap:balance;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.app .tp9t.m{font-size:15px}.app .tp9t.s{font-size:13px;line-height:1.05}
+/* the fish on the home screen glows softly */
+.app .lg-ich.glow9{animation:fish9 3.6s ease-in-out infinite;border-radius:50%}
+@keyframes fish9{0%,100%{filter:drop-shadow(0 0 2px rgba(241,212,143,.35))}50%{filter:drop-shadow(0 0 9px rgba(241,212,143,.95)) drop-shadow(0 0 16px rgba(201,151,31,.55))}}
+@media (prefers-reduced-motion:reduce){.app .lg-ich.glow9{animation:none;filter:drop-shadow(0 0 6px rgba(241,212,143,.8))}}
+.app .story .psk{margin-bottom:10px}
+.app #exr .gsec{display:block!important;width:auto}
+.app .gres{width:100%;box-sizing:border-box}
+.app .gres .srb{flex:1}
+.app .tile.tp9 b.tp9t{color:#fff!important;opacity:1!important}
+.app .tile.tp9 small.tp9n{color:#f1d48f!important;opacity:1!important;position:relative;top:auto;left:auto;right:auto}
+.app .cmtx{font-size:27px}
+.app .nt9b .pri{color:#1d1405!important}
+.app .gsec h3 span{color:var(--fg)}
+.app .gres mark{background:rgba(201,162,74,.3);color:var(--fg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .app .rd .kick{color:#7fd6a8!important}}
+:root[data-theme="dark"] .app .rd .kick{color:#7fd6a8!important}
+.app .nt9b .pri{background:#ecca73!important}
+/* the highlight bar docks at the bottom, clear of the phone's own selection menu */
+.app .selbar{left:50%!important;top:auto!important;transform:translateX(-50%);animation:sb9b .16s ease-out;max-width:calc(100% - 24px);box-sizing:border-box}
+@keyframes sb9b{from{opacity:0;transform:translate(-50%,6px)}to{opacity:1;transform:translateX(-50%)}}
+.app.selon #secpill{opacity:0;pointer-events:none}
+/* stories: holding a finger down pauses, it never selects text */
+.app .story,.app .story *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
+.app.selon #secpill,.app.selon .secpill{visibility:hidden!important;opacity:0!important}
+.app .selbar .sbn{white-space:nowrap}

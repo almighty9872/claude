@@ -52,6 +52,7 @@ jobs:
           cp -r assets/fonts _site/assets/
           cp data/compendium-*.js data/tespih.js data/azizler-adlar.js data/azizler-ozet-*.js data/refs-*.js _site/data/
           cp -r en kilise _site/
+          mkdir -p _site/app && cp app/index.html _site/app/   # the phone app (built from app/src)
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi
           touch _site/.nojekyll   # serve the files as they are, without Jekyll

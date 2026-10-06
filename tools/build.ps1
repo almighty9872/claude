@@ -1060,6 +1060,10 @@ $A11yWidgetHtml = @"
 # address decides it; the Turkish home page sends someone who reads English, by choice or by browser,
 # to the English home page, deep links are never redirected; crawlers are never sent anywhere), the theme and the reading settings,
 # all before the first paint.
+# Phones get the app (app/index.html, built from app/src): every page sends a touch screen at the
+# phone breakpoint to the same thing in the app (/app/?p=havari-pavlus). Crawlers stay on the pages,
+# and ?site=1 (the app's links to a page) keeps the visitor on the site for the rest of the session.
+$MobJs = '(function(){try{var q=location.search,s=window.sessionStorage;if(/[?&]site=1(&|$)/.test(q)){s.setItem(''kd-site'',''1'');return}if(s.getItem(''kd-site'')||!(window.matchMedia&&matchMedia(''(max-width: 979px) and (pointer: coarse)'').matches)||/bot|crawl|spider|slurp|lighthouse|headless|preview/i.test(navigator.userAgent))return;var p=location.pathname.replace(/^\/+/,'''').replace(/\.html$/,'''').replace(/(^|\/)index$/,''$1'');location.replace(''/app/?p=''+encodeURIComponent(p))}catch(e){}})();'
 $HeadJs = 'document.documentElement.classList.add(''js'');'
 $HeadJs2 = '(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem(''kd-lang-choice'');if(!L&&localStorage.getItem(''kd-lang'')===''en'')L=''en''}catch(e){}if(!L){var tz='''';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'''').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'''')||/Istanbul$/.test(tz)||nl.slice(0,2)===''tr'')?''tr'':''en''}var U=H.getAttribute(''data-url-lang'');if(U){if(U===''tr''&&L===''en''&&/^\/(index\.html)?$/.test(location.pathname)&&!/bot|crawl|spider|slurp|lighthouse|headless|inspection|preview|facebookexternalhit/i.test(navigator.userAgent||'''')){var a=document.querySelector(''link[hreflang=en]'');if(a){location.replace(a.getAttribute(''href'').replace(/^https?:\/\/[^\/]+/,'''')+location.search+location.hash);return}}L=U}if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
 $LangPillHtml = '<nav class="lang-pill" aria-label="Dil / Language"><span class="lp-knob" aria-hidden="true"></span>' +
@@ -1366,6 +1370,7 @@ function Write-Page {
   # Every page but the home screen becomes an app screen on phones (see Av-Nav); the class is set
   # before the first paint so the page doesn't jump
   $isHome = $File -match '(^|/)index\.html$'
+  $mobJs = if ($File -eq '404.html') { '' } else { $MobJs }
   $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches){document.documentElement.classList.add('av');setTimeout(function(){document.documentElement.classList.add('av-ready')},3000)}" }
   $avNav = if ($isHome) { '' } else { Av-Nav $File $false }
   $appAttr += if ($isHome) { '' } else { " data-avp=`"$File`"" }
@@ -1456,7 +1461,7 @@ $locAlt
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>$HeadJs$($avJs)$HeadJs2</script>
+<script>$($mobJs)$HeadJs$($avJs)$HeadJs2</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
