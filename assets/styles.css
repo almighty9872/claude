@@ -7,10 +7,13 @@
    ========================================================================= */
 
 /* ---------- 0. Self-hosted font (EB Garamond, variable weight 400–800) ---------- */
+/* The "-ext-a" files (Google Fonts' "latin-ext" files) are cut down to Latin Extended-A (U+0100-017F, which has
+   the Turkish ğ Ğ ş Ş İ) plus ǽ and Ṣ, the only other letters the site uses; about 80 KB instead
+   of 350 KB. Re-cut from the full Google Fonts files with pyftsubset if a page needs more. */
 @font-face {
   font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; font-display: swap;
-  src: url("fonts/eb-garamond-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("fonts/eb-garamond-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
 }
 @font-face {
   font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; font-display: swap;
@@ -19,8 +22,8 @@
 }
 @font-face {
   font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; font-display: swap;
-  src: url("fonts/eb-garamond-italic-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("fonts/eb-garamond-italic-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
 }
 @font-face {
   font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; font-display: swap;
@@ -35,8 +38,8 @@
    for the Settings panel's dyslexia-friendly text. Nothing downloads unless that setting is on. */
 @font-face {
   font-family: "Lexend"; font-style: normal; font-weight: 100 900; font-display: swap;
-  src: url("fonts/lexend-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("fonts/lexend-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
 }
 @font-face {
   font-family: "Lexend"; font-style: normal; font-weight: 100 900; font-display: swap;
@@ -501,7 +504,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   background: var(--gold-bg); border-left: 3px solid var(--gold-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
-
 @keyframes reveal { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
 
 /* Quotes between questions */
@@ -561,8 +563,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .signature p { margin: 0; }
 .footnotes { margin-top: 1.6rem; padding-top: .8rem; border-top: 1px solid var(--border); font-size: .95rem; color: var(--text-soft); }
 .footnotes p { margin: 0 0 .3rem; }
-
-
 
 /* The twenty best-known saints: a dropdown holding one compact list, four to a row on a wide screen */
 .gs-drop { margin: 1rem 0 2rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); }
@@ -882,7 +882,6 @@ html.av .gs-list { display: block; padding: 0; border: 0; }
 .ns-nav { display: grid; grid-template-columns: 1fr; gap: .2rem 2rem; align-items: start; max-width: 76rem; margin: 0 auto; }
 /* The Katekizm row: the link, and an arrow that folds its seven parts open underneath */
 
-
 .ns-more {
   flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; padding: 0; border: 0; border-radius: 50%;
   background: transparent; color: var(--muted); cursor: pointer; transition: background-color .15s, color .15s;
@@ -891,14 +890,6 @@ html.av .gs-list { display: block; padding: 0; border: 0; }
 .ns-more svg { width: 1.15rem; height: 1.15rem; transition: transform .35s cubic-bezier(.32, .72, 0, 1); }
 .ns-fold.is-open .ns-more { color: var(--gold); }
 .ns-fold.is-open .ns-more svg { transform: rotate(180deg); }
-
-
-
-
-
-
-
-
 
 .ns-label { margin: .7rem .55rem .25rem; font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 .ns-item {
@@ -978,9 +969,6 @@ body.sheet-open { overflow: hidden; }
 .why-aside { margin: 1rem 0 0; font-size: .98rem; color: var(--text-soft); }
 .why-aside a { font-weight: 600; }
 .why-part { margin: 0 0 3rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
-.why-part-head { margin: 0 0 1rem; }
-.why-part-head .label { margin: 0 0 .2rem; }
-.why-part-head h2 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.05rem); line-height: 1.15; }
 .why-thesis { margin: .45rem 0 0; font-size: 1.05rem; line-height: 1.55; color: var(--text-soft); }
 .why-list { border-top: 1px solid var(--border); }
 .why-item { border-bottom: 1px solid var(--border); scroll-margin-top: calc(var(--header-h) + 1rem); }
@@ -1245,12 +1233,6 @@ body.sheet-open { overflow: hidden; }
 }
 .today-pill:hover { border-color: var(--gold-soft); transform: translateY(-1px); }
 
-
-
-
-
-
-
 /* ---------- Rosary tracker (tesbih-duasi.html / en/rosary.html) ----------
    Mobile first: the bead SVG full width, the prayer panel a sticky bottom sheet over it.
    From 900px the panel moves beside the beads instead. Bead states: .unprayed / .active / .prayed. */
@@ -1461,7 +1443,7 @@ html:not(.js) .rt { display: none; }
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 1px 6px rgba(0,0,0,.08);
 }
 .amap-lg {
-  display: flex; align-items: center; gap: .4rem; width: 100%; padding: .12rem .5rem; border: 0; border-radius: 99px;
+  display: flex; align-items: center; gap: .4rem; width: 100%; min-height: 24px; padding: .12rem .5rem; border: 0; border-radius: 99px;
   background: transparent; font-family: var(--sans); font-size: .66rem; font-weight: 600; line-height: 1.35; color: var(--text-soft);
   text-align: left; cursor: pointer; transition: color .15s, background-color .15s;
 }
@@ -1558,12 +1540,9 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .myst-list li { margin-bottom: .4rem; }
 .m-tr { display: block; }
 
-
 .steps { margin: 0 0 1.5rem; padding-left: 1.4rem; }
 .steps li { margin-bottom: .7rem; }
 .s-tr { display: block; }
-
-
 
 /* ---------- 17. Katolik Olma Süreci: two doors, the first step, a light numbered timeline
    of the OCIA steps, and the rest folded (the .kk-sec folds shared with Kutsal Kitap) ---------- */
@@ -1573,9 +1552,6 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .sureci-first { margin: 0 0 2.6rem; text-align: center; font-size: 1rem; line-height: 1.55; color: var(--text-soft); }
 .sureci-first a { display: inline-flex; align-items: center; gap: .3rem; margin-left: .25rem; font-family: var(--sans); font-size: .9rem; font-weight: 600; color: var(--gold); white-space: nowrap; }
 .sureci-first a svg { width: 1rem; height: 1rem; }
-.sureci-sec { margin: 0 0 2.6rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
-.sureci-sec > h2 { margin: 0; font-size: clamp(1.5rem, 3.4vw, 1.9rem); line-height: 1.2; }
-.sureci-sec > .why-thesis { margin-bottom: 1.2rem; }
 .stage-list { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
 .stage-list::before { content: ""; position: absolute; left: .95rem; top: 1rem; bottom: 1rem; width: 2px; background: var(--gold-bg); }
 .stage { position: relative; display: flex; gap: .9rem; align-items: flex-start; }
@@ -1722,29 +1698,6 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 }
 
 .mass-parts { display: grid; gap: 1.3rem; }
-.mass-part {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow); scroll-margin-top: calc(var(--header-h) + 3.5rem);
-}
-.mass-part-head {
-  display: flex; align-items: flex-start; gap: 1rem; padding: 1.3rem 1.4rem; cursor: pointer; list-style: none;
-}
-.mass-part-head::-webkit-details-marker { display: none; }
-.mass-part-head:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; border-radius: var(--radius); }
-.mass-part-head .chev { flex: none; align-self: center; margin-left: auto; color: var(--muted); }
-.mass-part[open] > .mass-part-head .chev { transform: rotate(180deg); color: var(--gold); }
-.mass-part[open] > .mass-part-head { padding-bottom: .3rem; }
-.mass-part-body { padding: 0 1.4rem 1.3rem; }
-.mass-ico {
-  flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%;
-  background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-soft);
-}
-.mass-ico svg { width: 1.5rem; height: 1.5rem; }
-.mass-part-txt { display: block; min-width: 0; }
-.mass-part-n { display: block; margin: 0 0 .1rem; }
-.mass-part-head .sub { display: block; }
-.mass-part-head h2, .mass-part-h { display: block; margin: 0; font-size: 1.4rem; font-weight: 700; line-height: 1.25; }
-.mass-part-head .sub { margin: .15rem 0 0; }
 .mass-lead { margin: .8rem 0 1.1rem; color: var(--text-soft); }
 .mass-dialogue { display: grid; gap: .5rem; }
 .mass-dialogue[hidden] { display: none; }
@@ -1769,19 +1722,8 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 .mass-pc .mass-role { align-self: flex-start; background: var(--gold); color: var(--bg); }
 
 @media (max-width: 560px) {
-  .mass-part-head { gap: .7rem; padding: 1.05rem 1rem; }
-  .mass-part-body { padding: 0 1rem 1.05rem; }
-  .mass-ico { width: 2.5rem; height: 2.5rem; }
-  .mass-ico svg { width: 1.25rem; height: 1.25rem; }
   .mass-line { padding: .45rem .6rem; gap: .5rem; }
 }
-
-/* ---------- 20. Placeholder-style pages (İletişim) ---------- */
-.placeholder-page { max-width: 32rem; margin: 0 auto; padding: 2.4rem 0 4rem; text-align: center; }
-.placeholder-page svg { width: 2.6rem; height: 2.6rem; color: var(--gold); margin: 0 auto 1rem; }
-.placeholder-lead { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 0 0 .6rem; }
-.placeholder-page p { color: var(--muted); }
-.placeholder-page .btn { margin-top: 1.2rem; }
 @media (prefers-reduced-motion: reduce) { .mass-pills a { transition: none; } }
 
 /* ---------- 21. Mucizeler (miracles) ---------- */
@@ -1830,13 +1772,8 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 
 /* Intro copy: centered, kept short. */
 
-
-
 /* A compact <select> used wherever a row of pills or a long list of links would take up too
    much space (the Kiliseler rite filter, the Azizler contents jump menu, ...). */
-
-
-
 
 /* City pills (the jump nav above the city sections): mark whichever single city is
    currently the one being browsed. */
@@ -1897,58 +1834,18 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 .church-city[hidden] { display: none; }
 .church-city:hover, .church-city[open] { border-color: var(--border-strong); }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .church-card { display: flex; flex-direction: column; gap: .35rem; }
 .church-card[hidden] { display: none; }
-
-
-
-
-
-
-
-
 
 /* Inactive/closed parish: the label alone is always visible (so a reader never misses it),
    but the full explanation is tucked behind a click/tap, same as the Mass-times disclosure,
    so one closed parish doesn't dominate the card. */
 
-
-
-
-
-
 /* The affordance telling the reader this collapsed line hides more text. */
-
-
-
-
-
-
 
 /* Mass times: a plain native <details>, click/tap to toggle, same on every device. On a
    wide screen the expanded body floats as a small popup instead of pushing the rest of
    the card's layout around; on narrow screens it just expands in place. */
-
-
-
-
-
-
-
-
 
 /* ---------- Phones (below 980px): the header, the footer and the page icons ---------- */
 @media (max-width: 979px) {
@@ -1994,7 +1891,6 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
   .theme-toggle[aria-checked="false"] .ico-sun, .theme-toggle[aria-checked="true"] .ico-moon { display: none; }
   .theme-toggle[aria-checked="false"] .ico-moon, .theme-toggle[aria-checked="true"] .ico-sun { color: var(--text-soft); }
 }
-
 
 /* ---------- Home page ----------
    Phones: today's saint, the date (in the liturgical season's colour) and the rosary, then four
@@ -2168,17 +2064,12 @@ html.app-open { overflow: hidden; }
 /* Ara: the search, Spotlight-style, over the blurred home screen */
 .ios-spot { position: fixed; inset: 0; z-index: 300; }
 
-
 /* The field sits in the middle of what can be seen (script.js keeps it there as the keyboard comes
    and goes); once there are results it moves up, so they have the room below it */
 .ios-spot-panel { position: absolute; top: calc(50% - 1.6rem); left: 1rem; right: 1rem; transform-origin: 50% 50%; transition: top .45s cubic-bezier(.32, .72, 0, 1); }
 
-
-
 /* A tap anywhere around the field closes the search; this button is the same for the keyboard and
    screen readers, and shows itself only when it has the keyboard's focus */
-
-
 
 @media (prefers-reduced-motion: reduce) { .ios-page, .ios-splash, .ios-spot-bg, .ios-spot-panel { transition: none; } }
 
@@ -2199,7 +2090,6 @@ html.app-open { overflow: hidden; }
   .hm-search { display: block; margin: 1.2rem 0 0; }
   .hm-search .search { margin: 0; max-width: none; }
   .hm-search .search-field { border-radius: 999px; min-height: 3rem; }
-  .hm-lists { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; align-items: start; margin-top: 2rem; }
   .hm-col h2 { margin: 0 0 .6rem; font-size: 1.45rem; }
   .hm-list { border-radius: 1.1rem; background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
   .hm-row { display: flex; align-items: center; gap: .8rem; padding: .75rem .9rem; color: var(--text); text-decoration: none; }
@@ -2307,8 +2197,6 @@ html.av main .mira-item.av-cur .mira-place { display: block; margin-top: .35rem;
 .av-row-sub .av-t { font-size: .98rem; }
 html.av main :is(.av-cur, .av-path):is(.why-end, .mira-cat, .faq-cat) { display: block !important; margin-top: 0; }
 html.av main .why-part { margin: 0 0 1.6rem; }
-html.av main .why-part-head { margin: 0 0 .5rem; }
-html.av main .why-part-head h2 { font-size: 1.3rem; }
 html.av main .why-thesis { font-size: .95rem; }
 html.av main .why-list { border: 0; }
 html.av main .why-item.av-cur > summary { display: block; padding: .2rem 0 .8rem; margin: 0 0 1rem; border-bottom: 1px solid var(--border); }
@@ -2477,10 +2365,6 @@ html.av main .av-cur .text-card:not(.church-card) { padding: 1rem 0; border: 0; 
 html.av main .av-cur .text-grid > .text-card:first-child { border-top: 0; padding-top: 0; }
 /* Kutsal Ayin's parts and the miracles: the title alone, no round icon or "Bölüm 1" */
 html.av main .mass-part.av-cur { border: 0; background: none; box-shadow: none; }
-html.av main .mass-part.av-cur > .mass-part-head { display: block; padding: .2rem 0 .8rem; margin: .4rem 0 1rem; border-bottom: 1px solid var(--border); }
-html.av main .mass-part.av-cur :is(.mass-ico, .mass-part-n) { display: none; }
-html.av main .mass-part.av-cur .mass-part-head h2, html.av main .mass-part.av-cur .mass-part-h { font-size: 1.35rem; line-height: 1.25; }
-html.av main .mass-part.av-cur > .mass-part-body { padding: 0; }
 html.av main .mira-item.av-cur .mira-ico { display: none; }
 html.av main .mira-item.av-cur > summary { display: block; }
 /* The map's places */
@@ -2544,8 +2428,6 @@ summary .bref, summary .cref { pointer-events: auto; }
 
 /* English and Latin originals read like the Turkish they replace: no box, the same type */
 html.av[data-orig] main :is(.en-block, details.latin) { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; animation: none; }
-
-html.av[data-orig] main .en-block :is(p, li) { color: var(--text); }
 html.av[data-orig] main :is(.en-block, details.latin) :is(p, li) { font-size: inherit; line-height: inherit; }
 html.av[data-orig] main :is(.en-block, details.latin) { font-size: inherit; line-height: inherit; }
 
@@ -2690,8 +2572,6 @@ html.av body:not([data-app]) .av-hero .page-ico { border-radius: 22%; background
 /* A city of churches: its name alone as the heading; a church and a set of mysteries as plain text */
 html.av main .church-city.av-cur > summary { display: block; margin: .4rem 0 1rem; text-align: center; }
 
-
-
 html.av main :is(.church-card, .myst).av-cur { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
 html.av main :is(.church-card, .myst).av-cur > header { margin: .4rem 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--border); }
 
@@ -2740,7 +2620,6 @@ html.av .av-dock.av-dock-solid {
   background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 -6px 18px -14px rgba(20, 26, 44, .35);
 }
 html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-bottom)); }
-
 
 /* ---------- The home screen's bar, as in the App Store ----------
    A pill with a glyph and a name for each app; the open app in a capsule that glides to it.
@@ -2808,8 +2687,8 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
 }
 @font-face {
   font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
-  src: url("fonts/inter-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("fonts/inter-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
 }
 /* the same on a computer */
 html:not([data-a11y-dyslexia="1"]) {
@@ -3039,9 +2918,6 @@ html.av .to-top-wrap { display: none; }
 /* The full case: a comfortable reading column, headings that stand apart from the text,
    subheadings as small labels, quotes set off, and room between the steps of an argument */
 .ic-part { margin-top: 4.2rem; }
-.ic-part-head { padding: 1.6rem 1rem 1.4rem; border-radius: 1.2rem; background: var(--surface); border: 1px solid var(--border); text-align: center; }
-.ic-part-n { margin: 0; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
-.ic-part-t { margin: .35rem 0 0; text-align: center; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 600; line-height: 1.2; text-wrap: balance; }
 .ic-sec { max-width: 40rem; margin: 3rem auto 0; }
 .ic-sec-t { display: flex; align-items: flex-start; gap: .8rem; margin: 0 0 1.3rem; padding-bottom: .9rem; border-bottom: 1px solid var(--border); font-size: clamp(1.35rem, 3vw, 1.65rem); font-weight: 600; line-height: 1.25; text-wrap: balance; }
 .ic-sec-t .label { flex: none; display: grid; place-items: center; min-width: 1.9rem; height: 1.9rem; margin-top: .05rem; padding: 0 .35rem; border-radius: 999px; background: var(--gold-bg); color: var(--gold); font-family: var(--sans); font-size: .85rem; font-weight: 700; line-height: 1; }
@@ -3068,7 +2944,6 @@ html.av .to-top-wrap { display: none; }
 .ic-nav-start svg { width: .9rem; height: .9rem; }
 
 .ic-closing { margin-top: 4.2rem; }
-.ic-closing > .ic-part-t { margin-bottom: 1.4rem; }
 .ic-closing .prose p:last-child { margin-top: 1.4rem; text-align: center; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
 .ic-sources { max-width: 40rem; margin: 3.4rem auto 0; }
 .ic-sources ul { padding-left: 1.2rem; color: var(--text-soft); font-size: .92rem; line-height: 1.6; }
@@ -3089,7 +2964,6 @@ html.av main .av-cur > h2.ic-sec-t > .label { display: none; }
   .ic-page .prose { font-size: 1.04rem; line-height: 1.72; }
   .ic-sec { margin-top: 2.4rem; }
   .ic-sec-t { font-size: 1.3rem; }
-  .ic-part-head { padding: 1.3rem .9rem 1.1rem; }
   .ic-page .prose .ic-quote { padding: .85rem 1rem; }
   .ic-nav { gap: .5rem; }
   .ic-nav > a { padding: .7rem .8rem; }
@@ -3143,10 +3017,6 @@ tspan.l-tr, tspan.l-en { display: inline; }
 .sureci-wrap .kk-sec-body { font-size: 1.02rem; }
 .sureci-wrap .kk-sec-body p { margin: 0 0 .8rem; }
 html.av main .kk-sec.av-cur > summary h3 { font-size: 1.35rem; line-height: 1.25; }
-.kk-logos { margin: 0 0 2.4rem; padding: 1.2rem 1.35rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--gold); }
-.kk-logos h2 { margin: 0 0 .6rem; font-size: 1.25rem; line-height: 1.3; }
-.kk-logos p { margin: 0 0 .75rem; line-height: 1.65; }
-.kk-logos p:last-child { margin-bottom: 0; }
 body.sheet-open .hm-apps { display: none; }
 
 /* Reference popups (Bible, Qur'an, hadith): see initRefs() in script.js */
@@ -3282,58 +3152,45 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 }
 @media (min-width: 980px) { .dn-sa .dn-ico { display: none; } }
 
-/* ---------- Home page, desktop: "Kendi yolunuzu seçin" + featured article + timeline ---------- */
-.hm-journey { display: none; }
-@media (min-width: 980px) {
-  .hm-journey { display: block; margin-top: 2.2rem; }
-  .hm-journey a { color: inherit; text-decoration: none; }
-  .hj-kick { margin: 0; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
-  .hj-h { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.95rem; font-weight: 500; letter-spacing: 0; margin: .2rem 0 1.15rem; }
-  .hj-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2.4rem; }
-  .hj-steps { list-style: none; margin: 0; padding: 0; position: relative; }
-  .hj-steps::before { content: ""; position: absolute; left: .9rem; top: 1rem; bottom: 1rem; border-left: 2px dotted var(--gold-soft); }
-  .hj-step { position: relative; display: grid; grid-template-columns: 1.8rem 1fr; gap: .9rem; padding-bottom: 1.25rem; }
-  .hj-step:last-child { padding-bottom: 0; }
-  .hj-dot { position: relative; z-index: 1; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--surface); border: 2px solid var(--gold-soft); font-family: var(--sans); font-size: .82rem; font-weight: 700; color: var(--gold); }
-  .hj-st { margin: 0; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.32rem; font-weight: 500; line-height: 1.1; letter-spacing: 0; }
-  .hj-step p { margin: .15rem 0 .5rem; font-size: .9rem; color: var(--muted); }
-  .hj-links { display: flex; flex-wrap: wrap; gap: .5rem; }
-  .hj-links a { display: inline-flex; align-items: center; gap: .2rem; padding: .32rem .45rem .32rem .8rem; border-radius: 999px; background: var(--gold-bg); color: var(--gold-active); font-family: var(--sans); font-size: .8rem; font-weight: 600; transition: background-color .15s; }
-  .hj-links a:hover { background: rgba(185, 150, 80, .24); }
-  .hj-links svg, .hj-more svg { width: .95rem; height: .95rem; }
-  .hj-aside { display: flex; flex-direction: column; gap: 1.2rem; }
-  .hj-feat { display: flex; flex-direction: column; gap: .45rem; padding: 1.5rem 1.6rem; border-radius: 20px; background: linear-gradient(160deg, #f3e2b8, #e9cf98); transition: transform .2s, box-shadow .2s; }
-  .hj-feat:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-  .hj-ft { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.75rem; font-weight: 500; line-height: 1.05; color: #2c210d; }
-  .hj-fd { color: #4a3b1d; font-size: .9rem; line-height: 1.55; }
-  .hj-more { display: inline-flex; align-items: center; gap: .25rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; color: #7a5a1a; }
-  .hj-q { margin: 0; padding-left: 1.2rem; border-left: 3px solid var(--gold-soft); }
-  .hj-q blockquote { margin: 0; }
-  .hj-q p { margin: 0; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.12rem; font-style: italic; line-height: 1.35; letter-spacing: 0; }
-  .hj-q figcaption { margin-top: .4rem; font-family: var(--sans); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .hj-saints div { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .6rem; }
-  .hj-saints a { font-size: .84rem; border-bottom: 1px solid var(--border-strong); }
-  .hj-saints a:hover { color: var(--gold-active); border-color: var(--gold-soft); }
-  .hj-saints .hj-all { color: var(--gold); }
-  .hj-tl { margin-top: 1.8rem; padding: 1.6rem 1.9rem 1.8rem; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); }
-  .hj-track { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-  .hj-track::before { content: ""; position: absolute; left: 0; right: 0; top: 2.55rem; border-top: 2px solid var(--gold-soft); }
-  .hj-ev { display: flex; flex-direction: column; gap: .3rem; }
-  .hj-y { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.7rem; line-height: 1; color: var(--gold); }
-  .hj-tdot { position: relative; z-index: 1; width: .9rem; height: .9rem; margin: .45rem 0 .5rem; border-radius: 50%; background: var(--gold); border: 3px solid var(--surface); box-shadow: 0 0 0 2px var(--gold-soft); transition: transform .15s; }
-  .hj-ev:hover .hj-tdot { transform: scale(1.3); }
-  .hj-tn { font-family: var(--sans); font-size: .9rem; font-weight: 700; }
-  .hj-ev:hover .hj-tn, .hm-journey a:hover .hj-st { color: var(--gold-active); }
-  .hj-td { font-family: var(--sans); font-size: .78rem; color: var(--muted); }
-  .hm-journey a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 8px; }
-  [data-theme="dark"] .hj-feat { background: linear-gradient(160deg, #4a3a1a, #2f2410); }
-  [data-theme="dark"] .hj-ft { color: #fff3d6; } [data-theme="dark"] .hj-fd { color: #e8d9b5; } [data-theme="dark"] .hj-more { color: #e2bf6e; }
-}
-@media (min-width: 980px) and (prefers-reduced-motion: reduce) { .hj-feat, .hj-tdot { transition: none; } }
+/* ---------- Home page: debate cards, featured article, quote, saints, church history strip ---------- */
+/* Shown at every width since the phone app was retired; the two-column grid is desktop only (below) */
+.hm-journey { display: block; margin-top: 2.2rem; }
+.hm-journey a { color: inherit; text-decoration: none; }
+.hj-kick { margin: 0; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.hj-h { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.95rem; font-weight: 500; letter-spacing: 0; margin: .2rem 0 1.15rem; }
+.hj-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.hj-step { position: relative; display: grid; grid-template-columns: 1.8rem 1fr; gap: .9rem; padding-bottom: 1.25rem; }
+.hj-step:last-child { padding-bottom: 0; }
+.hj-dot { position: relative; z-index: 1; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--surface); border: 2px solid var(--gold-soft); font-family: var(--sans); font-size: .82rem; font-weight: 700; color: var(--gold); }
+.hj-st { margin: 0; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.32rem; font-weight: 500; line-height: 1.1; letter-spacing: 0; }
+.hj-step p { margin: .15rem 0 .5rem; font-size: .9rem; color: var(--muted); }
+.hj-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+.hj-links a { display: inline-flex; align-items: center; gap: .2rem; padding: .32rem .45rem .32rem .8rem; border-radius: 999px; background: var(--gold-bg); color: var(--gold-active); font-family: var(--sans); font-size: .8rem; font-weight: 600; transition: background-color .15s; }
+.hj-links a:hover { background: rgba(185, 150, 80, .24); }
+.hj-links svg, .hj-more svg { width: .95rem; height: .95rem; }
+.hj-aside { display: flex; flex-direction: column; gap: 1.2rem; }
+.hj-feat { display: flex; flex-direction: column; gap: .45rem; padding: 1.5rem 1.6rem; border-radius: 20px; background: linear-gradient(160deg, #f3e2b8, #e9cf98); transition: transform .2s, box-shadow .2s; }
+.hj-feat:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.hj-ft { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.75rem; font-weight: 500; line-height: 1.05; color: #2c210d; }
+.hj-fd { color: #4a3b1d; font-size: .9rem; line-height: 1.55; }
+.hj-more { display: inline-flex; align-items: center; gap: .25rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; color: #7a5a1a; }
+.hj-q { margin: 0; padding-left: 1.2rem; border-left: 3px solid var(--gold-soft); }
+.hj-q blockquote { margin: 0; }
+.hj-q p { margin: 0; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.12rem; font-style: italic; line-height: 1.35; letter-spacing: 0; }
+.hj-q figcaption { margin-top: .4rem; font-family: var(--sans); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.hj-saints div { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .6rem; }
+.hj-saints a { font-size: .84rem; border-bottom: 1px solid var(--border-strong); }
+.hj-saints a:hover { color: var(--gold-active); border-color: var(--gold-soft); }
+.hj-saints .hj-all { color: var(--gold); }
+.hj-ev:hover .hj-tn, .hm-journey a:hover .hj-st { color: var(--gold-active); }
+.hm-journey a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 8px; }
+[data-theme="dark"] .hj-feat { background: linear-gradient(160deg, #4a3a1a, #2f2410); }
+[data-theme="dark"] .hj-ft { color: #fff3d6; } [data-theme="dark"] .hj-fd { color: #e8d9b5; } [data-theme="dark"] .hj-more { color: #e2bf6e; }
+@media (prefers-reduced-motion: reduce) { .hj-feat { transition: none; } }
+@media (min-width: 980px) { .hj-grid { grid-template-columns: 1.5fr 1fr; gap: 2.4rem; } }
 
 /* Section labels sit on a tinted band when their section is highlighted: keep 4.5:1 */
 html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
-
 
 /* Computers: the Site column of the footer already lists these, so the line under the about text goes */
 @media (min-width: 980px) { .foot-about .foot-src { display: none; } }
@@ -3503,8 +3360,8 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 /* Anton (SIL OFL 1.1, see fonts/OFL-Anton.txt), the headings' typeface, as "KD Display" */
 @font-face {
   font-family: "KD Display"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("fonts/anton-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url("fonts/anton-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
 }
 @font-face {
   font-family: "KD Display"; font-style: normal; font-weight: 400; font-display: swap;
@@ -3664,7 +3521,7 @@ main .hx-t { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .hx-era-y { font: 600 .8rem var(--sans); letter-spacing: .06em; opacity: .7; }
 .hx-bar { height: 3px; border-radius: 3px; background: var(--border); overflow: hidden; }
 .hx-fill { display: block; height: 100%; width: 10%; border-radius: 3px; background: var(--gold); transform-origin: left; transition: margin-left .15s linear; }
-:root[data-theme="dark"] .hx-era { background: #efe6d3; color: #131316; }
+:root[data-theme="dark"] .hx-era { background: linear-gradient(160deg, #4a3a1a, #2f2410); color: #fff3d6; border: 1px solid rgba(226, 191, 110, .25); }
 @media (prefers-reduced-motion: reduce) { .hx-card, .hx-img img, .hx-btn { transition: none; } .hx-card:hover { transform: none; } .hx-card:hover .hx-img img { transform: none; } }
 
 /* ---- A section's painting in place of its line drawing ---- */
@@ -3690,6 +3547,28 @@ main .hx-t { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .hd-more { display: inline-flex; align-items: center; gap: .2rem; font: 600 .82rem var(--sans); color: #f1d38c; }
 .hd-more svg { width: .95rem; height: .95rem; }
 @media (prefers-reduced-motion: reduce) { .hd-card, .hd-card .hd-art { transition: none; } .hd-card:hover { transform: none; } }
+/* Phones and tablets: one column, shorter debate cards, the strip swiped by hand */
+@media (max-width: 979px) {
+  .hm-journey { margin-top: 1.8rem; }
+  .hj-h { font-size: 1.6rem; margin-bottom: .9rem; }
+  .hd-grid { grid-template-columns: 1fr; gap: .8rem; }
+  .hd-card { min-height: 15rem; padding: 1.2rem 1.2rem 1.1rem; border-radius: 18px; }
+  .hd-t { font-size: 1.7rem; }
+  .hd-d { font-size: .95rem; }
+  .hj-feat { min-height: 14rem; padding: 1.3rem 1.3rem 1.2rem; }
+  :root .hm-journey .hj-feat .hj-ft { font-size: 1.9rem; }
+  .hx { margin-top: 2.2rem; }
+  .hx-head { display: block; }
+  .hx-lead { font-size: 1rem; }
+  .hx-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 1rem calc(-1 * var(--gutter)) .8rem; padding: 0 var(--gutter); }
+  .hx-chips::-webkit-scrollbar { display: none; }
+  .hx-chip { flex: none; min-height: 2.25rem; }
+  .hx-card { width: min(19rem, 80vw); }
+  .hx-era { width: 8.5rem; padding: 1.1rem 1rem; }
+  .hx-era-n { font-size: 1.4rem; }
+}
+@media (max-width: 599px) { .hx-ctl { display: none; } }
+@media (min-width: 600px) and (max-width: 979px) { .hd-grid { grid-template-columns: 1fr 1fr; } .hd-card { min-height: 18rem; } }
 
 /* ---- Phones: the page's painting at the top of the screen; no line-drawn emblem beside it ---- */
 html.av .page-head.painted .ph-art { display: block; width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover; border-radius: 18px; margin: 0 0 1rem; box-shadow: 0 16px 34px -24px rgba(0, 0, 0, .6); }

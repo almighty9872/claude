@@ -60,6 +60,8 @@ $PageSources = @{
   'islama-cevap.html' = @('data/islama-cevap.js'); 'ateizme-cevap.html' = @('data/ateizme-cevap.js')
   'kutsal-kitap.html' = @('content/kutsal-kitap.md', 'content/kutsal-kitap-en.md'); 'erisilebilirlik.html' = @('content/erisilebilirlik.md', 'content/erisilebilirlik-en.md')
   'gizlilik.html' = @('content/gizlilik.md', 'content/gizlilik-en.md'); 'kaynaklar-ve-telif.html' = @('content/hakkinda.md', 'content/hakkinda-en.md')
+  'index.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json', 'data/tablolar.json', 'data/azizler.js', 'data/buyuk-azizler.js')
+  'iletisim.html' = @('cloudflare/contact-worker.js')   # the form and the worker that sends it on
 }
 $script:GitDates = @{}
 $script:HasGit = [bool](Get-Command git -ErrorAction SilentlyContinue) -and (Test-Path (Join-Path $Root '.git'))
@@ -537,7 +539,9 @@ function Paint-Head([string]$body, [string]$file) {
   # small or not clearly wide: shown whole, framed (a full-width band would show only a slice of it)
   $framed = ($Tablolar.art.$key.w -lt 1000) -or ($Tablolar.art.$key.h / $Tablolar.art.$key.w -gt 0.8)
   $cls = "page-head$($m.Groups[1].Value) painted$(if ($framed) { ' art-framed' })"
-  $imgs = (Art-Img $key 'ph-art' '100vw' 'high') + $(if ($framed) { Art-Img $key 'ph-frame' '360px' 'high' } else { '' })
+  # framed: the blurred copy and the frame ask for the same file (one download), the small one on desktop
+  $sz = if ($framed) { '(min-width: 980px) 360px, 100vw' } else { '100vw' }
+  $imgs = (Art-Img $key 'ph-art' $sz 'high') + $(if ($framed) { Art-Img $key 'ph-frame' $sz 'high' } else { '' })
   $open = "<header class=`"$cls`" data-art=`"$key`"$($m.Groups[2].Value)>$imgs"
   $end = $body.IndexOf('</header>', $m.Index)
   $inner = $body.Substring($m.Index + $m.Length, $end - $m.Index - $m.Length)
@@ -1524,7 +1528,7 @@ $locAlt
 <link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/kd-brand-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-ext-a.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
 <script>$HeadJs$($avJs)$HeadJs2</script>
 $ld
