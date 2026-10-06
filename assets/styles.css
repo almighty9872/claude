@@ -2,7 +2,7 @@
    Katolik Kilisesi İnanç Esasları Özeti · styles.css
    Modern reading layout. Dark = navy & gold, light = soft ivory & gold.
    No external requests: fonts are self-hosted in assets/fonts (Lexend for all
-   text, Inter for the logo; SIL Open Font License).
+   text, EB Garamond capitals for the logo; SIL Open Font License).
    All colours are CSS custom properties (section 1).
    ========================================================================= */
 
@@ -10,9 +10,10 @@
 /* The "-ext-a" files (Google Fonts' "latin-ext" files) are cut down to Latin Extended-A (U+0100-017F, which has
    the Turkish ğ Ğ ş Ş İ) plus ǽ and Ṣ, the only other letters the site uses; about 80 KB instead
    of 350 KB. Re-cut from the full Google Fonts files with pyftsubset if a page needs more. */
-/* "KD Brand": Inter (SIL OFL 1.1, see fonts/OFL-Inter.txt) cut down to the letters of the site's name, "KATOLİK DÜNYASI" */
-@font-face { font-family: "KD Brand"; font-weight: 400 700; font-display: block; src: url("fonts/kd-logo-latin.woff2") format("woff2"); unicode-range: U+0020, U+0041, U+0044, U+0049, U+004B, U+004C, U+004E, U+004F, U+0053, U+0054, U+0059, U+00DC; }
-@font-face { font-family: "KD Brand"; font-weight: 400 700; font-display: block; src: url("fonts/kd-logo-ext.woff2") format("woff2"); unicode-range: U+0130; }
+/* "KD Brand": EB Garamond (SIL OFL 1.1, see fonts/OFL.txt) cut down to the letters of the site's
+   name, "KATOLİK DÜNYASI", used only for the logo */
+@font-face { font-family: "KD Brand"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-latin.woff2") format("woff2"); unicode-range: U+0041, U+0044, U+0049, U+004B, U+004C, U+004E, U+004F, U+0053, U+0054, U+0059, U+00DC; }
+@font-face { font-family: "KD Brand"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-ext.woff2") format("woff2"); unicode-range: U+0130; }
 /* Lexend (SIL OFL 1.1, see fonts/OFL-Lexend.txt), a typeface designed for reading fluency,
    for the Settings panel's dyslexia-friendly text. Nothing downloads unless that setting is on. */
 @font-face {
@@ -182,8 +183,8 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; min-width: 0; }
 .brand .logo { width: 30px; height: 30px; color: var(--gold); flex: none; }
 .brand-name { line-height: 1; }
-/* "KATOLİK DÜNYASI": Inter capitals (a tiny subset holding only these letters), the first letters taller */
-.bn { font-family: "KD Brand", "Inter", system-ui, sans-serif; font-size: .98rem; font-weight: 600; letter-spacing: .08em; white-space: nowrap; color: var(--text); }
+/* "KATOLİK DÜNYASI": Garamond capitals, the first letters taller, like an inscription cut in stone */
+.bn { font-family: "KD Brand", Georgia, serif; font-size: 1.06rem; font-weight: 500; letter-spacing: .07em; white-space: nowrap; color: var(--text); }
 .bn-c { font-size: 1.36em; letter-spacing: .02em; }
 .brand-rule { width: 1px; height: 26px; flex: none; background: var(--border-strong); }
 /* The mark: the fish, glowing softly, turns over to the Jerusalem cross on hover or focus */
@@ -2653,29 +2654,8 @@ html.av:has(.av-dock.av-dock-solid) { --dock-h: calc(4rem + env(safe-area-inset-
 }
 @media (prefers-reduced-motion: reduce) { .hm-pill { transition: none; } }
 
-/* ---------- Type: Inter (SIL OFL 1.1, see fonts/OFL-Inter.txt), the open-source typeface
-   closest to Apple's San Francisco, with full Turkish (ç ğ ı İ ö ş ü). Both files are preloaded
-   in every page's head, so the first page already paints in Inter; "swap" only matters on a very
-   slow connection, where the text shows in the system font first rather than not at all ---------- */
-/* Arial, scaled to Inter's metrics: text keeps its place while Inter loads (no layout shift) */
-@font-face { font-family: "Inter Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"); size-adjust: 107.06%; ascent-override: 90.49%; descent-override: 22.56%; line-gap-override: 0%; }
-@font-face {
-  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
-  src: url("fonts/inter-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
-  src: url("fonts/inter-ext-a.woff2") format("woff2");
-  unicode-range: U+0100-017F, U+01FD, U+1E62;
-}
-/* the same on a computer */
-html:not([data-a11y-dyslexia="1"]) {
-  --serif: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
-  --sans: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
-}
-html:not([data-a11y-dyslexia="1"]) body { letter-spacing: -.005em; }
-:root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) { --serif: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif; --sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+/* the header and the settings panel keep the site's own type in the dyslexia setting */
+:root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) { --serif: "Lexend", Verdana, Tahoma, sans-serif; --sans: "Lexend", Verdana, Tahoma, sans-serif; }
 /* A level's heading takes the focus when it opens (for screen readers), without a ring round it */
 html.av main :is(.av-cur, .av-cur > *, .av-cur summary, .av-cur h2, .av-cur h3):focus:not(:focus-visible),
 html.av main .av-cur summary:focus, html.av main .av-cur [tabindex="-1"]:focus, html.av .av-hero h1:focus { outline: none; box-shadow: none; }
@@ -3425,56 +3405,6 @@ a.hm-card:hover { color: #fff; }
 /* the phone-style view of narrow windows keeps its own plain header */
 html.av .page-head .ph-art { display: none; }
 
-/* ---- The home page's strip of Church history: a card per event, oldest first, era by era ---- */
-.hx { margin-top: 2.6rem; }
-.hx-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
-.hx-lead { margin: 0; max-width: 38rem; color: var(--text-soft); font-size: 1.08rem; line-height: 1.5; }
-.hx-ctl { display: flex; gap: .5rem; flex: none; }
-.hx-btn { display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); cursor: pointer; transition: background .2s, transform .2s, opacity .2s; }
-.hx-btn svg { width: 1.2rem; height: 1.2rem; }
-.hx-btn:hover:not(:disabled) { background: var(--gold-bg); transform: translateY(-1px); }
-.hx-btn:disabled { opacity: .35; cursor: default; }
-.hx-btn:focus-visible, .hx-chip:focus-visible, .hx-track:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-.hx-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.2rem 0 1rem; }
-.hx-chip { padding: .42rem .95rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font: 600 .82rem var(--sans); letter-spacing: .02em; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
-.hx-chip:hover { border-color: var(--gold-soft); color: var(--text); }
-.hx-chip[aria-current="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
-.hx-track {
-  list-style: none; margin: 0 calc(-1 * var(--gutter)); padding: .4rem var(--gutter) 1.4rem;
-  display: flex; gap: 1.1rem; overflow-x: auto; overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - 3rem), transparent);
-          mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - 3rem), transparent);
-}
-.hx-track::-webkit-scrollbar { display: none; }
-.hx-card, .hx-era { flex: none; scroll-snap-align: start; border-radius: 20px; }
-.hx-card {
-  width: 19rem; display: flex; flex-direction: column; overflow: hidden;
-  background: var(--surface); border: 1px solid var(--border); box-shadow: 0 14px 30px -24px rgba(29, 36, 51, .5);
-  transition: transform .25s, box-shadow .25s;
-}
-.hx-card:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -26px rgba(29, 36, 51, .6); }
-.hx-img { position: relative; margin: 0; aspect-ratio: 3 / 2; overflow: hidden; background: #1a1712; }
-.hx-img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; transition: transform .6s; }
-.hx-card:hover .hx-img img { transform: scale(1.04); }
-.hx-body { display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.15rem 1.15rem; flex: 1; }
-.hx-y { margin: 0; font: 700 .76rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
-main .hx-t { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 1.45rem; line-height: 1.05; letter-spacing: .01em; }
-.hx-d { margin: .1rem 0 0; font-size: 1rem; line-height: 1.5; color: var(--text-soft); }
-.hx-more { display: inline-flex; align-items: center; gap: .2rem; margin-top: auto; padding-top: .4rem; font: 600 .82rem var(--sans); color: var(--gold); text-decoration: none; }
-.hx-more svg { width: .95rem; height: .95rem; }
-.hx-era {
-  width: 11rem; display: flex; flex-direction: column; justify-content: flex-end; gap: .4rem; padding: 1.3rem 1.2rem;
-  background: var(--text); color: var(--bg);
-}
-.hx-era-n { font-family: var(--display); text-transform: uppercase; font-size: 1.75rem; line-height: 1.02; overflow-wrap: anywhere; }
-.hx-era { justify-content: center; }
-.hx-track { align-items: stretch; }
-.hx-era-y { font: 600 .8rem var(--sans); letter-spacing: .06em; opacity: .7; }
-.hx-bar { height: 3px; border-radius: 3px; background: var(--border); overflow: hidden; }
-.hx-fill { display: block; height: 100%; width: 10%; border-radius: 3px; background: var(--gold); transform-origin: left; transition: margin-left .15s linear; }
-:root[data-theme="dark"] .hx-era { background: linear-gradient(160deg, #4a3a1a, #2f2410); color: #fff3d6; border: 1px solid rgba(226, 191, 110, .25); }
-@media (prefers-reduced-motion: reduce) { .hx-card, .hx-img img, .hx-btn { transition: none; } .hx-card:hover { transform: none; } .hx-card:hover .hx-img img { transform: none; } }
 
 /* ---- A section's painting in place of its line drawing ---- */
 .ill-art.ill-photo { width: 100%; max-width: 30rem; margin: 0 0 1.2rem; }
@@ -3509,17 +3439,7 @@ main .hx-t { margin: 0; font-family: var(--display); font-weight: 400; text-tran
   .hd-d { font-size: .95rem; }
   .hj-feat { min-height: 14rem; padding: 1.3rem 1.3rem 1.2rem; }
   :root .hm-journey .hj-feat .hj-ft { font-size: 1.9rem; }
-  .hx { margin-top: 2.2rem; }
-  .hx-head { display: block; }
-  .hx-lead { font-size: 1rem; }
-  .hx-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 1rem calc(-1 * var(--gutter)) .8rem; padding: 0 var(--gutter); }
-  .hx-chips::-webkit-scrollbar { display: none; }
-  .hx-chip { flex: none; min-height: 2.25rem; }
-  .hx-card { width: min(19rem, 80vw); }
-  .hx-era { width: 8.5rem; padding: 1.1rem 1rem; }
-  .hx-era-n { font-size: 1.4rem; }
 }
-@media (max-width: 599px) { .hx-ctl { display: none; } }
 @media (min-width: 600px) and (max-width: 979px) { .hd-grid { grid-template-columns: 1fr 1fr; } .hd-card { min-height: 18rem; } }
 
 /* ---- Phones: the page's painting at the top of the screen; no line-drawn emblem beside it ---- */
@@ -3536,8 +3456,8 @@ html.av .page-head.painted .ph-art { width: auto; max-width: 100%; height: auto;
 /* bold reads as semibold: 600 instead of 700 */
 strong, b { font-weight: 600; }
 :root[data-a11y-dyslexia="1"] :is(strong, b) { font-weight: 700; }
-:root:not([data-a11y-dyslexia="1"]) :is(.mira-name, .faq-q, .why-lede, .why-obj-q, .why-door-t, .why-cta-t, .why-hook-t, main h3:not(.hx-t):not(.hj-st), main h4, .bref, .gloss, .kk-sec > summary h3) { font-weight: 500; }
-:root:not([data-a11y-dyslexia="1"]) :is(.mass-role, .hx-y, .ill-kick, .why-hook-k, .why-q-label, .why-obj-label, .stage-n, .why-chain-n, .hm-label, .hj-kick, .hm-go, .label, .hj-more, .rt-c-myst strong) { font-weight: 600; }
+:root:not([data-a11y-dyslexia="1"]) :is(.mira-name, .faq-q, .why-lede, .why-obj-q, .why-door-t, .why-cta-t, .why-hook-t, main h3:not(.hj-st), main h4, .bref, .gloss, .kk-sec > summary h3) { font-weight: 500; }
+:root:not([data-a11y-dyslexia="1"]) :is(.mass-role, .ill-kick, .why-hook-k, .why-q-label, .why-obj-label, .stage-n, .why-chain-n, .hm-label, .hj-kick, .hm-go, .label, .hj-more, .rt-c-myst strong) { font-weight: 600; }
 
 /* ---------- Painted page headers: a full-width banner, the painting's name on it at the lower
    right, the page's title under it. Every header painting is landscape (data/tablolar.json "pages").
@@ -3562,14 +3482,12 @@ main .page-head.painted .ph-text .label { color: var(--gold) !important; }
 body, html:not([data-a11y-dyslexia="1"]) body { font-size: calc(1.1875rem * .9); line-height: 1.75; letter-spacing: 0; }
 @media (min-width: 980px) { .prose { font-size: 1.1rem; line-height: 1.75; } }
 /* headings in normal case, a weight up instead of the tall capitals */
-main h1, main h2, .hj-h, .hm-col h2, .hm-card .hm-day, .hm-card .hm-sn, .hm-card .hm-mn, :root .hm-journey .hj-feat .hj-ft, main .hx-t, .hx-era-n, .hd-t {
+main h1, main h2, .hj-h, .hm-col h2, .hm-card .hm-day, .hm-card .hm-sn, .hm-card .hm-mn, :root .hm-journey .hj-feat .hj-ft, .hd-t {
   text-transform: none !important; font-weight: 600 !important; letter-spacing: -.01em !important; line-height: 1.15 !important;
 }
 main h1 { font-size: clamp(1.9rem, 4.4vw, 3rem); }
 main .prose h2, main h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); }
-main .hx-t { font-size: 1.2rem !important; }
 .hd-t { font-size: 1.6rem !important; }
-.hx-era-n { font-size: 1.35rem !important; }
 /* the dyslexia setting now adds room between letters, words and lines */
 [data-a11y-dyslexia="1"] body { letter-spacing: .02em; word-spacing: .1em; line-height: 1.9; }
 main .page-head.painted .ph-text h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem) !important; }
@@ -3577,3 +3495,118 @@ main .work-hero:has(> .banner-only) { padding-top: 0 !important; margin-top: 0 !
 main .page-head.banner-only { width: 100%; }
 main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important; width: max-content; max-width: calc(100vw - 1.4rem); }
 @media (min-width: 980px) { main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + 1rem) !important; } }
+
+/* ---- The home page's strip of Church history: a round picture per event, oldest first; a scale
+   of dates and a slider under it; the longer text in a card on hover (script.js, initHistory) ---- */
+.hx { margin-top: 2.6rem; }
+.hx-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+.hx-hl { display: inline-flex; align-items: center; gap: .3rem; color: inherit; text-decoration: none; }
+.hx-hl svg { width: 1.3rem; height: 1.3rem; color: var(--gold); transition: transform .2s; }
+.hx-hl:hover svg, .hx-hl:focus-visible svg { transform: translateX(3px); }
+.hx-hl:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; text-decoration-color: var(--gold-soft); }
+.hx-lead { margin: 0; max-width: 38rem; color: var(--text-soft); font-size: 1.02rem; line-height: 1.5; }
+.hx-ctl { display: flex; gap: .5rem; flex: none; }
+.hx-btn { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); cursor: pointer; transition: background .2s, opacity .2s; }
+.hx-btn svg { width: 1.15rem; height: 1.15rem; }
+.hx-btn:hover:not(:disabled) { background: var(--gold-bg); }
+.hx-btn:disabled { opacity: .35; cursor: default; }
+.hx-btn:focus-visible, .hx-track:focus-visible, .hx-a:focus-visible, .hx-tick:focus-visible, .hx-range:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hx-track {
+  list-style: none; margin: 1rem calc(-1 * var(--gutter)) 0; padding: .6rem var(--gutter) .4rem;
+  display: flex; gap: .4rem; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); scrollbar-width: none;
+}
+.hx-track::-webkit-scrollbar { display: none; }
+@media (hover: hover) and (pointer: fine) { .hx-track { cursor: grab; } .hx-track .hx-a { cursor: pointer; } }
+.hx-track.is-drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.hx-track.is-drag .hx-a { cursor: grabbing; pointer-events: none; }
+.hx-it { flex: none; width: 9.6rem; scroll-snap-align: start; }
+.hx-a { display: flex; flex-direction: column; align-items: center; gap: .2rem; padding: .3rem .35rem .5rem; border-radius: 16px; color: inherit; text-decoration: none; text-align: center; }
+.hx-ph { display: block; width: 6.4rem; height: 6.4rem; border-radius: 50%; overflow: hidden; margin-bottom: .45rem; background: #1a1712; box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--gold-soft), 0 12px 22px -14px rgba(29, 36, 51, .6); transition: transform .25s, box-shadow .25s; }
+.hx-ph img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.hx-a:hover .hx-ph, .hx-a:focus-visible .hx-ph { transform: translateY(-3px); box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--gold), 0 16px 26px -14px rgba(29, 36, 51, .65); }
+.hx-y { font: 600 .74rem var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+.hx-t { font-weight: 600; font-size: .98rem; line-height: 1.22; color: var(--text); }
+.hx-s { font-size: .84rem; line-height: 1.38; color: var(--text-soft); }
+.hx-a:hover .hx-t { text-decoration: underline; text-decoration-color: var(--gold-soft); text-underline-offset: .18em; }
+/* the scale of dates over the slider */
+.hx-scale { position: relative; margin: .5rem 0 0; padding-top: 1.7rem; }
+.hx-ticks { position: absolute; inset: 0 .55rem auto; height: 1.7rem; }
+.hx-tick { position: absolute; top: 0; transform: translateX(-50%); padding: .1rem .3rem; min-height: 24px; border: 0; border-radius: 6px; background: none; color: var(--muted); font: 600 .78rem var(--sans); letter-spacing: .03em; cursor: pointer; }
+.hx-tick::after { content: ""; position: absolute; left: 50%; bottom: -.35rem; width: 1px; height: .45rem; background: var(--border-strong); }
+.hx-tick:hover { color: var(--gold); }
+.hx-tick.is-hid { visibility: hidden; }
+.hx-range { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 1.6rem; margin: 0; background: transparent; cursor: pointer; }
+.hx-range::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--border-strong); }
+.hx-range::-moz-range-track { height: 4px; border-radius: 4px; background: var(--border-strong); }
+.hx-range::-webkit-slider-thumb { -webkit-appearance: none; width: 1.15rem; height: 1.15rem; margin-top: calc(2px - .575rem); border-radius: 50%; background: var(--gold); border: 3px solid var(--surface); box-shadow: 0 1px 4px rgba(0, 0, 0, .35); }
+.hx-range::-moz-range-thumb { width: 1.15rem; height: 1.15rem; border-radius: 50%; background: var(--gold); border: 3px solid var(--surface); box-shadow: 0 1px 4px rgba(0, 0, 0, .35); }
+/* the longer text, laid over the page */
+.hx-pop { position: fixed; z-index: 60; width: min(20rem, calc(100vw - 24px)); padding: .85rem 1rem; border-radius: 14px; background: var(--surface); color: var(--text-soft); border: 1px solid var(--border); box-shadow: var(--glass-shadow); font-size: .9rem; line-height: 1.5; pointer-events: none; animation: hx-pop .16s ease-out; }
+@keyframes hx-pop { from { opacity: 0; transform: translateY(4px); } }
+@media (max-width: 979px) {
+  .hx { margin-top: 2.2rem; }
+  .hx-head { display: block; }
+  .hx-lead { font-size: .98rem; }
+  .hx-it { width: 8.4rem; }
+  .hx-ph { width: 5.4rem; height: 5.4rem; }
+}
+@media (max-width: 599px) { .hx-ctl { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hx-ph, .hx-hl svg { transition: none; } .hx-a:hover .hx-ph { transform: none; } .hx-pop { animation: none; } }
+
+/* ---- Kilise'nin Tarihi (kilise-tarihi.html): the eras, and their events down a line of dates ---- */
+.kt-page { max-width: 1000px; }
+.kt-nav { position: sticky; top: calc(var(--header-h) + .5rem); z-index: 5; display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; margin: 1.6rem auto 2.4rem; padding: .45rem; width: fit-content; max-width: 100%; border-radius: 999px; background: var(--glass-menu); border: 1px solid var(--glass-brd); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.kt-nav a { display: flex; flex-direction: column; align-items: center; padding: .3rem .9rem; border-radius: 999px; color: var(--text); text-decoration: none; line-height: 1.2; }
+.kt-nav a:hover, .kt-nav a[aria-current="true"] { background: var(--gold-bg); }
+.kt-nav a[aria-current="true"] .kt-en { color: var(--gold-active); }
+.kt-en { font-weight: 600; font-size: .9rem; }
+.kt-ey { font-size: .72rem; color: var(--muted); letter-spacing: .04em; }
+.kt-era { scroll-margin-top: calc(var(--header-h) + 5rem); margin-bottom: 3rem; }
+.kt-era-head { max-width: 44rem; margin: 0 auto 1.8rem; text-align: center; }
+.kt-span { margin: 0 0 .2rem; font: 600 .8rem var(--sans); letter-spacing: .14em; color: var(--gold); }
+main .kt-era-head h2 { margin: 0 0 .7rem; font-size: clamp(1.7rem, 3.2vw, 2.3rem); }
+.kt-intro { margin: 0; color: var(--text-soft); font-size: 1.05rem; line-height: 1.7; }
+.kt-list { position: relative; list-style: none; margin: 0; padding: 0 0 0 2.4rem; }
+.kt-list::before { content: ""; position: absolute; left: .7rem; top: .6rem; bottom: .6rem; width: 2px; border-radius: 2px; background: linear-gradient(var(--gold-soft), var(--border)); }
+.kt-ev { position: relative; display: grid; grid-template-columns: 15rem 1fr; gap: 1.6rem; align-items: start; padding: 1.4rem 0; scroll-margin-top: calc(var(--header-h) + 5.5rem); }
+.kt-ev + .kt-ev { border-top: 1px solid var(--border); }
+.kt-dot { position: absolute; left: calc(-2.4rem + .7rem - 7px + 1px); top: 1.9rem; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 3px solid var(--gold); }
+.kt-img { margin: 0; }
+.kt-img img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; box-shadow: 0 14px 28px -20px rgba(29, 36, 51, .6); }
+.kt-img figcaption { margin-top: .4rem; font-size: .74rem; line-height: 1.4; color: var(--muted); }
+.kt-y { margin: 0 0 .15rem; font: 600 .8rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-height: 1.25; }
+.kt-s { margin: 0 0 .5rem; font-weight: 600; color: var(--text); }
+.kt-d { margin: 0; color: var(--text-soft); line-height: 1.75; }
+.kt-more { display: inline-flex; align-items: center; gap: .2rem; margin-top: .6rem; font-weight: 600; font-size: .92rem; color: var(--gold); text-decoration: none; }
+.kt-more svg { width: 1rem; height: 1rem; }
+.kt-more:hover { text-decoration: underline; }
+.kt-ev:target .kt-dot { background: var(--gold); box-shadow: 0 0 0 6px var(--gold-bg); }
+.kt-ev:target { animation: kt-hi 2.4s ease-out; }
+@keyframes kt-hi { from { background: var(--gold-bg); } to { background: transparent; } }
+.kt-end { max-width: 44rem; margin: 1rem auto 3rem; text-align: center; color: var(--text-soft); font-size: 1.05rem; }
+@media (max-width: 759px) {
+  .kt-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; border-radius: 16px; scrollbar-width: none; width: auto; }
+  .kt-nav::-webkit-scrollbar { display: none; }
+  .kt-nav a { flex: none; padding: .3rem .7rem; }
+  .kt-list { padding-left: 1.8rem; }
+  .kt-list::before { left: .45rem; }
+  .kt-dot { left: calc(-1.8rem + .45rem - 6px); top: 1.75rem; }
+  .kt-ev { grid-template-columns: 1fr; gap: .9rem; }
+  .kt-intro { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) { .kt-ev:target { animation: none; } }
+/* ---- Articles: the parts still to come, and the bar at the top for how far along the reader is ---- */
+.kd-later { display: none !important; }
+.kd-more { height: 1px; }
+.kd-in { animation: kd-in .5s ease-out; }
+@keyframes kd-in { from { opacity: 0; transform: translateY(14px); } }
+.read-prog { position: fixed; top: 0; left: 0; right: 0; z-index: 400; height: 3px; pointer-events: none; background: transparent; }
+.read-prog span { display: block; height: 100%; background: linear-gradient(90deg, var(--gold-soft), var(--gold)); transform: scaleX(0); transform-origin: 0 50%; }
+@media print { .read-prog { display: none; } .kd-later { display: revert !important; } }
+.hx-tick:first-child { transform: none; }
+.hx-tick:first-child::after { left: .3rem; }
+.hx-tick:last-child { transform: translateX(-100%); }
+.hx-tick:last-child::after { left: auto; right: .3rem; }
+.hx-track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }

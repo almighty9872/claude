@@ -42,7 +42,8 @@
   "aziz-benedictus.html": "n-benedict",
   "padovali-aziz-antonius.html": "n-padua",
   "lisieuxlu-kucuk-teresa.html": "n-roses",
-  "aziz-ignatius-loyola.html": "l-montserrat"
+  "aziz-ignatius-loyola.html": "l-montserrat",
+  "kilise-tarihi.html": "n-basilica"
  },
  "art": {
   "05franc": {
@@ -1078,6 +1079,17 @@
    "w": 1600,
    "h": 1190,
    "y": 35
+  },
+  "n-basilica": {
+   "t": "Dor sütunlu Konstantin Bazilikası",
+   "te": "The Basilica of Constantine with a Doric Colonnade",
+   "a": "Niccolò Codazzi",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.139764.html",
+   "w": 1600,
+   "h": 1142,
+   "y": 55
   }
  },
  "sections": {

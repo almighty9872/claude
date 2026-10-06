@@ -61,6 +61,7 @@ $PageSources = @{
   'kutsal-kitap.html' = @('content/kutsal-kitap.md', 'content/kutsal-kitap-en.md'); 'erisilebilirlik.html' = @('content/erisilebilirlik.md', 'content/erisilebilirlik-en.md')
   'gizlilik.html' = @('content/gizlilik.md', 'content/gizlilik-en.md'); 'kaynaklar-ve-telif.html' = @('content/hakkinda.md', 'content/hakkinda-en.md')
   'index.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json', 'data/tablolar.json', 'data/azizler.js', 'data/buyuk-azizler.js')
+  'kilise-tarihi.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json')
   'iletisim.html' = @('cloudflare/contact-worker.js')   # the form and the worker that sends it on
 }
 $script:GitDates = @{}
@@ -490,6 +491,8 @@ $IcoClose  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 # purely decorative (repeating the nav category, or just the page's own title back at itself).
 $IcoDoor     = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21V4.5A1.5 1.5 0 0 1 8.5 3h5L18 6.5V21"/><path d="M4 21h16"/><circle cx="14.3" cy="12.5" r=".6" fill="currentColor" stroke="none"/></svg>'
 $IcoKey      = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="3.7"/><path d="M9.8 9.8 18.5 18.5"/><path d="M15 15l2.2-2.2"/><path d="M17.8 17.8l2.2-2.2"/></svg>'
+# Kilise'nin tarihi: an hourglass
+$IcoHourglass = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3h11M6.5 21h11"/><path d="M7.5 3c0 4.6 4.5 6 4.5 9s-4.5 4.4-4.5 9"/><path d="M16.5 3c0 4.6-4.5 6-4.5 9s4.5 4.4 4.5 9"/><path d="M9.6 18.6h4.8"/></svg>'
 $IcoRoots    = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3.1"/><path d="M12 9.1V14"/><path d="M12 14 8 20M12 14v6M12 14l4 6"/></svg>'
 $IcoCompass  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.3 8.7 13.2 13.2 8.7 15.3 10.8 10.8Z"/></svg>'
 $IcoChalice  = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10"/><path d="M7.5 4c0 4.5 1.3 8 4.5 8s4.5-3.5 4.5-8"/><path d="M12 12v5.5"/><path d="M8 21h8"/><path d="M12 17.5v3.5"/></svg>'
@@ -630,7 +633,7 @@ $Logo = '<svg class="logo" viewBox="0 0 100 100" aria-hidden="true" focusable="f
 $IchthysSvg = '<svg viewBox="0 0 48 24" focusable="false"><path d="M3 12C13-.5 33-1 45 20.5M3 12C13 24.5 33 25 45 3.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M24 6.5v11M19.5 11h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
 $JerusalemSvg = '<svg viewBox="0 0 100 100" focusable="false"><g fill="currentColor"><rect x="44.5" y="10" width="11" height="80" rx="1"/><rect x="10" y="44.5" width="80" height="11" rx="1"/><rect x="32" y="7" width="36" height="9" rx="1"/><rect x="32" y="84" width="36" height="9" rx="1"/><rect x="7" y="32" width="9" height="36" rx="1"/><rect x="84" y="32" width="9" height="36" rx="1"/><rect x="24.5" y="18" width="5" height="18" rx=".6"/><rect x="18" y="24.5" width="18" height="5" rx=".6"/><rect x="70.5" y="18" width="5" height="18" rx=".6"/><rect x="64" y="24.5" width="18" height="5" rx=".6"/><rect x="24.5" y="64" width="5" height="18" rx=".6"/><rect x="18" y="70.5" width="18" height="5" rx=".6"/><rect x="70.5" y="64" width="5" height="18" rx=".6"/><rect x="64" y="70.5" width="18" height="5" rx=".6"/></g></svg>'
 $BrandMark = '<span class="bm" aria-hidden="true"><span class="bm-in"><span class="bm-face bm-fish"><span class="bm-halo"></span>' + $IchthysSvg + '</span><span class="bm-face bm-cross">' + $JerusalemSvg + '</span></span></span>'
-# The name in capitals (a tiny Inter subset holding only these letters, preloaded); read as
+# The name in capitals (a tiny EB Garamond subset holding only these letters, preloaded); read as
 # words by screen readers
 $BrandName = '<span class="brand-name"><span class="visually-hidden">Katolik Dünyası</span><span class="bn" lang="tr" aria-hidden="true"><span class="bn-c">K</span>ATOLİK <span class="bn-c">D</span>ÜNYASI</span></span>'
 $Favicon = 'data:image/svg+xml,' + ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#16161a"/><g fill="#d6b16b" transform="translate(12 12) scale(.76)">' + $CrossShapes + '</g></svg>').Replace('<', '%3C').Replace('>', '%3E').Replace('#', '%23').Replace('"', "'")
@@ -905,7 +908,8 @@ $KaynaklarNav = @(
   @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille'; te = 'The Parables of Jesus'; se = 'Thirty-two parables, plainly explained' },
   @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler';              te = 'The Bible'; se = 'Approved translations' },
   @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri"; te = 'Find a Church'; se = 'Catholic churches in Turkey' },
-  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e"; te = 'Christianity in Anatolia'; se = 'From Paul to Nicaea' }
+  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e"; te = 'Christianity in Anatolia'; se = 'From Paul to Nicaea' },
+  @{ href = 'kilise-tarihi.html'; t = "Kilise$($Apos)nin Tarihi"; s = 'Havarilerden bugüne'; te = 'History of the Church'; se = 'From the apostles to today' }
 )
 $KatekizmPages = @('katekizm.html') + ($TextNav | ForEach-Object { $_.href })
 # The five links shown directly in the bar at all times; everything else (including these
@@ -953,6 +957,7 @@ $NavIcons = @{
   'sss.html'             = $IcoAsk
   'kiliseler.html'       = $IcoPin
   'topraklarimizda-hristiyanlik.html' = $IcoRoots
+  'kilise-tarihi.html'   = $IcoHourglass
   'islama-cevap.html'    = $IcoAnswer
   'ateizme-cevap.html'   = $IcoCosmos
   'iletisim.html'        = $IcoMail
@@ -982,6 +987,7 @@ $SheetNav = @(
     @{ href = 'azizler.html'; t = 'Azizler'; s = 'Yılın her günü için bir aziz'; te = 'Saints'; se = 'A saint for every day of the year' },
     @{ href = 'mucizeler.html'; t = 'Mucizeler'; s = 'Görünmeler, kalıntılar, mucizeler'; te = 'Miracles'; se = 'Apparitions, relics, miracles' },
     @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e"; te = 'Christianity in Anatolia'; se = 'From Paul to Nicaea' },
+    @{ href = 'kilise-tarihi.html'; t = "Kilise$($Apos)nin Tarihi"; s = 'Havarilerden bugüne'; te = 'History of the Church'; se = 'From the apostles to today' },
     @{ href = 'kiliseler.html'; t = 'Kilise Bul'; s = "Türkiye$($Apos)de kiliseler"; te = 'Find a Church'; se = 'Churches in Turkey' }) },
   @{ label = 'Site'; labelEn = 'Site'; items = @(
     @{ href = 'iletisim.html'; t = 'İletişim'; s = 'Bize ulaşın'; te = 'Contact'; se = 'Get in touch' },
@@ -1023,7 +1029,7 @@ foreach ($f in @('neden-katoligiz.html', 'katekizm.html', 'kutsal-kitap.html', '
 foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'tesbih-tarihi.html', 'ekler.html', 'gunah-cikarma.html')) { $AppOf[$f] = 'dua' }
 $AppOf['islama-cevap.html'] = 'tartis'
 $AppOf['ateizme-cevap.html'] = 'tartis'
-foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
+foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kilise-tarihi.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
 foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
 
 # ---- Phones: every page but the home screen is shown as an app screen (script.js, initAppView).
@@ -1447,6 +1453,11 @@ function Write-Page {
   $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches){document.documentElement.classList.add('av');setTimeout(function(){document.documentElement.classList.add('av-ready')},3000)}" }
   $avNav = if ($isHome) { '' } else { Av-Nav $File $false }
   $appAttr += if ($isHome) { '' } else { " data-avp=`"$File`"" }
+  # An article (every page but the home page, the Katekizm's, the calendar of saints, the
+  # churches and the contact form): read as one long page that grows as it is scrolled, with a
+  # bar at the top for how far along the reader is (script.js, initArticleFlow)
+  $notArticle = $isHome -or $File -like 'en/*' -or ($KatekizmPages -contains $File) -or (@('azizler.html', 'kiliseler.html', 'iletisim.html', '404.html', 'katesizm.html') -contains $File)
+  if (-not $notArticle) { $appAttr += ' data-article' }
   $a11yHtml = $A11yWidgetHtml
   # The TR | EN switch: links to the page's two addresses (so crawlers find both), a pair of
   # buttons that switch in place where there is only one (404.html)
@@ -1529,8 +1540,8 @@ $locAlt
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preload" href="assets/fonts/kd-logo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/kd-logo-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/kd-brand-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/lexend-ext-a.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
@@ -2752,6 +2763,39 @@ Write-Page -File 'tesbih-tarihi.html' -Title "Tesbihin Tarihi | $SiteName" -Titl
   -Description "Tesbihin tarihi: Kutsal Kitap'taki kökleri, çakıl taşlarından boncuklara, Aziz Dominik, İnebahtı, Lourdes, Fatima, Işık Gizemleri ve ruhsal savaş." -DescriptionEn "The history of the Rosary: its roots in Scripture, from pebbles to beads, St. Dominic, Lepanto, Lourdes, Fatima, the Luminous Mysteries and spiritual warfare." `
   -Path 'tesbih-tarihi.html' -Body $thBody -JsonLd @($thLd, (Breadcrumb-Ld 'Tesbihin Tarihi' 'tesbih-tarihi.html' 'Tesbih Duası' 'tesbih-duasi.html')) -OgType 'article'
 
+# ================================================================== KILISE'NIN TARIHI (kilise-tarihi.html)
+# The whole of data/kilise-tarihi.json as one article: an era bar to jump with, then each era
+# (its years, a short introduction) and its events down a line of dates, each with its picture,
+# its short line and the full story. The home page's strip links each event here (#olay-N).
+$ktN = 0; $ktEraNav = New-Object System.Collections.Generic.List[string]
+$ktEras = ($Tarih.eras | ForEach-Object {
+  $era = $_
+  $ktEraNav.Add("<a href=`"#donem-$($era.id)`"><span class=`"kt-en`">$($era.t)</span><span class=`"kt-ey`">$($era.span)</span></a>")
+  $evs = ($Tarih.items | Where-Object { $_.era -eq $era.id } | ForEach-Object {
+    $it = $_; $script:ktN++
+    $g = $TarihImg.($it.img)
+    $cap = if ($g) { "<figcaption>$($g.a) · <cite>$($g.t)</cite></figcaption>" } else { '' }
+    $more = if ($it.link) { "<a class=`"kt-more`" href=`"$($it.link)`">Devamını okuyun<svg viewBox=`"0 0 24 24`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"2`" stroke-linecap=`"round`" stroke-linejoin=`"round`"><path d=`"m9 6 6 6-6 6`"/></svg></a>" } else { '' }
+    "<li class=`"kt-ev`" id=`"olay-$script:ktN`"><span class=`"kt-dot`" aria-hidden=`"true`"></span>" +
+      "<figure class=`"kt-img`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`">$cap</figure>" +
+      "<div class=`"kt-body`"><p class=`"kt-y`">$($it.y)</p><h3 class=`"kt-t`">$($it.t)</h3><p class=`"kt-s`">$($it.s)</p><p class=`"kt-d`">$($it.d)</p>$more</div></li>"
+  }) -join ''
+  "<section class=`"kt-era`" id=`"donem-$($era.id)`" aria-labelledby=`"donem-$($era.id)-h`"><header class=`"kt-era-head`"><p class=`"kt-span`">$($era.span)</p>" +
+    "<h2 id=`"donem-$($era.id)-h`">$($era.t)</h2><p class=`"kt-intro`">$($era.intro)</p></header><ol class=`"kt-list`">$evs</ol></section>"
+}) -join "`n"
+$ktBody = @"
+<div class="wrap kt-page">
+  <header class="page-head center" id="bas">$(Page-Ico $IcoHourglass)<h1>Kilise$($Apos)nin Tarihi</h1><p class="sub">Pentikost$($Apos)tan II. Vatikan Konsili$($Apos)ne, iki bin yılın $ktN önemli olayı. Her biri kendi tablosu ve kısa hikâyesiyle, eskiden yeniye.</p></header>
+  <nav class="kt-nav" aria-label="Dönemler">$($ktEraNav -join '')</nav>
+$ktEras
+  <p class="kt-end">Hikâye burada bitmiyor: Kilise bugün de yoluna devam ediyor. Bu toprakların payına düşen bölüm için <a href="topraklarimizda-hristiyanlik.html">Topraklarımızda Hristiyanlık</a>, o yolda yürüyenler için <a href="azizler.html">Azizler</a> sayfasına bakın.</p>
+</div>
+"@
+$ktLd = '{"@context":"https://schema.org","@type":"Article","headline":"Kilise' + "'" + 'nin Tarihi","inLanguage":"tr","mainEntityOfPage":' + (JStr "$SiteUrl/kilise-tarihi.html") + '}'
+Write-Page -File 'kilise-tarihi.html' -Title "Kilise$($Apos)nin Tarihi | $SiteName" -TitleEn "History of the Church | $SiteName" `
+  -Description "Kilise'nin tarihi: Pentikost'tan İznik ve Efes konsillerine, manastırlardan Trento'ya, I. ve II. Vatikan konsillerine kadar $ktN olay, tablolarıyla." -DescriptionEn "The history of the Church: $ktN events from Pentecost to the Second Vatican Council, each with its painting." `
+  -Path 'kilise-tarihi.html' -Body $ktBody -JsonLd @($ktLd, (Breadcrumb-Ld "Kilise$($Apos)nin Tarihi" 'kilise-tarihi.html')) -OgType 'article'
+
 # ================================================================== MUCIZELER (mucizeler.html)
 $Miracles = Read-Data 'mucizeler.js'
 $MiracleIcons = @{
@@ -3115,6 +3159,8 @@ $HomeApps = @(
        s = 'Meryem Ana görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler.'; se = 'Marian apparitions, the Shroud of Turin, Eucharistic miracles and the incorrupt saints.' },
     @{ f = 'topraklarimizda-hristiyanlik.html'; ico = $IcoRoots; t = 'Topraklarımızda Hristiyanlık'; te = 'Christianity in Anatolia'
        s = "Pavlus$($Apos)un memleketi, Vahiy$($Apos)in yedi kilisesi, İznik Konsili."; se = "Paul's homeland, the seven churches of Revelation, the Council of Nicaea." },
+    @{ f = 'kilise-tarihi.html'; ico = $IcoHourglass; t = "Kilise$($Apos)nin Tarihi"; te = 'History of the Church'
+       s = 'Pentikost$($Apos)tan II. Vatikan Konsili$($Apos)ne, iki bin yılın önemli olayları.'; se = 'From Pentecost to the Second Vatican Council, two thousand years in brief.' },
     @{ f = 'kiliseler.html'; ico = $IcoPin; t = 'Kilise Bul'; te = 'Find a Church'
        s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches in Turkey where you can attend Mass, city by city.' }) }
 )
@@ -3182,28 +3228,27 @@ function Home-Page([string]$lang) {
     $links = ($_.l | ForEach-Object { "<a href=`"$($_[0])`">$(L $_[1] $_[2])$IcoChevR</a>" }) -join ''
     "<li class=`"hj-step`"><span class=`"hj-dot`" aria-hidden=`"true`">$n</span><div><h3 class=`"hj-st`">$(L $_.t $_.te)</h3><p>$(L $_.d $_.de)</p><div class=`"hj-links`">$links</div></div></li>"
   }) -join ''
-  # The Church's history as a strip of cards, oldest first (data/kilise-tarihi.json): each era
-  # opens with a title card, each card has its picture (assets/art/tl), year, title and a line or
-  # three; the chips above jump to an era, the arrows page through (script.js, initHistory)
-  $prevEra = ''; $tlCards = New-Object System.Collections.Generic.List[string]; $n = 0
+  # The Church's history as a strip of small round pictures, oldest first (data/kilise-tarihi.json):
+  # each with its year, title and a short line; hovering or focusing one shows the longer text,
+  # clicking it opens the event on kilise-tarihi.html. A scale of dates and a slider under the
+  # strip move along it; a mouse can drag it sideways (script.js, initHistory)
+  $tlItems = New-Object System.Collections.Generic.List[string]; $n = 0
+  $tlMarks = @(0, 18, 31, 36, 48, 61)
+  $tlTicks = New-Object System.Collections.Generic.List[string]
   foreach ($it in $Tarih.items) {
-    if ($it.era -ne $prevEra) {
-      $era = $Tarih.eras | Where-Object { $_.id -eq $it.era }
-      $tlCards.Add("<li class=`"hx-era`" id=`"tarih-$($it.era)`"><span class=`"hx-era-n`">$($era.t)</span><span class=`"hx-era-y`">$($it.y)</span></li>")
-      $prevEra = $it.era
-    }
+    $yr = [regex]::Match($it.y, '\d+').Value
+    if ($tlMarks -contains $n) { $tlTicks.Add("<button type=`"button`" class=`"hx-tick`" data-hx-to=`"$n`" style=`"left:$([math]::Round($n * 100 / ($Tarih.items.Count - 1), 2))%`" aria-label=`"$yr yılına git`">$yr</button>") }
     $n++
-    $more = if ($it.link) { "<a class=`"hx-more`" href=`"$($it.link)`">Devamı$IcoChevR</a>" } else { '' }
-    $tlCards.Add("<li class=`"hx-card`" data-era=`"$($it.era)`"><figure class=`"hx-img`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`"></figure><div class=`"hx-body`"><p class=`"hx-y`">$($it.y)</p><h3 class=`"hx-t`">$($it.t)</h3><p class=`"hx-d`">$($it.d)</p>$more</div></li>")
+    $tlItems.Add("<li class=`"hx-it`" data-y=`"$yr`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
+      "<span class=`"hx-y`">$($it.y)</span><span class=`"hx-t`">$($it.t)</span><span class=`"hx-s`">$($it.s)</span></a><span class=`"hx-d`" hidden>$($it.d)</span></li>")
   }
-  $tlChips = ($Tarih.eras | ForEach-Object { "<button type=`"button`" class=`"hx-chip`" data-hx-era=`"$($_.id)`">$($_.t)</button>" }) -join ''
   $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''
   $lists = @"
 <div class="hm-journey">
   <div class="hj-grid">
     <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">Tartış</p><h2 class="hj-h" id="hj-h">Sorular ve itirazlar</h2>
       <div class="hd-grid">
-        <a class="hd-card" href="islama-cevap.html">$(Art-Img '46ecceho' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
         <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
       </div>
     </section>
@@ -3214,11 +3259,11 @@ function Home-Page([string]$lang) {
     </aside>
   </div>
   <section class="hx" aria-labelledby="hx-h">
-    <div class="hx-head"><div><p class="hj-kick">Tarih</p><h2 class="hj-h" id="hx-h">Kilise$($Apos)nin tarihi</h2><p class="hx-lead">Havarilerden bugüne, Kilise tarihinin önemli olayları ve belgeleri.</p></div>
+    <div class="hx-head"><div><p class="hj-kick">Tarih</p><h2 class="hj-h" id="hx-h"><a class="hx-hl" href="kilise-tarihi.html">Kilise$($Apos)nin tarihi$IcoChevR</a></h2><p class="hx-lead">Havarilerden bugüne, Kilise tarihinin önemli olayları ve belgeleri.</p></div>
     <div class="hx-ctl"><button type="button" class="hx-btn" data-hx-step="-1" aria-label="Önceki"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button><button type="button" class="hx-btn" data-hx-step="1" aria-label="Sonraki">$IcoChevR</button></div></div>
-    <div class="hx-chips" role="group" aria-label="Dönemler">$tlChips</div>
-    <ol class="hx-track" tabindex="0" aria-label="Kilise tarihi, $n olay, eskiden yeniye">$($tlCards -join '')</ol>
-    <div class="hx-bar" aria-hidden="true"><span class="hx-fill"></span></div>
+    <ol class="hx-track" tabindex="0" aria-label="Kilise tarihi, $n olay, eskiden yeniye">$($tlItems -join '')</ol>
+    <div class="hx-scale"><div class="hx-ticks">$($tlTicks -join '')</div>
+      <input class="hx-range" type="range" min="0" max="1000" value="0" step="1" aria-label="Zaman çizelgesinde ilerle" aria-valuetext="33"></div>
   </section>
 </div>
 "@
@@ -3280,7 +3325,7 @@ $pages = @(
   @{ p = 'iman-ikrari.html'; pr = '0.9' }, @{ p = 'kutsal-sirlar.html'; pr = '0.9' },
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'tesbih-tarihi.html'; pr = '0.8' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
-  @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' },
+  @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' }, @{ p = 'kilise-tarihi.html'; pr = '0.8' },
   @{ p = 'neden-katoligiz.html'; pr = '0.9' }, @{ p = 'islama-cevap.html'; pr = '0.8' }, @{ p = 'ateizme-cevap.html'; pr = '0.8' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },

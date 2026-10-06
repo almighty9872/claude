@@ -179,38 +179,120 @@
   }
 
   /* ---------------------------------------------------------------
-     The home page's strip of Church history: the arrows page through it, the chips jump to an
-     era and show the era in view, the bar under it shows how far along the reader is
+     The home page's strip of Church history: the arrows page through it, the slider and the
+     scale of dates under it move along it and follow it; a mouse drags it sideways. Hovering or
+     focusing an event shows its longer text in a card above it.
      --------------------------------------------------------------- */
   function initHistory() {
     var box = $('.hx'), track = box && $('.hx-track', box);
     if (!track) return;
     var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var prev = $('[data-hx-step="-1"]', box), next = $('[data-hx-step="1"]', box), fill = $('.hx-fill', box);
-    var chips = $$('.hx-chip', box), eras = $$('.hx-era', track);
-    var go = function (x) { track.scrollTo({ left: x, behavior: still ? 'auto' : 'smooth' }); };
+    var prev = $('[data-hx-step="-1"]', box), next = $('[data-hx-step="1"]', box), range = $('.hx-range', box);
+    var items = $$('.hx-it', track), ticks = $$('.hx-tick', box);
+    var max = function () { return Math.max(0, track.scrollWidth - track.clientWidth); };
+    var go = function (x, smooth) { track.scrollTo({ left: x, behavior: smooth && !still ? 'smooth' : 'auto' }); };
+    var leftOf = function (el) { return el.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0); };
     $$('[data-hx-step]', box).forEach(function (b) {
-      b.addEventListener('click', function () { go(track.scrollLeft + (+b.getAttribute('data-hx-step')) * track.clientWidth * .85); });
+      b.addEventListener('click', function () { go(track.scrollLeft + (+b.getAttribute('data-hx-step')) * track.clientWidth * .85, true); });
     });
-    chips.forEach(function (c) {
-      c.addEventListener('click', function () {
-        var e = document.getElementById('tarih-' + c.getAttribute('data-hx-era'));
-        if (e) go(e.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0));
+    /* the scale: each year sits where the slider is when its event comes first in view; a year
+       that would run into the one before it stays hidden */
+    var placeTicks = function () {
+      var m = max(), lastEnd = -1e9, w = range ? range.clientWidth : 0;
+      ticks.forEach(function (t) {
+        var it = items[+t.getAttribute('data-hx-to')], f = m > 0 ? Math.min(1, Math.max(0, leftOf(it) / m)) : 0;
+        t.style.left = (f * 100) + '%';
+        var x = f * w, half = t.offsetWidth / 2;
+        t.classList.toggle('is-hid', x - half < lastEnd + 6);
+        if (x - half >= lastEnd + 6) lastEnd = x + half;
       });
+    };
+    ticks.forEach(function (t) {
+      t.addEventListener('click', function () { go(Math.min(max(), leftOf(items[+t.getAttribute('data-hx-to')])), true); });
     });
+    if (range) range.addEventListener('input', function () { go(+range.value / 1000 * max(), false); });
     var update = function () {
-      var max = track.scrollWidth - track.clientWidth, x = track.scrollLeft, part = max > 0 ? x / max : 0;
-      prev.disabled = x <= 2; next.disabled = x >= max - 2;
-      if (fill) { var w = Math.max(.06, track.clientWidth / track.scrollWidth); fill.style.width = (w * 100) + '%'; fill.style.marginLeft = (part * (1 - w) * 100) + '%'; }
-      /* the era whose title card is last passed on the left */
-      var cur = eras[0], edge = x + track.clientWidth * .35;
-      eras.forEach(function (e) { if (e.offsetLeft - track.offsetLeft <= edge) cur = e; });
-      chips.forEach(function (c) { c.setAttribute('aria-current', cur && cur.id === 'tarih-' + c.getAttribute('data-hx-era') ? 'true' : 'false'); });
+      var m = max(), x = track.scrollLeft;
+      if (prev) prev.disabled = x <= 2;
+      if (next) next.disabled = x >= m - 2;
+      if (range) {
+        if (document.activeElement !== range) range.value = String(m > 0 ? Math.round(x / m * 1000) : 0);
+        /* the year of the first event in view, for screen readers */
+        var cur = items[0];
+        items.forEach(function (it) { if (leftOf(it) <= x + 4) cur = it; });
+        range.setAttribute('aria-valuetext', cur.getAttribute('data-y'));
+      }
     };
     var raf = 0;
     track.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; update(); }); }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+    window.addEventListener('resize', function () { placeTicks(); update(); });
+
+    /* a mouse drags the strip; a click that ended a drag does not open the event */
+    var drag = null, moved = false;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      drag = { x: e.clientX, left: track.scrollLeft }; moved = false;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.x;
+      if (!moved && Math.abs(dx) > 5) { moved = true; track.classList.add('is-drag'); hidePop(); }
+      if (moved) { track.scrollLeft = drag.left - dx; e.preventDefault(); }
+    });
+    var endDrag = function () {
+      if (!drag) return;
+      drag = null;
+      if (moved) {
+        /* snap back on, to the nearest event */
+        var x = track.scrollLeft;
+        track.classList.remove('is-drag');
+        track.scrollLeft = x;
+      }
+    };
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+    track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    /* the longer text, in one card laid over the page (the strip itself would clip it) */
+    var pop = document.createElement('div'), popFor = null, popT = 0;
+    pop.className = 'hx-pop'; pop.setAttribute('role', 'tooltip'); pop.id = 'hx-pop'; pop.hidden = true;
+    document.body.appendChild(pop);
+    function hidePop() {
+      clearTimeout(popT);
+      if (popFor) popFor.querySelector('.hx-a').removeAttribute('aria-describedby');
+      popFor = null; pop.hidden = true;
+    }
+    function showPop(it) {
+      if (drag && moved) return;
+      var d = it.querySelector('.hx-d');
+      if (!d) return;
+      if (popFor && popFor !== it) popFor.querySelector('.hx-a').removeAttribute('aria-describedby');
+      popFor = it; pop.textContent = d.textContent; pop.hidden = false;
+      it.querySelector('.hx-a').setAttribute('aria-describedby', 'hx-pop');
+      var r = it.querySelector('.hx-ph').getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+      var left = Math.max(12, Math.min(window.innerWidth - pw - 12, r.left + r.width / 2 - pw / 2));
+      var top = r.top - ph - 10;
+      pop.classList.toggle('is-below', top < 70);
+      if (top < 70) top = r.bottom + 10;
+      pop.style.left = left + 'px'; pop.style.top = top + 'px';
+    }
+    var hover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    items.forEach(function (it) {
+      var a = it.querySelector('.hx-a');
+      if (hover) {
+        it.addEventListener('mouseenter', function () { clearTimeout(popT); popT = setTimeout(function () { showPop(it); }, 180); });
+        it.addEventListener('mouseleave', hidePop);
+      }
+      a.addEventListener('focus', function () { if (a.matches(':focus-visible')) showPop(it); });
+      a.addEventListener('blur', hidePop);
+    });
+    track.addEventListener('scroll', function () { if (popFor && !hover) hidePop(); else if (popFor) showPop(popFor); }, { passive: true });
+    window.addEventListener('scroll', hidePop, { passive: true });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && popFor) hidePop(); });
+
+    placeTicks(); update();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeTicks(); update(); });
   }
 
   /* ---------------------------------------------------------------
@@ -2467,65 +2549,12 @@
       if (top !== box) top.appendChild(el);
     });
   }
+  /* Pages read as levels on a phone: the Katekizm (its parts, chapters and questions), its
+     appendix and the calendar of saints. Every other page is one long page, as on a computer. */
   var AV_PAGES = {
-    'neden-katoligiz.html': function (m) {
-      $$('.why-item', m).forEach(function (d) { avNode(d, avText($('.why-hook', d)), avText($('.why-hook-k', d))); });
-      avNode($('.why-end', m), avHead($('h2', $('.why-end', m))));
-    },
-    'sss.html': function (m) {
-      $$('.faq-cat', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.faq-cat-en', s))); });
-      $$('.faq-item', m).forEach(function (d) { avNode(d, avText($('.faq-q', d)) || avText($('summary', d))); });
-    },
-    'meseller.html': function (m) { AV_PAGES['mucizeler.html'](m); },
-    'mucizeler.html': function (m) {
-      $$('.mira-cat', m).forEach(function (s) { avNode(s, avHead($('h2', s)), avText($('.faq-cat-en', s))); });
-      $$('.mira-item', m).forEach(function (d) { avNode(d, avText($('.mira-name', d)), avText($('.mira-place', d))); });
-    },
-    'kutsal-ayin.html': function (m) {
-      $$('.mass-sec', m).forEach(function (d) { avNode(d, avText($('.ill-h', d)), avText($('.ill-kick', d))); });
-    },
-    /* the summary, then each part holding its sections, the closing and the sources; the
-       footnote on the word "Allah" stays under the rows, at the foot of the page's list */
-    'islama-cevap.html': function (m) {
-      var sum = $('#kisaca', m);
-      avNode(sum, avHead($('#kisaca-h', m)), pcat(String($$('.ic-tl-list > li', m).length), ' ', pmake('madde', 'points')));
-      /* the summary is a group of its own, under its own title; the parts follow as "Bölümler" */
-      if (sum) sum._avGh = avHead($('#kisaca-h', m));
-      $$('.ic-part', m).forEach(function (p, i) { avNode(p, avText($('.ill-h', p)), avText($('.ill-kick', p))); if (i === 0) p._avGh = AV_GH_SECTIONS; });
-      $$('.ic-part .ic-sec', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
-      var end = $('.ic-closing', m); if (end) avNode(end, avText($('.ill-h', end)));
-      avNode($('.ic-sources', m), avHead($('#ic-kaynak-h', m)));
-    },
-    /* Ateizme Cevap is built the same way */
-    'ateizme-cevap.html': function (m) { return AV_PAGES['islama-cevap.html'](m); },
-    'katolik-sureci.html': function (m) {
-      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
-    },
-    'gunah-cikarma.html': function (m) {
-      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
-      $$('.ill-qa[id]', m).forEach(function (q) { avNode(q, avHead($('.ill-q', q))); });
-      var a = $('#muhur-sehitleri', m); if (a) avNode(a, pmap(avText($('.footnote-label', a)), function (x) { return x.replace(/^\*\s*/, ''); }));
-    },
     'ekler.html': function (m) {
       avWrap($('.wrap', m), 'h2.section-title[id]', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
       $$('.text-card[id]', m).forEach(function (c) { avNode(c, avText($('.t-title', c))); });
-    },
-    'tesbih-duasi.html': function (m) {
-      /* the history page first, under a heading of its own; the page's sections follow as "Bölümler" */
-      var hl = $('.th-link', m); avLink(hl, avText($('.t-title', hl)), avText($('.t-sub', hl)));
-      if (hl) hl._avGh = pmake('Okuyun', 'Read');
-      var rt = $('#tesbih-rehberi', m); avNode(rt, avHead($('h2', rt)));
-      if (rt) rt._avGh = AV_GH_SECTIONS;
-      avWrap($('.wrap', m), 'h2.section-title[id]:not(#rt-h)', 'p.conventions').forEach(function (w) { avNode(w, avHead($('h2', w))); });
-      $$('.myst[id]', m).forEach(function (a) { avNode(a, avText($('h3', a)), avText($('.m-day', a))); });
-    },
-    /* Tesbihin Tarihi: its numbered sections, then the sources */
-    'tesbih-tarihi.html': function (m) {
-      $$('.ic-sec[id]', m).forEach(function (s) { avNode(s, avHead($('.ic-sec-t', s))); });
-      avNode($('.ic-sources', m), avHead($('#th-kaynak-h', m)));
-    },
-    'kutsal-kitap.html': function (m) {
-      $$('.kk-sec', m).forEach(function (d) { avNode(d, avHead($('summary h3', d))); });
     },
     'azizler.html': function (m, T) {
       var wrap = $('.wrap', m), today = $('#bugun-azizi', m);
@@ -2554,12 +2583,6 @@
       /* the twenty saints: their list is open here, each saint a row to its page */
       var gd = $('[data-gs-drop]', m); if (gd) gd.open = true;
       $$('.gs-item', m).forEach(function (a) { avLink(a, avText($('.gs-n', a)), avText($('.gs-s', a))); });
-    },
-    'topraklarimizda-hristiyanlik.html': function (m) {
-      var map = $('#harita', m), first = $('.wrap.narrow > section[id]', m);
-      if (map && first) first.parentNode.insertBefore(map, first);
-      $$('main > .wrap > section[id]', document).forEach(function (s) { avNode(s, avHead($('h2', s))); });
-      $$('.amap-card[id]', m).forEach(function (c) { avNode(c, avText($('.amap-c-name', c)), avText($('.amap-c-place', c)), true); });
     },
     'katekizm.html': function (m) {
       $$('.part-acc', m).forEach(function (d) {
@@ -3298,6 +3321,139 @@
      restores whichever ones were actually open. Latin prayer text (.latin)
      is excluded: the print stylesheet hides it outright, screen/mobile keep
      it as a collapsed toggle either way. */
+  /* ---------------------------------------------------------------
+     An article is read as one long page that grows as it is read: the first screens are shown,
+     the rest follows a part at a time as the reader nears the end of what is there. A link to a
+     place further down (or a page opened at one), the browser's find (Ctrl/Cmd+F) and printing
+     bring in everything up to it, or everything. The thin bar at the top shows how much of the
+     whole article has been read, measured in its words, so it does not jump as parts come in.
+     --------------------------------------------------------------- */
+  function initArticleFlow() {
+    var main = $('#main');
+    if (!main || !document.body.hasAttribute('data-article')) return;
+    var bar = document.createElement('div'), fill = document.createElement('span');
+    bar.className = 'read-prog'; bar.setAttribute('aria-hidden', 'true'); bar.appendChild(fill);
+    document.body.appendChild(bar);
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var len = function (el) { return (el.textContent || '').replace(/\s+/g, ' ').length; };
+    /* the box that holds the article's parts: going in while one child holds nearly all of it */
+    var box = main;
+    for (var k = 0; k < 3; k++) {
+      var kids = Array.prototype.slice.call(box.children).filter(function (el) { return !/^(SCRIPT|STYLE|TEMPLATE|DIALOG)$/.test(el.tagName); });
+      if (kids.length >= 4) break;
+      var big = kids.slice().sort(function (x, y) { return len(y) - len(x); })[0];
+      if (!big || len(big) < len(box) * .7) break;
+      box = big;
+    }
+    var parts = Array.prototype.slice.call(box.children).filter(function (el) {
+      return !/^(SCRIPT|STYLE|TEMPLATE|DIALOG)$/.test(el.tagName) && !el.classList.contains('av-fixed') && !el.classList.contains('av-hero');
+    });
+    /* a part taller than a screen and a half is split into its own parts (going in, as above,
+       while one child holds nearly all of it) */
+    var split = function (el, depth) {
+      if (depth > 4 || el.getBoundingClientRect().height < (window.innerHeight || 700) * 1.5 || /^(UL|OL|TABLE|FIGURE|P|BLOCKQUOTE|DETAILS|SVG)$/i.test(el.tagName)) return [el];
+      var ks = Array.prototype.slice.call(el.children).filter(function (k) { return !/^(SCRIPT|STYLE|TEMPLATE|DIALOG)$/.test(k.tagName); });
+      if (ks.length >= 3) return ks.reduce(function (a, k) { return a.concat(split(k, depth + 1)); }, []);
+      var bigK = ks.slice().sort(function (x, y) { return len(y) - len(x); })[0];
+      if (!bigK || len(bigK) < len(el) * .7) return [el];
+      return ks.reduce(function (a, k) { return a.concat(k === bigK ? split(k, depth + 1) : [k]); }, []);
+    };
+    parts = parts.reduce(function (a, el) { return a.concat(split(el, 0)); }, []);
+    var total = 0;
+    parts.forEach(function (el) { el._kdLen = Math.max(1, len(el)); total += el._kdLen; });
+    var vh = function () { return window.innerHeight || 700; };
+    /* the first screens stay; the rest waits */
+    var shown = 0, h = 0, top0 = box.getBoundingClientRect().top + window.pageYOffset;
+    while (shown < parts.length && (h < vh() * 1.6 || shown < 2)) { h = parts[shown].getBoundingClientRect().bottom + window.pageYOffset - top0; shown++; }
+    var later = parts.slice(shown);
+    var hashEl = function () { try { return location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) { return null; } };
+    if (later.length > 1) {
+      later.forEach(function (el) { el.classList.add('kd-later'); });
+      var sentinel = document.createElement('div');
+      sentinel.className = 'kd-more'; sentinel.setAttribute('aria-hidden', 'true');
+      later[0].parentNode.insertBefore(sentinel, later[0]);
+      var showUpTo = function (n, fade) {
+        while (later.length && n > 0) {
+          var el = later.shift(); n--;
+          el.classList.remove('kd-later');
+          if (fade && !still) el.classList.add('kd-in');
+        }
+        if (!later.length) { sentinel.remove(); if (io) io.disconnect(); }
+        else { later[0].parentNode.insertBefore(sentinel, later[0]); if (io) { io.unobserve(sentinel); io.observe(sentinel); } }
+        progress();
+      };
+      /* a batch: parts until about a screen more is there */
+      var batch = function () {
+        var added = 0, n = 0;
+        while (later.length && (added < vh() * 1.2 || n === 0)) {
+          var el = later[0]; showUpTo(1, true); n++;
+          added += el.offsetHeight;
+        }
+      };
+      var io = window.IntersectionObserver ? new IntersectionObserver(function (es) {
+        if (es.some(function (e) { return e.isIntersecting; })) batch();
+      }, { rootMargin: '0px 0px 900px 0px' }) : null;
+      if (io) io.observe(sentinel); else showUpTo(later.length);
+      /* everything up to an element further down */
+      var bringIn = function (el) {
+        if (!el || !later.length) return false;
+        /* the part that holds it, or (a section split into parts) the first of its parts */
+        var i = -1;
+        later.forEach(function (p, j) { if (i < 0 && (p === el || p.contains(el) || el.contains(p))) i = j; });
+        if (i < 0) return false;
+        showUpTo(i + 1, false);
+        /* and what follows it, so it does not land at the end of the page */
+        var hh = 0;
+        while (later.length && hh < vh()) { var nx = later[0]; showUpTo(1, false); hh += nx.offsetHeight; }
+        return true;
+      };
+      var target = hashEl();
+      if (bringIn(target)) requestAnimationFrame(function () { target.scrollIntoView(); });
+      window.addEventListener('hashchange', function () { var t = hashEl(); if (bringIn(t)) t.scrollIntoView(); });
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href*="#"]');
+        if (!a) return;
+        var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
+        if (u.pathname !== location.pathname || !u.hash) return;
+        try { bringIn(document.getElementById(decodeURIComponent(u.hash.slice(1)))); } catch (err) { /* bad hash */ }
+      }, true);
+      document.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F')) showUpTo(later.length); });
+      window.addEventListener('beforeprint', function () { showUpTo(later.length); });
+    }
+    /* how much has been read: each part shown counts by how far past it the screen has come */
+    var raf = 0;
+    function progress() {
+      raf = 0;
+      var y = window.pageYOffset + vh(), done = 0;
+      parts.forEach(function (el) {
+        if (el.classList.contains('kd-later')) return;
+        var r = el.getBoundingClientRect(), t = r.top + window.pageYOffset;
+        if (!r.height) return;
+        done += el._kdLen * Math.max(0, Math.min(1, (y - t) / r.height));
+      });
+      /* at the very bottom of the page, the whole article has been read */
+      var end = window.pageYOffset + vh() >= document.documentElement.scrollHeight - 4 && !(later && later.length);
+      fill.style.transform = 'scaleX(' + (end ? 1 : Math.min(1, done / total)).toFixed(4) + ')';
+    }
+    window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(progress); }, { passive: true });
+    window.addEventListener('resize', function () { if (!raf) raf = requestAnimationFrame(progress); });
+    progress();
+  }
+
+  /* ----- Kilise'nin Tarihi: the era bar marks the era being read */
+  function initEraNav() {
+    var nav = $('.kt-nav');
+    if (!nav || !window.IntersectionObserver) return;
+    var links = $$('a', nav), seen = {};
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+      var cur = null;
+      links.forEach(function (a) { if (seen[a.getAttribute('href').slice(1)] && !cur) cur = a; });
+      if (cur) links.forEach(function (a) { a.setAttribute('aria-current', a === cur ? 'true' : 'false'); });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    links.forEach(function (a) { var s = document.getElementById(a.getAttribute('href').slice(1)); if (s) io.observe(s); });
+  }
+
   function initPrintExpand() {
     var reopen = [];
     window.addEventListener('beforeprint', function () {
@@ -3663,6 +3819,6 @@
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday(); initHistory();
     initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initChurchMap(); initChurchPick(); initLayoutSwitch();
+    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initArticleFlow(); initEraNav(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });
 })();

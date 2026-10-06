@@ -20,7 +20,7 @@ description: Sources and copyright on katolikdunyasi.com: where the Compendium t
 - **The English site:** the English of the Compendium, the Motu Proprio and the Introduction is the Vatican's original text. The English of every other page is written for this site.
 - **Drawings:** the line drawings beside the sections and the site's icons were drawn for this site.
 - **Paintings:** the paintings in the page headers and on the home page cards are public domain works; the images come from the open access collections of the National Gallery of Art (Washington), The Metropolitan Museum of Art, The Cleveland Museum of Art and the Library of Congress, and from the Web Gallery of Art. Each painting is named at the lower right of the picture; the full list is on the [Sources and Copyright](kaynaklar-ve-telif.html#tablolar) page.
-- **Fonts:** Lexend for text and headings, Inter for the logo, both self-hosted and used under the SIL Open Font License.
+- **Fonts:** Lexend for text and headings, EB Garamond for the logo, both self-hosted and used under the SIL Open Font License.
 - This site is not an official Church publication; it is a personal project.
 
 Translations and original content © 2026 katolikdunyasi.com.
