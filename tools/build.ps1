@@ -535,13 +535,17 @@ function Paint-Head([string]$body, [string]$file) {
   $key = $Tablolar.pages.$file
   if (-not $key) { return $body }
   $m = [regex]::Match($body, '<header class="page-head([^"]*)"([^>]*)>')
-  if (-not $m.Success) { return $body }
-  # small or not clearly wide: shown whole, framed (a full-width band would show only a slice of it)
-  $framed = ($Tablolar.art.$key.w -lt 1000) -or ($Tablolar.art.$key.h / $Tablolar.art.$key.w -gt 0.8)
-  $cls = "page-head$($m.Groups[1].Value) painted$(if ($framed) { ' art-framed' })"
-  # framed: the blurred copy and the frame ask for the same file (one download), the small one on desktop
-  $sz = if ($framed) { '(min-width: 980px) 360px, 100vw' } else { '100vw' }
-  $imgs = (Art-Img $key 'ph-art' $sz 'high') + $(if ($framed) { Art-Img $key 'ph-frame' $sz 'high' } else { '' })
+  if (-not $m.Success) {
+    # a page with a hero section instead of a page header (the Katekizm's own page): the banner opens it
+    $h = [regex]::Match($body, '<section class="hero work-hero">')
+    if (-not $h.Success) { return $body }
+    $at = $h.Index + $h.Length
+    return $body.Substring(0, $at) + "<header class=`"page-head painted banner-only`" data-art=`"$key`">$(Art-Img $key 'ph-art' '100vw' 'high')$(Art-Cap $key)</header>" + $body.Substring($at)
+  }
+  # the painting runs the full width of the page as a banner (header paintings are all landscape),
+  # its name on it at the lower right, the page's title under it
+  $cls = "page-head$($m.Groups[1].Value) painted"
+  $imgs = Art-Img $key 'ph-art' '100vw' 'high'
   $open = "<header class=`"$cls`" data-art=`"$key`"$($m.Groups[2].Value)>$imgs"
   $end = $body.IndexOf('</header>', $m.Index)
   $inner = $body.Substring($m.Index + $m.Length, $end - $m.Index - $m.Length)
@@ -626,7 +630,7 @@ $Logo = '<svg class="logo" viewBox="0 0 100 100" aria-hidden="true" focusable="f
 $IchthysSvg = '<svg viewBox="0 0 48 24" focusable="false"><path d="M3 12C13-.5 33-1 45 20.5M3 12C13 24.5 33 25 45 3.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M24 6.5v11M19.5 11h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
 $JerusalemSvg = '<svg viewBox="0 0 100 100" focusable="false"><g fill="currentColor"><rect x="44.5" y="10" width="11" height="80" rx="1"/><rect x="10" y="44.5" width="80" height="11" rx="1"/><rect x="32" y="7" width="36" height="9" rx="1"/><rect x="32" y="84" width="36" height="9" rx="1"/><rect x="7" y="32" width="9" height="36" rx="1"/><rect x="84" y="32" width="9" height="36" rx="1"/><rect x="24.5" y="18" width="5" height="18" rx=".6"/><rect x="18" y="24.5" width="18" height="5" rx=".6"/><rect x="70.5" y="18" width="5" height="18" rx=".6"/><rect x="64" y="24.5" width="18" height="5" rx=".6"/><rect x="24.5" y="64" width="5" height="18" rx=".6"/><rect x="18" y="70.5" width="18" height="5" rx=".6"/><rect x="70.5" y="64" width="5" height="18" rx=".6"/><rect x="64" y="70.5" width="18" height="5" rx=".6"/></g></svg>'
 $BrandMark = '<span class="bm" aria-hidden="true"><span class="bm-in"><span class="bm-face bm-fish"><span class="bm-halo"></span>' + $IchthysSvg + '</span><span class="bm-face bm-cross">' + $JerusalemSvg + '</span></span></span>'
-# The name in carved capitals (a tiny Garamond subset holding only these letters, preloaded); read as
+# The name in capitals (a tiny Inter subset holding only these letters, preloaded); read as
 # words by screen readers
 $BrandName = '<span class="brand-name"><span class="visually-hidden">Katolik Dünyası</span><span class="bn" lang="tr" aria-hidden="true"><span class="bn-c">K</span>ATOLİK <span class="bn-c">D</span>ÜNYASI</span></span>'
 $Favicon = 'data:image/svg+xml,' + ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#16161a"/><g fill="#d6b16b" transform="translate(12 12) scale(.76)">' + $CrossShapes + '</g></svg>').Replace('<', '%3C').Replace('>', '%3E').Replace('#', '%23').Replace('"', "'")
@@ -1525,10 +1529,10 @@ $locAlt
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/kd-brand-ext.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/inter-ext-a.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/kd-logo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/kd-logo-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/lexend-ext-a.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
 <script>$HeadJs$($avJs)$HeadJs2</script>
 $ld
@@ -1602,7 +1606,6 @@ for ($i = 0; $i -lt 4; $i++) {
 <div class="wrap">
   $(Crumbs $meta.ord 'Katekizm' 'katekizm.html')
   <header class="page-head">
-    <span class="roman" aria-hidden="true">$($meta.roman)</span>
     <div><p class="label">$(T "$($meta.ord) · Sorular $($p.from)–$($p.to)" "$($meta.ordEn) · Questions $($p.from)–$($p.to)")</p><h1>$(T $p.tr $p.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($l1.en)</p>")</div>
   </header>
   <div class="reader">

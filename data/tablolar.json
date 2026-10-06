@@ -1,48 +1,48 @@
 {
  "pages": {
-  "katekizm.html": "43jerome",
+  "katekizm.html": "n-stpeters",
   "giris.html": "i-doctors",
-  "iman-ikrari.html": "i-trinity",
+  "iman-ikrari.html": "c-trinity",
   "kutsal-sirlar.html": "i-sevens",
-  "mesihte-yasam.html": "i-sermon",
+  "mesihte-yasam.html": "n-feet",
   "hristiyan-duasi.html": "i-agony",
-  "ekler.html": "i-hodeg",
+  "ekler.html": "n-magi",
   "motu-proprio.html": "i-keys",
-  "kutsal-kitap.html": "26conta",
+  "kutsal-kitap.html": "n-jerome",
   "sss.html": "35emmau",
   "katolik-sureci.html": "23conta",
-  "gunah-cikarma.html": "72denial",
+  "gunah-cikarma.html": "m-denial",
   "kutsal-ayin.html": "47emmau",
-  "islama-cevap.html": "46ecceho",
+  "islama-cevap.html": "w-sultan",
   "ateizme-cevap.html": "34thomas",
-  "neden-katoligiz.html": "28ceras",
+  "neden-katoligiz.html": "m-peterpaul",
   "topraklarimizda-hristiyanlik.html": "33isaac",
-  "tesbih-duasi.html": "58rosar",
-  "tesbih-tarihi.html": "42loreto",
-  "meseller.html": "53mercy",
-  "mucizeler.html": "65lazar",
+  "tesbih-duasi.html": "n-shepherds",
+  "tesbih-tarihi.html": "m-annunc",
+  "meseller.html": "n-prodigal",
+  "mucizeler.html": "n-lazarus",
   "azizler.html": "05franc",
-  "kiliseler.html": "i-pentec",
-  "meryem-ana.html": "48palaf",
-  "aziz-yusuf.html": "13fligh",
-  "havari-petrus.html": "28ceras",
-  "havari-pavlus.html": "29ceras",
-  "vaftizci-yahya.html": "40baptis",
-  "havari-yuhanna.html": "37depos",
-  "aziz-hieronymus.html": "43jerome",
-  "assisili-aziz-francis.html": "49franci",
-  "aziz-augustinus.html": "i-august",
+  "kiliseler.html": "n-antwerp",
+  "meryem-ana.html": "n-annunc",
+  "aziz-yusuf.html": "c-holyfam",
+  "havari-petrus.html": "m-peterjohn",
+  "havari-pavlus.html": "n-paul",
+  "vaftizci-yahya.html": "n-baptism",
+  "havari-yuhanna.html": "n-galilee",
+  "aziz-hieronymus.html": "w-jerome",
+  "assisili-aziz-francis.html": "c-stigmata",
+  "aziz-augustinus.html": "w-augustine",
   "aziz-thomas-aquinas.html": "i-aquinas",
-  "avilali-aziz-teresa.html": "i-teresa",
-  "sienali-aziz-catharina.html": "i-cather",
-  "padre-pio.html": "49franci",
-  "aziz-patrick.html": "i-shepherd",
-  "kalkutali-aziz-teresa.html": "i-mercy",
+  "avilali-aziz-teresa.html": "m-teresa",
+  "sienali-aziz-catharina.html": "m-cathsiena",
+  "padre-pio.html": "c-gregory",
+  "aziz-patrick.html": "n-flock",
+  "kalkutali-aziz-teresa.html": "n-palladia",
   "aziz-ii-yuhanna-pavlus.html": "i-keys",
-  "aziz-benedictus.html": "i-greg",
-  "padovali-aziz-antonius.html": "i-francis",
-  "lisieuxlu-kucuk-teresa.html": "i-rosary",
-  "aziz-ignatius-loyola.html": "i-trent"
+  "aziz-benedictus.html": "n-benedict",
+  "padovali-aziz-antonius.html": "n-padua",
+  "lisieuxlu-kucuk-teresa.html": "n-roses",
+  "aziz-ignatius-loyola.html": "l-montserrat"
  },
  "art": {
   "05franc": {
@@ -89,28 +89,6 @@
    "h": 1800,
    "y": 40
   },
-  "28ceras": {
-   "t": "Aziz Petrus’un Çarmıha Gerilişi",
-   "te": "The Crucifixion of Saint Peter",
-   "a": "Caravaggio",
-   "loc": "Santa Maria del Popolo, Roma",
-   "loce": "Santa Maria del Popolo, Rome",
-   "src": "https://www.wga.hu/html/c/caravagg/05/28ceras.html",
-   "w": 1300,
-   "h": 1701,
-   "y": 50
-  },
-  "29ceras": {
-   "t": "Şam Yolunda Pavlus’un Dönüşü",
-   "te": "The Conversion of Saint Paul",
-   "a": "Caravaggio",
-   "loc": "Santa Maria del Popolo, Roma",
-   "loce": "Santa Maria del Popolo, Rome",
-   "src": "https://www.wga.hu/html/c/caravagg/05/29ceras.html",
-   "w": 1300,
-   "h": 1700,
-   "y": 76
-  },
   "33isaac": {
    "t": "İshak’ın Kurban Edilmesi",
    "te": "The Sacrifice of Isaac",
@@ -154,17 +132,6 @@
    "w": 1312,
    "h": 1900,
    "y": 45
-  },
-  "40baptis": {
-   "t": "Vaftizci Yahya",
-   "te": "Saint John the Baptist",
-   "a": "Caravaggio",
-   "loc": "Galleria Corsini, Roma",
-   "loce": "Galleria Corsini, Rome",
-   "src": "https://www.wga.hu/html/c/caravagg/07/40baptis.html",
-   "w": 1073,
-   "h": 774,
-   "y": 6
   },
   "42loreto": {
    "t": "Loreto Meryemi",
@@ -221,17 +188,6 @@
    "h": 1000,
    "y": 45
   },
-  "48palaf": {
-   "t": "Palafrenieri Meryemi",
-   "te": "Madonna of the Palafrenieri",
-   "a": "Caravaggio",
-   "loc": "Galleria Borghese, Roma",
-   "loce": "Galleria Borghese, Rome",
-   "src": "https://www.wga.hu/html/c/caravagg/08/48palaf.html",
-   "w": 1026,
-   "h": 1400,
-   "y": 50
-  },
   "49franci": {
    "t": "Tefekkür Eden Aziz Fransuva",
    "te": "Saint Francis in Meditation",
@@ -276,17 +232,6 @@
    "h": 2000,
    "y": 30
   },
-  "65lazar": {
-   "t": "Lazar’ın Dirilişi",
-   "te": "The Raising of Lazarus",
-   "a": "Caravaggio",
-   "loc": "Museo Regionale, Messina",
-   "loce": "Museo Regionale, Messina",
-   "src": "https://www.wga.hu/html/c/caravagg/10/65lazar.html",
-   "w": 1392,
-   "h": 1900,
-   "y": 60
-  },
   "66annunc": {
    "t": "Müjde",
    "te": "The Annunciation",
@@ -318,7 +263,7 @@
    "src": "https://www.wga.hu/html/m/mantegna/03/7agony.html",
    "w": 1235,
    "h": 950,
-   "y": 50
+   "y": 80
   },
   "i-aquinas": {
    "t": "Aziz Tomas Aquinas’ın Zaferi",
@@ -342,17 +287,6 @@
    "h": 1165,
    "y": 35
   },
-  "i-cather": {
-   "t": "Sienalı Azize Katerina",
-   "te": "Saint Catherine of Siena",
-   "a": "Pompeo Batoni",
-   "loc": "Museo di Villa Guinigi, Lucca",
-   "loce": "Museo di Villa Guinigi, Lucca",
-   "src": "https://www.wga.hu/html/b/batoni/extasy.html",
-   "w": 862,
-   "h": 1100,
-   "y": 35
-  },
   "i-doctors": {
    "t": "İsa Din Bilginleri Arasında",
    "te": "Christ among the Doctors",
@@ -363,17 +297,6 @@
    "w": 1276,
    "h": 1200,
    "y": 70
-  },
-  "i-hodeg": {
-   "t": "Aziz Luka Meryem İkonunu Yapıyor",
-   "te": "Saint Luke Painting the Virgin",
-   "a": "Bilinmeyen ikon ressamı",
-   "loc": "Bizans ve Hristiyan Müzesi",
-   "loce": "Byzantine and Christian Museum",
-   "src": "https://www.wga.hu/html/m/master/zunk_x/03icon.html",
-   "w": 787,
-   "h": 1080,
-   "y": 35
   },
   "i-keys": {
    "t": "İsa Anahtarları Petrus’a Veriyor",
@@ -418,17 +341,6 @@
    "w": 1136,
    "h": 980,
    "y": 50
-  },
-  "i-teresa": {
-   "t": "Avilalı Azize Teresa",
-   "te": "Saint Teresa of Ávila",
-   "a": "Ribera",
-   "loc": "Museo de Bellas Artes, Valencia",
-   "loce": "Museo de Bellas Artes, Valencia",
-   "src": "https://www.wga.hu/html/r/ribera/2/teresa.html",
-   "w": 697,
-   "h": 900,
-   "y": 35
   },
   "i-trinity": {
    "t": "Kutsal Üçlü",
@@ -549,17 +461,6 @@
    "src": "https://www.wga.hu/html/r/raphael/4stanze/1segnatu/2/00disput.html",
    "w": 680,
    "h": 513,
-   "y": 35
-  },
-  "i-francis": {
-   "t": "Aziz Fransuva",
-   "te": "Saint Francis",
-   "a": "Zurbarán",
-   "loc": "Alte Pinakothek, Münih",
-   "loce": "Alte Pinakothek, Munich",
-   "src": "https://www.wga.hu/html/z/zurbaran/2/sfrancis.html",
-   "w": 542,
-   "h": 680,
    "y": 35
   },
   "i-george": {
@@ -835,6 +736,347 @@
    "src": "https://www.wga.hu/html/c/carreno/mass_mat.html",
    "w": 462,
    "h": 680,
+   "y": 35
+  },
+  "n-antwerp": {
+   "t": "Anvers Katedrali",
+   "te": "Antwerp Cathedral",
+   "a": "Peeter Neeffs",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.46053.html",
+   "w": 1600,
+   "h": 1046,
+   "y": 60
+  },
+  "m-annunc": {
+   "t": "Müjde",
+   "te": "The Annunciation",
+   "a": "Botticelli",
+   "loc": "Metropolitan Sanat Müzesi, New York",
+   "loce": "The Metropolitan Museum of Art, New York",
+   "src": "https://www.metmuseum.org/art/collection/search/459016",
+   "w": 1600,
+   "h": 1016,
+   "y": 60
+  },
+  "w-augustine": {
+   "t": "Aziz Augustinus’un Görümü",
+   "te": "The Vision of Saint Augustine",
+   "a": "Vittore Carpaccio",
+   "loc": "Scuola di San Giorgio degli Schiavoni, Venedik",
+   "loce": "Scuola di San Giorgio degli Schiavoni, Venice",
+   "src": "https://www.wga.hu/art/c/carpacci/3schiavo/1/1vision.jpg",
+   "w": 1200,
+   "h": 811,
+   "y": 55
+  },
+  "n-jerome": {
+   "t": "Aziz Hieronymus ve Melek",
+   "te": "Saint Jerome and the Angel",
+   "a": "Simon Vouet",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.46151.html",
+   "w": 1600,
+   "h": 1272,
+   "y": 40
+  },
+  "n-roses": {
+   "t": "Masada Nis Gülleri",
+   "te": "Roses de Nice on a Table",
+   "a": "Henri Fantin-Latour",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.131027.html",
+   "w": 1600,
+   "h": 971,
+   "y": 50
+  },
+  "n-prodigal": {
+   "t": "Savurgan Oğul",
+   "te": "The Prodigal Son",
+   "a": "Pierre Puvis de Chavannes",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.46675.html",
+   "w": 1600,
+   "h": 1167,
+   "y": 55
+  },
+  "n-shepherds": {
+   "t": "Çobanların Tapınması",
+   "te": "The Adoration of the Shepherds",
+   "a": "Giovanni Girolamo Savoldo",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.46185.html",
+   "w": 1600,
+   "h": 1111,
+   "y": 45
+  },
+  "n-galilee": {
+   "t": "Celile Gölü’nde İsa",
+   "te": "Christ at the Sea of Galilee",
+   "a": "Tintoretto çevresi (muhtemelen Lambert Sustris)",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.41637.html",
+   "w": 1600,
+   "h": 1097,
+   "y": 45
+  },
+  "n-flock": {
+   "t": "Sürüsüyle Çoban",
+   "te": "Shepherd with His Flock",
+   "a": "Jean-Victor Bertin",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.130865.html",
+   "w": 1600,
+   "h": 1074,
+   "y": 60
+  },
+  "n-magi": {
+   "t": "Müneccimlerin Tapınması",
+   "te": "The Adoration of the Magi",
+   "a": "Botticelli",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.24.html",
+   "w": 1600,
+   "h": 1064,
+   "y": 55
+  },
+  "n-lazarus": {
+   "t": "Lazar’ın Dirilişi",
+   "te": "The Raising of Lazarus",
+   "a": "Benozzo Gozzoli",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.1163.html",
+   "w": 1600,
+   "h": 1281,
+   "y": 55
+  },
+  "n-annunc": {
+   "t": "Müjde",
+   "te": "The Annunciation",
+   "a": "Fra Filippo Lippi",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.12133.html",
+   "w": 1600,
+   "h": 691,
+   "y": 15
+  },
+  "w-jerome": {
+   "t": "Aziz Hieronymus ve Aslan Manastırda",
+   "te": "Saint Jerome and the Lion in the Monastery",
+   "a": "Vittore Carpaccio",
+   "loc": "Scuola di San Giorgio degli Schiavoni, Venedik",
+   "loce": "Scuola di San Giorgio degli Schiavoni, Venice",
+   "src": "https://www.wga.hu/html/c/carpacci/3schiavo/1/2jerome.html",
+   "w": 1347,
+   "h": 900,
+   "y": 60
+  },
+  "n-stpeters": {
+   "t": "Aziz Petrus Bazilikası’nın İçi",
+   "te": "Interior of Saint Peter’s, Rome",
+   "a": "Giovanni Paolo Pannini",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.50884.html",
+   "w": 1600,
+   "h": 1255,
+   "y": 55
+  },
+  "w-sultan": {
+   "t": "Aziz Fransuva Sultan’ın Huzurunda",
+   "te": "Saint Francis before the Sultan",
+   "a": "Giotto",
+   "loc": "Aziz Fransuva Bazilikası, Assisi",
+   "loce": "Basilica of Saint Francis, Assisi",
+   "src": "https://www.wga.hu/art/g/giotto/assisi/upper/legend/franc11.jpg",
+   "w": 924,
+   "h": 1001,
+   "y": 70
+  },
+  "m-peterjohn": {
+   "t": "Aziz Petrus ve Yuhanna Topal Adamı İyileştiriyor",
+   "te": "Saints Peter and John Healing the Lame Man",
+   "a": "Nicolas Poussin",
+   "loc": "Metropolitan Sanat Müzesi, New York",
+   "loce": "The Metropolitan Museum of Art, New York",
+   "src": "https://www.metmuseum.org/art/collection/search/437330",
+   "w": 1600,
+   "h": 1209,
+   "y": 50
+  },
+  "m-peterpaul": {
+   "t": "Aziz Petrus ve Pavlus",
+   "te": "Saints Peter and Paul",
+   "a": "Bartolomeo Manfredi",
+   "loc": "Metropolitan Sanat Müzesi, New York",
+   "loce": "The Metropolitan Museum of Art, New York",
+   "src": "https://www.metmuseum.org/art/collection/search/442491",
+   "w": 1600,
+   "h": 1245,
+   "y": 35
+  },
+  "c-stigmata": {
+   "t": "Assisili Aziz Fransuva Yaraları Alıyor",
+   "te": "Saint Francis of Assisi Receiving the Stigmata",
+   "a": "Bicci di Lorenzo",
+   "loc": "Cleveland Sanat Müzesi",
+   "loce": "The Cleveland Museum of Art",
+   "src": "https://clevelandart.org/art/1916.787",
+   "w": 1600,
+   "h": 1073,
+   "y": 45
+  },
+  "c-gregory": {
+   "t": "Aziz Gregorius’un Ayini",
+   "te": "The Mass of Saint Gregory",
+   "a": "Hans Baldung",
+   "loc": "Cleveland Sanat Müzesi",
+   "loce": "The Cleveland Museum of Art",
+   "src": "https://clevelandart.org/art/1952.112",
+   "w": 1600,
+   "h": 1145,
+   "y": 45
+  },
+  "n-paul": {
+   "t": "Aziz Pavlus’un Dönüşü",
+   "te": "The Conversion of Saint Paul",
+   "a": "Jacopo Tintoretto",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.46142.html",
+   "w": 1600,
+   "h": 1029,
+   "y": 50
+  },
+  "m-teresa": {
+   "t": "Avilalı Azize Teresa Araftaki Ruhlar İçin Yakarıyor",
+   "te": "Saint Teresa of Ávila Interceding for Souls in Purgatory",
+   "a": "Peter Paul Rubens",
+   "loc": "Metropolitan Sanat Müzesi, New York",
+   "loce": "The Metropolitan Museum of Art, New York",
+   "src": "https://www.metmuseum.org/art/collection/search/437542",
+   "w": 1600,
+   "h": 2069,
+   "y": 30
+  },
+  "m-cathsiena": {
+   "t": "Sienalı Azize Katerina’nın Mistik Evliliği",
+   "te": "The Mystic Marriage of Saint Catherine of Siena",
+   "a": "Giovanni di Paolo",
+   "loc": "Metropolitan Sanat Müzesi, New York",
+   "loce": "The Metropolitan Museum of Art, New York",
+   "src": "https://www.metmuseum.org/art/collection/search/438021",
+   "w": 1600,
+   "h": 1638,
+   "y": 45
+  },
+  "n-padua": {
+   "t": "Padova’da Porta Portello",
+   "te": "The Porta Portello, Padua",
+   "a": "Canaletto",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.46152.html",
+   "w": 1600,
+   "h": 908,
+   "y": 55
+  },
+  "c-trinity": {
+   "t": "Kutsal Üçlü İkonu",
+   "te": "Icon of the New Testament Trinity",
+   "a": "Bilinmeyen ressam",
+   "loc": "Cleveland Sanat Müzesi",
+   "loce": "The Cleveland Museum of Art",
+   "src": "https://clevelandart.org/art/2016.32",
+   "w": 1600,
+   "h": 936,
+   "y": 45
+  },
+  "n-feet": {
+   "t": "İsa Öğrencilerinin Ayaklarını Yıkıyor",
+   "te": "Christ Washing the Disciples’ Feet",
+   "a": "Garofalo",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.118598.html",
+   "w": 1600,
+   "h": 1089,
+   "y": 45
+  },
+  "l-montserrat": {
+   "t": "Montserrat Manastırı",
+   "te": "The Monastery of Montserrat",
+   "a": "Fotoğraf, yaklaşık 1900",
+   "loc": "Kongre Kütüphanesi, Washington",
+   "loce": "Library of Congress, Washington",
+   "src": "https://tile.loc.gov/storage-services/service/pnp/cph/3c00000/3c08000/3c08700/3c08738v.jpg",
+   "w": 942,
+   "h": 672,
+   "y": 55
+  },
+  "n-benedict": {
+   "t": "Aziz Benediktus, Maurus’u Plasidus’u Kurtarmaya Gönderiyor",
+   "te": "Saint Benedict Orders Saint Maurus to the Rescue of Saint Placidus",
+   "a": "Fra Filippo Lippi",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.41620.html",
+   "w": 1600,
+   "h": 923,
+   "y": 50
+  },
+  "n-palladia": {
+   "t": "Aziz Kozmas ve Damianus Palladia’yı İyileştiriyor",
+   "te": "The Healing of Palladia by Saints Cosmas and Damian",
+   "a": "Fra Angelico",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.41613.html",
+   "w": 1600,
+   "h": 1254,
+   "y": 50
+  },
+  "c-holyfam": {
+   "t": "Merdivenlerdeki Kutsal Aile",
+   "te": "The Holy Family on the Steps",
+   "a": "Nicolas Poussin",
+   "loc": "Cleveland Sanat Müzesi",
+   "loce": "The Cleveland Museum of Art",
+   "src": "https://clevelandart.org/art/1981.18",
+   "w": 1600,
+   "h": 1098,
+   "y": 45
+  },
+  "n-baptism": {
+   "t": "İsa’nın Vaftizi",
+   "te": "The Baptism of Christ",
+   "a": "Nicolas Poussin",
+   "loc": "Ulusal Sanat Galerisi, Washington",
+   "loce": "National Gallery of Art, Washington",
+   "src": "https://www.nga.gov/collection/art-object-page.32692.html",
+   "w": 1600,
+   "h": 1259,
+   "y": 50
+  },
+  "m-denial": {
+   "t": "Aziz Petrus’un İnkârı",
+   "te": "The Denial of Saint Peter",
+   "a": "Caravaggio",
+   "loc": "Metropolitan Sanat Müzesi, New York",
+   "loce": "The Metropolitan Museum of Art, New York",
+   "src": "https://www.metmuseum.org/art/collection/search/437986",
+   "w": 1600,
+   "h": 1190,
    "y": 35
   }
  },

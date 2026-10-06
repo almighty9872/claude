@@ -21,7 +21,7 @@ Site GitHub Pages üzerinde barındırılıyor ve Cloudflare ağı üzerinden su
 
 ## Yazı tipleri
 
-Sayfada kullanılan yazı tipleri (Inter, EB Garamond ve disleksi modundaki Lexend) sitenin kendi sunucusundan yükleniyor; Google Fonts gibi üçüncü taraf servislere hiçbir istek gönderilmez.
+Sayfada kullanılan yazı tipleri (metinler için Lexend, logo için Inter) sitenin kendi sunucusundan yükleniyor; Google Fonts gibi üçüncü taraf servislere hiçbir istek gönderilmez.
 
 ## İletişim formu
 

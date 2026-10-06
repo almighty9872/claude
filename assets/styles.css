@@ -1,39 +1,18 @@
 /* =========================================================================
    Katolik Kilisesi İnanç Esasları Özeti · styles.css
    Modern reading layout. Dark = navy & gold, light = soft ivory & gold.
-   No external requests: fonts are self-hosted in assets/fonts (EB Garamond,
-   SIL Open Font License) with Georgia as the fallback.
+   No external requests: fonts are self-hosted in assets/fonts (Lexend for all
+   text, Inter for the logo; SIL Open Font License).
    All colours are CSS custom properties (section 1).
    ========================================================================= */
 
-/* ---------- 0. Self-hosted font (EB Garamond, variable weight 400–800) ---------- */
+/* ---------- 0. Self-hosted fonts ---------- */
 /* The "-ext-a" files (Google Fonts' "latin-ext" files) are cut down to Latin Extended-A (U+0100-017F, which has
    the Turkish ğ Ğ ş Ş İ) plus ǽ and Ṣ, the only other letters the site uses; about 80 KB instead
    of 350 KB. Re-cut from the full Google Fonts files with pyftsubset if a page needs more. */
-@font-face {
-  font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; font-display: swap;
-  src: url("fonts/eb-garamond-ext-a.woff2") format("woff2");
-  unicode-range: U+0100-017F, U+01FD, U+1E62;
-}
-@font-face {
-  font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; font-display: swap;
-  src: url("fonts/eb-garamond-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; font-display: swap;
-  src: url("fonts/eb-garamond-italic-ext-a.woff2") format("woff2");
-  unicode-range: U+0100-017F, U+01FD, U+1E62;
-}
-@font-face {
-  font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; font-display: swap;
-  src: url("fonts/eb-garamond-italic-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* "KD Brand": EB Garamond (SIL OFL 1.1, see fonts/OFL.txt) cut down to the letters of the site's
-   name, KATOLİK DÜNYASI, at one weight: 3 KB, preloaded, so the logo never changes font */
-@font-face { font-family: "KD Brand"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-latin.woff2") format("woff2"); unicode-range: U+0041, U+0044, U+0049, U+004B, U+004C, U+004E, U+004F, U+0053, U+0054, U+0059, U+00DC; }
-@font-face { font-family: "KD Brand"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-ext.woff2") format("woff2"); unicode-range: U+0130; }
+/* "KD Brand": Inter (SIL OFL 1.1, see fonts/OFL-Inter.txt) cut down to the letters of the site's name, "KATOLİK DÜNYASI" */
+@font-face { font-family: "KD Brand"; font-weight: 400 700; font-display: block; src: url("fonts/kd-logo-latin.woff2") format("woff2"); unicode-range: U+0020, U+0041, U+0044, U+0049, U+004B, U+004C, U+004E, U+004F, U+0053, U+0054, U+0059, U+00DC; }
+@font-face { font-family: "KD Brand"; font-weight: 400 700; font-display: block; src: url("fonts/kd-logo-ext.woff2") format("woff2"); unicode-range: U+0130; }
 /* Lexend (SIL OFL 1.1, see fonts/OFL-Lexend.txt), a typeface designed for reading fluency,
    for the Settings panel's dyslexia-friendly text. Nothing downloads unless that setting is on. */
 @font-face {
@@ -93,7 +72,7 @@
   --danger-bg: rgba(179, 38, 30, .1);
   --danger-border: rgba(179, 38, 30, .38);
 
-  --serif: "EB Garamond", Garamond, "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --serif: "Lexend", Verdana, Tahoma, sans-serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --radius: 14px;
   --radius-sm: 9px;
@@ -203,8 +182,8 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; min-width: 0; }
 .brand .logo { width: 30px; height: 30px; color: var(--gold); flex: none; }
 .brand-name { line-height: 1; }
-/* "KATOLİK DÜNYASI": Garamond capitals, the first letters taller, like an inscription cut in stone */
-.bn { font-family: "KD Brand", "EB Garamond", Georgia, serif; font-size: 1.06rem; font-weight: 500; letter-spacing: .07em; white-space: nowrap; color: var(--text); }
+/* "KATOLİK DÜNYASI": Inter capitals (a tiny subset holding only these letters), the first letters taller */
+.bn { font-family: "KD Brand", "Inter", system-ui, sans-serif; font-size: .98rem; font-weight: 600; letter-spacing: .08em; white-space: nowrap; color: var(--text); }
 .bn-c { font-size: 1.36em; letter-spacing: .02em; }
 .brand-rule { width: 1px; height: 26px; flex: none; background: var(--border-strong); }
 /* The mark: the fish, glowing softly, turns over to the Jerusalem cross on hover or focus */
@@ -1141,11 +1120,11 @@ body.sheet-open { overflow: hidden; }
 /* The header and the Settings panel keep the usual fonts: Lexend's wider letters would push the
    bar onto two lines and the panel past the screen */
 :root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) {
-  --serif: "EB Garamond", Garamond, "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --serif: "Lexend", Verdana, Tahoma, sans-serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: var(--serif); letter-spacing: normal;
 }
-/* Lexend runs larger than EB Garamond; a slightly smaller size keeps lines at a similar length */
+/* Lexend runs large; a slightly smaller size keeps lines at a comfortable length */
 [data-a11y-dyslexia="1"] body { font-size: calc(1.1875rem * .9); line-height: 1.75; }
 [data-a11y-cursor="1"], [data-a11y-cursor="1"] a, [data-a11y-cursor="1"] button {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path d="M6 3.5 18 13l-5 .8 2.6 5.3-2 1-2.6-5.3L7.5 18Z" fill="black" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg>') 4 4, auto;
@@ -3157,12 +3136,12 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .hm-journey { display: block; margin-top: 2.2rem; }
 .hm-journey a { color: inherit; text-decoration: none; }
 .hj-kick { margin: 0; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
-.hj-h { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.95rem; font-weight: 500; letter-spacing: 0; margin: .2rem 0 1.15rem; }
+.hj-h { font-family: var(--serif); font-size: 1.95rem; font-weight: 500; letter-spacing: 0; margin: .2rem 0 1.15rem; }
 .hj-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 .hj-step { position: relative; display: grid; grid-template-columns: 1.8rem 1fr; gap: .9rem; padding-bottom: 1.25rem; }
 .hj-step:last-child { padding-bottom: 0; }
 .hj-dot { position: relative; z-index: 1; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--surface); border: 2px solid var(--gold-soft); font-family: var(--sans); font-size: .82rem; font-weight: 700; color: var(--gold); }
-.hj-st { margin: 0; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.32rem; font-weight: 500; line-height: 1.1; letter-spacing: 0; }
+.hj-st { margin: 0; font-family: var(--serif); font-size: 1.32rem; font-weight: 500; line-height: 1.1; letter-spacing: 0; }
 .hj-step p { margin: .15rem 0 .5rem; font-size: .9rem; color: var(--muted); }
 .hj-links { display: flex; flex-wrap: wrap; gap: .5rem; }
 .hj-links a { display: inline-flex; align-items: center; gap: .2rem; padding: .32rem .45rem .32rem .8rem; border-radius: 999px; background: var(--gold-bg); color: var(--gold-active); font-family: var(--sans); font-size: .8rem; font-weight: 600; transition: background-color .15s; }
@@ -3171,12 +3150,12 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .hj-aside { display: flex; flex-direction: column; gap: 1.2rem; }
 .hj-feat { display: flex; flex-direction: column; gap: .45rem; padding: 1.5rem 1.6rem; border-radius: 20px; background: linear-gradient(160deg, #f3e2b8, #e9cf98); transition: transform .2s, box-shadow .2s; }
 .hj-feat:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.hj-ft { font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.75rem; font-weight: 500; line-height: 1.05; color: #2c210d; }
+.hj-ft { font-family: var(--serif); font-size: 1.75rem; font-weight: 500; line-height: 1.05; color: #2c210d; }
 .hj-fd { color: #4a3b1d; font-size: .9rem; line-height: 1.55; }
 .hj-more { display: inline-flex; align-items: center; gap: .25rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; color: #7a5a1a; }
 .hj-q { margin: 0; padding-left: 1.2rem; border-left: 3px solid var(--gold-soft); }
 .hj-q blockquote { margin: 0; }
-.hj-q p { margin: 0; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 1.12rem; font-style: italic; line-height: 1.35; letter-spacing: 0; }
+.hj-q p { margin: 0; font-family: var(--serif); font-size: 1.12rem; font-style: italic; line-height: 1.35; letter-spacing: 0; }
 .hj-q figcaption { margin-top: .4rem; font-family: var(--sans); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .hj-saints div { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .6rem; }
 .hj-saints a { font-size: .84rem; border-bottom: 1px solid var(--border-strong); }
@@ -3355,22 +3334,9 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 
 /* =========================================================================
    The app's look on the website: cream paper, Caravaggio and the old masters behind the page
-   titles and on the home page's cards, tall Anton capitals for headings, EB Garamond to read.
+   titles and on the home page's cards.
    ========================================================================= */
-/* Anton (SIL OFL 1.1, see fonts/OFL-Anton.txt), the headings' typeface, as "KD Display" */
-@font-face {
-  font-family: "KD Display"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("fonts/anton-ext-a.woff2") format("woff2");
-  unicode-range: U+0100-017F, U+01FD, U+1E62;
-}
-@font-face {
-  font-family: "KD Display"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("fonts/anton-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-:root { --display: "KD Display", Impact, "Arial Narrow", sans-serif; }
-/* reading text in EB Garamond again (Inter stays for menus, labels and buttons) */
-html:not([data-a11y-dyslexia="1"]) { --serif: "EB Garamond", Garamond, Georgia, "Times New Roman", serif; }
+:root { --display: "Lexend", Verdana, Tahoma, sans-serif; }
 html:not([data-a11y-dyslexia="1"]) body { letter-spacing: 0; }
 /* light: the app's cream, plain, with navy ink */
 :root:not([data-theme="dark"]) {
@@ -3385,7 +3351,7 @@ main h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); }
 main .prose h2, main h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
 /* the dyslexia setting keeps its own, easier letters */
 :root[data-a11y-dyslexia="1"] main h1, :root[data-a11y-dyslexia="1"] main h2, :root[data-a11y-dyslexia="1"] .hj-h { font-family: inherit; text-transform: none; }
-/* reading: EB Garamond, a size up on wide screens */
+/* reading: a size up on wide screens */
 @media (min-width: 980px) {
   .prose { font-size: 1.24rem; line-height: 1.6; }
 }
@@ -3424,20 +3390,6 @@ html:not(.av) .page-head.painted .ph-cap {
 }
 .ph-cap cite { font-style: italic; }
 /* a painting smaller than the screen: whole, framed, beside the title, over a blurred copy */
-.ph-frame { display: none; }
-html:not(.av) .page-head.painted.art-framed { align-items: flex-start; text-align: left; justify-content: center; }
-html:not(.av) .page-head.painted.art-framed .ph-art { filter: blur(26px) saturate(1.15) brightness(.8); transform: scale(1.2); }
-html:not(.av) .page-head.painted.art-framed::after { background: linear-gradient(90deg, rgba(12, 10, 8, .82) 0%, rgba(12, 10, 8, .55) 55%, rgba(12, 10, 8, .25) 100%); }
-html:not(.av) .page-head.painted.art-framed .ph-text { align-items: flex-start; max-width: min(36rem, 58%); }
-html:not(.av) .page-head.painted.art-framed .ph-frame {
-  display: block; position: absolute; top: 50%; right: calc(50vw - 50% + var(--gutter) + 1rem); transform: translateY(-52%);
-  width: auto; height: 78%; max-width: 36%; object-fit: contain;
-  border: 6px solid #f3ead6; border-radius: 4px; box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .7);
-}
-@media (max-width: 719px) {
-  html:not(.av) .page-head.painted.art-framed .ph-frame { display: none; }
-  html:not(.av) .page-head.painted.art-framed .ph-text { max-width: none; }
-}
 
 /* ---- The home page's cards: a painting each ---- */
 :root .hm-today > .hm-card.hm-card.hm-card, :root .hm-journey .hj-feat.hj-feat {
@@ -3471,7 +3423,7 @@ a.hm-card:hover { color: #fff; }
 .art-list li { break-inside: avoid; margin: 0 0 .8rem; font-size: .95rem; line-height: 1.4; }
 .art-list cite { font-style: italic; }
 /* the phone-style view of narrow windows keeps its own plain header */
-html.av .page-head .ph-art, html.av .page-head .ph-frame { display: none; }
+html.av .page-head .ph-art { display: none; }
 
 /* ---- The home page's strip of Church history: a card per event, oldest first, era by era ---- */
 .hx { margin-top: 2.6rem; }
@@ -3581,8 +3533,47 @@ html.av .page-head.painted .ph-cap { display: block; order: 9; margin: .3rem 0 0
 html.av .page-head.painted .ph-art { width: auto; max-width: 100%; height: auto; max-height: 62vh; aspect-ratio: auto; object-fit: contain; margin-inline: auto; }
 /* a saint or a mystery: the upper part of the painting, where the faces are */
 .hm-saint .hm-art, .hm-myst .hm-art { background-position: center 18%; }
-/* bold reads as semibold: EB Garamond and Inter at 600 instead of 700 */
+/* bold reads as semibold: 600 instead of 700 */
 strong, b { font-weight: 600; }
 :root[data-a11y-dyslexia="1"] :is(strong, b) { font-weight: 700; }
 :root:not([data-a11y-dyslexia="1"]) :is(.mira-name, .faq-q, .why-lede, .why-obj-q, .why-door-t, .why-cta-t, .why-hook-t, main h3:not(.hx-t):not(.hj-st), main h4, .bref, .gloss, .kk-sec > summary h3) { font-weight: 500; }
 :root:not([data-a11y-dyslexia="1"]) :is(.mass-role, .hx-y, .ill-kick, .why-hook-k, .why-q-label, .why-obj-label, .stage-n, .why-chain-n, .hm-label, .hj-kick, .hm-go, .label, .hj-more, .rt-c-myst strong) { font-weight: 600; }
+
+/* ---------- Painted page headers: a full-width banner, the painting's name on it at the lower
+   right, the page's title under it. Every header painting is landscape (data/tablolar.json "pages").
+   These override the earlier painted-header rules, phone (html.av) and desktop alike. ---------- */
+main .page-head.painted { display: flex !important; flex-direction: column !important; align-items: stretch !important; min-height: 0 !important; padding: 0 !important; margin: 0 0 1.4rem !important; background: none !important; overflow: visible !important; color: var(--text) !important; position: relative !important; isolation: auto !important; }
+main .page-head.painted::before, main .page-head.painted::after { content: none !important; display: none !important; }
+main .page-head.painted .ph-art { display: block !important; position: relative !important; inset: auto !important; z-index: 0 !important; width: 100vw !important; max-width: none !important; max-height: none !important; height: auto !important; margin: 0 0 0 calc(50% - 50vw) !important; aspect-ratio: 16 / 10 !important; object-fit: cover !important; filter: none !important; transform: none !important; border-radius: 0 !important; box-shadow: none !important; opacity: 1 !important; }
+main .page-head.painted .ph-cap { position: absolute !important; top: calc(62.5vw - 2.4rem) !important; right: .7rem !important; bottom: auto !important; left: auto !important; z-index: 2; margin: 0 !important; padding: .28rem .7rem !important; max-width: 80%; border-radius: 999px; background: rgba(10, 9, 8, .62) !important; color: #f3ead6 !important; font: 500 .74rem/1.25 var(--sans) !important; text-align: right; opacity: 1 !important; transform: none !important; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+main .page-head.painted .ph-cap cite { color: inherit !important; }
+main .page-head.painted .ph-text { position: relative !important; z-index: 1; width: 100%; max-width: 46rem; align-self: center; margin: 0 !important; padding: 1.3rem 0 0 !important; background: none !important; color: var(--text) !important; text-align: center; }
+main .page-head.painted .ph-text :is(h1, .label, .sub, p) { color: inherit !important; text-shadow: none !important; }
+main .page-head.painted .ph-text .label { color: var(--gold) !important; }
+@media (min-width: 980px) {
+  main .page-head.painted .ph-art { aspect-ratio: auto !important; height: clamp(260px, 34vw, 460px) !important; }
+  main .page-head.painted .ph-cap { top: calc(clamp(260px, 34vw, 460px) - 2.6rem) !important; right: calc(50% - 50vw + 1rem) !important; }
+}
+
+/* ---------- Reading font: Lexend everywhere, text, headings, menus and buttons alike ---------- */
+:root, html:not([data-a11y-dyslexia="1"]) {
+  --serif: "Lexend", Verdana, Tahoma, sans-serif; --sans: "Lexend", Verdana, Tahoma, sans-serif; --display: "Lexend", Verdana, Tahoma, sans-serif;
+}
+body, html:not([data-a11y-dyslexia="1"]) body { font-size: calc(1.1875rem * .9); line-height: 1.75; letter-spacing: 0; }
+@media (min-width: 980px) { .prose { font-size: 1.1rem; line-height: 1.75; } }
+/* headings in normal case, a weight up instead of the tall capitals */
+main h1, main h2, .hj-h, .hm-col h2, .hm-card .hm-day, .hm-card .hm-sn, .hm-card .hm-mn, :root .hm-journey .hj-feat .hj-ft, main .hx-t, .hx-era-n, .hd-t {
+  text-transform: none !important; font-weight: 600 !important; letter-spacing: -.01em !important; line-height: 1.15 !important;
+}
+main h1 { font-size: clamp(1.9rem, 4.4vw, 3rem); }
+main .prose h2, main h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); }
+main .hx-t { font-size: 1.2rem !important; }
+.hd-t { font-size: 1.6rem !important; }
+.hx-era-n { font-size: 1.35rem !important; }
+/* the dyslexia setting now adds room between letters, words and lines */
+[data-a11y-dyslexia="1"] body { letter-spacing: .02em; word-spacing: .1em; line-height: 1.9; }
+main .page-head.painted .ph-text h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem) !important; }
+main .work-hero:has(> .banner-only) { padding-top: 0 !important; margin-top: 0 !important; }
+main .page-head.banner-only { width: 100%; }
+main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important; width: max-content; max-width: calc(100vw - 1.4rem); }
+@media (min-width: 980px) { main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + 1rem) !important; } }

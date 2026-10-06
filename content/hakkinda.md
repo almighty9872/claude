@@ -20,8 +20,8 @@ description: katolikdunyasi.com’un kaynakları ve telif bilgileri: Katekizm Ö
 - **İngilizce:** sitede İngilizce yalnızca Katekizm sayfalarında vardır. Katekizm Özeti’nin, Motu Proprio’nun ve Giriş’in İngilizcesi Vatikan’ın özgün metnidir.
 - **Kilise tarihi şeridi:** ana sayfadaki olaylar, Kilise Babaları’nın eserlerine, konsil belgelerine ve papalık belgelerine dayanılarak bu site için yazılmıştır. Görsellerin çoğu Wikimedia Commons’tan alınmıştır; her birinin sahibi ve lisansı [Kaynaklar ve Telif](kaynaklar-ve-telif.html#tarih-gorselleri) sayfasındadır.
 - **Çizimler:** bölümlerin yanındaki çizgi çizimler ve sitedeki simgeler bu site için çizilmiştir.
-- **Tablolar:** sayfa başlıklarındaki ve ana sayfa kartlarındaki tablolar, çoğu Caravaggio’nun olmak üzere, kamu malı olan eserlerdir; görüntüler Web Gallery of Art’tan alınmıştır. Her tablonun adı başlığın altında yazılıdır; tam liste [Kaynaklar ve Telif](kaynaklar-ve-telif.html#tablolar) sayfasındadır.
-- **Yazı tipleri:** Inter, EB Garamond, başlıklar için Anton ve Lexend (disleksi modu) sitenin kendi sunucusundan yüklenir ve SIL Open Font License ile kullanılır.
+- **Tablolar:** sayfa başlıklarındaki ve ana sayfa kartlarındaki tablolar kamu malı olan eserlerdir; görüntüler Ulusal Sanat Galerisi (Washington), Metropolitan Sanat Müzesi, Cleveland Sanat Müzesi ve Kongre Kütüphanesi’nin açık erişim koleksiyonlarından ve Web Gallery of Art’tan alınmıştır. Her tablonun adı resmin sağ alt köşesinde yazılıdır; tam liste [Kaynaklar ve Telif](kaynaklar-ve-telif.html#tablolar) sayfasındadır.
+- **Yazı tipleri:** metinler ve başlıklar için Lexend, logo için Inter; ikisi de sitenin kendi sunucusundan yüklenir ve SIL Open Font License ile kullanılır.
 - Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir.
 
 Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
