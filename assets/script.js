@@ -3368,20 +3368,21 @@
       document.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F')) showUpTo(later.length); });
       window.addEventListener('beforeprint', function () { showUpTo(later.length); });
     }
-    /* how much has been read: each part shown counts by how far past it the screen has come */
+    /* how much has been read: how far down the page the reader is, with the parts still to come
+       counted at the height the text shown so far takes for its length; so the bar moves evenly
+       up and down with the scroll, and does not jump when a part comes in */
     var raf = 0;
     function progress() {
       raf = 0;
-      var y = window.pageYOffset + vh(), done = 0;
+      var doc = document.documentElement, H = doc.scrollHeight, rest = 0, shown = 0, shownH = 0;
       parts.forEach(function (el) {
-        if (el.classList.contains('kd-later')) return;
-        var r = el.getBoundingClientRect(), t = r.top + window.pageYOffset;
-        if (!r.height) return;
-        done += el._kdLen * Math.max(0, Math.min(1, (y - t) / r.height));
+        if (el.classList.contains('kd-later')) { rest += el._kdLen; return; }
+        var r = el.getBoundingClientRect();
+        if (r.height) { shown += el._kdLen; shownH += r.height; }
       });
-      /* at the very bottom of the page, the whole article has been read */
-      var end = window.pageYOffset + vh() >= document.documentElement.scrollHeight - 4 && !(later && later.length);
-      fill.style.transform = 'scaleX(' + (end ? 1 : Math.min(1, done / total)).toFixed(4) + ')';
+      if (rest && shown) H += rest * shownH / shown;
+      var max = Math.max(1, H - vh());
+      fill.style.transform = 'scaleX(' + Math.max(0, Math.min(1, window.pageYOffset / max)).toFixed(4) + ')';
     }
     window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(progress); }, { passive: true });
     window.addEventListener('resize', function () { if (!raf) raf = requestAnimationFrame(progress); });

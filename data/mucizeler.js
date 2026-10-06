@@ -44,6 +44,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "zeytun",
+     "art": "mira-zeytun",
      "name": "Zeytun Meryem Ana’sı",
      "nameEn": "Our Lady of Zeitoun",
      "place": "Kahire, Mısır · 1968–1971",
@@ -53,6 +54,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "guadalupe",
+     "art": "mira-guadalupe",
      "name": "Guadalupe Meryem Ana’sı",
      "nameEn": "Our Lady of Guadalupe",
      "place": "Mexico City, Meksika · 1531",
@@ -62,6 +64,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "lourdes",
+     "art": "mira-lourdes",
      "name": "Lourdes Meryem Ana’sı",
      "nameEn": "Our Lady of Lourdes",
      "place": "Lourdes, Fransa · 1858",
@@ -81,6 +84,7 @@ window.MIRACLES = /*JSON-START*/{
    "items": [
     {
      "id": "kefen",
+     "art": "mira-kefen",
      "name": "Torino Kefeni",
      "nameEn": "The Shroud of Turin",
      "place": "Torino, İtalya",
@@ -90,6 +94,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "tilma",
+     "art": "mira-tilma",
      "name": "Guadalupe Tilması",
      "nameEn": "The Guadalupe Tilma",
      "place": "Mexico City, Meksika",
@@ -109,6 +114,7 @@ window.MIRACLES = /*JSON-START*/{
    "items": [
     {
      "id": "lanciano",
+     "art": "mira-lanciano",
      "name": "Lanciano Mucizesi",
      "nameEn": "The Miracle of Lanciano",
      "place": "Lanciano, İtalya · 8. yüzyıl",
@@ -118,6 +124,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "bolsena",
+     "art": "mira-bolsena",
      "name": "Bolsena-Orvieto Mucizesi",
      "nameEn": "The Miracle of Bolsena-Orvieto",
      "place": "Bolsena / Orvieto, İtalya · 1263",
@@ -127,6 +134,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "buenos-aires",
+     "art": "mira-buenos-aires",
      "name": "Buenos Aires Mucizesi",
      "nameEn": "The Buenos Aires Miracle",
      "place": "Buenos Aires, Arjantin · 1996",
@@ -146,6 +154,7 @@ window.MIRACLES = /*JSON-START*/{
    "items": [
     {
      "id": "bernadette",
+     "art": "mira-bernadette",
      "name": "Lourdesli Aziz Bernadette",
      "nameEn": "St. Bernadette of Lourdes",
      "place": "Nevers, Fransa",
@@ -155,6 +164,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "padre-pio",
+     "art": "mira-padre-pio",
      "name": "Aziz Padre Pio",
      "nameEn": "St. Pio of Pietrelcina (Padre Pio)",
      "place": "San Giovanni Rotondo, İtalya",
@@ -164,6 +174,7 @@ window.MIRACLES = /*JSON-START*/{
     },
     {
      "id": "vianney",
+     "art": "mira-vianney",
      "name": "Aziz Jean-Marie Vianney (Ars Curesi)",
      "nameEn": "St. Jean-Marie Vianney (The Curé of Ars)",
      "place": "Ars, Fransa",

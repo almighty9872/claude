@@ -1101,6 +1101,127 @@
    "w": 922,
    "h": 590,
    "y": 50
+  },
+  "mira-zeytun": {
+   "t": "Zeytun’daki görünmenin 1968 fotoğrafı",
+   "te": "The 1968 photograph of the apparition at Zeitoun",
+   "a": "Anonim fotoğraf",
+   "loc": "Kamu malı",
+   "loce": "Kamu malı",
+   "src": "https://commons.wikimedia.org/wiki/File:Our_Lady_of_Zeitun.jpg",
+   "w": 286,
+   "h": 500,
+   "y": 30
+  },
+  "mira-guadalupe": {
+   "t": "Guadalupe Meryem Ana’sı tasviri",
+   "te": "The image of Our Lady of Guadalupe",
+   "a": "Tilmadaki tasvir, 1531",
+   "loc": "Kamu malı",
+   "loce": "Kamu malı",
+   "src": "https://commons.wikimedia.org/wiki/File:Virgen_de_guadalupe1.jpg",
+   "w": 788,
+   "h": 1226,
+   "y": 25
+  },
+  "mira-lourdes": {
+   "t": "Lourdes’taki mağara, 1890’lar",
+   "te": "The grotto at Lourdes, 1890s",
+   "a": "Detroit Publishing Co.",
+   "loc": "Kamu malı (Kongre Kütüphanesi)",
+   "loce": "Kamu malı (Kongre Kütüphanesi)",
+   "src": "https://www.loc.gov/item/2001698648/",
+   "w": 1024,
+   "h": 766,
+   "y": 50
+  },
+  "mira-kefen": {
+   "t": "Torino Kefeni: kumaş ve negatif görüntüsü",
+   "te": "The Shroud of Turin: the cloth and its negative",
+   "a": "Fotoğraf: Dianelos Georgoudis",
+   "loc": "CC BY-SA 3.0",
+   "loce": "CC BY-SA 3.0",
+   "src": "https://commons.wikimedia.org/wiki/File:Turin_shroud_positive_and_negative_displaying_original_color_information_708_x_465_pixels_94_KB.jpg",
+   "w": 708,
+   "h": 465,
+   "y": 30
+  },
+  "mira-tilma": {
+   "t": "Tilmadaki yüz, yakından",
+   "te": "The face on the tilma, close up",
+   "a": "Fotoğraf: Lyricmac",
+   "loc": "Kamu malı",
+   "loce": "Kamu malı",
+   "src": "https://commons.wikimedia.org/wiki/File:El_Rostro_de_la_Virgen.jpg",
+   "w": 515,
+   "h": 570,
+   "y": 35
+  },
+  "mira-lanciano": {
+   "t": "Lanciano’daki et ve kan kalıntıları",
+   "te": "The flesh and blood relics at Lanciano",
+   "a": "Fotoğraf: AFC photo",
+   "loc": "CC BY-SA 3.0",
+   "loce": "CC BY-SA 3.0",
+   "src": "https://commons.wikimedia.org/wiki/File:1_miracolo.jpg",
+   "w": 667,
+   "h": 1200,
+   "y": 25
+  },
+  "mira-bolsena": {
+   "t": "Bolsena Ayini",
+   "te": "The Mass at Bolsena",
+   "a": "Raffaello, Vatikan Sarayı",
+   "loc": "Kamu malı",
+   "loce": "Kamu malı",
+   "src": "https://www.wga.hu/html/r/raphael/4stanze/2eliodor/2bolsen.html",
+   "w": 1200,
+   "h": 786,
+   "y": 50
+  },
+  "mira-bernadette": {
+   "t": "Bernadette’in bedeni, 1925",
+   "te": "Bernadette’s body, 1925",
+   "a": "Anonim fotoğraf",
+   "loc": "Kamu malı",
+   "loce": "Kamu malı",
+   "src": "https://commons.wikimedia.org/wiki/File:Bernadette_soubirous_exhumated_1925.jpg",
+   "w": 1200,
+   "h": 768,
+   "y": 40
+  },
+  "mira-padre-pio": {
+   "t": "Padre Pio",
+   "te": "Padre Pio",
+   "a": "Anonim fotoğraf",
+   "loc": "Kamu malı",
+   "loce": "Kamu malı",
+   "src": "https://commons.wikimedia.org/wiki/File:Padre_Pio_portraitFXD.jpg",
+   "w": 1200,
+   "h": 1494,
+   "y": 30
+  },
+  "mira-vianney": {
+   "t": "Aziz Jean-Marie Vianney’nin bedeni, Ars",
+   "te": "The body of St John Vianney, Ars",
+   "a": "Fotoğraf: Herwig Reidlinger",
+   "loc": "CC BY-SA 3.0",
+   "loce": "CC BY-SA 3.0",
+   "src": "https://commons.wikimedia.org/wiki/File:Jean-Marie_Vianney.jpg",
+   "w": 831,
+   "h": 533,
+   "y": 50
+  },
+  "mira-buenos-aires": {
+   "t": "Buenos Aires Metropolitan Katedrali",
+   "te": "Buenos Aires Metropolitan Cathedral",
+   "a": "Fotoğraf: Alexis González Molina",
+   "loc": "CC BY-SA 3.0",
+   "loce": "CC BY-SA 3.0",
+   "src": "https://commons.wikimedia.org/wiki/File:Buenos_Aires-Catedral_Metropolitana_(interior).jpg",
+   "w": 960,
+   "h": 720,
+   "y": 50
   }
  },
  "sections": {

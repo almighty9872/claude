@@ -519,7 +519,8 @@ function Art-Img([string]$key, [string]$cls, [string]$sizes = '100vw', [string]$
 function Mira-Fig([string]$key) {
   if (-not $key) { return '' }
   $a = $Tablolar.art.$key
-  return "<figure class=`"mira-fig`">$(Art-Img $key 'mira-img' '(min-width: 980px) 44rem, 100vw')<figcaption>$($a.a) · <cite>$($a.t)</cite></figcaption></figure>"
+  $lic = if ($a.loc -match '^CC') { " · $($a.loc)" } else { '' }
+  return "<figure class=`"mira-fig`">$(Art-Img $key 'mira-img' '(min-width: 980px) 44rem, 100vw')<figcaption><cite>$($a.t)</cite> · $($a.a)$lic</figcaption></figure>"
 }
 function Art-Cap([string]$key) {
   $a = $Tablolar.art.$key
@@ -2196,8 +2197,9 @@ function Case-Body($Ic, $Ico, [string]$Page) {
     <header class="page-head center" id="bas">$(Page-Ico $Ico)<h1>$(T $Ic.title $Ic.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Ic.en)</p>")</header>
     <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)<a class="ic-fn-ref" href="#dipnot" aria-label="Dipnot" data-en-aria-label="Footnote">*</a></p>
     <section class="ic-tldr" id="kisaca" aria-labelledby="kisaca-h">
-      <h2 class="section-title" id="kisaca-h">$(T $Ic.tldrTitle $Ic.tldrTitleEn)</h2>
+      <details class="ic-tldr-d"><summary class="ic-tldr-s"><h2 class="section-title" id="kisaca-h">$(T $Ic.tldrTitle $Ic.tldrTitleEn)</h2>$IcoChevDown</summary>
       <ol class="ic-tl-list ic-tl-v">$icTldr</ol>
+      </details>
     </section>
   $icParts
 $(Ill-Sec -Id $Ic.closing.id -HeadId "$($Ic.closing.id)-h" -Art $arts['sonuc'][0] -Tone $arts['sonuc'][1] -Class 'ic-closing' -Kick (T 'Sonuç' 'In the end') -Head (T $Ic.closing.title $Ic.closing.titleEn) -Body ("<div class=`"prose`">$(TB ((Ic-Blocks $Ic.closing.body) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>') ((Ic-Blocks $Ic.closing.bodyEn) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>'))</div>" + (Ic-Nav ($icSeq.Count - 1))))
@@ -3085,7 +3087,8 @@ Write-Page -File 'gizlilik.html' -Title "$($GzMeta.title) | $SiteName" -TitleEn 
 # ================================================================== KAYNAKLAR VE TELIF (kaynaklar-ve-telif.html)
 # The same text as the footer's "Kaynaklar ve telif" popup, as a page of its own for search
 # engines, shared links and visitors without JavaScript
-$ArtListHtml = (($Tablolar.art.PSObject.Properties | Sort-Object { $_.Value.a }, { $_.Value.t }) | ForEach-Object {
+# the photographs in the miracle stories (keys mira-*, fatima-*) are listed on their own
+$ArtListHtml = (($Tablolar.art.PSObject.Properties | Where-Object { $_.Name -notmatch '^(mira|fatima)-' } | Sort-Object { $_.Value.a }, { $_.Value.t }) | ForEach-Object {
   $a = $_.Value
   "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`">$(T "<cite>$($a.t)</cite>" "<cite>$($a.te)</cite>")</a><br>$($a.a) · $(T $a.loc $a.loce)</span></li>"
 }) -join ''
@@ -3093,6 +3096,10 @@ $seenImg = @{}
 $TarihListHtml = (($Tarih.items | ForEach-Object { $_.img } | Where-Object { if ($seenImg[$_]) { $false } else { $seenImg[$_] = 1; $true } }) | ForEach-Object {
   $g = $TarihImg.$_
   if ($g) { "<li><span><a href=`"$($g.src)`" target=`"_blank`" rel=`"noopener`"><cite>$(Attr $g.t)</cite></a><br>$(Attr $g.a) · $($g.lic)</span></li>" }
+}) -join ''
+$MiraListHtml = (($Tablolar.art.PSObject.Properties | Where-Object { $_.Name -match '^(mira|fatima)-' }) | ForEach-Object {
+  $a = $_.Value
+  "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`"><cite>$($a.t)</cite></a><br>$($a.a) · $($a.loc)</span></li>"
 }) -join ''
 $PortraitListHtml = ($GreatSaints.saints | ForEach-Object {
   $p = $SaintPortraits.($_.id)
@@ -3109,6 +3116,9 @@ $ktBody = @"
   <h2 id="tarih-gorselleri">Kilise’nin tarihi görselleri</h2>
   <p>Kilise’nin tarihi sayfasındaki ve ana sayfa şeridindeki görseller, sırasıyla. Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır.</p>
   <ul class="art-list">$TarihListHtml</ul>
+  <h2 id="mucize-fotograflari">Mucizeler sayfasındaki görseller</h2>
+  <p>Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır.</p>
+  <ul class="art-list">$MiraListHtml</ul>
   <h2 id="aziz-portreleri">Aziz portreleri</h2>
   <p>Azizler sayfasındaki en bilinen yirmi azizin portreleri. Creative Commons lisanslı olanlar, lisansları ve kaynak sayfaları belirtilerek kullanılır.</p>
   <ul class="art-list">$PortraitListHtml</ul></div>

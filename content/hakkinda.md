@@ -26,6 +26,7 @@ Diğer bütün yazılar (aziz hayatları, meseller, mucizeler, Kilise’nin tari
 
 - **Tablolar:** sayfa başlıklarındaki ve bölümlerdeki tablolar kamu malıdır. Washington Ulusal Sanat Galerisi, Metropolitan Müzesi, Cleveland Sanat Müzesi, Kongre Kütüphanesi ve Web Gallery of Art koleksiyonlarından alındı. [Tam liste](kaynaklar-ve-telif.html#tablolar) aşağıda.
 - **Kilise’nin tarihi:** görsellerin çoğu Wikimedia Commons’tan. [Sahipleri ve lisansları](kaynaklar-ve-telif.html#tarih-gorselleri) aşağıda.
+- **Mucizeler:** fotoğraflar ve resimler kamu malıdır ya da Creative Commons lisanslıdır. [Künyeler](kaynaklar-ve-telif.html#mucize-fotograflari) aşağıda.
 - **Aziz portreleri:** kamu malı tablolar ve fotoğraflar; üçü Creative Commons lisanslı fotoğraftır. [Künyeler](kaynaklar-ve-telif.html#aziz-portreleri) aşağıda.
 - **Haritalar:** kıyılar ve göller kamu malı [Natural Earth](https://www.naturalearthdata.com) verisinden çizildi.
 - **Çizimler ve simgeler:** bu site için çizildi.

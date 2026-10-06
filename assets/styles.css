@@ -3017,7 +3017,7 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .ic-tldr:has(> .ic-tldr-d:not([open])) .section-title { margin: .45rem 0; font-size: clamp(1.1rem, 2.4vw, 1.3rem); }
 .ic-tldr:has(> .ic-tldr-d:not([open])):hover { border-color: var(--gold-soft); }
 .ic-tldr { transition: border-color .2s; }
-.ic-tldr-d[open] .ic-car { animation: tldr-open .35s ease-out; }
+.ic-tldr-d[open] .ic-tl-v { animation: tldr-open .35s ease-out; }
 @keyframes tldr-open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .ic-tldr-d[open] .ic-car { animation: none; } }
 
@@ -3625,7 +3625,7 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 .mass-pills a { pointer-events: auto; background: var(--glass-strong); border-color: var(--glass-brd); box-shadow: 0 6px 18px -10px rgba(29, 36, 51, .45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 .mass-pills a.is-current { background: color-mix(in srgb, var(--gold) 16%, var(--surface)); }
 .mira-fig { margin: .2rem 0 1.2rem; }
-.mira-img { display: block; width: 100%; height: auto; border-radius: 12px; filter: sepia(.15); }
+.mira-img { display: block; width: 100%; height: auto; border-radius: 12px; }
 .mira-fig figcaption { margin-top: .4rem; font: .74rem var(--sans); color: var(--muted); text-align: center; }
 /* a banner that is a window onto its painting (Tesbih Duası): the painting at its full width,
    moving inside it as the page scrolls (script.js, initBannerPan) */
@@ -3633,7 +3633,7 @@ main .page-head.painted.ph-pan .ph-win { position: relative; width: 100vw; margi
 @media (min-width: 980px) { main .page-head.painted.ph-pan .ph-win { aspect-ratio: auto; height: clamp(260px, 34vw, 460px); } }
 main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; top: 0; left: 0; margin: 0 !important; width: 100% !important; height: auto !important; aspect-ratio: auto !important; object-fit: fill !important; transform: translate3d(0, var(--pan, 0px), 0) !important; will-change: transform; }
 /* İslam'a Cevap, Ateizme Cevap: the summary, always open, one point under another */
-.ic-tldr { margin-inline: 0 !important; padding: .4rem 1.4rem 1rem; }
+.ic-tldr { padding: .4rem 1.4rem 1rem; }
 .ic-tldr .ic-tl-list.ic-tl-v { display: block; overflow: visible; padding: 0; counter-reset: none; }
 .ic-tl-v > li { display: block; }
 .ic-tl-v > li + li { border-top: 1px solid var(--border); }
@@ -3660,3 +3660,6 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 .gs-credit { margin: .4rem 0 2rem; font-size: .76rem; color: var(--muted); text-align: center; }
 @media (max-width: 599px) { .gs-stories { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem .4rem; } .gs-ring { width: 4.6rem; height: 4.6rem; } .gs-st .gs-s { display: none; } }
 @media (prefers-reduced-motion: reduce) { .gs-ring { transition: none; } }
+/* a story's picture: whole, at most about half a screen tall, in the middle */
+.mira-fig { text-align: center; }
+.mira-img { width: auto; max-width: 100%; max-height: min(26rem, 60vh); margin: 0 auto; }
