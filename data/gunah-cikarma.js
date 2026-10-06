@@ -13,7 +13,7 @@
 window.CONFESSION = /*JSON-START*/{
  "title": "Günah Çıkarma",
  "en": "Confession",
- "intro": "Günah çıkarma, Katolik inancında insanların en çok çekindiği ama en çok özgürleştiren kutsal sırdır. İsa bu sırrı, dirilişinin akşamı şu sözlerle başlattı: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip yalnızca bir aracıdır; asıl karşılaştığınız kişi Tanrı’nın kendisidir.",
+ "intro": "Günah çıkarma, en çok çekinilen ama en çok özgürleştiren kutsal sırdır. İsa onu dirilişinin akşamı başlattı: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip bir aracıdır; karşınızdaki Tanrı’dır.",
  "introEn": "Confession is the most feared and yet the most freeing sacrament of the Catholic faith. Jesus instituted it on the evening of the Resurrection with these words: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is only an instrument; the one you truly meet is God himself.",
  "steps": [
   {
@@ -65,7 +65,7 @@ window.CONFESSION = /*JSON-START*/{
    "textEn": "Do your penance as soon as you can, and carry the peace you've found into daily life."
   }
  ],
- "examenIntro": "Sorular On Emir’e göre sıralanmıştır. Aşağıdaki listeyle vicdan muhasebenizi yapıp günah çıkarmaya hazırlanabilirsiniz.",
+ "examenIntro": "Sorular On Emir’e göre sıralı. Günah çıkarmadan önce bu listeyle kendinizi gözden geçirin.",
  "examenIntroEn": "The questions follow the Ten Commandments. You can use the list below to examine your conscience and prepare for confession.",
  "examenGroups": [
   {

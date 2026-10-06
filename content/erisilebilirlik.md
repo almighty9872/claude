@@ -1,33 +1,47 @@
 ---
 title: Erişilebilirlik
-subtitle: Herkesin kolayca okuyabilmesi için
-description: katolikdunyasi.com’un erişilebilirlik yaklaşımı: desteklenen özellikler, bilinen sınırlamalar ve bir sorunu nasıl bildirebileceğiniz.
-short: Sitenin desteklediği erişilebilirlik özellikleri ve bir sorunu nasıl bildirebileceğiniz.
+subtitle: Herkes rahatça okuyabilsin diye
+description: katolikdunyasi.com’un erişilebilirlik özellikleri, bilinen sınırları ve bir sorunu nasıl bildirebileceğiniz.
+short: Sitenin erişilebilirlik özellikleri ve bir sorunu nasıl bildirebileceğiniz.
 ---
 
-## Taahhüdümüz
+## Ayarlar paneli
 
-katolikdunyasi.com, ekran okuyucu kullanan görme engelli ziyaretçiler dahil, mümkün olduğunca geniş bir kitle tarafından rahatça kullanılabilecek şekilde tasarlanıyor. Bu bir kerede bitecek bir iş değil; site büyüdükçe erişilebilirlik de sürekli gözden geçiriliyor.
+Üst çubuktaki dişli simgesi Ayarlar panelini açar. Hazır profiller var: hareket kısıtlılığı, görme engeli, renk körlüğü ve disleksi. Tek tek açabileceğiniz ayarlar:
 
-## Şu anda desteklenenler
+- yazıyı büyütmek
+- kontrastı artırmak, renkleri soldurmak
+- harf, kelime ve satır aralığını açmak
+- bağlantıları belirginleştirmek
+- büyük imleç
+- ekran okuyucu yardımcısı: üzerine geldiğiniz metni tarayıcınız sesli okur
 
-- **Erişilebilirlik ayarları:** her sayfanın üst çubuğundaki dişli (Ayarlar) simgesine tıklayarak açılır. Hareket kısıtlılığı, görme engeli, renk körlüğü ve disleksi için hazır profiller sunar; ayrıca kontrastı artırma, renk doygunluğunu azaltma, yazıyı büyütme, harf ve satır aralığını genişletme, bağlantıları vurgulama, okuma akıcılığı için tasarlanmış, açık kaynaklı Lexend yazı tipine geçme ve büyük imleç gibi tek tek açılıp kapatılabilen ayarlar içerir. Seçimleriniz tarayıcınızda hatırlanır, dilediğiniz an “Tüm Ayarları Sıfırla” ile eski hâline dönebilirsiniz.
-- **Ekran okuyucu yardımcısı:** Ayarlar panelindeki “Ekran Okuyucu” ayarını açtığınızda, üzerine geldiğiniz ya da klavyeyle odaklandığınız metni tarayıcınızın kendi sesli okuma özelliğiyle okur. Bu, VoiceOver, NVDA ya da TalkBack gibi gerçek bir ekran okuyucunun yerini tutmaz; site zaten anlamlı başlık sırası, işaret bölgeleri (menü, ana içerik, alt bilgi) ve arama sonuçları ile “bugünün azizi” gibi kendiliğinden güncellenen alanlar için sesli duyurularla bu tür araçlarla uyumlu çalışır.
-- **Klavye ile kullanım:** menüler, arama kutusu, Ayarlar paneli ve açılır panellerin tümü fare kullanmadan, yalnızca klavye ile açılıp kapatılabilir; odaklanılan öğe her zaman görsel olarak belirgindir. Bilgisayarda sayfanın üstündeki menülerde Enter menüyü açar, Tab ve ok tuşları menüde gezdirir, Escape kapatır.
-- **Dokunmatik ekranlar:** tablette, kendi alt listesi olan bir menü öğesine ilk dokunuşta o liste açılır, ikinci dokunuşta sayfaya gidilir.
-- **İçeriğe atlama bağlantısı:** her sayfanın başında, menüyü atlayıp doğrudan içeriğe geçen görünmez bir bağlantı bulunur (“İçeriğe geç”).
-- **Hareket azaltma:** işletim sisteminizde “hareketi azalt” tercihi açıksa site buna uyar ve gereksiz geçiş animasyonlarını kapatır. Bazı sayfalardaki bölüm çizimleri siz kaydırdıkça kendini çizer; bu tercih açıksa çizimler baştan tamamlanmış olarak görünür.
-- **Çizimler:** bölümlerin yanındaki çizgi çizimler yalnızca süs amaçlıdır; ekran okuyuculardan gizlenir, bilgi taşımaz. Her bölümün anlamı başlığında ve metninde yazılıdır.
-- **Harita:** Topraklarımızda Hristiyanlık haritasının sağ alt köşesindeki grup adları birer düğmedir. Fareyle üzerine gelince, klavyeyle odaklanınca ya da dokununca o gruptaki yerler vurgulanır; haritadaki her yer de klavyeyle seçilip bilgi kartı açılabilir.
-- **İletişim formu:** her alanın görünür bir etiketi vardır; gönderim sonucu (teşekkür ya da hata mesajı) ekran okuyuculara sesli olarak duyurulur. Spam koruması olan Cloudflare Turnstile çoğu zaman görünmeden çalışır, gerektiğinde tek tıklık bir doğrulama kutusu gösterir.
-- **Koyu ve açık tema:** göz yorgunluğuna ya da ışık hassasiyetine göre seçilebilir, tercihiniz hatırlanır.
-- **Renk kontrastı:** metin renkleri, WCAG 2.2 AA standardının önerdiği kontrast oranları hedeflenerek seçilmiştir; Ayarlar panelindeki “Kontrast Artır” ayarıyla daha da güçlendirilebilir.
-- **Dil:** her sayfanın Türkçe ve İngilizce iki sürümü vardır. Her sayfanın sağ alt köşesindeki TR | EN düğmesi, aynı sayfayı öteki dilde, aynı bölümden açar; seçiminiz hatırlanır. Katekizm’de İngilizce metin, özgün İngilizce metindir.
+Seçimleriniz tarayıcınızda hatırlanır. “Tüm Ayarları Sıfırla” hepsini geri alır.
 
-## Bilinen sınırlamalar
+## Okumayı kolaylaştıranlar
 
-Site tek bir kişi tarafından hazırlanıp bakımı yapılıyor ve resmî bir erişilebilirlik denetiminden geçmedi. Yukarıdaki maddeler WCAG 2.2 AA rehber alınarak uygulandı ve her sayfa bilgisayar ve telefon ekranında, iki temada da otomatik erişilebilirlik testlerinden (axe) geçiriliyor; ama bu bir uygunluk beyanı ya da sertifika değildir. Gözden kaçan bir yer olabilir; fark ederseniz aşağıdan bildirmeniz büyük yardım olur.
+- **Yazı tipi:** bütün metinler, okuma kolaylığı için tasarlanmış Lexend yazı tipiyle yazılır.
+- **Koyu ve açık tema:** güneşe göre kendiliğinden değişir; isterseniz kendiniz seçersiniz.
+- **Bölüm listesi:** uzun yazılarda sağ alt köşedeki yuvarlak düğme, sayfanın bölümlerini açar.
+- **Okuma çubuğu:** sayfanın en üstündeki ince altın çizgi, yazının ne kadarını okuduğunuzu gösterir.
 
-## Bir sorun mu fark ettiniz?
+## Klavye ve ekran okuyucu
 
-Bir sayfanın ekran okuyucuyla beklediğiniz gibi çalışmadığını, okunması zor bir renk kullanıldığını ya da klavyeyle ulaşamadığınız bir yer olduğunu fark ederseniz, lütfen [İletişim](iletisim.html) sayfasındaki formdan bize yazın. Hangi sayfada, hangi cihaz ve yardımcı teknolojiyle karşılaştığınızı belirtirseniz sorunu bulmak çok daha kolay olur.
+- Her şey klavyeyle kullanılabilir. Odaklanılan öğe her zaman görünür.
+- Menülerde Enter açar, ok tuşları gezdirir, Escape kapatır.
+- Her sayfanın başında menüyü atlayıp içeriğe geçen gizli bir bağlantı var (“İçeriğe geç”).
+- Başlıklar düzgün sıralıdır. Menü, içerik ve alt bilgi ayrı bölgelerdir.
+- Kendiliğinden değişen alanlar (arama sonuçları, “bugünün azizi”) ekran okuyucuya duyurulur.
+- Süs amaçlı çizimler ekran okuyucudan gizlenir.
+
+## Hareket
+
+İşletim sisteminizde “hareketi azalt” açıksa site geçiş animasyonlarını kapatır. Kayan görseller de sabit kalır.
+
+## Bilinen sınırlar
+
+Siteyi tek bir kişi hazırlıyor. Resmî bir erişilebilirlik denetiminden geçmedi. WCAG 2.2 AA rehber alındı ve her sayfa bilgisayar ve telefonda otomatik testlerden (axe) geçiriliyor. Yine de gözden kaçan bir yer olabilir.
+
+## Bir sorun mu var?
+
+[İletişim](iletisim.html) sayfasından yazın. Hangi sayfada, hangi cihaz ve araçla karşılaştığınızı belirtirseniz sorunu bulmak kolaylaşır.

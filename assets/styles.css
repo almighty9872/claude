@@ -545,27 +545,10 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .footnotes p { margin: 0 0 .3rem; }
 
 /* The twenty best-known saints: a dropdown holding one compact list, four to a row on a wide screen */
-.gs-drop { margin: 1rem 0 2rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); }
-.gs-drop > summary { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .85rem 1.1rem; cursor: pointer; list-style: none; font-family: var(--sans); font-weight: 600; }
-.gs-drop > summary::-webkit-details-marker { display: none; }
-.gs-drop > summary .ico { width: 1rem; height: 1rem; color: var(--gold); transition: transform .2s; }
-.gs-drop[open] > summary .ico { transform: rotate(180deg); }
-.gs-drop > summary:hover, .gs-drop > summary:focus-visible { color: var(--gold); }
-.gs-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); gap: .1rem .8rem; padding: .2rem .8rem .8rem; border-top: 1px solid var(--border); }
-.gs-item { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); column-gap: .7rem; align-items: center; padding: .45rem .35rem; border-radius: .5rem; color: var(--text); text-decoration: none; line-height: 1.3; }
-.gs-item:hover, .gs-item:focus-visible { background: var(--surface-2); }
-.gs-item:hover .gs-n, .gs-item:focus-visible .gs-n { color: var(--gold); }
 .gs-n { font-weight: 600; font-size: .95rem; }
 .gs-s { font-family: var(--sans); font-size: .76rem; color: var(--muted); }
-.gs-item > .gs-n, .gs-item > .gs-s { grid-column: 2; }
 /* the saint's emblem in its tone, on a soft disc of the same colour */
-.gs-ico { grid-row: 1 / span 2; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); }
-.gs-ico svg { width: 1.9rem; height: 1.9rem; fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-.gs-item:hover .gs-ico, .gs-item:focus-visible .gs-ico { background: color-mix(in srgb, var(--tone) 22%, transparent); }
 /* on a phone the list is open and its saints are rows */
-html.av .gs-drop { border: 0; background: none; margin: 0; }
-html.av .gs-drop > summary { display: none; }
-html.av .gs-list { display: block; padding: 0; border: 0; }
 /* on a wide screen the calendar has its own day panel beside it, so today's card is not needed */
 @media (min-width: 980px) { .today-saint { display: none; } }
 
@@ -3264,16 +3247,12 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
 .emblem-cap { margin: .35rem 0 0; font-family: var(--sans); font-size: .78rem; letter-spacing: .04em; color: var(--text-soft); }
 .saint-head:has(.emblem) > .page-ico { display: none; }
 @media (max-width: 640px) { .emblem .ill-art { width: 5.5rem; } .emblem { margin-bottom: .6rem; } }
-/* a page made of them: wide enough for the drawing column beside the text */
-.wrap.ill-page { max-width: 880px; }
+/* a page made of them: one column of text in the middle of the screen */
+.wrap.ill-page { max-width: calc(47rem + 2 * var(--gutter)); }
 @media (max-width: 899px) {
   .ill-sec { margin-top: 2.5rem; padding-top: 1.75rem; }
   .ill-sec > .ill-art { float: right; width: 5.5rem; margin: 0 0 .5rem 1rem; }
   .ill-body > .stage-list, .ill-body > .kk-secs, .ill-body > .ill-qas, .ill-body > .kk-quick { clear: both; }
-}
-@media (min-width: 900px) {
-  .ill-sec { display: grid; grid-template-columns: 9rem minmax(0, 1fr); column-gap: 2.5rem; align-items: start; }
-  .ill-sec > .ill-art { position: sticky; top: calc(var(--header-h) + 2rem); width: 9rem; margin: .3rem 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { .ill-draw .ill-art path { transition: none; stroke-dashoffset: 0; } }
 @media print { .ill-art { display: none; } }
@@ -3411,10 +3390,6 @@ html.av .page-head .ph-art { display: none; }
 .ill-photo .ill-img { display: block; width: 100%; height: auto; max-height: 22rem; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 34px -24px rgba(29, 36, 51, .6); }
 .ill-photo figcaption { margin-top: .45rem; font: .74rem var(--sans); color: var(--muted); }
 .ill-photo cite { font-style: italic; }
-@media (min-width: 980px) {
-  .ill-sec:has(.ill-photo) { display: grid; grid-template-columns: minmax(15rem, 22rem) 1fr; gap: 2.2rem; align-items: start; }
-  .ill-sec .ill-photo { position: sticky; top: calc(var(--header-h) + 1.5rem); margin: 0; }
-}
 
 /* ---- Home: the two debate pages, each with its painting ---- */
 .hd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .4rem; }
@@ -3610,3 +3585,78 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 .hx-tick:last-child { transform: translateX(-100%); }
 .hx-tick:last-child::after { left: auto; right: .3rem; }
 .hx-track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }
+
+/* ---- Long articles: the text in one column in the middle of the screen; each section's painting
+   under its heading, a landscape one across the column, an upright one standing in the middle;
+   the section's first paragraph opens with a large letter ---- */
+.ill-sec .ill-photo { position: static; width: 100%; max-width: none; margin: .2rem 0 1.6rem; float: none; }
+.ill-photo .ill-img { border-radius: 16px; }
+.ill-photo.ill-wide .ill-img { width: 100%; max-height: none; object-fit: cover; }
+.ill-photo.ill-tall { text-align: center; }
+.ill-photo.ill-tall .ill-img { width: auto; max-width: 100%; max-height: min(27rem, 64vh); }
+.ill-photo figcaption { text-align: center; }
+.ill-body > :is(.ill-photo, .ill-h) + p:not(.faq-cat-en)::first-letter,
+.ill-body > :is(.ill-photo, .ill-h) + .faq-intro::first-letter {
+  float: left; margin: .06em .12em 0 0; font-size: 3.3em; line-height: .82; font-weight: 600; color: var(--tone);
+}
+.ill-body > .ill-h { margin-bottom: .9rem; }
+/* the round button in the lower corner, and the list of the page's sections it opens */
+.jl { position: fixed; right: max(1.2rem, env(safe-area-inset-right)); bottom: calc(1.2rem + env(safe-area-inset-bottom)); z-index: 70; display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .25s, transform .25s; }
+.jl.is-on, .jl.is-open { opacity: 1; transform: none; pointer-events: auto; }
+.jl-btn { position: relative; display: grid; place-items: center; width: 3.3rem; height: 3.3rem; border-radius: 50%; border: 1px solid var(--glass-brd); background: var(--glass-strong); color: var(--gold); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); cursor: pointer; }
+.jl-btn svg { width: 1.35rem; height: 1.35rem; }
+.jl-btn:hover { color: var(--gold-active); }
+.jl-btn:focus-visible, .jl-panel a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.jl-n { position: absolute; top: -.45rem; left: -.6rem; min-width: 1.9rem; padding: .05rem .35rem; border-radius: 999px; background: var(--gold); color: var(--bg); font: 600 .66rem/1.4 var(--sans); text-align: center; }
+.jl-n:empty { display: none; }
+.jl-panel { width: min(22rem, calc(100vw - 2.4rem)); max-height: min(28rem, 62vh); overflow-y: auto; padding: .8rem .5rem .5rem; border-radius: 18px; border: 1px solid var(--glass-brd); background: var(--glass-strong); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); animation: jl-in .18s ease-out; }
+@keyframes jl-in { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+.jl-h { margin: 0 .7rem .4rem; font: 600 .72rem var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.jl-panel ol { list-style: none; margin: 0; padding: 0; }
+.jl-panel a { display: flex; gap: .7rem; align-items: baseline; padding: .55rem .7rem; border-radius: 12px; color: var(--text); text-decoration: none; font-size: .95rem; line-height: 1.35; }
+.jl-panel a:hover { background: var(--gold-bg); }
+.jl-panel a[aria-current="true"] { background: var(--gold-bg); color: var(--gold-active); font-weight: 600; }
+.jl-sub a { padding: .35rem .7rem .35rem 2.7rem; font-size: .86rem; color: var(--text-soft); }
+.jl-i { flex: none; width: 1.3rem; font: 600 .78rem var(--sans); color: var(--gold); text-align: right; }
+@media print { .jl { display: none; } }
+@media (prefers-reduced-motion: reduce) { .jl, .jl-panel { transition: none; animation: none; } }
+/* Kutsal Ayin: the row of round icons floats on its own, no band behind it; each icon a small glass button */
+.mass-pills { background: none; pointer-events: none; }
+.mass-pills a { pointer-events: auto; background: var(--glass-strong); border-color: var(--glass-brd); box-shadow: 0 6px 18px -10px rgba(29, 36, 51, .45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.mass-pills a.is-current { background: color-mix(in srgb, var(--gold) 16%, var(--surface)); }
+.mira-fig { margin: .2rem 0 1.2rem; }
+.mira-img { display: block; width: 100%; height: auto; border-radius: 12px; filter: sepia(.15); }
+.mira-fig figcaption { margin-top: .4rem; font: .74rem var(--sans); color: var(--muted); text-align: center; }
+/* a banner that is a window onto its painting (Tesbih Duası): the painting at its full width,
+   moving inside it as the page scrolls (script.js, initBannerPan) */
+main .page-head.painted.ph-pan .ph-win { position: relative; width: 100vw; margin: 0 0 0 calc(50% - 50vw); aspect-ratio: 16 / 10; overflow: hidden; background: #111; opacity: var(--fade, 1); }
+@media (min-width: 980px) { main .page-head.painted.ph-pan .ph-win { aspect-ratio: auto; height: clamp(260px, 34vw, 460px); } }
+main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; top: 0; left: 0; margin: 0 !important; width: 100% !important; height: auto !important; aspect-ratio: auto !important; object-fit: fill !important; transform: translate3d(0, var(--pan, 0px), 0) !important; will-change: transform; }
+/* İslam'a Cevap, Ateizme Cevap: the summary, always open, one point under another */
+.ic-tldr { margin-inline: 0 !important; padding: .4rem 1.4rem 1rem; }
+.ic-tldr .ic-tl-list.ic-tl-v { display: block; overflow: visible; padding: 0; counter-reset: none; }
+.ic-tl-v > li { display: block; }
+.ic-tl-v > li + li { border-top: 1px solid var(--border); }
+.ic-tl-v .ic-tl { display: grid !important; grid-template-columns: 2.2rem 1fr; gap: .1rem .8rem; align-items: start; width: auto; padding: .9rem .2rem !important; border: 0 !important; border-radius: 10px !important; background: none !important; font-size: 1rem !important; }
+.ic-tl-v .ic-tl:hover { background: var(--gold-bg) !important; }
+.ic-tl-v .ic-tl-k { display: none !important; }
+.ic-tl-v .ic-tl-n { display: grid !important; grid-row: span 2; width: 2.1rem; height: 2.1rem; margin: 0; font-size: .95rem; }
+.ic-tl-v .ic-tl-b { display: flex !important; flex-direction: column; gap: .25rem; }
+.ic-tl-v .ic-tl-t { margin: 0; font-size: 1.06rem; line-height: 1.3; }
+.ic-tl-v .ic-tl-s { display: block !important; color: var(--text-soft); line-height: 1.55; }
+.ic-tl-v .ic-tl-more { display: inline-flex; margin: .1rem 0 0 .35rem !important; font-size: .85em; }
+/* ---- Azizler: the twenty best-known saints as round portraits, ringed like an unseen story until
+   the saint's page has been read (script.js, initSaintStories) ---- */
+.gs-stories { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.2rem, 1fr)); gap: 1.4rem .8rem; margin: 1.4rem 0 1rem; }
+.gs-st { display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: .3rem; border-radius: 14px; color: var(--text); text-decoration: none; text-align: center; }
+.gs-ring { display: block; width: 5.4rem; height: 5.4rem; margin-bottom: .45rem; padding: 3px; border-radius: 50%; background: conic-gradient(from 200deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75); transition: transform .25s; }
+.gs-ring img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--bg); background: var(--surface-2, #ddd); }
+.gs-st.is-seen .gs-ring { background: var(--border-strong); }
+.gs-st:hover .gs-ring, .gs-st:focus-visible .gs-ring { transform: scale(1.05); }
+.gs-st:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.gs-st .gs-n { font-weight: 600; font-size: .92rem; line-height: 1.25; }
+.gs-st .gs-s { font-size: .78rem; line-height: 1.3; color: var(--muted); }
+.gs-st:hover .gs-n { color: var(--gold); }
+.gs-credit { margin: .4rem 0 2rem; font-size: .76rem; color: var(--muted); text-align: center; }
+@media (max-width: 599px) { .gs-stories { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem .4rem; } .gs-ring { width: 4.6rem; height: 4.6rem; } .gs-st .gs-s { display: none; } }
+@media (prefers-reduced-motion: reduce) { .gs-ring { transition: none; } }

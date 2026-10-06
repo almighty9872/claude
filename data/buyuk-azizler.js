@@ -1,7 +1,7 @@
 window.BUYUK_AZIZLER = /*JSON-START*/{
  "title": "En Çok Bilinen 20 Aziz",
  "en": "20 of the Church's Best-Known Saints",
- "intro": "Bazı azizlerin etkisi kendi çağlarıyla sınırlı kalmadı ve bütün Hristiyanlık tarihine yayıldı. İşte Katolik geleneğinde en çok bilinen yirmi aziz.",
+ "intro": "Katolik geleneğinde en çok bilinen yirmi aziz.",
  "introEn": "Some saints outgrew their own age and shaped the whole of Christian history. Here are twenty of the best-known names in Catholic tradition.",
  "saints": [
   {

@@ -15,7 +15,7 @@
 window.MASS = /*JSON-START*/{
  "title": "Kutsal Ayin",
  "en": "The Holy Mass",
- "intro": "Kutsal Ayin, Katolik ibadetinin kalbidir. Mesih’in çarmıhta bir kez sunduğu kurban, Ayinde kansız bir şekilde yeniden sunulur. Aşağıda Ayinin altı bölümünü, rahibin ve cemaatin söyledikleriyle birlikte sırasıyla bulabilirsiniz.",
+ "intro": "Ayin, Katolik ibadetinin kalbidir. Mesih’in çarmıhtaki kurbanı burada kansız olarak yeniden sunulur. Aşağıda Ayinin altı bölümünü, söylenen sözlerle birlikte bulabilirsiniz.",
  "introEn": "The Mass is the heart of Catholic worship. The one sacrifice Christ offered on the cross is made present again in it, in an unbloody manner. Below you will find the six parts of the Mass in order, with what the Priest and the People say.",
  "roleLabels": {
   "P": "Rahip",
@@ -36,7 +36,7 @@ window.MASS = /*JSON-START*/{
    "icon": "gather",
    "title": "Cemaatin Toplanması",
    "en": "The Introductory Rites",
-   "lead": "Ayin, rahibin sunağa gelip onu öpmesi ve haç işareti yapmasıyla başlar. Toplanan cemaat önce Allah’tan af diler.",
+   "lead": "Rahip sunağı öper ve haç işareti yapar. Cemaat önce Allah’tan af diler.",
    "leadEn": "Mass begins as the Priest approaches the altar, venerates it with a kiss, and makes the Sign of the Cross. The people gather and ask God's forgiveness.",
    "lines": [
     {
@@ -262,7 +262,7 @@ window.MASS = /*JSON-START*/{
    "icon": "book",
    "title": "Kutsal Kitabın Okunması",
    "en": "The Liturgy of the Word",
-   "lead": "Kutsal Kitap’tan okumalar yapılır, İncil okunur ve rahip vaaz eder. Pazar ve bayram günlerinde herkes birlikte İman Açıklaması’nı söyler.",
+   "lead": "Kutsal Kitap’tan okumalar yapılır, İncil okunur, rahip vaaz eder. Pazar ve bayramlarda herkes İman Açıklaması’nı söyler.",
    "leadEn": "The Scripture readings, the Gospel and the homily bring the Church's teaching to the people, and then all profess their faith together.",
    "lines": [
     {
@@ -383,7 +383,7 @@ window.MASS = /*JSON-START*/{
    "icon": "gifts",
    "title": "Ekmeğin ve Şarabın Sunulması",
    "en": "The Preparation of the Gifts",
-   "lead": "Ekmek ve şarap sunağa getirilir. Rahip bu adakları Allah’a sunar ve cemaat adına dua eder.",
+   "lead": "Ekmek ve şarap sunağa getirilir. Rahip bunları cemaat adına Allah’a sunar.",
    "leadEn": "Bread and wine are brought to the altar; the Priest offers these gifts to God, praying on behalf of the people.",
    "lines": [
     {
@@ -479,7 +479,7 @@ window.MASS = /*JSON-START*/{
    "icon": "chalice",
    "title": "Şükran Duası",
    "en": "The Eucharistic Prayer",
-   "lead": "Ayinin kalbidir. Rahip cemaat adına Allah’a şükreder. Kutsal Ruh’un kudretiyle ekmek ve şarap, Mesih İsa’nın gerçek bedeni ve kanı olur.",
+   "lead": "Ayinin kalbi. Rahip Allah’a şükreder; Kutsal Ruh’un kudretiyle ekmek ve şarap, Mesih’in gerçek bedeni ve kanı olur.",
    "leadEn": "The heart of the Mass: the Priest gives thanks to God on behalf of the people, and by the power of the Holy Spirit the bread and wine become the true Body and Blood of Christ.",
    "lines": [
     {
@@ -585,7 +585,7 @@ window.MASS = /*JSON-START*/{
    "icon": "host",
    "title": "Komünyon",
    "en": "The Communion Rite",
-   "lead": "Cemaat Rab’bin Duası’nı söyler ve birbirine barış diler. Sonra Mesih İsa’nın bedenini ve kanını, yani Kutsal Efkaristiya’yı alır.",
+   "lead": "Rab’bin Duası söylenir, herkes birbirine barış diler. Cemaat Mesih’in bedenini ve kanını alır.",
    "leadEn": "The people pray the Lord's Prayer, offer each other a sign of peace, and share the true Body and Blood of Christ in Holy Communion.",
    "lines": [
     {
@@ -716,7 +716,7 @@ window.MASS = /*JSON-START*/{
    "icon": "blessing",
    "title": "Son Takdis",
    "en": "The Concluding Rites",
-   "lead": "Rahip cemaati kutsar ve Müjde’yi yaşamak ve duyurmak için dünyaya gönderir.",
+   "lead": "Rahip cemaati kutsar ve Müjde’yi yaşaması için dünyaya gönderir.",
    "leadEn": "The Priest blesses the people and sends them out into the world to live and proclaim the Gospel.",
    "lines": [
     {

@@ -80,6 +80,7 @@ data/kilise-tarihi.json ← Church history: eras (years, introduction) and event
                           shown on the home page's strip and on kilise-tarihi.html
 data/tarih-gorseller.json ← The credits of that strip's pictures (assets/art/tl/<key>.jpg): title, author, licence, source
 data/tablolar.json      ← The paintings behind the page titles and on the home cards (assets/art/<key>.jpg)
+data/aziz-portreleri.json ← Credits of the twenty saints' round portraits on Azizler (assets/art/saints/<id>.jpg)
 data/extras.js          ← Motu Proprio, Introduction, Creeds, Decalogue, Our Father, Appendix
 data/katolik-sureci.js  ← OCIA/RCIA process content
 data/gunah-cikarma.js   ← Confession guide content
@@ -149,7 +150,7 @@ An X beside the settings gear returns to the home screen, where the four app ico
 
 ## Articles: one long page, loaded as it is read
 
-Every page but the home page, the Katekizm's pages, the calendar of saints, Kilise Bul and İletişim is an article (`data-article` on its `<body>`, set by `Write-Page`). An article shows its first screens and brings in the rest a part at a time as the reader nears the end of what is there (`initArticleFlow` in `assets/script.js`). All of the text is in the HTML from the start, so search engines and readers without JavaScript get the whole page. A link to a place further down, a page opened at an `#anchor`, the browser's find (Ctrl/Cmd+F) and printing bring in everything needed. A thin gold bar at the top of the screen shows how much of the whole article has been read.
+Every page but the home page, the Katekizm's pages, the calendar of saints, Kilise Bul and İletişim is an article (`data-article` on its `<body>`, set by `Write-Page`). An article shows its first screens and brings in the rest a part at a time as the reader nears the end of what is there (`initArticleFlow` in `assets/script.js`). All of the text is in the HTML from the start, so search engines and readers without JavaScript get the whole page. A link to a place further down, a page opened at an `#anchor`, the browser's find (Ctrl/Cmd+F) and printing bring in everything needed. A thin gold bar at the top of the screen shows how much of the whole article has been read. A round button in the lower corner opens the list of the article's sections (`initJumpList`). Long articles are one centred column of text; each section's painting sits under its heading (`Paint-Sections` in `tools/build.ps1`), and the section's first paragraph opens with a large letter.
 
 ## References and addresses
 

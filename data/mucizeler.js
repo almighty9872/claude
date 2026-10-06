@@ -21,7 +21,7 @@
 window.MIRACLES = /*JSON-START*/{
  "title": "Mucizeler",
  "en": "Miracles",
- "intro": "Burada anlatılan görünmeler ve olağanüstü olaylar “özel vahiy” sayılır. İmanın temel öğretilerine yeni bir şey eklemezler; ama Kilise, titiz incelemelerden sonra bunları inanılmaya değer bulmuştur. Aşağıda bu olayları tarih sırasıyla ve öne çıkan bilimsel bulgularla birlikte okuyabilirsiniz.",
+ "intro": "Bu olaylar “özel vahiy” sayılır: imana yeni bir şey eklemezler. Kilise, uzun incelemelerden sonra onları inanılmaya değer bulmuştur.",
  "introEn": "The apparitions and extraordinary events here are considered \"private revelation\". They add nothing new to the articles of faith, but after careful investigation the Church has found them worthy of belief. Below you will find these events in chronological order, together with their most notable scientific findings.",
  "categories": [
   {
@@ -29,11 +29,12 @@ window.MIRACLES = /*JSON-START*/{
    "icon": "apparition",
    "title": "Meryem Ana’nın Görünmeleri",
    "en": "Marian Apparitions",
-   "lead": "Kilise’nin uzun incelemelerden sonra onayladığı, dünyada en çok ziyaret edilen dört görünme.",
+   "lead": "Kilise’nin onayladığı, en çok ziyaret edilen dört görünme.",
    "leadEn": "Four of the best-known apparitions in the world, approved by the Church after long investigation.",
    "items": [
     {
      "id": "fatima",
+     "art": "fatima-1917",
      "name": "Fatima Meryem Ana’sı",
      "nameEn": "Our Lady of Fatima",
      "place": "Fatima, Portekiz · 1917",
@@ -75,7 +76,7 @@ window.MIRACLES = /*JSON-START*/{
    "icon": "relic",
    "title": "Kutsal Kalıntılar ve Nesneler",
    "en": "Relics and Sacred Objects",
-   "lead": "Bilim insanlarının yüzyıllardır en çok incelediği iki nesne.",
+   "lead": "Bilimin en çok incelediği iki nesne.",
    "leadEn": "The two objects scientists have studied most over the centuries.",
    "items": [
     {
@@ -103,7 +104,7 @@ window.MIRACLES = /*JSON-START*/{
    "icon": "eucharist",
    "title": "Efkaristiya Mucizeleri",
    "en": "Eucharistic Miracles",
-   "lead": "Efkaristiya’da ekmek ve şarap, görünüşleri değişmeden Mesih’in bedeni ve kanı olur. Geleneğe göre aşağıdaki üç olayda bu değişim gözle görülür hâle geldi.",
+   "lead": "Efkaristiya’da ekmek ve şarap, görünüşü değişmeden Mesih’in bedeni ve kanı olur. Bu üç olayda değişim gözle görüldü.",
    "leadEn": "In the Eucharist, bread and wine become Christ's Body and Blood while looking unchanged. In the three events below, tradition holds, the change became visible.",
    "items": [
     {
@@ -140,7 +141,7 @@ window.MIRACLES = /*JSON-START*/{
    "icon": "incorrupt",
    "title": "Çürümeyen Azizler",
    "en": "Incorrupt Saints",
-   "lead": "Bazı azizlerin bedenleri, ölümlerinden yıllar, hatta yüzyıllar sonra beklenenden çok daha az çürümüş olarak bulunmuştur. Sergilenen bedenlerin yüzleri, korunmaları için çoğu zaman ince bir balmumu ya da silikon maskeyle kaplanır.",
+   "lead": "Bazı azizlerin bedenleri yıllar, hatta yüzyıllar sonra neredeyse çürümemiş bulundu. Sergilenen yüzler, korunmak için çoğu zaman ince bir balmumu ya da silikon maskeyle kaplanır.",
    "leadEn": "The bodies of some saints have been found far less decayed than expected, years or even centuries after death. The faces of bodies on display are often covered with a thin wax or silicone mask to protect them.",
    "items": [
     {

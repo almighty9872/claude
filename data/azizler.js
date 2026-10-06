@@ -16,7 +16,7 @@
 window.SAINTS = /*JSON-START*/{
  "title": "Azizler",
  "en": "Saints",
- "intro": "Kilise yılın her gününde bir ya da birkaç azizi anar. Her biri, imanla yaşamanın mümkün olduğunu gösterir.",
+ "intro": "Kilise yılın her gününde en az bir azizi anar. Her biri, imanla yaşamanın mümkün olduğunu gösterir.",
  "introEn": "Every day of the year, the Church remembers one or more saints. Each of them shows that a life of faith is possible.",
  "genelTitle": "Bugün İçin Özel Bir Aziz Yok",
  "genelTitleEn": "No Particular Saint for Today",

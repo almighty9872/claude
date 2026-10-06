@@ -15,14 +15,14 @@
 window.WHY_CATHOLIC = /*JSON-START*/{
  "title": "Neden Katoliğiz?",
  "en": "Why We're Catholic",
- "intro": "İster inancı yeni keşfediyor olun, ister manevi bir yuva arıyor olun, kapımız da kalbimiz de size sonuna kadar açık. Katolik Kilisesi’nin sunduğu huzuru, köklü geleneğini ve sevgi dolu topluluğunu bizimle birlikte keşfedin.",
+ "intro": "Tanrı var mı, İsa kim, neden Katolik Kilisesi? Üç soruyu sırayla ve kısaca cevaplıyoruz.",
  "introEn": "Whether you are just discovering faith or looking for a spiritual home, our door and our hearts are wide open to you. Come and discover with us the peace, the deep-rooted tradition and the loving community of the Catholic Church.",
  "parts": [
   {
    "id": "tanri-var-mi",
    "title": "Tanrı var mı?",
    "en": "Is There a God?",
-   "thesis": "Evrenin var olması, ince ayarı, iyiyle kötüyü ayırt edebilmemiz ve kalbimizin özlemi, en makul açıklamanın bir Yaratıcı olduğunu gösteriyor.",
+   "thesis": "Evrenin varlığı, ince ayarı, iyiyi kötüden ayırabilmemiz ve kalbimizin özlemi: en makul açıklama bir Yaratıcı’dır.",
    "thesisEn": "That the universe exists and is finely tuned, that we can tell good from evil, and that our hearts long for more all make a Creator the most reasonable explanation.",
    "topics": [
     {
@@ -156,7 +156,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
    "id": "isa-kim",
    "title": "İsa kim?",
    "en": "Who Is Jesus?",
-   "thesis": "Bir Yaratıcı varsa, kendini bize tanıtmış olabilir. Hristiyanlık bunu tarihte sınanabilecek bir olaya dayandırır: İsa’nın dirilişine.",
+   "thesis": "Yaratıcı kendini tanıtmış olabilir. Hristiyanlık bunu tarihte sınanabilen bir olaya dayandırır: İsa’nın dirilişine.",
    "thesisEn": "If there is a Creator, he may have made himself known. Christianity rests this on an event we can test in history: Jesus’ resurrection.",
    "topics": [
     {
@@ -240,7 +240,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
    "id": "neden-katolik",
    "title": "Neden Katolik Kilise?",
    "en": "Why the Catholic Church?",
-   "thesis": "İsa dirildiyse söyledikleri önemlidir. O, havarilerin üzerine kurulmuş ve bugüne kadar süren bir Kilise bıraktı.",
+   "thesis": "İsa dirildiyse söyledikleri önemlidir. O, havariler üzerine kurulu ve bugün de süren bir Kilise bıraktı.",
    "thesisEn": "If Jesus rose, what he said matters, and he left behind a Church built on the apostles that lasts to this day.",
    "topics": [
     {

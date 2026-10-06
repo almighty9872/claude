@@ -958,55 +958,6 @@
      --------------------------------------------------------------- */
   /* The footer's popups: Kaynaklar ve telif, and İletişim, Erişilebilirlik and Gizlilik (which
      are links to their own pages without JS) */
-  /* Tartış pages: the "Kısaca" cards slide sideways; the arrows move one view at a time and
-     grey out at either end */
-  function initCaseCarousel() {
-    $$('.ic-car').forEach(function (car) {
-      var track = $('.ic-tl-list', car), btns = $$('.ic-car-btn', car);
-      if (!track || !btns.length) return;
-      function sync() {
-        var max = track.scrollWidth - track.clientWidth - 2;
-        btns.forEach(function (b) { b.disabled = b.getAttribute('data-car') === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max; });
-      }
-      btns.forEach(function (b) {
-        b.addEventListener('click', function () { track.scrollBy({ left: Number(b.getAttribute('data-car')) * track.clientWidth * 0.9 }); });
-      });
-      track.addEventListener('scroll', sync, { passive: true });
-      window.addEventListener('resize', sync);
-      /* with a mouse the row can be grabbed and dragged; a drag is not a click on a card */
-      var down = null, moved = false;
-      track.addEventListener('pointerdown', function (e) {
-        if (e.pointerType !== 'mouse' || e.button !== 0 || track.scrollWidth <= track.clientWidth) return;
-        down = { x: e.clientX, left: track.scrollLeft }; moved = false;
-      });
-      track.addEventListener('pointermove', function (e) {
-        if (!down) return;
-        var dx = e.clientX - down.x;
-        if (!moved && Math.abs(dx) < 5) return;
-        if (!moved) { moved = true; track.classList.add('is-drag'); try { track.setPointerCapture(e.pointerId); } catch (x) { /* already released */ } }
-        track.scrollLeft = down.left - dx;
-      });
-      function up(e) {
-        if (!down) return;
-        down = null;
-        if (!moved) return;
-        try { track.releasePointerCapture(e.pointerId); } catch (x) { /* not captured */ }
-        /* let the cards settle on the nearest one again */
-        var left = track.scrollLeft;
-        track.classList.remove('is-drag');
-        track.scrollLeft = left;
-      }
-      track.addEventListener('pointerup', up);
-      track.addEventListener('pointercancel', up);
-      track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-      track.addEventListener('dragstart', function (e) { e.preventDefault(); });
-      /* the summary is folded shut at first: its arrows are set once it opens */
-      var fold = car.closest('details');
-      if (fold) fold.addEventListener('toggle', sync);
-      sync();
-    });
-  }
-
   function initSources() {
     function open(dlg) { fill(dlg); if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
     /* a popup whose text lives on its own page: fetched the first time it opens */
@@ -1025,15 +976,15 @@
       }).catch(function () { box.setAttribute('data-lazy', ''); });
     }
     function close(dlg) { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
-    /* Every link to these pages opens its popup (menu, footer columns too); the
-       href stays, so the pages are still crawled and open without JS */
+    /* The footer's links to these pages open their popup; everywhere else (the menus) they
+       open the page itself. The href stays, so the pages are still crawled and open without JS */
     var DLG_PAGES = { 'erisilebilirlik.html': 'dlg-erisilebilirlik', 'gizlilik.html': 'dlg-gizlilik', 'kaynaklar-ve-telif.html': 'sources-dialog',
       'accessibility.html': 'dlg-erisilebilirlik', 'privacy.html': 'dlg-gizlilik', 'sources-and-copyright.html': 'sources-dialog' };
     var here = location.pathname.split('/').pop();
     $$('a[href]:not([data-no-dlg])').forEach(function (a) {
       var page = (a.getAttribute('href') || '').split(/[?#]/)[0].split('/').pop();
       var id = a.getAttribute('data-dialog') || DLG_PAGES[page];
-      var dlg = id && page !== here && document.getElementById(id);
+      var dlg = id && page !== here && a.closest('footer') && document.getElementById(id);
       if (dlg) a.addEventListener('click', function (e) {
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
         e.preventDefault();
@@ -2580,9 +2531,6 @@
           avNode(c, pmake(d + ' ' + psplit(mn)[0], psplit(mn)[1] + ' ' + d), names || avText($('.day-rank', c)));
         });
       });
-      /* the twenty saints: their list is open here, each saint a row to its page */
-      var gd = $('[data-gs-drop]', m); if (gd) gd.open = true;
-      $$('.gs-item', m).forEach(function (a) { avLink(a, avText($('.gs-n', a)), avText($('.gs-s', a))); });
     },
     'katekizm.html': function (m) {
       $$('.part-acc', m).forEach(function (d) {
@@ -3440,6 +3388,109 @@
     progress();
   }
 
+  /* ---------------------------------------------------------------
+     An article's sections, a tap away: a round button with a list in the lower corner (once the
+     reader is into the page) opens the list of the page's sections, the one being read marked;
+     a section further down that has not come in yet is brought in first (initArticleFlow).
+     --------------------------------------------------------------- */
+  function initJumpList() {
+    var main = $('#main');
+    if (!main || !document.body.hasAttribute('data-article')) return;
+    /* the page's sections, and the numbered parts inside them (İslam'a Cevap, Tesbihin Tarihi) */
+    var heads = $$('h2, h3.ic-sec-t', main).filter(function (h) {
+      return !h.closest('.page-head, .av-hero, dialog, .ic-sources, .kt-nav') && !h.classList.contains('visually-hidden');
+    });
+    var items = [];
+    heads.forEach(function (h) {
+      var t = h.id ? h : h.closest('[id]');
+      if (!t || !main.contains(t) || items.some(function (x) { return x.t === t; })) return;
+      var name = pnow(avHead(h)).trim();
+      if (name) items.push({ t: t, h: h, name: name, sub: h.tagName === 'H3' });
+    });
+    if (items.filter(function (x) { return !x.sub; }).length < 3) return;
+    var box = document.createElement('div');
+    box.className = 'jl';
+    box.innerHTML = '<nav class="jl-panel" id="jl-panel" aria-label="Bu sayfada" hidden><p class="jl-h">Bu sayfada</p><ol></ol></nav>' +
+      '<button type="button" class="jl-btn" aria-expanded="false" aria-controls="jl-panel" aria-label="Bölümler: bu sayfadaki başlıklar">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.6" cy="6.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4.6" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg>' +
+      '<span class="jl-n" aria-hidden="true"></span></button>';
+    var list = $('ol', box), panel = $('.jl-panel', box), btn = $('.jl-btn', box), num = $('.jl-n', box);
+    var top = 0;
+    items.forEach(function (it) {
+      var li = document.createElement('li'), a = document.createElement('a');
+      a.href = '#' + it.t.id; a.textContent = it.name;
+      if (it.sub) li.className = 'jl-sub';
+      else a.insertAdjacentHTML('afterbegin', '<span class="jl-i">' + (++top) + '</span>');
+      it.n = top;
+      li.appendChild(a); list.appendChild(li); it.a = a;
+    });
+    document.body.appendChild(box);
+    var open = function (on) {
+      panel.hidden = !on; btn.setAttribute('aria-expanded', String(on)); box.classList.toggle('is-open', on);
+      if (on) { var c = $('[aria-current="true"]', list); if (c) c.scrollIntoView({ block: 'nearest' }); }
+    };
+    btn.addEventListener('click', function () { open(panel.hidden); });
+    list.addEventListener('click', function (e) { if (e.target.closest('a')) setTimeout(function () { open(false); }, 0); });
+    document.addEventListener('click', function (e) { if (!panel.hidden && !box.contains(e.target)) open(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { open(false); btn.focus(); } });
+    var raf = 0;
+    var update = function () {
+      raf = 0;
+      box.classList.toggle('is-on', window.pageYOffset > (window.innerHeight || 700) * .6);
+      var line = (window.innerHeight || 700) * .3, cur = -1;
+      items.forEach(function (it, i) { if (it.h.offsetParent && it.h.getBoundingClientRect().top <= line) cur = i; });
+      /* at the foot of the page, the last section */
+      if (window.pageYOffset + (window.innerHeight || 700) >= document.documentElement.scrollHeight - 4 && !$('.kd-later')) cur = items.length - 1;
+      items.forEach(function (it, i) { it.a.setAttribute('aria-current', i === cur ? 'true' : 'false'); });
+      num.textContent = cur >= 0 ? items[cur].n + '/' + top : '';
+    };
+    window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener('resize', function () { if (!raf) raf = requestAnimationFrame(update); });
+    update();
+  }
+
+  /* ----- A banner that is a window onto its painting (.ph-pan): the painting is shown at its
+     full width, its top first; as the page scrolls, the painting moves inside the window, so the
+     rest of it comes into view before the window leaves the screen */
+  function initBannerPan() {
+    var win = $('.ph-pan .ph-win'), img = win && $('img', win);
+    if (!img) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var raf = 0;
+    var run = function () {
+      raf = 0;
+      var wh = win.offsetHeight, ih = img.offsetHeight, extra = Math.max(0, ih - wh);
+      var r = win.getBoundingClientRect(), s = Math.max(0, -r.top);
+      /* the top of the painting first; the rest rises into view as the window scrolls away */
+      var y = -Math.min(extra, s * extra / Math.max(1, wh * .8));
+      img.style.setProperty('--pan', y.toFixed(1) + 'px');
+      win.style.setProperty('--fade', Math.max(.25, 1 - s / Math.max(1, wh) * .75).toFixed(3));
+    };
+    var go = function () { if (!raf) raf = requestAnimationFrame(run); };
+    window.addEventListener('scroll', go, { passive: true });
+    window.addEventListener('resize', go);
+    img.addEventListener('load', go);
+    run();
+  }
+
+  /* ----- The twenty saints on Azizler: a ring like an unseen story around each portrait until
+     that saint's page has been read; a saint's page marks itself read (kd-saints-seen) */
+  function initSaintStories() {
+    var KEY = 'kd-saints-seen', seen = [];
+    try { seen = JSON.parse(localStorage.getItem(KEY) || '[]') || []; } catch (e) { seen = []; }
+    var page = $('[data-saint-page]');
+    if (page) {
+      var id = page.getAttribute('data-saint-page');
+      if (seen.indexOf(id) < 0) { seen.push(id); try { localStorage.setItem(KEY, JSON.stringify(seen)); } catch (e) { /* private mode */ } }
+    }
+    $$('.gs-st[data-gs]').forEach(function (a) {
+      var read = seen.indexOf(a.getAttribute('data-gs')) >= 0;
+      a.classList.toggle('is-seen', read);
+      var n = $('.gs-n', a);
+      if (n && !read && !$('.visually-hidden', a)) a.insertAdjacentHTML('beforeend', '<span class="visually-hidden">, okunmadı</span>');
+    });
+  }
+
   /* ----- Kilise'nin Tarihi: the era bar marks the era being read */
   function initEraNav() {
     var nav = $('.kt-nav');
@@ -3818,7 +3869,7 @@
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
     initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday(); initHistory();
-    initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initCaseCarousel(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initArticleFlow(); initEraNav(); initChurchMap(); initChurchPick(); initLayoutSwitch();
+    initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
+    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initArticleFlow(); initJumpList(); initBannerPan(); initSaintStories(); initEraNav(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });
 })();

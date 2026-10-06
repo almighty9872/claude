@@ -4,31 +4,31 @@
    "id": "havariler",
    "t": "Havariler Çağı",
    "span": "33-100",
-   "intro": "İsa’nın göğe yükselişinden sonra havariler Kudüs’ten yola çıkar. Petrus ve Pavlus Roma’da şehit olur, Kilise’nin ilk önderleri onların yerine geçer. Bu yıllardan kalan birkaç metin, ilk Hristiyanların nasıl yaşadığını ve nasıl dua ettiğini anlatır."
+   "intro": "Havariler Kudüs’ten yola çıkar. Petrus ve Pavlus Roma’da şehit olur. Bu yıllardan kalan metinler, ilk Hristiyanların nasıl yaşadığını anlatır."
   },
   {
    "id": "babalar",
    "t": "Kilise Babaları",
    "span": "100-451",
-   "intro": "Zulüm yıllarında Kilise şehitlerin kanıyla büyür. Antakya’dan, İzmir’den, Kartaca’dan yazan piskoposlar imanı savunur; İznik ve Efes konsilleri iman ikrarını ve Meryem’in Tanrı’nın Annesi olduğunu ilan eder. Kutsal Kitap’ın listesi de bu dönemde kesinleşir."
+   "intro": "Kilise zulme rağmen büyür. Piskoposlar imanı savunur. İznik ve Efes konsilleri iman ikrarını ve Meryem’in Tanrı’nın Annesi olduğunu ilan eder. Kutsal Kitap’ın listesi kesinleşir."
   },
   {
    "id": "orta",
    "t": "Orta Çağ",
    "span": "451-1500",
-   "intro": "Roma yıkıldıktan sonra manastırlar bilgiyi korur, Büyük Gregorius gibi papalar Kilise’yi zor yıllarda ayakta tutar. Doğu ile Batı 1054’te ayrılır. Büyük konsiller ve Thomas Aquinas gibi ilahiyatçılar, iman ile aklın birlikte yürüdüğünü gösterir."
+   "intro": "Roma yıkılır, manastırlar bilgiyi korur. Doğu ile Batı 1054’te ayrılır. Thomas Aquinas, iman ile aklın çatışmadığını gösterir."
   },
   {
    "id": "reform",
    "t": "Reform Çağı",
    "span": "1517-1600",
-   "intro": "Luther’in 95 tezi Batı Hristiyanlığını böler. Reformcular Kutsal Kitap’ı ve kutsal sırları yeniden yorumlar; Kilise, Trento Konsili ile kendi içinde büyük bir yenilenmeye girişir."
+   "intro": "Luther’in 95 tezi Batı Hristiyanlığını böler. Kilise, Trento Konsili ile kendini yeniler."
   },
   {
    "id": "modern",
    "t": "Modern Çağ",
    "span": "1800-1965",
-   "intro": "Papalar yeni çağın sorunlarına cevap verir: Meryem’le ilgili iki iman esası ilan edilir, işçilerin hakları savunulur, totaliter rejimler kınanır. II. Vatikan Konsili herkesi kutsallığa çağırır."
+   "intro": "Meryem’le ilgili iki iman esası ilan edilir, işçilerin hakları savunulur, totaliter rejimler kınanır. II. Vatikan Konsili herkesi kutsallığa çağırır."
   }
  ],
  "items": [

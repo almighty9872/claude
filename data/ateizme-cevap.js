@@ -21,7 +21,7 @@
 window.ATEIZME_CEVAP = /*JSON-START*/{
  "title": "Ateizme Cevap",
  "en": "Answering Atheism",
- "lead": "Tanrı var mı yok mu? Bu sayfada ünlü münazaralardan, yıllarca ateist kalıp sonunda inanan filozoflardan ve şüpheci tarihçilerin kendi itiraflarından derlediğimiz en güçlü cevaplar yer alıyor.",
+ "lead": "Tanrı var mı? Ünlü münazaralardan, ateistlikten dönen filozoflardan ve şüpheci tarihçilerin itiraflarından en güçlü cevaplar.",
  "leadEn": "Does God exist or not? On this page we’ve gathered the strongest answers from famous debates, from philosophers who believed after years as atheists, and from the admissions of skeptical historians themselves.",
  "note": "Buradaki cevapların çoğu, ateistlerle yüz yüze tartışmış kişilerden geliyor: Trent Horn, Cliffe Knechtle, tarihçiler Gary Habermas ve Michael Licona, Kutsal Kitap uzmanı Brant Pitre ile yıllarca ateist ya da agnostik kaldıktan sonra inanan Joe Schmid, Pat Flynn ve rahip Mark Goring. Kaynakların tam listesi sayfanın sonunda yer alıyor. Kutsal Kitap ve Katekizm göndermelerine tıklayarak metinleri kendiniz okuyabilirsiniz.",
  "noteEn": "Most of these answers come from people who have argued with atheists face to face: Trent Horn, Cliffe Knechtle, the historians Gary Habermas and Michael Licona, the biblical scholar Brant Pitre, and Joe Schmid, Pat Flynn and Fr. Mark Goring, who believed after years as atheists or agnostics. The full list of sources is at the end of the page. Click any Bible or Catechism reference to read the text yourself.",

@@ -37,7 +37,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "textEn": "You're already Christian. You're received into the Church with a profession of faith, usually along with confirmation and first Communion in the same Mass. <a href=\"#zaten-hristiyan\">More on this path</a>."
   }
  ],
- "processIntro": "Vaftiz olmamış yetişkinlerin hazırlığına OCIA denir (eskiden RCIA deniyordu). Süreç genellikle eylülde başlar ve yaklaşık altı ay sonra, Paskalya Nöbeti’nde vaftizle tamamlanır.",
+ "processIntro": "Vaftiz olmamış yetişkinler OCIA ile hazırlanır (eski adı RCIA). Süreç çoğunlukla eylülde başlar ve Paskalya Nöbeti’nde vaftizle biter.",
  "processIntroEn": "The preparation of unbaptized adults is called OCIA (formerly RCIA). It usually begins in September and ends about six months later, with baptism at the Easter Vigil.",
  "steps": [
   {

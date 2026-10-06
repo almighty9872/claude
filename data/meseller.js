@@ -12,7 +12,7 @@
 window.PARABLES = /*JSON-START*/{
  "title": "İsa’nın Meselleri",
  "en": "The Parables of Jesus",
- "intro": "Meseller, gündelik hayattan alınmış basit hikâyelerle derin gerçekleri anlatır. İsa, gerçeği arayan yüreklerde düşünceye bir kapı açmak için meselleri kullandı (Matta 13:10-17).",
+ "intro": "İsa derin gerçekleri gündelik hayattan basit hikâyelerle anlattı (Matta 13:10-17).",
  "categories": [
   {
    "id": "hukumdarlik",
@@ -133,7 +133,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "heart",
    "title": "Merhamet ve Bağışlama Meselleri",
    "en": "Parables of Mercy and Forgiveness",
-   "lead": "Bu meseller, Allah’ın günahkârlara gösterdiği sınırsız merhameti ve insanın da aynı merhameti başkalarına göstermesi gerektiğini anlatır.",
+   "lead": "Allah günahkârlara sınırsız merhamet gösterir; biz de başkalarına göstermeliyiz.",
    "leadEn": "These parables describe God's boundless mercy toward sinners, and teach that we must show that same mercy to others.",
    "items": [
     {
@@ -247,7 +247,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "prayer",
    "title": "Dua ve Sebat Meselleri",
    "en": "Parables of Prayer and Perseverance",
-   "lead": "Bu iki kısa mesel, Allah’a güvenerek ve vazgeçmeden dua etmeyi öğretir.",
+   "lead": "Allah’a güvenerek ve vazgeçmeden dua etmek.",
    "leadEn": "These two short parables teach us to pray with trust in God and to persevere.",
    "items": [
     {
@@ -283,7 +283,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "lamp",
    "title": "Uyanıklık, Hazırlık ve Bilgelik Meselleri",
    "en": "Parables of Watchfulness and Wisdom",
-   "lead": "Bu meseller, Mesih İsa’nın geri dönüşüne ve hayatın sınavlarına hazırlıklı olmayı, gerçek bilgeliğin ne olduğunu anlatır.",
+   "lead": "Mesih’in dönüşüne hazır olmak ve gerçek bilgelik.",
    "leadEn": "These parables teach readiness for Christ's return and for life's trials, and what true wisdom looks like.",
    "items": [
     {
@@ -358,7 +358,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "coins",
    "title": "Sorumluluk ve Yönetim Meselleri",
    "en": "Parables of Stewardship",
-   "lead": "Bu meseller, Allah’ın insana emanet ettiği yeteneklerin, zamanın ve imkânların nasıl kullanılması gerektiğini ve Allah’ın lütfunun insan adaletinden farklı işlediğini anlatır.",
+   "lead": "Allah’ın bize emanet ettiklerini nasıl kullandığımız ve O’nun lütfunun insan adaletinden farkı.",
    "leadEn": "These parables describe how we are to use the talents, time and resources God entrusts to us, and how God's grace works differently from human fairness.",
    "items": [
     {
@@ -446,7 +446,7 @@ window.PARABLES = /*JSON-START*/{
    "icon": "door",
    "title": "Hükümdarlığa Çağrı ve Hesap Verme Meselleri",
    "en": "Parables of Invitation and Judgment",
-   "lead": "Bu meseller, Allah’ın Hükümdarlığı’na davetin genişliğini ve yaşamın sonunda verilecek hesabı anlatır.",
+   "lead": "Allah’ın Hükümdarlığı’na davet herkese açık; yaşamın sonunda hesap verilir.",
    "leadEn": "These parables describe the breadth of the invitation to God's Kingdom, and the account each of us will give at the end of life.",
    "items": [
     {

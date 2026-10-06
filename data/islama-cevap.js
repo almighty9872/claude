@@ -23,7 +23,7 @@
 window.ISLAMA_CEVAP = /*JSON-START*/{
  "title": "İslam’a Cevap",
  "en": "Answering Islam",
- "lead": "İslam, Kur’an’ın Tanrı’nın bozulmamış son sözü, Muhammed’in ise son peygamber ve tüm insanlık için en mükemmel örnek olduğunu savunur. Bu çalışmada söz konusu iddiaları dışarıdan bir gözle değil, doğrudan İslam’ın kendi kaynaklarına dayanarak inceliyoruz.",
+ "lead": "İslam’a göre Kur’an Tanrı’nın bozulmamış son sözü, Muhammed de herkes için en güzel örnektir. Bu iddiaları İslam’ın kendi kaynaklarıyla inceliyoruz.",
  "leadEn": "Islam claims that the Qur’an is God’s final, uncorrupted word, and that Muhammad is the last prophet and the most perfect example for all mankind. Here we examine these claims not from an outsider’s point of view, but on the basis of Islam’s own sources.",
  "note": "Türkçe kullanımda “Allah” kelimesi, Hristiyanlar da dâhil olmak üzere genel olarak Tanrı için kullanılan ortak bir sözcüktür; bu çalışmada da bu genel tanımıyla yer almaktadır. Dolayısıyla bu sayfada eleştirilen husus kelimenin kendisi değil, doğrudan Kur’an’ın tanımladığı ilah tasviridir. Kavram karmaşasını önlemek adına metin boyunca “Kur’an’ın ilahı” veya “İslam’ın Allah’ı” ifadeleri tercih edilmiştir. Bir Müslüman “Kutsal Kitap” deyince Kur’an’ı düşünebilir; bu sebeple karışıklık olmasın diye kelime “İncil” olarak yazılmıştır. Sunulan kanıtların büyük bir kısmı Hristiyan savunucular Sam Shamoun, David Wood ve Avery Austin (GodLogic Apologetics) incelemelerinden ve Müslüman davetçilerle yürüttükleri tartışmalardan derlenmiş, her bir veri özgün kaynağından doğrulanmıştır. İlgili ayet ve hadis referanslarını inceleyerek metinleri doğrudan okuyabilirsiniz.",
  "noteEn": "In Turkish, the word “Allah” is a common word for God in general, used by Christians too, and this study uses it in that general sense. So what this page criticizes is not the word itself, but the picture of the deity the Qur’an describes. To avoid confusion, the text uses the phrases “the god of the Qur’an” or “Islam’s Allah”. A Muslim may take “Holy Book” to mean the Qur’an, so to avoid confusion the Turkish text says “İncil” (the Gospel); in English we say “the Bible” or “the Gospel” as the context requires. Most of the evidence presented is compiled from the work of the Christian apologists Sam Shamoun, David Wood and Avery Austin (GodLogic Apologetics) and from their debates with Muslim preachers, and every point has been checked against its original source. Follow the verse and hadith references to read the texts for yourself.",
@@ -34,50 +34,50 @@ window.ISLAMA_CEVAP = /*JSON-START*/{
    "href": "ikilem",
    "t": "İslam İkilemi",
    "tEn": "The Islamic Dilemma",
-   "text": "Kur’an kendi kendini çürütüyor. Kendisiyle tamamen çelişen Tevrat ve İncil’i Tanrı sözü olarak kabul ediyor; o kitaplar doğru olsa da bozuk olsa da Kur’an her iki durumda da haksız çıkıyor. “Sonradan bozuldu” bahanesini de zaten Muhammed’den yüzyıllar önce yazılmış el yazmaları tamamen çürütüyor.",
-   "textEn": "The Qur’an refutes itself. It accepts as God’s word the Torah and the Gospel, which flatly contradict it; whether those books are true or corrupted, the Qur’an comes out wrong either way. And the excuse “it was corrupted later” is demolished by manuscripts written centuries before Muhammad."
+   "text": "Kur’an, kendisiyle çelişen Tevrat ve İncil’i Tanrı sözü sayar. O kitaplar doğruysa Kur’an yanlıştır; bozuksa yine yanlıştır.",
+   "textEn": "The Qur’an calls the Torah and the Gospel God’s word, yet contradicts them. If they are true, the Qur’an is wrong; if they are corrupted, it is still wrong."
   },
   {
    "href": "korunma",
    "t": "“Harfi harfine korundu” efsanesi",
    "tEn": "The myth of “preserved letter for letter”",
-   "text": "Ayşe’nin anlattığına göre, Muhammed öldüğünde okunan bir ayetin yazılı olduğu sayfayı evdeki bir keçi yemiş. Buhari’ye bakılırsa Ömer’in söylediği bazı sözler bile sonradan ayet olarak inmiş.",
-   "textEn": "According to Aisha, when Muhammad died, a goat in the house ate the page on which a verse still being recited was written. According to Bukhari, even some of Umar’s sayings were later sent down as verses."
+   "text": "Ayşe’ye göre bir ayetin yazılı olduğu sayfayı bir keçi yedi. Buhari’ye göre Ömer’in bazı sözleri sonradan ayet oldu.",
+   "textEn": "According to Aisha, a goat ate the page a verse was written on. According to Bukhari, some of Umar’s sayings later became verses."
   },
   {
    "href": "hatalar",
    "t": "Kur’an’ın kendi çelişkileri",
    "tEn": "The Qur’an’s own contradictions",
-   "text": "Kur’an, doğru kabul ettiği İncil’i aslında hiç tanımıyor; güneşin kapkara çamurlu bir su birikintisinde battığını iddia ediyor (18:86) ve daha namazın bile nasıl kılınacağını anlatmıyor.",
-   "textEn": "The Qur’an doesn’t actually know the Gospel it accepts as true; it claims the sun sets in a pool of pitch-black mud (18:86); and it doesn’t even explain how to perform the daily prayers."
+   "text": "Güneş çamurlu bir suda batar (Kur’an 18:86). Doğru saydığı İncil’i tanımaz. Namazın nasıl kılınacağını bile anlatmaz.",
+   "textEn": "The sun sets in a muddy spring (Qur’an 18:86). It does not know the Gospel it calls true. It does not even say how to pray."
   },
   {
    "href": "ornek",
    "t": "Örnek alınacak yaşam bu mu?",
    "tEn": "Is this a role model?",
-   "text": "Sahih hadislere baktığımızda Muhammed, dokuz yaşındaki Ayşe ile evlenip birlikte oluyor, dinden dönenlerin öldürülmesini emrediyor. Hatta Ayşe bile bir noktada ona, “Rabbinin senin isteklerini hemen yerine getirdiğini görüyorum” diyor.",
-   "textEn": "In the authentic hadith, Muhammad marries nine-year-old Aisha and consummates the marriage, and orders apostates to be killed. At one point even Aisha tells him, “I see that your Lord fulfills your wishes at once.”"
+   "text": "Dokuz yaşında Ayşe ile evlilik. Dinden dönene ölüm emri. Ayşe bile şöyle der: “Rabbin isteklerini hemen yerine getiriyor.”",
+   "textEn": "Marriage to nine-year-old Aisha. Death for apostates. Even Aisha says: “Your Lord hastens to fulfil your wishes.”"
   },
   {
    "href": "vahiy",
    "t": "Hira’daki gizemli güç",
    "tEn": "The mysterious power at Hira",
-   "text": "Hira’da karşısına çıkan varlık, Muhammed’i nefesi kesilene kadar defalarca boğar gibi sıktı. Kur’an’da, Tanrı adına yalan uyduran birinin şah damarının kesileceği söylenir; Muhammed ölürken tam da şah damarının kopuyor gibi hissettiğini anlattı.",
-   "textEn": "The being that confronted Muhammad at Hira squeezed him again and again, as if to choke him, until he could not breathe. The Qur’an says that whoever makes up lies in God’s name will have his aorta cut; as he lay dying, Muhammad said he felt exactly as if his aorta were being severed."
+   "text": "Hira’daki varlık onu boğar gibi sıktı. Kur’an, Tanrı adına yalan söyleyenin şah damarı kesilir der (Kur’an 69:44-46). Muhammed ölürken şah damarının koptuğunu hissetti.",
+   "textEn": "The being at Hira squeezed him as if to choke him. The Qur’an says whoever lies in God’s name has his aorta cut (Qur’an 69:44-46). Dying, Muhammad felt his aorta being severed."
   },
   {
    "href": "kabe",
    "t": "Kâbe’nin gerçek geçmişi",
    "tEn": "The Kaaba’s real history",
-   "text": "İslam öncesi Arap paganizmine ait tavaf, Kara Taş’ı öpme, Safa-Merve arası koşma ve ihram gibi ritüellerin İslam’a geçmesi tarihsel devamlılığı gösterir.",
-   "textEn": "Many rituals of pre-Islamic Arab paganism passed into Islam: circling the Kaaba, kissing the Black Stone, running between Safa and Marwa, the ihram. The historical continuity is plain."
+   "text": "Tavaf, Kara Taş’ı öpmek, Safa ile Merve arasında koşmak, ihram: hepsi İslam’dan önce putperest Araplarda vardı.",
+   "textEn": "Circling the Kaaba, kissing the Black Stone, running between Safa and Marwa, ihram: the pagan Arabs did all of it before Islam."
   },
   {
    "href": "hristiyanlik",
    "t": "İtirazlara cevap",
    "tEn": "Answering the objections",
-   "text": "Tevrat’taki Kenan savaşları belirli bir zaman ve yerle sınırlı kalıp bitti; ama Kur’an’daki (9:29) savaş emrinin sonu, sınırı yok. Zaten Kur’an, İsa’ya uyanların her zaman üstün geleceğini vaat eder; tarihte öne geçip üstün gelen de Pavlus’un öğretilerini takip eden Kilise oldu.",
-   "textEn": "The wars in Canaan in the Torah were limited to a particular time and place, and they ended; but the command to fight in the Qur’an (9:29) has no end and no limit. Besides, the Qur’an promises that those who follow Jesus will always prevail; and the followers of Jesus who actually prevailed in history were the Church that follows Paul’s teaching."
+   "text": "Kenan savaşları bir yer ve zamanla sınırlıydı; Kur’an 9:29’un sınırı yok. Kur’an, İsa’ya uyanların hep üstün geleceğini söyler: Üstün gelen, Kilise oldu.",
+   "textEn": "The wars in Canaan were limited to one place and time; Qur’an 9:29 has no limit. The Qur’an says Jesus’ followers will prevail: the Church did."
   }
  ],
  "parts": [
