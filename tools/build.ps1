@@ -2203,7 +2203,8 @@ function Case-Body($Ic, $Ico, [string]$Page) {
   $icBody = @"
   <div class="wrap narrow ic-page ill-page">
     <header class="page-head center" id="bas">$(Page-Ico $Ico)<h1>$(T $Ic.title $Ic.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Ic.en)</p>")</header>
-    <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)<a class="ic-fn-ref" href="#dipnot" aria-label="Dipnot" data-en-aria-label="Footnote">*</a></p>
+    <p class="ic-lead">$(T $Ic.lead $Ic.leadEn)</p>
+    <p class="ic-lead-note">$(T (Ic-Link $Ic.note) (Ic-Link $Ic.noteEn))</p>
     <section class="ic-tldr" id="kisaca" aria-labelledby="kisaca-h">
       <details class="ic-tldr-d"><summary class="ic-tldr-s"><h2 class="section-title" id="kisaca-h">$(T $Ic.tldrTitle $Ic.tldrTitleEn)</h2>$IcoChevDown</summary>
       <ol class="ic-tl-list ic-tl-v">$icTldr</ol>
@@ -2212,7 +2213,6 @@ function Case-Body($Ic, $Ico, [string]$Page) {
   $icParts
 $(Ill-Sec -Id $Ic.closing.id -HeadId "$($Ic.closing.id)-h" -Art $arts['sonuc'][0] -Tone $arts['sonuc'][1] -Class 'ic-closing' -Kick (T 'Sonuç' 'In the end') -Head (T $Ic.closing.title $Ic.closing.titleEn) -Body ("<div class=`"prose`">$(TB ((Ic-Blocks $Ic.closing.body) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>') ((Ic-Blocks $Ic.closing.bodyEn) -replace '<h4>', '<h3 class="ic-sub">' -replace '</h4>', '</h3>'))</div>" + (Ic-Nav ($icSeq.Count - 1))))
     <section class="ic-sources" aria-labelledby="ic-kaynak-h"><h2 class="section-title" id="ic-kaynak-h">$(T 'Kaynaklar' 'Sources')</h2><ul>$icSources</ul></section>
-    <aside class="ic-footnote" id="dipnot" aria-label="Dipnot" data-en-aria-label="Footnote"><p><span class="ic-fn-mark" aria-hidden="true">*</span>$(T (Ic-Link $Ic.note) (Ic-Link $Ic.noteEn))</p></aside>
   </div>
 "@
   return $icBody

@@ -2814,7 +2814,7 @@ html.av .to-top-wrap { display: none; }
    A short summary first, each point a link to its section, then the full case part by part */
 .ic-page [id] { scroll-margin-top: 5.5rem; }
 .ic-lead { max-width: 40rem; margin: 0 auto 1.8rem; font-size: 1.14rem; line-height: 1.7; text-align: center; color: var(--text-soft); }
-.ic-fn-ref { margin-left: .15em; font-family: var(--sans); font-weight: 700; color: var(--gold); text-decoration: none; vertical-align: super; font-size: .8em; line-height: 0; }
+.ic-lead-note { max-width: 38rem; margin: -1.1rem auto 1.8rem; font-family: var(--sans); font-size: .8rem; line-height: 1.6; text-align: center; color: var(--muted); }
 .ic-tldr { padding: .2rem 1.2rem .8rem; border: 1px solid var(--border); border-radius: 1.2rem; background: var(--surface); }
 .ic-tldr .section-title { margin: .8rem 0 .6rem; font-size: clamp(1.3rem, 3vw, 1.6rem); }
 /* each point is one short paragraph: number, title, the sentence and "Tümünü oku" run together */
@@ -2902,9 +2902,6 @@ html.av .to-top-wrap { display: none; }
 .th-page .prose .th-closing { margin-top: 2rem; text-align: center; font-weight: 600; }
 html.av main .av-cur > h2.ic-sec-t > .label { display: none; }
 .th-src-g { margin: 1.4rem 0 .4rem; font-family: var(--sans); font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
-.ic-footnote { max-width: 40rem; margin: 2.4rem auto 0; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-soft); font-size: .88rem; line-height: 1.65; }
-.ic-footnote p { margin: 0; }
-.ic-fn-mark { margin-right: .3em; font-family: var(--sans); font-weight: 700; color: var(--gold); }
 @media (max-width: 600px) {
   .ic-page .prose { font-size: 1.04rem; line-height: 1.72; }
   .ic-sec { margin-top: 2.4rem; }
@@ -3667,3 +3664,15 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 /* a story's picture: whole, at most about half a screen tall, in the middle */
 .mira-fig { text-align: center; }
 .mira-img { width: auto; max-width: 100%; max-height: min(26rem, 60vh); margin: 0 auto; }
+/* Tartış pages: a smaller summary ("Özet Geç"), closed and open */
+.ic-tldr:has(> .ic-tldr-d:not([open])) { padding: .05rem 1rem; }
+.ic-tldr:has(> .ic-tldr-d:not([open])) .section-title { margin: .3rem 0; font-size: 1rem; }
+.ic-tldr-s > svg { width: 1.05rem; height: 1.05rem; }
+.ic-tldr { padding: .2rem 1.1rem .6rem; }
+.ic-tldr .section-title { margin: .6rem 0 .4rem; font-size: 1.15rem; }
+.ic-tl-v .ic-tl { grid-template-columns: 1.7rem 1fr; gap: 0 .65rem; padding: .55rem .2rem !important; font-size: .9rem !important; }
+.ic-tl-v .ic-tl-n { width: 1.55rem; height: 1.55rem; font-size: .75rem; }
+.ic-tl-v .ic-tl-t { font-size: .95rem; }
+.ic-tl-v .ic-tl-s { font-size: .86rem; line-height: 1.5; }
+.ic-tl-v .ic-tl-more { display: none !important; }
+.ic-tldr { max-width: 46rem; margin-inline: auto; }
