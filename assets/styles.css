@@ -3485,17 +3485,17 @@ main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important
 .hx-btn svg { width: 1.15rem; height: 1.15rem; }
 .hx-btn:hover:not(:disabled) { background: var(--gold-bg); }
 .hx-btn:disabled { opacity: .35; cursor: default; }
-.hx-btn:focus-visible, .hx-track:focus-visible, .hx-a:focus-visible, .hx-tick:focus-visible, .hx-range:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hx-btn:focus-visible, .hx-track:focus-visible, .hx-a:focus-visible, .hx-range:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .hx-track {
   list-style: none; margin: 1rem calc(-1 * var(--gutter)) 0; padding: .6rem var(--gutter) .4rem;
   display: flex; gap: .4rem; overflow-x: auto; overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); scrollbar-width: none;
+  scrollbar-width: none;
 }
 .hx-track::-webkit-scrollbar { display: none; }
 @media (hover: hover) and (pointer: fine) { .hx-track { cursor: grab; } .hx-track .hx-a { cursor: pointer; } }
-.hx-track.is-drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.hx-track.is-drag { cursor: grabbing; user-select: none; }
 .hx-track.is-drag .hx-a { cursor: grabbing; pointer-events: none; }
-.hx-it { flex: none; width: 9.6rem; scroll-snap-align: start; }
+.hx-it { flex: none; width: 9.6rem; }
 .hx-a { display: flex; flex-direction: column; align-items: center; gap: .2rem; padding: .3rem .35rem .5rem; border-radius: 16px; color: inherit; text-decoration: none; text-align: center; }
 .hx-ph { display: block; width: 6.4rem; height: 6.4rem; border-radius: 50%; overflow: hidden; margin-bottom: .45rem; background: #1a1712; box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--gold-soft), 0 12px 22px -14px rgba(29, 36, 51, .6); transition: transform .25s, box-shadow .25s; }
 .hx-ph img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
@@ -3505,12 +3505,16 @@ main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important
 .hx-s { font-size: .84rem; line-height: 1.38; color: var(--text-soft); }
 .hx-a:hover .hx-t { text-decoration: underline; text-decoration-color: var(--gold-soft); text-underline-offset: .18em; }
 /* the scale of dates over the slider */
-.hx-scale { position: relative; margin: .5rem 0 0; padding-top: 1.7rem; }
-.hx-ticks { position: absolute; inset: 0 .55rem auto; height: 1.7rem; }
-.hx-tick { position: absolute; top: 0; transform: translateX(-50%); padding: .1rem .3rem; min-height: 24px; border: 0; border-radius: 6px; background: none; color: var(--muted); font: 600 .78rem var(--sans); letter-spacing: .03em; cursor: pointer; }
-.hx-tick::after { content: ""; position: absolute; left: 50%; bottom: -.35rem; width: 1px; height: .45rem; background: var(--border-strong); }
-.hx-tick:hover { color: var(--gold); }
-.hx-tick.is-hid { visibility: hidden; }
+.hx-scale { position: relative; margin: .4rem 0 0; }
+/* every year in one row that slides with the strip (script.js sets its transform); the year in view
+   stands in the middle, over the small gold mark, larger and lit; the others step back */
+.hx-years { position: relative; overflow: hidden; padding: .2rem 0 .55rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); }
+.hx-years::after { content: ""; position: absolute; left: 50%; bottom: .1rem; width: 1.4rem; height: 2px; margin-left: -.7rem; border-radius: 2px; background: var(--gold); }
+.hx-yl { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: .15rem; width: max-content; position: relative; left: 50%; will-change: transform; }
+.hx-yr { display: block; min-width: 2.6rem; min-height: 32px; padding: .25rem .45rem; border: 0; border-radius: 8px; background: none; color: var(--muted); font: 500 .8rem var(--sans); letter-spacing: .02em; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer; transform: scale(.94); transition: color .3s, transform .3s; }
+.hx-yr:hover { color: var(--text); }
+.hx-yr.is-on { color: var(--gold); font-weight: 700; transform: scale(1.3); }
+.hx-yr:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .hx-range { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 1.6rem; margin: 0; background: transparent; cursor: pointer; }
 .hx-range::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--border-strong); }
 .hx-range::-moz-range-track { height: 4px; border-radius: 4px; background: var(--border-strong); }
@@ -3527,7 +3531,7 @@ main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important
   .hx-ph { width: 5.4rem; height: 5.4rem; }
 }
 @media (max-width: 599px) { .hx-ctl { display: none; } }
-@media (prefers-reduced-motion: reduce) { .hx-ph, .hx-hl svg { transition: none; } .hx-a:hover .hx-ph { transform: none; } .hx-pop { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .hx-ph, .hx-hl svg, .hx-yr { transition: none; } .hx-a:hover .hx-ph { transform: none; } .hx-pop { animation: none; } }
 
 /* ---- Kilise'nin Tarihi (kilise-tarihi.html): the eras, and their events down a line of dates ---- */
 .kt-page { max-width: 1000px; }
@@ -3580,10 +3584,6 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 .read-prog { position: fixed; top: 0; left: 0; right: 0; z-index: 400; height: 3px; pointer-events: none; background: transparent; }
 .read-prog span { display: block; height: 100%; background: linear-gradient(90deg, var(--gold-soft), var(--gold)); transform: scaleX(0); transform-origin: 0 50%; }
 @media print { .read-prog { display: none; } .kd-later { display: revert !important; } }
-.hx-tick:first-child { transform: none; }
-.hx-tick:first-child::after { left: .3rem; }
-.hx-tick:last-child { transform: translateX(-100%); }
-.hx-tick:last-child::after { left: auto; right: .3rem; }
 .hx-track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }
 
 /* ---- Long articles: the text in one column in the middle of the screen; each section's painting

@@ -188,50 +188,108 @@
     if (!track) return;
     var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var prev = $('[data-hx-step="-1"]', box), next = $('[data-hx-step="1"]', box), range = $('.hx-range', box);
-    var items = $$('.hx-it', track), ticks = $$('.hx-tick', box);
+    var items = $$('.hx-it', track), years = $$('.hx-yr', box), yl = $('.hx-yl', box);
+    var n = items.length, last = Math.max(1, n - 1);
     var max = function () { return Math.max(0, track.scrollWidth - track.clientWidth); };
-    var go = function (x, smooth) { track.scrollTo({ left: x, behavior: smooth && !still ? 'smooth' : 'auto' }); };
-    var leftOf = function (el) { return el.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0); };
-    $$('[data-hx-step]', box).forEach(function (b) {
-      b.addEventListener('click', function () { go(track.scrollLeft + (+b.getAttribute('data-hx-step')) * track.clientWidth * .85, true); });
-    });
-    /* the scale: each year sits where the slider is when its event comes first in view; a year
-       that would run into the one before it stays hidden */
-    var placeTicks = function () {
-      var m = max(), lastEnd = -1e9, w = range ? range.clientWidth : 0;
-      ticks.forEach(function (t) {
-        var it = items[+t.getAttribute('data-hx-to')], f = m > 0 ? Math.min(1, Math.max(0, leftOf(it) / m)) : 0;
-        t.style.left = (f * 100) + '%';
-        var x = f * w, half = t.offsetWidth / 2;
-        t.classList.toggle('is-hid', x - half < lastEnd + 6);
-        if (x - half >= lastEnd + 6) lastEnd = x + half;
-      });
+    var group = function (i) { return +items[Math.max(0, Math.min(n - 1, i))].getAttribute('data-g'); };
+    /* event i is "in view" when the strip has come i/(n-1) of the way, so every event, the last
+       ones too, has its own place along the slider */
+    var posOf = function (i) { return i / last * max(); };
+
+    /* every move glides: an eased run for a click, a steady one while an arrow is held down */
+    var anim = 0;
+    var stop = function () { if (anim) cancelAnimationFrame(anim); anim = 0; };
+    var glide = function (x) {
+      stop();
+      var from = track.scrollLeft, to = Math.max(0, Math.min(max(), x)), d = to - from;
+      if (still || Math.abs(d) < 1) { track.scrollLeft = to; return; }
+      var t0 = 0, dur = Math.min(900, 320 + Math.abs(d) * .25);
+      var tick = function (t) {
+        if (!t0) t0 = t;
+        var k = Math.min(1, (t - t0) / dur), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        track.scrollLeft = from + d * e;
+        anim = k < 1 ? requestAnimationFrame(tick) : 0;
+      };
+      anim = requestAnimationFrame(tick);
     };
-    ticks.forEach(function (t) {
-      t.addEventListener('click', function () { go(Math.min(max(), leftOf(items[+t.getAttribute('data-hx-to')])), true); });
+    var nowAt = function () { var m = max(); return m > 0 ? track.scrollLeft / m * last : 0; };
+    /* the first event of the next (or previous) year */
+    var stepTo = function (dir) {
+      var g = group(Math.round(nowAt())), i;
+      if (dir > 0) { for (i = 0; i < n && group(i) <= g; i++); }
+      else { for (i = n - 1; i >= 0 && group(i) >= g; i--); while (i > 0 && group(i - 1) === group(i)) i--; }
+      glide(posOf(Math.max(0, Math.min(n - 1, i))));
+    };
+    var hold = function (dir) {
+      stop();
+      var v = 0, lastT = 0;
+      var run = function (t) {
+        var dt = lastT ? Math.min(50, t - lastT) : 16; lastT = t;
+        v = Math.min(.9, v + dt * .003);                 /* speeds up to ~900px a second */
+        track.scrollLeft += dir * v * dt;
+        anim = requestAnimationFrame(run);
+      };
+      anim = requestAnimationFrame(run);
+    };
+    [prev, next].forEach(function (b) {
+      if (!b) return;
+      var dir = +b.getAttribute('data-hx-step'), timer = 0, held = false;
+      b.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0) return;
+        held = false;
+        timer = setTimeout(function () { held = true; hold(dir); }, 260);
+      });
+      var release = function () { clearTimeout(timer); if (held) stop(); };
+      b.addEventListener('pointerup', release);
+      b.addEventListener('pointerleave', function () { release(); held = false; });
+      b.addEventListener('pointercancel', function () { release(); held = false; });
+      /* a quick press, or Enter and Space, glides to the next year; a long press has already moved */
+      b.addEventListener('click', function () { if (held) held = false; else stepTo(dir); });
     });
-    if (range) range.addEventListener('input', function () { go(+range.value / 1000 * max(), false); });
+    years.forEach(function (y) {
+      y.addEventListener('click', function () { glide(posOf(+y.getAttribute('data-hx-to'))); });
+      /* reaching a year with Tab brings the strip to it, so the year comes into the middle */
+      y.addEventListener('focus', function () { if (y.matches(':focus-visible')) glide(posOf(+y.getAttribute('data-hx-to'))); });
+    });
+    /* the row is moved only by script.js: the browser must not scroll it to show a focused year */
+    var ybox = yl && yl.parentNode;
+    if (ybox) ybox.addEventListener('scroll', function () { ybox.scrollLeft = 0; });
+    /* the reader's own scrolling, dragging or sliding stops a glide */
+    ['wheel', 'touchstart'].forEach(function (ev) { track.addEventListener(ev, stop, { passive: true }); });
+    if (range) range.addEventListener('input', function () { stop(); track.scrollLeft = +range.value / 1000 * max(); });
+
+    /* the row of years slides with the strip: the year in view sits in the middle, lit */
+    var centers = [], lit = -1;
+    var measure = function () { centers = years.map(function (y) { return y.offsetLeft + y.offsetWidth / 2; }); };
     var update = function () {
-      var m = max(), x = track.scrollLeft;
+      var m = max(), x = track.scrollLeft, f = m > 0 ? Math.min(last, Math.max(0, x / m * last)) : 0;
+      var i = Math.floor(f), j = Math.min(n - 1, i + 1), k = f - i;
       if (prev) prev.disabled = x <= 2;
       if (next) next.disabled = x >= m - 2;
+      if (yl && centers.length) {
+        var c = centers[group(i)] + (centers[group(j)] - centers[group(i)]) * k;
+        yl.style.transform = 'translateX(' + (-c).toFixed(1) + 'px)';
+      }
+      var g = group(Math.round(f));
+      if (g !== lit) {
+        if (years[lit]) { years[lit].classList.remove('is-on'); years[lit].removeAttribute('aria-current'); }
+        if (years[g]) { years[g].classList.add('is-on'); years[g].setAttribute('aria-current', 'true'); }
+        lit = g;
+      }
       if (range) {
         if (document.activeElement !== range) range.value = String(m > 0 ? Math.round(x / m * 1000) : 0);
-        /* the year of the first event in view, for screen readers */
-        var cur = items[0];
-        items.forEach(function (it) { if (leftOf(it) <= x + 4) cur = it; });
-        range.setAttribute('aria-valuetext', cur.getAttribute('data-y'));
+        range.setAttribute('aria-valuetext', items[Math.round(f)].getAttribute('data-y'));
       }
     };
     var raf = 0;
     track.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; update(); }); }, { passive: true });
-    window.addEventListener('resize', function () { placeTicks(); update(); });
+    window.addEventListener('resize', function () { measure(); update(); });
 
     /* a mouse drags the strip; a click that ended a drag does not open the event */
     var drag = null, moved = false;
     track.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      drag = { x: e.clientX, left: track.scrollLeft }; moved = false;
+      stop(); drag = { x: e.clientX, left: track.scrollLeft }; moved = false;
     });
     window.addEventListener('pointermove', function (e) {
       if (!drag) return;
@@ -242,12 +300,7 @@
     var endDrag = function () {
       if (!drag) return;
       drag = null;
-      if (moved) {
-        /* snap back on, to the nearest event */
-        var x = track.scrollLeft;
-        track.classList.remove('is-drag');
-        track.scrollLeft = x;
-      }
+      if (moved) track.classList.remove('is-drag');
     };
     window.addEventListener('pointerup', endDrag);
     window.addEventListener('pointercancel', endDrag);
@@ -291,8 +344,8 @@
     window.addEventListener('scroll', hidePop, { passive: true });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && popFor) hidePop(); });
 
-    placeTicks(); update();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeTicks(); update(); });
+    measure(); update();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); update(); });
   }
 
   /* ---------------------------------------------------------------

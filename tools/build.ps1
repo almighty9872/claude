@@ -3187,7 +3187,7 @@ $HomeApps = @(
     @{ f = 'topraklarimizda-hristiyanlik.html'; ico = $IcoRoots; t = 'Topraklarımızda Hristiyanlık'; te = 'Christianity in Anatolia'
        s = "Pavlus$($Apos)un memleketi, Vahiy$($Apos)in yedi kilisesi, İznik Konsili."; se = "Paul's homeland, the seven churches of Revelation, the Council of Nicaea." },
     @{ f = 'kilise-tarihi.html'; ico = $IcoHourglass; t = "Kilise$($Apos)nin Tarihi"; te = 'History of the Church'
-       s = 'Pentikost$($Apos)tan II. Vatikan Konsili$($Apos)ne, iki bin yıl.'; se = 'From Pentecost to the Second Vatican Council, two thousand years in brief.' },
+       s = "Pentikost$($Apos)tan II. Vatikan Konsili$($Apos)ne, iki bin yıl."; se = 'From Pentecost to the Second Vatican Council, two thousand years in brief.' },
     @{ f = 'kiliseler.html'; ico = $IcoPin; t = 'Kilise Bul'; te = 'Find a Church'
        s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches in Turkey where you can attend Mass, city by city.' }) }
 )
@@ -3257,16 +3257,17 @@ function Home-Page([string]$lang) {
   }) -join ''
   # The Church's history as a strip of small round pictures, oldest first (data/kilise-tarihi.json):
   # each with its year, title and a short line; hovering or focusing one shows the longer text,
-  # clicking it opens the event on kilise-tarihi.html. A scale of dates and a slider under the
-  # strip move along it; a mouse can drag it sideways (script.js, initHistory)
+  # clicking it opens the event on kilise-tarihi.html. Under the strip, every year in a row that
+  # glides along with it, the year in view lit and the rest dimmed, then a slider (script.js,
+  # initHistory). Events that share a year share one button (data-g on each event)
   $tlItems = New-Object System.Collections.Generic.List[string]; $n = 0
-  $tlMarks = @(0, 18, 31, 36, 48, 61)
-  $tlTicks = New-Object System.Collections.Generic.List[string]
+  $tlYears = New-Object System.Collections.Generic.List[string]; $g = -1; $lastLbl = ''
   foreach ($it in $Tarih.items) {
-    $yr = [regex]::Match($it.y, '\d+').Value
-    if ($tlMarks -contains $n) { $tlTicks.Add("<button type=`"button`" class=`"hx-tick`" data-hx-to=`"$n`" style=`"left:$([math]::Round($n * 100 / ($Tarih.items.Count - 1), 2))%`" aria-label=`"$yr yılına git`">$yr</button>") }
+    $nums = @([regex]::Matches($it.y, '\d+') | ForEach-Object { $_.Value })
+    $lbl = if ($it.y -match 'yüzyıl') { ($nums -join '-') + '. yy' } elseif ($it.y -match '^\d+\S*l[ae]r') { $Matches[0] } else { $nums[0] }
+    if ($lbl -ne $lastLbl) { $g++; $lastLbl = $lbl; $tlYears.Add("<li><button type=`"button`" class=`"hx-yr`" data-hx-to=`"$n`" aria-label=`"$($it.y): $($it.t)`">$lbl</button></li>") }
     $n++
-    $tlItems.Add("<li class=`"hx-it`" data-y=`"$yr`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
+    $tlItems.Add("<li class=`"hx-it`" data-y=`"$($it.y)`" data-g=`"$g`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
       "<span class=`"hx-y`">$($it.y)</span><span class=`"hx-t`">$($it.t)</span><span class=`"hx-s`">$($it.s)</span></a><span class=`"hx-d`" hidden>$($it.d)</span></li>")
   }
   $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''
@@ -3289,7 +3290,7 @@ function Home-Page([string]$lang) {
     <div class="hx-head"><div><p class="hj-kick">Tarih</p><h2 class="hj-h" id="hx-h"><a class="hx-hl" href="kilise-tarihi.html">Kilise$($Apos)nin tarihi$IcoChevR</a></h2><p class="hx-lead">Havarilerden bugüne Kilise tarihinin önemli olayları.</p></div>
     <div class="hx-ctl"><button type="button" class="hx-btn" data-hx-step="-1" aria-label="Önceki"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button><button type="button" class="hx-btn" data-hx-step="1" aria-label="Sonraki">$IcoChevR</button></div></div>
     <ol class="hx-track" tabindex="0" aria-label="Kilise tarihi, $n olay, eskiden yeniye">$($tlItems -join '')</ol>
-    <div class="hx-scale"><div class="hx-ticks">$($tlTicks -join '')</div>
+    <div class="hx-scale"><div class="hx-years"><ol class="hx-yl" aria-label="Yıllar">$($tlYears -join '')</ol></div>
       <input class="hx-range" type="range" min="0" max="1000" value="0" step="1" aria-label="Zaman çizelgesinde ilerle" aria-valuetext="33"></div>
   </section>
 </div>
