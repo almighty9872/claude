@@ -4,7 +4,11 @@ about: katolikdunyasi.com, Katolik inancının temel metinlerini ve öğretisini
 description: katolikdunyasi.com’un kaynakları ve telif bilgileri: Katekizm Özeti çevirisi, Kutsal Kitap alıntıları, dualar, görseller ve yazı tipleri.
 ---
 
-Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir. Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
+## Yasal Uyarı
+
+Katolik Dünyası, Kanon Hukuku’nun 216. Maddesinin ilk cümlesine uygun olarak yürütülen bağımsız ve özel bir girişimdir. Bu web sitesi, hiçbir kilise makamının veya Katolik Kilisesi’nin resmi bir platformu değildir; resmi bir onay veya kurumsal bir bağlılık taşımamaktadır.
+
+Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
 
 ## Metinler
 
@@ -17,7 +21,7 @@ Bu site resmî bir Kilise yayını değildir; kişisel bir girişimdir. Türkçe
 
 ## Bu site için yazılanlar
 
-Diğer bütün yazılar (aziz hayatları, meseller, mucizeler, Kilise’nin tarihi, rehberler, İslam’a ve Ateizme Cevap) Kilise belgelerine ve güvenilir kaynaklara dayanılarak bu site için yazıldı. Bir sayfa belli kaynaklardan yararlandıysa, kaynak listesi o sayfanın sonundadır.
+Diğer bütün yazılar (aziz hayatları, meseller, mucizeler, Kilise’nin tarihi, rehberler, İslam’a Cevap, Ateizme Cevap, Yahudilere Çağrı) Kilise belgelerine ve güvenilir kaynaklara dayanılarak bu site için yazıldı. Bir sayfa belli kaynaklardan yararlandıysa, kaynak listesi o sayfanın sonundadır.
 
 - **İslam’a Cevap:** hadis numaraları sunnah.com’a göredir. Kur’an’ın Arapçası Tanzil projesinden, İngilizcesi Pickthall’ın (1930) çevirisinden alındı.
 - **Mucizeler:** Fatima, Lanciano ve Padre Pio bölümlerinde Ethan Muse’un [Motiva Credibilitatis](https://motivacredibilitatis.substack.com/) yazılarından yararlanıldı.

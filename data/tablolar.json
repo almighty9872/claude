@@ -43,7 +43,8 @@
   "padovali-aziz-antonius.html": "n-padua",
   "lisieuxlu-kucuk-teresa.html": "n-roses",
   "aziz-ignatius-loyola.html": "l-montserrat",
-  "kilise-tarihi.html": "n-basilica"
+  "kilise-tarihi.html": "n-basilica",
+  "yahudilere-cagri.html": "y-presen"
  },
  "art": {
   "05franc": {
@@ -1222,6 +1223,105 @@
    "w": 960,
    "h": 720,
    "y": 50
+  },
+  "y-presen": {
+   "t": "İsa’nın Tapınağa Sunuluşu",
+   "te": "The Presentation in the Temple",
+   "a": "Andrea Mantegna",
+   "loc": "Gemäldegalerie, Berlin",
+   "loce": "Gemäldegalerie, Berlin",
+   "src": "https://www.wga.hu/html/m/mantegna/06/1presen.html",
+   "w": 1300,
+   "h": 1027,
+   "y": 40
+  },
+  "y-synag": {
+   "t": "Sinagogda Yahudiler",
+   "te": "Jews in the Synagogue",
+   "a": "Rembrandt (gravür)",
+   "loc": "Teylers Müzesi, Haarlem",
+   "loce": "Teylers Museum, Haarlem",
+   "src": "https://www.wga.hu/html/r/rembrand/51etchin/3/126.html",
+   "w": 917,
+   "h": 500,
+   "y": 50
+  },
+  "y-isaiah": {
+   "t": "Peygamber Yeşaya",
+   "te": "The Prophet Isaiah",
+   "a": "Michelangelo",
+   "loc": "Sistina Şapeli, Vatikan",
+   "loce": "Sistine Chapel, Vatican",
+   "src": "https://www.wga.hu/html/m/michelan/3sistina/3prophet/03_7pr3.html",
+   "w": 943,
+   "h": 960,
+   "y": 40
+  },
+  "y-daniel": {
+   "t": "Peygamber Daniel",
+   "te": "The Prophet Daniel",
+   "a": "Michelangelo",
+   "loc": "Sistina Şapeli, Vatikan",
+   "loce": "Sistine Chapel, Vatican",
+   "src": "https://www.wga.hu/html/m/michelan/3sistina/3prophet/07_7pr5.html",
+   "w": 951,
+   "h": 950,
+   "y": 40
+  },
+  "y-zechar": {
+   "t": "Peygamber Zekeriya",
+   "te": "The Prophet Zechariah",
+   "a": "Michelangelo",
+   "loc": "Sistina Şapeli, Vatikan",
+   "loce": "Sistine Chapel, Vatican",
+   "src": "https://www.wga.hu/html/m/michelan/3sistina/3prophet/00_3pr1.html",
+   "w": 926,
+   "h": 970,
+   "y": 40
+  },
+  "y-entry": {
+   "t": "İsa’nın Kudüs’e Girişi",
+   "te": "Entry into Jerusalem",
+   "a": "Giotto",
+   "loc": "Scrovegni Şapeli, Padova",
+   "loce": "Scrovegni Chapel, Padua",
+   "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris10.html",
+   "w": 1289,
+   "h": 1200,
+   "y": 50
+  },
+  "y-joseph": {
+   "t": "Yusuf’un Kardeşleriyle Tanışması",
+   "te": "The Recognition of Joseph by his Brothers",
+   "a": "Peter von Cornelius",
+   "loc": "Alte Nationalgalerie, Berlin",
+   "loce": "Alte Nationalgalerie, Berlin",
+   "src": "https://www.wga.hu/html/c/corneliu/fresco2.html",
+   "w": 1030,
+   "h": 833,
+   "y": 45
+  },
+  "y-passov": {
+   "t": "Fısıh Yemeği",
+   "te": "The Feast of the Passover",
+   "a": "Dieric Bouts",
+   "loc": "Sint-Pieterskerk, Leuven",
+   "loce": "Sint-Pieterskerk, Leuven",
+   "src": "https://www.wga.hu/html/b/bouts/dirk_e/lastsupp/4feast.html",
+   "w": 900,
+   "h": 1135,
+   "y": 50
+  },
+  "y-simeon": {
+   "t": "Tapınakta Bebek İsa’yı Kucağına Alan Simeon",
+   "te": "Simeon with the Infant Jesus in the Temple",
+   "a": "Rembrandt",
+   "loc": "Nationalmuseum, Stockholm",
+   "loce": "Nationalmuseum, Stockholm",
+   "src": "https://www.wga.hu/html/r/rembrand/14biblic/68newtes.html",
+   "w": 1000,
+   "h": 1228,
+   "y": 40
   }
  },
  "sections": {
@@ -1307,6 +1407,12 @@
    "gizem-isik": "47emmau",
    "gizem-aci": "55flagel",
    "gizem-yucelik": "45death"
+  },
+  "yahudilere-cagri.html": {
+   "kardeslik": "y-synag",
+   "isaretler": "y-isaiah",
+   "itirazlar": "y-entry",
+   "sonuc": "y-joseph"
   }
  }
 }

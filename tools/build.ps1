@@ -57,7 +57,7 @@ $PageSources = @{
   'neden-katoligiz.html' = @('data/neden-katoligiz.js'); 'azizler.html' = @('data/azizler.js', 'data/buyuk-azizler.js')
   'kutsal-ayin.html' = @('data/kutsal-ayin.js'); 'meseller.html' = @('data/meseller.js'); 'mucizeler.html' = @('data/mucizeler.js')
   'tesbih-duasi.html' = @('data/tespih.js'); 'tesbih-tarihi.html' = @('data/tesbih-tarihi.js'); 'kiliseler.html' = @('data/kiliseler.js')
-  'islama-cevap.html' = @('data/islama-cevap.js'); 'ateizme-cevap.html' = @('data/ateizme-cevap.js')
+  'islama-cevap.html' = @('data/islama-cevap.js'); 'ateizme-cevap.html' = @('data/ateizme-cevap.js'); 'yahudilere-cagri.html' = @('data/yahudilere-cagri.js', 'data/tablolar.json')
   'kutsal-kitap.html' = @('content/kutsal-kitap.md', 'content/kutsal-kitap-en.md'); 'erisilebilirlik.html' = @('content/erisilebilirlik.md', 'content/erisilebilirlik-en.md')
   'gizlilik.html' = @('content/gizlilik.md', 'content/gizlilik-en.md'); 'kaynaklar-ve-telif.html' = @('content/hakkinda.md', 'content/hakkinda-en.md', 'data/tablolar.json', 'data/aziz-portreleri.json')
   'index.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json', 'data/tablolar.json', 'data/azizler.js', 'data/buyuk-azizler.js')
@@ -246,6 +246,7 @@ Add-EnAlt 'padre-pio.html' 'padre-pio.html'
 Add-EnAlt 'aziz-hieronymus.html' 'saint-jerome.html'
 Add-EnAlt 'islama-cevap.html' 'answering-islam.html'
 Add-EnAlt 'ateizme-cevap.html' 'answering-atheism.html'
+Add-EnAlt 'yahudilere-cagri.html' 'a-call-to-our-jewish-friends.html'
 Add-EnAlt 'kaynaklar-ve-telif.html' 'sources-and-copyright.html'
 
 # ------------------------------------------------------------------ data
@@ -952,6 +953,7 @@ $IcoDebate = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 $IcoAnswer = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.8h14a1.8 1.8 0 0 1 1.8 1.8v9.2a1.8 1.8 0 0 1-1.8 1.8h-7.4L7 20.4v-3.8H5a1.8 1.8 0 0 1-1.8-1.8V5.6A1.8 1.8 0 0 1 5 3.8Z"/><path d="M12 6.6v7.2M9.4 9.2h5.2"/></svg>'
 # Ateizme Cevap: a planet with its ring and a small star
 $IcoCosmos = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13.5" r="5"/><path d="M4.6 17.8c-1.9-1.2.6-4.6 5.6-7.1s9.9-3.2 11-1.5c.6 1-.4 2.6-2.5 4.3"/><path d="M18.5 2.8v3.6M16.7 4.6h3.6"/></svg>'
+$IcoLamp = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v13M8.5 20h7"/><path d="M9 7v2a3 3 0 0 0 6 0V7"/><path d="M6 7v2a6 6 0 0 0 12 0V7"/><path d="M3 7v2a9 9 0 0 0 18 0V7"/><path d="M3 4.6v.4M6 4.6v.4M9 4.6v.4M12 4.6v.4M15 4.6v.4M18 4.6v.4M21 4.6v.4"/></svg>'
 # href -> icon lookup for the mobile menu sheet (each real destination gets a small icon; the
 # plain-text ns-label section headers do not). Defined early, before Header-Html is first called
 # by the Compendium part-page loop below, so every icon it references must already exist here.
@@ -973,6 +975,7 @@ $NavIcons = @{
   'kilise-tarihi.html'   = $IcoHourglass
   'islama-cevap.html'    = $IcoAnswer
   'ateizme-cevap.html'   = $IcoCosmos
+  'yahudilere-cagri.html' = $IcoLamp
   'iletisim.html'        = $IcoMail
 }
 $IcoA11yPerson = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="7.4" r="1.3" fill="currentColor" stroke="none"/><path d="M7.6 10.2 12 11l4.4-.8M12 11v3.2l-2.2 4M12 14.2l2.2 4"/></svg>'
@@ -990,7 +993,8 @@ $SheetNav = @(
     @{ href = 'meseller.html'; t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel'; te = 'The Parables of Jesus'; se = 'Thirty-two parables' }) },
   @{ label = 'Tartış'; labelEn = 'Debate'; items = @(
     @{ href = 'islama-cevap.html'; t = "İslam$($Apos)a Cevap"; s = 'İslam, kendi kaynaklarıyla'; te = 'Answering Islam'; se = 'Islam, by its own sources' },
-    @{ href = 'ateizme-cevap.html'; t = 'Ateizme Cevap'; s = 'Akıl ve kanıtla Tanrı'; te = 'Answering Atheism'; se = 'God, by reason and evidence' }) },
+    @{ href = 'ateizme-cevap.html'; t = 'Ateizme Cevap'; s = 'Akıl ve kanıtla Tanrı'; te = 'Answering Atheism'; se = 'God, by reason and evidence' },
+    @{ href = 'yahudilere-cagri.html'; t = 'Yahudilere Çağrı'; s = "Tanah$($Apos)ın sözleriyle Mesih"; te = 'A Call to Our Jewish Friends'; se = 'The Messiah, in the words of the Tanakh' }) },
   @{ label = 'Dua Et'; labelEn = 'Pray'; items = @(
     @{ href = 'kutsal-ayin.html'; t = 'Kutsal Ayin'; s = 'Ayinin sırası'; te = 'The Mass'; se = 'The order of Mass' },
     @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Dualar ve gizemler'; te = 'The Rosary'; se = 'Prayers and mysteries' },
@@ -1043,6 +1047,7 @@ foreach ($f in @('neden-katoligiz.html', 'katekizm.html', 'kutsal-kitap.html', '
 foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'tesbih-tarihi.html', 'ekler.html', 'gunah-cikarma.html')) { $AppOf[$f] = 'dua' }
 $AppOf['islama-cevap.html'] = 'tartis'
 $AppOf['ateizme-cevap.html'] = 'tartis'
+$AppOf['yahudilere-cagri.html'] = 'tartis'
 foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kilise-tarihi.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
 foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
 
@@ -1296,6 +1301,7 @@ $FooterHtml = @"
       <p class="foot-brand"><span class="foot-fish" aria-hidden="true">$IchthysSvg</span>$BrandName</p>
       <p class="foot-tag">$(T $SiteTag $SiteTagEn)</p>
       <p class="foot-desc">$(T $fm['about'] $fmEn['about'])</p>
+      <p class="foot-legal"><strong>Yasal Uyarı</strong> Katolik Dünyası, Kanon Hukuku$($Apos)nun 216. Maddesinin ilk cümlesine uygun olarak yürütülen bağımsız ve özel bir girişimdir. Bu web sitesi, hiçbir kilise makamının veya Katolik Kilisesi$($Apos)nin resmi bir platformu değildir; resmi bir onay veya kurumsal bir bağlılık taşımamaktadır.</p>
       <p class="foot-copy foot-src"><a class="foot-sources" href="kaynaklar-ve-telif.html" data-dialog="sources-dialog">$(T $fm['title'] $fmEn['title'])</a><a class="foot-contact" href="iletisim.html">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
     </div>
     <nav class="foot-sitemap" $(TA 'aria-label' 'Site haritası' 'Sitemap')>
@@ -2121,7 +2127,7 @@ $HadithEval = [System.Text.RegularExpressions.MatchEvaluator]{
   "<a class=`"hdref`" href=`"https://sunnah.com/$($book):$($m.Groups[2].Value)`" target=`"_blank`" rel=`"noopener`">$($m.Value)</a>"
 }
 function Ic-Link([string]$s) { return $HadithRx.Replace($QuranRx.Replace($s, $QuranEval), $HadithEval) }
-# One paragraph per line; "- " list items, "### " a subheading, "> text || source" a quotation
+# One paragraph per line; "- " list items, "### " a subheading, "@art key" a painting, "> text || source" a quotation
 function Ic-Blocks([string]$s) {
   $sb = New-Object Text.StringBuilder; $list = New-Object Collections.ArrayList
   $flush = { if ($list.Count) { [void]$sb.Append('<ul>' + (($list | ForEach-Object { "<li>$(Ic-Link $_)</li>" }) -join '') + '</ul>'); $list.Clear() } }
@@ -2130,6 +2136,7 @@ function Ic-Blocks([string]$s) {
     if ($l.StartsWith('- ')) { [void]$list.Add($l.Substring(2)); continue }
     . $flush
     if ($l.StartsWith('### ')) { [void]$sb.Append("<h4>$(Ic-Link $l.Substring(4))</h4>"); continue }
+    if ($l.StartsWith('@art ')) { [void]$sb.Append((Mira-Fig $l.Substring(5).Trim())); continue }
     if ($l.StartsWith('> ')) {
       $qs = $l.Substring(2) -split ' \|\| ', 2
       $cite = if ($qs.Count -gt 1) { "<cite>$(Ic-Link $qs[1])</cite>" } else { '' }
@@ -2149,6 +2156,7 @@ $IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 $CaseArt = @{
   'islama-cevap' = @{ kitap = @('scroll', 'blue'); peygamber = @('scales', 'gold'); tanri = @('cosmos', 'purple'); itirazlar = @('shield', 'red'); sonuc = @('door', 'green') }
   'ateizme-cevap' = @{ ring = @('scales', 'purple'); tanri = @('cosmos', 'blue'); isa = @('tomb', 'gold'); itirazlar = @('shield', 'red'); sonuc = @('door', 'green') }
+  'yahudilere-cagri' = @{ kardeslik = @('lampstand', 'gold'); isaretler = @('scroll', 'blue'); itirazlar = @('shield', 'red'); sonuc = @('door', 'green') }
 }
 function Case-Body($Ic, $Ico, [string]$Page) {
   $arts = $CaseArt[$Page]
@@ -2225,6 +2233,17 @@ $acLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr
 Write-Page -File 'ateizme-cevap.html' -Title "$(Plain $Ac.title): Akıl ve Kanıtla | $SiteName" -TitleEn "$($Ac.en): Reason and Evidence | $SiteName" `
   -Description (Meta-Trim "Tanrı var mı? Ateizm ve agnostisizm akıl ve kanıtla sınanıyor: evrenin varlığı, ince ayar, bilinç, ahlak, İsa’nın dirilişi, mucizeler ve kötülük sorunu.") -DescriptionEn "Does God exist? Atheism and agnosticism tested by reason and evidence: the universe, fine-tuning, consciousness, the resurrection of Jesus, miracles and evil." `
   -Path 'ateizme-cevap.html' -Body $acBody -JsonLd @($acLd, (Breadcrumb-Ld 'Ateizme Cevap' 'ateizme-cevap.html'))
+
+# ================================================================== YAHUDILERE CAGRI (yahudilere-cagri.html)
+# The Tartış section's third page, built like the other two from data/yahudilere-cagri.js: a humble
+# witness to Jesus as Israel's Messiah, from the Tanakh, written to the Church's own guidance on
+# Catholic-Jewish relations. Its paintings are named in data/tablolar.json.
+$Yc = Read-Data 'yahudilere-cagri.js'
+$ycBody = Case-Body $Yc $IcoLamp 'yahudilere-cagri'
+$ycLd = '{"@context":"https://schema.org","@type":"Article","headline":' + (JStr (Plain $Yc.title)) + ',"inLanguage":"tr","author":{"@type":"Organization","name":' + (JStr $SiteName) + '},"mainEntityOfPage":' + (JStr "$SiteUrl/yahudilere-cagri.html") + '}'
+Write-Page -File 'yahudilere-cagri.html' -Title "$(Plain $Yc.title): Tanah$($Apos)ın Sözleriyle Mesih | $SiteName" -TitleEn "$($Yc.en): The Messiah in the Tanakh | $SiteName" `
+  -Description (Meta-Trim "Nasıralı İsa neden İsrail$($Apos)in beklediği Mesih? Daniel, Yeşaya 53, kurban ve kefaret, Mezmur 22 ve en sık itirazlar. Kilise$($Apos)nin Yahudi halkına duyduğu saygıyla.") -DescriptionEn "Why Jesus of Nazareth is the Messiah Israel awaited: Daniel, Isaiah 53, sacrifice and atonement, Psalm 22 and the common objections, with the Church's respect for the Jewish people." `
+  -Path 'yahudilere-cagri.html' -Body $ycBody -JsonLd @($ycLd, (Breadcrumb-Ld 'Yahudilere Çağrı' 'yahudilere-cagri.html'))
 
 # ================================================================== NEDEN KATOLIGIZ (neden-katoligiz.html + en/why-were-catholic.html)
 # A short case in three parts, read in one calm column. Two "doors" at the top send a skeptic to
@@ -3169,7 +3188,9 @@ $HomeApps = @(
     @{ f = 'islama-cevap.html'; ico = $IcoAnswer; t = "İslam$($Apos)a Cevap"; te = 'Answering Islam'
        s = "İslam$($Apos)ın iddiaları, Kur$($Apos)an ve hadislerle sınanıyor."; se = "Islam's claims, tested by the Qur'an and the hadith." },
     @{ f = 'ateizme-cevap.html'; ico = $IcoCosmos; t = 'Ateizme Cevap'; te = 'Answering Atheism'
-       s = 'Tanrı var mı? Ateizm, akıl ve kanıtla sınanıyor.'; se = 'Does God exist? Atheism, tested by reason and evidence.' }) },
+       s = 'Tanrı var mı? Ateizm, akıl ve kanıtla sınanıyor.'; se = 'Does God exist? Atheism, tested by reason and evidence.' },
+    @{ f = 'yahudilere-cagri.html'; ico = $IcoLamp; t = 'Yahudilere Çağrı'; te = 'A Call to Our Jewish Friends'
+       s = "Nasıralı İsa neden İsrail$($Apos)in Mesih$($Apos)i? Tanah$($Apos)ın sözleriyle, saygıyla."; se = "Why Jesus of Nazareth is Israel$($Apos)s Messiah: from the Tanakh, with respect." }) },
   @{ id = 'dua'; t = 'Dua Et'; te = 'Pray'; s = 'Ayin, tesbih ve günlük dualar'; se = 'The Mass, the Rosary and daily prayers'; ico = $TbChurch; pages = @(
     @{ f = 'kutsal-ayin.html'; ico = $IcoChalice; t = 'Kutsal Ayin'; te = 'The Mass'
        s = 'Ayinin sırası, toplanmadan son takdise altı bölüm.'; se = 'The order of the Mass, in six parts.' },
@@ -3241,7 +3262,7 @@ function Home-Page([string]$lang) {
     @{ t = 'Merak ediyorum'; te = "I'm curious"; d = "Tanrı var mı, İsa kim, neden Katolik Kilise?"; de = 'Is there a God, who is Jesus, why the Catholic Church?'
        l = @(@('neden-katoligiz.html', 'Neden Katoliğiz?', "Why We're Catholic"), @('ateizme-cevap.html', 'Ateizme Cevap', 'Answering Atheism'), @('mucizeler.html', 'Mucizeler', 'Miracles')) },
     @{ t = 'Sorularım var'; te = 'I have questions'; d = "En çok sorulan sorular ve Kilise$($Apos)nin öğretisi."; de = 'The most common questions, and what the Church teaches.'
-       l = @(@('sss.html', 'Sorular', 'FAQ'), @('katekizm.html', 'Katekizm', 'Catechism'), @('kutsal-kitap.html', 'Kutsal Kitap', 'The Bible'), @('islama-cevap.html', "İslam$($Apos)a Cevap", 'Answering Islam')) },
+       l = @(@('sss.html', 'Sorular', 'FAQ'), @('katekizm.html', 'Katekizm', 'Catechism'), @('kutsal-kitap.html', 'Kutsal Kitap', 'The Bible'), @('islama-cevap.html', "İslam$($Apos)a Cevap", 'Answering Islam'), @('yahudilere-cagri.html', 'Yahudilere Çağrı', 'A Call to Our Jewish Friends')) },
     @{ t = 'Katolik olmak istiyorum'; te = 'I want to become Catholic'; d = 'Vaftizli ya da vaftizsiz, süreç adım adım.'; de = 'Baptized or not, the process step by step.'
        l = @(@('katolik-sureci.html', 'Katolik Olma Süreci', 'Becoming Catholic'), @('kiliseler.html', 'Kilise Bul', 'Find a Church')) },
     @{ t = 'Dua etmek istiyorum'; te = 'I want to pray'; d = 'Tesbih, Ayin ve günlük dualar.'; de = 'The Rosary, the Mass and daily prayers.'
@@ -3278,6 +3299,7 @@ function Home-Page([string]$lang) {
       <div class="hd-grid">
         <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
         <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card hd-wide" href="yahudilere-cagri.html">$(Art-Img 'y-presen' 'hd-art' '(min-width: 980px) 48vw, 100vw')<span class="hd-t">Yahudilere Çağrı</span><span class="hd-d">Nasıralı İsa neden İsrail$($Apos)in Mesih$($Apos)i? Tanah$($Apos)ın kendi sözleriyle, saygıyla.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
       </div>
     </section>
     <aside class="hj-aside">
@@ -3354,7 +3376,7 @@ $pages = @(
   @{ p = 'mesihte-yasam.html'; pr = '0.9' }, @{ p = 'hristiyan-duasi.html'; pr = '0.9' }, @{ p = 'ekler.html'; pr = '0.8' },
   @{ p = 'kutsal-kitap.html'; pr = '0.9' }, @{ p = 'tesbih-duasi.html'; pr = '0.9' }, @{ p = 'tesbih-tarihi.html'; pr = '0.8' }, @{ p = 'katolik-sureci.html'; pr = '0.9' },
   @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' }, @{ p = 'kilise-tarihi.html'; pr = '0.8' },
-  @{ p = 'neden-katoligiz.html'; pr = '0.9' }, @{ p = 'islama-cevap.html'; pr = '0.8' }, @{ p = 'ateizme-cevap.html'; pr = '0.8' },
+  @{ p = 'neden-katoligiz.html'; pr = '0.9' }, @{ p = 'islama-cevap.html'; pr = '0.8' }, @{ p = 'ateizme-cevap.html'; pr = '0.8' }, @{ p = 'yahudilere-cagri.html'; pr = '0.8' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
   @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'mucizeler.html'; pr = '0.7' },

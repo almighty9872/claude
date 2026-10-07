@@ -1131,6 +1131,8 @@ body.sheet-open { overflow: hidden; }
 .foot-copy a:hover { color: var(--gold); }
 .foot-about .foot-copy + .foot-copy { margin-top: .2rem; }
 .foot-desc { margin: 0 0 .6rem; max-width: 22rem; font-family: var(--sans); font-size: .8rem; line-height: 1.5; color: var(--text-soft); }
+.foot-legal { margin: 0 0 .7rem; max-width: 24rem; font-family: var(--sans); font-size: .72rem; line-height: 1.5; color: var(--text-soft); }
+.foot-legal strong { display: block; margin-bottom: .15rem; font-weight: 600; color: var(--text); }
 .foot-sources {
   padding: 0; border: 0; background: none; font: inherit; color: var(--muted); cursor: pointer;
   text-decoration: none;
@@ -1823,6 +1825,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
   .foot-tag, .foot-desc, .foot-sitemap, .foot-about .foot-copy:not(.foot-src) { display: none; }
   .foot-grid { gap: 0; grid-template-columns: 1fr; text-align: center; }
   .foot-about { width: 100%; }
+  .foot-legal { margin: .6rem auto .2rem; }
   .foot-about .foot-src { margin-top: .5rem; }
   .foot-src { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; row-gap: .35rem; }
   .foot-src .foot-contact { display: inline; }
@@ -3399,6 +3402,7 @@ html.av .page-head .ph-art { display: none; }
 .hd-card:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 24px 40px -26px rgba(29, 36, 51, .7); }
 .hd-card:hover .hd-art { transform: scale(1.04); }
 .hd-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.hd-card.hd-wide { grid-column: 1 / -1; min-height: 19rem; }
 .hd-t { font: 400 2rem/1 var(--display); text-transform: uppercase; }
 .hd-d { font-size: 1rem; line-height: 1.45; color: rgba(255, 255, 255, .9); }
 .hd-more { display: inline-flex; align-items: center; gap: .2rem; font: 600 .82rem var(--sans); color: #f1d38c; }
