@@ -2163,7 +2163,7 @@
       if (!el) return;
       try { map = JSON.parse(card.getAttribute('data-art-map') || '{}'); } catch (e) { map = {}; }
       var art = map[k] || map['*'];
-      if (art) el.style.backgroundImage = 'url("' + ROOT + 'assets/art/' + art + (card === saintCard ? '' : '-800') + '.jpg")';
+      if (art) el.style.backgroundImage = 'url("' + ROOT + 'assets/art/' + art + (card === saintCard && window.innerWidth >= 980 ? '' : '-800') + '.jpg")';
     };
     getTodaySaint().then(function (sn) {
       $('[data-hs-name]', saintCard).innerHTML = sn.html;

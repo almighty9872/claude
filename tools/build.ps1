@@ -3235,7 +3235,7 @@ function Home-Page([string]$lang) {
       <span class="hm-sn" data-hs-name>$loading</span><span class="hm-sub" data-hs-title></span><span class="hm-bio" data-hs-bio></span>
       <span class="hm-go">$(L 'Hayatını oku' 'Read their life') $IcoChevR</span>
     </a>
-    <div class="hm-card hm-date" data-home-lit>$(Art-Img '13fligh' 'hm-art' '(min-width: 980px) 40vw, 100vw' 'high')$DecoDove
+    <div class="hm-card hm-date" data-home-lit>$(Art-Img '13fligh' 'hm-art' '(min-width: 980px) 40vw, 50vw' 'high')$DecoDove
       <span class="hm-label">$(L 'Bugün' 'Today')</span>
       <span class="hm-day" data-hd-day>$loading</span><span class="hm-year" data-hd-year></span><time class="hm-time" data-hd-time></time>
       <span class="hm-season" data-hd-season></span><span class="hm-sub" data-hd-colour></span>
@@ -3297,9 +3297,9 @@ function Home-Page([string]$lang) {
   <div class="hj-grid">
     <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">Tartış</p><h2 class="hj-h" id="hj-h">Sorular ve itirazlar</h2>
       <div class="hd-grid">
-        <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
-        <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 100vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
-        <a class="hd-card hd-wide" href="yahudilere-cagri.html">$(Art-Img 'y-presen' 'hd-art' '(min-width: 980px) 48vw, 100vw')<span class="hd-t">Yahudilere Çağrı</span><span class="hd-d">Nasıralı İsa neden İsrail$($Apos)in Mesih$($Apos)i? Tanah$($Apos)ın kendi sözleriyle, saygıyla.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card hd-wide" href="yahudilere-cagri.html">$(Art-Img 'y-presen' 'hd-art' '(min-width: 980px) 48vw, 60vw')<span class="hd-t">Yahudilere Çağrı</span><span class="hd-d">Nasıralı İsa neden İsrail$($Apos)in Mesih$($Apos)i? Tanah$($Apos)ın kendi sözleriyle, saygıyla.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
       </div>
     </section>
     <aside class="hj-aside">
