@@ -98,8 +98,8 @@
    "loc": "Uffizi, Floransa",
    "loce": "Uffizi, Florence",
    "src": "https://www.wga.hu/html/c/caravagg/06/33isaac.html",
-   "w": 1700,
-   "h": 1310,
+   "w": 1600,
+   "h": 1233,
    "y": 22
   },
   "34thomas": {
@@ -277,17 +277,6 @@
    "w": 1200,
    "h": 855,
    "y": 50
-  },
-  "i-august": {
-   "t": "Aziz Augustinus",
-   "te": "Saint Augustine",
-   "a": "Botticelli",
-   "loc": "Ognissanti, Floransa",
-   "loce": "Ognissanti, Florence",
-   "src": "https://www.wga.hu/html/b/botticel/21/5augustu.html",
-   "w": 725,
-   "h": 1165,
-   "y": 35
   },
   "i-doctors": {
    "t": "İsa Din Bilginleri Arasında",
@@ -531,17 +520,6 @@
    "h": 483,
    "y": 35
   },
-  "i-mercy": {
-   "t": "Merhamet Meryemi",
-   "te": "The Virgin of Mercy",
-   "a": "Enguerrand Quarton",
-   "loc": "Musée Condé, Chantilly",
-   "loce": "Musée Condé, Chantilly",
-   "src": "https://www.wga.hu/html/c/charonto/v_mercy.html",
-   "w": 680,
-   "h": 230,
-   "y": 35
-  },
   "i-michael": {
    "t": "Başmelek Mikail",
    "te": "Saint Michael the Archangel",
@@ -661,17 +639,6 @@
    "src": "https://www.wga.hu/html/d/durer/1/05/3rose.html",
    "w": 680,
    "h": 571,
-   "y": 35
-  },
-  "i-shepherd": {
-   "t": "İyi Çoban",
-   "te": "The Good Shepherd",
-   "a": "Erken Hristiyan ressam",
-   "loc": "Priscilla Katakombu, Roma",
-   "loce": "Catacomb of Priscilla, Rome",
-   "src": "https://www.wga.hu/html/zearly/1/2mural/3priscil/2velati7.html",
-   "w": 487,
-   "h": 680,
    "y": 35
   },
   "i-sultan": {

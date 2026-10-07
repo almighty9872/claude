@@ -349,7 +349,7 @@
   }
 
   /* ---------------------------------------------------------------
-     1. Theme (navy/gold dark, ivory/gold light) follows the sun: light from sunrise to sunset
+     1. Theme (charcoal/gold dark, ivory/gold light) follows the sun: light from sunrise to sunset
         where the reader is, dark after. Where that is comes from the device's time zone alone
         (a table of zones below, or the zone's offset), worked out here and never sent anywhere.
         Today's sunrise and sunset are kept (kd-sun) so <head> can pick the theme before the
@@ -561,20 +561,6 @@
     var sunday = add(today, -today.getDay());
     return res(L.ordinary, 34 - Math.round(days(king, sunday) / 7), 'green');
   }
-  function fillTodaySeason() {
-    var val = $('[data-ns-season]'), dot = $('[data-ns-season-dot]');
-    if (!val) return;
-    var now = new Date(), lit = liturgicalDay(now, 'tr'), litEn = liturgicalDay(now, 'en');
-    var label = LIT_TEXT.tr.colour + ': ' + LIT_TEXT.tr.colours[lit.colour], labelEn = LIT_TEXT.en.colour + ': ' + LIT_TEXT.en.colours[lit.colour];
-    val.innerHTML = LT(lit.name, litEn.name);
-    val.classList.remove('hint');
-    if (dot) {
-      dot.className = 'lit-dot lit-' + lit.colour;
-      dot.setAttribute('role', 'img');
-      setAttr2(dot, 'aria-label', label, labelEn);
-      setAttr2(dot, 'title', label, labelEn);
-    }
-  }
   /* today's date in both languages, as a pair */
   function todayDateHtml() { return LT(todayDateText('tr'), todayDateText('en')); }
   function todayDateText(lang) {
@@ -587,31 +573,6 @@
     } catch (e) {
       return d.toDateString();
     }
-  }
-  function fillTodayMystery() {
-    var val = $('[data-ns-mystery]');
-    if (!val) return;
-    loadDataScript('data/tespih.js', 'COMPENDIUM_ROSARY').then(function () {
-      var day = new Date().getDay();
-      var set = window.COMPENDIUM_ROSARY.sets.filter(function (s) { return s.days.indexOf(day) !== -1; })[0];
-      val.innerHTML = set ? LT(set.tr, set.en) : LT('Bulunamadı', 'Unavailable');
-      val.classList.remove('hint');
-      var link = val.closest('a');
-      if (link && set) link.setAttribute('href', ROOT + 'tesbih-duasi.html#gizem-' + set.id);
-    })['catch'](function () { val.innerHTML = LT('Bulunamadı', 'Unavailable'); val.classList.remove('hint'); });
-  }
-  function fillTodaySaint() {
-    var val = $('[data-ns-saint]');
-    if (!val) return;
-    getTodaySaint().then(function (s) {
-      val.innerHTML = s.html;
-      val.classList.remove('hint');
-      var link = val.closest('a');
-      if (link) link.setAttribute('href', s.href);
-    })['catch'](function () {
-      val.innerHTML = LT('Bulunamadı', 'Unavailable');
-      val.classList.remove('hint');
-    });
   }
   function tickNavTime() {
     var timeEl = $('[data-ns-time]');
@@ -630,9 +591,6 @@
     var dateEl = $('[data-ns-date]');
     if (dateEl) dateEl.innerHTML = todayDateHtml();
     tickNavTime();
-    fillTodaySeason();
-    fillTodayMystery();
-    fillTodaySaint();
   }
 
   /* ---------------------------------------------------------------
@@ -973,14 +931,6 @@
       });
     });
     if (panel) panel.addEventListener('click', function (e) {
-      /* the arrow beside Katekizm folds its parts open or closed */
-      var more = e.target.closest('.ns-more');
-      if (more) {
-        var fold = more.closest('.ns-fold'), open = !fold.classList.contains('is-open');
-        fold.classList.toggle('is-open', open);
-        more.setAttribute('aria-expanded', open ? 'true' : 'false');
-        return;
-      }
       if (e.target.closest('a')) closeSheet(false);
     });
     /* a click beside the drawer, on the dimmed page, closes it */
@@ -1054,8 +1004,8 @@
     });
   }
 
-  /* A Bible, Qur'an or hadith reference opens its passage in a popup, read from data/refs-*.js
-     (loaded on the first click). The link keeps its href: a modifier-click, or a passage the
+  /* A Bible, Qur'an or hadith reference opens its passage in a popup, read from the page itself
+     (or from data/refs-*.js, loaded on the first click, where the page carries none). The link keeps its href: a modifier-click, or a passage the
      data doesn't have, still goes to the external site. */
   function initRefs() {
     var KINDS = {
@@ -1063,6 +1013,9 @@
       qref: { file: 'data/refs-quran.js', name: 'REFS_QURAN', key: function (u) { return u.pathname.slice(1).replace('/', ':'); } },
       hdref: { file: 'data/refs-hadith.js', name: 'REFS_HADITH', key: function (u) { return decodeURIComponent(u.pathname.slice(1)); } }
     };
+    /* the passages this page cites, written into it by the build (build.ps1, Embed-Refs) */
+    var emb = document.getElementById('kd-refs');
+    if (emb) { try { var ed = JSON.parse(emb.textContent); Object.keys(ed).forEach(function (n) { if (!window[n]) window[n] = ed[n]; }); } catch (err) {} }
     var HD_BOOK = { bukhari: ['Buhari', 'Bukhari'], muslim: ['Müslim', 'Muslim'], abudawud: ['Ebu Davud', 'Abu Dawud'], tirmidhi: ['Tirmizi', 'Tirmidhi'], ibnmajah: ['İbn Mace', 'Ibn Majah'], nasai: ['Nesai', 'Nasa’i'] };
     var dlg = null, body, title, foot;
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
@@ -2163,6 +2116,8 @@
       if (!el) return;
       try { map = JSON.parse(card.getAttribute('data-art-map') || '{}'); } catch (e) { map = {}; }
       var art = map[k] || map['*'];
+      /* the saint card's default painting is already in the page (build.ps1) */
+      if (card === saintCard && art === map['*']) return;
       if (art) el.style.backgroundImage = 'url("' + ROOT + 'assets/art/' + art + (card === saintCard && window.innerWidth >= 980 ? '' : '-800') + '.jpg")';
     };
     getTodaySaint().then(function (sn) {
@@ -2453,7 +2408,7 @@
     function paint() {
       $$('article.qa[data-n]').forEach(function (a) { a.classList.toggle('is-read', KKREAD.has(+a.getAttribute('data-n'))); });
       $$('.toc a, .acc-list a').forEach(function (a) {
-        var r = rdRange(avText($('.rng, .toc-rng, .count', a)) || (a.getAttribute('data-rng') || ''));
+        var r = rdRange(avText($('.rng, .count', a)) || (a.getAttribute('data-rng') || ''));
         var old = $('.rd', a); if (old) old.remove();
         if (!r) return;
         a.insertAdjacentHTML('beforeend', rdRing(KKREAD.count(r[0], r[1]), r[1] - r[0] + 1));
@@ -3851,8 +3806,6 @@
       position();
       nextFrame(function () { panel.classList.add('open'); });
       toggleBtn.setAttribute('aria-expanded', 'true');
-      var first = $('.a11y-lang-switch', panel);
-      if (first) first.focus({ preventScroll: true });
     }
     function hide() {
       open = false;

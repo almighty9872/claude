@@ -1,14 +1,16 @@
 ﻿<#
 .SYNOPSIS
-  Static page generator for katolikdunyasi.com, a Turkish and English Catholic
-  resource site: the Compendium of the Catechism of the Catholic Church,
-  the OCIA/RCIA process, the Mass explained, prayers and the Rosary, a
-  calendar of the saints, the Bible in Turkish, miracles, and an FAQ.
+  Static page generator for katolikdunyasi.com, a Turkish Catholic resource
+  site: the Compendium of the Catechism of the Catholic Church (with the
+  Vatican's English), the OCIA/RCIA process, the Mass explained, prayers and
+  the Rosary, a calendar of the saints, the Bible in Turkish, miracles, the
+  Church's history, answers to common objections, and an FAQ.
 
 .DESCRIPTION
   Reads the single source of truth, data/*.js and content/*.md, and writes
-  crawlable static HTML pages (all content pre-rendered for SEO), each in Turkish
-  at the site root and in English under en/, with JSON-LD structured data
+  crawlable static HTML pages (all content pre-rendered for SEO) in Turkish at
+  the site root, the Katekizm pages also in English under en/ (every page with
+  -WithEnglish), with JSON-LD structured data
   (WebSite, Book, Article, Church, BreadcrumbList), sitemap.xml, robots.txt and
   llms.txt into the site root.
 
@@ -505,7 +507,7 @@ $IcoChevDown = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="
 function Page-Ico([string]$svg) { return "<span class=`"page-ico`">$svg</span>" }
 
 # The paintings (data/tablolar.json): which page's header shows which painting, and each
-# painting's title, painter, home and source. The images are in assets/art (1600 and 800 wide).
+# painting's title, painter, home and source. The images are in assets/art (up to 1600 wide, with 1200 and 800 wide copies).
 $Tablolar = Get-Content -Raw -Encoding UTF8 (Join-Path $Root 'data/tablolar.json') | ConvertFrom-Json
 # The home page's strip of Church history and the credits of its pictures
 $Tarih = Get-Content -Raw -Encoding UTF8 (Join-Path $Root 'data/kilise-tarihi.json') | ConvertFrom-Json
@@ -514,7 +516,14 @@ $TarihImg = if (Test-Path $tgFile) { Get-Content -Raw -Encoding UTF8 $tgFile | C
 function Art-Img([string]$key, [string]$cls, [string]$sizes = '100vw', [string]$prio = 'auto') {
   $a = $Tablolar.art.$key
   $fp = if ($prio -eq 'high') { ' fetchpriority="high"' } else { ' loading="lazy"' }
-  return "<img class=`"$cls`" src=`"assets/art/$key.jpg`" srcset=`"/assets/art/$key-800.jpg 800w, /assets/art/$key.jpg 1600w`" sizes=`"$sizes`" width=`"$($a.w)`" height=`"$($a.h)`" alt=`"`" decoding=`"async`" style=`"object-position:50% $($a.y)%`"$fp>"
+  # one file for a painting 800 wide or less; else an 800 copy, a 1200 copy when the original
+  # is wider than that (phones take it), and the original
+  $w = [int]$a.w
+  $set = if ($w -le 800) { '' } else {
+    $mid = if ($w -gt 1200) { ", /assets/art/$key-1200.jpg 1200w" } else { '' }
+    " srcset=`"/assets/art/$key-800.jpg 800w$mid, /assets/art/$key.jpg $($w)w`" sizes=`"$sizes`""
+  }
+  return "<img class=`"$cls`" src=`"assets/art/$key.jpg`"$set width=`"$($a.w)`" height=`"$($a.h)`" alt=`"`" decoding=`"async`" style=`"object-position:50% $($a.y)%`"$fp>"
 }
 # a picture inside a story (data file "art": a key of data/tablolar.json), with its credit under it
 function Mira-Fig([string]$key) {
@@ -1012,7 +1021,6 @@ $SheetNav = @(
     @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Hangi veri, nasıl korunur'; te = 'Privacy Policy'; se = 'What data, and how it is kept'; ico = $IcoShield },
     @{ href = 'kaynaklar-ve-telif.html'; t = 'Kaynaklar ve Telif'; s = 'Metinler, tablolar, lisanslar'; te = 'Sources and Copyright'; se = 'Texts, paintings, licences'; ico = $IcoBook }) }
 )
-$IcoFold = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'
 function Ns-Item($it, [string]$current, [string]$cls = 'ns-item') {
   $ico = if ($it.ico) { $it.ico } elseif ($NavIcons[$it.href]) { $NavIcons[$it.href] } else { $SmallCross }
   $sHtml = if ($it.s) { "<span class=`"ns-s`">$(T $it.s $it.se)</span>" } else { '' }
@@ -1022,14 +1030,7 @@ function Nav-Sheet([string]$lang, [string]$current) {
   $i = 0
   return (($SheetNav | ForEach-Object {
     $links = ($_.items | ForEach-Object {
-      $it = $_
-      if (-not $it.fold) { return (Ns-Item $it $current) }
-      $open = ($current -eq $it.href) -or (@($it.fold | Where-Object { $_.href -eq $current }).Count -gt 0)
-      $subs = ($it.fold | ForEach-Object { Ns-Item $_ $current 'ns-item ns-sub' }) -join ''
-      $st = if ($open) { ' is-open' } else { '' }; $ex = if ($open) { 'true' } else { 'false' }
-      "<div class=`"ns-fold$st`"><div class=`"ns-fold-row`">$(Ns-Item $it $current)" +
-        "<button type=`"button`" class=`"ns-more`" aria-expanded=`"$ex`" aria-controls=`"ns-fold-$i`" $(TA 'aria-label' "$($it.t) bölümleri" "$($it.te) sections")>$IcoFold</button></div>" +
-        "<div class=`"ns-fold-body`" id=`"ns-fold-$i`"><div class=`"ns-fold-in`">$subs</div></div></div>"
+      Ns-Item $_ $current
     }) -join ''
     $delay = ([double]$i * 0.04).ToString([Globalization.CultureInfo]::InvariantCulture); $i++
     "      <div class=`"ns-group`" style=`"animation-delay:$($delay)s`"><p class=`"ns-label`">$(T $_.label $_.labelEn)</p>$links</div>"
@@ -1082,19 +1083,6 @@ function Av-Nav([string]$trFile, [bool]$en) {
     "<span class=`"av-title`" aria-hidden=`"true`"></span><span class=`"av-tools`">$find<button type=`"button`" class=`"theme-toggle av-theme`" role=`"switch`" aria-checked=`"false`" $thL>$IcoSun$IcoMoon</button>" +
     "<button type=`"button`" class=`"av-gear`" $setL aria-haspopup=`"dialog`" aria-controls=`"settings-panel`">$IcoGear</button>" +
     "<a class=`"av-close`" href=`"index.html`" $(TA 'aria-label' 'Kapat: ana ekrana dön' 'Close: back to the home screen')>$IcoClose</a></span>$findBar</nav>"
-}
-# The home screen's four icons, small, at the foot of every page on a phone: each opens its app
-# on the home screen, so another part of the site is always one tap away.
-function Av-Dock([string]$trFile) {
-  $app = $AppOf[$trFile]
-  $items = @(@('ogren', (T 'Öğren' 'Learn'), $SmallCross), @('tartis', (T 'Tartış' 'Debate'), $IcoDebate), @('dua', (T 'Dua Et' 'Pray'), $TbChurch), @('kesfet', (T 'Keşfet' 'Explore'), $IcoCompass))
-  $links = ($items | ForEach-Object {
-    $cur = if ($_[0] -eq $app) { ' aria-current="true"' } else { '' }
-    "<a class=`"av-dock-a`" href=`"index.html#app-$($_[0])`"$cur><span class=`"hm-icon app-$($_[0])`">$($_[2])</span><span class=`"av-dock-t`">$($_[1])</span></a>"
-  }) -join ''
-  # On the Katekizm's pages the icons sit on a solid bar across the screen, clear of the text
-  $solid = if ($KatekizmPages -contains $trFile) { ' av-dock-solid' } else { '' }
-  return "<nav class=`"av-dock$solid`" $(TA 'aria-label' 'Bölümler' 'Sections')>$links</nav>"
 }
 $MassIcons = @{
   gather   = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V11a7 7 0 0 1 14 0v10"/><path d="M4 21h16"/><circle cx="12" cy="9" r="1" fill="currentColor" stroke="none"/></svg>'
@@ -1428,6 +1416,36 @@ function Link-Xrefs([string]$html, [string]$file) {
 $ShortTitles = @{
   'kilise/verapokhumin-buyukada.html' = @('Verapokhumin Ermeni Katolik Kilisesi, Büyükada', 'Verapokhumin Armenian Catholic Church, Büyükada')
 }
+# The passages a page cites (the a.bref, a.qref and a.hdref links), taken from data/refs-*.js
+# and written into the page, so its popups open without loading the whole collection. The keys
+# are worked out the way script.js (initRefs) works them out from each link.
+$RefData = @{}
+foreach ($rf in @(@('bref', 'refs-bible.js', 'REFS_BIBLE'), @('qref', 'refs-quran.js', 'REFS_QURAN'), @('hdref', 'refs-hadith.js', 'REFS_HADITH'))) {
+  $raw = [IO.File]::ReadAllText((Join-Path $Root "data/$($rf[1])"))
+  $json = $raw.Substring($raw.IndexOf('{')).TrimEnd().TrimEnd(';')
+  $RefData[$rf[0]] = @{ name = $rf[2]; data = ($json | ConvertFrom-Json -AsHashtable) }
+}
+function Embed-Refs([string]$h) {
+  $found = @{}
+  foreach ($m in [regex]::Matches($h, '<a class="(bref|qref|hdref)"[^>]*?\bhref="https?://[^/"]+/([^"]*)"')) {
+    $kind = $m.Groups[1].Value; $rest = [Net.WebUtility]::HtmlDecode($m.Groups[2].Value)
+    $key = switch ($kind) {
+      'bref' { if ($rest -match '[?&]search=([^&]*)') { ([Uri]::UnescapeDataString($Matches[1].Replace('+', ' ')) -replace '\s*[-–]\s*', '-') } }
+      'qref' { $pth = ($rest -split '[?#]')[0]; $i = $pth.IndexOf('/'); if ($i -ge 0) { $pth.Substring(0, $i) + ':' + $pth.Substring($i + 1) } else { $pth } }
+      'hdref' { [Uri]::UnescapeDataString(($rest -split '[?#]')[0]) }
+    }
+    # (a plain assignment: an if-expression would unroll a one-verse list)
+    $item = $null
+    if ($key) { $item = $RefData[$kind].data[$key] }
+    if ($null -eq $item) { continue }
+    $n = $RefData[$kind].name
+    if (-not $found[$n]) { $found[$n] = [ordered]@{} }
+    $found[$n][$key] = $item
+  }
+  if ($found.Count -eq 0) { return $h }
+  $js = (ConvertTo-Json -InputObject $found -Compress -Depth 8).Replace('</', '<\/')
+  return $h.Replace('</body>', "<script type=`"application/json`" id=`"kd-refs`">$js</script>`n</body>")
+}
 function Write-Page {
   param([string]$File, [string]$Title, [string]$Description, [string]$Path, [string]$Body,
         [string[]]$JsonLd = @(), [string]$OgType = 'website',
@@ -1486,13 +1504,32 @@ function Write-Page {
     "<a class=`"lp-btn`" data-set-lang=`"tr`" lang=`"tr`" hreflang=`"tr`" href=`"/$Path`" title=`"Türkçe`">TR</a>" +
     "<a class=`"lp-btn`" data-set-lang=`"en`" lang=`"en`" hreflang=`"en`" href=`"/$(Page-Path $enFile)`" title=`"English`">EN</a></nav>"
   } elseif ($trOnly) { '' } else { $LangPillHtml }
+  # The picture a shared link shows: the page's painting (its 1200 copy when it has one, small
+  # enough for every app's preview), else the site's own
+  $ogKey = $Tablolar.pages.$File
+  if ($ogKey) {
+    $oa = $Tablolar.art.$ogKey; $ow = [int]$oa.w; $oh = [int]$oa.h
+    $ogImg = "$SiteUrl/assets/art/$ogKey.jpg"
+    if ($ow -gt 1200) { $ogImg = "$SiteUrl/assets/art/$ogKey-1200.jpg"; $oh = [int][math]::Round($oh * 1200 / $ow); $ow = 1200 }
+    $ogAlt = "$($oa.a) · $($oa.t)"
+  } else { $ogImg = "$SiteUrl/assets/og-image.jpg"; $ow = 1200; $oh = 630; $ogAlt = $SiteName }
+  # The home page's largest picture on a phone is the saint card's painting, which script.js
+  # would only set once the day's saint is known; the default one is in the page from the start
+  # (.hm-card.hm-saint: more specific than the stylesheet's background shorthand, which loads later)
+  $homeArt = ''
+  if ($isHome) {
+    $da = ($SaintArtJson | ConvertFrom-Json).'*'
+    $homeArt = "<link rel=`"preload`" as=`"image`" href=`"assets/art/$da-800.jpg`" media=`"(max-width: 979.98px)`" fetchpriority=`"high`">`n" +
+      "<link rel=`"preload`" as=`"image`" href=`"assets/art/$da.jpg`" media=`"(min-width: 980px)`">`n" +
+      "<style>.hm-card.hm-saint .hm-art{background-image:url(`"assets/art/$da-800.jpg`")}@media (min-width:980px){.hm-card.hm-saint .hm-art{background-image:url(`"assets/art/$da.jpg`")}}</style>`n"
+  }
   # Articles carry an image and a publisher, as search engines ask of them
   $JsonLd = @($JsonLd | ForEach-Object {
     if ($_ -match '"@type":"Article"' -and $_ -notmatch '"image"') {
       $pub = if ($_ -notmatch '"publisher"') { '"publisher":{"@type":"Organization","name":' + (JStr $SiteName) + ',"url":"' + $SiteUrl + '/","logo":{"@type":"ImageObject","url":"' + $SiteUrl + '/apple-touch-icon.png"}},' } else { '' }
       $mod = Page-LastMod $File
       $dm = if ($mod -and $_ -notmatch '"dateModified"') { '"dateModified":"' + $mod + '",' } else { '' }
-      $_.Replace('"@type":"Article",', '"@type":"Article","image":"' + $SiteUrl + '/assets/og-image.jpg",' + $pub + $dm)
+      $_.Replace('"@type":"Article",', '"@type":"Article","image":"' + $ogImg + '",' + $pub + $dm)
     } else { $_ }
   })
   $ldTr = ($JsonLd | ForEach-Object { "<script type=`"application/ld+json`">$_</script>" }) -join "`n"
@@ -1548,14 +1585,15 @@ $locAlt
 <meta property="og:title" content="$(Attr $t)">
 <meta property="og:description" content="$(Attr $d)">
 <meta property="og:url" content="$u">
-<meta property="og:image" content="$SiteUrl/assets/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="$(Attr $SiteName)">
+<meta property="og:image" content="$ogImg">
+<meta property="og:image:width" content="$ow">
+<meta property="og:image:height" content="$oh">
+<meta property="og:image:alt" content="$(Attr $ogAlt)">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="$(Attr $t)">
 <meta name="twitter:description" content="$(Attr $d)">
-<meta name="twitter:image" content="$SiteUrl/assets/og-image.jpg">
+<meta name="twitter:image" content="$ogImg">
+<meta name="twitter:image:alt" content="$(Attr $ogAlt)">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1564,7 +1602,7 @@ $locAlt
 <link rel="preload" href="assets/fonts/kd-brand-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/lexend-ext-a.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
+$homeArt<link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
 <script>$HeadJs$($avJs)$HeadJs2</script>
 $ld
 <script src="assets/script.min.js?v=$JsVer" defer></script>
@@ -1589,6 +1627,7 @@ $a11yHtml
   if ($RootRelative) { $html = [regex]::Replace($html, $rootRx, '$1="/') }
   $html = $html.Replace('<!--KD-PILL-->', $pill)
   if ($trOnly) { $html = Strip-En $html }
+  $html = Embed-Refs $html
   [IO.File]::WriteAllText((Join-Path $Root $File), $html, $Utf8)
   if ($enFile) {
     $h = & $render 'en'
@@ -3249,38 +3288,12 @@ function Home-Page([string]$lang) {
 "@
   $placeholder = "Katekizm$($Apos)de ara: Türkçe, İngilizce ya da soru numarası"
   $searchDesk = "<div class=`"hm-search`">$(Search-Form 'hm-search-form' 'q-home' $placeholder 'tr' 'Search the Catechism: English, Turkish or a question number')</div>"
-  # Desktop lists
-  $cols = ($HomeApps | ForEach-Object {
-    $app = $_
-    $rows = ($app.pages | ForEach-Object { "<a class=`"hm-row`" href=`"$(F $_.f)`"><span class=`"hm-ri`">$($_.ico)</span><span class=`"hm-rt`"><span class=`"hm-t`">$(L $_.t $_.te)</span><span class=`"hm-s`">$(L $_.s $_.se)</span></span>$IcoChevR</a>" }) -join ''
-    "<section class=`"hm-col`"><h2>$(L $app.t $app.te)</h2><div class=`"hm-list`">$rows</div></section>"
-  }) -join ''
-  # Desktop, under the search: "Choose your own path" (five starting points, each with the pages
-  # that answer it), a featured article, a quotation and the great saints beside it, and a short
-  # timeline of the Church's history whose stops open the pages that tell them.
-  $jSteps = @(
-    @{ t = 'Merak ediyorum'; te = "I'm curious"; d = "Tanrı var mı, İsa kim, neden Katolik Kilise?"; de = 'Is there a God, who is Jesus, why the Catholic Church?'
-       l = @(@('neden-katoligiz.html', 'Neden Katoliğiz?', "Why We're Catholic"), @('ateizme-cevap.html', 'Ateizme Cevap', 'Answering Atheism'), @('mucizeler.html', 'Mucizeler', 'Miracles')) },
-    @{ t = 'Sorularım var'; te = 'I have questions'; d = "En çok sorulan sorular ve Kilise$($Apos)nin öğretisi."; de = 'The most common questions, and what the Church teaches.'
-       l = @(@('sss.html', 'Sorular', 'FAQ'), @('katekizm.html', 'Katekizm', 'Catechism'), @('kutsal-kitap.html', 'Kutsal Kitap', 'The Bible'), @('islama-cevap.html', "İslam$($Apos)a Cevap", 'Answering Islam'), @('yahudilere-cagri.html', 'Yahudilere Çağrı', 'A Call to Our Jewish Friends')) },
-    @{ t = 'Katolik olmak istiyorum'; te = 'I want to become Catholic'; d = 'Vaftizli ya da vaftizsiz, süreç adım adım.'; de = 'Baptized or not, the process step by step.'
-       l = @(@('katolik-sureci.html', 'Katolik Olma Süreci', 'Becoming Catholic'), @('kiliseler.html', 'Kilise Bul', 'Find a Church')) },
-    @{ t = 'Dua etmek istiyorum'; te = 'I want to pray'; d = 'Tesbih, Ayin ve günlük dualar.'; de = 'The Rosary, the Mass and daily prayers.'
-       l = @(@('tesbih-duasi.html', 'Tesbih Duası', 'The Rosary'), @('kutsal-ayin.html', 'Kutsal Ayin', 'The Mass'), @('ekler.html', 'Sık Kullanılan Dualar', 'Common Prayers')) },
-    @{ t = 'Yeniden başlamak istiyorum'; te = 'I want to start again'; d = 'Yıllardır gitmediyseniz bile kapı açık.'; de = "Even if it's been years, the door is open."
-       l = @(@('gunah-cikarma.html', 'Günah Çıkarma', 'Confession'), @('meseller.html#musrif-ogul', 'Müsrif Oğul', 'The Prodigal Son')) }
-  )
-  $n = 0
-  $stepsHtml = ($jSteps | ForEach-Object {
-    $n++
-    $links = ($_.l | ForEach-Object { "<a href=`"$($_[0])`">$(L $_[1] $_[2])$IcoChevR</a>" }) -join ''
-    "<li class=`"hj-step`"><span class=`"hj-dot`" aria-hidden=`"true`">$n</span><div><h3 class=`"hj-st`">$(L $_.t $_.te)</h3><p>$(L $_.d $_.de)</p><div class=`"hj-links`">$links</div></div></li>"
-  }) -join ''
   # The Church's history as a strip of small round pictures, oldest first (data/kilise-tarihi.json):
   # each with its year, title and a short line; hovering or focusing one shows the longer text,
   # clicking it opens the event on kilise-tarihi.html. Under the strip, every year in a row that
   # glides along with it, the year in view lit and the rest dimmed, then a slider (script.js,
-  # initHistory). Events that share a year share one button (data-g on each event)
+  # initHistory). Events that share a year share one button (data-g on each event). The round
+  # pictures are small square copies (assets/art/tl/s); kilise-tarihi.html shows the full ones.
   $tlItems = New-Object System.Collections.Generic.List[string]; $n = 0
   $tlYears = New-Object System.Collections.Generic.List[string]; $g = -1; $lastLbl = ''
   foreach ($it in $Tarih.items) {
@@ -3288,7 +3301,7 @@ function Home-Page([string]$lang) {
     $lbl = if ($it.y -match 'yüzyıl') { ($nums -join '-') + '. yy' } elseif ($it.y -match '^\d+\S*l[ae]r') { $Matches[0] } else { $nums[0] }
     if ($lbl -ne $lastLbl) { $g++; $lastLbl = $lbl; $tlYears.Add("<li><button type=`"button`" class=`"hx-yr`" data-hx-to=`"$n`" aria-label=`"$($it.y): $($it.t)`">$lbl</button></li>") }
     $n++
-    $tlItems.Add("<li class=`"hx-it`" data-y=`"$($it.y)`" data-g=`"$g`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
+    $tlItems.Add("<li class=`"hx-it`" data-y=`"$($it.y)`" data-g=`"$g`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/s/$($it.img).jpg`" alt=`"`" width=`"240`" height=`"240`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
       "<span class=`"hx-y`">$($it.y)</span><span class=`"hx-t`">$($it.t)</span><span class=`"hx-s`">$($it.s)</span></a><span class=`"hx-d`" hidden>$($it.d)</span></li>")
   }
   $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''

@@ -1,12 +1,12 @@
 # katolikdunyasi.com
 
-A static Catholic resource site in Turkish and English: every page is written in Turkish, and a TR | EN switch that stays on screen turns the whole page, its text and its buttons, into English in place (Latin originals are shown on request). It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, frequently asked questions, and a directory of active Catholic churches in Turkey.
+A static Catholic resource site in Turkish. Only the Katekizm pages keep a TR | EN switch, which turns the page into the Vatican's English in place (Latin originals are shown on request); see below. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, the Church's history, the history of the Rosary, answers to Islam and to atheism, a call to the Jewish people, frequently asked questions, and a directory of active Catholic churches in Turkey.
 
 The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests (the one exception is Cloudflare Turnstile, the spam check, loaded only on the contact page); the fonts (Lexend for all text, EB Garamond capitals for the logo) are self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
-Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows the day's liturgical season with a disc in the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, alongside the day's Rosary mystery and saint.
+Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows today's date and time. The home page's "Bugün" card shows the day's liturgical season and the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, beside the day's saint and Rosary mysteries.
 
-## Two languages: the TR | EN switch
+## Languages: Turkish, with English on the Katekizm pages
 
 **The live site is Turkish.** Since October 2026 only the Katekizm pages (`katekizm`, `giris`, `motu-proprio`, the four parts and `ekler`) keep their English and their `en/` twins; every other page is built in Turkish alone (`Strip-En` in `tools/build.ps1` takes the English out of the finished page), with no TR | EN switch, no `hreflang` and no `en/` twin. Nothing English was deleted: the English text stays in `data/` and `content/`, and `pwsh tools/build.ps1 -WithEnglish` builds the whole bilingual site described below (for another site).
 
@@ -48,8 +48,8 @@ tesbih-duasi.html       The Rosary: an interactive 59-bead SVG tracker (tap a be
                         feedback on phones), then the prayers and the four sets of mysteries
 azizler.html            Calendar of the saints (current month shown, other months a click away;
                         the feasts that move with Easter are dated for the year and placed on
-                        their days), plus the "20 best-known saints" in a compact dropdown list,
-                        each linking to its own page below
+                        their days), plus the "20 best-known saints" as round portraits (a gold
+                        ring until read), each linking to its own page below
 <saint-id>.html         One page per saint in the "20 best-known" list (e.g. meryem-ana.html),
                         a long original Turkish biography
 kutsal-kitap.html       Choosing a Bible: three quick answers up top, the guide folded below
@@ -62,12 +62,15 @@ kiliseler.html          Parish locator: a map of Turkey; a city's dot opens the 
 kilise/<id>.html        One page per church: Mass and visiting times, address, history, sources
 kilise-tarihi.html      Kilise'nin Tarihi: the Church's history, era by era, every event with its picture
 islama-cevap.html       Tartış (Debate): Answering Islam, a short summary then the full case in four parts
+ateizme-cevap.html      Tartış: Answering atheism, the same layout
+yahudilere-cagri.html   Tartış: A call to the Jewish people, in the humble tone the Vatican's documents ask for
+tesbih-tarihi.html      The history of the Rosary
 iletisim.html           Contact page: a form that posts to the Cloudflare Worker (no address is published)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
-en/                     The English twin of every page (en/index.html, en/mass.html, en/church/<id>.html…)
+en/                     The English twins of the Katekizm pages (every page with -WithEnglish)
 sitemap.xml, robots.txt, llms.txt, <IndexNow key>.txt
 favicon.ico, apple-touch-icon.png, site.webmanifest, assets/icon-192.png, assets/icon-512.png   Site icons
-assets/styles.css       All styling, hand-edited. Theme tokens at the top: dark = navy/gold, light = ivory/gold
+assets/styles.css       All styling, hand-edited. Theme tokens at the top: dark = charcoal/gold, light = ivory/gold
 assets/script.js        Theme, TR | EN switch, search, reading bar, contents drawer, phone app screens, widgets
 assets/styles.min.css   ← generated by build.ps1 from styles.css; the file pages actually load
 assets/script.min.js    ← generated by build.ps1 from script.js; the file pages actually load
@@ -78,8 +81,12 @@ assets/og-image.jpg     1200×630 social preview image
 data/compendium-1..4.js ← Compendium content (Turkish + English pairs), one file per part
 data/kilise-tarihi.json ← Church history: eras (years, introduction) and events (year, title, short line, full text, picture, link),
                           shown on the home page's strip and on kilise-tarihi.html
-data/tarih-gorseller.json ← The credits of that strip's pictures (assets/art/tl/<key>.jpg): title, author, licence, source
-data/tablolar.json      ← The paintings behind the page titles and on the home cards (assets/art/<key>.jpg)
+data/tarih-gorseller.json ← The credits of that strip's pictures (assets/art/tl/<key>.jpg, with small square
+                          copies for the home page's round pictures in assets/art/tl/s/): title, author, licence, source
+data/tablolar.json      ← The paintings behind the page titles, in the sections and on the home cards
+                          (assets/art/<key>.jpg, up to 1600 wide, with <key>-1200.jpg and <key>-800.jpg
+                          copies for smaller screens; a painting 800 wide or less has only the one file).
+                          A page's painting is also its picture when the link is shared
 data/aziz-portreleri.json ← Credits of the twenty saints' round portraits on Azizler (assets/art/saints/<id>.jpg)
 data/extras.js          ← Motu Proprio, Introduction, Creeds, Decalogue, Our Father, Appendix
 data/katolik-sureci.js  ← OCIA/RCIA process content
@@ -99,6 +106,10 @@ data/azizler-adlar.js   ← Generated by the build: just each day's saint name, 
 data/kiliseler.js       ← Parish locator: churches in Turkey by city and rite, with approximate (district) map positions
 data/kilise-harita-sekli.js ← The Marmara coast in full detail for the parish map (generated; don't edit)
 data/islama-cevap.js    ← Answering Islam: the summary, the four parts and the sources (Turkish + English)
+data/ateizme-cevap.js   ← Answering atheism
+data/yahudilere-cagri.js ← A call to the Jewish people
+data/refs-bible.js, refs-quran.js, refs-hadith.js ← The passages the reference popups show; the build writes
+                          the ones each page cites into that page
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← Footer text: the one-line "about" sentence and the "Kaynaklar ve Telif" (sources and copyright) dialog (Markdown)
 content/*-en.md         ← The English of each Markdown page (hakkinda, kutsal-kitap, erisilebilirlik, gizlilik)
@@ -111,7 +122,7 @@ tools/kilise-harita-sekli.mjs   Regenerates the parish map's detailed Marmara co
 CNAME                   Your domain (one line). Also used for canonical/sitemap URLs
 ```
 
-Search works on every page: it loads the four data files the first time someone uses it, then searches the Turkish and English text, or jumps straight to a question number. `index.html?q=...` opens the home page with a search already filled in.
+Search works on every page: it loads the four data files the first time someone uses it, then searches the Katekizm's Turkish and English text, or jumps straight to a question number. `index.html?q=...` opens the home page with a search already filled in.
 
 ## Illustrated sections
 
@@ -193,9 +204,10 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 
 **5. HTTPS.** Once Settings → Pages shows the DNS check passed and the certificate is ready (minutes to a few hours), tick **Enforce HTTPS**. After that you may switch the Cloudflare records to **Proxied** (orange cloud) if you want Cloudflare's CDN. If you do, set Cloudflare **SSL/TLS mode to "Full (strict)"**. Never use "Flexible", which causes a redirect loop.
 
-**6. Cloudflare caching (current setup).** The records are **Proxied**, with SSL/TLS **Full (strict)**, **Always Use HTTPS** and **HSTS** (6 months, no preload). Two Cache Rules keep the files that rarely change at Cloudflare's edge; pages themselves are not cached, so a deploy shows up at once:
+**6. Cloudflare caching (current setup).** The records are **Proxied**, with SSL/TLS **Full (strict)**, **Always Use HTTPS** and **HSTS** (6 months, no preload). Cache Rules keep the files that rarely change at Cloudflare's edge:
 - `/assets/*` (CSS, JS, fonts, images): Edge TTL and Browser TTL 1 year. Safe because every CSS/JS link carries a content hash (`?v=…`); if you replace a font or an image under the same name, purge that URL (Caching → Configuration → Purge Cache).
 - `/data/*` (the Catechism text and the verse popups the scripts fetch): Edge TTL and Browser TTL 2 hours, so data edits are visible within a couple of hours.
+- The pages (`/`, and paths ending in `.html`): Edge TTL 10 minutes, matching the pages' own `max-age=600`, so a deploy shows up within 10 minutes.
 - Keep **Block AI bots** and Cloudflare's **managed robots.txt** off (the site's own `robots.txt` and `llms.txt` invite crawlers), and leave **Rocket Loader** off. If GitHub's Pages settings ever show a certificate warning, switch the records to DNS only for an hour, then back.
 
 **Updating later:** edit `data/*.js`, `content/hakkinda.md` or the assets, then commit. The workflow rebuilds and republishes. The pages, `sitemap.xml` and the minified CSS/JS are not kept in the repository (see `.gitignore`): the workflow builds them on every push, so you only run `tools/build.ps1` yourself to preview locally.
