@@ -25,3 +25,4 @@ _site/
 
 # The English site (verbumdomini.ca), written by tools/build.ps1 -EnglishSite
 /_site_en/
+__pycache__/
