@@ -1,0 +1,48 @@
+# Builds the English site (Verbum Domini) with tools/build.ps1 -EnglishSite and publishes _site_en/
+# to the Cloudflare Worker "verbumdomini" (config: cloudflare/verbumdomini/wrangler.jsonc).
+# Runs on every push to "main", like the Turkish deploy, and can also be started by hand
+# from the Actions tab ("Run workflow").
+#
+# Repository secrets it needs: CLOUDFLARE_API_TOKEN (the "Edit Cloudflare Workers" token)
+# and CLOUDFLARE_ACCOUNT_ID.
+name: Deploy English site to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: english-site
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history: the sitemap's <lastmod> dates come from git
+
+      - name: Install esbuild (the build minifies the CSS and JS with it)
+        run: npm install -g esbuild@0.25
+
+      - name: Build the English site into _site_en (PowerShell 7 is preinstalled on GitHub runners)
+        shell: pwsh
+        run: ./tools/build.ps1 -EnglishSite
+
+      - name: Check the built HTML (fails the deploy on broken markup)
+        run: npx --yes html-validate@9 --config .htmlvalidate.json "_site_en/*.html"
+
+      - name: Check internal links and anchors
+        run: python3 tools/qa/links.py _site_en | tee links.txt && grep -q 'total bad 0' links.txt
+
+      - name: Publish to Cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 deploy --config cloudflare/verbumdomini/wrangler.jsonc

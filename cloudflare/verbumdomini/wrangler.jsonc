@@ -1,0 +1,18 @@
+// The English site (verbumdomini.ca) as a Cloudflare Worker that serves static files.
+// Deployed by .github/workflows/deploy-english.yml after tools/build.ps1 -EnglishSite writes _site_en/.
+// Preview address: https://verbumdomini.tzjcqs5g44.workers.dev
+{
+  "name": "verbumdomini",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": "../../_site_en",
+    "binding": "ASSETS",
+    // The pages link to /mass.html etc., so serve the files under their own names, no rewriting.
+    // Requests that match no file go to worker.js ("/" and addresses without ".html").
+    "html_handling": "none",
+    "not_found_handling": "404-page"
+  }
+}
