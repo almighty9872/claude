@@ -30,14 +30,11 @@ param(
   # Absolute site root for canonical, og:url and sitemap URLs (no trailing slash).
   # Leave empty to use the domain in the CNAME file (https://<domain>).
   [string]$SiteUrl = '',
-  # The live site is Turkish, with English only on the Katekizm pages. -WithEnglish builds every
-  # page in both languages, with its English twin under en/, as the site was before.
-  [switch]$WithEnglish,
-  # Also writes the English site (verbumdomini.ca) into _site_en/: every English page at the root
-  # of its own domain, in English alone, under the name Verbum Domini (see the end of this file)
-  [switch]$EnglishSite
+  # The live site is Turkish only (the English site, verbumdomini.ca, is built from verbumdomini/).
+  # -WithEnglish builds every page in both languages, with its English twin under en/, as the site
+  # was before.
+  [switch]$WithEnglish
 )
-if ($EnglishSite) { $WithEnglish = $true }
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
@@ -168,16 +165,22 @@ $SiteNameEn = 'Compendium of the Catechism of the Catholic Church'
 # The folder is rebuilt from scratch on every build.
 $EnDir = Join-Path $Root 'en'
 if (Test-Path $EnDir) { Remove-Item -Recurse -Force $EnDir }
-New-Item -ItemType Directory -Path $EnDir | Out-Null
-New-Item -ItemType Directory -Path (Join-Path $EnDir 'church') | Out-Null
+if ($WithEnglish) {
+  New-Item -ItemType Directory -Path $EnDir | Out-Null
+  New-Item -ItemType Directory -Path (Join-Path $EnDir 'church') | Out-Null
+}
 # Maps every page to its English twin, keyed both directions (e.g. 'sss.html' -> 'en/faq.html'
 # and 'en/faq.html' -> 'sss.html'). English pages use English slugs, listed explicitly below;
 # the church pages keep their names under en/church/.
 $EnAltMap = @{}
-# The pages that keep their English on the Turkish-only site: the Katekizm and its parts
-$BilingualPages = @('katekizm.html', 'giris.html', 'motu-proprio.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html', 'ekler.html')
+# Pages whose English twin lives on verbumdomini.ca under the same English name: the Katekizm and its
+# parts. Their hreflang="en" points there (the old katolikdunyasi.com/en/ addresses redirect there too).
+$VdUrl = 'https://verbumdomini.ca'
+$VdTwinPages = @('katekizm.html', 'giris.html', 'motu-proprio.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html', 'ekler.html')
+$VdTwin = @{}
 function Add-EnAlt([string]$trFile, [string]$enFile) {
-  if (-not $WithEnglish -and $BilingualPages -notcontains $trFile) { return }
+  if ($VdTwinPages -contains $trFile) { $VdTwin[$trFile] = "$VdUrl/$enFile" }
+  if (-not $WithEnglish) { return }
   $EnAltMap[$trFile] = "en/$enFile"; $EnAltMap["en/$enFile"] = $trFile
 }
 # The public path of a page: the two homepages are served (and canonical) at / and /en/
@@ -1489,7 +1492,8 @@ function Write-Page {
   if ($DescriptionEn) { $DescriptionEn = Meta-Trim $DescriptionEn 158 }
   $trUrl = "$SiteUrl/$Path"
   $enUrl = if ($enFile) { "$SiteUrl/$(Page-Path $enFile)" } else { '' }
-  $hreflang = if ($enFile) { "<link rel=`"alternate`" hreflang=`"tr`" href=`"$trUrl`">`n<link rel=`"alternate`" hreflang=`"en`" href=`"$enUrl`">`n<link rel=`"alternate`" hreflang=`"x-default`" href=`"$trUrl`">" } else { '' }
+  if (-not $enFile -and $VdTwin.ContainsKey($File)) { $enUrl = $VdTwin[$File] }
+  $hreflang = if ($enUrl) { "<link rel=`"alternate`" hreflang=`"tr`" href=`"$trUrl`">`n<link rel=`"alternate`" hreflang=`"en`" href=`"$enUrl`">`n<link rel=`"alternate`" hreflang=`"x-default`" href=`"$trUrl`">" } else { '' }
   $headerHtml = Header-Html $File
   $footerHtml = $FooterHtml
   # The home screen app a page belongs to (Öğren, Dua Et, Keşfet), for its colour on phones
@@ -3453,12 +3457,14 @@ $sm = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://w
 $llmSkip = @('404.html', 'katesizm.html')
 $llmPages = @($script:PageInfo | Where-Object { $llmSkip -notcontains $_.File -and $_.Robots -notmatch 'noindex' } | Sort-Object -Stable { if ($_.File -eq 'index.html') { 0 } else { 1 } })
 $llmCut = { param($t) ($t -replace ([regex]::Escape(" | $SiteName") + '$'), '') -replace ('^' + [regex]::Escape($SiteName) + ' \| '), '' }
-$llmLangs = if ($WithEnglish) { 'with every page in Turkish and English' } else { 'in Turkish (the Catechism also in English)' }
-$llmTwins = if ($WithEnglish) { 'Every page has a Turkish address and an English twin under /en/.' } else { 'The Catechism pages have English twins under /en/.' }
+$llmLangs = if ($WithEnglish) { 'with every page in Turkish and English' } else { '(Turkish only)' }
+$llmTwins = if ($WithEnglish) { 'Every page has a Turkish address and an English twin under /en/.' } else { "The English edition is a separate site, Verbum Domini: $VdUrl/." }
+$llmEn = if ($WithEnglish) {
+  "## English`n`n" + (($llmPages | Where-Object { $_.En } | ForEach-Object { "- [$(& $llmCut $(if ($_.TitleEn) { $_.TitleEn } else { $_.Title }))]($SiteUrl/$(Page-Path $_.En)): $(if ($_.DescEn) { $_.DescEn } else { $_.Desc })" }) -join "`n") + "`n`n"
+} else { '' }
 $llms = "# $SiteName`n`n> A Turkish Catholic portal $($llmLangs): the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, Catholic churches in Turkey with Mass times, and answers about the faith, Islam and atheism.`n`n" +
-  "$llmTwins Quotations of the Catechism follow the official Turkish translation and the English Compendium (Libreria Editrice Vaticana).`n`n## English`n`n" +
-  (($llmPages | Where-Object { $_.En } | ForEach-Object { "- [$(& $llmCut $(if ($_.TitleEn) { $_.TitleEn } else { $_.Title }))]($SiteUrl/$(Page-Path $_.En)): $(if ($_.DescEn) { $_.DescEn } else { $_.Desc })" }) -join "`n") +
-  "`n`n## Türkçe`n`n" +
+  "$llmTwins Quotations of the Catechism follow the official Turkish translation.`n`n" + $llmEn +
+  "## Türkçe`n`n" +
   (($llmPages | ForEach-Object { "- [$(& $llmCut $_.Title)]($SiteUrl/$($_.Path)): $($_.Desc)" }) -join "`n") + "`n"
 [IO.File]::WriteAllText((Join-Path $Root 'llms.txt'), $llms, $Utf8)
 # IndexNow: the key file that proves the site is ours when the deploy tells Bing, Yandex and
@@ -3474,126 +3480,4 @@ $secExpires = (Get-Date).AddYears(1).ToString('yyyy-MM-ddT00:00:00.000Z')
 $secTxt = "Contact: $SiteUrl/iletisim.html`nExpires: $secExpires`nPreferred-Languages: tr`nCanonical: $SiteUrl/.well-known/security.txt`n"
 [IO.File]::WriteAllText((Join-Path $wellKnownDir 'security.txt'), $secTxt, $Utf8)
 Write-Host "  + sitemap.xml, robots.txt, llms.txt, IndexNow key, .well-known/security.txt"
-# ================================================================== THE ENGLISH SITE (verbumdomini.ca)
-# With -EnglishSite: the English twins under en/ become a site of their own in _site_en/, ready to
-# publish: each page at the root of verbumdomini.ca under its English name (en/faq.html -> faq.html),
-# in English alone (the Turkish of every pair taken out), under the name Verbum Domini, with its own
-# sitemap, robots.txt, llms.txt, manifest and 404 page. Pages for readers in Turkey (Kilise Bul and
-# its church pages, Topraklarımızda Hristiyanlık) are left out, and links to them with them.
-if ($EnglishSite) {
-  $EnSiteUrl = 'https://verbumdomini.ca'
-  $EnTagline = 'Spreading and defending the Gospel'
-  $EnOut = Join-Path $Root '_site_en'
-  if (Test-Path $EnOut) { Remove-Item -Recurse -Force $EnOut }
-  New-Item -ItemType Directory -Path $EnOut, (Join-Path $EnOut 'assets'), (Join-Path $EnOut 'data') | Out-Null
-  $enDropRx = '/(?:find-a-church\.html|anatolia\.html|church/[a-z0-9-]+\.html)'
-  # The Turkish of every pair out, the English left as plain text; an attribute keeps its English
-  function Strip-Tr([string]$h) {
-    $h = [regex]::Replace($h, '<li data-only="tr">[\s\S]*?</li>', '')
-    $h = $h.Replace('<li data-only="en">', '<li>')
-    foreach ($t in 'div', 'span', 'tspan') {
-      $bal = "(?>(?<o><$t\b)|(?<-o></$t>)|(?!</?$t\b)[\s\S])*(?(o)(?!))"
-      $h = [regex]::Replace($h, "<$t class=`"l-tr(?: l-sub-en)?`">$bal</$t>", '')
-      $rx = [regex]"<$t class=`"l-en`" lang=`"en`">(?<c>$bal)</$t>"
-      do { $before = $h; $h = $rx.Replace($h, '${c}') } while ($h -ne $before)
-    }
-    $h = [regex]::Replace($h, '(\s)([a-z-]+)="[^"]*" data-en-\2="([^"]*)"', '$1$2="$3"')
-    return [regex]::Replace($h, ' data-en-[a-z-]+="[^"]*"', '')
-  }
-  $bal = '(?>(?<o><a\b)|(?<-o></a>)|(?!</?a\b)[\s\S])*(?(o)(?!))'
-  $brandTr = '<span class="visually-hidden">Katolik Dünyası</span><span class="bn" lang="tr" aria-hidden="true"><span class="bn-c">K</span>ATOLİK <span class="bn-c">D</span>ÜNYASI</span>'
-  $brandEn = '<span class="visually-hidden">Verbum Domini</span><span class="bn bn-en" aria-hidden="true"><span class="bn-c">V</span>ERBUM <span class="bn-c">D</span>OMINI</span>'
-  $enPages = New-Object System.Collections.Generic.List[object]
-  $enFiles = @(Get-ChildItem (Join-Path $Root 'en') -Filter '*.html') + @(Get-Item (Join-Path $Root '404.html'))
-  foreach ($f in $enFiles) {
-    $name = if ($f.Name -eq '404.html') { '404.html' } else { $f.Name }
-    if ($name -match '^(find-a-church|anatolia)\.html$') { continue }
-    $h = [IO.File]::ReadAllText($f.FullName)
-    if ($name -eq '404.html') {
-      # the one page with no twin: it switches in place, so it is made English here
-      $h = $h.Replace('<title>Sayfa bulunamadı |', '<title>Page not found |').Replace('<meta name="description" content="Sayfa bulunamadı.">', '<meta name="description" content="Page not found.">')
-      $h = $h.Replace('content="Sayfa bulunamadı |', 'content="Page not found |').Replace('content="Sayfa bulunamadı."', 'content="Page not found."').Replace('content="tr_TR"', 'content="en_US"')
-      $h = [regex]::Replace($h, '<html lang="tr"([^>]*)>', { param($m) '<html lang="en" class="lang-en" data-url-lang="en"' + ($m.Groups[1].Value -replace ' class="[^"]*"', '') + '>' })
-    }
-    $h = Strip-Tr $h
-    # a <select> option holds one language only: the guided rosary's list of mysteries in English
-    foreach ($rs in $Rosary.sets) { $h = $h.Replace(">$($rs.tr)</option>", ">$($rs.en)</option>") }
-    $h = [regex]::Replace($h, '<nav class="lang-pill"[\s\S]*?</nav>', '')
-    $h = [regex]::Replace($h, ' data-y="[^"]*" data-y-en="([^"]*)"', ' data-y="$1"')   # the history strip's years
-    $h = $h.Replace('data-url-lang="en" data-root="/"', 'data-url-lang="en" data-root="/" data-en-base=""')
-    # addresses: the English pages to the root of the new domain; the Turkish ones stay where they are
-    $h = $h.Replace("$SiteUrl/en/", "$EnSiteUrl/").Replace("$SiteUrl/assets/", "$EnSiteUrl/assets/").Replace("$SiteUrl/apple-touch-icon", "$EnSiteUrl/apple-touch-icon")
-    $h = $h.Replace("`"url`":`"$SiteUrl/`"", "`"url`":`"$EnSiteUrl/`"")
-    $h = [regex]::Replace($h, '(href|src|action)="/en/', '$1="/')
-    # a link still to a Turkish page (404.html is made from the Turkish one): its English twin
-    $h = [regex]::Replace($h, 'href="/((?:kilise/)?[a-z0-9-]+\.html)', { param($m) $e = En-Of $m.Groups[1].Value; if ($e) { 'href="/' + $e.Substring(3) } else { $m.Value } })
-    # links to the pages left out: menu items and cards go, a link in running text keeps its words
-    $h = [regex]::Replace($h, "<li>\s*<a href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>$bal</a>\s*</li>", '')
-    $h = [regex]::Replace($h, "<a class=`"(?:dn-a|ns-item|ios-row|why-cta|hm-row)[^`"]*`" href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>$bal</a>", '')
-    $h = [regex]::Replace($h, "<a\b[^>]*href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>(?=[^<]*<svg)$bal</a>", '')
-    $h = [regex]::Replace($h, "<a\b[^>]*href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>(?<c>$bal)</a>", '${c}')
-    # the name: Verbum Domini instead of katolikdunyasi.com (the Turkish site's own address stays
-    # in the language links that point to it)
-    $h = $h.Replace($brandTr, $brandEn).Replace('Turkish Catholic Portal', $EnTagline)
-    $h = $h.Replace('<link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/kd-brand-en.woff2" as="font" type="font/woff2" crossorigin>')
-    $h = $h.Replace('<link rel="preload" href="/assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/kd-brand-en.woff2" as="font" type="font/woff2" crossorigin>')
-    $h = [regex]::Replace($h, '<link rel="preload" href="/?assets/fonts/kd-brand-ext\.woff2"[^>]*>\s*', '')
-    # English alone: no links to the Turkish twins, no Turkish locale, no mention of the Turkish site
-    $h = [regex]::Replace($h, '\s*<link rel="alternate" hreflang="[a-zA-Z-]+" href="[^"]*">', '')
-    $h = [regex]::Replace($h, '\s*<meta property="og:locale:alternate" content="[^"]*">', '')
-    $h = $h.Replace(' and katolikdunyasi.com', '')
-    $h = [regex]::Replace($h, '(?<!https://)katolikdunyasi\.com', 'Verbum Domini')
-    # the Catechism search looks in the English (and the Turkish) text; the English site need not say so
-    $h = $h.Replace('English, Turkish or a question number', 'a word or a question number').Replace('English, Turkish or a number', 'a word or a number').Replace('(English or Turkish, or a question number)', '(a word or a question number)')
-    [IO.File]::WriteAllText((Join-Path $EnOut $name), $h, $Utf8)
-    if ($name -ne '404.html') { $enPages.Add($name) }
-  }
-  # the files the pages load, as the Turkish site's deploy collects them (.github/workflows/deploy.yml)
-  Get-ChildItem (Join-Path $Root 'assets') -File | Where-Object { $_.Name -match '\.min\.(css|js)$|\.(jpg|png)$' } | Copy-Item -Destination (Join-Path $EnOut 'assets')
-  Copy-Item -Recurse (Join-Path $Root 'assets/fonts'), (Join-Path $Root 'assets/art') (Join-Path $EnOut 'assets')
-  Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Copy-Item -Destination (Join-Path $EnOut 'data')
-  foreach ($x in 'favicon.ico', 'apple-touch-icon.png') { Copy-Item (Join-Path $Root $x) $EnOut }
-  # the data files and the passages the pages embed carry both languages: the Turkish half out
-  $py = Get-Command python3, python -ErrorAction SilentlyContinue | Select-Object -First 1
-  if ($py) { & $py.Source (Join-Path $Root 'tools/en-site/strip_tr.py') $EnOut; if ($LASTEXITCODE) { throw 'tools/en-site/strip_tr.py failed' } }
-  else { Write-Warning 'Python not found: the English site still carries the Turkish in its data (tools/en-site/strip_tr.py)' }
-  [IO.File]::WriteAllText((Join-Path $EnOut 'site.webmanifest'), (@"
-{
-  "name": "Verbum Domini",
-  "short_name": "Verbum Domini",
-  "description": "$EnTagline",
-  "lang": "en",
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "background_color": "#f7f2e8",
-  "theme_color": "#f7f2e8",
-  "icons": [
-    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
-  ]
-}
-"@), $Utf8)
-  # sitemap, robots.txt and llms.txt from the pages' own head
-  $enInfo = foreach ($n in ($enPages | Sort-Object { if ($_ -eq 'index.html') { 0 } else { 1 } }, { $_ })) {
-    $h = [IO.File]::ReadAllText((Join-Path $EnOut $n))
-    $tr = $EnAltMap["en/$n"]
-    [pscustomobject]@{
-      Url = "$EnSiteUrl/" + $(if ($n -eq 'index.html') { '' } else { $n })
-      Title = ([Net.WebUtility]::HtmlDecode(([regex]::Match($h, '<title>(.*?)</title>').Groups[1].Value)) -replace ' \| Verbum Domini$', '')
-      Desc = [Net.WebUtility]::HtmlDecode(([regex]::Match($h, '<meta name="description" content="([^"]*)"').Groups[1].Value))
-      Mod = if ($tr) { Page-LastMod $tr } else { '' }
-      Index = $h -notmatch '<meta name="robots" content="noindex'
-    }
-  }
-  $smEn = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
-    (($enInfo | Where-Object Index | ForEach-Object { "  <url><loc>$($_.Url)</loc>$(if ($_.Mod) { "<lastmod>$($_.Mod)</lastmod>" })</url>" }) -join "`n") + "`n</urlset>`n"
-  [IO.File]::WriteAllText((Join-Path $EnOut 'sitemap.xml'), $smEn, $Utf8)
-  [IO.File]::WriteAllText((Join-Path $EnOut 'robots.txt'), "User-agent: *`nAllow: /`n`nSitemap: $EnSiteUrl/sitemap.xml`n", $Utf8)
-  $llmsEn = "# Verbum Domini`n`n> A Catholic portal in English: the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, the history of the Church, and answers about the faith, Islam, atheism and Judaism. A sister site of katolikdunyasi.com, which publishes the same work in Turkish.`n`n## Pages`n`n" +
-    (($enInfo | Where-Object Index | ForEach-Object { "- [$($_.Title)]($($_.Url)): $($_.Desc)" }) -join "`n") + "`n"
-  [IO.File]::WriteAllText((Join-Path $EnOut 'llms.txt'), $llmsEn, $Utf8)
-  Write-Host "  + English site: $($enPages.Count) pages in _site_en/ ($EnSiteUrl)"
-}
-
 Write-Host "Done."

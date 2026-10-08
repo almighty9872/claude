@@ -42,7 +42,7 @@ jobs:
         run: ./tools/build.ps1   # site URL comes from the CNAME file
 
       - name: Check the built HTML (fails the deploy on broken markup)
-        run: npx --yes html-validate@9 --config .htmlvalidate.json "./*.html" "en/**/*.html" "kilise/*.html"
+        run: npx --yes html-validate@9 --config .htmlvalidate.json "./*.html" "kilise/*.html"
 
       - name: Collect the public files into _site
         # Only what the pages load: the minified CSS/JS (not their sources), the fonts and images,
@@ -54,7 +54,7 @@ jobs:
           cp assets/*.min.js assets/*.min.css assets/*.jpg assets/*.png _site/assets/
           cp -r assets/fonts assets/art _site/assets/
           cp data/compendium-*.js data/tespih.js data/azizler-adlar.js data/azizler-ozet-*.js data/refs-*.js _site/data/
-          cp -r en kilise _site/
+          cp -r kilise _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
           if [ -d .well-known ]; then cp -r .well-known _site/; fi
           touch _site/.nojekyll   # serve the files as they are, without Jekyll
