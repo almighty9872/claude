@@ -28,9 +28,9 @@ Everything else (the lives of the saints, the parables, the miracles, the histor
 ## Pictures
 
 - **Paintings:** the paintings in the page headers and sections are in the public domain. They come from the collections of the National Gallery of Art (Washington), the Metropolitan Museum of Art, the Cleveland Museum of Art, the Library of Congress and the Web Gallery of Art. The [full list](kaynaklar-ve-telif.html#tablolar) is below.
-- **History of the Church:** most of the pictures come from Wikimedia Commons. Their [owners and licences](kaynaklar-ve-telif.html#tarih-gorselleri) are below.
-- **Miracles:** the photographs and pictures are in the public domain or under Creative Commons licences. The [credits](kaynaklar-ve-telif.html#mucize-fotograflari) are below.
-- **Portraits of the saints:** public-domain paintings and photographs; three are photographs under Creative Commons licences. The [credits](kaynaklar-ve-telif.html#aziz-portreleri) are below.
+- **History of the Church:** most of the pictures come from Wikimedia Commons. Their [owners and licenses](kaynaklar-ve-telif.html#tarih-gorselleri) are below.
+- **Miracles:** the photographs and pictures are in the public domain or under Creative Commons licenses. The [credits](kaynaklar-ve-telif.html#mucize-fotograflari) are below.
+- **Portraits of the saints:** public-domain paintings and photographs; four are photographs under Creative Commons licenses. The [credits](kaynaklar-ve-telif.html#aziz-portreleri) are below.
 - **Drawings and icons:** drawn for this site.
 
 ## Fonts

@@ -1028,7 +1028,7 @@ $SheetNav = @(
     @{ href = 'iletisim.html'; t = 'İletişim'; s = 'Bize ulaşın'; te = 'Contact'; se = 'Get in touch' },
     @{ href = 'erisilebilirlik.html'; t = 'Erişilebilirlik'; s = 'Herkes için okunur bir site'; te = 'Accessibility'; se = 'A site everyone can read'; ico = $IcoA11yPerson },
     @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Hangi veri, nasıl korunur'; te = 'Privacy Policy'; se = 'What data, and how it is kept'; ico = $IcoShield },
-    @{ href = 'kaynaklar-ve-telif.html'; t = 'Kaynaklar ve Telif'; s = 'Metinler, tablolar, lisanslar'; te = 'Sources and Copyright'; se = 'Texts, paintings, licences'; ico = $IcoBook }) }
+    @{ href = 'kaynaklar-ve-telif.html'; t = 'Kaynaklar ve Telif'; s = 'Metinler, tablolar, lisanslar'; te = 'Sources and Copyright'; se = 'Texts, paintings, licenses'; ico = $IcoBook }) }
 )
 function Ns-Item($it, [string]$current, [string]$cls = 'ns-item') {
   $ico = if ($it.ico) { $it.ico } elseif ($NavIcons[$it.href]) { $NavIcons[$it.href] } else { $SmallCross }
@@ -3095,7 +3095,7 @@ Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" -Title
 
 # ================================================================== ILETISIM (iletisim.html)
 $cfMsgs = @(
-  @('ok', 'Teşekkürler, mesajınız bize ulaştı. En kısa sürede yanıt vereceğim.', 'Thank you, your message has reached us. I will reply as soon as I can.'),
+  @('ok', 'Teşekkürler, mesajınız bize ulaştı. En kısa sürede yanıt vereceğim.', "Thank you, your message has arrived. I’ll reply as soon as I can."),
   @('fields', 'Lütfen geçerli bir e-posta adresi ve bir mesaj yazın.', 'Please enter a valid email address and a message.'),
   @('check', 'Güvenlik doğrulaması tamamlanamadı. Lütfen kutunun yüklenmesini bekleyip yeniden deneyin.', 'The security check could not be completed. Please wait for the box to load and try again.'),
   @('error', 'Mesajınız şu an gönderilemedi. Lütfen biraz sonra yeniden deneyin.', 'Your message could not be sent just now. Please try again a little later.'))
@@ -3172,7 +3172,7 @@ $MiraListHtml = (($Tablolar.art.PSObject.Properties | Where-Object { $_.Name -ma
 }) -join ''
 $PortraitListHtml = ($GreatSaints.saints | ForEach-Object {
   $p = $SaintPortraits.($_.id)
-  if ($p) { "<li><span><a href=`"$($p.src)`" target=`"_blank`" rel=`"noopener`">$(Inline $_.name)</a><br>$($p.t) · $($p.lic)</span></li>" }
+  if ($p) { "<li><span><a href=`"$($p.src)`" target=`"_blank`" rel=`"noopener`">$(T (Inline $_.name) (Inline $_.en))</a><br>$(T $p.t $p.te) · $(T $p.lic $p.lice)</span></li>" }
 }) -join ''
 $ktBody = @"
 <div class="wrap narrow">
@@ -3180,16 +3180,16 @@ $ktBody = @"
   <header class="page-head center">$(Page-Ico $IcoBook)<h1>$(T $fm['title'] $fmEn['title'])</h1></header>
   <div class="body prose">$(TB $InfoHtml $InfoHtmlEn)
   <h2 id="tablolar">$(T 'Tablolar' 'Paintings')</h2>
-  <p>$(T 'Sayfa başlıklarında, bölümlerde ve ana sayfada kullanılan tablolar. Hepsi kamu malıdır; bağlantılar görüntülerin alındığı sayfaları açar.' 'The paintings used in the page headers and on the home page. All are in the public domain; the links open the Web Gallery of Art pages the images come from.')</p>
+  <p>$(T 'Sayfa başlıklarında, bölümlerde ve ana sayfada kullanılan tablolar. Hepsi kamu malıdır; bağlantılar görüntülerin alındığı sayfaları açar.' 'The paintings used in the page headers and on the home page. All are in the public domain; the links open the pages the images come from.')</p>
   <ul class="art-list">$ArtListHtml</ul>
-  <h2 id="tarih-gorselleri">Kilise’nin tarihi görselleri</h2>
-  <p>Kilise’nin tarihi sayfasındaki ve ana sayfa şeridindeki görseller, sırasıyla. Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır.</p>
+  <h2 id="tarih-gorselleri">$(T "Kilise’nin tarihi görselleri" 'Pictures in the History of the Church')</h2>
+  <p>$(T "Kilise’nin tarihi sayfasındaki ve ana sayfa şeridindeki görseller, sırasıyla. Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır." 'The pictures on the History of the Church page and in the home page strip, in order. Those not in the public domain are used under the Creative Commons license shown, with their owners named.')</p>
   <ul class="art-list">$TarihListHtml</ul>
-  <h2 id="mucize-fotograflari">Mucizeler sayfasındaki görseller</h2>
-  <p>Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır.</p>
+  <h2 id="mucize-fotograflari">$(T 'Mucizeler sayfasındaki görseller' 'Pictures on the Miracles page')</h2>
+  <p>$(T 'Kamu malı olmayanlar, belirtilen Creative Commons lisansıyla ve sahiplerinin adıyla kullanılır.' 'Those not in the public domain are used under the Creative Commons license shown, with their owners named.')</p>
   <ul class="art-list">$MiraListHtml</ul>
-  <h2 id="aziz-portreleri">Aziz portreleri</h2>
-  <p>Azizler sayfasındaki en bilinen yirmi azizin portreleri. Creative Commons lisanslı olanlar, lisansları ve kaynak sayfaları belirtilerek kullanılır.</p>
+  <h2 id="aziz-portreleri">$(T 'Aziz portreleri' 'Portraits of the saints')</h2>
+  <p>$(T 'Azizler sayfasındaki en bilinen yirmi azizin portreleri. Creative Commons lisanslı olanlar, lisansları ve kaynak sayfaları belirtilerek kullanılır.' 'The portraits of the twenty best-known saints on the Saints page. Those under a Creative Commons licence are used with the license and source page given.')</p>
   <ul class="art-list">$PortraitListHtml</ul></div>
 </div>
 "@
@@ -3496,6 +3496,8 @@ if ($EnglishSite) {
       $h = [regex]::Replace($h, '<html lang="tr"([^>]*)>', { param($m) '<html lang="en" class="lang-en"' + ($m.Groups[1].Value -replace ' class="[^"]*"', '') + '>' })
     }
     $h = Strip-Tr $h
+    # a <select> option holds one language only: the guided rosary's list of mysteries in English
+    foreach ($rs in $Rosary.sets) { $h = $h.Replace(">$($rs.tr)</option>", ">$($rs.en)</option>") }
     $h = [regex]::Replace($h, '<nav class="lang-pill"[\s\S]*?</nav>', '')
     $h = $h.Replace('data-url-lang="en" data-root="/"', 'data-url-lang="en" data-root="/" data-en-base=""')
     # addresses: the English pages to the root of the new domain; the Turkish ones stay where they are

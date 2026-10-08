@@ -18,7 +18,7 @@ Before you buy, check two things:
 
 There is no single "official" English Bible. Each has its strengths:
 
-- **RSV-2CE (the Ignatius Bible):** accurate, dignified and easy to read aloud. A favourite for study and prayer.
+- **RSV-2CE (the Ignatius Bible):** accurate, dignified and easy to read aloud. A favorite for study and prayer.
 - **NABRE (New American Bible, Revised Edition):** the translation behind the readings at Mass in the United States. Good notes, plainer style.
 - **NRSV-CE and NRSVue-CE:** widely used in universities and, in Canada, close to what you hear at Mass.
 - **ESV-CE:** the English Standard Version with the deuterocanonical books, chosen for the new Lectionary in England, Wales and Scotland.
