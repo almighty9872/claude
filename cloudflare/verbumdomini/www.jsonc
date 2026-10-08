@@ -1,0 +1,10 @@
+// www.verbumdomini.ca: a separate small Worker that redirects to verbumdomini.ca.
+// Deployed by .github/workflows/deploy-english.yml together with wrangler.jsonc.
+{
+  "name": "verbumdomini-www",
+  "main": "www-redirect.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "www.verbumdomini.ca", "custom_domain": true }]
+}

@@ -1,12 +1,14 @@
 // The English site (verbumdomini.ca) as a Cloudflare Worker that serves static files.
 // Deployed by .github/workflows/deploy-english.yml after tools/build.ps1 -EnglishSite writes _site_en/.
-// Preview address: https://verbumdomini.tzjcqs5g44.workers.dev
+// Address: https://verbumdomini.ca (preview: https://verbumdomini.tzjcqs5g44.workers.dev)
 {
   "name": "verbumdomini",
   "main": "worker.js",
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
   "preview_urls": false,
+  // Cloudflare creates the DNS record and the certificate for a custom domain by itself
+  "routes": [{ "pattern": "verbumdomini.ca", "custom_domain": true }],
   "assets": {
     "directory": "../../_site_en",
     "binding": "ASSETS",

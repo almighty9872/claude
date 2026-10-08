@@ -53,15 +53,15 @@ Done:
 2. Build split (`-EnglishSite`), 48 pages, valid HTML, no broken links, no JS errors.
 3. Native-English rewrite of interface, homepage, guides, Bible guide, Mass, Rosary, debate pages, the 20 great saints, Privacy and Accessibility. The 365-day saint calendar was only spot-checked.
 
-4. workers.dev preview set up. `.github/workflows/deploy-english.yml` runs on every push to main (and by hand): it builds with `-EnglishSite`, validates the HTML, checks the links, then deploys `_site_en/` with Wrangler to the Worker `verbumdomini` (config and a small `worker.js` in `cloudflare/verbumdomini/`). Preview: https://verbumdomini.tzjcqs5g44.workers.dev. GitHub secrets: `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers" template), `CLOUDFLARE_ACCOUNT_ID`.
+4. workers.dev preview set up. `.github/workflows/deploy-english.yml` runs on every push to main (and by hand): it builds with `-EnglishSite`, validates the HTML, checks the links, then deploys `_site_en/` with Wrangler to the Worker `verbumdomini` (config and a small `worker.js` in `cloudflare/verbumdomini/`). Address: https://verbumdomini.ca (registered with Cloudflare, connected as the Worker's custom domain in wrangler.jsonc); preview: https://verbumdomini.tzjcqs5g44.workers.dev. GitHub secrets: `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers" template), `CLOUDFLARE_ACCOUNT_ID`.
    - URLs keep `.html` (`html_handling: none`); `worker.js` serves `/` and redirects `/mass` to `/mass.html`; unknown paths get `404.html`.
+   - `www.verbumdomini.ca` is a second Worker, `verbumdomini-www` (`www.jsonc`, `www-redirect.js`), that 301-redirects to verbumdomini.ca, so ordinary page loads stay free static-file requests.
    - Test locally with `npx wrangler@4 dev --config cloudflare/verbumdomini/wrangler.jsonc`.
    - Leave the Worker `katolikdunyasi-contact` (the Turkish contact form, route `katolikdunyasi.com/api/*`) alone.
 
 Next:
 5. Contact form on the English site: the form posts to `/api/contact`, which the verbumdomini Worker doesn't have yet, and the Turnstile widget doesn't allow the workers.dev or verbumdomini.ca hostnames. Decide how the English form gets sent.
 6. At cutover:
-   - Point verbumdomini.ca at the Worker.
    - Repoint the old katolikdunyasi.com `/en/...` redirects (Cloudflare bulk redirects CSV) to verbumdomini.ca.
    - Make the Turkish site's hreflang point to verbumdomini.ca and stop shipping `en/` on the Turkish site, except the 8 Catechism English pages, which move to the English site.
    - Turn off GitHub Pages only if the Turkish site also moves to Cloudflare.
