@@ -26,6 +26,7 @@ pwsh -NoProfile -File ./tools/build.ps1 -EnglishSite    # English site -> _site_
 
 What `-EnglishSite` does (the block before `Write-Host "Done."` in build.ps1):
 - copies the `en/*.html` twins to the root of `_site_en/` and strips the Turkish halves
+- English alone: no hreflang links or `og:locale:alternate`, no mention of katolikdunyasi.com, data files without Turkish (strip_tr.py), `data-en-base=""` on every page including 404. In `assets/script.js`, `EN_SITE` (true when `data-en-base` is empty) makes the script write English only, build links to the English pages (`siteHref`) and leave the Turkish out of the reference popups
 - removes the language pill and sets `data-en-base=""`
 - rewrites `https://katolikdunyasi.com/en/` to `https://verbumdomini.ca/` and `/en/` links to `/`
 - drops pages not offered in English (Find a Church and the church pages, Christianity in Our Lands): menu items are removed, links in running text are unwrapped
@@ -34,6 +35,8 @@ What `-EnglishSite` does (the block before `Write-Host "Done."` in build.ps1):
 - `$EnSiteUrl = 'https://verbumdomini.ca'`, `$EnTagline = 'Spreading and defending the Gospel'`
 
 In `build.ps1`, a curly apostrophe (’) inside a single-quoted PowerShell string ends the string and breaks the build. Put such text in double quotes.
+
+Sources on the case pages (Answering Islam, Answering Atheism) are `[Turkish, link, English, English link]`; put `"-"` for one language to cite a source on the other language's page only (the English page cites Pew where the Turkish cites Özarslan).
 
 Brand-neutral writing: in shared text (footer, Sources page), write "katolikdunyasi.com" and let the English build swap it, so each site names itself.
 
@@ -46,6 +49,7 @@ Brand-neutral writing: in shared text (footer, Sources page), write "katolikduny
   - `data/tespih.js` doesn't round-trip; edit it with plain string replacement.
   - `usspell.py <file>` (add `--dry` to preview): makes British spellings American in a file's English fields (the site's English is US). It skips quoted Scripture (`/en/text`); check anything else inside quotation marks by hand, since quotations keep their published spelling.
 - `tools/yahudilere-cagri/`: `data/yahudilere-cagri.js` is generated. Turkish text lives in `gen.py`, English in `en.py`, auto-links in `linker.py`. Edit those, then `python3 tools/yahudilere-cagri/gen.py data/yahudilere-cagri.js`.
+- `tools/en-site/strip_tr.py _site_en`: run by `build.ps1 -EnglishSite` (needs Python). Empties the Turkish half of every pair in the English site's data files and in the passages each page embeds, keeping the structure the script expects; it lists any Turkish-only letters left over (names like İzmir or Wojtyła are expected). The build stops if it fails.
 - `tools/qa/links.py _site_en`: internal link and anchor check (expects `total bad 0`).
 - `tools/qa/runtime.js <dir>`: Playwright run of every page on desktop and phone; reports JS errors, horizontal overflow and possible Turkish leaks. Serve the folder on port 8772 first (`python3 -m http.server 8772`). Needs the `playwright` package. The leak check has false positives; read them.
 - HTML validation: `npx --yes html-validate@9 --config .htmlvalidate.json "_site_en/*.html"`.

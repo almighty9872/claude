@@ -41,6 +41,10 @@
     if (/^kilise\/[a-z0-9-]+\.html$/.test(file)) return EN_BASE + 'church/' + file.slice(7);
     return null;
   }
+  /* the English site (verbumdomini.ca, data-en-base="") is English alone: a link the script writes
+     goes straight to the English page, and the reference popups leave out the Turkish */
+  var EN_SITE = EN_BASE === '';
+  function siteHref(file) { var p = EN_SITE ? enPathOf(file) : null; return ROOT + (p === null ? file : p); }
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
@@ -61,11 +65,12 @@
   var LANG_KEY = 'kd-lang-choice';
   function isEn() { return document.documentElement.classList.contains('lang-en'); }
   /* the same pair, for text this script writes into the page */
-  function LT(tr, en) { return (!en || en === tr) ? tr : '<span class="l-tr">' + tr + '</span><span class="l-en" lang="en">' + en + '</span>'; }
+  function LT(tr, en) { if (EN_SITE) return en || tr; return (!en || en === tr) ? tr : '<span class="l-tr">' + tr + '</span><span class="l-en" lang="en">' + en + '</span>'; }
   /* one of the two, for text that cannot hold markup (a confirm box, a document title) */
   function L2(tr, en) { return isEn() && en ? en : tr; }
   /* an attribute in both languages: swapAttrs() keeps it in step with the switch */
   function setAttr2(el, name, tr, en) {
+    if (EN_SITE) { el.setAttribute(name, en || tr); return; }
     el.setAttribute('data-tr-' + name, tr); el.setAttribute('data-en-' + name, en || tr);
     el.setAttribute(name, isEn() && en ? en : tr);
   }
@@ -107,7 +112,7 @@
     $$(lang === 'en' ? '.l-tr' : '.l-en', c).forEach(function (x) { x.remove(); });
     return c.textContent.replace(/\s+/g, ' ').trim();
   }
-  function pmake(tr, en) { tr = tr == null ? '' : String(tr); en = en == null ? tr : String(en); return tr === en ? tr : tr + PSEP + en; }
+  function pmake(tr, en) { tr = tr == null ? '' : String(tr); en = en == null ? tr : String(en); return EN_SITE ? en : tr === en ? tr : tr + PSEP + en; }
   function psplit(v) { v = v == null ? '' : String(v); var i = v.indexOf(PSEP); return i < 0 ? [v, v] : [v.slice(0, i), v.slice(i + 1)]; }
   function pstr(el) {
     if (!el) return '';
@@ -282,7 +287,7 @@
       }
       if (range) {
         if (document.activeElement !== range) range.value = String(m > 0 ? Math.round(x / m * 1000) : 0);
-        range.setAttribute('aria-valuetext', items[Math.round(f)].getAttribute('data-y'));
+        var yi = items[Math.round(f)]; range.setAttribute('aria-valuetext', (isEn() && yi.getAttribute('data-y-en')) || yi.getAttribute('data-y'));
       }
     };
     var raf = 0;
@@ -665,7 +670,7 @@
       window.COMPENDIUM.parts.forEach(function (p, pi) {
         p.items.forEach(function (it) {
           if (it.type !== 'qa') return;
-          var e = { n: it.n, page: ROOT + PAGES[pi], part: p.tr, partEn: p.en, q: plain(it.tr.q), a: plain(it.tr.a), qe: plain(it.en.q), ae: plain(it.en.a) };
+          var e = { n: it.n, page: siteHref(PAGES[pi]), part: p.tr, partEn: p.en, q: plain(it.tr.q), a: plain(it.tr.a), qe: plain(it.en.q), ae: plain(it.en.a) };
           e.fq = fold(e.q); e.fa = fold(e.a); e.fe = fold(e.qe + ' ' + e.ae);
           index.push(e);
         });
@@ -1068,23 +1073,24 @@
       } else if (kind === 'bref') {
         var tr = verses(item.tr, 'tr', function (v) { return v[1]; }), dr = verses(item.en, 'en', function (v) { return v[1]; });
         body.appendChild(en ? dr : tr);
-        body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Douay-Rheims)', en ? tr : dr));
+        if (!EN_SITE) body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Douay-Rheims)', en ? tr : dr));
       } else if (kind === 'qref') {
         var ar = el('p', 'ref-ar'); ar.lang = 'ar'; ar.dir = 'rtl';
         item.forEach(function (v, i) { ar.appendChild(document.createTextNode(v[1] + ' ')); ar.appendChild(el('span', 'ref-ayah', '﴿' + v[0].toLocaleString('ar-EG') + '﴾')); if (i < item.length - 1) ar.appendChild(document.createTextNode(' ')); });
         body.appendChild(ar);
         var qtr = verses(item, 'tr', function (v) { return v[2]; }), qen = verses(item, 'en', function (v) { return v[3]; });
         body.appendChild(en ? qen : qtr);
-        body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Pickthall)', en ? qtr : qen));
+        if (!EN_SITE) body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Pickthall)', en ? qtr : qen));
       } else {
         body.appendChild(arabic(item.ar));
         var htr = el('p', 'ref-text', item.tr), hen = el('p', 'ref-text', item.en); htr.lang = 'tr'; hen.lang = 'en';
         body.appendChild(en ? hen : htr);
-        body.appendChild(other(en ? 'Turkish' : 'İngilizcesi', en ? htr : hen));
+        if (!EN_SITE) body.appendChild(other(en ? 'Turkish' : 'İngilizcesi', en ? htr : hen));
       }
       var src = { bref: en ? 'English: Douay-Rheims. The Turkish is our own translation.' : 'Türkçe çeviri bize aittir. İngilizcesi: Douay-Rheims.',
         qref: en ? 'Arabic: Tanzil. English: Pickthall. The Turkish is our own translation.' : 'Arapça: Tanzil. Türkçe çeviri bize aittir. İngilizcesi: Pickthall.',
         hdref: en ? 'Numbering follows sunnah.com. The English and Turkish translations are our own.' : 'Numaralar sunnah.com’a göredir. Türkçe ve İngilizce çeviriler bize aittir.' }[kind];
+      if (EN_SITE) src = { bref: 'English: Douay-Rheims.', qref: 'Arabic: Tanzil. English: Pickthall.', hdref: 'Numbering follows sunnah.com. The English translation is our own.' }[kind];
       if (item) foot.appendChild(el('span', 'ref-src', src + ' '));
       var out = el('a', '', en ? 'Open at the source ↗' : 'Kaynağında aç ↗');
       out.href = a.href; out.target = '_blank'; out.rel = 'noopener';
@@ -1677,7 +1683,7 @@
           });
         items.forEach(function (it) {
           var moreSlug = top20Id || null;
-          var more = moreSlug ? '<a class="today-more-link" href="' + ROOT + moreSlug + '.html">' + LT('Devamını oku', 'Read more') + '<span class="visually-hidden">: ' + it.name.replace(/<[^>]*>/g, '') + '</span>' +
+          var more = moreSlug ? '<a class="today-more-link" href="' + siteHref(moreSlug + '.html') + '">' + LT('Devamını oku', 'Read more') + '<span class="visually-hidden">: ' + it.name.replace(/<[^>]*>/g, '') + '</span>' +
             '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></a>' : '';
           pieces.push('<div class="today-more"><span class="today-name">' + it.name + '</span>' +
             (it.title ? '<span class="today-title">' + it.title + '</span>' : '') +
@@ -1852,7 +1858,7 @@
       var top20Id = TOP20_BY_DATE[today.month + '-' + today.day];
       var slug = top20Id || 'azizler';
       /* a saint without a page of their own: straight to today in the calendar, their life open */
-      var href = ROOT + slug + '.html' + (top20Id ? '' : '#gun-' + today.month + '-' + today.day);
+      var href = siteHref(slug + '.html') + (top20Id ? '' : '#gun-' + today.month + '-' + today.day);
       return { html: s ? LT(esc(s.name), esc(s.nameEn || s.name)) : LT('Bugün için yok', 'None for today'), href: href };
     });
   }
@@ -2146,7 +2152,7 @@
       /* the days this set is prayed on */
       $('[data-hm-days]', myst).innerHTML = '(' + LT(set.dayTr, set.dayEn) + ')';
       /* "Tesbihe başla": the rosary itself, which opens on today's mysteries */
-      myst.setAttribute('href', ROOT + 'tesbih-duasi.html#tesbih-rehberi');
+      myst.setAttribute('href', siteHref('tesbih-duasi.html') + '#tesbih-rehberi');
     })['catch'](function () { $('[data-hm-name]', myst).innerHTML = LT('Tesbih', 'The Rosary'); });
 
     /* the date card's clock: 24-hour, with seconds */
@@ -3087,7 +3093,7 @@
        over all 598 and the questions of this chapter. Past the first or the last question of a
        part, the next part's page opens at that question. */
     var KQ_TOTAL = 598, KQ_STARTS = [1, 218, 357, 534];
-    function kqUrl(n) { var pi = 0; KQ_STARTS.forEach(function (s, i) { if (n >= s) pi = i; }); return ROOT + PAGES[pi] + '#soru-' + n; }
+    function kqUrl(n) { var pi = 0; KQ_STARTS.forEach(function (s, i) { if (n >= s) pi = i; }); return siteHref(PAGES[pi]) + '#soru-' + n; }
     function kqGo(n, dir) {
       if (n < 1 || n > KQ_TOTAL) return;
       var el = document.getElementById('soru-' + n);

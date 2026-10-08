@@ -368,6 +368,8 @@ function TO([string]$html) { if (-not $html) { return '' }; return "<div class=`
 # A page without an English twin, on the Turkish-only site: its English taken out, the Turkish
 # left as plain text (the l-tr / l-en wrappers nest, so the patterns balance their own tags)
 function Strip-En([string]$h) {
+  $h = [regex]::Replace($h, '<li data-only="en">[\s\S]*?</li>', '')
+  $h = $h.Replace('<li data-only="tr">', '<li>')
   foreach ($t in 'div', 'span', 'tspan') {
     $bal = "(?>(?<o><$t\b)|(?<-o></$t>)|(?!</?$t\b)[\s\S])*(?(o)(?!))"
     $h = [regex]::Replace($h, "<$t class=`"l-en`"[^>]*>$bal</$t>", '')
@@ -1152,12 +1154,10 @@ $A11yWidgetHtml = @"
 
 # The TR | EN switch: a small pill that floats in the corner of every page, over the text, so the
 # reader can flip between the two languages at any point of a long page (script.js, initLang)
-# The inline <head> script, around the phone-view flag ($avJs): picks the language (the page's
-# address decides it; the Turkish home page sends someone who reads English, by choice or by browser,
-# to the English home page, deep links are never redirected; crawlers are never sent anywhere), the theme and the reading settings,
-# all before the first paint.
+# The inline <head> script, around the phone-view flag ($avJs): the language (every page says its
+# own, data-url-lang), the theme and the reading settings, all before the first paint.
 $HeadJs = 'document.documentElement.classList.add(''js'');'
-$HeadJs2 = '(function(H){var L=null,T=null,d=new Date();try{L=localStorage.getItem(''kd-lang-choice'');if(!L&&localStorage.getItem(''kd-lang'')===''en'')L=''en''}catch(e){}if(!L){var tz='''';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''''}catch(e){}var nl=((navigator.languages&&navigator.languages[0])||navigator.language||'''').toLowerCase();L=(/bot|crawl|spider|slurp|lighthouse|headless|inspection/i.test(navigator.userAgent||'''')||/Istanbul$/.test(tz)||nl.slice(0,2)===''tr'')?''tr'':''en''}var U=H.getAttribute(''data-url-lang'');if(U){if(U===''tr''&&L===''en''&&/^\/(index\.html)?$/.test(location.pathname)&&!/bot|crawl|spider|slurp|lighthouse|headless|inspection|preview|facebookexternalhit/i.test(navigator.userAgent||'''')){var a=document.querySelector(''link[hreflang=en]'');if(a){location.replace(a.getAttribute(''href'').replace(/^https?:\/\/[^\/]+/,'''')+location.search+location.hash);return}}L=U}if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
+$HeadJs2 = '(function(H){var T=null,d=new Date(),L=H.getAttribute(''data-url-lang'');if(L===''en''){H.classList.add(''lang-en'');H.lang=''en''}try{var c=JSON.parse(localStorage.getItem(''kd-theme-choice'')||''null'');if(c&&c.until>d.getTime())T=c.t}catch(e){}if(!T){var u=null;try{u=JSON.parse(localStorage.getItem(''kd-sun'')||''null'')}catch(e){}var m=d.getHours()*60+d.getMinutes();T=m>=(u?u.r:420)&&m<(u?u.s:1140)?''light'':''dark''}H.setAttribute(''data-theme'',T);if(T===''light''){var tc=document.querySelector(''meta[name=theme-color]'');if(tc)tc.setAttribute(''content'',''#f7f2e8'')}})(document.documentElement);try{var fs=localStorage.getItem(''kkio-fontsize'');if(fs===''1''||fs===''2'')document.documentElement.setAttribute(''data-fontsize'',fs);var a11y=JSON.parse(localStorage.getItem(''kkio-a11y'')||''{}'');[''contrast'',''saturation'',''spacing'',''links'',''dyslexia'',''cursor''].forEach(function(k){if(a11y[k])document.documentElement.setAttribute(''data-a11y-''+k,''1'')})}catch(e){}'
 $LangPillHtml = '<nav class="lang-pill" aria-label="Dil / Language"><span class="lp-knob" aria-hidden="true"></span>' +
   '<button type="button" class="lp-btn" data-set-lang="tr" lang="tr" aria-pressed="true" title="Türkçe">TR</button>' +
   '<button type="button" class="lp-btn" data-set-lang="en" lang="en" aria-pressed="false" title="English">EN</button></nav>'
@@ -1569,6 +1569,13 @@ function Write-Page {
         $ld = [regex]::Replace($ld, '("@type":"Church","name":)"(?:[^"\\]|\\.)*"', { param($m) $m.Groups[1].Value + (JStr $tEn) })
       }
       $ld = $ld.Replace('"name":"Katekizm"', '"name":"Compendium"').Replace('"name":"Azizler"', '"name":"Saints"').Replace('"name":"Kilise Bul"', '"name":"Find a Church"').Replace('"Kardinal ', '"Cardinal ').Replace('"Papa XVI. Benediktus"', '"Pope Benedict XVI"')
+      # the Compendium is the Vatican's own English, not a translation; its parts and the rosary in English
+      $ld = $ld.Replace('"name":"Katolik Kilisesi İnanç Esasları Özeti","alternateName":"Compendium of the Catechism of the Catholic Church (Türkçe)"', '"name":"Compendium of the Catechism of the Catholic Church"')
+      $ld = $ld.Replace('"about":{"@type":"Thing","name":"Katolik Kilisesi"}', '"about":{"@type":"Thing","name":"Catholic Church"}')
+      $ld = [regex]::Replace($ld, ',"translationOfWork":\{"@type":"Book","name":"[^"]*","inLanguage":"en",("datePublished":"[^"]*","publisher":\{[^}]*\})\}', ',$1')
+      foreach ($pair in @(@('İnanç Beyanı', 'The Profession of Faith'), @('Hristiyan Gizeminin Kutlanması', 'The Celebration of the Christian Mystery'), @("Mesih$($Apos)te Yaşam", 'Life in Christ'), @('Hristiyan Duası', 'Christian Prayer'), @('Tesbih Duası', 'The Holy Rosary'))) {
+        $ld = $ld.Replace('"name":"' + $pair[0] + '"', '"name":"' + $pair[1] + '"')
+      }
       $ld = [regex]::Replace($ld, ('"' + [regex]::Escape($SiteUrl) + '/((?:kilise/)?[a-z0-9-]*(?:\.html)?)"'), $EnUrlEval)
       $ld = $ld.Replace('"description":' + (JStr $SiteTag), '"description":' + (JStr $SiteTagEn))
     }
@@ -2247,6 +2254,15 @@ function Case-Body($Ic, $Ico, [string]$Page) {
     Ill-Sec -Id $part.id -HeadId "$($part.id)-h" -Art $a[0] -Tone $a[1] -Class 'ic-part' -Kick (T "$($icRoman[$pi - 1]). Bölüm" "Part $($icRoman[$pi - 1])") -Head (T $part.title $part.titleEn) -Body $secs
   }) -join "`n"
   $icSources = ($Ic.sources | ForEach-Object {
+    # [Turkish, link, English(, English link)]; "-" for a source cited in one language only: an
+    # item of its own that the other language's page leaves out (Strip-En, Strip-Tr)
+    if ($_[0] -eq '-' -or $_[2] -eq '-') {
+      $only = if ($_[2] -eq '-') { 'tr' } else { 'en' }
+      $txt = if ($only -eq 'tr') { $_[0] } else { $_[2] }
+      $href = if ($only -eq 'en' -and $_.Count -gt 3 -and $_[3]) { $_[3] } else { $_[1] }
+      $inner = if ($href) { "<a href=`"$href`" target=`"_blank`" rel=`"noopener`">$txt</a>" } else { $txt }
+      return "<li data-only=`"$only`">$inner</li>"
+    }
     $t = T $_[0] $_[2]
     if ($_[1]) { "<li><a href=`"$($_[1])`" target=`"_blank`" rel=`"noopener`">$t</a></li>" } else { "<li>$t</li>" }
   }) -join ''
@@ -3315,7 +3331,8 @@ function Home-Page([string]$lang) {
     $lblEn = if ($ords.Count) { ($ords -join '-') + ' c.' } elseif ($it.yEn -match '^\d+s\b') { $Matches[0] } else { $nums[0] }
     if ($lbl -ne $lastLbl) { $g++; $lastLbl = $lbl; $tlYears.Add("<li><button type=`"button`" class=`"hx-yr`" data-hx-to=`"$n`" $(TA 'aria-label' "$($it.y): $($it.t)" "$($it.yEn): $($it.tEn)")>$(T $lbl $lblEn)</button></li>") }
     $n++
-    $tlItems.Add("<li class=`"hx-it`" data-y=`"$($it.y)`" data-g=`"$g`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/s/$($it.img).jpg`" alt=`"`" width=`"240`" height=`"240`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
+    $yEnAttr = if ($it.yEn -and $it.yEn -ne $it.y) { ' data-y-en="' + $it.yEn + '"' } else { '' }
+    $tlItems.Add("<li class=`"hx-it`" data-y=`"$($it.y)`"$yEnAttr data-g=`"$g`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/s/$($it.img).jpg`" alt=`"`" width=`"240`" height=`"240`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
       "<span class=`"hx-y`">$(T $it.y $it.yEn)</span><span class=`"hx-t`">$(T $it.t $it.tEn)</span><span class=`"hx-s`">$(T $it.s $it.sEn)</span></a><span class=`"hx-d`" hidden>$(T $it.d $it.dEn)</span></li>")
   }
   $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''
@@ -3472,6 +3489,8 @@ if ($EnglishSite) {
   $enDropRx = '/(?:find-a-church\.html|anatolia\.html|church/[a-z0-9-]+\.html)'
   # The Turkish of every pair out, the English left as plain text; an attribute keeps its English
   function Strip-Tr([string]$h) {
+    $h = [regex]::Replace($h, '<li data-only="tr">[\s\S]*?</li>', '')
+    $h = $h.Replace('<li data-only="en">', '<li>')
     foreach ($t in 'div', 'span', 'tspan') {
       $bal = "(?>(?<o><$t\b)|(?<-o></$t>)|(?!</?$t\b)[\s\S])*(?(o)(?!))"
       $h = [regex]::Replace($h, "<$t class=`"l-tr(?: l-sub-en)?`">$bal</$t>", '')
@@ -3493,12 +3512,14 @@ if ($EnglishSite) {
     if ($name -eq '404.html') {
       # the one page with no twin: it switches in place, so it is made English here
       $h = $h.Replace('<title>Sayfa bulunamadı |', '<title>Page not found |').Replace('<meta name="description" content="Sayfa bulunamadı.">', '<meta name="description" content="Page not found.">')
-      $h = [regex]::Replace($h, '<html lang="tr"([^>]*)>', { param($m) '<html lang="en" class="lang-en"' + ($m.Groups[1].Value -replace ' class="[^"]*"', '') + '>' })
+      $h = $h.Replace('content="Sayfa bulunamadı |', 'content="Page not found |').Replace('content="Sayfa bulunamadı."', 'content="Page not found."').Replace('content="tr_TR"', 'content="en_US"')
+      $h = [regex]::Replace($h, '<html lang="tr"([^>]*)>', { param($m) '<html lang="en" class="lang-en" data-url-lang="en"' + ($m.Groups[1].Value -replace ' class="[^"]*"', '') + '>' })
     }
     $h = Strip-Tr $h
     # a <select> option holds one language only: the guided rosary's list of mysteries in English
     foreach ($rs in $Rosary.sets) { $h = $h.Replace(">$($rs.tr)</option>", ">$($rs.en)</option>") }
     $h = [regex]::Replace($h, '<nav class="lang-pill"[\s\S]*?</nav>', '')
+    $h = [regex]::Replace($h, ' data-y="[^"]*" data-y-en="([^"]*)"', ' data-y="$1"')   # the history strip's years
     $h = $h.Replace('data-url-lang="en" data-root="/"', 'data-url-lang="en" data-root="/" data-en-base=""')
     # addresses: the English pages to the root of the new domain; the Turkish ones stay where they are
     $h = $h.Replace("$SiteUrl/en/", "$EnSiteUrl/").Replace("$SiteUrl/assets/", "$EnSiteUrl/assets/").Replace("$SiteUrl/apple-touch-icon", "$EnSiteUrl/apple-touch-icon")
@@ -3517,7 +3538,11 @@ if ($EnglishSite) {
     $h = $h.Replace('<link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/kd-brand-en.woff2" as="font" type="font/woff2" crossorigin>')
     $h = $h.Replace('<link rel="preload" href="/assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/kd-brand-en.woff2" as="font" type="font/woff2" crossorigin>')
     $h = [regex]::Replace($h, '<link rel="preload" href="/?assets/fonts/kd-brand-ext\.woff2"[^>]*>\s*', '')
-    $h = [regex]::Replace($h, '(?<!https://|hreflang="tr" href="https://|and )katolikdunyasi\.com', 'Verbum Domini')
+    # English alone: no links to the Turkish twins, no Turkish locale, no mention of the Turkish site
+    $h = [regex]::Replace($h, '\s*<link rel="alternate" hreflang="[a-zA-Z-]+" href="[^"]*">', '')
+    $h = [regex]::Replace($h, '\s*<meta property="og:locale:alternate" content="[^"]*">', '')
+    $h = $h.Replace(' and katolikdunyasi.com', '')
+    $h = [regex]::Replace($h, '(?<!https://)katolikdunyasi\.com', 'Verbum Domini')
     # the Catechism search looks in the English (and the Turkish) text; the English site need not say so
     $h = $h.Replace('English, Turkish or a question number', 'a word or a question number').Replace('English, Turkish or a number', 'a word or a number').Replace('(English or Turkish, or a question number)', '(a word or a question number)')
     [IO.File]::WriteAllText((Join-Path $EnOut $name), $h, $Utf8)
@@ -3528,6 +3553,10 @@ if ($EnglishSite) {
   Copy-Item -Recurse (Join-Path $Root 'assets/fonts'), (Join-Path $Root 'assets/art') (Join-Path $EnOut 'assets')
   Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Copy-Item -Destination (Join-Path $EnOut 'data')
   foreach ($x in 'favicon.ico', 'apple-touch-icon.png') { Copy-Item (Join-Path $Root $x) $EnOut }
+  # the data files and the passages the pages embed carry both languages: the Turkish half out
+  $py = Get-Command python3, python -ErrorAction SilentlyContinue | Select-Object -First 1
+  if ($py) { & $py.Source (Join-Path $Root 'tools/en-site/strip_tr.py') $EnOut; if ($LASTEXITCODE) { throw 'tools/en-site/strip_tr.py failed' } }
+  else { Write-Warning 'Python not found: the English site still carries the Turkish in its data (tools/en-site/strip_tr.py)' }
   [IO.File]::WriteAllText((Join-Path $EnOut 'site.webmanifest'), (@"
 {
   "name": "Verbum Domini",
