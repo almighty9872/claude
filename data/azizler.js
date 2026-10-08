@@ -34,7 +34,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Yılın ilk günü Kilise, en eski Meryem bayramlarından birini kutlar: Meryem’in Theotokos, yani Tanrı Anası oluşunu. Bu unvan 431’deki Efes Konsili’nde resmen tanındı. Kilise babaları şöyle düşündü: Meryem’in Oğlu gerçekten Allah ise, Meryem de gerçekten Tanrı’nın Anası’dır. Bu gün aynı zamanda Noel’in sekizinci günüdür; Kilise yeni yılı Meryem’in duasına emanet eder.",
      "nameEn": "Mary, Mother of God",
      "titleEn": "Mother of God",
-     "bioEn": "On the first day of the year, the Church celebrates one of the oldest Marian feasts: Mary's title as Theotokos, Mother of God. This title was formally recognized at the Council of Ephesus in 431; the Church Fathers argued that if Mary's Son is truly God, then Mary is truly the Mother of God. This feast also falls on the eighth day of Christmas, entrusting the new year to Mary's intercession."
+     "bioEn": "On the first day of the year, the Church celebrates one of the oldest Marian feasts: Mary's title as Theotokos, Mother of God. This title was formally recognized at the Council of Ephesus in 431; the Church Fathers argued that if Mary's Son is truly God, then Mary is truly the Mother of God. It also falls on the eighth day of Christmas, so the new year begins in Mary's care."
     }
    ]
   },
@@ -57,7 +57,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Basileios’un yakın dostu ve IV. yüzyılın bir başka büyük Kapadokyalı teoloğudur. Konstantinopolis episkoposu oldu. Kutsal Üçlü üzerine verdiği vaazlar yüzünden ona “Teolog” dendi. “Kapadokyalı Babalar” diye anılan üç büyük isimden biri olarak, Mesih İsa’nın hem tam Tanrı hem tam insan olduğu öğretisinin netleşmesinde kalıcı bir iz bıraktı.",
      "nameEn": "Gregory of Nazianzus",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "A close friend of Basil, and another great fourth-century Cappadocian theologian. He served as bishop of Constantinople and earned the title \"the Theologian\" through his sermons on the Holy Trinity. As one of the Cappadocian Fathers, he left a lasting mark on the clarification of Christian theology, especially on Christ's full divinity and full humanity."
+     "bioEn": "A close friend of Basil, and another great fourth-century Cappadocian theologian. He served as bishop of Constantinople and earned the title \"the Theologian\" through his sermons on the Holy Trinity. As one of the Cappadocian Fathers, he did much to make Christian teaching clear, above all that Christ is fully God and fully man."
     }
    ]
   },
@@ -102,7 +102,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bohemya’da doğdu, Amerika Birleşik Devletleri’ne göç etti ve orada rahip oldu. Philadelphia episkoposu olarak görev yaptı. Amerika’daki ilk düzenli Katolik okul sistemini kurdu ve Kırk Saatlik Adorasyon geleneğini yaydı. Amerika’da episkoposluk yapmış ve aziz ilan edilmiş ilk erkektir.",
      "nameEn": "John Neumann",
      "titleEn": "Bishop",
-     "bioEn": "Born in Bohemia, he became a priest as an immigrant in the United States and served as bishop of Philadelphia. He established America's first diocesan Catholic school system and spread the tradition of the Forty Hours' Devotion. He was the first American bishop to be canonized."
+     "bioEn": "Born in Bohemia, he emigrated to the United States, was ordained there and became bishop of Philadelphia. He established America's first diocesan Catholic school system and spread the tradition of the Forty Hours' Devotion. He was the first American bishop to be canonized."
     }
    ]
   },
@@ -117,7 +117,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Kanada’nın Québec bölgesinde yoksul bir ailede doğdu. Sağlığı zayıf olduğu için hiçbir işte tutunamadı; sonunda Sainte-Croix cemaatine kapıcı olarak kabul edildi. Aziz Yusuf’a derin bir bağlılığı vardı. Ona dua isteyerek gelenlerin şifa bulduğuna dair sayısız tanıklık vardır; bugün de ziyaret edilen Montreal’deki büyük Saint Joseph Oratuvarı bu sayede kuruldu.",
      "nameEn": "André Bessette",
      "titleEn": "Religious",
-     "bioEn": "Born to a poor family in Quebec, his frail health made it hard for him to hold down a job until he was finally accepted as a doorkeeper by the Congregation of Holy Cross. He is known for his deep devotion to Saint Joseph; countless testimonies of healing among those who sought his intercession led to the founding of the great Saint Joseph's Oratory in Montreal, still visited today."
+     "bioEn": "Born to a poor family in Quebec, he was too frail to hold down a job until the Congregation of Holy Cross finally took him on as a doorkeeper. He had a deep devotion to Saint Joseph, and so many people reported being healed after asking for his prayers that the great Saint Joseph's Oratory was built in Montreal, where pilgrims still come today."
     }
    ]
   },
@@ -252,7 +252,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre III. yüzyılda Mısır çölüne çekilen ilk Hristiyan münzevidir ve orada doksan yıldan fazla tek başına yaşadı. Ölümünden kısa süre önce Mısırlı Antonius onu ziyaret etti. Efsaneye göre Antonius, iki aslanın yardımıyla onun mezarını kazdı.",
      "nameEn": "Paul of Thebes",
      "titleEn": "Hermit",
-     "bioEn": "Tradition holds him to be the first Christian hermit to withdraw into the Egyptian desert in the third century; he is said to have lived alone for more than ninety years. He is known for the legend that Anthony of Egypt, who visited him shortly before his death, dug his grave with the help of two lions."
+     "bioEn": "Tradition says he was the first Christian hermit to go into the Egyptian desert, in the third century; he is said to have lived alone for more than ninety years. He is known for the legend that Anthony of Egypt, who visited him shortly before his death, dug his grave with the help of two lions."
     }
    ]
   },
@@ -297,7 +297,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre I. yüzyılda Roma’da, daha on üç yaşındayken imanı uğruna şehit edilen genç bir kızdır. Roma’nın en eski kiliselerinden biri olan Santa Prisca’nın onun evinin üzerine yapıldığına inanılır.",
      "nameEn": "Prisca",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "Tradition holds her to be a young saint martyred for her faith in first-century Rome at only thirteen years old. One of the oldest churches in Rome, Santa Prisca, is believed to have been built over her home."
+     "bioEn": "Tradition says she was a girl of only thirteen, martyred for her faith in first-century Rome. One of the oldest churches in Rome, Santa Prisca, is believed to have been built over her home."
     }
    ]
   },
@@ -327,7 +327,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda papa seçildi. Geleneğe göre seçim sırasında başına bir güvercin kondu ve halk ile rahipler onu oybirliğiyle seçti. On dört yıllık papalığı boyunca Roma Kilisesi’ni düzene soktu. İmparator Decius’un başlattığı zulüm sırasında, 250 yılında şehit edildi.",
      "nameEn": "Fabian",
      "titleEn": "Pope and Martyr",
-     "bioEn": "Elected pope in the third century, tradition holds, when a dove landed on his head, uniting the people and clergy in choosing him by acclamation. During his fourteen-year papacy he organized the Church of Rome, and was martyred in 250 during the persecution launched by Emperor Decius."
+     "bioEn": "Tradition says that when Rome gathered to elect a new pope in the third century, a dove landed on his head, and the people and clergy chose him on the spot. During his fourteen-year papacy he organized the Church of Rome, and was martyred in 250 during the persecution launched by Emperor Decius."
     },
     {
      "name": "Sebastian",
@@ -335,7 +335,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre Roma ordusunda subaydı ve gizlice Hristiyan olmuştu. İmparator Diocletianus döneminde imanı yüzünden oklarla vuruldu. Yaralı olarak hayatta kaldı, ama sonra yeniden yakalanıp öldürüldü. Sanat tarihinde en çok resmedilen şehitlerden biridir; vebaya karşı koruyucu olarak da anılır.",
      "nameEn": "Sebastian",
      "titleEn": "Martyr",
-     "bioEn": "Tradition holds him to be an officer in the Roman army who was secretly Christian and was shot with arrows for his faith under Emperor Diocletian. He is said to have survived, wounded, but was later captured and killed. He is one of the most frequently depicted martyrs in art history, and is also venerated as a protector against plague."
+     "bioEn": "Tradition says he was an officer in the Roman army and a secret Christian, shot with arrows for his faith under Emperor Diocletian. He is said to have survived his wounds, only to be arrested again and killed. He is one of the most frequently depicted martyrs in art history, and is also venerated as a protector against plague."
     }
    ]
   },
@@ -350,7 +350,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılın başında Roma’da, henüz on iki-on üç yaşındayken şehit edilen bir kızdır. Kendini Mesih İsa’ya adadığı için evlenmeyi reddetti ve bu yüzden öldürüldü. Bu kadar genç yaşta gösterdiği sarsılmaz iman, ilk yüzyıllardan beri Kilise’de büyük saygı görür. Adı, Ayin’deki en eski Efkaristiya duası olan Roma Kanunu’nda anılır.",
      "nameEn": "Agnes",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "A young girl martyred in early fourth-century Rome, only twelve or thirteen years old, for refusing marriage because she had consecrated her virginity to Christ. Despite her young age, the unshakable courage of her faith has been held in great honor by the Church since Christianity's first centuries; she is among the saints named in the Roman Canon of the Mass."
+     "bioEn": "A young girl martyred in early fourth-century Rome, only twelve or thirteen years old, for refusing marriage because she had consecrated her virginity to Christ. The Church has honored her courage since the first centuries; she is among the saints named in the Roman Canon of the Mass."
     }
    ]
   },
@@ -395,7 +395,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI-XVII. yüzyılda Savoy bölgesinde Cenevre episkoposuydu. Sakin ve nazik yaklaşımıyla, Protestan olmuş bölgeleri yeniden Katolik inancına kazandırdı. “Dindar Yaşama Giriş” adlı kitabında, kutsallığın yalnızca rahiplere ve rahibelere değil, her meslekten sıradan insanlara da açık olduğunu anlattı. Katolik basınının koruyucu azizidir.",
      "nameEn": "Francis de Sales",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "Bishop of Geneva in sixteenth- and seventeenth-century Savoy, he won regions that had turned Protestant back to the Catholic faith through his calm, gentle approach. In his work \"Introduction to the Devout Life,\" he taught that holiness is open not only to priests and religious, but to ordinary people of every walk of life. He is considered the patron saint of the Catholic press."
+     "bioEn": "Bishop of Geneva in sixteenth- and seventeenth-century Savoy, his patience and gentleness won whole regions that had turned Protestant back to the Catholic faith. In his work \"Introduction to the Devout Life,\" he taught that holiness is open not only to priests and religious, but to ordinary people of every walk of life. He is considered the patron saint of the Catholic press."
     }
    ]
   },
@@ -410,7 +410,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu gün, Hristiyanlara zulmeden Ferisi Saul’un Şam yolunda dirilmiş Mesih İsa ile karşılaşmasını anar. Saul kör oldu, sonra iman edip vaftiz oldu ve Pavlus adıyla anıldı. Elçilerin İşleri’nde anlatılan bu olay, Hristiyanlık tarihinin en büyük dönüşüm hikâyelerinden biridir ve Pavlus’un “Milletlerin Havarisi” olacağı yolculuğun başlangıcıdır.",
      "nameEn": "The Conversion of Saint Paul the Apostle",
      "titleEn": "",
-     "bioEn": "This commemorates how Saul, a Pharisee who persecuted Christians, encountered the risen Christ on the road to Damascus, was struck blind, then came to faith, was baptized, and took the name Paul. Recounted in the Acts of the Apostles, this event is one of the most foundational conversion stories in Christian history, and marks the beginning of the journey that made Paul the Apostle to the Gentiles."
+     "bioEn": "The day Saul, a Pharisee who persecuted Christians, met the risen Christ on the road to Damascus, was struck blind, then came to faith, was baptized, and took the name Paul. Recounted in the Acts of the Apostles, it is the best-known conversion in Christian history, and marks the beginning of the journey that made Paul the Apostle to the Gentiles."
     }
    ]
   },
@@ -485,7 +485,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşamış bir Fransisken rahibesidir. Manastırda uzun süre rahat ve gösterişli bir hayat sürdü. Ağır bir hastalıktan sonra gerçek bir değişim yaşadı ve ömrünün geri kalanını perhiz yaparak ve yoksullara hizmet ederek geçirdi.",
      "nameEn": "Hyacintha Mariscotti",
      "titleEn": "Virgin",
-     "bioEn": "A Franciscan sister in sixteenth- and seventeenth-century Italy who lived a comfortable, ostentatious convent life at first, then, after a severe illness, underwent a genuine conversion and spent the rest of her life in fasting and service to the poor."
+     "bioEn": "A Franciscan sister in sixteenth- and seventeenth-century Italy who at first lived a comfortable, showy life in her convent, then, after a serious illness, was truly converted and spent the rest of her life in fasting and service to the poor."
     }
    ]
   },
@@ -515,7 +515,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "V-VI. yüzyılda İrlanda’da yaşadı ve Aziz Patrick’ten sonra İrlanda’nın en sevilen azizidir. Kildare’de kadınların ve erkeklerin ayrı bölümlerde yaşadığı bir manastır kurdu. Cömertliği hakkında sayısız halk hikâyesi anlatılır. İrlanda’nın koruyucu azizelerinden biridir.",
      "nameEn": "Brigid of Kildare",
      "titleEn": "Virgin",
-     "bioEn": "A fifth- to sixth-century Irish saint, the most beloved in the country after Saint Patrick. She founded a mixed monastery of men and women at Kildare and is remembered through countless folk legends of her generosity. She is one of the patron saints of Ireland."
+     "bioEn": "A fifth- to sixth-century Irish saint, the best-loved saint in Ireland after Patrick. She founded a mixed monastery of men and women at Kildare and is remembered through countless folk legends of her generosity. She is one of the patron saints of Ireland."
     }
    ]
   },
@@ -530,7 +530,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Musa’nın Yasası’na göre Meryem ile Yusuf, bebek İsa’yı doğumundan kırk gün sonra Kudüs’teki Tapınak’ta Allah’a sundular. Bu bayram o günü anar. Luka İncili’ne göre yaşlı Simeon İsa’yı kucağına aldı ve O’nu “uluslara ışık” diye tanıttı. Bu gün mumlar kutsandığı için bayrama “Mum Bayramı” da denir. Hayatını Allah’a adamış kişiler için de bir dua günüdür.",
      "nameEn": "The Presentation of the Lord",
      "titleEn": "",
-     "bioEn": "This commemorates Mary and Joseph presenting the infant Jesus in the Temple in Jerusalem forty days after his birth, as Jewish law required. According to the Gospel of Luke, the elderly Simeon takes Jesus in his arms and calls him \"a light to the nations.\" Because of the tradition of blessing candles on this feast, it is also known as Candlemas; it is also a day of prayer for those in consecrated life."
+     "bioEn": "Remembers Mary and Joseph presenting the infant Jesus in the Temple in Jerusalem forty days after his birth, as Jewish law required. According to the Gospel of Luke, the elderly Simeon takes Jesus in his arms and calls him \"a light to the nations.\" Because of the tradition of blessing candles on this feast, it is also known as Candlemas; it is also a day of prayer for those in consecrated life."
     }
    ]
   },
@@ -583,7 +583,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda Sicilya’da yaşamış, güzelliği ve soylu ailesiyle tanınan genç bir Hristiyandır. Kendini Mesih İsa’ya adadığı için, onunla evlenmek isteyen bir Roma valisinin baskılarına direndi. Bu yüzden ağır işkenceler gördü ve şehit edildi. Sicilya’da, özellikle Katanya’da, bugün de büyük saygı görür.",
      "nameEn": "Agatha",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "A young Christian known for her beauty and nobility who lived in third-century Sicily. She resisted the advances of a Roman governor who desired her, since she had consecrated her virginity to Christ, and was martyred after severe torture. She is still held in great honor in Sicily, especially in Catania, today."
+     "bioEn": "A young Christian woman of noble birth in third-century Sicily. She had consecrated her virginity to Christ, so she refused the advances of a Roman governor, and was martyred after cruel torture. She is still held in great honor in Sicily, especially in Catania, today."
     }
    ]
   },
@@ -651,7 +651,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda İskenderiye’de yaşamış yaşlı bir kadındır. Zulüm sırasında dişleri kırılarak söküldü. Ateşe atılmakla tehdit edilince imanını inkâr etmek yerine kendini ateşe attı. Diş ağrısı çekenlerin ve diş hekimlerinin koruyucu azizesidir.",
      "nameEn": "Apollonia",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "An elderly woman in third-century Alexandria; during persecution her teeth were broken and pulled out, and when threatened with being thrown into the fire, she threw herself into it. She is regarded as the patron saint of those with toothache and of dentists."
+     "bioEn": "An elderly woman of third-century Alexandria. During a persecution her teeth were smashed and pulled out, and when she was threatened with being burned alive, she walked into the fire herself. She is regarded as the patron saint of those with toothache and of dentists."
     }
    ]
   },
@@ -666,7 +666,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Nursialı Aziz Benedictus’un ikiz kız kardeşidir ve kadın manastırcılığının öncülerinden sayılır. Anlatılana göre kardeşiyle yılda bir kez buluşup Allah hakkında konuşurlardı. Son buluşmalarında Scholastica dua etti, bir fırtına çıktı ve kardeşi yanından ayrılamadı. Kadın Benedikten manastırcılığının kurucu figürüdür.",
      "nameEn": "Scholastica",
      "titleEn": "Virgin",
-     "bioEn": "The twin sister of Saint Benedict of Nursia, considered one of the pioneers of women's monasticism. Tradition holds that the siblings met once a year to speak of God, and at their last meeting a storm arose through Scholastica's prayer to keep her brother from leaving. She is a founding figure of women's Benedictine monasticism."
+     "bioEn": "The twin sister of Saint Benedict of Nursia, considered one of the pioneers of women's monasticism. Tradition holds that the siblings met once a year to speak of God, and at their last meeting a storm arose through Scholastica's prayer to keep her brother from leaving."
     }
    ]
   },
@@ -681,7 +681,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1858’de Fransa’nın Lourdes kasabasında Meryem Ana, genç Bernadette Soubirous’a on sekiz kez göründü. Kilise’nin onayladığı bu görünmeleri anarız. Görünmelerin olduğu yerdeki kaynak, o zamandan beri milyonlarca hacının geldiği bir şifa ve dua merkezi oldu. Bu gün aynı zamanda Dünya Hastalar Günü’dür.",
      "nameEn": "Our Lady of Lourdes",
      "titleEn": "",
-     "bioEn": "This commemorates the Church-approved apparitions of Mary to a young girl, Bernadette Soubirous, eighteen times in 1858 in the French town of Lourdes. The spring at the site of the apparitions has since become a center of healing and prayer visited by millions of pilgrims. This day is also celebrated as World Day of the Sick."
+     "bioEn": "Remembers the apparitions of Mary, approved by the Church, to a young girl, Bernadette Soubirous, eighteen times in 1858 in the French town of Lourdes. The spring at the site of the apparitions has since become a center of healing and prayer visited by millions of pilgrims. This day is also celebrated as World Day of the Sick."
     }
    ]
   },
@@ -696,7 +696,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda İtalya’da yaşadı. Kocasının rızasıyla evliliğini bırakıp manastıra girdi. Daha sonra Vallombrosa keşişlerine bağlı ilk kadın manastırını kurdu.",
      "nameEn": "Humility of Faenza",
      "titleEn": "Religious",
-     "bioEn": "A saint in thirteenth-century Italy who, with her husband's consent, left her marriage to enter a convent, and later founded the first convent of Vallombrosan nuns."
+     "bioEn": "A woman of thirteenth-century Italy who, with her husband's consent, left her marriage to enter a convent, and later founded the first convent of Vallombrosan nuns."
     }
    ]
   },
@@ -771,7 +771,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda Floransa’da yaşamış yedi tüccardır. Dünyevi hayatı bırakıp Meryem Ana’ya adanmış bir hayat sürmek için bir araya geldiler. Kurdukları topluluk, Meryem Ana’nın acılarına bağlılığıyla tanınan Servi (Meryem’in Hizmetkârları) Tarikatı oldu. Birlikte anılmaları, aynı çağrıya birlikte verdikleri cevabı simgeler.",
      "nameEn": "The Seven Founders of the Servite Order",
      "titleEn": "",
-     "bioEn": "Seven merchants in thirteenth-century Florence who left worldly life to live a life devoted to Mary. The community they founded became the Servite Order (Servants of Mary), known for its devotion to the Sorrows of Mary. Their shared commemoration symbolizes a shared answer to a shared call."
+     "bioEn": "Seven merchants in thirteenth-century Florence who left worldly life to live a life devoted to Mary. The community they founded became the Servite Order (Servants of Mary), known for its devotion to the Sorrows of Mary. They are remembered together because they answered the call together."
     }
    ]
   },
@@ -786,7 +786,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Kudüs’ün ilk episkoposu Yakup öldükten sonra Kudüs Kilisesi’nin ikinci episkoposu oldu. Mesih İsa’nın akrabası olduğu kabul edilir. İleri yaşta, İmparator Traianus döneminde çarmıha gerilerek şehit edildi.",
      "nameEn": "Simeon of Jerusalem",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "After the death of James (the first bishop of Jerusalem), he became the second bishop of the Jerusalem Church, and is considered a relative of Christ. He was martyred by crucifixion at an advanced age under Emperor Trajan."
+     "bioEn": "After the death of James (the first bishop of Jerusalem), he became the second bishop of the Jerusalem Church, and tradition counts him a relative of Jesus. He was martyred by crucifixion at an advanced age under Emperor Trajan."
     }
    ]
   },
@@ -1056,7 +1056,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "203 yılında Kartaca’da, bugünkü Tunus’ta şehit edilen iki genç kadındır. Perpetua soylu bir aileden geliyordu ve bebeği olan genç bir anneydi; Felicitas ise onun kölesiydi ve hapiste doğum yaptı. İkisi de arenada vahşi hayvanların önüne atılarak öldürüldü. Perpetua’nın hapiste tuttuğu günlük, bir kadının yazdığı en eski Hristiyan metinlerinden biridir.",
      "nameEn": "Perpetua and Felicity",
      "titleEn": "Martyrs",
-     "bioEn": "Two young women martyred in 203 in Carthage (in modern Tunisia). Perpetua was of noble family, a young mother with an infant; Felicity was her slave, and had given birth in prison. Both were martyred by being made to fight wild beasts. The diary Perpetua kept in prison is considered one of the oldest surviving texts written by a Christian woman."
+     "bioEn": "Two young women martyred in 203 in Carthage (in modern Tunisia). Perpetua was of noble family, a young mother with an infant; Felicity was her slave, and had given birth in prison. Both were thrown to wild beasts in the arena. The diary Perpetua kept in prison is considered one of the oldest surviving texts written by a Christian woman."
     }
    ]
   },
@@ -1101,7 +1101,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda Kudüs episkoposuydu ve I. İznik Konsili’ne katıldı. Anlatılana göre İmparator Konstantin’in annesi Helena’ya, İsa’nın mezarının yerini bulma çalışmalarında yol gösterdi.",
      "nameEn": "Macarius of Jerusalem",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Jerusalem in the fourth century and took part in the First Council of Nicaea. He is said to have guided Helena, mother of Emperor Constantine, in her search for the site of the Holy Sepulchre."
+     "bioEn": "Bishop of Jerusalem in the fourth century and took part in the First Council of Nicaea. He is said to have guided Helena, mother of Emperor Constantine, in her search for the site of the Holy Sepulchre."
     }
    ]
   },
@@ -1176,7 +1176,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI-XVII. yüzyılda Fransa’da yaşadı ve Aziz Vincent de Paul ile birlikte Merhamet Kızları cemaatini kurdu. Manastıra kapanmadan, doğrudan sokaklarda ve evlerde yoksullara hizmet eden yeni bir kadın cemaati modeli geliştirdi.",
      "nameEn": "Louise de Marillac",
      "titleEn": "Virgin",
-     "bioEn": "A saint in sixteenth- and seventeenth-century France who, together with Saint Vincent de Paul, founded the Daughters of Charity. She developed a model of a women's community that served the poor directly in the streets and in homes, without being cloistered in a convent."
+     "bioEn": "A Frenchwoman of the sixteenth and seventeenth centuries who, together with Saint Vincent de Paul, founded the Daughters of Charity. She developed a model of a women's community that served the poor directly in the streets and in homes, without being cloistered in a convent."
     }
    ]
   },
@@ -1191,7 +1191,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "X-XI. yüzyılda Köln başepiskoposuydu ve İmparator III. Otto’nun baş danışmanlığını yaptı; hem devlet adamı hem din adamıydı. Bir kuraklık sırasında halk için yağmur duası ettiği ve yağmurun yağdığı anlatılır.",
      "nameEn": "Heribert of Cologne",
      "titleEn": "Bishop",
-     "bioEn": "A statesman-churchman who became archbishop of Cologne and chief advisor to Emperor Otto III in the tenth and eleventh centuries. Legend remembers him praying for rain for the people during a drought."
+     "bioEn": "A churchman and statesman who became archbishop of Cologne and chief advisor to Emperor Otto III in the tenth and eleventh centuries. Legend remembers him praying for rain for the people during a drought."
     }
    ]
   },
@@ -1266,7 +1266,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XV. yüzyılda İsviçre’de on çocuklu bir çiftçiydi. Ailesinin rızasıyla münzevi olarak inzivaya çekildi. İsviçre kantonları arasındaki bir anlaşmazlıkta arabuluculuk yaparak ülkeyi iç savaştan korudu. İsviçre’nin koruyucu azizidir.",
      "nameEn": "Nicholas of Flüe",
      "titleEn": "Hermit",
-     "bioEn": "A saint in fifteenth-century Switzerland who, as a farmer with ten children, withdrew into solitude with his family's consent. He is known for his peaceful mediation that prevented the Swiss Confederation from being drawn into civil war; he is the patron saint of Switzerland."
+     "bioEn": "A Swiss farmer and father of ten in the fifteenth century who, with his family's consent, went to live alone as a hermit. He is known for his peaceful mediation that prevented the Swiss Confederation from being drawn into civil war; he is the patron saint of Switzerland."
     }
    ]
   },
@@ -1326,7 +1326,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu bayram, Başmelek Cebrail’in Meryem Ana’ya gelip onun Mesih İsa’nın annesi olacağını bildirmesini anar. Meryem bu çağrıyı “Bana dediğin gibi olsun” diyerek kabul etti. Bu, Tanrı’nın Sözü’nün insan bedeni aldığı andır; buna Enkarnasyon denir. Bayramın Noel’den tam dokuz ay önce olması tesadüf değildir.",
      "nameEn": "The Annunciation of the Lord",
      "titleEn": "",
-     "bioEn": "This commemorates the Archangel Gabriel coming to Mary to announce that she would become the mother of Christ, and Mary's acceptance of this call with the words, \"be it done to me according to thy word.\" At that moment the Word (Logos) took on human flesh: the Incarnation. It is no coincidence that it falls nine months before Christmas."
+     "bioEn": "Remembers the Archangel Gabriel's coming to Mary to announce that she would become the mother of Christ, and Mary's acceptance of this call with the words, \"be it done to me according to thy word.\" At that moment the Word (Logos) took on human flesh: the Incarnation. It is no coincidence that it falls nine months before Christmas."
     }
    ]
   },
@@ -1341,7 +1341,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VIII-IX. yüzyılda Frizya ve Saksonya bölgelerinde misyonerlik yaptı ve Münster’in ilk episkoposu oldu.",
      "nameEn": "Ludger",
      "titleEn": "Bishop",
-     "bioEn": "A saint who was a missionary in the Frisian and Saxon regions in the eighth and ninth centuries, and became the first bishop of Münster."
+     "bioEn": "A missionary in the Frisian and Saxon regions in the eighth and ninth centuries, and became the first bishop of Münster."
     }
    ]
   },
@@ -1446,7 +1446,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XV. yüzyılda İtalya’nın Kalabriya bölgesinde yaşadı. Genç yaşta bir mağaraya çekilip münzevi olarak yaşadı. Çevresinde toplanan öğrencilerle Minim Kardeşler Tarikatı’nı kurdu. Çok sıkı perhizi ve yoksul hayatıyla tanınır; bilgeliği ve mucizeleriyle o kadar ünlendi ki krallar bile ona danıştı.",
      "nameEn": "Francis of Paola",
      "titleEn": "Hermit",
-     "bioEn": "A saint in fifteenth-century Italy (Calabria) who withdrew to a cave as a hermit at a young age, and founded the Order of Minims with the disciples who gathered around him. Known for his extreme fasting and harsh poverty, he became so renowned for wisdom and miracles that even kings sought his counsel."
+     "bioEn": "A fifteenth-century hermit from Calabria, in southern Italy, who went to live in a cave as a young man and founded the Order of Minims with the disciples who gathered around him. Known for his extreme fasting and harsh poverty, he became so renowned for wisdom and miracles that even kings sought his counsel."
     }
    ]
   },
@@ -1461,7 +1461,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda İngiltere’de Chichester episkoposuydu. Ona ait olduğu söylenen ünlü dua (“Seni daha açık görmek, daha çok sevmek ve daha yakından izlemek için”) bugün de çok kullanılır.",
      "nameEn": "Richard of Chichester",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Chichester in thirteenth-century England. The famous prayer attributed to him (\"may I know thee more clearly, love thee more dearly, and follow thee more nearly\") is still widely used today."
+     "bioEn": "Bishop of Chichester in thirteenth-century England. The famous prayer attributed to him (\"may I know thee more clearly, love thee more dearly, and follow thee more nearly\") is still widely used today."
     }
    ]
   },
@@ -1476,7 +1476,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VI-VII. yüzyılda İspanya’da Sevilla episkoposuydu. “Etymologiae” adlı dev ansiklopedisiyle, Roma İmparatorluğu çöktükten sonra antik dünyanın bilgisini toplayıp Orta Çağ’a aktardı. Bu geniş kapsamlı çalışması yüzünden internetin ve bilgisayar kullanıcılarının koruyucu azizi olarak da anılır.",
      "nameEn": "Isidore of Seville",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "Bishop of Seville in Spain in the sixth and seventh centuries. Through his vast encyclopedic work \"Etymologiae,\" he gathered the knowledge of the ancient world after the fall of the Roman Empire and carried it into the Middle Ages. Because of this sweeping work, he is also venerated as the patron saint of the internet and computer users."
+     "bioEn": "Bishop of Seville in Spain in the sixth and seventh centuries. Through his vast encyclopedic work \"Etymologiae,\" he gathered the knowledge of the ancient world after the fall of the Roman Empire and carried it into the Middle Ages. Because of it he is often called the patron saint of the internet and of computer users."
     }
    ]
   },
@@ -1491,7 +1491,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIV-XV. yüzyılda İspanya’da yaşamış bir Dominiken vaizidir. Avrupa’yı dolaşıp tövbe ve Mesih İsa’ya dönüş üzerine verdiği ateşli vaazlarla tanınır. Aynı anda birden fazla papanın olduğu Büyük Batı Bölünmesi döneminde Kilise’nin birliği için çalıştı. Anlatılana göre vaazlarını dinleyen binlerce kişi imana geldi.",
      "nameEn": "Vincent Ferrer",
      "titleEn": "Priest",
-     "bioEn": "A Dominican preacher who lived in fourteenth- and fifteenth-century Spain. He is known for the fiery sermons on repentance and return to Christ he preached while traveling across Europe; he worked for the restoration of unity during the Great Western Schism. Thousands are said to have converted among those who heard his preaching."
+     "bioEn": "A Dominican preacher who lived in fourteenth- and fifteenth-century Spain. He traveled across Europe preaching fiery sermons on repentance, and worked to restore unity during the Great Western Schism. Thousands are said to have been converted by his preaching."
     }
    ]
   },
@@ -1536,7 +1536,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVIII-XIX. yüzyılda Fransa’da yaşadı. Yirmi yıldan uzun süre felçli kaldıktan sonra mucizevi biçimde iyileşti. Kızların eğitimi için Notre Dame Rahibeleri cemaatini kurdu.",
      "nameEn": "Julie Billiart",
      "titleEn": "Virgin",
-     "bioEn": "A saint in eighteenth- and nineteenth-century France who was miraculously healed after more than twenty years of paralysis. She founded the Sisters of Notre Dame for the education of girls."
+     "bioEn": "A Frenchwoman of the eighteenth and nineteenth centuries who was miraculously healed after more than twenty years of paralysis. She founded the Sisters of Notre Dame for the education of girls."
     }
    ]
   },
@@ -1626,7 +1626,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIV-XV. yüzyılda Hollanda’da yaşadı. On beş yaşında buz pateni yaparken kaza geçirdi ve ömür boyu yatağa bağlı kaldı. Uzun yıllar süren acısını Mesih İsa’nın çektiği acılarla birleştirerek yaşadı. Kronik hastalığı olanların koruyucu azizesidir.",
      "nameEn": "Lidwina of Schiedam",
      "titleEn": "Virgin",
-     "bioEn": "A saint in fourteenth- and fifteenth-century Holland who was left bedridden for life after an ice-skating accident at fifteen. Because she lived her long suffering in union with the Passion of Christ, she became the patron saint of the chronically ill."
+     "bioEn": "A Dutch girl of the fourteenth and fifteenth centuries who was left bedridden for life after an ice-skating accident at fifteen. Because she lived her long suffering in union with the Passion of Christ, she became the patron saint of the chronically ill."
     }
    ]
   },
@@ -1641,7 +1641,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VI. yüzyılda Galya’da, bugünkü Fransa’da episkopostu. Episkopos olmadan önce münzevi olarak yaşamıştı.",
      "nameEn": "Paternus of Avranches",
      "titleEn": "Bishop",
-     "bioEn": "A saint who served as bishop in sixth-century Gaul (France), having first lived as a hermit."
+     "bioEn": "A hermit who became a bishop in sixth-century Gaul (France)."
     }
    ]
   },
@@ -1656,7 +1656,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIX. yüzyılda Fransa’nın Lourdes kasabasında Meryem Ana’nın kendisine göründüğü, yoksul bir değirmencinin kızıdır. Gördüklerinden şüphe edenlere karşı hep aynı sade tanıklığı verdi. Sonra bir manastıra girip sessiz bir hayat sürdü.",
      "nameEn": "Bernadette Soubirous",
      "titleEn": "Virgin",
-     "bioEn": "A poor miller's daughter in nineteenth-century France, to whom Mary appeared at Lourdes. She stood out for the simple, unwavering way she held to her testimony before those who doubted her visions, and later entered a convent, living quietly."
+     "bioEn": "A poor miller's daughter in nineteenth-century France, to whom Mary appeared at Lourdes. She held simply and firmly to her story in front of everyone who doubted her, and later entered a convent, where she lived quietly."
     }
    ]
   },
@@ -1686,7 +1686,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XII. yüzyılda Milano episkoposuydu. Şehirde yayılan Katarizm adlı yanlış öğretiye karşı ateşli vaazlarıyla mücadele etti ve bir vaaz verirken öldü.",
      "nameEn": "Galdinus of Milan",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Milan in the twelfth century and fought the Catharist heresy that had spread through the city with fiery sermons; he died while preaching."
+     "bioEn": "Archbishop of Milan in the twelfth century and fought the Cathar heresy that had spread through the city with fiery sermons. He died in the pulpit."
     }
    ]
   },
@@ -1701,7 +1701,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XI. yüzyılda Canterbury başepiskoposuydu. Viking akıncıları onu rehin aldı. Halkının daha fazla sömürülmesini istemediği için, kendisi için fidye toplanmasını yasakladı ve bu yüzden öldürüldü.",
      "nameEn": "Alphege of Canterbury",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "Archbishop of Canterbury in the eleventh century, taken hostage by Viking raiders and killed after he forbade a ransom to be collected for him, unwilling to see his people exploited any further."
+     "bioEn": "Archbishop of Canterbury in the eleventh century, taken hostage by Viking raiders and He was killed because he would not let a ransom be raised for him: he refused to see his people squeezed any further."
     }
    ]
   },
@@ -1716,7 +1716,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII-XIV. yüzyılda İtalya’da yaşamış bir Dominiken rahibesidir. Daha on beş yaşındayken bir manastırın başrahibesi seçildi. Mucizeleriyle ünlendi; Sienalı Azize Katerina ona büyük hayranlık duyardı.",
      "nameEn": "Agnes of Montepulciano",
      "titleEn": "Virgin",
-     "bioEn": "A Dominican sister in thirteenth- and fourteenth-century Italy, elected abbess of a convent at only fifteen. She was greatly admired by Saint Catherine of Siena, and gained fame for her miracles."
+     "bioEn": "A Dominican sister in thirteenth- and fourteenth-century Italy, elected abbess of a convent at only fifteen. She was greatly admired by Saint Catherine of Siena, and was famous for her miracles."
     }
    ]
   },
@@ -1731,7 +1731,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XI-XII. yüzyılda yaşamış, İtalya kökenli bir Benedikten keşişidir. Canterbury başepiskoposu olarak, İngiltere’de kral ile Kilise arasındaki çatışmalarda Kilise’nin özgürlüğünü savundu. “Anlamak için inanıyorum” sözüyle bilinir. Allah’ın varlığına dair ünlü “ontolojik kanıtı” ile Orta Çağ felsefesinin öncülerindendir.",
      "nameEn": "Anselm of Canterbury",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "A Benedictine of Italian origin who lived in the eleventh and twelfth centuries; as archbishop of Canterbury he defended the Church's freedom in the conflicts between the king and the Church in England. He is known for the principle \"I believe so that I may understand,\" and is a pioneer of medieval philosophy for his famous \"ontological argument\" for the existence of God."
+     "bioEn": "A Benedictine of Italian origin who lived in the eleventh and twelfth centuries; as archbishop of Canterbury he defended the Church's freedom in the conflicts between the king and the Church in England. His motto was \"I believe so that I may understand,\" and his famous \"ontological argument\" for the existence of God made him one of the founders of medieval philosophy."
     }
    ]
   },
@@ -1746,7 +1746,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VIII. yüzyılda Normandiya’da bir manastırın başrahibesiydi. Anlatılana göre kardeşi episkopos Chrodegangus’un hac dönüşü öldürüldüğünü duyunca büyük acı çekti.",
      "nameEn": "Opportuna of Montreuil",
      "titleEn": "Virgin",
-     "bioEn": "A saint who became abbess of a convent in eighth-century Normandy; she is said to have suffered great grief on hearing that her brother, Bishop Chrodegang, had died on his way back from a pilgrimage."
+     "bioEn": "Abbess of a convent in eighth-century Normandy; she is said to have suffered great grief on hearing that her brother, Bishop Chrodegang, had died on his way back from a pilgrimage."
     }
    ]
   },
@@ -1761,7 +1761,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre III-IV. yüzyılda Roma ordusunda subaydı ve Hristiyan olduğu için İmparator Diocletianus döneminde şehit edildi. Hayatı hakkında kesin tarihsel bilgi azdır, ama imanı uğruna canını vermeye hazır cesur bir asker olarak çok erken dönemden beri büyük saygı görür. Ejderha efsanesiyle özdeşleşmiştir ve birçok ülkenin koruyucu azizidir.",
      "nameEn": "George",
      "titleEn": "Martyr",
-     "bioEn": "A soldier who, tradition holds, served as an officer in the Roman army around the third to fourth century and was martyred for being Christian under Emperor Diocletian. Few certain historical details about him survive, but he has been greatly venerated since the early period as a courageous soldier ready to give his life for his faith. Associated with the famous legend of the dragon, he became the patron saint of many countries."
+     "bioEn": "Tradition says he was an officer in the Roman army, martyred for his faith under Emperor Diocletian around the year 300. Few historical details survive, but from the earliest times he was honored as a brave soldier who gave his life for Christ. The famous legend of George and the dragon made him the patron saint of many countries."
     },
     {
      "name": "Prağlı Adalbert",
@@ -1769,7 +1769,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "X. yüzyılda Prag episkoposuydu ve Orta ve Doğu Avrupa’da misyonerlik yaptı. Baltık kıyısındaki putperest Prusyalılara Müjde’yi anlatmaya çalışırken şehit edildi. Polonya’nın, Çekya’nın ve Macaristan’ın koruyucu azizlerindendir.",
      "nameEn": "Adalbert of Prague",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "A saint who became bishop of Prague in the tenth century and was a missionary in Central and Eastern Europe. He was martyred while trying to bring the Gospel to the pagan Prussians on the Baltic coast. He is one of the patron saints of Poland, the Czech Republic, and Hungary."
+     "bioEn": "Bishop of Prague in the tenth century and was a missionary in Central and Eastern Europe. He was martyred while trying to bring the Gospel to the pagan Prussians on the Baltic coast. He is one of the patron saints of Poland, the Czech Republic, and Hungary."
     }
    ]
   },
@@ -1799,7 +1799,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre Havari Petrus’un tercümanı ve yakın çalışma arkadaşıdır. Markos İncili’ni Petrus’un Roma’daki vaazlarına dayanarak yazdığı kabul edilir. Dört İncil’in en kısası ve büyük olasılıkla en eskisi olan bu metin, sade ve hızlı anlatımıyla tanınır. Gelenek onu İskenderiye Kilisesi’nin kurucusu sayar; simgesi kanatlı aslandır.",
      "nameEn": "Mark the Evangelist",
      "titleEn": "",
-     "bioEn": "Tradition holds him to be the interpreter and close associate of the Apostle Peter; he is held to have written the Gospel of Mark based on Peter's preaching in Rome. The shortest, and probably the oldest, of the four Gospels, this text is known for its simple, fast-paced narration. He is traditionally considered the founder of the Church of Alexandria; his symbol is the winged lion."
+     "bioEn": "Tradition says he was the Apostle Peter's interpreter and close companion, and that he wrote his Gospel from Peter's preaching in Rome. The shortest of the four Gospels, and probably the oldest, it tells the story simply and at a fast pace. He is traditionally regarded as the founder of the Church of Alexandria; his symbol is the winged lion."
     }
    ]
   },
@@ -1814,7 +1814,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "I. yüzyılda, Havari Petrus’tan sonra Roma’nın üçüncü episkoposu, yani papası oldu. Geleneğe göre şehit edildi. Adı, Ayin’deki Roma Kanunu’nda anılan ilk papalar arasındadır.",
      "nameEn": "Cletus",
      "titleEn": "Pope and Martyr",
-     "bioEn": "A saint who became the third bishop (pope) of Rome after the Apostle Peter in the first century, and is traditionally held to have been martyred. He is one of the first popes named in the Roman Canon of the Mass."
+     "bioEn": "The third bishop of Rome (pope) after the Apostle Peter, in the first century, traditionally said to have died a martyr. He is one of the first popes named in the Roman Canon of the Mass."
     }
    ]
   },
@@ -1829,7 +1829,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda İtalya’da yaşadı. On iki yaşından ölümüne kadar aynı ailenin evinde hizmetçilik yaptı. Anlatılana göre ekmeğini yoksullarla paylaşır ve işini her zaman bir dua gibi yapardı. Ev hizmetçilerinin koruyucu azizesidir.",
      "nameEn": "Zita",
      "titleEn": "Virgin",
-     "bioEn": "A saint in thirteenth-century Italy who worked as a servant in the same household from age twelve until her death. She is said to have shared her bread with the poor and always done her work as a prayer. She is the patron saint of domestic workers."
+     "bioEn": "A girl of thirteenth-century Italy who worked as a servant in the same household from age twelve until her death. She is said to have shared her bread with the poor and always done her work as a prayer. She is the patron saint of domestic workers."
     }
    ]
   },
@@ -1844,7 +1844,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIX. yüzyılda Fransa’da rahipti, sonra misyoner olarak Pasifik’teki Futuna adasına gönderildi. Adanın şefi, oğlunun vaftiz olmasından rahatsız oldu ve şefin adamları onu öldürdü. Okyanusya’nın ilk şehididir. Ölümünden kısa süre sonra adanın halkı topluca Hristiyan oldu.",
      "nameEn": "Peter Chanel",
      "titleEn": "Priest and Martyr",
-     "bioEn": "A priest in nineteenth-century France, later a missionary sent to the island of Futuna in the Pacific. He was killed by the men of a local chief who was angered by his son's baptism. He is the first martyr of Oceania; the people of his island converted to Christianity en masse shortly after his death."
+     "bioEn": "A priest in nineteenth-century France, later a missionary sent to the island of Futuna in the Pacific. He was killed by the men of a local chief who was angry that his son had been baptized. He is the first martyr of Oceania; the people of his island converted to Christianity en masse shortly after his death."
     },
     {
      "name": "Louis-Marie Grignion de Montfort",
@@ -1867,7 +1867,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIV. yüzyılda İtalya’da, yirmi beşten fazla çocuklu sıradan bir ailede doğdu. Manastıra girmeden, evinde derin bir dua hayatı sürdü. Papaların Avignon’dan Roma’ya dönmesi için çok çalıştı. Okuma yazması sınırlı olduğu hâlde, mektupları ve “Diyalog” adlı eseriyle Kilise tarihinin en etkili mistiklerinden biri sayılır. Avrupa’nın koruyucu azizelerindendir.",
      "nameEn": "Catherine of Siena",
      "titleEn": "Virgin and Doctor of the Church",
-     "bioEn": "Born in fourteenth-century Italy, the daughter of an ordinary family with more than twenty-five children. Without entering a convent, she lived a deep life of prayer at home, and worked actively for the popes' return from Avignon to Rome. Through her letters and her work \"The Dialogue,\" despite her limited literacy, she is considered one of the most influential mystical theologians in Church history. She is one of the co-patron saints of Europe."
+     "bioEn": "Born in fourteenth-century Italy, the daughter of an ordinary family with more than twenty-five children. Without entering a convent, she lived a deep life of prayer at home, and worked actively for the popes' return from Avignon to Rome. Although she could barely read, her letters and her book \"The Dialogue\" make her one of the most influential mystics in the Church's history. She is one of the co-patron saints of Europe."
     }
    ]
   },
@@ -1897,7 +1897,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu gün Aziz Yusuf’u marangoz olarak, yani çalışan bir insan olarak anar. Papa XII. Pius bu anmayı 1955’te, 1 Mayıs İşçi Bayramı’na karşılık olarak koydu. Çalışmanın, insanın Allah’ın yaratma işine katıldığı onurlu bir iş olduğunu ve işçilerin haklarının savunulması gerektiğini hatırlatır.",
      "nameEn": "Saint Joseph the Worker",
      "titleEn": "",
-     "bioEn": "This day commemorates Saint Joseph not as the husband of Mary but in his role as a laboring carpenter; it was instituted in 1955 by Pope Pius XII to coincide with May Day, International Workers' Day. It reminds us that labor is a dignified activity that shares in God's work of creation, and that workers' rights must be defended."
+     "bioEn": "Today the Church remembers Joseph not as Mary's husband but as a working carpenter. The feast was set up in 1955 by Pope Pius XII to coincide with May Day, International Workers' Day. It reminds us that labor is a dignified activity that shares in God's work of creation, and that workers' rights must be defended."
     }
    ]
   },
@@ -1942,7 +1942,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III-IV. yüzyılda Roma ordusunda subaydı. Hristiyan olduğu için İmparator Diocletianus döneminde boynuna değirmen taşı bağlanıp nehre atıldı ve şehit edildi. Avusturya’da ve Polonya’da itfaiyecilerin koruyucu azizidir.",
      "nameEn": "Florian of Lorch",
      "titleEn": "Martyr",
-     "bioEn": "An officer in the Roman army around the third to fourth century, martyred under Emperor Diocletian for being Christian by having a millstone tied to his neck and being thrown into the river. He is regarded as the patron saint of firefighters in Austria and Poland."
+     "bioEn": "An officer in the Roman army around the third to fourth century, martyred for his faith under Emperor Diocletian: he was thrown into a river with a millstone tied around his neck. He is regarded as the patron saint of firefighters in Austria and Poland."
     }
    ]
   },
@@ -1987,7 +1987,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVII-XVIII. yüzyılda İtalya’da, o dönem için alışılmadık bir şekilde kızlar için herkese açık okullar kuran bir öncüdür.",
      "nameEn": "Rose Venerini",
      "titleEn": "Virgin",
-     "bioEn": "A pioneer in seventeenth- and eighteenth-century Italy who, unusually for her time, founded public schools for girls."
+     "bioEn": "A woman of seventeenth- and eighteenth-century Italy who, unusually for her time, opened free schools for girls."
     }
    ]
   },
@@ -2017,7 +2017,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda Mısır’da yaşadı. Keşişlerin tek başına değil, bir topluluk hâlinde birlikte yaşadığı manastır hayatının kurucusu sayılır. Yazdığı kurallar, sonraki bütün Batı manastır kurallarını etkiledi.",
      "nameEn": "Pachomius the Great",
      "titleEn": "Abbot",
-     "bioEn": "Living in fourth-century Egypt, he is considered the founder of communal (cenobitic) monastic life, in which monks live together rather than alone. The rules he established influenced all later Western monastic rules."
+     "bioEn": "A fourth-century Egyptian monk, regarded as the founder of communal (cenobitic) monastic life, in which monks live together rather than alone. The rules he established influenced all later Western monastic rules."
     }
    ]
   },
@@ -2032,7 +2032,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Belçika’da doğmuş bir misyoner rahiptir. Hawaii’nin Molokai adasında cüzzam hastalarının zorla yaşatıldığı koloniye kendi isteğiyle gitti. On altı yıl boyunca hastalara bizzat baktı, onlar için bir kilise ve barınaklar yaptı. Sonunda kendisi de cüzzama yakalandı ve o adada öldü. Cüzzam hastalarının ve dışlanmışların koruyucu azizidir.",
      "nameEn": "Damien of Molokai",
      "titleEn": "Priest",
-     "bioEn": "A missionary priest born in Belgium; he volunteered to go to the forcibly isolated leprosy colony on the island of Molokai in Hawaii, personally caring for the sick for sixteen years and building a church and shelters. He eventually contracted leprosy himself and died on the island. He is the patron saint of people with leprosy and of outcasts."
+     "bioEn": "A missionary priest born in Belgium; he volunteered to go to the leprosy colony on the island of Molokai in Hawaii, where people with the disease were sent away and left. For sixteen years he cared for the sick with his own hands and built a church and homes for them. He eventually contracted leprosy himself and died on the island. He is the patron saint of people with leprosy and of outcasts."
     },
     {
      "name": "Juan de Ávila",
@@ -2055,7 +2055,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVII-XVIII. yüzyılda İtalya’nın Sardinya adasında yaşamış bir Kapuçin kardeşidir. Kırk yıldan fazla adanın köylerini dolaşıp sadaka topladı ve bunu yoksullara dağıttı. Alçakgönüllülüğü ve esprili konuşmasıyla çok sevildi.",
      "nameEn": "Ignatius of Laconi",
      "titleEn": "Religious",
-     "bioEn": "A Capuchin begging brother in seventeenth- and eighteenth-century Sardinia (Italy). For more than forty years he traveled the island's villages collecting alms to distribute to the poor, beloved for his humility and witty speech."
+     "bioEn": "A Capuchin brother in seventeenth- and eighteenth-century Sardinia who begged for the poor. For more than forty years he traveled the island's villages collecting alms to distribute to the poor, beloved for his humility and witty speech."
     }
    ]
   },
@@ -2078,7 +2078,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre IV. yüzyılın başında, İmparator Diocletianus’un zulmü sırasında, henüz on dört yaşındayken Roma’da şehit edilen bir gençtir. Bu kadar genç yaşta gösterdiği iman yüzünden çok erken dönemden beri büyük saygı görür.",
      "nameEn": "Pancras",
      "titleEn": "Martyr",
-     "bioEn": "Tradition holds him to be a young Christian martyred in Rome at only fourteen, in the early fourth century, during Emperor Diocletian's persecution. The faith he showed at so young an age has been held in great honor since the earliest times."
+     "bioEn": "Tradition says he was a young Christian martyred in Rome at only fourteen, in the early fourth century, during Emperor Diocletian's persecution. His faith at so young an age has been honored since the earliest times."
     }
    ]
   },
@@ -2093,7 +2093,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1917’de Portekiz’in Fatima kasabası yakınında Meryem Ana üç çoban çocuğa altı kez göründü. Bu gün, Kilise’nin onayladığı bu görünmeleri anar. Görünmelerin çağrısı tövbe, dua ve tesbih duasıdır. Fatima o günden beri dünyada en çok ziyaret edilen Meryem hac yerlerinden biridir.",
      "nameEn": "Our Lady of Fatima",
      "titleEn": "",
-     "bioEn": "This commemorates the six Church-approved apparitions of Mary to three shepherd children near the town of Fatima, Portugal, in 1917. The apparitions emphasized a call to repentance, prayer, and the Rosary. Fatima has since become one of the world's most visited Marian pilgrimage sites."
+     "bioEn": "Remembers the six apparitions of Mary, approved by the Church, to three shepherd children near the town of Fatima, Portugal, in 1917. Her message was a call to repentance, prayer and the Rosary. Fatima has since become one of the world's most visited Marian pilgrimage sites."
     }
    ]
   },
@@ -2153,7 +2153,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI. yüzyılda İspanya’da çobanken Fransisken kardeşi oldu. Efkaristiya’ya olan derin bağlılığıyla tanınır; Efkaristiya kongrelerinin ve derneklerinin koruyucu azizidir.",
      "nameEn": "Paschal Baylón",
      "titleEn": "Religious",
-     "bioEn": "A saint in sixteenth-century Spain who became a Franciscan brother after having been a shepherd. He is known for his deep devotion to the Eucharist; he has been declared the patron saint of Eucharistic congresses and associations."
+     "bioEn": "A Spanish shepherd who became a Franciscan brother in the sixteenth century. He is known for his deep devotion to the Eucharist; he has been declared the patron saint of Eucharistic congresses and associations."
     }
    ]
   },
@@ -2183,7 +2183,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda Fransa’nın Bretanya bölgesinde hem hukukçu hem de rahipti. Yoksulları ücretsiz savunduğu ve asla rüşvet almadığı için “yoksulların avukatı” diye anılır. Hukukçuların koruyucu azizidir.",
      "nameEn": "Ivo Hélory",
      "titleEn": "Priest",
-     "bioEn": "A saint in thirteenth-century Brittany (France) who was both a lawyer and a priest. He is remembered as \"the advocate of the poor\" for defending the poor without charge and refusing bribes. He is the patron saint of lawyers."
+     "bioEn": "A Breton (France) of the thirteenth century who was both a lawyer and a priest. He is remembered as \"the advocate of the poor\" for defending the poor without charge and refusing bribes. He is the patron saint of lawyers."
     }
    ]
   },
@@ -2228,7 +2228,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIV-XV. yüzyılda İtalya’da yaşadı. Genç yaşta, şiddete eğilimli bir adamla zorla evlendirildi. Kocası ve iki oğlu öldükten sonra manastıra kabul edildi. Zor bir evlilik, yas ve hastalıkla dolu bir hayata rağmen bağışlayıcılığı ve sabrıyla tanınır. İmkânsız ve çaresiz durumların azizesi olarak anılır.",
      "nameEn": "Rita of Cascia",
      "titleEn": "Religious",
-     "bioEn": "A widow in fourteenth- and fifteenth-century Italy, admitted to a convent after the deaths of her violent husband, whom she had been forced to marry, and her two sons. Despite a difficult marriage and a life full of grief and illness, she is known for her forgiveness and patience. She is remembered as the saint of impossible and desperate situations."
+     "bioEn": "A woman of fourteenth- and fifteenth-century Italy who was forced to marry a violent man. After he and both her sons had died, she was finally allowed to enter a convent. Through a hard marriage and a life full of grief and illness, she was known for her patience and forgiveness. She is the saint of impossible causes."
     }
    ]
   },
@@ -2258,7 +2258,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Papa VII. Pius, Napolyon tarafından hapsedildikten sonra 1814’te serbest kalıp Roma’ya döndü. Bu Meryem bayramı, o dönüşü anmak için konuldu. Özellikle Don Bosco ve kurduğu Salesyen tarikatı bu bağlılığı yaydı.",
      "nameEn": "Mary, Help of Christians",
      "titleEn": "",
-     "bioEn": "A Marian devotion instituted to commemorate the day (1814) when Pope Pius VII regained his freedom and returned to Rome after being imprisoned by Napoleon; it was especially promoted by Don Bosco's Salesian order."
+     "bioEn": "A feast of Mary set up to mark the day in 1814 when Pope Pius VII, freed from Napoleon's prison, returned to Rome. Don Bosco's Salesians did much to spread it."
     }
    ]
   },
@@ -2281,7 +2281,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XI. yüzyılda papaydı ve Kilise reformunun en kararlı savunucularından biridir. Episkoposları kimin atayacağı konusunda İmparator IV. Heinrich ile uzun bir mücadeleye girdi ve Kilise’nin dünyevi güçlerden bağımsız olmasını savundu.",
      "nameEn": "Gregory VII",
      "titleEn": "Pope",
-     "bioEn": "Pope in the eleventh century, one of the most resolute defenders of Church reform. He entered a long struggle with Emperor Henry IV over the appointment of bishops (the Investiture Controversy), defending the Church's independence from worldly powers."
+     "bioEn": "Pope in the eleventh century, one of the most determined champions of Church reform. He fought a long battle with Emperor Henry IV over the appointment of bishops (the Investiture Controversy), defending the Church's independence from worldly powers."
     },
     {
      "name": "Maria Maddalena de’ Pazzi",
@@ -2349,7 +2349,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1963-1978 yılları arasında papalık yaptı. II. Vatikan Konsili’nin büyük bölümünü yönetip sonuçlandırdı ve konsil kararlarını uygulamaya koydu. Ayin reformunu gerçekleştirdi ve Kilise’nin çağdaş dünyayla ilişkisi üzerine önemli genelgeler yazdı.",
      "nameEn": "Paul VI",
      "titleEn": "Pope",
-     "bioEn": "Pope from 1963 to 1978, who guided and concluded most of the Second Vatican Council and put its decisions into practice. He carried out the liturgical reform and wrote important encyclicals on the Church's relationship with the modern world."
+     "bioEn": "Pope from 1963 to 1978, who led the Second Vatican Council through most of its sessions to its close and put its decisions into practice. He carried out the liturgical reform and wrote important encyclicals on the Church's relationship with the modern world."
     }
    ]
   },
@@ -2379,7 +2379,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu bayram, İsa’ya hamile olan Meryem Ana’nın akrabası Elizabet’i ziyaret etmesini anar. Luka İncili’ne göre Elizabet karnındaki çocuğun, yani Yahya’nın, sevinçle kıpırdadığını hissetti ve Meryem’i “Kadınlar arasında kutsanmışsın” diyerek selamladı. Meryem de ünlü Magnificat ilahisiyle karşılık verdi.",
      "nameEn": "The Visitation of Mary",
      "titleEn": "",
-     "bioEn": "This commemorates Mary visiting her relative Elizabeth while pregnant with Jesus. According to the Gospel of Luke, Elizabeth feels the child in her womb (John) leap for joy, and greets Mary, \"Blessed art thou among women\"; Mary answers with the famous Magnificat hymn."
+     "bioEn": "Remembers Mary's visit to her relative Elizabeth while she was expecting Jesus. According to the Gospel of Luke, Elizabeth feels the child in her womb (John) leap for joy, and greets Mary, \"Blessed art thou among women\"; Mary answers with the famous Magnificat hymn."
     }
    ]
   },
@@ -2499,7 +2499,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XII. yüzyılda York başepiskoposuydu. Göreve gelişi tartışmalı olsa da sonradan aziz ilan edildi. Şehre dönüşünde onu karşılayan kalabalığın ağırlığıyla bir köprü çöktü, ama kimse ölmedi; bu olay onun mucizesi olarak anılır.",
      "nameEn": "William of York",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became archbishop of York in the twelfth century; though his appointment was disputed, he was later canonized. He is remembered for a miracle: when a bridge collapsed under the weight of the crowd welcoming him back to the city, no one died."
+     "bioEn": "Archbishop of York in the twelfth century; though his appointment was disputed, he was later canonized. He is remembered for a miracle: when a bridge collapsed under the weight of the crowd welcoming him back to the city, no one died."
     }
    ]
   },
@@ -2589,7 +2589,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IX. yüzyılda Konstantinopolis episkoposuydu. İkonaları kırmak isteyenlere karşı ikonaları savunanların önde gelenlerindendi ve bu yüzden işkence gördü.",
      "nameEn": "Methodius I",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Constantinople in the ninth century and played a pioneering role in defending icons during the Iconoclast controversy, for which he was tortured."
+     "bioEn": "Bishop of Constantinople in the ninth century and played a pioneering role in defending icons during the Iconoclast controversy, for which he was tortured."
     }
    ]
   },
@@ -2634,7 +2634,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XII. yüzyılda zengin bir tüccardı. Servetini dağıtıp hacı olarak Kutsal Topraklar’ı dolaştı, sonra Pisa’ya dönüp sade bir hayat sürdü. Pisa’nın koruyucu azizidir.",
      "nameEn": "Rainerius of Pisa",
      "titleEn": "Hermit",
-     "bioEn": "A saint who was first a wealthy merchant, then gave away his fortune to travel the Holy Land as a pilgrim, and later returned to Pisa to live a simple life. He is the patron saint of Pisa."
+     "bioEn": "A wealthy merchant who gave away his fortune to travel the Holy Land as a pilgrim, and later returned to Pisa to live a simple life. He is the patron saint of Pisa."
     }
    ]
   },
@@ -2649,7 +2649,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre erkek kılığına girip babasıyla birlikte bir manastırda keşiş olarak yaşadı. Haksız yere bir çocuğun babası olmakla suçlandığında bile kimliğini açıklamadı ve cezayı sessizce kabul etti. Gerçek kimliği ancak ölümünden sonra anlaşıldı.",
      "nameEn": "Marina",
      "titleEn": "Virgin",
-     "bioEn": "Tradition holds her to be a saint who, disguised as a man, was admitted to a monastery and lived as a monk together with her father. When falsely accused of fathering a child, she did not reveal her identity and quietly accepted the punishment; her true identity was discovered only after her death."
+     "bioEn": "Tradition says she disguised herself as a man so that she could enter a monastery with her father and live as a monk. When falsely accused of fathering a child, she did not reveal her identity and quietly accepted the punishment; her true identity was discovered only after her death."
     }
    ]
   },
@@ -2709,7 +2709,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV-V. yüzyılda yaşadı ve Roma’nın zengin bir senatör ailesinden geliyordu. Servetini yoksullara dağıttı ve Nola şehrinin episkoposu oldu. Döneminin büyük Hristiyan yazarlarıyla, Augustinus ve Hieronymus ile mektuplaştı.",
      "nameEn": "Paulinus of Nola",
      "titleEn": "Bishop",
-     "bioEn": "A saint from a wealthy Roman senatorial family in the fourth and fifth centuries who gave away his fortune to the poor and became a bishop. He served as bishop in the city of Nola, and corresponded closely with the great Christian writers of his time (Augustine, Jerome)."
+     "bioEn": "Born into a rich Roman senatorial family in the fourth century, he gave away his fortune to the poor and became a bishop. He served as bishop in the city of Nola, and corresponded closely with the great Christian writers of his time (Augustine, Jerome)."
     },
     {
      "name": "John Fisher ve Thomas More",
@@ -2747,7 +2747,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Luka İncili’ne göre yaşlı ve çocuksuz bir çift olan Zekeriya ile Elizabet, mucizevi bir şekilde bir oğul sahibi oldu: Mesih İsa’nın yolunu hazırlayacak peygamber Yahya. Bu bayram onun doğumunu anar. Kilise takviminde doğum günü kutlanan neredeyse yalnızca üç kişi vardır: İsa, Meryem Ana ve Yahya. Bu da Yahya’nın kurtuluş tarihindeki eşsiz yerini gösterir.",
      "nameEn": "The Birth of Saint John the Baptist",
      "titleEn": "",
-     "bioEn": "According to the Gospel of Luke, this commemorates the miraculous birth of the prophet who would prepare the way for Christ, born to Zechariah and Elizabeth, an elderly, childless couple. The Church's calendar celebrates the birthdays of only three people, Jesus, Mary, and John; this shows John's unique place in the history of salvation."
+     "bioEn": "Celebrates the miraculous birth, told in Luke's Gospel, of the prophet who would prepare the way for Christ. His parents, Zechariah and Elizabeth, were old and had never had children. The Church's calendar celebrates the birthdays of only three people, Jesus, Mary, and John; this shows John's unique place in the history of salvation."
     }
    ]
   },
@@ -2792,7 +2792,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "V. yüzyılda İskenderiye episkoposuydu. Nestorius, Meryem Ana’nın “Tanrı Anası” değil yalnızca “Mesih’in Anası” olduğunu öğretiyordu; Kyrillos buna karşı çıktı. Bu tartışma, Meryem’in Theotokos (Tanrı Anası) unvanını resmen onaylayan 431 Efes Konsili’ne yol açtı.",
      "nameEn": "Cyril of Alexandria",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "A saint who became bishop of Alexandria in the fifth century and opposed Nestorius's teaching that Mary was only the \"Mother of Christ\" and not the \"Mother of God.\" This dispute led to the Council of Ephesus in 431, which formally confirmed Mary's title of Theotokos."
+     "bioEn": "Bishop of Alexandria in the fifth century and opposed Nestorius's teaching that Mary was only the \"Mother of Christ\" and not the \"Mother of God.\" This dispute led to the Council of Ephesus in 431, which formally confirmed Mary's title of Theotokos."
     }
    ]
   },
@@ -2807,7 +2807,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "II. yüzyılda Küçük Asya’da, bugünkü Türkiye topraklarında doğdu, sonra Galya’da Lyon episkoposu oldu. “Sapkınlıklara Karşı” adlı büyük eseriyle, erken dönemin gnostik yanlış öğretilerine karşı havarilerden gelen imanı düzenli olarak savunan ilk büyük teologlardandır. Havari Yuhanna’nın öğrencisi Polikarp’ın öğrencisiydi. Bu zincir, havarilerden gelen geleneğin kesintisiz sürdüğünün canlı bir kanıtıdır.",
      "nameEn": "Irenaeus",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "Born in the second century in Asia Minor (modern Turkey), he later became bishop of Lyon (Gaul). With his great work \"Against Heresies,\" he became one of the first great theologians to defend the apostolic faith systematically against the Gnostic heresies of his day. He was a disciple of Polycarp, who was himself a disciple of the Apostle John; this chain is living proof of the continuity of the apostolic tradition."
+     "bioEn": "Born in the second century in Asia Minor (modern Turkey), he later became bishop of Lyon (Gaul). With his great work \"Against Heresies,\" he became one of the first great theologians to defend the apostolic faith systematically against the Gnostic heresies of his day. He was a disciple of Polycarp, who was himself a disciple of the Apostle John; a living link back to the apostles."
     }
    ]
   },
@@ -2837,7 +2837,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "64 yılında Roma’daki büyük yangından sonra İmparator Neron suçu Hristiyanların üzerine attı ve onları acımasızca öldürttü. Bu gün, o ilk Hristiyan topluluğunu anar. Tacitus gibi putperest Romalı tarihçilerin bile kaydettiği bu zulüm, devletin Hristiyanlara karşı başlattığı ilk büyük baskı sayılır.",
      "nameEn": "The First Martyrs of the Church of Rome",
      "titleEn": "",
-     "bioEn": "This commemorates the early Christians of Rome whom Emperor Nero blamed for the great fire of the year 64 and had mercilessly put to death. This persecution, recorded even by pagan Roman historians such as Tacitus, is considered the first major state-sponsored oppression of Christians."
+     "bioEn": "Remembers the first Christians of Rome, whom Emperor Nero blamed for the great fire of AD 64 and put to death without mercy. This persecution, recorded even by pagan Roman historians such as Tacitus, is considered the first major state-sponsored oppression of Christians."
     }
    ]
   },
@@ -2972,7 +2972,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1648-1930 yılları arasında Çin’de, farklı dönemlerdeki zulümler sırasında şehit edilen yüz otuz kadar rahibi, rahibeyi ve sıradan Katoliği anarız. Augustinus Zhao Rong Çinli bir rahipti. Bu ortak anma, Çin Katolik Kilisesi’nin yüzyıllar boyunca ödediği bedeli hatırlatır.",
      "nameEn": "Augustine Zhao Rong and Companions",
      "titleEn": "Martyrs",
-     "bioEn": "This commemorates a group of about a hundred and thirty priests, sisters, and lay Catholics martyred in China during various periods of persecution between 1648 and 1930. Zhao Rong was a Chinese priest. This joint commemoration recalls the price the Chinese Catholic Church has paid across the centuries."
+     "bioEn": "Remembers about a hundred and thirty priests, sisters, and lay Catholics martyred in China during various periods of persecution between 1648 and 1930. Zhao Rong was a Chinese priest. Together they stand for the price the Catholic Church in China has paid over the centuries."
     }
    ]
   },
@@ -2987,7 +2987,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre II. yüzyılda Roma’da, anneleri Azize Felicitas ile birlikte imanları uğruna şehit edilen yedi kardeştir.",
      "nameEn": "The Seven Sons of Felicity",
      "titleEn": "Martyrs",
-     "bioEn": "Tradition holds them to be seven brothers martyred in second-century Rome for their faith, together with their mother Saint Felicity."
+     "bioEn": "Tradition says they were seven brothers martyred in second-century Rome for their faith, together with their mother Saint Felicity."
     }
    ]
   },
@@ -3002,7 +3002,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "V-VI. yüzyılda İtalya’da yaşadı ve Batı manastırcılığının kurucusu sayılır. Monte Cassino’da bir manastır kurdu. Yazdığı “Kural”, dua ile çalışmayı (“ora et labora”, yani “dua et ve çalış”) dengeleyen ölçülü ve düzenli bir topluluk hayatı anlatır. Bu kural, sonraki bin yıl boyunca Batı manastırcılığının temeli oldu. Avrupa’nın koruyucu azizidir.",
      "nameEn": "Benedict of Nursia",
      "titleEn": "Abbot",
-     "bioEn": "A saint who lived in fifth- and sixth-century Italy, considered the founder of Western monasticism. He founded a monastery at Monte Cassino; the Rule (Regula) he wrote sets out a measured, stable communal life that balances prayer and work (\"ora et labora\"). This rule became the basic framework of Western monasticism for the following thousand years. He is the patron saint of Europe."
+     "bioEn": "A fifth- and sixth-century Italian monk, regarded as the founder of Western monasticism. He founded a monastery at Monte Cassino; the Rule (Regula) he wrote sets out a measured, stable communal life that balances prayer and work (\"ora et labora\"). This rule became the basic framework of Western monasticism for the following thousand years. He is the patron saint of Europe."
     }
    ]
   },
@@ -3032,7 +3032,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "X-XI. yüzyılda Kutsal Roma-Germen İmparatoru’ydu ve gücünü Kilise’yi güçlendirmek ve yenilemek için kullandı. Eşi Azize Kunigunde ile birlikte, iktidardayken de dindarlığını koruyabilen bir hükümdar örneği olarak anılır.",
      "nameEn": "Henry II",
      "titleEn": "Emperor",
-     "bioEn": "Holy Roman Emperor in the tenth and eleventh centuries, who used his power to strengthen and reform the Church. Together with his wife, Saint Cunigunde, he is remembered as an example of a ruler who could hold power while preserving his piety."
+     "bioEn": "Holy Roman Emperor in the tenth and eleventh centuries, who used his power to strengthen and reform the Church. Together with his wife, Saint Cunigunde, he is remembered as proof that a ruler can hold power and stay holy."
     }
    ]
   },
@@ -3070,7 +3070,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda İtalya’da yaşamış bir Fransisken teologdur. Fransisken tarikatının genel başkanlığını yaptı ve Assisili Aziz Francis’in resmî biyografisini yazdı. Akademik teoloji ile mistik dindarlığı bir araya getiren yaklaşımıyla “Serafik Doktor” unvanını aldı.",
      "nameEn": "Bonaventure",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "A Franciscan theologian who lived in thirteenth-century Italy. He served as master general of the Franciscan order and wrote the official life of Saint Francis. His approach uniting academic theology with mystical devotion earned him the title \"the Seraphic Doctor.\""
+     "bioEn": "A Franciscan theologian who lived in thirteenth-century Italy. He served as master general of the Franciscan order and wrote the official life of Saint Francis. His way of joining scholarly theology with mystical devotion earned him the title \"the Seraphic Doctor.\""
     }
    ]
   },
@@ -3085,7 +3085,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu bayram, Karmelit tarikatının Meryem Ana’ya özel bağlılığını kutlar. Geleneğe göre XIII. yüzyılda Meryem Ana, Aziz Simon Stock’a göründü ve ona kahverengi bir skapular (omuza takılan kumaş) vererek korunma sözü verdi. Bayram, Karmelit maneviyatının ve Meryem’e adanmış sade dindarlığın simgesidir.",
      "nameEn": "Our Lady of Mount Carmel",
      "titleEn": "",
-     "bioEn": "This feast celebrates the Carmelite order's special devotion to Mary; tradition connects it to the thirteenth-century vision in which Mary appeared to Saint Simon Stock and promised protection while giving him a brown scapular. It is a symbol of Carmelite spirituality and of simple devotion to Mary."
+     "bioEn": "The feast of the Carmelites' special love for Mary. Tradition links it to a thirteenth-century vision in which Mary appeared to Saint Simon Stock, gave him the brown scapular and promised her protection."
     }
    ]
   },
@@ -3115,7 +3115,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "II. yüzyılda Roma yakınlarında yaşadı. Kocası şehit edildikten sonra kendisi de yedi oğluyla birlikte İmparator Hadrianus’un emriyle şehit edildi.",
      "nameEn": "Symphorosa and Her Seven Sons",
      "titleEn": "Martyrs",
-     "bioEn": "A saint near second-century Rome, martyred by order of Emperor Hadrian together with her seven sons after her husband's martyrdom."
+     "bioEn": "A woman martyred near Rome in the second century, on Emperor Hadrian's orders, together with her seven sons, after her husband had been martyred too."
     }
    ]
   },
@@ -3130,7 +3130,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV-V. yüzyılda Roma imparatorunun sarayında prenslerin öğretmeniydi. Her şeyi bırakıp Mısır çölüne çekildi. Çöl geleneğinin önemli isimlerindendir; “Kaç, sus ve sükûnet içinde ol” öğüdüyle tanınır.",
      "nameEn": "Arsenius the Great",
      "titleEn": "Hermit",
-     "bioEn": "A saint who, while serving as tutor to the children in the court of the Roman Emperor in the fourth and fifth centuries, gave everything up to withdraw into the Egyptian desert. He is a major figure of the desert tradition, known for the advice \"Flee, keep silent, and be still.\""
+     "bioEn": "A tutor to the emperor's children at the Roman court in the fourth century, who gave it all up to go and live in the Egyptian desert. He is a major figure of the desert tradition, known for the advice \"Flee, keep silent, and be still.\""
     }
    ]
   },
@@ -3145,7 +3145,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre I. yüzyılda Havari Petrus onu Ravenna’nın ilk episkoposu olarak atadı. Uzun yıllar hizmet ettikten sonra imanı yüzünden şehit edildi; bunun hangi imparator döneminde olduğu kesin bilinmez.",
      "nameEn": "Apollinaris",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "A saint whom tradition holds to have been appointed the first bishop of Ravenna by the Apostle Peter himself in the first century. After many years of service, though it is not certain under which emperor, he was martyred for his faith."
+     "bioEn": "Tradition says the Apostle Peter himself made him the first bishop of Ravenna in the first century. After many years as bishop he was martyred for his faith, though under which emperor is not certain."
     }
    ]
   },
@@ -3250,7 +3250,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III-IV. yüzyılda Nikomedya’da, bugünkü İzmit’te, imparator sarayının hekimiydi ve sonra Hristiyan oldu. Yoksulları ücretsiz tedavi ettiği için kıskanıldı, ihbar edildi ve şehit edildi. Hekimlerin koruyucu azizlerindendir.",
      "nameEn": "Pantaleon",
      "titleEn": "Martyr",
-     "bioEn": "A saint who, while serving as physician to the imperial court in third- and fourth-century Nicomedia (modern İzmit, Turkey), became Christian; he was denounced out of jealousy for treating the poor free of charge and was martyred. He is one of the patron saints of physicians."
+     "bioEn": "A physician at the imperial court in Nicomedia (modern İzmit, Turkey) around the year 300 who became a Christian. Jealous rivals denounced him for treating the poor free of charge, and he was martyred. He is one of the patron saints of physicians."
     }
    ]
   },
@@ -3265,7 +3265,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre I. yüzyılda Milano’da şehit edilen iki azizdir. Mezarlarını IV. yüzyılda Aziz Ambrosius buldu.",
      "nameEn": "Nazarius and Celsus",
      "titleEn": "Martyrs",
-     "bioEn": "Tradition holds them to be two saints martyred in first-century Milan, whose graves were discovered by Saint Ambrose in the fourth century."
+     "bioEn": "Tradition says they were two martyrs of first-century Milan, whose graves were discovered by Saint Ambrose in the fourth century."
     }
    ]
   },
@@ -3340,7 +3340,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda İtalya’da Vercelli episkoposuydu. Athanasius ile birlikte Arianizme karşı mücadele ettiği için sürgüne gönderildi. Batı’da rahiplerin bir arada yaşamasını teşvik eden ilk episkoposlardan biri sayılır.",
      "nameEn": "Eusebius of Vercelli",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Vercelli in Italy in the fourth century, exiled for fighting Arianism alongside Athanasius. He is considered one of the first bishops in the West to encourage priests to live in community."
+     "bioEn": "Bishop of Vercelli in Italy in the fourth century, exiled for fighting Arianism alongside Athanasius. He is considered one of the first bishops in the West to encourage priests to live in community."
     },
     {
      "name": "Pierre-Julien Eymard",
@@ -3363,7 +3363,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Elçilerin İşleri’ne göre mor kumaş ticareti yapan Filipili bir kadındır. Havari Pavlus’un Avrupa’da vaftiz ettiği ilk kişidir. Evi, şehirdeki ilk Hristiyan topluluğunun buluşma yeri oldu.",
      "nameEn": "Lydia of Philippi",
      "titleEn": "",
-     "bioEn": "A woman of Philippi in the trade of purple cloth, recounted in the Acts of the Apostles as the first person the Apostle Paul baptized in Europe. Her home became the meeting place of the city's first Christian community."
+     "bioEn": "A dealer in purple cloth from Philippi who, according to the Acts of the Apostles, was the first person the Apostle Paul baptized in Europe. Her home became the meeting place of the city's first Christian community."
     }
    ]
   },
@@ -3378,7 +3378,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVIII-XIX. yüzyılda Fransa’da yaşamış bir köylü çocuğudur. Öğrenmekte çok zorlandı ve güçlükle rahip olabildi. Ars adlı küçük bir köyün papazı oldu. Günde on altı saate varan sürelerle günah çıkarma dinledi ve binlerce kişiyi imana geri kazandırdı. Bütün papazların koruyucu azizidir.",
      "nameEn": "John Vianney",
      "titleEn": "Priest",
-     "bioEn": "A peasant boy in eighteenth- and nineteenth-century France who struggled greatly to learn and became a priest only with difficulty. Appointed pastor of the small village of Ars, he served in the confessional for as long as sixteen hours a day, winning thousands back to the faith. He is the patron saint of all parish priests."
+     "bioEn": "A peasant boy in eighteenth- and nineteenth-century France who struggled greatly to learn and became a priest only with difficulty. Appointed pastor of the small village of Ars, he heard confessions for up to sixteen hours a day, winning thousands back to the faith. He is the patron saint of all parish priests."
     }
    ]
   },
@@ -3393,7 +3393,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Roma’daki dört büyük papalık bazilikasından biri olan Santa Maria Maggiore’nin Meryem Ana’ya adanmasını anar. Bir efsaneye göre bazilikanın yeri, IV. yüzyılda ağustos ortasında yağan bir karla belirlendi. Efes Konsili’nin Meryem’i Tanrı Anası ilan etmesinden kısa süre sonra yapılan bu bazilika, Batı’nın en eski Meryem kiliselerinden biridir.",
      "nameEn": "The Dedication of the Basilica of Saint Mary Major",
      "titleEn": "",
-     "bioEn": "This commemorates the dedication to Mary of Santa Maria Maggiore, one of the four great papal basilicas in Rome; a legend links its founding in the fourth century to a miraculous snowfall. The present basilica, built shortly after the Council of Ephesus declared Mary the Mother of God, is one of the oldest Marian churches in the West."
+     "bioEn": "Remembers the dedication to Mary of Santa Maria Maggiore, one of the four great papal basilicas in Rome; a legend links its founding in the fourth century to a miraculous snowfall. The present basilica, built shortly after the Council of Ephesus declared Mary the Mother of God, is one of the oldest Marian churches in the West."
     }
    ]
   },
@@ -3408,7 +3408,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "İsa, Petrus’u, Yakup’u ve Yuhanna’yı yanına alıp yüksek bir dağa çıktı. Orada gözlerinin önünde görünüşü değişti ve ışıl ışıl parladı. Musa ve İlyas O’nunla konuştu, Peder’in sesi de şöyle dedi: “Bu benim sevgili Oğlum’dur, O’nu dinleyin.” Bu bayram o anı anar. İsa, çektiği acılardan önce tanrısal yüceliğini havarilerine bir kez göstermiş oldu.",
      "nameEn": "The Transfiguration of the Lord",
      "titleEn": "",
-     "bioEn": "This commemorates Jesus being transfigured in radiant light on Mount Tabor before Peter, James, and John: he speaks with Moses and Elijah, and the Father's voice says, \"This is my beloved Son, hear ye him.\" Here, before his Passion, Jesus reveals his divine glory to his apostles."
+     "bioEn": "Remembers how Jesus was transfigured, shining with light, on Mount Tabor before Peter, James and John: he speaks with Moses and Elijah, and the Father's voice says, \"This is my beloved Son, hear ye him.\" Here, before his Passion, Jesus reveals his divine glory to his apostles."
     }
    ]
   },
@@ -3551,7 +3551,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu bayram, Meryem Ana’nın dünyadaki hayatının sonunda bedeni ve ruhuyla birlikte cennetin yüceliğine alınmasını kutlar. Papa XII. Pius 1950’de bunu Kilise’nin resmî öğretisi olarak ilan etti. Bayram, Meryem’in Oğlu’nun dirilişinden ilk ve tam olarak pay alan kişi olduğunu ve bütün inananların gelecekteki dirilişinin bir işareti olduğunu vurgular.",
      "nameEn": "The Assumption of Mary",
      "titleEn": "",
-     "bioEn": "This celebrates Mary being taken up, body and soul, into the glory of heaven at the end of her earthly life. This belief was defined as dogma by Pope Pius XII in 1950; it emphasizes that Mary is the first and most complete fruit of her Son's resurrection, and at the same time a sign of the future resurrection of all believers."
+     "bioEn": "Celebrates Mary's being taken up, body and soul, into the glory of heaven at the end of her earthly life. Pope Pius XII defined it as a dogma in 1950. Mary is the first and fullest fruit of her Son's resurrection, and a sign of the resurrection that awaits all believers."
     }
    ]
   },
@@ -3581,7 +3581,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XII-XIII. yüzyılda Polonya’da yaşadı. Aziz Dominik’in Dominiken tarikatına bizzat kabul ettiği ilk Polonyalılardan biridir. Tarikatın Orta ve Doğu Avrupa’da yayılmasında öncü oldu.",
      "nameEn": "Hyacinth of Poland",
      "titleEn": "Priest",
-     "bioEn": "A Pole of the twelfth and thirteenth centuries, one of the first whom Saint Dominic himself admitted to the Dominican order. He played a pioneering role in spreading the order across Central and Eastern Europe."
+     "bioEn": "A Pole who, in the thirteenth century, was among the first men Saint Dominic himself received into the Dominican order. He played a pioneering role in spreading the order across Central and Eastern Europe."
     }
    ]
   },
@@ -3641,7 +3641,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1903-1914 yılları arasında papalık yaptı. Sade bir köylü ailesinden geliyordu. Çocukların erken yaşta ilk Komünyon almasını teşvik etti, din eğitimini yaygınlaştırdı ve Ayin müziğini yeniledi. Sade yaşamıyla da tanınır.",
      "nameEn": "Pius X",
      "titleEn": "Pope",
-     "bioEn": "Pope from 1903 to 1914, who came from a simple peasant family. He encouraged children to receive First Communion at an early age, spread catechetical education, and reformed liturgical music. He is also known for the simplicity of his lifestyle."
+     "bioEn": "Pope from 1903 to 1914, who came from a simple peasant family. He encouraged children to receive First Communion at an early age, spread catechetical education, and reformed liturgical music. He always lived simply."
     }
    ]
   },
@@ -3656,7 +3656,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu bayram Meryem Ana’yı, Oğlu Mesih İsa Kral olduğu için göğün ve yerin Kraliçesi olarak onurlandırır. Meryem Ana’nın Göğe Alınışı’ndan tam bir hafta sonra kutlanır; böylece Meryem’in kraliçeliğinin göğe alınışının doğal sonucu olduğunu vurgular.",
      "nameEn": "The Queenship of Mary",
      "titleEn": "",
-     "bioEn": "This celebrates Mary being honored as Queen of heaven and earth because her Son, Christ, is King. Celebrated exactly one week after the feast of the Assumption of Mary, it emphasizes this queenship as a natural consequence of the Assumption."
+     "bioEn": "Honors Mary as Queen of heaven and earth, because her Son, Christ, is King. It falls a week after the Assumption, and her queenship follows naturally from it."
     }
    ]
   },
@@ -3671,7 +3671,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI-XVII. yüzyılda Peru’nun Lima şehrinde yaşadı. Evlenmesi için yapılan baskılara rağmen kendini Allah’a adadı. Evinin bahçesinde inzivaya çekilerek yoğun bir dua ve perhiz hayatı sürdü. Amerika kıtasında aziz ilan edilen ilk kişidir; Latin Amerika’nın koruyucu azizesidir.",
      "nameEn": "Rose of Lima",
      "titleEn": "Virgin",
-     "bioEn": "A saint who lived in sixteenth- and seventeenth-century Peru (Lima). Despite pressure to marry, she chose to remain unmarried, withdrawing into a hermitage in her home's garden to live a life of intense prayer and fasting. She is the first saint canonized from the Americas; she is regarded as the patron saint of Latin America."
+     "bioEn": "A young woman of Lima, Peru, in the sixteenth and seventeenth centuries. Despite pressure to marry, she chose to remain unmarried, withdrawing into a hermitage in her home's garden to live a life of intense prayer and fasting. She is the first saint canonized from the Americas; she is regarded as the patron saint of Latin America."
     }
    ]
   },
@@ -3754,7 +3754,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV-V. yüzyılda Kuzey Afrika’da yaşadı. Gençliğinde zevke düşkün ve şüpheci bir hayat sürdü. Annesi Monica’nın duaları ve Ambrosius’un vaazları sayesinde otuz iki yaşında hayatı değişti. Hippo episkoposu oldu. “İtiraflar” ve “Tanrı Devleti” gibi eserleriyle Batı Hristiyan düşüncesini en derinden etkileyen teologlardan biridir.",
      "nameEn": "Augustine of Hippo",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "A saint who lived in fourth- and fifth-century North Africa; in his youth he led a life devoted to pleasure and skepticism, and underwent a conversion at thirty-two through his mother Monica's prayers and Ambrose's preaching. He became bishop of Hippo, and through works such as \"Confessions\" and \"The City of God\" became one of the theologians who most deeply shaped Western Christian thought."
+     "bioEn": "A fourth- and fifth-century North African who spent his youth chasing pleasure and doubting everything, and was converted at thirty-two through his mother Monica's prayers and Ambrose's preaching. He became bishop of Hippo, and through works such as \"Confessions\" and \"The City of God\" became one of the theologians who most deeply shaped Western Christian thought."
     }
    ]
   },
@@ -3769,7 +3769,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Markos İncili’ne göre Yahya, Kral Hirodes Antipas’ı kardeşinin karısıyla evlendiği için açıkça eleştirdi ve bu yüzden hapse atıldı. Hirodes’in üvey kızı bir şölende dans etti; Hirodes de ona istediği her şeyi vereceğine yemin etti. Kız Yahya’nın başını istedi ve Yahya idam edildi. Bu gün, gerçeği söylediği için canını veren peygamberin ölümünü anar.",
      "nameEn": "The Martyrdom of Saint John the Baptist",
      "titleEn": "",
-     "bioEn": "According to the Gospel of Mark, John was imprisoned for openly criticizing King Herod Antipas for marrying his brother's wife, He was then executed when Herod, after a rash promise made to his stepdaughter for her dance, was asked for John's head. This commemorates the death of the prophet who gave his life for speaking the truth."
+     "bioEn": "According to the Gospel of Mark, John was imprisoned for openly criticizing King Herod Antipas for marrying his brother's wife. When Herod's stepdaughter danced for him, he rashly promised her anything she wanted, and she asked for John's head. The Church remembers a prophet who gave his life for telling the truth."
     }
    ]
   },
@@ -3814,7 +3814,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VII-VIII. yüzyılda yaşadı. Yunanistan’da doğdu, Fransa’da bir ormanda inzivaya çekildi. Geleneğe göre yaralı bir geyiği korudu. Orta Çağ’ın en sevilen on dört “yardımcı aziz”inden biri oldu. Sakatların koruyucu azizidir.",
      "nameEn": "Giles",
      "titleEn": "Hermit",
-     "bioEn": "A saint born in seventh- and eighth-century Greece who withdrew as a hermit into a forest in France. Tradition tells how he protected a wounded deer; in the Middle Ages he became one of the most beloved of the Fourteen Holy Helpers. He is the patron saint of the disabled."
+     "bioEn": "Born in Greece, he went to live as a hermit in a forest in France in the seventh or eighth century. Tradition tells how he protected a wounded deer; in the Middle Ages he became one of the most beloved of the Fourteen Holy Helpers. He is the patron saint of the disabled."
     }
    ]
   },
@@ -3829,7 +3829,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VII. yüzyılda Avignon episkoposuydu. Şehri sel felaketlerinden koruduğuna inanılır. Avignon’un koruyucu azizidir.",
      "nameEn": "Agricol of Avignon",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Avignon in the seventh century, believed to have protected the city from floods in his time; he is the patron saint of Avignon."
+     "bioEn": "Bishop of Avignon in the seventh century, believed to have saved the city from floods; he is the patron saint of Avignon."
     }
    ]
   },
@@ -3919,7 +3919,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Kutsal Kitap Meryem’in doğumunu anlatmaz, ama ilk Kilise geleneği bu olayı bu günde anar. Meryem’in doğumu, Allah’ın insanlığı kurtarma planında yeni bir umudun başlangıcı olarak kutlanır. Bayram, aralıktaki Lekesiz Gebe Kalınış bayramından tam dokuz ay sonra gelir.",
      "nameEn": "The Nativity of Mary",
      "titleEn": "",
-     "bioEn": "Though not directly recounted in Scripture, early Church tradition commemorates Mary's birth on this day. Her birth is celebrated as a new dawn of hope in God's plan to save humanity; it falls exactly nine months after the feast of the Immaculate Conception on December 8."
+     "bioEn": "Scripture doesn't tell of Mary's birth, but since early times the Church has celebrated it on this day. Her birth is celebrated as a new dawn of hope in God's plan to save humanity; it falls exactly nine months after the feast of the Immaculate Conception on December 8."
     }
    ]
   },
@@ -3979,7 +3979,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu gün Meryem Ana’nın adına duyulan bağlılığı kutlar. 1683’te Viyana kuşatmasının kaldırılması Meryem’in duasına bağlandı ve bu anma bütün Kilise’ye yayıldı. Bir isim, taşıyanın bütün varlığını temsil eder; bu bayram da Meryem’in kim olduğunu, yani Allah’ın lütfuyla dolu kişi olduğunu anar.",
      "nameEn": "The Holy Name of Mary",
      "titleEn": "",
-     "bioEn": "This feast of the Holy Name of Mary spread to the whole Church after the lifting of the Siege of Vienna in 1683 was attributed to her intercession. A name represents a person's whole being; this feast commemorates who Mary is, the one full of God's grace."
+     "bioEn": "This feast of the Holy Name of Mary spread to the whole Church after the lifting of the Siege of Vienna in 1683 was attributed to her intercession. In the Bible a name stands for the whole person, so this feast honors who Mary is: the one full of grace."
     }
    ]
   },
@@ -3994,7 +3994,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV-V. yüzyılda Konstantinopolis episkoposuydu. Olağanüstü vaazları yüzünden “Altın Ağızlı” anlamına gelen Chrysostomos lakabını aldı. Saraydaki ahlaksızlığı ve zenginlerin yoksullara duyarsızlığını sert bir dille eleştirdiği için sürgüne gönderildi ve sürgünde öldü. Doğu Kilisesi’nin en büyük vaizlerinden ve teologlarından biridir.",
      "nameEn": "John Chrysostom",
      "titleEn": "Bishop and Doctor of the Church",
-     "bioEn": "A saint who became bishop of Constantinople in the fourth and fifth centuries, earning the nickname \"Chrysostom\" (\"golden-mouthed\") for his extraordinary gift of preaching. He was exiled for sharply criticizing the immorality of the court and the indifference of the rich toward the poor, and died in exile. He is considered one of the greatest preachers and theologians of the Eastern Church."
+     "bioEn": "Bishop of Constantinople in the fourth and fifth centuries, earning the nickname \"Chrysostom\" (\"golden-mouthed\") for his extraordinary gift of preaching. He was exiled for sharply criticizing the immorality of the court and the indifference of the rich toward the poor, and died in exile. He is considered one of the greatest preachers and theologians of the Eastern Church."
     }
    ]
   },
@@ -4009,7 +4009,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "İmparator Konstantin’in annesi Azize Helena’nın, 326’da Kudüs’te Mesih İsa’nın çarmıha gerildiği gerçek Haç’ı bulduğuna inanılır. Bu bayram, o olayı ve 335’te o yerde yapılan bazilikanın kutsanmasını anar. Kilise, bir işkence aracı olan çarmıhı kurtuluşun ve zaferin işareti olarak yüceltir.",
      "nameEn": "The Exaltation of the Holy Cross",
      "titleEn": "",
-     "bioEn": "This commemorates the finding in Jerusalem of the True Cross on which Christ was crucified, traditionally credited to Saint Helena, mother of Emperor Constantine, in 326, and the dedication in 335 of the basilica built on that site. The Church exalts the cross, an instrument of torture, as a sign of salvation and victory."
+     "bioEn": "Remembers the finding in Jerusalem of the True Cross on which Christ was crucified, traditionally credited to Saint Helena, mother of Emperor Constantine, in 326, and the dedication in 335 of the basilica built on that site. The Church exalts the cross, an instrument of torture, as a sign of salvation and victory."
     }
    ]
   },
@@ -4024,7 +4024,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu gün, Meryem Ana’nın Oğlu’nun çektiği acılar boyunca yaşadığı iç acıyı anar. Gelenek yedi acı sayar: Simeon’un kehaneti, Mısır’a kaçış, kaybolan İsa’nın aranması, çarmıha giden yolda karşılaşma, çarmıhın dibinde durma, İsa’nın bedeninin kucağına verilmesi ve mezara konması. Bu anmanın, Kutsal Haç’ın Yüceltilmesi’nden bir gün sonra olması tesadüf değildir.",
      "nameEn": "Our Lady of Sorrows",
      "titleEn": "",
-     "bioEn": "This commemorates the spiritual suffering Mary bore through her Son's Passion; tradition counts seven distinct sorrows (Simeon's prophecy, the flight into Egypt, the search for the lost Jesus, meeting him on the way to the cross, standing at the foot of the cross, receiving his body, and his burial). It is no coincidence that it is celebrated one day after the Exaltation of the Holy Cross."
+     "bioEn": "Remembers what Mary suffered with her Son in his Passion; tradition counts seven distinct sorrows (Simeon's prophecy, the flight into Egypt, the search for the lost Jesus, meeting him on the way to the cross, standing at the foot of the cross, receiving his body, and his burial). It is no coincidence that it is celebrated one day after the Exaltation of the Holy Cross."
     }
    ]
   },
@@ -4092,7 +4092,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda İtalya’da Benevento episkoposuydu ve İmparator Diocletianus’un zulmü sırasında şehit edildi. Napoli’de, onun kanı olduğuna inanılan bir şişe saklanır ve bu kanın belirli günlerde sıvılaştığı anlatılır. Napoli’nin koruyucu azizidir.",
      "nameEn": "Januarius",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "A saint who became bishop of Benevento in Italy in the fourth century, martyred during Emperor Diocletian's persecution. A vessel kept in Naples, believed by tradition to hold his blood, is said to liquefy on certain days; he is the patron saint of Naples."
+     "bioEn": "Bishop of Benevento in Italy in the fourth century, martyred during Emperor Diocletian's persecution. A vessel kept in Naples, believed by tradition to hold his blood, is said to liquefy on certain days; he is the patron saint of Naples."
     }
    ]
   },
@@ -4107,7 +4107,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1839-1867 yılları arasında Kore’de, Hristiyanlığın şiddetle bastırıldığı bir dönemde şehit edilen yüz üç Koreliyi anarız. Andreas Kim Tae-gŏn Kore’nin ilk yerli rahibiydi; Paulus Chŏng Ha-sang ise öncü bir sıradan Katolikti. İmanlarından dönmeyi reddedip canlarını veren bu insanlar, bugün Kore Katolik Kilisesi’nin kökleridir.",
      "nameEn": "Andrew Kim Tae-gon, Paul Chong Ha-sang, and Companions",
      "titleEn": "Martyrs",
-     "bioEn": "This commemorates a hundred and three Koreans martyred between 1839 and 1867, a period when Christianity was violently suppressed in Korea. Kim Tae-gon was Korea's first native priest; Chong Ha-sang was a lay pioneer. This group, who refused to renounce their faith and gave their lives, form the roots of today's Korean Catholic Church."
+     "bioEn": "Remembers a hundred and three Koreans martyred between 1839 and 1867, a period when Christianity was violently suppressed in Korea. Kim Tae-gon was Korea's first native priest; Chong Ha-sang was a lay pioneer. They refused to give up their faith and paid with their lives, and they are the roots of the Catholic Church in Korea today."
     }
    ]
   },
@@ -4167,7 +4167,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda Aziz Pedro Nolasco, Müslümanların elinde esir olan Hristiyanları fidye ödeyerek kurtarmak için Mercedarian tarikatını kurdu. Bu gün, tarikatın kuruluşuna yol açan görümü anar. Bu bağlılık bugün de esirlerin özgürlüğü için dua etmeye vesile olur.",
      "nameEn": "Our Lady of Ransom",
      "titleEn": "",
-     "bioEn": "This commemorates the founding vision of the Mercedarian order, established by Saint Peter Nolasco in the thirteenth century to ransom Christian captives held by Muslims. This devotion is still an occasion for prayer for the freedom of captives."
+     "bioEn": "Remembers the vision that led Saint Peter Nolasco to found the Mercedarian order in the thirteenth century, to ransom Christians held captive by Muslims. It is still a day of prayer for all who are held captive."
     }
    ]
   },
@@ -4227,7 +4227,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "X. yüzyılda Bohemya’nın, yani bugünkü Çekya’nın dükü oldu ve ülkesinde Hristiyanlığı güçlendirmeye çalıştı. Tahtı ele geçirmek isteyen kendi kardeşi tarafından öldürüldü. Çekya’nın koruyucu azizidir ve adil, dindar bir hükümdarın simgesi olmuştur.",
      "nameEn": "Wenceslaus",
      "titleEn": "Martyr",
-     "bioEn": "Duke of Bohemia (modern Czech Republic) in the tenth century, who worked to strengthen Christianity in his country and was killed by his own brother, who wanted to seize the throne. He is the patron saint of the Czech Republic, and became a symbol of the ideal of a just and pious ruler."
+     "bioEn": "Duke of Bohemia (modern Czech Republic) in the tenth century, who worked to strengthen Christianity in his country and was killed by his own brother, who wanted to seize the throne. He is the patron saint of the Czech Republic, and a model of the just and devout ruler."
     },
     {
      "name": "Lorenzo Ruiz ve Yoldaşları",
@@ -4250,7 +4250,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Kutsal Kitap’ta adı geçen üç başmeleği birlikte anarız. Mikael (“Allah gibisi kim?”), kötülüğe karşı Allah’ın ordularının başıdır. Cebrail, Meryem Ana’ya müjdeyi getiren habercidir. Rafael ise Tobit Kitabı’nda genç Tobiya’ya yol arkadaşlığı eden ve şifa veren melektir. Üçü de Allah’ın insanlara doğrudan yaklaştığı anlarda hizmet eder.",
      "nameEn": "The Archangels Michael, Gabriel, and Raphael",
      "titleEn": "",
-     "bioEn": "This commemorates together the three archangels named in Scripture. Michael (\"who is like God\") leads God's armies against evil; Gabriel is the messenger who brings the Annunciation to Mary; and Raphael is the angel in the Book of Tobit who accompanies and heals the young Tobias. All three serve at moments when God communicates directly with people."
+     "bioEn": "Honors together the three archangels named in Scripture. Michael (\"who is like God\") leads God's armies against evil; Gabriel is the messenger who brings the Annunciation to Mary; and Raphael is the angel in the Book of Tobit who accompanies and heals the young Tobias. All three appear at moments when God speaks directly to people."
     }
    ]
   },
@@ -4295,7 +4295,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Allah’ın her insana onu korumak ve doğru yola yönlendirmek için bir melek verdiğine inanılır. Bu gün o melekleri anar. Dayanağı, Mesih İsa’nın küçüklerin meleklerinin gökte her zaman Peder’in yüzünü gördüğünü söylemesidir. Çocukları özellikle koruyucu meleklerine emanet etmek eski bir gelenektir.",
      "nameEn": "The Guardian Angels",
      "titleEn": "",
-     "bioEn": "This commemorates the angel believed to be given by God to every person to protect them and guide them along the right path. It rests on Christ's words about the little ones: \"their angels... always behold the face of my Father who is in heaven.\" Traditionally, children in particular are entrusted to their guardian angels."
+     "bioEn": "Honors the angel God gives to every person to protect them and keep them on the right path. It rests on Christ's words about the little ones: \"their angels... always behold the face of my Father who is in heaven.\" Traditionally, children in particular are entrusted to their guardian angels."
     }
    ]
   },
@@ -4371,7 +4371,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIX. yüzyılda Kanada’da yaşadı ve kızların eğitimine adanmış İsa ve Meryem’in Kutsal Adları Rahibeleri cemaatini kurdu. Kısa ama çok verimli bir hizmet hayatı oldu.",
      "nameEn": "Marie Rose Durocher",
      "titleEn": "Virgin",
-     "bioEn": "A saint in nineteenth-century Canada who founded the Sisters of the Holy Names of Jesus and Mary, devoted to the education of girls. She led a short but intense life of service."
+     "bioEn": "A Canadian woman of the nineteenth century who founded the Sisters of the Holy Names of Jesus and Mary, devoted to the education of girls. She led a short but intense life of service."
     }
    ]
   },
@@ -4386,7 +4386,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1571’de Lepanto Deniz Savaşı’nda Hristiyan donanması beklenmedik bir zafer kazandı. Bu zafer, o gün Roma’da topluca edilen tesbih duasına bağlandı ve Papa V. Pius bu bayramı koydu. Bayram, Mesih İsa’nın hayatındaki olayları Meryem Ana ile birlikte düşünmenin bir yolu olan tesbih duasının Kilise’deki önemini vurgular.",
      "nameEn": "Our Lady of the Rosary",
      "titleEn": "",
-     "bioEn": "A feast instituted by Pope Pius V after the unexpected victory of the Christian fleet at the Battle of Lepanto in 1571 was attributed to the collective praying of the Rosary in Rome that day. It emphasizes the Rosary's central place in the Church as a way of meditating on the events of Christ's life together with Mary."
+     "bioEn": "Pope Pius V set up this feast after the Christian fleet's unexpected victory at Lepanto in 1571, which he credited to the Rosary prayed all over Rome that day. It reminds the Church that the Rosary is a way of thinking over the life of Christ together with Mary."
     }
    ]
   },
@@ -4401,7 +4401,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre Antakya’da dansçıyken bir episkoposun vaazından etkilenip tövbe etti. Sonra erkek kılığına girip Kudüs yakınlarında bir mağarada inzivaya çekildi.",
      "nameEn": "Pelagia the Penitent",
      "titleEn": "",
-     "bioEn": "Tradition holds her to be a saint who, while living as a dancer in Antioch (modern Antakya, Turkey), was moved by a bishop's sermon to repent, then, disguised as a man, withdrew to a cave near Jerusalem."
+     "bioEn": "Tradition says she was a dancer in Antioch (modern Antakya, Turkey) who repented after hearing a bishop preach, then disguised herself as a man and went to live in a cave near Jerusalem."
     }
    ]
   },
@@ -4424,7 +4424,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda Roma’dan Galya’ya, bugünkü Fransa’ya misyoner olarak gönderildi. Paris’in ilk episkoposu sayılır ve orada arkadaşlarıyla birlikte şehit edildi.",
      "nameEn": "Denis and Companions",
      "titleEn": "Bishop and Martyrs",
-     "bioEn": "A saint sent as a missionary from Rome to Gaul (France) in the third century, considered the first bishop of Paris, martyred there."
+     "bioEn": "Sent from Rome as a missionary to Gaul (France) in the third century, he is regarded as the first bishop of Paris, and was martyred there."
     },
     {
      "name": "Giovanni Leonardi",
@@ -4447,7 +4447,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI. yüzyılda İspanya’da önce bir dük ve devlet adamıydı. İmparatoriçe Isabella’nın cenazesinde onun bozulmuş yüzünü görünce dünyevi hırslardan vazgeçti. Cizvit oldu ve tarikatın genel başkanlığına kadar yükseldi.",
      "nameEn": "Francis Borgia",
      "titleEn": "Priest",
-     "bioEn": "First a duke and statesman in sixteenth-century Spain, after seeing the decayed face of Empress Isabella's corpse, he gave up worldly ambition, became a Jesuit, and rose to be superior general of the order."
+     "bioEn": "First a duke and statesman in sixteenth-century Spain, after seeing the decaying body of Empress Isabella, he gave up worldly ambition, became a Jesuit, and rose to be superior general of the order."
     }
    ]
   },
@@ -4477,7 +4477,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VII. yüzyılda İngiltere’de York episkoposuydu. Kelt ve Roma gelenekleri arasında Paskalya’nın tarihi konusunda bir anlaşmazlık vardı. 664’teki Whitby Sinodu’nda Roma tarafını savundu ve kararda belirleyici oldu.",
      "nameEn": "Wilfrid of York",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of York in seventh-century England, playing a decisive role at the Synod of Whitby in 664 by defending the Roman side in the dispute over the date of Easter between the Celtic and Roman Christian traditions."
+     "bioEn": "Bishop of York in seventh-century England, playing a decisive role at the Synod of Whitby in 664 by defending the Roman side in the dispute over the date of Easter between the Celtic and Roman Christian traditions."
     }
    ]
   },
@@ -4507,7 +4507,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda yaşadı. Gençliğinde köle ve mahkûm olarak zor bir hayat sürdü, sonra papa oldu. Roma’da bugün onun adını taşıyan büyük bir katakomb yaptırdı. Papalığı sırasında çıkan bir ayaklanmada öldürüldü ve şehit olarak anılır.",
      "nameEn": "Callixtus I",
      "titleEn": "Pope and Martyr",
-     "bioEn": "A saint who lived a hard life as a slave and prisoner in his youth, then became pope in the third century. He had a great catacomb built in Rome that still bears his name today. He was martyred during an uprising while he was pope."
+     "bioEn": "As a young man he lived a hard life as a slave and a prisoner; later, in the third century, he became pope. He had a great catacomb built in Rome that still bears his name today. He was killed in a riot while he was pope."
     }
    ]
   },
@@ -4545,7 +4545,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVII. yüzyılda Fransa’da yaşamış bir Ziyaret Rahibesi’dir. Mesih İsa’nın ona göründüğü ve Kutsal Yüreği’ne bağlılığı yaymasını istediği görümlerle tanınır. Bu bağlılık onun aracılığıyla bütün Kilise’ye yayıldı.",
      "nameEn": "Margaret Mary Alacoque",
      "titleEn": "Virgin",
-     "bioEn": "A Visitation Sister in seventeenth-century France. She is known for the visions in which Christ appeared to her and asked her to spread devotion to his Sacred Heart; this devotion spread throughout the whole Church through her."
+     "bioEn": "A Visitation Sister in seventeenth-century France. She is known for the visions in which Christ appeared to her and asked her to spread devotion to his Sacred Heart; through her the devotion spread to the whole Church."
     }
    ]
   },
@@ -4560,7 +4560,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "I-II. yüzyılda Antakya episkoposuydu. Geleneğe göre Havari Yuhanna’nın öğrencisidir. Vahşi hayvanlara atılmak üzere Roma’ya götürülürken yedi mektup yazdı. Bu mektuplar, Kilise’nin birliği, episkoposun önemi ve Efkaristiya hakkında ilk dönemden kalan en değerli tanıklıklardandır. Kendini “Allah’ın buğdayı” diye tanıttı.",
      "nameEn": "Ignatius of Antioch",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "A saint who became bishop of Antioch (modern Antakya, Turkey) in the first and second centuries, traditionally held to be a disciple of the Apostle John. The seven letters he wrote while being taken to Rome to be thrown to wild beasts and martyred are among the most valuable early testimonies on the Church's unity, the importance of the episcopate, and the Eucharist. He described himself as \"the wheat of God.\""
+     "bioEn": "Bishop of Antioch (modern Antakya, Turkey) in the first and second centuries, traditionally held to be a disciple of the Apostle John. The seven letters he wrote on his way to Rome, where he was thrown to the wild beasts, are among the most valuable early testimonies on the Church's unity, the importance of the episcopate, and the Eucharist. He described himself as \"the wheat of God.\""
     }
    ]
   },
@@ -4598,7 +4598,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVII. yüzyılda bugünkü Kanada’da ve ABD’nin kuzeydoğusunda, Huron ve İrokua halkları arasında misyonerlik yapan Fransız Cizvitlerdir. Bölgedeki savaşlar sırasında işkenceyle şehit edildiler. Hikâyeleri, Kuzey Amerika’nın ilk misyon tarihinin en dramatik anlatılarındandır.",
      "nameEn": "John de Brébeuf, Isaac Jogues, and Companions",
      "titleEn": "Martyrs",
-     "bioEn": "French Jesuits who did missionary work among the Huron and Iroquois peoples in what is now northeastern Canada and the United States in the seventeenth century. They were martyred by torture during the wars in the region. This is one of the most dramatic accounts in the early mission history of North America."
+     "bioEn": "French Jesuits who did missionary work among the Huron and Iroquois peoples in what is now northeastern Canada and the United States in the seventeenth century. They were martyred by torture during the wars in the region. Their story is one of the most dramatic in the early missions of North America."
     }
    ]
   },
@@ -4628,7 +4628,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre IV-V. yüzyılda Britanyalı bir prenses olan Ursula, ona eşlik eden genç kızlarla birlikte hacdan dönerken Köln yakınlarında Hunlar tarafından öldürüldü. Efsanenin ayrıntıları zamanla büyüdü, ama Ursula ve arkadaşları çok erken dönemden beri Köln’de büyük saygı görür.",
      "nameEn": "Ursula and Companions",
      "titleEn": "Virgins and Martyrs",
-     "bioEn": "Tradition holds that Ursula, a British princess, was massacred near Cologne by the Huns while returning from pilgrimage together with the virgins who accompanied her, around the fourth to fifth century; though the legend's details grew over time, she has been held in great honor in Cologne since the early period."
+     "bioEn": "Tradition says Ursula was a British princess who, with the young women traveling with her, was massacred by the Huns near Cologne on her way back from a pilgrimage, in the fourth or fifth century. The legend grew in the telling, but Cologne has honored her since early times."
     }
    ]
   },
@@ -4658,7 +4658,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIV-XV. yüzyılda İtalya’da önce hukukçuydu, sonra Fransisken rahibi oldu. Yaşlılığında, Osmanlı ordusuna karşı Belgrad’ı savunan askerlere ruhani destek verdi ve zaferde rol oynadı. Askeri rahiplerin koruyucu azizlerindendir.",
      "nameEn": "John of Capistrano",
      "titleEn": "Priest",
-     "bioEn": "First a lawyer, then a Franciscan friar, in fourteenth- and fifteenth-century Italy. In old age he gave spiritual support to the soldiers defending Belgrade against the Ottoman army, playing a role in the victory won there. He is among the patron saints of military chaplains."
+     "bioEn": "First a lawyer, then a Franciscan friar, in fourteenth- and fifteenth-century Italy. In old age he rallied the soldiers defending Belgrade against the Ottoman army and helped win the victory there. He is among the patron saints of military chaplains."
     }
    ]
   },
@@ -4688,7 +4688,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda Roma’da yaşamış bir çift şehittir. Anlatılana göre evlendirildiler, ama ikisi de kendini Allah’a adadığı için evliliklerini ruhani bir birlik olarak yaşadılar.",
      "nameEn": "Chrysanthus and Daria",
      "titleEn": "Martyrs",
-     "bioEn": "A married couple martyred together in third-century Rome; tradition holds that their marriage was, by mutual vow of virginity, turned into a spiritual union rather than a physical one."
+     "bioEn": "A married couple martyred together in third-century Rome; tradition says they agreed together to live their marriage in chastity."
     }
    ]
   },
@@ -4718,7 +4718,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda bir gemi kazasından sonra Etiyopya’ya götürülen Fenikeli bir gençti; sonra oranın ilk episkoposu oldu. Etiyopya Kilisesi’nin kurucusu sayılır ve “Etiyopya’nın Havarisi” diye anılır.",
      "nameEn": "Frumentius",
      "titleEn": "Bishop",
-     "bioEn": "A Phoenician who was carried to Ethiopia after a shipwreck in the fourth century, and later became its first bishop. He is remembered as the founding father of the Ethiopian Church and \"the Apostle of Ethiopia.\""
+     "bioEn": "A Phoenician who ended up in Ethiopia after a shipwreck in the fourth century and later became its first bishop. He is remembered as the founding father of the Ethiopian Church and \"the Apostle of Ethiopia.\""
     }
    ]
   },
@@ -4733,7 +4733,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "İki havariyi birlikte anarız. Simon “Gayretkeş” lakabıyla anılır. Yahuda ise İskariot’tan ayırt etmek için Taddeus diye de bilinir. İncil’de onun hakkında çok az şey anlatılır, ama halk arasında “umutsuz davaların azizi” olarak çok sevilir ve ona çok dua edilir.",
      "nameEn": "The Apostles Simon and Jude",
      "titleEn": "",
-     "bioEn": "Two apostles. Simon is known by the nickname \"the Zealot\"; Jude (to distinguish him from Iscariot) is also known as Thaddeus, and is much loved in popular devotion as \"the saint of hopeless causes,\" because although little is said of him in the Gospel, a strong tradition of intercession grew up around him."
+     "bioEn": "Two apostles. Simon is known by the nickname \"the Zealot\"; Jude (to distinguish him from Iscariot) is also known as Thaddeus, and is much loved in popular devotion as \"the saint of hopeless causes,\" Little is said of him in the Gospels, but a strong tradition of asking for his help grew up around him."
     }
    ]
   },
@@ -4748,7 +4748,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "II-III. yüzyılda yüz yaşını geçene kadar Kudüs episkoposu olarak hizmet ettiği anlatılır. Paskalya gecesi lambalar için yağ bulunamayınca suyu yağa dönüştürdüğü mucizeyle anılır.",
      "nameEn": "Narcissus of Jerusalem",
      "titleEn": "Bishop",
-     "bioEn": "A saint said to have served as bishop of Jerusalem past the age of one hundred, in the second and third centuries; he is remembered for a miracle in which the water for the Easter vigil turned into oil."
+     "bioEn": "Said to have been bishop of Jerusalem until past the age of a hundred, in the second and third centuries; he is remembered for a miracle in which the water for the Easter vigil turned into oil."
     }
    ]
   },
@@ -4763,7 +4763,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III-IV. yüzyılda Roma ordusunda yüzbaşıydı. İmparatorun doğum günü için yapılan putperest bir törende rütbe işaretlerini yere attı ve Hristiyan olduğunu ilan etti. Bu yüzden idam edildi.",
      "nameEn": "Marcellus the Centurion",
      "titleEn": "Martyr",
-     "bioEn": "A martyr executed for throwing down his rank insignia and declaring himself Christian during a pagan festival ceremony, while serving as a centurion in the Roman army around the third to fourth century."
+     "bioEn": "A centurion in the Roman army around the year 300 who threw down his badge of rank at a pagan festival, declared himself a Christian and was executed."
     }
    ]
   },
@@ -4778,7 +4778,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "X. yüzyılda Regensburg episkoposuydu. Döneminde din eğitiminin ve manastır hayatının yenilenmesinde öncü oldu.",
      "nameEn": "Wolfgang of Regensburg",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Regensburg in the tenth century, a pioneer in the religious education and monastic reform of his time."
+     "bioEn": "Bishop of Regensburg in the tenth century, who led the way in the religious education and monastic reform of his time."
     }
    ]
   },
@@ -4793,7 +4793,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Takvimde adıyla anılan azizlerin dışında, cennette olduğuna inandığımız sayısız kutsal insanı topluca kutlar. Dayanağı, Vahiy Kitabı’ndaki şu görümdür: “Kimsenin sayamayacağı kadar büyük bir kalabalık” Allah’ın tahtı önünde durup O’nu övmektedir. Bu bayram, kutsallık çağrısının yalnızca aziz ilan edilmiş birkaç kişiye değil, herkese açık olduğunu hatırlatır.",
      "nameEn": "All Saints",
      "titleEn": "",
-     "bioEn": "A feast celebrating together the countless holy souls believed to be in heaven, beyond the saints remembered by name in the Church's calendar. It rests on the vision described in the Book of Revelation of \"a great multitude, which no man could number,\" standing before God's throne giving him praise. This feast reminds us that the call to holiness is open to everyone, not only to the few who have been formally canonized."
+     "bioEn": "The feast of all the saints in heaven, not only the ones the Church's calendar names. It rests on the vision described in the Book of Revelation of \"a great multitude, which no man could number,\" standing before God's throne giving him praise. This feast reminds us that the call to holiness is open to everyone, not only to the few who have been formally canonized."
     }
    ]
   },
@@ -4883,7 +4883,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VII-VIII. yüzyılda İngiltere’de doğdu. Misyoner olarak Frizya’ya, bugünkü Hollanda’ya gitti ve Utrecht’in ilk episkoposu oldu. Hollanda’nın koruyucu azizlerindendir.",
      "nameEn": "Willibrord",
      "titleEn": "Bishop",
-     "bioEn": "A saint born in seventh- and eighth-century England who went as a missionary to Frisia (modern Netherlands) and became the first bishop of Utrecht. He is regarded as one of the patron saints of the Netherlands."
+     "bioEn": "An Englishman of the seventh and eighth centuries who went as a missionary to Frisia (modern Netherlands) and became the first bishop of Utrecht. He is regarded as one of the patron saints of the Netherlands."
     }
    ]
   },
@@ -4898,7 +4898,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XI-XII. yüzyılda Fransa’da Amiens episkoposuydu. Din adamları arasında kilise görevlerinin parayla satılmasına karşı mücadele etti.",
      "nameEn": "Godfrey of Amiens",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Amiens in eleventh- and twelfth-century France, fighting against simony (the selling of Church offices) among the clergy."
+     "bioEn": "Bishop of Amiens in eleventh- and twelfth-century France, fighting against simony (the selling of Church offices) among the clergy."
     }
    ]
   },
@@ -4913,7 +4913,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Papa’nın Roma episkoposu olarak kendi katedrali olan Aziz Yuhanna Laterano Bazilikası’nın IV. yüzyılda kutsanmasını anar. Bu bazilika “Roma’daki ve dünyadaki bütün kiliselerin annesi ve başı” unvanını taşır. Bayram, Roma Kilisesi’nin ve papanın bütün Kilise’yi bir arada tutan rolünü hatırlatır.",
      "nameEn": "The Dedication of the Lateran Basilica",
      "titleEn": "",
-     "bioEn": "This commemorates the fourth-century dedication of the Basilica of Saint John Lateran, the pope's own cathedral as bishop of Rome. This basilica carries the title \"mother and head\" of all the churches in Rome; this feast recalls the unifying role of the Church of Rome and the papacy within the universal Church."
+     "bioEn": "Remembers the fourth-century dedication of the Basilica of Saint John Lateran, the pope's own cathedral as bishop of Rome. It is called the \"mother and head\" of all the churches of Rome, and the feast is a reminder of the part Rome and the pope play in holding the whole Church together."
     }
    ]
   },
@@ -4943,7 +4943,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda Roma ordusunda askerdi. Anlatılana göre kışın ortasında soğuktan donmak üzere olan bir dilenciyle pelerinini ikiye bölüp paylaştı. O gece rüyasında o dilencinin Mesih İsa olduğunu gördü. Bundan sonra vaftiz oldu, askerliği bıraktı ve sonra Tours episkoposu oldu. Fransa’nın kırsal bölgelerinde Hristiyanlığın yayılmasında öncü oldu.",
      "nameEn": "Martin of Tours",
      "titleEn": "Bishop",
-     "bioEn": "While serving as a soldier in the Roman army in the fourth century, he is said to have shared half his cloak with a beggar freezing in the middle of winter, then to have learned in a dream that night that the beggar was Christ. After this event he was baptized and left the army, later becoming bishop of Tours. He played a pioneering role in spreading Christianity across rural France."
+     "bioEn": "While serving as a soldier in the Roman army in the fourth century, he is said to have shared half his cloak with a beggar freezing in the middle of winter, then to have learned in a dream that night that the beggar was Christ. After that he was baptized and left the army, later becoming bishop of Tours. He played a pioneering role in spreading Christianity across rural France."
     }
    ]
   },
@@ -4988,7 +4988,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XII. yüzyılda İrlanda’da Dublin başepiskoposuydu. İngilizlerin İrlanda’yı istilası sırasında halkı için arabuluculuk yapmaya çalıştı.",
      "nameEn": "Lawrence O'Toole",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became bishop of Dublin in twelfth-century Ireland, trying to mediate for his people during the English invasion."
+     "bioEn": "Archbishop of Dublin in twelfth-century Ireland, who tried to make peace on behalf of his people during the English invasion."
     }
    ]
   },
@@ -5056,7 +5056,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Roma’da iki büyük havarinin mezarları üzerine yapılmış iki bazilikanın, Aziz Petrus Bazilikası’nın ve Surlar Dışındaki Aziz Pavlus Bazilikası’nın kutsanmasını anar. Bu iki yapı, iki büyük havarinin şehitliğini ve Roma Kilisesi’nin havarilere dayanan köklerini somut olarak hatırlatır.",
      "nameEn": "The Dedication of the Basilicas of Saints Peter and Paul",
      "titleEn": "",
-     "bioEn": "This commemorates the dedication of the basilicas built over the tombs of the two great apostles in Rome: St. Peter's Basilica and the Basilica of St. Paul Outside the Walls. These two buildings are tangible reminders of the martyrdom of the two great apostles and of the apostolic roots of the Church of Rome."
+     "bioEn": "Remembers the dedication of the basilicas built over the tombs of the two great apostles in Rome: St. Peter's Basilica and the Basilica of St. Paul Outside the Walls. The two churches stand as reminders of the martyrdom of the two great apostles and of the apostolic roots of the Church of Rome."
     },
     {
      "name": "Rose Philippine Duchesne",
@@ -5079,7 +5079,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda Ermeni Kilisesi’nin patriğiydi. Hastaneler ve yetimhaneler kurdurdu; toplumsal reformlarıyla tanınır.",
      "nameEn": "Nerses I the Great",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became patriarch of the Armenian Church in the fourth century, known for his social reforms, founding hospitals and orphanages."
+     "bioEn": "Patriarch of the Armenian Church in the fourth century, known for his social reforms, founding hospitals and orphanages."
     }
    ]
   },
@@ -5109,7 +5109,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Kutsal Kitap’ta geçmez, ama ilk Hristiyan geleneğine göre küçük Meryem’in anne babası onu Kudüs’teki Tapınak’ta Allah’a adadı. Bu gün o olayı anar. Bu gelenek, Meryem’in daha çocukluğundan itibaren bütün hayatının tamamen Allah’a adanmış olduğunu anlatır.",
      "nameEn": "The Presentation of Mary",
      "titleEn": "",
-     "bioEn": "Not found in Scripture, but present in early Christian tradition, this commemorates Mary as a small child being consecrated by her parents to the Temple in Jerusalem. This tradition symbolizes the idea that Mary's whole life, from her very childhood, was wholly consecrated to God."
+     "bioEn": "An early tradition, not found in Scripture, tells how Mary's parents brought her as a small child to the Temple in Jerusalem and dedicated her to God. It expresses the belief that Mary belonged wholly to God from her earliest years."
     }
    ]
   },
@@ -5124,7 +5124,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "İlk yüzyıllarda Roma’da yaşadı. Geleneğe göre soylu bir aileden geliyordu ve kendini Mesih İsa’ya adamıştı. Evlendirildiğinde eşini de imana kazandırdı. Şehitliğiyle ilgili anlatılar zamanla efsaneleşti. Geleneğe göre şehit edilirken yüreğinde Allah’a ilahiler söylüyordu; bu yüzden kilise müziğinin koruyucu azizesidir.",
      "nameEn": "Cecilia",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "A saint who lived in early Rome, traditionally from a noble family, who consecrated her virginity to Christ and, after her marriage, won her husband over to the faith and to respecting that vow. The accounts of her martyrdom became legendary over time. She is regarded as the patron saint of Church music; tradition holds that during her own martyrdom she sang hymns to God in her heart."
+     "bioEn": "A young Roman woman of the early centuries, traditionally of noble family, who consecrated her virginity to Christ and, after her marriage, won her husband over to the faith and to respecting that vow. The accounts of her martyrdom became legendary over time. She is regarded as the patron saint of Church music; tradition says that while the musicians played at her wedding, she sang to God in her heart."
     }
    ]
   },
@@ -5139,7 +5139,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "I. yüzyılın sonunda papaydı; geleneğe göre Havari Petrus’un ardıllarından biridir. Korint Kilisesi’ndeki bölünmeler üzerine yazdığı mektup (Clemens’in Birinci Mektubu), Yeni Ahit dışında yazılmış en eski Hristiyan metinlerinden biridir.",
      "nameEn": "Clement I",
      "titleEn": "Pope and Martyr",
-     "bioEn": "A saint who became pope at the end of the first century, traditionally one of the successors of the Apostle Peter. His letter on the divisions in the Church of Corinth (the First Letter of Clement) is considered one of the oldest Christian texts written outside the New Testament."
+     "bioEn": "Pope at the end of the first century, one of the first successors of the Apostle Peter. His letter on the divisions in the Church of Corinth (the First Letter of Clement) is considered one of the oldest Christian texts written outside the New Testament."
     },
     {
      "name": "Miguel Agustín Pro",
@@ -5170,7 +5170,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVIII-XIX. yüzyıllarda Vietnam’da, Hristiyanlara yapılan zulümler sırasında şehit edilen yüz on yedi kişiyi anarız; aralarında Vietnamlı rahip Andreas Dung-Lac de vardır. Bu şehitler, Vietnam Katolik Kilisesi’nin ağır bedeller ödeyerek büyüyen tarihini temsil eder.",
      "nameEn": "Andrew Dung-Lac and Companions",
      "titleEn": "Martyrs",
-     "bioEn": "This commemorates a hundred and seventeen people martyred in Vietnam during periodic persecutions of Christianity in the eighteenth and nineteenth centuries, among them the native priest Andrew Dung-Lac. It represents the history of the Vietnamese Catholic Church, which grew at a heavy cost."
+     "bioEn": "Remembers a hundred and seventeen people martyred in Vietnam during periodic persecutions of Christianity in the eighteenth and nineteenth centuries, among them the native priest Andrew Dung-Lac. Their story is the story of the Catholic Church in Vietnam, which grew at a heavy price."
     }
    ]
   },
@@ -5185,7 +5185,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre IV. yüzyılın başında İskenderiye’de yaşamış, bilgisiyle tanınan soylu bir genç kadındır. Anlatılana göre Hristiyanlığa karşı çıkan filozofları tartışmada susturdu ve bu yüzden İmparator Maxentius’un emriyle şehit edildi. Orta Çağ boyunca öğrencilerin ve filozofların koruyucu azizesi olarak büyük saygı gördü.",
      "nameEn": "Catherine of Alexandria",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "Tradition holds her to be a noble young woman known for her exceptional learning who lived in Alexandria in the early fourth century. She is said to have silenced in debate the philosophers who opposed Christianity, and for this was martyred by order of Emperor Maxentius. She was held in great honor throughout the Middle Ages as the patron saint of students and philosophers."
+     "bioEn": "Tradition says she was a brilliant young noblewoman of Alexandria in the early fourth century. She is said to have silenced in debate the philosophers who opposed Christianity, and for this was martyred by order of Emperor Maxentius. She was held in great honor throughout the Middle Ages as the patron saint of students and philosophers."
     }
    ]
   },
@@ -5200,7 +5200,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XIII. yüzyılda İtalya’da yaşadı. Kırk yaşından sonra kariyerini bırakıp inzivaya çekildi ve daha sonra Benedikten tarikatının Silvestrin kolunu kurdu.",
      "nameEn": "Sylvester Gozzolini",
      "titleEn": "Abbot",
-     "bioEn": "A saint in thirteenth-century Italy who left his worldly career after the age of forty to withdraw into solitude, and later founded the Sylvestrine branch of the Benedictines."
+     "bioEn": "A thirteenth-century Italian who, past the age of forty, left his career to live in solitude, and later founded the Sylvestrine branch of the Benedictines."
     }
    ]
   },
@@ -5245,7 +5245,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda Fransa’daki Toulouse’un ilk episkoposuydu. Putperest bir tapınağın önünden geçerken yakalandı. Kurban sunmayı reddedince bir boğaya bağlanıp sürüklendi ve şehit edildi.",
      "nameEn": "Saturninus of Toulouse",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "A saint who became the first bishop of Toulouse (France) in the third century, martyred when, as he passed a pagan temple, he was tied to a bull and dragged to death."
+     "bioEn": "The first bishop of Toulouse (France), in the third century. When he refused to sacrifice at a pagan temple, he was tied to a bull and dragged to death."
     }
    ]
   },
@@ -5275,7 +5275,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VII. yüzyılda Fransa’da önce ünlü bir kuyumcu ve sarayın hazinedarıydı. Sonra rahip ve Noyon episkoposu oldu. Kuyumcuların ve nalbantların koruyucu azizidir.",
      "nameEn": "Eligius",
      "titleEn": "Bishop",
-     "bioEn": "A saint in seventh-century France, first a renowned goldsmith and royal treasurer, who became a priest and bishop of Noyon. He is the patron saint of goldsmiths and blacksmiths."
+     "bioEn": "A famous goldsmith and royal treasurer in seventh-century France who became a priest and then bishop of Noyon. He is the patron saint of goldsmiths and blacksmiths."
     }
    ]
   },
@@ -5290,7 +5290,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda Roma’da yaşadı. Anlatılana göre ailesiyle birlikte zulüm gördü ve kırbaçlanarak şehit edildi.",
      "nameEn": "Bibiana",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "A saint in fourth-century Rome, said to have been persecuted together with her family and martyred by flogging."
+     "bioEn": "A young woman of fourth-century Rome, said to have been persecuted together with her family and martyred by flogging."
     }
    ]
   },
@@ -5320,7 +5320,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "VII-VIII. yüzyılda İslam halifeliğinin yönetimindeki Şam’da önce yüksek bir devlet görevlisiydi, sonra keşiş oldu. Kutsal ikonaları savunan yazıları ve Doğu teolojisini düzenli bir şekilde özetleyen eseriyle, Doğu Hristiyanlığının son büyük Kilise Babası sayılır.",
      "nameEn": "John Damascene",
      "titleEn": "Priest and Doctor of the Church",
-     "bioEn": "In seventh- and eighth-century Damascus, under Islamic caliphate rule, he first worked as a high government official, then became a monk. Through his defense of icons (sacred images) and his writings offering a systematic summary of Eastern theology, he is considered the last great Church Father of Eastern Christianity."
+     "bioEn": "A high official at the caliph's court in Damascus who became a monk, in the seventh and eighth centuries. Through his defense of icons (sacred images) and his writings offering a systematic summary of Eastern theology, he is considered the last great Church Father of Eastern Christianity."
     }
    ]
   },
@@ -5335,7 +5335,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "V-VI. yüzyılda Filistin çölünde, bugün de faal olan Mar Saba Manastırı’nı kurdu. Doğu Kilisesi’nin ayin geleneğinin şekillenmesinde büyük etkisi oldu.",
      "nameEn": "Sabbas the Sanctified",
      "titleEn": "Abbot",
-     "bioEn": "A saint of the fifth and sixth centuries who founded Mar Saba Monastery in the Palestinian desert, still active today. He had a great influence on shaping the liturgical tradition of the Eastern Church."
+     "bioEn": "The fifth- and sixth-century monk who founded Mar Saba Monastery in the Palestinian desert, still active today. He had a great influence on shaping the liturgical tradition of the Eastern Church."
     }
    ]
   },
@@ -5350,7 +5350,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılda bugünkü Antalya’nın Demre ilçesinde, eski adıyla Myra’da episkopostu. Anlatılana göre çeyiz parası olmadığı için köle olarak satılma tehlikesiyle karşı karşıya kalan üç kızın evine gece gizlice altın attı. Bu hikâye onu gizli cömertliğin simgesi yaptı ve Noel Baba figürünün kökeni oldu. Çocukların, denizcilerin ve Anadolu’nun koruyucu azizlerindendir.",
      "nameEn": "Nicholas",
      "titleEn": "Bishop",
-     "bioEn": "A saint who served as bishop in what is now Demre (Myra), Turkey, in the fourth century. He became a symbol of secret generosity through the story of how he secretly threw gold into a house at night so that three sisters who had no dowry would not be sold into slavery. This tradition is the origin of the Santa Claus figure. He is one of the patron saints of children, sailors, and Anatolia."
+     "bioEn": "Bishop of Myra (modern Demre, Turkey) in the fourth century. He is the model of secret giving: the story goes that he threw gold into a house at night so that three sisters with no dowry would not be sold into slavery. That story is where Santa Claus comes from. He is one of the patron saints of children, sailors, and Anatolia."
     }
    ]
   },
@@ -5380,7 +5380,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu bayram, Meryem Ana’nın Mesih İsa’nın annesi olacağı için, ana rahmine düştüğü ilk andan itibaren özel bir lütufla asli günahtan korunduğunu kutlar. Papa IX. Pius 1854’te bunu Kilise’nin resmî öğretisi olarak ilan etti. Meryem bu ayrıcalıkla, Oğlu’nun kurtarışından ilk ve tam olarak pay alan kişi oldu.",
      "nameEn": "The Immaculate Conception of Mary",
      "titleEn": "",
-     "bioEn": "This celebrates that Mary, because she was to become the mother of Christ, was preserved by a special grace from the stain of original sin from the very first moment of her conception. It was defined as dogma by Pope Pius IX in 1854. Through this privilege, Mary becomes the first and most complete fruit of her Son's saving work."
+     "bioEn": "Celebrates the truth that Mary, who was to be the mother of Christ, was kept free by a special grace from all stain of original sin from the first moment of her existence. Pope Pius IX defined it as a dogma in 1854. It makes Mary the first and fullest fruit of her Son's saving work."
     }
    ]
   },
@@ -5410,7 +5410,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Geleneğe göre Nasıra’daki Kutsal Aile’nin evi XIII. yüzyılda İtalya’nın Loreto kasabasına taşındı. Bu gün, bu inanca bağlı Meryem bağlılığını anar. Evin havadan taşındığı anlatıldığı için Loreto Meryem Anası havacıların koruyucusu olarak da anılır.",
      "nameEn": "Our Lady of Loreto",
      "titleEn": "",
-     "bioEn": "This commemorates a Marian devotion based on the tradition that the stones of the Holy Family's house in Nazareth were carried to the Italian town of Loreto in the thirteenth century. Because of this legend, Our Lady of Loreto is also remembered as the patron saint of aviation."
+     "bioEn": "A feast of Mary based on the tradition that the stones of the Holy Family's house in Nazareth were carried to the Italian town of Loreto in the thirteenth century. Because of the legend, Our Lady of Loreto is the patron saint of aviation."
     }
    ]
   },
@@ -5440,7 +5440,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "1531’de Meksika’da Juan Diego’ya yerli bir kadın görünümünde gelen Meryem Ana’yı kutlar. Bu görünmeden sonra, İspanyol fethinin acısını yaşayan yerli halklar kitleler hâlinde Hristiyan oldu. Guadalupe Meryem Anası bütün Amerika kıtasının koruyucusudur.",
      "nameEn": "Our Lady of Guadalupe",
      "titleEn": "",
-     "bioEn": "This celebrates the apparition of Mary to Juan Diego in Mexico in 1531, in which she appeared as an Indigenous woman. This apparition led to the mass conversion to Christianity of Indigenous peoples traumatized by the Spanish conquest. Our Lady of Guadalupe is honored as the patroness of the Americas."
+     "bioEn": "Celebrates the apparition of Mary to Juan Diego in Mexico in 1531, in which she appeared as an Indigenous woman. This apparition led to the mass conversion to Christianity of Indigenous peoples traumatized by the Spanish conquest. Our Lady of Guadalupe is honored as the patroness of the Americas."
     }
    ]
   },
@@ -5455,7 +5455,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV. yüzyılın başında Sicilya’da yaşamış genç bir kızdır. Kendini Mesih İsa’ya adamıştı; onunla evlenmek isteyen bir adam onu ihbar etti ve İmparator Diocletianus’un zulmü sırasında şehit edildi. Adı “ışık” anlamına gelen kelimeden türediği için gözlerin koruyucu azizesi olarak da anılır. Kuzey Avrupa’da onun günü ışık şenlikleriyle kutlanır.",
      "nameEn": "Lucy of Syracuse",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "A young saint martyred in early fourth-century Sicily during Emperor Diocletian's persecution, denounced by a man who desired her after she had consecrated her virginity to Christ. Because her name comes from the word for \"light,\" she is also venerated as the patron saint of the eyes; in northern Europe her day is celebrated with festivals of light."
+     "bioEn": "A young woman martyred in Sicily in the early fourth century, during Emperor Diocletian's persecution. She had consecrated her virginity to Christ, and a suitor she turned down denounced her. Because her name comes from the word for \"light,\" she is also venerated as the patron saint of the eyes; in northern Europe her day is celebrated with festivals of light."
     }
    ]
   },
@@ -5485,7 +5485,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XVI-XVII. yüzyılda İtalya’da yaşadı ve genç yaşta dul kaldı. Servetini savaştan ve kıtlıktan etkilenen kadınlara ve kızlara yardım etmek için kullandı.",
      "nameEn": "Virginia Centurione Bracelli",
      "titleEn": "Virgin",
-     "bioEn": "A saint in sixteenth- and seventeenth-century Italy, widowed young, who used her fortune to help women and girls who were victims of war and famine."
+     "bioEn": "A woman of sixteenth- and seventeenth-century Italy who was widowed young and used her fortune to help women and girls who were victims of war and famine."
     }
    ]
   },
@@ -5500,7 +5500,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "X. yüzyılda Kutsal Roma İmparatoriçesi’ydi. Dul kaldıktan sonra manastırlar kurdurdu ve torunu III. Otto çocukken onun yerine ülkeyi yönetti.",
      "nameEn": "Adelaide",
      "titleEn": "Empress",
-     "bioEn": "A saint who became Holy Roman Empress in the tenth century; after being widowed she had monasteries founded and served as regent for her grandson, Otto III."
+     "bioEn": "Holy Roman Empress in the tenth century. After she was widowed she founded monasteries and ruled as regent for her grandson, Otto III."
     }
    ]
   },
@@ -5530,7 +5530,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III. yüzyılda Fransa’daki Tours’un ilk episkoposuydu ve Roma’dan gönderilen ilk misyonerlerdendir.",
      "nameEn": "Gatian of Tours",
      "titleEn": "Bishop",
-     "bioEn": "A saint who became the first bishop of Tours (France) in the third century, one of the first missionaries sent from Rome."
+     "bioEn": "The first bishop of Tours (France) in the third century, one of the first missionaries sent from Rome."
     }
    ]
   },
@@ -5545,7 +5545,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "IV-V. yüzyılda kısa bir süre papalık yaptı. Aziz Hieronymus mektuplarında ondan övgüyle söz eder.",
      "nameEn": "Anastasius I",
      "titleEn": "Pope",
-     "bioEn": "A saint who served briefly as pope in the fourth and fifth centuries, spoken of with praise in the letters of Saint Jerome."
+     "bioEn": "Pope for a short time around the year 400, praised in the letters of Saint Jerome."
     }
    ]
   },
@@ -5590,7 +5590,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "İtalya’da doğmuş bir öğretmendir. Gençliğinde sağlığı zayıf görüldüğü için manastırlara kabul edilmedi; bunun üzerine Kutsal Yürek Misyoner Rahibeleri’ni kendisi kurdu. Amerika’ya göç eden İtalyanlara hizmet etmek için okyanusu otuz kez aştı ve dört kıtada altmıştan fazla yetimhane, okul ve hastane kurdurdu. 1946’da aziz ilan edildi, 1950’de de bütün göçmenlerin koruyucu azizesi ilan edildi. ABD vatandaşı olan ilk azizedir.",
      "nameEn": "Frances Xavier Cabrini",
      "titleEn": "Virgin",
-     "bioEn": "A teacher born in Italy who, deemed too frail in health to be accepted into a convent in her youth, founded the Missionary Sisters of the Sacred Heart instead. She crossed the ocean thirty times to serve Italian immigrants in America, and had more than sixty orphanages, schools, and hospitals built across four continents. She was canonized in 1946, and in 1950 declared the heavenly patron saint of all immigrants; she is the first American citizen to be canonized."
+     "bioEn": "An Italian teacher who, turned away by convents as a young woman because of her poor health, founded the Missionary Sisters of the Sacred Heart instead. She crossed the ocean thirty times to serve Italian immigrants in America, and had more than sixty orphanages, schools, and hospitals built across four continents. She was canonized in 1946, and in 1950 declared the heavenly patron saint of all immigrants; she is the first American citizen to be canonized."
     }
    ]
   },
@@ -5620,7 +5620,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Orta Çağ’da Batı Avrupa’nın halk takviminde bu gün, Yaratılış kitabındaki ilk insan çiftini anma günüydü. O gün kiliselerde oynanan “Cennet Oyunu”nda üzerine elmalar asılmış bir çam ağacı, yani “Cennet Ağacı” kullanılırdı. Bugün dünyanın her yerinde süslenen Noel ağacının kökeni büyük ölçüde bu unutulmuş geleneğe dayanır.",
      "nameEn": "Adam and Eve",
      "titleEn": "",
-     "bioEn": "In the popular calendar of medieval Western Europe, this was the day commemorating the first human couple of Genesis; the \"Paradise Play\" staged in churches that day used a fir tree hung with apples (the Tree of Paradise). The origin of today's Christmas tree, decorated the world over, largely traces back to this now-forgotten tradition."
+     "bioEn": "In the popular calendar of medieval Western Europe, this was the feast of Adam and Eve; the \"Paradise Play\" staged in churches that day used a fir tree hung with apples (the Tree of Paradise). Today's Christmas tree largely goes back to this forgotten custom."
     }
    ]
   },
@@ -5635,7 +5635,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Allah’ın Oğlu’nun Beytlehem’de Meryem Ana’dan insan olarak doğmasını kutlar. Hristiyanlığın en temel sırlarından biri olan Enkarnasyon’u, yani sonsuz Allah’ın insan doğasını üstlenmesini anar. Paskalya’dan sonra Kilise’nin en önemli bayramıdır; dört haftalık hazırlık dönemi olan Advent ile bu güne varılır.",
      "nameEn": "The Nativity of the Lord (Christmas)",
      "titleEn": "",
-     "bioEn": "This celebrates the birth of the Son of God as man, from Mary, in Bethlehem. It commemorates the Incarnation, one of Christianity's most fundamental mysteries: the infinite God taking on finite human nature. It is the Church's most important feast after Easter, and is preceded by Advent, a four-week season of preparation."
+     "bioEn": "Celebrates the birth of the Son of God as a man, from Mary, in Bethlehem: the Incarnation, one of the deepest mysteries of the faith, in which the infinite God takes on a finite human nature. It is the Church's most important feast after Easter, and is preceded by Advent, a four-week season of preparation."
     }
    ]
   },
@@ -5680,7 +5680,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Matta İncili’ne göre Kral Hirodes, yeni doğan İsa’yı öldürmek için Beytlehem ve çevresindeki iki yaşından küçük bütün erkek çocukları öldürttü. Bu gün o masum çocukları anar. Daha konuşamayacak yaştaydılar, ama Mesih İsa uğruna canlarını veren ilk şehitler sayılırlar.",
      "nameEn": "The Holy Innocents",
      "titleEn": "Martyrs",
-     "bioEn": "According to the Gospel of Matthew, this commemorates King Herod having all the male children under two years old in Bethlehem and its surroundings killed, in order to have the newborn Jesus put to death. These innocent children, too young even to speak, are honored as the first martyrs to die for Christ."
+     "bioEn": "Remembers the boys of Bethlehem and the villages around it, two years old and under, whom King Herod had killed in his attempt to put the newborn Jesus to death (Matthew 2). These innocent children, too young even to speak, are honored as the first martyrs to die for Christ."
     }
    ]
   },
@@ -5695,7 +5695,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "XII. yüzyılda İngiltere’de önce kralın yakın dostu ve başbakanıydı. Canterbury başepiskoposu olunca, Kilise’nin haklarını Kral II. Henricus’un müdahalelerine karşı savunmaya başladı. Bu yüzden kralın adamları onu kendi katedralinde öldürdü. Kilise’nin özgürlüğü için canını veren episkoposların simgesi olmuştur.",
      "nameEn": "Thomas Becket",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "First a close friend and chancellor of the king in twelfth-century England, after becoming archbishop of Canterbury he began defending the Church's rights against the interference of the king (Henry II). For this he was killed by the king's men in his own cathedral. He became a symbol of bishops who gave their lives for the Church's freedom."
+     "bioEn": "First a close friend and chancellor of the king in twelfth-century England, once he became archbishop of Canterbury he defended the Church's rights against the king, Henry II. For this he was killed by the king's men in his own cathedral. He became a symbol of bishops who gave their lives for the Church's freedom."
     }
    ]
   },
@@ -5710,7 +5710,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III-IV. yüzyılda Yunanistan’daki Selanik’te yaşamış genç bir kızdır. Zulüm döneminde gizlenmeye çalışırken bir Roma askeri onu fark etti ve öldürdü.",
      "nameEn": "Anysia",
      "titleEn": "Virgin and Martyr",
-     "bioEn": "A young saint in third- and fourth-century Thessalonica (Greece), killed by a Roman soldier who noticed her as she tried to avoid being recognized during a period of persecution."
+     "bioEn": "A young woman of Thessalonica (Greece) around the year 300, killed by a Roman soldier who spotted her while she was hiding during a persecution."
     }
    ]
   },
@@ -5749,7 +5749,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Mesih İsa’nın Kudüs’e girişini, halkın O’nu hurma dallarıyla karşılamasını anar ve Kutsal Hafta’yı açar. Ayin sevinçli bir alayla başlar, sonra İsa’nın çektiği acıların anlatıldığı İncil bölümü okunur ve hava birden ağırlaşır. Bu karşıtlık, Kutsal Hafta’nın bütün ruhunu özetler.",
    "titleEn": "Palm Sunday",
    "rankEn": "Solemnity",
-   "bioEn": "This commemorates Christ's entry into Jerusalem, welcomed by the people with palm branches, and opens Holy Week. The Mass begins with a joyful procession, then suddenly turns solemn with the reading of Christ's Passion; this contrast sums up the whole character of Holy Week."
+   "bioEn": "Remembers Christ's entry into Jerusalem, welcomed by the people with palm branches, and opens Holy Week. The Mass begins with a joyful procession, then suddenly turns solemn with the reading of Christ's Passion; this contrast sums up the whole character of Holy Week."
   },
   {
    "id": "kutsal-persembe",
@@ -5759,7 +5759,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Son Akşam Yemeği’ni, Efkaristiya’nın ve rahipliğin kurulmasını anar. Bazı kiliselerde Ayin sırasında ayak yıkama töreni yapılır; bu, Mesih İsa’nın havarilerinin ayaklarını yıkayarak verdiği alçakgönüllü hizmet örneğini hatırlatır. Kutsal Perşembe akşamıyla Paskalya’nın üç kutsal günü başlar.",
    "titleEn": "Holy Thursday",
    "rankEn": "Solemnity",
-   "bioEn": "This commemorates the Last Supper, and the institution of the Eucharist and the Sacrament of Holy Orders. During Mass, some churches hold a washing of the feet; this recalls the example of humble service Christ gave by washing his apostles' feet. Holy Thursday begins the Easter Triduum."
+   "bioEn": "Remembers the Last Supper, and the institution of the Eucharist and the Sacrament of Holy Orders. During Mass, some churches hold a washing of the feet; this recalls the example of humble service Christ gave by washing his apostles' feet. Holy Thursday begins the Easter Triduum."
   },
   {
    "id": "kutsal-cuma",
@@ -5769,7 +5769,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Mesih İsa’nın çarmıhta çektiği acıları ve ölümünü anar. Kilise’nin Ayin kutlamadığı tek gündür. Bu günkü tören, İsa’nın acılarının anlatıldığı İncil bölümünün okunmasını, bütün insanlık için edilen büyük duaları, haça saygı gösterilmesini ve bir gün önce kutsanmış ekmekle komünyonu içerir. Oruç ve etten perhiz günüdür.",
    "titleEn": "Good Friday",
    "rankEn": "Solemnity",
-   "bioEn": "This commemorates Christ's Passion and death on the cross, and is the only day the Church does not celebrate the Eucharistic liturgy of the Mass. The service includes the reading of the Passion in the Liturgy of the Word, great intercessory prayers for all humanity, the veneration of the cross, and Communion with hosts consecrated beforehand. It is a day of fasting and abstinence."
+   "bioEn": "Remembers Christ's Passion and death on the cross. It is the only day of the year on which the Church does not celebrate Mass. The service includes the reading of the Passion in the Liturgy of the Word, great intercessory prayers for all humanity, the veneration of the cross, and Communion with hosts consecrated beforehand. It is a day of fasting and abstinence."
   },
   {
    "id": "kutsal-cumartesi",
@@ -5779,7 +5779,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Mesih İsa’nın mezarda kaldığı günü ve Kilise’nin sessiz, umut dolu bekleyişini anar. Gündüz Ayin kutlanmaz. Gece Paskalya Nöbeti ile Diriliş kutlanmaya başlar. Nöbette ateş ve Paskalya mumu kutsanır, Kutsal Kitap’tan uzun okumalar yapılır, vaftiz suyu kutsanır ve genellikle yeni üyeler vaftiz edilir ya da Kilise’ye kabul edilir.",
    "titleEn": "Holy Saturday",
    "rankEn": "Solemnity",
-   "bioEn": "This commemorates Christ's rest in the tomb, and the Church's silent, hopeful waiting. No Mass is celebrated during the day; at night the celebration of the Resurrection begins with the Easter Vigil. The Vigil includes the blessing of the fire and the Paschal candle, a long series of Scripture readings, the blessing of the baptismal water, and usually the baptism of new members or their reception into the Church."
+   "bioEn": "Remembers Christ's rest in the tomb, and the Church's silent, hopeful waiting. No Mass is celebrated during the day; at night the celebration of the Resurrection begins with the Easter Vigil. The Vigil includes the blessing of the fire and the Paschal candle, a long series of Scripture readings, the blessing of the baptismal water, and usually the baptism of new members or their reception into the Church."
   },
   {
    "id": "paskalya",
@@ -5799,7 +5799,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Paskalya’nın sekizinci günü kutlanır ve dirilmiş Mesih İsa’nın havarilere görünüp Tomas’ın şüphesini gidermesini anar. Azize Faustina Kowalska’nın görümlerine dayanan bu anmayı Papa II. Yuhanna Pavlus 2000 yılında bütün Kilise için ilan etti. Allah’ın sonsuz merhametini vurgular.",
    "titleEn": "Divine Mercy Sunday",
    "rankEn": "Principal Solemnity",
-   "bioEn": "Celebrated on the eighth day of Easter, this commemorates Christ appearing to the apostles and resolving Thomas's doubt. Based on the visions of Saint Faustina Kowalska, this commemoration was declared an official feast for the whole Church by Pope John Paul II in 2000; it emphasizes God's infinite mercy."
+   "bioEn": "Celebrated on the eighth day of Easter, it remembers Christ appearing to the apostles and putting Thomas's doubts to rest. In response to the visions of Saint Faustina Kowalska, Pope John Paul II made it a feast for the whole Church in 2000, to celebrate God's infinite mercy."
   },
   {
    "id": "goge-cikis",
@@ -5809,7 +5809,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Mesih İsa’nın dirilişinden kırk gün sonra, havarilerinin gözü önünde göğe yükselişini anar. İncil’e göre İsa onlara Kutsal Ruh’u göndereceğini söyledi ve Müjde’yi bütün uluslara duyurma görevini verdi. Bu bayram, Mesih İsa’nın insan doğasının da Allah’ın yanındaki yüceliğe girişini kutlar.",
    "titleEn": "The Ascension of the Lord",
    "rankEn": "Principal Solemnity",
-   "bioEn": "This commemorates Christ's ascension into heaven before his apostles' eyes, forty days after the Resurrection. According to the Gospel, he promised them he would send the Holy Spirit and gave them the task of spreading the Gospel to all nations. This feast celebrates Christ's human nature entering into the glory of God."
+   "bioEn": "Remembers Christ's ascension into heaven before his apostles' eyes, forty days after the Resurrection. According to the Gospel, he promised them he would send the Holy Spirit and gave them the task of spreading the Gospel to all nations. The feast celebrates Christ's human nature entering the glory of God."
   },
   {
    "id": "pentekost",
@@ -5819,7 +5819,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Paskalya’dan elli gün sonra Kutsal Ruh’un, Meryem Ana’nın ve havarilerin üzerine ateşten diller gibi inişini anar. Elçilerin İşleri’ne göre bu olay Kilise’nin doğuşudur; havariler o günden itibaren korkmadan vaaz etmeye başladı. Paskalya dönemi bu bayramla sona erer.",
    "titleEn": "Pentecost",
    "rankEn": "Principal Solemnity",
-   "bioEn": "This commemorates the Holy Spirit descending as tongues of fire upon Mary and the apostles, fifty days after Easter. According to the Acts of the Apostles, this event is the birth of the Church; from that day the apostles began to preach fearlessly. It marks the end of the Easter season."
+   "bioEn": "Remembers the Holy Spirit coming down as tongues of fire upon Mary and the apostles, fifty days after Easter. According to the Acts of the Apostles, this event is the birth of the Church; from that day the apostles began to preach fearlessly. It marks the end of the Easter season."
   },
   {
    "id": "kutsal-uclu",
@@ -5829,7 +5829,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Hristiyan inancının merkezindeki sırrı kutlar: Tek Allah’ın Peder, Oğul ve Kutsal Ruh olarak üç kişide var olması. Bu sır akılla tam olarak kavranamaz; Kilise bu gerçeği, Mesih İsa’nın kendisini, Peder’i ve Kutsal Ruh’u bize açıklamasıyla bilir. Pentekost’tan sonraki ilk pazar kutlanır.",
    "titleEn": "The Holy Trinity",
    "rankEn": "Principal Solemnity",
-   "bioEn": "This celebrates the central mystery of the Christian faith: the one God existing in three persons, Father, Son, and Holy Spirit. This mystery cannot be fully grasped by reason; the Church knows this truth through what Christ revealed about himself and his relationship with the Father and the Holy Spirit. It is celebrated on the first Sunday after Pentecost."
+   "bioEn": "Celebrates the central mystery of the Christian faith: the one God existing in three persons, Father, Son, and Holy Spirit. This mystery cannot be fully grasped by reason; the Church knows this truth through what Christ revealed about himself and his relationship with the Father and the Holy Spirit. It is celebrated on the first Sunday after Pentecost."
   },
   {
    "id": "kutsal-beden-kan",
@@ -5839,7 +5839,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Efkaristiya’da, ekmek ve şarap görünümü altında gerçekten bulunan Mesih İsa’nın Bedeni’ni ve Kanı’nı kutlar. Birçok ülkede bu gün Kutsal Efkaristiya sokaklarda alayla taşınır. Kutsal Üçlü pazarından sonraki perşembe günü kutlanır; birçok ülkede ise ondan sonraki pazara alınır.",
    "titleEn": "The Body and Blood of Christ (Corpus Christi)",
    "rankEn": "Principal Solemnity",
-   "bioEn": "This celebrates the Body and Blood of Christ, truly present under the appearance of bread and wine in the Eucharist. In many countries this day is celebrated with a traditional ceremony in which the Blessed Sacrament is carried in procession through the streets. It is celebrated on the Thursday after Trinity Sunday."
+   "bioEn": "Celebrates the Body and Blood of Christ, truly present under the appearance of bread and wine in the Eucharist. In many countries this day is celebrated with a traditional ceremony in which the Blessed Sacrament is carried in procession through the streets. It is celebrated on the Thursday after Trinity Sunday."
   },
   {
    "id": "kutsal-yurek",
@@ -5849,7 +5849,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Mesih İsa’nın insanlığa duyduğu sonsuz ve kendini feda eden sevgisini, yüreği simgesiyle kutlar. Bu bağlılık özellikle XVII. yüzyılda Azize Marguerite-Marie Alacoque’un gördüğü görümlerle yaygınlaştı. Corpus Christi bayramından sonraki cuma günü kutlanır; aynı zamanda rahiplerin kutsallığı için dua günüdür.",
    "titleEn": "The Sacred Heart of Jesus",
    "rankEn": "Principal Solemnity",
-   "bioEn": "This celebrates, under the symbol of his heart, Christ's infinite and self-sacrificing love for humanity. This devotion spread widely especially through the visions given to Saint Margaret Mary Alacoque in the seventeenth century. It is celebrated on the Friday after the feast of Corpus Christi, and is also observed as a day of prayer for the sanctification of priests."
+   "bioEn": "Celebrates, through the symbol of his heart, Christ's infinite and self-sacrificing love for humanity. This devotion spread widely especially through the visions given to Saint Margaret Mary Alacoque in the seventeenth century. It is celebrated on the Friday after the feast of Corpus Christi, and is also observed as a day of prayer for the sanctification of priests."
   },
   {
    "id": "meryem-kalbi",
@@ -5859,7 +5859,7 @@ window.SAINTS = /*JSON-START*/{
    "bio": "Meryem Ana’nın Allah’a ve Oğlu’na duyduğu kusursuz sevgiyi, imanını ve iç dünyasını anar. Luka İncili’nde Meryem’in “bütün bunları yüreğinde saklayıp derin derin düşündüğü” yazar. Kutsal Yürek bayramından bir gün sonra, onunla birlikte kutlanır.",
    "titleEn": "The Immaculate Heart of Mary",
    "rankEn": "Memorial",
-   "bioEn": "This commemorates Mary's perfect love for God and her Son, her faith, and her interior life. The Gospel of Luke says that Mary \"kept all these things, pondering them in her heart.\" It is paired with the feast of the Sacred Heart and celebrated the day after it."
+   "bioEn": "Honors Mary's perfect love for God and her Son, her faith, and her interior life. The Gospel of Luke says that Mary \"kept all these things, pondering them in her heart.\" It is paired with the feast of the Sacred Heart and celebrated the day after it."
   }
  ]
 }/*JSON-END*/;
