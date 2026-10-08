@@ -27,3 +27,18 @@ _site/
 /_site_en/
 __pycache__/
 .wrangler/
+
+# The English site's own build (verbumdomini/tools/build.ps1) writes the same things inside verbumdomini/
+/verbumdomini/*.html
+/verbumdomini/en/
+/verbumdomini/kilise/
+/verbumdomini/sitemap.xml
+/verbumdomini/robots.txt
+/verbumdomini/llms.txt
+/verbumdomini/[0-9a-f]*.txt
+/verbumdomini/.well-known/
+/verbumdomini/assets/*.min.css
+/verbumdomini/assets/*.min.js
+/verbumdomini/data/azizler-adlar.js
+/verbumdomini/data/azizler-ozet-*.js
+/verbumdomini/_site_en/

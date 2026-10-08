@@ -1,5 +1,5 @@
 // The English site (verbumdomini.ca) as a Cloudflare Worker that serves static files.
-// Deployed by .github/workflows/deploy-english.yml after tools/build.ps1 -EnglishSite writes _site_en/.
+// Deployed by .github/workflows/deploy-english.yml after verbumdomini/tools/build.ps1 -EnglishSite writes verbumdomini/_site_en/.
 // Address: https://verbumdomini.ca (preview: https://verbumdomini.tzjcqs5g44.workers.dev)
 {
   "name": "verbumdomini",
@@ -10,7 +10,7 @@
   // Cloudflare creates the DNS record and the certificate for a custom domain by itself
   "routes": [{ "pattern": "verbumdomini.ca", "custom_domain": true }],
   "assets": {
-    "directory": "../../_site_en",
+    "directory": "../_site_en",
     "binding": "ASSETS",
     // The pages link to /mass.html etc., so serve the files under their own names, no rewriting.
     // Requests that match no file go to worker.js ("/", addresses without ".html", and 404s).

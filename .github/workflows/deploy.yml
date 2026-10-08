@@ -8,6 +8,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'verbumdomini/**'               # the English site has its own folder and deploy
+      - '.github/workflows/deploy-english.yml'
   workflow_dispatch:
 
 permissions:

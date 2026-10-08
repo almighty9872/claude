@@ -15,32 +15,38 @@ Handoff notes for whoever works on the English site. The Turkish site (katolikdu
 
 ## How it's built
 
-Both sites come from the same source. Every bilingual field has a Turkish and an English value (`xxx` / `xxxEn` in `data/*.js|json`, `content/*-en.md` for the English Markdown pages). `T(tr,en)` in `tools/build.ps1` renders the pair; an empty English value falls back to Turkish, so never blank an English field.
+**The English site has its own folder, `verbumdomini/`, and nothing in it is shared with the Turkish site.** It was copied from the shared source on 8 October 2026 (the copy built byte-for-byte the same site) and from then on the two sites evolve separately:
+
+- English work happens only inside `verbumdomini/`: its `data/`, `content/`, `assets/` (styles, script, fonts, pictures), `tools/` (its own copy of `build.ps1` and the helper scripts) and `cloudflare/` (the Workers config).
+- The Turkish site is everything outside `verbumdomini/`. Don't edit it from the English workstream, and don't expect a change there to reach verbumdomini.ca: the root's own `-EnglishSite` build is no longer deployed (the Turkish workstream can remove it, with `tools/en-site/`, `tools/en-rewrite/` and the `en/` twins).
+- Deploys follow the folders: `.github/workflows/deploy-english.yml` runs only when `verbumdomini/` (or that workflow) changes; the Turkish `deploy.yml` ignores `verbumdomini/`.
 
 ```
-pwsh -NoProfile -File ./tools/build.ps1                 # Turkish site (what main deploys)
-pwsh -NoProfile -File ./tools/build.ps1 -EnglishSite    # English site -> _site_en/ (gitignored)
+pwsh -NoProfile -File ./verbumdomini/tools/build.ps1 -EnglishSite   # English site -> verbumdomini/_site_en/
 ```
 
-`-EnglishSite` also writes `en/` twins into the working tree. After an English build, run `rm -rf en` and rebuild the Turkish site so the tree is back to its committed state.
+The copied build still carries the bilingual machinery it came with: data fields come in pairs (`xxx` / `xxxEn`, `content/*-en.md`), `T(tr,en)` renders a pair, and `-EnglishSite` keeps the English half. Inside `verbumdomini/` only the English halves matter; the Turkish halves are leftovers that `strip_tr.py` empties from the output and that can be deleted over time. It also writes Turkish pages and `en/` twins inside `verbumdomini/` as a by-product; they are gitignored.
 
-What `-EnglishSite` does (the block before `Write-Host "Done."` in build.ps1):
+What `-EnglishSite` does (the block before `Write-Host "Done."` in `verbumdomini/tools/build.ps1`):
 - copies the `en/*.html` twins to the root of `_site_en/` and strips the Turkish halves
 - English alone: no hreflang links or `og:locale:alternate`, no mention of katolikdunyasi.com, data files without Turkish (strip_tr.py), `data-en-base=""` on every page including 404. In `assets/script.js`, `EN_SITE` (true when `data-en-base` is empty) makes the script write English only, build links to the English pages (`siteHref`) and leave the Turkish out of the reference popups
-- removes the language pill and sets `data-en-base=""`
+- removes the language pill
 - rewrites `https://katolikdunyasi.com/en/` to `https://verbumdomini.ca/` and `/en/` links to `/`
 - drops pages not offered in English (Find a Church and the church pages, Christianity in Our Lands): menu items are removed, links in running text are unwrapped
-- swaps the brand to "Verbum Domini" (font `assets/fonts/kd-brand-en.woff2`), and replaces the text "katolikdunyasi.com" with "Verbum Domini" except in hreflang lines and in "and katolikdunyasi.com"
+- swaps the brand to "Verbum Domini" (font `assets/fonts/kd-brand-en.woff2`) and replaces the text "katolikdunyasi.com" with "Verbum Domini"
 - writes its own sitemap, robots.txt, llms.txt and site.webmanifest
 - `$EnSiteUrl = 'https://verbumdomini.ca'`, `$EnTagline = 'Spreading and defending the Gospel'`
+
+The next step for the English site, when there is time: give it a build of its own made for articles (for example Astro: Markdown articles with date, author, category and tags, RSS, category pages), and an editor such as Pages CMS, so content can be written without code.
 
 In `build.ps1`, a curly apostrophe (’) inside a single-quoted PowerShell string ends the string and breaks the build. Put such text in double quotes.
 
 Sources on the case pages (Answering Islam, Answering Atheism) are `[Turkish, link, English, English link]`; put `"-"` for one language to cite a source on the other language's page only (the English page cites Pew where the Turkish cites Özarslan).
 
-Brand-neutral writing: in shared text (footer, Sources page), write "katolikdunyasi.com" and let the English build swap it, so each site names itself.
 
 ## Tools
+
+All paths below are inside `verbumdomini/` (run them from there, e.g. `cd verbumdomini`).
 
 - `tools/en-rewrite/`: edit English fields in data files without touching Turkish.
   - `python3 tools/en-rewrite/dump.py data/sss.js` prints every English field with its path.
@@ -61,15 +67,15 @@ Done:
 2. Build split (`-EnglishSite`), 48 pages, valid HTML, no broken links, no JS errors.
 3. Native-English rewrite of every page written for the site: interface, homepage, guides, Bible guide, Mass, Rosary and its history, Confession, FAQ, Miracles, Church history, Parables, debate pages, the 20 great saints, the 365-day calendar, Privacy, Accessibility and Sources. Texts by others (the Vatican's Compendium, Douay-Rheims, the Roman Missal, traditional prayers, Pickthall) are left as published. The Sources page no longer shows Turkish (picture credits and portrait list now have English).
 
-4. workers.dev preview set up. `.github/workflows/deploy-english.yml` runs on every push to main (and by hand): it builds with `-EnglishSite`, validates the HTML, checks the links, then deploys `_site_en/` with Wrangler to the Worker `verbumdomini` (config and a small `worker.js` in `cloudflare/verbumdomini/`). Address: https://verbumdomini.ca (registered with Cloudflare, connected as the Worker's custom domain in wrangler.jsonc); preview: https://verbumdomini.tzjcqs5g44.workers.dev. GitHub secrets: `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers" template), `CLOUDFLARE_ACCOUNT_ID`.
+4. workers.dev preview set up. `.github/workflows/deploy-english.yml` runs when `verbumdomini/` changes (and by hand): it builds `verbumdomini/` with `-EnglishSite`, validates the HTML, checks the links, then deploys `_site_en/` with Wrangler to the Worker `verbumdomini` (config and a small `worker.js` in `verbumdomini/cloudflare/`). Address: https://verbumdomini.ca (registered with Cloudflare, connected as the Worker's custom domain in wrangler.jsonc); preview: https://verbumdomini.tzjcqs5g44.workers.dev. GitHub secrets: `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers" template), `CLOUDFLARE_ACCOUNT_ID`.
    - URLs keep `.html` (`html_handling: none`); `worker.js` serves `/` and redirects `/mass` to `/mass.html`; unknown paths get `404.html`.
    - `www.verbumdomini.ca` is a second Worker, `verbumdomini-www` (`www.jsonc`, `www-redirect.js`), that 301-redirects to verbumdomini.ca, so ordinary page loads stay free static-file requests.
-   - Test locally with `npx wrangler@4 dev --config cloudflare/verbumdomini/wrangler.jsonc`.
+   - Test locally with `npx wrangler@4 dev --config verbumdomini/cloudflare/wrangler.jsonc`.
    - Leave the Worker `katolikdunyasi-contact` (the Turkish contact form, route `katolikdunyasi.com/api/*`) alone.
 
 Next:
 5. Contact form on the English site: the form posts to `/api/contact`, which the verbumdomini Worker doesn't have yet, and the Turnstile widget doesn't allow the workers.dev or verbumdomini.ca hostnames. Decide how the English form gets sent.
 6. At cutover:
-   - Repoint the old katolikdunyasi.com `/en/...` redirects (Cloudflare bulk redirects CSV) to verbumdomini.ca.
+   - Done: the old katolikdunyasi.com `/en/...` addresses redirect to verbumdomini.ca (Cloudflare Bulk Redirects).
    - Make the Turkish site's hreflang point to verbumdomini.ca and stop shipping `en/` on the Turkish site, except the 8 Catechism English pages, which move to the English site.
    - Turn off GitHub Pages only if the Turkish site also moves to Cloudflare.
