@@ -56,7 +56,7 @@ window.ISLAMA_CEVAP = /*JSON-START*/{
    "t": "Örnek alınacak yaşam bu mu?",
    "tEn": "Is this a role model?",
    "text": "Dokuz yaşında Ayşe ile evlilik. Dinden dönene ölüm emri. Ayşe bile şöyle der: “Rabbin isteklerini hemen yerine getiriyor.”",
-   "textEn": "Marriage to nine-year-old Aisha. Death for apostates. Even Aisha says: “Your Lord hastens to fulfill your wishes.”"
+   "textEn": "Marriage to nine-year-old Aisha. Death for apostates. Even Aisha says: “Your Lord hastens to fulfil your wishes.”"
   },
   {
    "href": "vahiy",

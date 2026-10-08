@@ -1,4 +1,6 @@
 # Makes British spellings American in the English fields of a data file (the site's English is US).
+# Quoted texts (Scripture, prayers, translations in quotation marks) keep their published spelling:
+# the tool skips /en/text fields; check any change inside quotation marks by hand.
 # Usage: python3 tools/en-rewrite/usspell.py data/x.js [--dry]
 import sys,os,re; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__))); import rwlib
 W={'honour':'honor','honours':'honors','honoured':'honored','honouring':'honoring','honourable':'honorable',
@@ -26,7 +28,7 @@ def fix(t):
     return t
 p=sys.argv[1]; s,a,b,body,d=rwlib.load(p); n=0
 for path,v in list(rwlib.walk(d)):
-    if isinstance(v,str) and v and rwlib.is_en(path):
+    if isinstance(v,str) and v and rwlib.is_en(path) and not path.endswith('/en/text'):  # /en/text = quoted Scripture or prayers
         f=fix(v)
         if f!=v:
             n+=1
