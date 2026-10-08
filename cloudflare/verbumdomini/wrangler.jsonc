@@ -13,8 +13,8 @@
     "directory": "../../_site_en",
     "binding": "ASSETS",
     // The pages link to /mass.html etc., so serve the files under their own names, no rewriting.
-    // Requests that match no file go to worker.js ("/" and addresses without ".html").
+    // Requests that match no file go to worker.js ("/", addresses without ".html", and 404s).
     "html_handling": "none",
-    "not_found_handling": "404-page"
+    "not_found_handling": "none"
   }
 }
