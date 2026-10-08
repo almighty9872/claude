@@ -80,7 +80,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "title": "İnce Ayar",
      "en": "Fine-Tuning",
      "hook": "Evrenin ayarları biraz farklı olsaydı, ne yıldızlar olurdu ne de biz.",
-     "hookEn": "Were the universe’s settings slightly different, there would be no stars, and no us.",
+     "hookEn": "If the universe’s settings were slightly different, there would be no stars, and no us.",
      "q": "Hayatın var olması sadece bir şans eseri olamaz mı?",
      "qEn": "Couldn't life be just a lucky accident?",
      "lede": "Evrenin temel sabitleri, hayatın var olabilmesi için inanılmaz bir hassasiyetle ayarlanmış görünüyor.",
@@ -314,7 +314,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
      "pointsEn": [
       "Jesus touched people when he healed, used mud and water, and told his disciples to baptize, to offer the bread “in remembrance of me” and to forgive sins: “If you forgive the sins of any, they are forgiven” (John 20:22-23).",
       "The seven sacraments accompany every important moment of life, from birth to death.",
-      "The first Christians didn’t treat the Eucharist as a symbol: Ignatius of Antioch criticized those who denied it was “the flesh of our Saviour Jesus Christ”.",
+      "The first Christians didn’t treat the Eucharist as a symbol: Ignatius of Antioch criticized those who denied it was “the flesh of our Savior Jesus Christ”.",
       "Jesus said, “My flesh is food indeed, and my blood is drink indeed” (John 6:55). Many of his disciples could not accept this and left him, yet he did not call them back to say he only meant a symbol (John 6:66). At the Last Supper he took the bread and said, “This is my body” (Mark 14:22)."
      ],
      "objection": "Bu bir tür büyü değil mi?",
@@ -419,7 +419,7 @@ window.WHY_CATHOLIC = /*JSON-START*/{
       "“The prayer of a righteous man has great power” (James 5:16), and death doesn’t separate people who are one in Christ.",
       "Mary is honored as Jesus’ mother and first disciple; she always points to her Son: “Do whatever he tells you” (John 2:5).",
       "The saints prove that the Christian life can actually be lived. Many of them, like Augustine, were great sinners first.",
-      "Mary said, “Henceforth all generations will call me blessed” (Luke 1:48). God tells us to honour our father and mother (Exodus 20:12). He surely wants his own Son’s mother honoured."
+      "Mary said, “Henceforth all generations will call me blessed” (Luke 1:48). God tells us to honor our father and mother (Exodus 20:12). Surely he wants his own Son’s mother honored."
      ],
      "objection": "Neden doğrudan Tanrı’ya dua etmiyorsunuz?",
      "objectionEn": "Why not pray to God directly?",

@@ -12,7 +12,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
  "title": "Katolik Olma Süreci",
  "en": "How to Become Catholic",
  "intro": "Katolik olmanın yolu, daha önce vaftiz olup olmadığınıza göre değişir. Varılan yer ise aynıdır: Vaftiz, Konfirmasyon ve Efkaristiya ile Kilise’yle tam birlik.",
- "introEn": "How you become Catholic depends on whether you've already been baptized. The destination is the same: full communion with the Church through Baptism, Confirmation and the Eucharist.",
+ "introEn": "How you become Catholic depends on whether you've already been baptized. Either way, you end up in the same place: full communion with the Church through Baptism, Confirmation and the Eucharist.",
  "paths": [
   {
    "id": "vaftizsiz",
@@ -21,7 +21,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "doorEn": "I have never been baptized",
    "doorSubEn": "Baptism makes you Catholic. Here is how to prepare.",
    "title": "Daha önce hiç vaftiz olmadıysanız",
-   "titleEn": "If you've never been baptized before",
+   "titleEn": "If you've never been baptized",
    "text": "Vaftiz olduğunuz anda Katolik olursunuz. <a href=\"#surec\">Hazırlık sürecini adım adım görün</a>.",
    "textEn": "You become Catholic the moment you're baptized. <a href=\"#surec\">See the preparation step by step</a>."
   },
@@ -97,9 +97,9 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
  },
  "waiting": {
   "title": "Bekleme süresi boşuna mı geçiyor?",
-  "titleEn": "Is the waiting period wasted time?",
+  "titleEn": "Is the wait wasted time?",
   "body": "Beklemek sabır ister, ama boşuna değildir; çünkü Katolik olmak hayatı değiştiren bir karardır. Üstelik bu süre boyunca Kilise’den uzak değilsiniz. Vaftizliyseniz, vaftiziniz sizi zaten Kilise’ye bağlar (KKK 1271). Henüz vaftiz olmadıysanız, Kilise’ye katılma isteğiniz sizi şimdiden ona bağlar ve Kilise sizi kendi çocuğu olarak kucaklar (KKK 1249).",
-  "bodyEn": "Waiting takes patience, but it isn’t wasted time: becoming Catholic changes your whole life. And you aren’t outside the Church while you wait. If you’re baptized, your baptism already binds you to the Church (CCC 1271). If you aren’t, your desire for baptism already joins you to it, and the Church holds you as her own child (CCC 1249)."
+  "bodyEn": "Waiting takes patience, but it isn’t wasted time: becoming Catholic changes your whole life. And you aren’t outside the Church while you wait. If you’re baptized, your baptism already binds you to the Church (CCC 1271). If you aren’t, your desire for baptism already joins you to it, and the Church already embraces you as her own (CCC 1249)."
  },
  "faq": [
   {
@@ -107,7 +107,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "q": "OCIA sürecine nasıl başlarım?",
    "a": "Size en yakın Katolik kilisesiyle iletişime geçin. Süreç genellikle eylülde başlar; ağustos başında rahiple görüşürseniz geç kalmış olmazsınız. Rahip, sizi tanımak için büyük olasılıkla yüz yüze görüşmek isteyecektir. Türkiye’de bu hazırlık genellikle herkese açık bir kayıtla değil, rahiple birebir görüşülerek her aday için ayrı planlanır. Bu yüzden bir kilisenin sitesinde duyuru görmemeniz, o kilisenin hazırlık yapmadığı anlamına gelmez. Samsun’daki <a href=\"kilise/mater-dolorosa-samsun.html#ocia\">Mater Dolorosa Kilisesi</a>, OCIA hazırlığını sitesinde duyuran kiliselerden biridir.",
    "qEn": "How do I start the OCIA process?",
-   "aEn": "Contact your nearest Catholic parish. The process usually starts in September; if you talk to the priest by early August, you won't be late. He'll most likely want to meet you in person to get to know you. Some parishes arrange this preparation one to one with the priest rather than through public enrollment, so if a parish website says nothing about it, ask anyway."
+   "aEn": "Contact your nearest Catholic parish. The process usually starts in September; if you talk to the priest by early August, you won't be late. He'll most likely want to meet you in person to get to know you. Some parishes arrange this preparation one to one with the priest rather than in a group, so if a parish website says nothing about it, ask anyway."
   },
   {
    "id": "gunah-cikarma-gerekli-mi",

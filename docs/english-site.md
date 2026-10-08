@@ -7,6 +7,7 @@ Handoff notes for whoever works on the English site. The Turkish site (katolikdu
 - Never commit, push or deploy without the owner's explicit "commit and deploy".
 - No em dashes anywhere (content, commits, PRs).
 - The owner's name and email never appear in the repo, commits, PRs or pages.
+- Commit messages carry no Claude lines: no `Co-Authored-By: Claude` and no `Claude-Session:` link (the repo is public).
 - Secrets (Cloudflare API token, Turnstile secret key) go into GitHub secrets by the owner. Never ask for them in chat and never write them to files.
 - Don't use Wikimedia for new images.
 - English should read like it was written in English: direct, plain, not "translated", not AI-sounding.

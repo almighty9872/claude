@@ -146,7 +146,7 @@ window.PARABLES = /*JSON-START*/{
      "bioEn": "A shepherd with a hundred sheep leaves the ninety-nine to search for the one that is lost, and carries it home on his shoulders with joy.\nJesus told it to those who criticized him for eating with sinners. God never writes off anyone who is lost, and rejoices over a single sinner who repents.",
      "en": {
       "ref": "Luke 15:3–7 (Douay-Rheims)",
-      "text": "What man is there of you, that hath an hundred sheep: and if he shall lose one of them, doth he not leave the ninety-nine in the desert, and go after that which was lost, until he find it?\nAnd when he hath found it, lay it upon his shoulders, rejoicing: And coming home, call together his friends and neighbours, saying to them: Rejoice with me, because I have found my sheep that was lost? I say to you, that even so there shall be joy in heaven upon one sinner that doth penance, more than upon ninety-nine just who need not penance."
+      "text": "What man is there of you, that hath an hundred sheep: and if he shall lose one of them, doth he not leave the ninety-nine in the desert, and go after that which was lost, until he find it?\nAnd when he hath found it, lay it upon his shoulders, rejoicing: And coming home, call together his friends and neighbors, saying to them: Rejoice with me, because I have found my sheep that was lost? I say to you, that even so there shall be joy in heaven upon one sinner that doth penance, more than upon ninety-nine just who need not penance."
      }
     },
     {
@@ -159,7 +159,7 @@ window.PARABLES = /*JSON-START*/{
      "bioEn": "A woman with ten silver coins loses one, lights a lamp and sweeps the house until she finds it, then celebrates with her neighbors.\nA twin of the Lost Sheep, it says the same thing: God actively searches for the lost, because every person is precious to him.",
      "en": {
       "ref": "Luke 15:8–10 (Douay-Rheims)",
-      "text": "What woman having ten groats, if she lose one groat, doth not light a candle, and sweep the house, and seek diligently until she find it? And when she hath found it, call together her friends and neighbours, saying: Rejoice with me, because I have found the groat which I had lost.\nSo I say to you, there shall be joy before the angels of God upon one sinner doing penance."
+      "text": "What woman having ten groats, if she lose one groat, doth not light a candle, and sweep the house, and seek diligently until she find it? And when she hath found it, call together her friends and neighbors, saying: Rejoice with me, because I have found the groat which I had lost.\nSo I say to you, there shall be joy before the angels of God upon one sinner doing penance."
      }
     },
     {

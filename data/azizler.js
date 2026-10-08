@@ -72,7 +72,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu gün İsa adının gücünü ve tatlılığını anar. Dayanağı, Yeni Ahit’teki şu sözdür: “Göğün altında insanlara verilmiş, bizi kurtarabilecek başka hiçbir ad yoktur” (Elçilerin İşleri 4:12). Bu anmayı Orta Çağ’dan beri özellikle Fransiskenler ve Cizvitler yaydı.",
      "nameEn": "The Holy Name of Jesus",
      "titleEn": "",
-     "bioEn": "An optional memorial honouring the name of Jesus itself: “There is no other name under heaven given among men by which we must be saved” (Acts 4:12). The Franciscans and later the Jesuits spread the devotion from the Middle Ages on."
+     "bioEn": "An optional memorial honoring the name of Jesus itself: “There is no other name under heaven given among men by which we must be saved” (Acts 4:12). The Franciscans and later the Jesuits spread the devotion from the Middle Ages on."
     }
    ]
   },
