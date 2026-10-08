@@ -12,6 +12,7 @@ Handoff notes for whoever works on the English site. The Turkish site (katolikdu
 - Don't use Wikimedia for new images.
 - English should read like it was written in English: direct, plain, not "translated", not AI-sounding.
 - The live katolikdunyasi.com stays Turkish-only. Its Catechism pages still have an English toggle.
+- Nothing Turkish on verbumdomini.ca, and no links or language tags (hreflang) to the Turkish site.
 
 ## How it's built
 
@@ -74,7 +75,7 @@ Done:
    - Leave the Worker `katolikdunyasi-contact` (the Turkish contact form, route `katolikdunyasi.com/api/*`) alone.
 
 Next:
-5. Contact form on the English site: the form posts to `/api/contact`, which the verbumdomini Worker doesn't have yet, and the Turnstile widget doesn't allow the workers.dev or verbumdomini.ca hostnames. Decide how the English form gets sent.
+5. Contact form: the form posts to `/api/contact`, handled by `verbumdomini/cloudflare/contact.js` inside the verbumdomini Worker (trap field, Turnstile check, then mail through Cloudflare Email Routing). The Turnstile widget is shared with the Turkish site and lists verbumdomini.ca as a hostname. Set by the owner in Cloudflare, not in the repo: Email Routing on for verbumdomini.ca, and the Worker secrets `TURNSTILE_SECRET` and `TO_ADDRESS` (a verified destination address). `FROM_ADDRESS` (form@verbumdomini.ca) and the `CONTACT_EMAIL` binding are in `wrangler.jsonc`. Local test: put both secrets in a file outside the repo (Turnstile's test secret `1x0000000000000000000000000000000AA` always passes) and run `wrangler dev --env-file <file>`; sent mail is saved as .eml under `.wrangler/`.
 6. At cutover:
    - Done: the old katolikdunyasi.com `/en/...` addresses redirect to verbumdomini.ca (Cloudflare Bulk Redirects).
    - Make the Turkish site's hreflang point to verbumdomini.ca and stop shipping `en/` on the Turkish site, except the 8 Catechism English pages, which move to the English site.

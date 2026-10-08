@@ -16,5 +16,10 @@
     // Requests that match no file go to worker.js ("/", addresses without ".html", and 404s).
     "html_handling": "none",
     "not_found_handling": "none"
-  }
+  },
+  // Contact form (contact.js): sends mail through Cloudflare Email Routing. Email Routing must be on
+  // for verbumdomini.ca. The receiving address and the Turnstile secret key are secrets set in the
+  // Cloudflare dashboard (TO_ADDRESS, TURNSTILE_SECRET), never here; deploys keep them.
+  "send_email": [{ "name": "CONTACT_EMAIL" }],
+  "vars": { "FROM_ADDRESS": "form@verbumdomini.ca" }
 }
