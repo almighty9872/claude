@@ -1,46 +1,49 @@
 ---
 title: The Bible
-subtitle: Which translation should you choose?
-description: What makes a Bible edition Catholic, where to start in Turkish, and which translation to choose? A short guide with a list of approved translations.
-short: A short guide to choosing a Bible translation, with a list of approved editions.
+subtitle: Which translation should you read?
+description: What makes a Bible Catholic, which English translation to pick, and which ones the bishops have approved. A short, practical guide.
+short: How to pick a Catholic Bible in English, and which translations the bishops have approved.
 ---
 
-## How to recognize a Catholic edition {#katolik-baski}
+## How to tell a Catholic Bible {#katolik-baski}
 
-The Catholic Bible has 73 books. Protestant editions are missing seven Old Testament books: Tobit, Judith, Wisdom, Sirach, Baruch, and 1 and 2 Maccabees (plus parts of Esther and Daniel). The Church has held these **deuterocanonical** books to be Scripture from the beginning.
+A Catholic Bible has 73 books. Most Protestant Bibles have 66: they leave out Tobit, Judith, Wisdom, Sirach, Baruch and 1 and 2 Maccabees, along with parts of Esther and Daniel. The Church has read these **deuterocanonical** books as Scripture since the first centuries.
 
-Check two things before buying:
+Before you buy, check two things:
 
-- **"Catholic Edition"** on the cover.
-- **Nihil obstat** and **Imprimatur** inside: they show the translation carries the Church's approval.
+- **"Catholic Edition"** on the cover or title page.
+- **Nihil obstat** and **Imprimatur** inside. They mean a bishop has approved the translation and its notes.
 
-## Which Turkish edition? {#turkce}
+## Which English translation? {#ceviri}
 
-There's no printed, Church-approved Turkish Catholic edition yet. The closest option is the Bible Society in Turkey's 2003 translation, **Kutsal Kitap ve Deuterokanonik Kitaplar** ("The Bible and the Deuterocanonical Books"): it includes the seven deuterocanonical books and reads easily. Read it free online:
+There is no single "official" English Bible. Each has its strengths:
 
-- [Kutsal Kitap ve Deuterokanonik Kitaplar (KKDEU), Bible.com](https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar)
-- [kitabimukaddes.com](https://kitabimukaddes.com/tr/kutsal-kitap)
+- **RSV-2CE (the Ignatius Bible):** accurate, dignified and easy to read aloud. A favourite for study and prayer.
+- **NABRE (New American Bible, Revised Edition):** the translation behind the readings at Mass in the United States. Good notes, plainer style.
+- **NRSV-CE and NRSVue-CE:** widely used in universities and, in Canada, close to what you hear at Mass.
+- **ESV-CE:** the English Standard Version with the deuterocanonical books, chosen for the new Lectionary in England, Wales and Scotland.
+- **Douay-Rheims:** the classic Catholic translation from the Latin Vulgate (1582-1610, revised by Bishop Challoner in the 1750s). Old-fashioned English, but beautiful, and free of copyright. It is the English you see in the verse popups on this site.
+
+If you are starting out, pick the RSV-2CE or whatever your parish uses, and read a Gospel from beginning to end. Mark is the shortest.
 
 ## Approved translations {#onayli}
 
-English translations approved by the US Conference of Catholic Bishops (USCCB) since 1983:
+Translations approved by the United States Conference of Catholic Bishops (USCCB) since 1983:
 
-- Books of the New Testament, Alba House
-- Contemporary English Version, New Testament, First Edition, American Bible Society
-- Contemporary English Version, Book of Psalms, American Bible Society
-- Contemporary English Version, Book of Proverbs, American Bible Society
-- The Grail Psalter (Inclusive Language Version), G.I.A. Publications
 - **New American Bible, Revised Edition (NABRE)**
 - **New Revised Standard Version, Catholic Edition**, National Council of Churches
 - **New Revised Standard Version, Updated Edition, Catholic Edition**, Friendship Press
+- Books of the New Testament, Alba House
+- Contemporary English Version: New Testament, Psalms and Proverbs, American Bible Society
+- Good News Translation (Today's English Version, Second Edition), American Bible Society
+- Translation for Early Youth (a New Testament for children), American Bible Society
+- The Grail Psalter (Inclusive Language Version), G.I.A. Publications
 - The Psalms, Alba House
 - The Psalms (New International Version), St. Joseph Catholic Edition, Catholic Book Publishing Company
 - The Psalms, St. Joseph New Catholic Version, Catholic Book Publishing Company
 - Revised Psalms of the New American Bible (1991)
-- So You May Believe, A Translation of the Four Gospels, Alba House
-- Good News Translation (Today's English Version, Second Edition), American Bible Society
-- Translation for Early Youth, A Translation of the New Testament for Children, Contemporary English Version, American Bible Society
+- So You May Believe: A Translation of the Four Gospels, Alba House
 
-The Douay-Rheims isn't on this list because the list covers only contemporary translations; it carries its own historical approval and is still fine to use. If you live in another country, check your own bishops' conference's list.
+The list covers only translations approved since 1983, which is why older ones like the RSV-CE and the Douay-Rheims aren't on it; they carry their own approval and are fine to use. Outside the United States, your own bishops' conference keeps its own list.
 
-> The sections on translation are adapted from Catholic Answers' Bible Translations Guide pamphlet; the list of approved translations comes from the USCCB.
+> The list of approved translations comes from the USCCB.

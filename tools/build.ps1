@@ -32,8 +32,12 @@ param(
   [string]$SiteUrl = '',
   # The live site is Turkish, with English only on the Katekizm pages. -WithEnglish builds every
   # page in both languages, with its English twin under en/, as the site was before.
-  [switch]$WithEnglish
+  [switch]$WithEnglish,
+  # Also writes the English site (verbumdomini.ca) into _site_en/: every English page at the root
+  # of its own domain, in English alone, under the name Verbum Domini (see the end of this file)
+  [switch]$EnglishSite
 )
+if ($EnglishSite) { $WithEnglish = $true }
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
@@ -151,6 +155,8 @@ $CssVer = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/styles.min.
 $Apos = [char]0x2019
 # The site is the brand now; the Compendium is one work published on it.
 $SiteName = 'katolikdunyasi.com'
+# The English site's own name (verbumdomini.ca)
+$BrandEn = 'Verbum Domini'
 $SiteTag = 'Türkçe Katolik Portalı'
 $SiteTagEn = 'Turkish Catholic Portal'
 $WorkName = 'Katolik Kilisesi İnanç Esasları Özeti'
@@ -220,6 +226,7 @@ Add-EnAlt 'erisilebilirlik.html' 'accessibility.html'
 Add-EnAlt 'gizlilik.html' 'privacy.html'
 Add-EnAlt 'tesbih-duasi.html' 'rosary.html'
 Add-EnAlt 'tesbih-tarihi.html' 'history-of-the-rosary.html'
+Add-EnAlt 'kilise-tarihi.html' 'history-of-the-church.html'
 Add-EnAlt 'kutsal-kitap.html' 'bible.html'
 Add-EnAlt 'neden-katoligiz.html' 'why-were-catholic.html'
 Add-EnAlt 'topraklarimizda-hristiyanlik.html' 'anatolia.html'
@@ -526,15 +533,17 @@ function Art-Img([string]$key, [string]$cls, [string]$sizes = '100vw', [string]$
   return "<img class=`"$cls`" src=`"assets/art/$key.jpg`"$set width=`"$($a.w)`" height=`"$($a.h)`" alt=`"`" decoding=`"async`" style=`"object-position:50% $($a.y)%`"$fp>"
 }
 # a picture inside a story (data file "art": a key of data/tablolar.json), with its credit under it
+# A painting's painter in the reader's language ("ae" where the English differs)
+function Art-A($a) { if ($a.ae) { T $a.a $a.ae } else { $a.a } }
 function Mira-Fig([string]$key) {
   if (-not $key) { return '' }
   $a = $Tablolar.art.$key
   $lic = if ($a.loc -match '^CC') { " · $($a.loc)" } else { '' }
-  return "<figure class=`"mira-fig`">$(Art-Img $key 'mira-img' '(min-width: 980px) 44rem, 100vw')<figcaption><cite>$($a.t)</cite> · $($a.a)$lic</figcaption></figure>"
+  return "<figure class=`"mira-fig`">$(Art-Img $key 'mira-img' '(min-width: 980px) 44rem, 100vw')<figcaption><cite>$(T $a.t $a.te)</cite> · $(Art-A $a)$lic</figcaption></figure>"
 }
 function Art-Cap([string]$key) {
   $a = $Tablolar.art.$key
-  return "<p class=`"ph-cap`">$(T "$($a.a) · <cite>$($a.t)</cite>" "$($a.a) · <cite>$($a.te)</cite>")</p>"
+  return "<p class=`"ph-cap`">$(T "$($a.a) · <cite>$($a.t)</cite>" "$(if ($a.ae) { $a.ae } else { $a.a }) · <cite>$($a.te)</cite>")</p>"
 }
 # A page whose header has a painting: the painting behind the title, its name underneath. A
 # painting smaller than the screen is shown whole, in a frame, over a blurred copy of itself.
@@ -547,7 +556,7 @@ function Paint-Sections([string]$body, [string]$file) {
     $key = $p.Value; $a = $Tablolar.art.$key
     # a landscape painting runs the width of the text; an upright one stands in the middle of it
     $shape = if ([int]$a.w -ge [int]$a.h * 1.15) { 'ill-wide' } else { 'ill-tall' }
-    $fig = "<figure class=`"ill-art ill-photo $shape`">$(Art-Img $key 'ill-img' '(min-width: 980px) 46rem, 100vw')<figcaption>$(T "$($a.a) · <cite>$($a.t)</cite>" "$($a.a) · <cite>$($a.te)</cite>")</figcaption></figure>"
+    $fig = "<figure class=`"ill-art ill-photo $shape`">$(Art-Img $key 'ill-img' '(min-width: 980px) 46rem, 100vw')<figcaption>$(T "$($a.a) · <cite>$($a.t)</cite>" "$(if ($a.ae) { $a.ae } else { $a.a }) · <cite>$($a.te)</cite>")</figcaption></figure>"
     # the painting goes under the section's heading, in the run of the text
     $rx = '(<(?:section|article)\b[^>]*\bid="' + [regex]::Escape($p.Name) + '"[^>]*>)<div class="ill-art" aria-hidden="true"><svg[\s\S]*?</svg></div>(<div class="ill-body">(?:<p class="ill-kick">[\s\S]*?</p>)?<h2[\s\S]*?</h2>)'
     $body = [regex]::Replace($body, $rx, { param($m) $m.Groups[1].Value + $m.Groups[2].Value + $fig })
@@ -1281,7 +1290,7 @@ function Foot-Dialog([string]$id, [string]$title, [string]$inner, [string]$src =
 # katolikdunyasi.com's own key.
 $TurnstileSiteKey = '0x4AAAAAAFLZFP4-Scpg6ov1'
 $ContactIntro = TB "<p>Bir hata gördüyseniz, bir konu önermek ya da merhaba demek istiyorsanız aşağıdaki formdan yazın.</p>" "<p>If you've spotted a mistake in a translation, there's a topic, saint or miracle you'd like to see added, or you'd simply like to say hello, you can write to us with the form below.</p>"
-$ContactOutro = TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. Depending on how busy things are, a reply may take a little while, but thank you, sincerely, for any feedback you send.</p>"
+$ContactOutro = TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. A reply can take a while, but every note is welcome.</p>"
 $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
@@ -1289,7 +1298,7 @@ $FooterHtml = @"
       <p class="foot-brand"><span class="foot-fish" aria-hidden="true">$IchthysSvg</span>$BrandName</p>
       <p class="foot-tag">$(T $SiteTag $SiteTagEn)</p>
       <p class="foot-desc">$(T $fm['about'] $fmEn['about'])</p>
-      <p class="foot-legal"><strong>Yasal Uyarı</strong> Katolik Dünyası, Kanon Hukuku$($Apos)nun 216. Maddesinin ilk cümlesine uygun olarak yürütülen bağımsız ve özel bir girişimdir. Bu web sitesi, hiçbir kilise makamının veya Katolik Kilisesi$($Apos)nin resmi bir platformu değildir; resmi bir onay veya kurumsal bir bağlılık taşımamaktadır.</p>
+      <p class="foot-legal">$(T "<strong>Yasal Uyarı</strong> Katolik Dünyası, Kanon Hukuku$($Apos)nun 216. Maddesinin ilk cümlesine uygun olarak yürütülen bağımsız ve özel bir girişimdir. Bu web sitesi, hiçbir kilise makamının veya Katolik Kilisesi$($Apos)nin resmi bir platformu değildir; resmi bir onay veya kurumsal bir bağlılık taşımamaktadır." "<strong>Legal notice</strong> katolikdunyasi.com is an independent, private initiative undertaken in keeping with the first sentence of Canon 216 of the Code of Canon Law. This website is not an official platform of any Church authority or of the Catholic Church, and carries no official approval or institutional affiliation.")</p>
       <p class="foot-copy foot-src"><a class="foot-sources" href="kaynaklar-ve-telif.html" data-dialog="sources-dialog">$(T $fm['title'] $fmEn['title'])</a><a class="foot-contact" href="iletisim.html">$(T 'İletişim' 'Contact')</a><a class="foot-contact foot-extra" href="erisilebilirlik.html" data-dialog="dlg-erisilebilirlik">$(T 'Erişilebilirlik' 'Accessibility')</a><a class="foot-contact foot-extra" href="gizlilik.html" data-dialog="dlg-gizlilik">$(T 'Gizlilik' 'Privacy')</a></p>
     </div>
     <nav class="foot-sitemap" $(TA 'aria-label' 'Site haritası' 'Sitemap')>
@@ -1512,7 +1521,8 @@ function Write-Page {
     $ogImg = "$SiteUrl/assets/art/$ogKey.jpg"
     if ($ow -gt 1200) { $ogImg = "$SiteUrl/assets/art/$ogKey-1200.jpg"; $oh = [int][math]::Round($oh * 1200 / $ow); $ow = 1200 }
     $ogAlt = "$($oa.a) · $($oa.t)"
-  } else { $ogImg = "$SiteUrl/assets/og-image.jpg"; $ow = 1200; $oh = 630; $ogAlt = $SiteName }
+    $ogAltEn = "$(if ($oa.ae) { $oa.ae } else { $oa.a }) · $(if ($oa.te) { $oa.te } else { $oa.t })"
+  } else { $ogImg = "$SiteUrl/assets/og-image.jpg"; $ow = 1200; $oh = 630; $ogAlt = $SiteName; $ogAltEn = $SiteName }
   # The home page's largest picture on a phone is the saint card's painting, which script.js
   # would only set once the day's saint is known; the default one is in the page from the start
   # (.hm-card.hm-saint: more specific than the stylesheet's background shorthand, which loads later)
@@ -1588,12 +1598,12 @@ $locAlt
 <meta property="og:image" content="$ogImg">
 <meta property="og:image:width" content="$ow">
 <meta property="og:image:height" content="$oh">
-<meta property="og:image:alt" content="$(Attr $ogAlt)">
+<meta property="og:image:alt" content="$(Attr $(if ($pl -eq 'en') { $ogAltEn } else { $ogAlt }))">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="$(Attr $t)">
 <meta name="twitter:description" content="$(Attr $d)">
 <meta name="twitter:image" content="$ogImg">
-<meta name="twitter:image:alt" content="$(Attr $ogAlt)">
+<meta name="twitter:image:alt" content="$(Attr $(if ($pl -eq 'en') { $ogAltEn } else { $ogAlt }))">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="$Favicon" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1632,6 +1642,7 @@ $a11yHtml
   if ($enFile) {
     $h = & $render 'en'
     $h = (Map-EnLinks ([regex]::Replace($h, $rootRx, '$1="/'))).Replace('<!--KD-PILL-->', $pill)
+    $h = Embed-Refs $h
     [IO.File]::WriteAllText((Join-Path $Root $enFile), $h, $Utf8)
   }
   $script:PageInfo += ,@{ File = $File; Path = $Path; En = $enFile; Title = $Title; TitleEn = $TitleEn; Desc = $Description; DescEn = $DescriptionEn; Robots = $Robots }
@@ -1913,12 +1924,12 @@ function Kk-Fold([string]$html, [string]$sfx = '') {
 }
 $kkRead = 'https://www.bible.com/tr/versions/2308-kkdeu-kutsal-kitap-ve-deuterokanonik-kitaplar'
 $kkQuick = @(
-  @((T 'Türkçe okumak için' 'In Turkish'), (T 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)' 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)'),
-    (T '73 kitabın tamamı, kolay okunur bir dille.' 'All 73 books, in easy modern Turkish.'),
-    "<a href=`"$kkRead`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
-  @((T 'İngilizce için' 'In English'), 'RSV-CE (The Ignatius Bible)',
-    (T 'Özgün metne yakın ama okunur; genel kullanım için en iyi seçim.' 'Close to the original yet readable; the best choice for general use.'),
-    "<a href=`"https://www.ewtn.com/bible`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
+  @((T 'Türkçe okumak için' 'For everyday reading'), (T 'Kutsal Kitap ve Deuterokanonik Kitaplar (2003)' 'RSV-2CE (the Ignatius Bible)'),
+    (T '73 kitabın tamamı, kolay okunur bir dille.' 'Accurate, dignified and easy to read aloud.'),
+    "<a href=`"$kkRead`" data-en-href=`"https://www.biblegateway.com/versions/Revised-Standard-Version-Catholic-Edition-RSVCE-Bible/`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read the RSV-CE free') $IcoExternal</a>"),
+  @((T 'İngilizce için' 'At Mass in the US'), (T 'RSV-CE (The Ignatius Bible)' 'NABRE'),
+    (T 'Özgün metne yakın ama okunur; genel kullanım için en iyi seçim.' 'The translation behind the Sunday readings in American parishes.'),
+    "<a href=`"https://www.ewtn.com/bible`" data-en-href=`"https://bible.usccb.org/`" target=`"_blank`" rel=`"noopener`">$(T 'Ücretsiz oku' 'Read it free') $IcoExternal</a>"),
   @((T 'Satın alırken' 'When buying a Bible'), (T '73 kitap ve Imprimatur' '73 books and an Imprimatur'),
     (T 'Katolik baskıda 73 kitap vardır; iç kapakta Nihil obstat ve Imprimatur yazar.' 'A Catholic edition has 73 books, with Nihil obstat and Imprimatur inside the cover.'), '')
 )
@@ -1930,7 +1941,7 @@ $kkLogosTr = @'
 <h2>Çeviri neden bu kadar önemli?</h2><p>Yeni Ahit Grekçe yazıldı. Eski Grekçe, tek bir kelimeye koca bir felsefeyi sığdırabilen bir dildir; bu yüzden onu daha dar anlamlı dillere aktarmak zordur. Yuhanna İncili şöyle başlar: <em>“Başlangıçta Söz vardı. Söz Tanrı’yla birlikteydi ve Söz Tanrı’ydı”</em> (Yuhanna 1:1). Burada “Söz” diye çevrilen kelime, Grekçe <em lang="grc">logos</em>’tur.</p><p>Eski Grek felsefesinde logos, evrene düzen veren akıl ve ilahi zekâdır: her şeyi birbirine bağlayan ve yöneten evrensel ilke. Stoacı filozoflar için logos, doğa, kader ya da takdirle bir tutulan etkin, akıllı ve ruhani bir güçtü. Yuhanna bu kelimeyi seçerek şunu söyler: Evrenin anlamı ve düzeni olan bu Akıl, Tanrı’nın kendisidir ve İsa’da insan oldu (Yuhanna 1:14).</p><p>“Söz” ya da “Tanrısal Söz” gibi karşılıklar bu derinliği taşıyamaz; birçok okur için anlamı bile açık değildir. Grekçenin bu zenginliği, her kelimenin bağlamıyla birlikte dikkatle yorumlanmasını gerektirir. İyi bir çeviri ve Kilise’nin rehberliği bu yüzden bu kadar önemlidir.</p>
 '@
 $kkLogosEn = @'
-<h2>Why translation matters so much</h2><p>The New Testament was written in Greek. Ancient Greek can fit a whole philosophy into a single word, which makes it hard to carry into languages with narrower words. John’s Gospel opens: <em>“In the beginning was the Word, and the Word was with God, and the Word was God”</em> (John 1:1). The word translated “Word” is the Greek <em lang="grc">logos</em>.</p><p>In ancient Greek philosophy, logos is the reason and divine intelligence that orders the cosmos: the universal principle that connects and governs all things. For the Stoics it was an active, rational, spiritual principle, equated with nature, fate or providence. By choosing this word, John says that this Reason, the meaning and order of the universe, is God himself, and became man in Jesus (John 1:14).</p><p>Renderings such as “Söz” (“Word”) or “Tanrısal Söz” (“Divine Word”) in Turkish cannot carry this depth; to many readers they barely make sense. Greek’s semantic breadth means every word must be read carefully in its context. That is why a good translation, and the Church’s guidance, matter so much.</p>
+<h2>Why translation matters so much</h2><p>The New Testament was written in Greek. Ancient Greek can fit a whole philosophy into a single word, which makes it hard to carry into languages with narrower words. John’s Gospel opens: <em>“In the beginning was the Word, and the Word was with God, and the Word was God”</em> (John 1:1). The word translated “Word” is the Greek <em lang="grc">logos</em>.</p><p>In ancient Greek philosophy, logos is the reason and divine intelligence that orders the cosmos: the universal principle that connects and governs all things. For the Stoics it was an active, rational, spiritual principle, equated with nature, fate or providence. By choosing this word, John says that this Reason, the meaning and order of the universe, is God himself, and became man in Jesus (John 1:14).</p><p>“Word” is the best English has, and it still loses most of what John’s first readers heard. The same is true of many Greek words: each has to be read in its context. That is why a good translation, and the Church’s guidance in reading it, matter so much.</p>
 '@
 # the Logos note: its heading becomes the section's, the rest its body
 function Kk-Split([string]$h) { $m = [regex]::Match($h.Trim(), '^<h2>(.*?)</h2>(.*)$', 'Singleline'); return @($m.Groups[1].Value, $m.Groups[2].Value) }
@@ -2032,7 +2043,7 @@ $(Ill-Sec -Id 'vicdan-muhasebesi' -HeadId 'h-vicdan' -Art 'tablets' -Tone 'red' 
     -Body "<p class=`"why-thesis`">$(T (Inline $Confession.examenIntro) (Inline $Confession.examenIntroEn))</p><div class=`"kk-secs`">$examenFolds</div>")
 $(Ill-Sec -Id 'sorular-ve-korkular' -HeadId 'h-sorular' -Art 'candle' -Tone 'green' -Kick (T 'Merak edilenler' 'What people ask') -Head (T 'Sık sorulan sorular ve korkular' 'Common questions and fears') `
     -Body "<div class=`"ill-qas`">$confessionFaq</div>$sealMartyrsHtml")
-  $(TB "<p class=`"conventions`">Bu sayfa, Katolik Kilisesi Katekizmi$($Apos)nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">KKK 1420-1498</a>) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href=`"kiliseler.html`">Kilise Bul</a> sayfası size yardımcı olabilir.</p>" "<p class=`"conventions`">This page is grounded in the Catechism of the Catholic Church's teaching on the Sacrament of Penance and Reconciliation (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">CCC 1420-1498</a>) and canon law; the exact wording of the rite can vary slightly from region to region. For practical details (such as confession times), ask your nearest parish; the <a href=`"kiliseler.html`">Find a Church</a> page can help.</p>")
+  $(TB "<p class=`"conventions`">Bu sayfa, Katolik Kilisesi Katekizmi$($Apos)nin Tövbe ve Barışma Kutsal Sırrı üzerine öğretisine (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">KKK 1420-1498</a>) ve Kilise hukukuna dayanır; ayin sözlerinin tam metni bölgeden bölgeye küçük farklar gösterebilir. Uygulamadaki ayrıntılar için (örneğin günah çıkarma saatleri) en yakın cemaat kilisenize danışın; <a href=`"kiliseler.html`">Kilise Bul</a> sayfası size yardımcı olabilir.</p>" "<p class=`"conventions`">This page is grounded in the Catechism of the Catholic Church's teaching on the Sacrament of Penance and Reconciliation (<a href=`"https://www.vatican.va/content/catechism/en/part_two/section_two/chapter_two/article_4/vi_the_sacrament_of_penance_and_reconciliation.html`" target=`"_blank`" rel=`"noopener`">CCC 1420-1498</a>) and canon law; the exact wording of the rite can vary slightly from region to region. For practical details (such as confession times), ask your nearest parish.</p>")
 </div>
 "@
 Write-Page -File 'gunah-cikarma.html' -Title "$($Confession.title) | $SiteName" -TitleEn "$($Confession.en) | $SiteName" `
@@ -2489,11 +2500,11 @@ $monthSectionsHtml
   <h2 class="section-title" id="buyuk-azizler">$(T (Inline $GreatSaints.title) (Inline $GreatSaints.en))</h2>
   <p class="faq-intro">$(T (Inline $GreatSaints.intro) (Inline $GreatSaints.introEn))</p>
   <div class="gs-stories">$greatSaintsCardsHtml</div>
-  <p class="gs-credit">Portreler kamu malı tablolardan ve fotoğraflardan alınmıştır; künyeleri <a href="kaynaklar-ve-telif.html#aziz-portreleri">Kaynaklar ve Telif</a> sayfasındadır.</p>
+  <p class="gs-credit">$(T 'Portreler kamu malı tablolardan ve fotoğraflardan alınmıştır; künyeleri <a href="kaynaklar-ve-telif.html#aziz-portreleri">Kaynaklar ve Telif</a> sayfasındadır.' 'The portraits come from public-domain paintings and photographs; their credits are on the <a href="kaynaklar-ve-telif.html#aziz-portreleri">Sources and Copyright</a> page.')</p>
   <div class="movable-list" data-movable-list hidden>
 $movableCardsHtml
   </div>
-  $(TB "<p class=`"conventions`">Tarihler ve ayin dereceleri Roma Genel Takvimi$($Apos)ne göredir. Hareketli bayramlar, Meeus/Jones/Butcher algoritmasıyla hesaplanan Paskalya tarihine göre yerleştirilir. Roma Genel Takvimi$($Apos)nde boş kalan günler için Roma Azizler Cetveli$($Apos)nden (Martyrologium Romanum) ya da Batı$($Apos)nın eski takvim geleneğinden bir aziz seçtik. Bu azizlerin rütbesi <em>Roma Azizler Cetveli</em> olarak gösterilir. Kilise bu anmaları o gün için zorunlu tutmaz; bunlar sitenin sunduğu ek bilgilerdir. Aziz hayat öyküleri bu site için Türkçe olarak yazıldı ve yazarın kendi bilgisine dayanır. Özellikle az bilinen azizlerde tarih ya da ayrıntı hataları olabilir. Güvenilir bir kaynağa dayandırılamayan birkaç gün için Kilise$($Apos)nin genel bir açıklaması kullanıldı.</p>" "<p class=`"conventions`">Dates and liturgical ranks follow the General Roman Calendar; the year's movable feasts are set according to the date of Easter, calculated with the Meeus/Jones/Butcher algorithm. For dates the General Roman Calendar leaves open, a saint ranked <em>Roman Martyrology</em> has been chosen from the Roman Martyrology (Martyrologium Romanum) or the West's historical calendar tradition; this means it is not a commemoration the Church requires for that day, but additional information the site offers. The saint biographies were written for this site, from the author's own knowledge; small errors of date or detail are possible, especially for lesser-known saints. For a very small number of days that could not be grounded in any reliable source, the Church's own general description is used instead.</p>")
+  $(TB "<p class=`"conventions`">Tarihler ve ayin dereceleri Roma Genel Takvimi$($Apos)ne göredir. Hareketli bayramlar, Meeus/Jones/Butcher algoritmasıyla hesaplanan Paskalya tarihine göre yerleştirilir. Roma Genel Takvimi$($Apos)nde boş kalan günler için Roma Azizler Cetveli$($Apos)nden (Martyrologium Romanum) ya da Batı$($Apos)nın eski takvim geleneğinden bir aziz seçtik. Bu azizlerin rütbesi <em>Roma Azizler Cetveli</em> olarak gösterilir. Kilise bu anmaları o gün için zorunlu tutmaz; bunlar sitenin sunduğu ek bilgilerdir. Aziz hayat öyküleri bu site için Türkçe olarak yazıldı ve yazarın kendi bilgisine dayanır. Özellikle az bilinen azizlerde tarih ya da ayrıntı hataları olabilir. Güvenilir bir kaynağa dayandırılamayan birkaç gün için Kilise$($Apos)nin genel bir açıklaması kullanıldı.</p>" "<p class=`"conventions`">Dates and ranks follow the General Roman Calendar, and the feasts that move with Easter are worked out for each year. Where the calendar leaves a day open, we picked a saint from the Roman Martyrology or the older Western calendar and marked it <em>Roman Martyrology</em>: the Church doesn’t require that commemoration, it’s simply there for you. The short lives were written for this site; with lesser-known saints, a date or detail may be off. On the few days no reliable source could support, we used the Church’s own general description.</p>")
 </div>
 <div class="hover-panel glass" id="saint-panel" role="tooltip" hidden></div>
 "@
@@ -2556,7 +2567,7 @@ $massBody = @"
   $(Crumbs 'Kutsal Ayin')
   <header class="page-head center">$(Page-Ico $IcoChalice)<h1>$(T $Mass.title $Mass.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Mass.en)</p>")</header>
   <p class="faq-intro">$(T (Inline $Mass.intro) (Inline $Mass.introEn))</p>
-  <p class="mass-video-note">$IcoPlay $(T 'Ayinin akışını izleyerek takip etmek isterseniz <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">bu İngilizce video</a> yardımcı olabilir.' 'If you would like to follow the flow of the Mass by watching it, you may find <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">this video</a> helpful.')</p>
+  <p class="mass-video-note">$IcoPlay $(T 'Ayinin akışını izleyerek takip etmek isterseniz <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">bu İngilizce video</a> yardımcı olabilir.' 'Want to see it before you go? In <a href="https://www.youtube.com/watch?v=RS8NrJ0Y5O8" target="_blank" rel="noopener">this video</a> Fr. Mike Schmitz walks through every part of the Mass.')</p>
   <nav class="mass-pills" $(TA 'aria-label' 'Ayinin bölümleri' 'The parts of the Mass') data-mass-pills>$massPillsHtml</nav>
   <div class="mass-parts" data-mass-parts>
 $massPartsHtml
@@ -2762,7 +2773,7 @@ $mysterySets
   $rosaryLead
   <ol class="steps">$stepList</ol>
   $rosaryTip
-  <p class="conventions">$(T "Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir." "The Turkish prayers follow the tradition used for the Rosary at the Basilica of Saint Anthony of Padua (Sant'Antuan) in Istanbul; the English versions are the prayers as they are commonly said in English.")</p>
+  <p class="conventions">$(T "Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir." "The prayers are given in their traditional English form.")</p>
 </div>
 "@
 Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" -TitleEn "$($Rosary.en) | $SiteName" `
@@ -2840,25 +2851,25 @@ Write-Page -File 'tesbih-tarihi.html' -Title "Tesbihin Tarihi | $SiteName" -Titl
 $ktN = 0; $ktEraNav = New-Object System.Collections.Generic.List[string]
 $ktEras = ($Tarih.eras | ForEach-Object {
   $era = $_
-  $ktEraNav.Add("<a href=`"#donem-$($era.id)`"><span class=`"kt-en`">$($era.t)</span><span class=`"kt-ey`">$($era.span)</span></a>")
+  $ktEraNav.Add("<a href=`"#donem-$($era.id)`"><span class=`"kt-en`">$(T $era.t $era.tEn)</span><span class=`"kt-ey`">$($era.span)</span></a>")
   $evs = ($Tarih.items | Where-Object { $_.era -eq $era.id } | ForEach-Object {
     $it = $_; $script:ktN++
     $g = $TarihImg.($it.img)
-    $cap = if ($g) { "<figcaption>$($g.a) · <cite>$($g.t)</cite></figcaption>" } else { '' }
-    $more = if ($it.link) { "<a class=`"kt-more`" href=`"$($it.link)`">Devamını okuyun<svg viewBox=`"0 0 24 24`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"2`" stroke-linecap=`"round`" stroke-linejoin=`"round`"><path d=`"m9 6 6 6-6 6`"/></svg></a>" } else { '' }
+    $cap = if ($g) { "<figcaption>$(T $g.a $(if ($g.ae) { $g.ae } else { $g.a })) · <cite>$(T $g.t $g.te)</cite></figcaption>" } else { '' }
+    $more = if ($it.link) { "<a class=`"kt-more`" href=`"$($it.link)`">$(T 'Devamını okuyun' 'Read more')<svg viewBox=`"0 0 24 24`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"2`" stroke-linecap=`"round`" stroke-linejoin=`"round`"><path d=`"m9 6 6 6-6 6`"/></svg></a>" } else { '' }
     "<li class=`"kt-ev`" id=`"olay-$script:ktN`"><span class=`"kt-dot`" aria-hidden=`"true`"></span>" +
       "<figure class=`"kt-img`"><img src=`"assets/art/tl/$($it.img).jpg`" alt=`"`" width=`"600`" height=`"400`" loading=`"lazy`" decoding=`"async`">$cap</figure>" +
-      "<div class=`"kt-body`"><p class=`"kt-y`">$($it.y)</p><h3 class=`"kt-t`">$($it.t)</h3><p class=`"kt-s`">$($it.s)</p><p class=`"kt-d`">$($it.d)</p>$more</div></li>"
+      "<div class=`"kt-body`"><p class=`"kt-y`">$(T $it.y $it.yEn)</p><h3 class=`"kt-t`">$(T $it.t $it.tEn)</h3><p class=`"kt-s`">$(T $it.s $it.sEn)</p><p class=`"kt-d`">$(T $it.d $it.dEn)</p>$more</div></li>"
   }) -join ''
   "<section class=`"kt-era`" id=`"donem-$($era.id)`" aria-labelledby=`"donem-$($era.id)-h`"><header class=`"kt-era-head`"><p class=`"kt-span`">$($era.span)</p>" +
-    "<h2 id=`"donem-$($era.id)-h`">$($era.t)</h2><p class=`"kt-intro`">$($era.intro)</p></header><ol class=`"kt-list`">$evs</ol></section>"
+    "<h2 id=`"donem-$($era.id)-h`">$(T $era.t $era.tEn)</h2><p class=`"kt-intro`">$(T $era.intro $era.introEn)</p></header><ol class=`"kt-list`">$evs</ol></section>"
 }) -join "`n"
 $ktBody = @"
 <div class="wrap kt-page">
-  <header class="page-head center" id="bas">$(Page-Ico $IcoHourglass)<h1>Kilise$($Apos)nin Tarihi</h1><p class="sub">Pentikost$($Apos)tan II. Vatikan Konsili$($Apos)ne, $ktN olay.</p></header>
-  <nav class="kt-nav" aria-label="Dönemler">$($ktEraNav -join '')</nav>
+  <header class="page-head center" id="bas">$(Page-Ico $IcoHourglass)<h1>$(T "Kilise$($Apos)nin Tarihi" 'History of the Church')</h1><p class="sub">$(T "Pentikost$($Apos)tan II. Vatikan Konsili$($Apos)ne, $ktN olay." "From Pentecost to the Second Vatican Council, $ktN events.")</p></header>
+  <nav class="kt-nav" $(TA 'aria-label' 'Dönemler' 'Eras')>$($ktEraNav -join '')</nav>
 $ktEras
-  <p class="kt-end">Hikâye sürüyor. Devamı için <a href="topraklarimizda-hristiyanlik.html">Topraklarımızda Hristiyanlık</a> ve <a href="azizler.html">Azizler</a>.</p>
+  <p class="kt-end">$(T 'Hikâye sürüyor. Devamı için <a href="topraklarimizda-hristiyanlik.html">Topraklarımızda Hristiyanlık</a> ve <a href="azizler.html">Azizler</a>.' 'The story goes on in the lives of <a href="azizler.html">the saints</a>.')</p>
 </div>
 "@
 $ktLd = '{"@context":"https://schema.org","@type":"Article","headline":"Kilise' + "'" + 'nin Tarihi","inLanguage":"tr","mainEntityOfPage":' + (JStr "$SiteUrl/kilise-tarihi.html") + '}'
@@ -3148,16 +3159,16 @@ Write-Page -File 'gizlilik.html' -Title "$($GzMeta.title) | $SiteName" -TitleEn 
 # the photographs in the miracle stories (keys mira-*, fatima-*) are listed on their own
 $ArtListHtml = (($Tablolar.art.PSObject.Properties | Where-Object { $_.Name -notmatch '^(mira|fatima)-' } | Sort-Object { $_.Value.a }, { $_.Value.t }) | ForEach-Object {
   $a = $_.Value
-  "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`">$(T "<cite>$($a.t)</cite>" "<cite>$($a.te)</cite>")</a><br>$($a.a) · $(T $a.loc $a.loce)</span></li>"
+  "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`">$(T "<cite>$($a.t)</cite>" "<cite>$($a.te)</cite>")</a><br>$(Art-A $a) · $(T $a.loc $a.loce)</span></li>"
 }) -join ''
 $seenImg = @{}
 $TarihListHtml = (($Tarih.items | ForEach-Object { $_.img } | Where-Object { if ($seenImg[$_]) { $false } else { $seenImg[$_] = 1; $true } }) | ForEach-Object {
   $g = $TarihImg.$_
-  if ($g) { "<li><span><a href=`"$($g.src)`" target=`"_blank`" rel=`"noopener`"><cite>$(Attr $g.t)</cite></a><br>$(Attr $g.a) · $($g.lic)</span></li>" }
+  if ($g) { "<li><span><a href=`"$($g.src)`" target=`"_blank`" rel=`"noopener`"><cite>$(T (Attr $g.t) (Attr $g.te))</cite></a><br>$(T (Attr $g.a) (Attr $(if ($g.ae) { $g.ae } else { $g.a }))) · $(T $g.lic $g.lice)</span></li>" }
 }) -join ''
 $MiraListHtml = (($Tablolar.art.PSObject.Properties | Where-Object { $_.Name -match '^(mira|fatima)-' }) | ForEach-Object {
   $a = $_.Value
-  "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`"><cite>$($a.t)</cite></a><br>$($a.a) · $($a.loc)</span></li>"
+  "<li><span><a href=`"$($a.src)`" target=`"_blank`" rel=`"noopener`"><cite>$(T $a.t $a.te)</cite></a><br>$(Art-A $a) · $(T $a.loc $a.loce)</span></li>"
 }) -join ''
 $PortraitListHtml = ($GreatSaints.saints | ForEach-Object {
   $p = $SaintPortraits.($_.id)
@@ -3213,7 +3224,7 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -TitleEn "Pag
 $HomeApps = @(
   @{ id = 'ogren'; t = 'Öğren'; te = 'Learn'; s = 'İnancın ne olduğu ve nedeni'; se = 'What the faith is, and why'; ico = $SmallCross; pages = @(
     @{ f = 'neden-katoligiz.html'; ico = $IcoCompass; t = 'Neden Katoliğiz?'; te = "Why We're Catholic"
-       s = 'Tanrı var mı, İsa kim, neden Katolik Kilise? Kısa cümlelerle.'; se = 'Is there a God, who is Jesus, why the Catholic Church? In short sentences.' },
+       s = 'Tanrı var mı, İsa kim, neden Katolik Kilise? Kısa cümlelerle.'; se = 'Is there a God? Who is Jesus? Why the Catholic Church? Straight answers.' },
     @{ f = 'katekizm.html'; ico = $SmallCross; t = 'Katekizm'; te = 'Catechism'
        s = 'İman, kutsal sırlar, ahlak ve dua üzerine 598 soru ve yanıt.'; se = '598 questions and answers on faith, the sacraments, morality and prayer.' },
     @{ f = 'kutsal-kitap.html'; ico = $IcoBook; t = 'Kutsal Kitap'; te = 'The Bible'; s = $KkMeta.short; se = $KkEn.meta.short },
@@ -3223,7 +3234,7 @@ $HomeApps = @(
        s = 'Katolik olmak isteyenler için OCIA süreci, adım adım.'; se = 'The OCIA process for those who want to become Catholic, step by step.' },
     @{ f = 'meseller.html'; ico = $IcoScroll; t = "İsa$($Apos)nın Meselleri"; te = 'The Parables of Jesus'
        s = 'Otuz iki mesel, düz bir dille açıklanmış.'; se = 'Thirty-two parables, plainly explained.' }) },
-  @{ id = 'tartis'; t = 'Tartış'; te = 'Debate'; s = 'İtirazlara cevap, inancın savunusu'; se = 'Answers to objections, a defense of the faith'; ico = $IcoDebate; pages = @(
+  @{ id = 'tartis'; t = 'Tartış'; te = 'Debate'; s = 'İtirazlara cevap, inancın savunusu'; se = 'Hard questions, honest answers'; ico = $IcoDebate; pages = @(
     @{ f = 'islama-cevap.html'; ico = $IcoAnswer; t = "İslam$($Apos)a Cevap"; te = 'Answering Islam'
        s = "İslam$($Apos)ın iddiaları, Kur$($Apos)an ve hadislerle sınanıyor."; se = "Islam's claims, tested by the Qur'an and the hadith." },
     @{ f = 'ateizme-cevap.html'; ico = $IcoCosmos; t = 'Ateizme Cevap'; te = 'Answering Atheism'
@@ -3239,9 +3250,9 @@ $HomeApps = @(
        s = 'Günlük dualar ve formüller, tek sayfada.'; se = 'Daily prayers and formulas of Catholic doctrine, on one page.' },
     @{ f = 'gunah-cikarma.html'; ico = $IcoKey; t = 'Günah Çıkarma'; te = 'Confession'
        s = 'Nasıl işler, adım adım; vicdan muhasebesi ve sık sorulan sorular.'; se = 'How it works, step by step; an examination of conscience and common questions.' }) },
-  @{ id = 'kesfet'; t = 'Keşfet'; te = 'Explore'; s = 'Azizler, mucizeler ve bu toprakların kökleri'; se = "Saints, miracles and our faith's roots in this land"; ico = $IcoCompass; pages = @(
+  @{ id = 'kesfet'; t = 'Keşfet'; te = 'Explore'; s = 'Azizler, mucizeler ve bu toprakların kökleri'; se = 'Saints, miracles and two thousand years of history'; ico = $IcoCompass; pages = @(
     @{ f = 'azizler.html'; ico = $IcoStar; t = 'Azizler'; te = 'Saints'
-       s = 'Bugünün azizini görün, yılın her günü için hayat hikâyeleri.'; se = 'A saint for every day of the year, and the twenty best-known names.' },
+       s = 'Bugünün azizini görün, yılın her günü için hayat hikâyeleri.'; se = 'A saint for every day of the year, and the lives of twenty great saints.' },
     @{ f = 'mucizeler.html'; ico = $IcoRadiance; t = 'Mucizeler'; te = 'Miracles'
        s = 'Meryem Ana görünmeleri, Torino Kefeni, Efkaristiya mucizeleri ve çürümeyen azizler.'; se = 'Marian apparitions, the Shroud of Turin, Eucharistic miracles and the incorrupt saints.' },
     @{ f = 'topraklarimizda-hristiyanlik.html'; ico = $IcoRoots; t = 'Topraklarımızda Hristiyanlık'; te = 'Christianity in Anatolia'
@@ -3299,20 +3310,23 @@ function Home-Page([string]$lang) {
   foreach ($it in $Tarih.items) {
     $nums = @([regex]::Matches($it.y, '\d+') | ForEach-Object { $_.Value })
     $lbl = if ($it.y -match 'yüzyıl') { ($nums -join '-') + '. yy' } elseif ($it.y -match '^\d+\S*l[ae]r') { $Matches[0] } else { $nums[0] }
-    if ($lbl -ne $lastLbl) { $g++; $lastLbl = $lbl; $tlYears.Add("<li><button type=`"button`" class=`"hx-yr`" data-hx-to=`"$n`" aria-label=`"$($it.y): $($it.t)`">$lbl</button></li>") }
+    # the English label: "2nd-3rd c." for centuries, "1520s" for decades, else the first year
+    $ords = @([regex]::Matches($it.yEn, '\d+(?:st|nd|rd|th)') | ForEach-Object { $_.Value })
+    $lblEn = if ($ords.Count) { ($ords -join '-') + ' c.' } elseif ($it.yEn -match '^\d+s\b') { $Matches[0] } else { $nums[0] }
+    if ($lbl -ne $lastLbl) { $g++; $lastLbl = $lbl; $tlYears.Add("<li><button type=`"button`" class=`"hx-yr`" data-hx-to=`"$n`" $(TA 'aria-label' "$($it.y): $($it.t)" "$($it.yEn): $($it.tEn)")>$(T $lbl $lblEn)</button></li>") }
     $n++
     $tlItems.Add("<li class=`"hx-it`" data-y=`"$($it.y)`" data-g=`"$g`"><a class=`"hx-a`" href=`"kilise-tarihi.html#olay-$n`"><span class=`"hx-ph`"><img src=`"assets/art/tl/s/$($it.img).jpg`" alt=`"`" width=`"240`" height=`"240`" loading=`"lazy`" decoding=`"async`" draggable=`"false`"></span>" +
-      "<span class=`"hx-y`">$($it.y)</span><span class=`"hx-t`">$($it.t)</span><span class=`"hx-s`">$($it.s)</span></a><span class=`"hx-d`" hidden>$($it.d)</span></li>")
+      "<span class=`"hx-y`">$(T $it.y $it.yEn)</span><span class=`"hx-t`">$(T $it.t $it.tEn)</span><span class=`"hx-s`">$(T $it.s $it.sEn)</span></a><span class=`"hx-d`" hidden>$(T $it.d $it.dEn)</span></li>")
   }
   $gsHtml = (($GreatSaints.saints | Select-Object -First 10) | ForEach-Object { "<a href=`"$($_.id).html`">$(L $_.name $_.en)</a>" }) -join ''
   $lists = @"
 <div class="hm-journey">
   <div class="hj-grid">
-    <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">Tartış</p><h2 class="hj-h" id="hj-h">Sorular ve itirazlar</h2>
+    <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">$(L 'Tartış' 'Debate')</p><h2 class="hj-h" id="hj-h">$(L 'Sorular ve itirazlar' 'Questions and objections')</h2>
       <div class="hd-grid">
-        <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
-        <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
-        <a class="hd-card hd-wide" href="yahudilere-cagri.html">$(Art-Img 'y-presen' 'hd-art' '(min-width: 980px) 48vw, 60vw')<span class="hd-t">Yahudilere Çağrı</span><span class="hd-d">Nasıralı İsa neden İsrail$($Apos)in Mesih$($Apos)i? Tanah$($Apos)ın kendi sözleriyle, saygıyla.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
+        <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">$(L "İslam$($Apos)a Cevap" 'Answering Islam')</span><span class="hd-d">$(L "Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar." "Muslim objections to Christianity, answered from the Qur$($Apos)an, the hadith and Islamic history.")</span><span class="hd-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
+        <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">$(L 'Ateizme Cevap' 'Answering Atheism')</span><span class="hd-d">$(L 'Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.' 'Does God exist? Did Jesus rise? What reason and history say.')</span><span class="hd-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
+        <a class="hd-card hd-wide" href="yahudilere-cagri.html">$(Art-Img 'y-presen' 'hd-art' '(min-width: 980px) 48vw, 60vw')<span class="hd-t">$(L 'Yahudilere Çağrı' 'A Call to Our Jewish Friends')</span><span class="hd-d">$(L "Nasıralı İsa neden İsrail$($Apos)in Mesih$($Apos)i? Tanah$($Apos)ın kendi sözleriyle, saygıyla." "Why is Jesus of Nazareth Israel$($Apos)s Messiah? In the Tanakh$($Apos)s own words, with respect.")</span><span class="hd-more">$(L 'Okuyun' 'Read')$IcoChevR</span></a>
       </div>
     </section>
     <aside class="hj-aside">
@@ -3322,11 +3336,11 @@ function Home-Page([string]$lang) {
     </aside>
   </div>
   <section class="hx" aria-labelledby="hx-h">
-    <div class="hx-head"><div><p class="hj-kick">Tarih</p><h2 class="hj-h" id="hx-h"><a class="hx-hl" href="kilise-tarihi.html">Kilise$($Apos)nin tarihi$IcoChevR</a></h2><p class="hx-lead">Havarilerden bugüne Kilise tarihinin önemli olayları.</p></div>
-    <div class="hx-ctl"><button type="button" class="hx-btn" data-hx-step="-1" aria-label="Önceki"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button><button type="button" class="hx-btn" data-hx-step="1" aria-label="Sonraki">$IcoChevR</button></div></div>
-    <ol class="hx-track" tabindex="0" aria-label="Kilise tarihi, $n olay, eskiden yeniye">$($tlItems -join '')</ol>
-    <div class="hx-scale"><div class="hx-years"><ol class="hx-yl" aria-label="Yıllar">$($tlYears -join '')</ol></div>
-      <input class="hx-range" type="range" min="0" max="1000" value="0" step="1" aria-label="Zaman çizelgesinde ilerle" aria-valuetext="33"></div>
+    <div class="hx-head"><div><p class="hj-kick">$(L 'Tarih' 'History')</p><h2 class="hj-h" id="hx-h"><a class="hx-hl" href="kilise-tarihi.html">$(L "Kilise$($Apos)nin tarihi" 'History of the Church')$IcoChevR</a></h2><p class="hx-lead">$(L 'Havarilerden bugüne Kilise tarihinin önemli olayları.' "The great events of the Church$($Apos)s history, from the apostles to our day.")</p></div>
+    <div class="hx-ctl"><button type="button" class="hx-btn" data-hx-step="-1" $(TA 'aria-label' 'Önceki' 'Previous')><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button><button type="button" class="hx-btn" data-hx-step="1" $(TA 'aria-label' 'Sonraki' 'Next')>$IcoChevR</button></div></div>
+    <ol class="hx-track" tabindex="0" $(TA 'aria-label' "Kilise tarihi, $n olay, eskiden yeniye" "History of the Church, $n events, oldest first")>$($tlItems -join '')</ol>
+    <div class="hx-scale"><div class="hx-years"><ol class="hx-yl" $(TA 'aria-label' 'Yıllar' 'Years')>$($tlYears -join '')</ol></div>
+      <input class="hx-range" type="range" min="0" max="1000" value="0" step="1" $(TA 'aria-label' 'Zaman çizelgesinde ilerle' 'Move along the timeline') aria-valuetext="33"></div>
   </section>
 </div>
 "@
@@ -3443,4 +3457,112 @@ $secExpires = (Get-Date).AddYears(1).ToString('yyyy-MM-ddT00:00:00.000Z')
 $secTxt = "Contact: $SiteUrl/iletisim.html`nExpires: $secExpires`nPreferred-Languages: tr`nCanonical: $SiteUrl/.well-known/security.txt`n"
 [IO.File]::WriteAllText((Join-Path $wellKnownDir 'security.txt'), $secTxt, $Utf8)
 Write-Host "  + sitemap.xml, robots.txt, llms.txt, IndexNow key, .well-known/security.txt"
+# ================================================================== THE ENGLISH SITE (verbumdomini.ca)
+# With -EnglishSite: the English twins under en/ become a site of their own in _site_en/, ready to
+# publish: each page at the root of verbumdomini.ca under its English name (en/faq.html -> faq.html),
+# in English alone (the Turkish of every pair taken out), under the name Verbum Domini, with its own
+# sitemap, robots.txt, llms.txt, manifest and 404 page. Pages for readers in Turkey (Kilise Bul and
+# its church pages, Topraklarımızda Hristiyanlık) are left out, and links to them with them.
+if ($EnglishSite) {
+  $EnSiteUrl = 'https://verbumdomini.ca'
+  $EnTagline = 'Spreading and defending the Gospel'
+  $EnOut = Join-Path $Root '_site_en'
+  if (Test-Path $EnOut) { Remove-Item -Recurse -Force $EnOut }
+  New-Item -ItemType Directory -Path $EnOut, (Join-Path $EnOut 'assets'), (Join-Path $EnOut 'data') | Out-Null
+  $enDropRx = '/(?:find-a-church\.html|anatolia\.html|church/[a-z0-9-]+\.html)'
+  # The Turkish of every pair out, the English left as plain text; an attribute keeps its English
+  function Strip-Tr([string]$h) {
+    foreach ($t in 'div', 'span', 'tspan') {
+      $bal = "(?>(?<o><$t\b)|(?<-o></$t>)|(?!</?$t\b)[\s\S])*(?(o)(?!))"
+      $h = [regex]::Replace($h, "<$t class=`"l-tr(?: l-sub-en)?`">$bal</$t>", '')
+      $rx = [regex]"<$t class=`"l-en`" lang=`"en`">(?<c>$bal)</$t>"
+      do { $before = $h; $h = $rx.Replace($h, '${c}') } while ($h -ne $before)
+    }
+    $h = [regex]::Replace($h, '(\s)([a-z-]+)="[^"]*" data-en-\2="([^"]*)"', '$1$2="$3"')
+    return [regex]::Replace($h, ' data-en-[a-z-]+="[^"]*"', '')
+  }
+  $bal = '(?>(?<o><a\b)|(?<-o></a>)|(?!</?a\b)[\s\S])*(?(o)(?!))'
+  $brandTr = '<span class="visually-hidden">Katolik Dünyası</span><span class="bn" lang="tr" aria-hidden="true"><span class="bn-c">K</span>ATOLİK <span class="bn-c">D</span>ÜNYASI</span>'
+  $brandEn = '<span class="visually-hidden">Verbum Domini</span><span class="bn bn-en" aria-hidden="true"><span class="bn-c">V</span>ERBUM <span class="bn-c">D</span>OMINI</span>'
+  $enPages = New-Object System.Collections.Generic.List[object]
+  $enFiles = @(Get-ChildItem (Join-Path $Root 'en') -Filter '*.html') + @(Get-Item (Join-Path $Root '404.html'))
+  foreach ($f in $enFiles) {
+    $name = if ($f.Name -eq '404.html') { '404.html' } else { $f.Name }
+    if ($name -match '^(find-a-church|anatolia)\.html$') { continue }
+    $h = [IO.File]::ReadAllText($f.FullName)
+    if ($name -eq '404.html') {
+      # the one page with no twin: it switches in place, so it is made English here
+      $h = $h.Replace('<title>Sayfa bulunamadı |', '<title>Page not found |').Replace('<meta name="description" content="Sayfa bulunamadı.">', '<meta name="description" content="Page not found.">')
+      $h = [regex]::Replace($h, '<html lang="tr"([^>]*)>', { param($m) '<html lang="en" class="lang-en"' + ($m.Groups[1].Value -replace ' class="[^"]*"', '') + '>' })
+    }
+    $h = Strip-Tr $h
+    $h = [regex]::Replace($h, '<nav class="lang-pill"[\s\S]*?</nav>', '')
+    $h = $h.Replace('data-url-lang="en" data-root="/"', 'data-url-lang="en" data-root="/" data-en-base=""')
+    # addresses: the English pages to the root of the new domain; the Turkish ones stay where they are
+    $h = $h.Replace("$SiteUrl/en/", "$EnSiteUrl/").Replace("$SiteUrl/assets/", "$EnSiteUrl/assets/").Replace("$SiteUrl/apple-touch-icon", "$EnSiteUrl/apple-touch-icon")
+    $h = $h.Replace("`"url`":`"$SiteUrl/`"", "`"url`":`"$EnSiteUrl/`"")
+    $h = [regex]::Replace($h, '(href|src|action)="/en/', '$1="/')
+    # a link still to a Turkish page (404.html is made from the Turkish one): its English twin
+    $h = [regex]::Replace($h, 'href="/((?:kilise/)?[a-z0-9-]+\.html)', { param($m) $e = En-Of $m.Groups[1].Value; if ($e) { 'href="/' + $e.Substring(3) } else { $m.Value } })
+    # links to the pages left out: menu items and cards go, a link in running text keeps its words
+    $h = [regex]::Replace($h, "<li>\s*<a href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>$bal</a>\s*</li>", '')
+    $h = [regex]::Replace($h, "<a class=`"(?:dn-a|ns-item|ios-row|why-cta|hm-row)[^`"]*`" href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>$bal</a>", '')
+    $h = [regex]::Replace($h, "<a\b[^>]*href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>(?=[^<]*<svg)$bal</a>", '')
+    $h = [regex]::Replace($h, "<a\b[^>]*href=`"$enDropRx(?:#[^`"]*)?`"[^>]*>(?<c>$bal)</a>", '${c}')
+    # the name: Verbum Domini instead of katolikdunyasi.com (the Turkish site's own address stays
+    # in the language links that point to it)
+    $h = $h.Replace($brandTr, $brandEn).Replace('Turkish Catholic Portal', $EnTagline)
+    $h = $h.Replace('<link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/kd-brand-en.woff2" as="font" type="font/woff2" crossorigin>')
+    $h = $h.Replace('<link rel="preload" href="/assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/kd-brand-en.woff2" as="font" type="font/woff2" crossorigin>')
+    $h = [regex]::Replace($h, '<link rel="preload" href="/?assets/fonts/kd-brand-ext\.woff2"[^>]*>\s*', '')
+    $h = [regex]::Replace($h, '(?<!https://|hreflang="tr" href="https://|and )katolikdunyasi\.com', 'Verbum Domini')
+    # the Catechism search looks in the English (and the Turkish) text; the English site need not say so
+    $h = $h.Replace('English, Turkish or a question number', 'a word or a question number').Replace('English, Turkish or a number', 'a word or a number').Replace('(English or Turkish, or a question number)', '(a word or a question number)')
+    [IO.File]::WriteAllText((Join-Path $EnOut $name), $h, $Utf8)
+    if ($name -ne '404.html') { $enPages.Add($name) }
+  }
+  # the files the pages load, as the Turkish site's deploy collects them (.github/workflows/deploy.yml)
+  Get-ChildItem (Join-Path $Root 'assets') -File | Where-Object { $_.Name -match '\.min\.(css|js)$|\.(jpg|png)$' } | Copy-Item -Destination (Join-Path $EnOut 'assets')
+  Copy-Item -Recurse (Join-Path $Root 'assets/fonts'), (Join-Path $Root 'assets/art') (Join-Path $EnOut 'assets')
+  Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Copy-Item -Destination (Join-Path $EnOut 'data')
+  foreach ($x in 'favicon.ico', 'apple-touch-icon.png') { Copy-Item (Join-Path $Root $x) $EnOut }
+  [IO.File]::WriteAllText((Join-Path $EnOut 'site.webmanifest'), (@"
+{
+  "name": "Verbum Domini",
+  "short_name": "Verbum Domini",
+  "description": "$EnTagline",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f2e8",
+  "theme_color": "#f7f2e8",
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
+"@), $Utf8)
+  # sitemap, robots.txt and llms.txt from the pages' own head
+  $enInfo = foreach ($n in ($enPages | Sort-Object { if ($_ -eq 'index.html') { 0 } else { 1 } }, { $_ })) {
+    $h = [IO.File]::ReadAllText((Join-Path $EnOut $n))
+    $tr = $EnAltMap["en/$n"]
+    [pscustomobject]@{
+      Url = "$EnSiteUrl/" + $(if ($n -eq 'index.html') { '' } else { $n })
+      Title = ([Net.WebUtility]::HtmlDecode(([regex]::Match($h, '<title>(.*?)</title>').Groups[1].Value)) -replace ' \| Verbum Domini$', '')
+      Desc = [Net.WebUtility]::HtmlDecode(([regex]::Match($h, '<meta name="description" content="([^"]*)"').Groups[1].Value))
+      Mod = if ($tr) { Page-LastMod $tr } else { '' }
+      Index = $h -notmatch '<meta name="robots" content="noindex'
+    }
+  }
+  $smEn = '<?xml version="1.0" encoding="UTF-8"?>' + "`n" + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "`n" +
+    (($enInfo | Where-Object Index | ForEach-Object { "  <url><loc>$($_.Url)</loc>$(if ($_.Mod) { "<lastmod>$($_.Mod)</lastmod>" })</url>" }) -join "`n") + "`n</urlset>`n"
+  [IO.File]::WriteAllText((Join-Path $EnOut 'sitemap.xml'), $smEn, $Utf8)
+  [IO.File]::WriteAllText((Join-Path $EnOut 'robots.txt'), "User-agent: *`nAllow: /`n`nSitemap: $EnSiteUrl/sitemap.xml`n", $Utf8)
+  $llmsEn = "# Verbum Domini`n`n> A Catholic portal in English: the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, the history of the Church, and answers about the faith, Islam, atheism and Judaism. A sister site of katolikdunyasi.com, which publishes the same work in Turkish.`n`n## Pages`n`n" +
+    (($enInfo | Where-Object Index | ForEach-Object { "- [$($_.Title)]($($_.Url)): $($_.Desc)" }) -join "`n") + "`n"
+  [IO.File]::WriteAllText((Join-Path $EnOut 'llms.txt'), $llmsEn, $Utf8)
+  Write-Host "  + English site: $($enPages.Count) pages in _site_en/ ($EnSiteUrl)"
+}
+
 Write-Host "Done."

@@ -10,8 +10,8 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
   "title": "Meryem Ana Tesbih Duası",
   "en": "The Holy Rosary",
   "intro": "Tesbih, Meryem Ana ile birlikte İsa’nın hayatını düşünerek dua etmektir. Dualar, gizemler ve tesbihin nasıl çekileceği aşağıda; bugünün gizemi işaretlidir.",
-  "introEn": "The Rosary is a way of meditating deeply, together with Mary, on the mysteries of the life of Jesus Christ. Below you will find the prayers, the mysteries, and how to pray the Rosary. The mystery for today is marked automatically.",
-  "about": {"tr": "Tesbih beş onluktan oluşur: her onlukta bir Göklerdeki Pederimiz, on Selam Sana Meryem ve bir Peder’e Şan okunur, İsa Mesih’in hayatından bir gizem anılır. Bütün tesbih yaklaşık 15-20 dakika sürer; elinizde tesbih yoksa parmaklarınızla da sayabilirsiniz.", "en": "The Rosary has five decades: each is one Our Father, ten Hail Marys and one Glory Be, prayed while recalling a mystery from the life of Jesus Christ. A whole Rosary takes about 15 to 20 minutes, and you can count on your fingers if you have no beads.", "tipTr": "Tesbih tek başına, ailecek ya da kilisede toplu olarak okunabilir; zamanınız azsa tek bir onlukla başlamak da olur. Kilise ekim ayını tesbihe adar ve 7 Ekim’de Tesbih Meryem Ana’sını anar.", "tipEn": "The Rosary can be prayed alone, as a family or together in church; if time is short, a single decade is a good start. The Church dedicates October to the Rosary and celebrates Our Lady of the Rosary on 7 October."},
+  "introEn": "The Rosary is the life of Jesus seen through the eyes of his mother. Here are the prayers, the mysteries and how to pray it; today’s mysteries are already marked.",
+  "about": {"tr": "Tesbih beş onluktan oluşur: her onlukta bir Göklerdeki Pederimiz, on Selam Sana Meryem ve bir Peder’e Şan okunur, İsa Mesih’in hayatından bir gizem anılır. Bütün tesbih yaklaşık 15-20 dakika sürer; elinizde tesbih yoksa parmaklarınızla da sayabilirsiniz.", "en": "The Rosary has five decades. Each is one Our Father, ten Hail Marys and a Glory Be, prayed while you picture a moment from the life of Christ. The whole thing takes 15 to 20 minutes, and if you have no beads, your fingers will do.", "tipTr": "Tesbih tek başına, ailecek ya da kilisede toplu olarak okunabilir; zamanınız azsa tek bir onlukla başlamak da olur. Kilise ekim ayını tesbihe adar ve 7 Ekim’de Tesbih Meryem Ana’sını anar.", "tipEn": "Pray it alone, with your family or with your parish. Short on time? One decade is a fine start. October is the month of the Rosary, and 7 October is the feast of Our Lady of the Rosary."},
   "prayers": [
     {
       "id": "hac-isareti",
@@ -111,7 +111,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
         "text": "V. Bizim için dua et, ey Allah’ın kutsal Annesi.\nR. Mesih’in vaatlerine layık olalım diye.\n\nDua edelim: Ey biricik Oğlu yaşamı, ölümü ve dirilişiyle bize ebedi hayatın ödüllerini kazandıran Allah, sana yalvarırız: Kutsanmış Bakire Meryem’in en kutsal Tesbihinin bu gizemleri üzerinde derin düşünerek onların içerdiğini örnek alalım ve vaat ettiklerine kavuşalım. Aynı Rabbimiz Mesih aracılığıyla. Amin."
       },
       "en": {
-        "title": "Prayer Concluding the Rosary",
+        "title": "Closing Prayer",
         "text": "V. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray. O God, whose only-begotten Son, by his life, death and resurrection, has purchased for us the rewards of eternal life, grant, we beseech thee, that meditating on these mysteries of the most holy Rosary of the Blessed Virgin Mary, we may imitate what they contain and obtain what they promise, through the same Christ our Lord. Amen."
       },
       "spot": "end",
@@ -193,7 +193,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     {
       "id": "isik",
       "tr": "Işık Gizemleri",
-      "en": "The Mysteries of Light",
+      "en": "The Luminous Mysteries",
       "days": [
         4
       ],

@@ -1,34 +1,36 @@
 ---
 title: Privacy Policy
-subtitle: In short, we collect nothing unless you write to us
-description: katolikdunyasi.com's privacy approach: no tracking or cookies; your browser only keeps your display preferences and your place in the Rosary.
-short: What data this site collects (none, unless you write to us) and what it stores in your browser.
+subtitle: Short version: we collect nothing unless you write to us
+description: Privacy on Verbum Domini: no tracking, no analytics, no cookies. Your browser keeps your display settings and your place in the Rosary, and that's it.
+short: What this site collects (nothing, unless you write to us) and what it keeps in your browser.
 ---
 
-## In short
+## The short version
 
-Unless you write to us, this site collects no user data, uses no tracking or analytics software, and uses no cookies. None of the usual third-party tools, such as Google Analytics, ad networks, or social media plugins, are on this site. The one exception is Cloudflare Turnstile, which runs only on the Contact page and protects the form from spam (see below).
+Unless you write to us, this site collects nothing about you. No analytics, no tracking, no cookies, no ad networks, no social media buttons. The only third-party tool is Cloudflare Turnstile, and it runs only on the Contact page to keep spam out of the form (more below).
 
-## Preferences stored in your browser
+## What your browser remembers
 
-Your light/dark theme and Turkish/English language choices, your accessibility-menu preferences (text size, contrast, letter spacing, and so on), whether you read the Catechism's prayers in Turkish, English or Latin, which Catechism questions you have marked as read, and, on the Rosary page, where you are in the interactive rosary that day are stored only in your own browser (localStorage). Your place in the rosary resets on its own the next day. This information is never sent to any server, can't be seen by us, and stays only on your device. Clearing your browser data also clears these preferences.
+A few settings are saved in your own browser (localStorage) so the site behaves the way you left it: light or dark theme, your accessibility choices (text size, contrast, spacing and so on), whether you read the Catechism’s prayers in English or Latin, which Catechism questions you’ve marked as read, and where you are in the interactive rosary today. Your place in the rosary resets the next day.
 
-On your first visit to the home page, the language is chosen for you: it opens in Turkish in Turkey’s time zone or in a Turkish-language browser, and in English everywhere else. Every other page opens in the language of its own address. The theme turns light at sunrise and dark at sunset where you are. Only your device’s time zone and language setting are used for this, on your device. No location permission is asked for and nothing is sent anywhere. Once you press the language or theme switch, your choice applies; for the theme it lasts until the next sunrise or sunset.
+None of this is ever sent to a server. We can’t see it. Clear your browser data and it’s gone.
+
+The theme switches to light at sunrise and dark at sunset where you are. That uses only your device’s time zone, on your device: no location permission, nothing sent anywhere. If you flip the switch yourself, your choice holds until the next sunrise or sunset.
 
 ## Hosting and server logs
 
-The site is hosted on GitHub Pages and delivered through Cloudflare's network, which keeps copies of the site's files closer to visitors so pages load faster. Like any web server, GitHub's and Cloudflare's servers may keep standard access logs for technical purposes (security, performance). These logs are operated by GitHub and Cloudflare, not by this site, and we have no access to them; see [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) and [Cloudflare's Privacy Policy](https://www.cloudflare.com/privacypolicy/) for details.
+The site runs on Cloudflare, which keeps copies of the pages close to you so they load fast. Like any web server, Cloudflare may keep standard access logs for security and performance. Those logs belong to Cloudflare, not to us, and we have no access to them. See [Cloudflare’s Privacy Policy](https://www.cloudflare.com/privacypolicy/) for details.
 
 ## Fonts
 
-The typefaces used on the site are loaded from the site's own server; no requests are sent to third-party services like Google Fonts.
+All fonts are served from this site. No requests go to Google Fonts or any other outside service.
 
 ## The contact form
 
-When you write to us with the form on the [Contact](iletisim.html) page, your name (if you give it), your email address and your message are passed to us by email through Cloudflare (Cloudflare Workers and Email Routing); your email address becomes the message’s reply-to address so we can answer you. They are not stored on the site or in any database, only in our inbox; they are used only so we can reply, never for any other purpose, never shared with third parties, and never kept for marketing.
+When you use the form on the [Contact](iletisim.html) page, your name (if you give one), your email address and your message come to us by email through Cloudflare (Workers and Email Routing). Your address is set as the reply-to, so we can answer you. Nothing is stored on the site or in a database, only in our inbox. We use it to reply to you and for nothing else: no sharing, no mailing lists, no marketing.
 
-To protect the form from automated spam, it uses Cloudflare Turnstile. The check runs only on the Contact page and does not track you for advertising; for details see [Cloudflare’s Turnstile privacy statement](https://www.cloudflare.com/turnstile-privacy-policy/).
+Cloudflare Turnstile checks that you’re not a bot. It runs only on the Contact page and doesn’t track you for advertising; see [Cloudflare’s Turnstile privacy statement](https://www.cloudflare.com/turnstile-privacy-policy/).
 
 ## Changes
 
-This page may be updated as needed. For questions, please use the form on the [Contact](iletisim.html) page.
+We may update this page from time to time. Questions? Use the form on the [Contact](iletisim.html) page.

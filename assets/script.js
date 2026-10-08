@@ -31,10 +31,14 @@
   var URL_LANG = document.documentElement.getAttribute('data-url-lang') || '';
   /* Turkish page -> its English twin's address (written in by tools/build.ps1) */
   var EN_MAP = {"__EN_MAP__": 1};
+  /* where the English pages live: under en/ here, at the root of the English site (verbumdomini.ca,
+     whose pages say <html data-en-base="">) */
+  var EN_BASE = document.documentElement.getAttribute('data-en-base');
+  if (EN_BASE === null) EN_BASE = 'en/';
   function enPathOf(file) {
-    if (file === '' || file === 'index.html') return 'en/';
-    if (EN_MAP[file]) return EN_MAP[file];
-    if (/^kilise\/[a-z0-9-]+\.html$/.test(file)) return 'en/church/' + file.slice(7);
+    if (file === '' || file === 'index.html') return EN_BASE;
+    if (EN_MAP[file]) return EN_BASE + EN_MAP[file].replace(/^en\//, '');
+    if (/^kilise\/[a-z0-9-]+\.html$/.test(file)) return EN_BASE + 'church/' + file.slice(7);
     return null;
   }
 
@@ -3419,8 +3423,9 @@
     if (items.filter(function (x) { return !x.sub; }).length < 3) return;
     var box = document.createElement('div');
     box.className = 'jl';
-    box.innerHTML = '<nav class="jl-panel" id="jl-panel" aria-label="Bu sayfada" hidden><p class="jl-h">Bu sayfada</p><ol></ol></nav>' +
-      '<button type="button" class="jl-btn" aria-expanded="false" aria-controls="jl-panel" aria-label="Bölümler: bu sayfadaki başlıklar">' +
+    var jlOn = isEn() ? 'On this page' : 'Bu sayfada', jlBtn = isEn() ? 'Sections: the headings on this page' : 'Bölümler: bu sayfadaki başlıklar';
+    box.innerHTML = '<nav class="jl-panel" id="jl-panel" aria-label="' + jlOn + '" hidden><p class="jl-h">' + jlOn + '</p><ol></ol></nav>' +
+      '<button type="button" class="jl-btn" aria-expanded="false" aria-controls="jl-panel" aria-label="' + jlBtn + '">' +
       '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.6" cy="6.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4.6" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg>' +
       '<span class="jl-n" aria-hidden="true"></span></button>';
     var list = $('ol', box), panel = $('.jl-panel', box), btn = $('.jl-btn', box), num = $('.jl-n', box);
@@ -3496,7 +3501,7 @@
       var read = seen.indexOf(a.getAttribute('data-gs')) >= 0;
       a.classList.toggle('is-seen', read);
       var n = $('.gs-n', a);
-      if (n && !read && !$('.visually-hidden', a)) a.insertAdjacentHTML('beforeend', '<span class="visually-hidden">, okunmadı</span>');
+      if (n && !read && !$('.visually-hidden', a)) a.insertAdjacentHTML('beforeend', '<span class="visually-hidden">' + (isEn() ? ', not yet read' : ', okunmadı') + '</span>');
     });
   }
 

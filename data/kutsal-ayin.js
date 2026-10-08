@@ -16,7 +16,7 @@ window.MASS = /*JSON-START*/{
  "title": "Kutsal Ayin",
  "en": "The Holy Mass",
  "intro": "Ayin, Katolik ibadetinin kalbidir. Mesih’in çarmıhtaki kurbanı burada kansız olarak yeniden sunulur. Aşağıda Ayinin altı bölümünü, söylenen sözlerle birlikte bulabilirsiniz.",
- "introEn": "The Mass is the heart of Catholic worship. The one sacrifice Christ offered on the cross is made present again in it, in an unbloody manner. Below you will find the six parts of the Mass in order, with what the Priest and the People say.",
+ "introEn": "The Mass is the heart of Catholic worship: the one sacrifice Christ offered on the cross, made present on the altar without the shedding of blood. Here are its six parts in order, with the words the Priest and the people say.",
  "roleLabels": {
   "P": "Rahip",
   "C": "Cemaat",
@@ -37,12 +37,12 @@ window.MASS = /*JSON-START*/{
    "title": "Cemaatin Toplanması",
    "en": "The Introductory Rites",
    "lead": "Rahip sunağı öper ve haç işareti yapar. Cemaat önce Allah’tan af diler.",
-   "leadEn": "Mass begins as the Priest approaches the altar, venerates it with a kiss, and makes the Sign of the Cross. The people gather and ask God's forgiveness.",
+   "leadEn": "The Priest goes up to the altar, kisses it and makes the Sign of the Cross. Before anything else, we ask God’s forgiveness.",
    "lines": [
     {
      "role": "N",
      "tr": "Giriş sırasında Rahip sunağa doğru gider, onu öper ve haç işareti yaparak şöyle der:",
-     "en": "As Mass begins, the Priest approaches the altar, venerates it with a kiss, and makes the Sign of the Cross."
+     "en": "The Priest goes up to the altar, kisses it, and makes the Sign of the Cross with everyone."
     },
     {
      "role": "P",
@@ -72,7 +72,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Selam şöyle de olabilir:",
-     "en": "Or the greeting may be:"
+     "en": "Or:"
     },
     {
      "role": "P",
@@ -102,7 +102,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip müminleri tövbe etmeye davet eder:",
-     "en": "The Priest invites the faithful to repentance:"
+     "en": "The Priest invites everyone to call to mind their sins:"
     },
     {
      "role": "P",
@@ -117,7 +117,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip, müminleri şu şekilde de tövbeye davet edebilir:",
-     "en": "The Priest may also invite the faithful to repentance in this way:"
+     "en": "Or:"
     },
     {
      "role": "P",
@@ -192,7 +192,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Kyrie eleison:",
-     "en": "The Kyrie:"
+     "en": "Then the Kyrie:"
     },
     {
      "role": "P",
@@ -227,7 +227,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Gloria (Pazar ve bayram günlerinde):",
-     "en": "The Gloria (on Sundays and feast days):"
+     "en": "On Sundays and feast days, the Gloria:"
     },
     {
      "role": "PC",
@@ -237,7 +237,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip cemaatin adına Pazar gününe ya da bayrama ait özel duayı okur.",
-     "en": "The Priest then prays the Collect proper to the Sunday or feast, on behalf of the people."
+     "en": "The Priest says the Collect, the opening prayer of the day."
     },
     {
      "role": "P",
@@ -247,7 +247,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Dua sonunda,",
-     "en": "At the end of the prayer,"
+     "en": "At the end, the people answer:"
     },
     {
      "role": "C",
@@ -263,12 +263,12 @@ window.MASS = /*JSON-START*/{
    "title": "Kutsal Kitabın Okunması",
    "en": "The Liturgy of the Word",
    "lead": "Kutsal Kitap’tan okumalar yapılır, İncil okunur, rahip vaaz eder. Pazar ve bayramlarda herkes İman Açıklaması’nı söyler.",
-   "leadEn": "The Scripture readings, the Gospel and the homily bring the Church's teaching to the people, and then all profess their faith together.",
+   "leadEn": "God speaks to us in the readings, the Gospel and the homily. Then we profess our faith together.",
    "lines": [
     {
      "role": "N",
      "tr": "İncili yalnızca Rahip ya da diyakoz okur. Diğer okumaları yapanlar kürsüye yaklaşırken, Efkaristiya’nın bulunduğu özel alanın kutsallığına uygun davranmalı, kürsüden önce ve sonra diz çökerek ya da eğilerek selamlamalı ve okumaları açıkça anlaşılacak şekilde yapmalıdır. Okunan her parça şu sözlerle bitirilir:",
-     "en": "Only the Priest or the deacon reads the Gospel. Those who proclaim the other readings approach the ambo with reverence for the sacred space where the Eucharist is kept, bow or genuflect before and after reading, and proclaim the text clearly. Each reading closes with these words:"
+     "en": "A reader proclaims the first reading and, on Sundays, a second, with a psalm in between. Only a priest or deacon reads the Gospel. Each reading ends:"
     },
     {
      "role": "P",
@@ -283,7 +283,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip, İncili okumadan önce alçak sesle şu duayı söyler:",
-     "en": "Before proclaiming the Gospel, the Priest quietly prays:"
+     "en": "Before the Gospel, the Priest prays quietly:"
     },
     {
      "role": "P",
@@ -293,7 +293,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "sonra şöyle devam eder,",
-     "en": "then continues,"
+     "en": "Then he says:"
     },
     {
      "role": "P",
@@ -303,7 +303,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "herkes ayağa kalkmalıdır,",
-     "en": "All stand,"
+     "en": "Everyone is standing."
     },
     {
      "role": "C",
@@ -318,7 +318,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahiple beraber herkes sağ elleriyle alınlarına, dudaklarına ve kalpleri üzerine haç işareti yaparlar.",
-     "en": "Together with the Priest, all trace a small cross with the right thumb on the forehead, lips and breast."
+     "en": "With the Priest, everyone traces a small cross with the thumb on the forehead, the lips and the heart."
     },
     {
      "role": "C",
@@ -328,7 +328,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip İncili okuduktan sonra şöyle der,",
-     "en": "After the Gospel, the Priest says,"
+     "en": "At the end of the Gospel:"
     },
     {
      "role": "P",
@@ -343,7 +343,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip İncili öper ve alçak sesle şöyle der,",
-     "en": "The Priest kisses the Book and quietly says,"
+     "en": "The Priest kisses the book and says quietly:"
     },
     {
      "role": "P",
@@ -353,7 +353,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Vaazdan sonra, Pazar ve bayram günlerinde, herkes ayağa kalkıp Büyük İman Açıklaması’nı söyler:",
-     "en": "After the homily, on Sundays and feast days, all stand and recite the Creed:"
+     "en": "After the homily, on Sundays and solemnities, everyone stands for the Creed:"
     },
     {
      "role": "PC",
@@ -363,7 +363,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Cemaatin duaları (genel dilekler) okunur; her dilekten sonra cemaat karşılık verir, örneğin:",
-     "en": "The Prayer of the Faithful (General Intercessions) follows; after each petition the people respond, for example:"
+     "en": "Then come the Prayers of the Faithful. After each petition:"
     },
     {
      "role": "P",
@@ -384,12 +384,12 @@ window.MASS = /*JSON-START*/{
    "title": "Ekmeğin ve Şarabın Sunulması",
    "en": "The Preparation of the Gifts",
    "lead": "Ekmek ve şarap sunağa getirilir. Rahip bunları cemaat adına Allah’a sunar.",
-   "leadEn": "Bread and wine are brought to the altar; the Priest offers these gifts to God, praying on behalf of the people.",
+   "leadEn": "Bread and wine are brought to the altar, and the Priest offers them to God for all of us.",
    "lines": [
     {
      "role": "N",
      "tr": "Rahip ekmeği alır ve onu sunarken şöyle der:",
-     "en": "The Priest takes the bread and, offering it, says:"
+     "en": "The Priest lifts the bread a little and says:"
     },
     {
      "role": "P",
@@ -404,7 +404,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip şarabı kupaya döker ve ona biraz su katarak şu duayı söyler,",
-     "en": "The Priest pours wine and a little water into the chalice, saying quietly,"
+     "en": "He pours wine and a drop of water into the chalice, saying quietly:"
     },
     {
      "role": "P",
@@ -414,7 +414,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip şarabı sunarken şu duayı söyler,",
-     "en": "The Priest then offers the chalice, saying,"
+     "en": "He lifts the chalice:"
     },
     {
      "role": "P",
@@ -429,7 +429,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Bundan sonra Rahip alçak sesle duaya şöyle devam eder,",
-     "en": "Then, bowing, the Priest quietly says,"
+     "en": "Bowing, he says quietly:"
     },
     {
      "role": "P",
@@ -439,7 +439,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip ellerini yıkarken alçak sesle şu duayı söyler,",
-     "en": "Washing his hands, the Priest quietly says,"
+     "en": "He washes his hands, saying quietly:"
     },
     {
      "role": "P",
@@ -449,7 +449,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip, cemaati kendi duasına katılmaya davet eder,",
-     "en": "The Priest invites the people to join in his prayer,"
+     "en": "Then he turns to the people:"
     },
     {
      "role": "P",
@@ -464,7 +464,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip adaklar üzerine o güne ait duayı söyler. Duanın sonunda cemaat şöyle der,",
-     "en": "The Priest says the Prayer over the Offerings. At its end the people say,"
+     "en": "The Priest says the Prayer over the Offerings. The people answer:"
     },
     {
      "role": "C",
@@ -480,7 +480,7 @@ window.MASS = /*JSON-START*/{
    "title": "Şükran Duası",
    "en": "The Eucharistic Prayer",
    "lead": "Ayinin kalbi. Rahip Allah’a şükreder; Kutsal Ruh’un kudretiyle ekmek ve şarap, Mesih’in gerçek bedeni ve kanı olur.",
-   "leadEn": "The heart of the Mass: the Priest gives thanks to God on behalf of the people, and by the power of the Holy Spirit the bread and wine become the true Body and Blood of Christ.",
+   "leadEn": "The heart of the Mass. The Priest gives thanks to God for all of us, and by the power of the Holy Spirit the bread and wine become the Body and Blood of Christ.",
    "lines": [
     {
      "role": "P",
@@ -490,7 +490,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Herkes ayağa kalkar,",
-     "en": "All stand,"
+     "en": "Everyone is standing."
     },
     {
      "role": "C",
@@ -520,7 +520,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip o güne ait şükran duasını (Prefasyo) söyler ve sonunda cemaatle birlikte şunu söyler:",
-     "en": "The Priest prays the Preface proper to the day, and at its end says together with the people:"
+     "en": "The Priest says the Preface of the day, and everyone joins in the Holy, Holy:"
     },
     {
      "role": "PC",
@@ -530,7 +530,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Şükran Duaları. Herkes diz çöker,",
-     "en": "The Eucharistic Prayer continues. All kneel,"
+     "en": "The Eucharistic Prayer continues. Everyone kneels."
     },
     {
      "role": "P",
@@ -540,7 +540,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Kutsallaştırma sözleri:",
-     "en": "The words of Consecration:"
+     "en": "The words of consecration:"
     },
     {
      "role": "P",
@@ -586,7 +586,7 @@ window.MASS = /*JSON-START*/{
    "title": "Komünyon",
    "en": "The Communion Rite",
    "lead": "Rab’bin Duası söylenir, herkes birbirine barış diler. Cemaat Mesih’in bedenini ve kanını alır.",
-   "leadEn": "The people pray the Lord's Prayer, offer each other a sign of peace, and share the true Body and Blood of Christ in Holy Communion.",
+   "leadEn": "We pray the Our Father, offer each other the sign of peace, and receive the Body and Blood of Christ in Holy Communion.",
    "lines": [
     {
      "role": "P",
@@ -636,7 +636,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip alçak sesle devam eder,",
-     "en": "The Priest quietly continues,"
+     "en": "The Priest continues quietly:"
     },
     {
      "role": "P",
@@ -646,7 +646,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Herkes birbirine barış ve huzur diler.",
-     "en": "All offer one another a sign of peace."
+     "en": "Everyone offers a sign of peace to those nearby."
     },
     {
      "role": "PC",
@@ -656,7 +656,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip kutsal ekmeği cemaate gösterir, herkes diz çöker,",
-     "en": "The Priest shows the host to the people, and all kneel,"
+     "en": "The Priest raises the Host for all to see. Everyone kneels."
     },
     {
      "role": "P",
@@ -671,7 +671,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip Kutsal Ekmeği alırken şöyle der,",
-     "en": "As he receives Communion, the Priest quietly says,"
+     "en": "Receiving the Body of Christ, the Priest says quietly:"
     },
     {
      "role": "P",
@@ -681,7 +681,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip kupayı alırken şöyle der,",
-     "en": "As he receives from the chalice, he says,"
+     "en": "Receiving from the chalice:"
     },
     {
      "role": "P",
@@ -691,12 +691,12 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "Rahip, kutsal ekmeği verirken “Mesih’in bedeni” der; komünyonu alan “Amin” der. Vaftiz olmamış ya da hazırlanmamış olanlar komünyon alamaz; yalnızca takdis alabilirler.",
-     "en": "As he gives Communion, the Priest says, “The Body of Christ,” and the communicant answers, “Amen.” Those not baptized, or not prepared to receive, do not come forward for Communion; they may receive a blessing instead."
+     "en": "To each person the Priest or minister says, “The Body of Christ,” and they answer, “Amen.” If you are not Catholic, or not ready to receive, you are still welcome: come forward with your arms crossed over your chest for a blessing, or stay in your seat and pray."
     },
     {
      "role": "N",
      "tr": "Komünyondan sonra dua. Rahip cemaatin adına dua eder, herkes ayağa kalkar,",
-     "en": "The Prayer after Communion. The Priest prays on behalf of the people, and all stand,"
+     "en": "Everyone stands for the Prayer after Communion."
     },
     {
      "role": "P",
@@ -717,7 +717,7 @@ window.MASS = /*JSON-START*/{
    "title": "Son Takdis",
    "en": "The Concluding Rites",
    "lead": "Rahip cemaati kutsar ve Müjde’yi yaşaması için dünyaya gönderir.",
-   "leadEn": "The Priest blesses the people and sends them out into the world to live and proclaim the Gospel.",
+   "leadEn": "The Priest blesses the people and sends them out to live the Gospel.",
    "lines": [
     {
      "role": "P",
@@ -737,7 +737,7 @@ window.MASS = /*JSON-START*/{
     {
      "role": "N",
      "tr": "haç işareti yaparak,",
-     "en": "making the Sign of the Cross,"
+     "en": "Everyone makes the Sign of the Cross:"
     },
     {
      "role": "C",

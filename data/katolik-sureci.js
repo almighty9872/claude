@@ -19,7 +19,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "door": "Hiç vaftiz olmadım",
    "doorSub": "Vaftiz olduğunuz anda Katolik olursunuz. Hazırlık adımlarını görün.",
    "doorEn": "I have never been baptized",
-   "doorSubEn": "You become Catholic the moment you are baptized. See the steps.",
+   "doorSubEn": "Baptism makes you Catholic. Here is how to prepare.",
    "title": "Daha önce hiç vaftiz olmadıysanız",
    "titleEn": "If you've never been baptized before",
    "text": "Vaftiz olduğunuz anda Katolik olursunuz. <a href=\"#surec\">Hazırlık sürecini adım adım görün</a>.",
@@ -30,7 +30,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "door": "Başka bir kilisede vaftiz oldum",
    "doorSub": "Zaten Hristiyansınız; iman ikrarıyla Kilise’ye kabul edilirsiniz.",
    "doorEn": "I was baptized in another church",
-   "doorSubEn": "You are already a Christian; you are received with a profession of faith.",
+   "doorSubEn": "You’re already a Christian. You join with a profession of faith.",
    "title": "Başka bir Hristiyan topluluğunda geçerli biçimde vaftiz olduysanız",
    "titleEn": "If you were validly baptized in another Christian community",
    "text": "Zaten Hristiyansınız. İman ikrarında bulunarak Kilise’ye kabul edilirsiniz; genellikle aynı ayinde konfirmasyon ve ilk komünyonu da alırsınız. <a href=\"#zaten-hristiyan\">Bu yolun ayrıntıları</a>.",
@@ -50,37 +50,37 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "title": "Vaftiz Adaylığına Kabul Ayini",
    "en": "Rite of Reception into the Order of Catechumens",
    "text": "İlk resmî adım: Aday, Hristiyan olma isteğini açıkça dile getirir ve katekümen, yani vaftize hazırlanan kişi olur.",
-   "textEn": "The first formal step: the candidate openly asks to become Christian and becomes a catechumen (someone preparing for baptism)."
+   "textEn": "The first formal step: you ask the Church, out loud, to become a Christian, and you become a catechumen (someone preparing for baptism)."
   },
   {
    "title": "Katekümenlik Dönemi",
    "en": "The Catechumenate",
    "text": "Genellikle bir yıldan kısa süren bu dönemde aday, Katolik öğretisini ve ahlakını öğrenir; imanı derinleşir.",
-   "textEn": "Usually less than a year of formation in Catholic teaching and morality, as faith deepens."
+   "textEn": "A period of formation in Catholic belief and the Christian life, usually under a year, while your faith grows."
   },
   {
    "title": "Seçilme Ayini",
    "en": "The Rite of Election",
    "text": "Büyük Perhiz’in ilk pazarında Kilise adayı seçer. Adayın adı, o Paskalya’da vaftiz olacakların defterine yazılır.",
-   "textEn": "On the first Sunday of Lent the Church formally elects the candidate, and their name is written in the book of those to be baptized that Easter."
+   "textEn": "On the first Sunday of Lent the bishop formally chooses you, and your name goes into the book of those to be baptized at Easter."
   },
   {
    "title": "Üç Arınma Ayini",
    "en": "The Scrutinies",
    "text": "Büyük Perhiz’in 3., 4. ve 5. pazarlarında tövbe ve iç arınma için dualar edilir. Adaya İman Açıklaması ve Rab’bin Duası da bu dönemde verilir.",
-   "textEn": "Prayers of repentance and inner healing on the 3rd, 4th and 5th Sundays of Lent. The Creed and the Lord's Prayer are also handed on to the candidate in this period."
+   "textEn": "On the 3rd, 4th and 5th Sundays of Lent the parish prays over you for repentance and healing. Around this time you are also given the Creed and the Lord’s Prayer."
   },
   {
    "title": "Paskalya Nöbeti: Başlangıç Kutsal Sırları",
    "en": "The Easter Vigil",
    "text": "Paskalya gecesi aday vaftiz olur, konfirmasyon alır ve ilk kez komünyon alır. Artık Katoliktir.",
-   "textEn": "On Easter night the candidate is baptized, confirmed and receives Communion for the first time: now they are Catholic."
+   "textEn": "On Easter night you are baptized, confirmed and receive your first Communion. Now you’re Catholic."
   },
   {
    "title": "Mistagoji Dönemi",
    "en": "Mystagogy",
    "text": "Paskalya’dan Pentekost’a kadar süren elli günlük dönem. Yeni Katolik, bu dönemde imanında güçlenir ve cemaate kök salar.",
-   "textEn": "The fifty days from Easter to Pentecost: the new Catholic grows in faith and puts down roots in the parish."
+   "textEn": "The fifty days from Easter to Pentecost, when the new Catholic settles into the faith and into parish life."
   }
  ],
  "already": {
@@ -99,7 +99,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
   "title": "Bekleme süresi boşuna mı geçiyor?",
   "titleEn": "Is the waiting period wasted time?",
   "body": "Beklemek sabır ister, ama boşuna değildir; çünkü Katolik olmak hayatı değiştiren bir karardır. Üstelik bu süre boyunca Kilise’den uzak değilsiniz. Vaftizliyseniz, vaftiziniz sizi zaten Kilise’ye bağlar (KKK 1271). Henüz vaftiz olmadıysanız, Kilise’ye katılma isteğiniz sizi şimdiden ona bağlar ve Kilise sizi kendi çocuğu olarak kucaklar (KKK 1249).",
-  "bodyEn": "Waiting takes patience, but it isn't wasted: becoming Catholic changes your life. And you aren't apart from the Church in the meantime. If you're baptized, your baptism already binds you to the Church (CCC 1271); if not, your desire to join already joins you to it, and the Church embraces you as her own child (CCC 1249)."
+  "bodyEn": "Waiting takes patience, but it isn’t wasted time: becoming Catholic changes your whole life. And you aren’t outside the Church while you wait. If you’re baptized, your baptism already binds you to the Church (CCC 1271). If you aren’t, your desire for baptism already joins you to it, and the Church holds you as her own child (CCC 1249)."
  },
  "faq": [
   {
@@ -107,7 +107,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
    "q": "OCIA sürecine nasıl başlarım?",
    "a": "Size en yakın Katolik kilisesiyle iletişime geçin. Süreç genellikle eylülde başlar; ağustos başında rahiple görüşürseniz geç kalmış olmazsınız. Rahip, sizi tanımak için büyük olasılıkla yüz yüze görüşmek isteyecektir. Türkiye’de bu hazırlık genellikle herkese açık bir kayıtla değil, rahiple birebir görüşülerek her aday için ayrı planlanır. Bu yüzden bir kilisenin sitesinde duyuru görmemeniz, o kilisenin hazırlık yapmadığı anlamına gelmez. Samsun’daki <a href=\"kilise/mater-dolorosa-samsun.html#ocia\">Mater Dolorosa Kilisesi</a>, OCIA hazırlığını sitesinde duyuran kiliselerden biridir.",
    "qEn": "How do I start the OCIA process?",
-   "aEn": "Contact your nearest Catholic parish. The process usually starts in September; if you talk to the priest by early August, you won't be late. He'll most likely want to meet you in person to get to know you. In Turkey this preparation is usually arranged one to one with the priest for each candidate, not through public enrollment. So if a church's website says nothing about it, that doesn't mean it isn't offered. <a href=\"kilise/mater-dolorosa-samsun.html#ocia\">Mater Dolorosa in Samsun</a> is one church that announces its OCIA preparation online."
+   "aEn": "Contact your nearest Catholic parish. The process usually starts in September; if you talk to the priest by early August, you won't be late. He'll most likely want to meet you in person to get to know you. Some parishes arrange this preparation one to one with the priest rather than through public enrollment, so if a parish website says nothing about it, ask anyway."
   },
   {
    "id": "gunah-cikarma-gerekli-mi",
@@ -118,5 +118,5 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
   }
  ],
  "firstStep": "İlk adım basit: Size en yakın Katolik kilisesine yazın ya da uğrayın. Rahip sizinle tanışır ve hazırlığı birlikte planlar.",
- "firstStepEn": "The first step is simple: write to or visit your nearest Catholic church. The priest will meet you and plan your preparation with you."
+ "firstStepEn": "The first step is easy: call, write to or walk into your nearest Catholic parish. The priest will meet you and plan your preparation with you."
 }/*JSON-END*/;

@@ -22,7 +22,7 @@ window.MIRACLES = /*JSON-START*/{
  "title": "Mucizeler",
  "en": "Miracles",
  "intro": "Bu olaylar “özel vahiy” sayılır: imana yeni bir şey eklemezler. Kilise, uzun incelemelerden sonra onları inanılmaya değer bulmuştur.",
- "introEn": "The apparitions and extraordinary events here are considered \"private revelation\". They add nothing new to the articles of faith, but after careful investigation the Church has found them worthy of belief. Below you will find these events in chronological order, together with their most notable scientific findings.",
+ "introEn": "Apparitions, relics, bleeding hosts, bodies that didn’t decay. None of this is required belief: the Church calls it “private revelation”, which adds nothing to the faith. But each case below was investigated hard, and the Church judged it worthy of belief. Here they are, in date order, with the most striking scientific findings.",
  "categories": [
   {
    "id": "gorunmeler",
@@ -30,7 +30,7 @@ window.MIRACLES = /*JSON-START*/{
    "title": "Meryem Ana’nın Görünmeleri",
    "en": "Marian Apparitions",
    "lead": "Kilise’nin onayladığı, en çok ziyaret edilen dört görünme.",
-   "leadEn": "Four of the best-known apparitions in the world, approved by the Church after long investigation.",
+   "leadEn": "Four of the most famous apparitions in the world, each approved after a long investigation.",
    "items": [
     {
      "id": "fatima",
@@ -50,7 +50,7 @@ window.MIRACLES = /*JSON-START*/{
      "place": "Kahire, Mısır · 1968–1971",
      "placeEn": "Cairo, Egypt · 1968-1971",
      "bio": "2 Nisan 1968 gecesi Kahire’nin Zeytun semtindeki bir Kıpti kilisesinin kubbesinde, ışıktan bir kadın figürü görüldü. İlk tanıklar iki Müslüman otobüs tamircisiydi; kubbedeki kişinin atlayacağını sanıp yardım çağırdılar.\nGörünmeler üç yıl boyunca tekrarlandı. Hristiyanlar, Müslümanlar ve yabancı gazeteciler dahil bir milyona yakın kişi, kubbede ışıktan bir figür ve güvercin biçiminde ışıklar gördü. Görünmeler sessizdi; hiçbir mesaj verilmedi.\nKıpti Ortodoks Kilisesi görünmeleri resmen onayladı. Katolik Kilisesi’nin onay sürecinden geçmediler, ama iki Kilise de onları saygıyla anar.",
-     "bioEn": "On the night of 2 April 1968, a figure of light appeared on the dome of a Coptic church in the Zeitoun district of Cairo. The first witnesses were two Muslim bus mechanics, who thought someone was about to jump and called for help.\nThe apparitions recurred for three years; close to a million people, Christians, Muslims and foreign journalists among them, saw a luminous figure and dove-shaped lights above the dome. The apparitions were silent and gave no message.\nThe Coptic Orthodox Church formally approved them; they didn't go through the Catholic Church's approval process, but both communities honor them."
+     "bioEn": "On the night of 2 April 1968, a figure of light appeared on the dome of a Coptic church in the Zeitoun district of Cairo. The first to see it were two Muslim bus mechanics, who thought a woman was about to jump and shouted for help.\nThe apparitions went on for three years. Close to a million people, including Christians, Muslims and foreign journalists, saw a glowing figure and dove-shaped lights above the dome. She never spoke and gave no message.\nThe Coptic Orthodox Church formally approved the apparitions. They never went through the Catholic Church’s process, but both Churches honour them."
     },
     {
      "id": "guadalupe",
@@ -110,7 +110,7 @@ window.MIRACLES = /*JSON-START*/{
    "title": "Efkaristiya Mucizeleri",
    "en": "Eucharistic Miracles",
    "lead": "Efkaristiya’da ekmek ve şarap, görünüşü değişmeden Mesih’in bedeni ve kanı olur. Bu üç olayda değişim gözle görüldü.",
-   "leadEn": "In the Eucharist, bread and wine become Christ's Body and Blood while looking unchanged. In the three events below, tradition holds, the change became visible.",
+   "leadEn": "In the Eucharist, bread and wine become Christ’s Body and Blood while looking exactly the same. In these three cases, tradition holds, the change became visible.",
    "items": [
     {
      "id": "lanciano",
@@ -150,7 +150,7 @@ window.MIRACLES = /*JSON-START*/{
    "title": "Çürümeyen Azizler",
    "en": "Incorrupt Saints",
    "lead": "Bazı azizlerin bedenleri yıllar, hatta yüzyıllar sonra neredeyse çürümemiş bulundu. Sergilenen yüzler, korunmak için çoğu zaman ince bir balmumu ya da silikon maskeyle kaplanır.",
-   "leadEn": "The bodies of some saints have been found far less decayed than expected, years or even centuries after death. The faces of bodies on display are often covered with a thin wax or silicone mask to protect them.",
+   "leadEn": "Some saints’ bodies have been found far less decayed than they should be, years or even centuries after death. Bodies on display often have a thin wax or silicone mask over the face to protect them.",
    "items": [
     {
      "id": "bernadette",

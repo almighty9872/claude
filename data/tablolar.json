@@ -342,7 +342,8 @@
    "src": "https://www.wga.hu/html/r/rublyov/trinity.html",
    "w": 750,
    "h": 932,
-   "y": 35
+   "y": 35,
+   "ae": "Andrei Rublev"
   },
   "12magda": {
    "t": "Tövbekâr Mecdelli Meryem",
@@ -408,7 +409,8 @@
    "src": "https://www.wga.hu/html/r/raphael/4stanze/1segnatu/1/athens.html",
    "w": 680,
    "h": 464,
-   "y": 35
+   "y": 35,
+   "ae": "Raphael"
   },
   "i-bapt": {
    "t": "İsa’nın Vaftizi",
@@ -452,7 +454,8 @@
    "src": "https://www.wga.hu/html/r/raphael/4stanze/1segnatu/2/00disput.html",
    "w": 680,
    "h": 513,
-   "y": 35
+   "y": 35,
+   "ae": "Raphael"
   },
   "i-george": {
    "t": "Aziz Yorgi ve Ejderha",
@@ -463,7 +466,8 @@
    "src": "https://www.wga.hu/html/r/raphael/2firenze/1/25drago1.html",
    "w": 516,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "ae": "Raphael"
   },
   "i-greg": {
    "t": "Aziz Gregorius’un Ayini",
@@ -529,7 +533,8 @@
    "src": "https://www.wga.hu/html/r/raphael/5roma/5/03satan.html",
    "w": 412,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "ae": "Raphael"
   },
   "i-nativ": {
    "t": "İsa’nın Doğuşu",
@@ -562,7 +567,8 @@
    "src": "https://www.wga.hu/html/m/master/zunk_y/01icon5.html",
    "w": 529,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "ae": "Unknown icon painter"
   },
   "i-patmos": {
    "t": "Patmos’ta Aziz Yuhanna",
@@ -584,7 +590,8 @@
    "src": "https://www.wga.hu/html/r/raphael/6tapestr/3athens.html",
    "w": 680,
    "h": 528,
-   "y": 35
+   "y": 35,
+   "ae": "Raphael"
   },
   "i-petpaul": {
    "t": "Havariler Petrus ve Pavlus",
@@ -661,7 +668,8 @@
    "src": "https://www.wga.hu/html/r/raphael/5roma/5/10trans.html",
    "w": 463,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "ae": "Raphael"
   },
   "i-trent": {
    "t": "Trento Konsili",
@@ -793,7 +801,8 @@
    "src": "https://www.nga.gov/collection/art-object-page.41637.html",
    "w": 1600,
    "h": 1097,
-   "y": 45
+   "y": 45,
+   "ae": "Circle of Tintoretto (probably Lambert Sustris)"
   },
   "n-flock": {
    "t": "Sürüsüyle Çoban",
@@ -991,7 +1000,8 @@
    "src": "https://tile.loc.gov/storage-services/service/pnp/cph/3c00000/3c08000/3c08700/3c08738v.jpg",
    "w": 942,
    "h": 672,
-   "y": 55
+   "y": 55,
+   "ae": "Photograph, about 1900"
   },
   "n-benedict": {
    "t": "Aziz Benediktus, Maurus’u Plasidus’u Kurtarmaya Gönderiyor",
@@ -1068,7 +1078,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Newspaper_fatima_353.jpg",
    "w": 922,
    "h": 590,
-   "y": 50
+   "y": 50,
+   "ae": "Ilustração Portuguesa, 29 October 1917"
   },
   "mira-zeytun": {
    "t": "Zeytun’daki görünmenin 1968 fotoğrafı",
@@ -1079,7 +1090,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Our_Lady_of_Zeitun.jpg",
    "w": 286,
    "h": 500,
-   "y": 30
+   "y": 30,
+   "ae": "Anonymous photograph"
   },
   "mira-guadalupe": {
    "t": "Guadalupe Meryem Ana’sı tasviri",
@@ -1112,7 +1124,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Turin_shroud_positive_and_negative_displaying_original_color_information_708_x_465_pixels_94_KB.jpg",
    "w": 708,
    "h": 465,
-   "y": 30
+   "y": 30,
+   "ae": "Photo: Dianelos Georgoudis"
   },
   "mira-tilma": {
    "t": "Tilmadaki yüz, yakından",
@@ -1123,7 +1136,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:El_Rostro_de_la_Virgen.jpg",
    "w": 515,
    "h": 570,
-   "y": 35
+   "y": 35,
+   "ae": "Photo: Lyricmac"
   },
   "mira-lanciano": {
    "t": "Lanciano’daki et ve kan kalıntıları",
@@ -1134,7 +1148,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:1_miracolo.jpg",
    "w": 667,
    "h": 1200,
-   "y": 25
+   "y": 25,
+   "ae": "Photo: AFC photo"
   },
   "mira-bolsena": {
    "t": "Bolsena Ayini",
@@ -1145,7 +1160,8 @@
    "src": "https://www.wga.hu/html/r/raphael/4stanze/2eliodor/2bolsen.html",
    "w": 1200,
    "h": 786,
-   "y": 50
+   "y": 50,
+   "ae": "Raphael, Apostolic Palace, Vatican"
   },
   "mira-bernadette": {
    "t": "Bernadette’in bedeni, 1925",
@@ -1156,7 +1172,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Bernadette_soubirous_exhumated_1925.jpg",
    "w": 1200,
    "h": 768,
-   "y": 40
+   "y": 40,
+   "ae": "Anonymous photograph"
   },
   "mira-padre-pio": {
    "t": "Padre Pio",
@@ -1167,7 +1184,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Padre_Pio_portraitFXD.jpg",
    "w": 1200,
    "h": 1494,
-   "y": 30
+   "y": 30,
+   "ae": "Anonymous photograph"
   },
   "mira-vianney": {
    "t": "Aziz Jean-Marie Vianney’nin bedeni, Ars",
@@ -1178,7 +1196,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Jean-Marie_Vianney.jpg",
    "w": 831,
    "h": 533,
-   "y": 50
+   "y": 50,
+   "ae": "Photo: Herwig Reidlinger"
   },
   "mira-buenos-aires": {
    "t": "Buenos Aires Metropolitan Katedrali",
@@ -1189,7 +1208,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Buenos_Aires-Catedral_Metropolitana_(interior).jpg",
    "w": 960,
    "h": 720,
-   "y": 50
+   "y": 50,
+   "ae": "Photo: Alexis González Molina"
   },
   "y-presen": {
    "t": "İsa’nın Tapınağa Sunuluşu",
@@ -1211,7 +1231,8 @@
    "src": "https://www.wga.hu/html/r/rembrand/51etchin/3/126.html",
    "w": 917,
    "h": 500,
-   "y": 50
+   "y": 50,
+   "ae": "Rembrandt (etching)"
   },
   "y-isaiah": {
    "t": "Peygamber Yeşaya",

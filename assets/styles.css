@@ -14,6 +14,8 @@
    name, "KATOLİK DÜNYASI", used only for the logo */
 @font-face { font-family: "KD Brand"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-latin.woff2") format("woff2"); unicode-range: U+0041, U+0044, U+0049, U+004B, U+004C, U+004E, U+004F, U+0053, U+0054, U+0059, U+00DC; }
 @font-face { font-family: "KD Brand"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-ext.woff2") format("woff2"); unicode-range: U+0130; }
+/* The English site's name, "VERBUM DOMINI": the same EB Garamond, cut down to the capital letters */
+@font-face { font-family: "KD Brand EN"; font-weight: 500; font-display: block; src: url("fonts/kd-brand-en.woff2") format("woff2"); }
 /* Lexend (SIL OFL 1.1, see fonts/OFL-Lexend.txt), a typeface designed for reading fluency,
    for the Settings panel's dyslexia-friendly text. Nothing downloads unless that setting is on. */
 @font-face {
@@ -186,6 +188,7 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 /* "KATOLİK DÜNYASI": Garamond capitals, the first letters taller, like an inscription cut in stone */
 .bn { font-family: "KD Brand", Georgia, serif; font-size: 1.06rem; font-weight: 500; letter-spacing: .07em; white-space: nowrap; color: var(--text); }
 .bn-c { font-size: 1.36em; letter-spacing: .02em; }
+.bn-en { font-family: "KD Brand EN", Georgia, serif; }
 .brand-rule { width: 1px; height: 26px; flex: none; background: var(--border-strong); }
 /* The mark: the fish, glowing softly, turns over to the Jerusalem cross on hover or focus */
 .bm { position: relative; flex: none; width: 44px; height: 30px; perspective: 320px; color: var(--gold); }
@@ -3606,3 +3609,7 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 .ic-tl-v .ic-tl-s { font-size: .86rem; line-height: 1.5; }
 .ic-tl-v .ic-tl-more { display: none !important; }
 .ic-tldr { max-width: 46rem; margin-inline: auto; }
+
+/* English month names are longer than the Turkish ones ("September" against "Eylül"): on a
+   phone the date card's day shrinks with the screen so the month fits the half-width card */
+@media (max-width: 979px) { html.lang-en .hm-card.hm-date .hm-day { font-size: min(7.4vw, 2.6rem); overflow-wrap: normal; } }

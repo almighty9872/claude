@@ -20,7 +20,7 @@ window.PARABLES = /*JSON-START*/{
    "title": "Hükümdarlık Meselleri",
    "en": "Parables of the Kingdom",
    "lead": "Allah’ın Hükümdarlığı küçük başlar, sessizce büyür ve her şeyden değerlidir.",
-   "leadEn": "God's Kingdom starts small, grows quietly and is worth more than anything.",
+   "leadEn": "God’s Kingdom starts small, grows quietly and is worth everything you have.",
    "items": [
     {
      "id": "ekinci",
@@ -68,7 +68,7 @@ window.PARABLES = /*JSON-START*/{
      "ref": "Matta 13:33 · Luka 13:20–21",
      "refEn": "Matthew 13:33 · Luke 13:20–21",
      "bio": "Bir kadın biraz mayayı büyük bir un yığınına karıştırır ve bütün hamur kabarır.\nMaya görünmez, ama hamuru içten değiştirir. Hükümdarlık da dünyada gösterişsizce, içeriden, yürekleri değiştirerek çalışır.",
-     "bioEn": "A woman mixes a little yeast into a large batch of flour, and the whole dough rises.\nYeast is invisible, yet it changes the dough from within. The Kingdom works the same way in the world: quietly, from the inside, transforming hearts.",
+     "bioEn": "A woman mixes a little yeast into a large batch of flour, and the whole dough rises.\nYou can’t see yeast, but it changes the dough from the inside. That’s how the Kingdom works in the world: quietly, from within, one heart at a time.",
      "en": {
       "ref": "Matthew 13:33 (Douay-Rheims)",
       "text": "The kingdom of heaven is like to leaven, which a woman took and hid in three measures of meal, till the whole was leavened."
@@ -81,7 +81,7 @@ window.PARABLES = /*JSON-START*/{
      "ref": "Matta 13:44",
      "refEn": "Matthew 13:44",
      "bio": "Bir adam tarlada gömülü bir hazine bulur ve sevinçle her şeyini satıp o tarlayı satın alır.\nHükümdarlık, her şeyden değerli bir hazinedir. Adam her şeyini kayba uğradığı için değil, sevindiği için verir. İman uğruna verilen hiçbir şey boşa gitmez.",
-     "bioEn": "A man finds treasure buried in a field and, full of joy, sells everything to buy that field.\nThe Kingdom is worth more than anything. He gives up everything not out of loss but out of joy: nothing given for faith is really lost.",
+     "bioEn": "A man finds treasure buried in a field and, overjoyed, sells everything he owns to buy the field.\nThe Kingdom is worth more than anything. Notice he gives everything up not with regret but with joy: nothing given up for God is really lost.",
      "en": {
       "ref": "Matthew 13:44 (Douay-Rheims)",
       "text": "The kingdom of heaven is like unto a treasure hidden in a field. Which a man having found, hid it, and for joy thereof goeth, and selleth all that he hath, and buyeth that field."
@@ -120,7 +120,7 @@ window.PARABLES = /*JSON-START*/{
      "ref": "Markos 4:26–29",
      "refEn": "Mark 4:26–29",
      "bio": "Bir adam toprağa tohum eker. O uyurken de uyanıkken de tohum, nasıl olduğunu bilmediği bir şekilde filizlenir ve ürün verir.\nYalnızca Markos İncili’nde geçen bu mesel, büyümeyi sağlayanın insan değil Allah olduğunu hatırlatır. Biz ekeriz; Allah’ın işi kendi zamanında olgunlaşır.",
-     "bioEn": "A man scatters seed; whether he sleeps or wakes, it sprouts and grows, though he doesn't know how.\nFound only in Mark, this parable reminds us that it is God, not we, who makes things grow. We sow; God's work ripens in its own time.",
+     "bioEn": "A man scatters seed; whether he sleeps or wakes, it sprouts and grows, and he doesn’t know how.\nFound only in Mark, it reminds us that God, not we, makes things grow. We sow; God’s work ripens in its own time.",
      "en": {
       "ref": "Mark 4:26–29 (Douay-Rheims)",
       "text": "So is the kingdom of God, as if a man should cast seed into the earth, And should sleep, and rise, night and day, and the seed should spring, and grow up whilst he knoweth not. For the earth of itself bringeth forth fruit, first the blade, then the ear, afterwards the full corn in the ear. And when the fruit is brought forth, immediately he putteth in the sickle, because the harvest is come."
@@ -134,7 +134,7 @@ window.PARABLES = /*JSON-START*/{
    "title": "Merhamet ve Bağışlama Meselleri",
    "en": "Parables of Mercy and Forgiveness",
    "lead": "Allah günahkârlara sınırsız merhamet gösterir; biz de başkalarına göstermeliyiz.",
-   "leadEn": "These parables describe God's boundless mercy toward sinners, and teach that we must show that same mercy to others.",
+   "leadEn": "God’s mercy has no limit, and he expects us to pass it on.",
    "items": [
     {
      "id": "kayip-koyun",
@@ -248,7 +248,7 @@ window.PARABLES = /*JSON-START*/{
    "title": "Dua ve Sebat Meselleri",
    "en": "Parables of Prayer and Perseverance",
    "lead": "Allah’a güvenerek ve vazgeçmeden dua etmek.",
-   "leadEn": "These two short parables teach us to pray with trust in God and to persevere.",
+   "leadEn": "Two short stories about praying with trust, and not giving up.",
    "items": [
     {
      "id": "israrci-dul-kadin",
@@ -284,7 +284,7 @@ window.PARABLES = /*JSON-START*/{
    "title": "Uyanıklık, Hazırlık ve Bilgelik Meselleri",
    "en": "Parables of Watchfulness and Wisdom",
    "lead": "Mesih’in dönüşüne hazır olmak ve gerçek bilgelik.",
-   "leadEn": "These parables teach readiness for Christ's return and for life's trials, and what true wisdom looks like.",
+   "leadEn": "Be ready: for Christ’s return, for life’s storms, and for the questions that really matter.",
    "items": [
     {
      "id": "on-kiz",
@@ -359,7 +359,7 @@ window.PARABLES = /*JSON-START*/{
    "title": "Sorumluluk ve Yönetim Meselleri",
    "en": "Parables of Stewardship",
    "lead": "Allah’ın bize emanet ettiklerini nasıl kullandığımız ve O’nun lütfunun insan adaletinden farkı.",
-   "leadEn": "These parables describe how we are to use the talents, time and resources God entrusts to us, and how God's grace works differently from human fairness.",
+   "leadEn": "What we do with the gifts, time and money God trusts us with, and why his generosity doesn’t follow our idea of fair.",
    "items": [
     {
      "id": "yetenekler",
@@ -447,7 +447,7 @@ window.PARABLES = /*JSON-START*/{
    "title": "Hükümdarlığa Çağrı ve Hesap Verme Meselleri",
    "en": "Parables of Invitation and Judgment",
    "lead": "Allah’ın Hükümdarlığı’na davet herkese açık; yaşamın sonunda hesap verilir.",
-   "leadEn": "These parables describe the breadth of the invitation to God's Kingdom, and the account each of us will give at the end of life.",
+   "leadEn": "The invitation is open to everyone, and everyone will one day give an account.",
    "items": [
     {
      "id": "buyuk-solen",

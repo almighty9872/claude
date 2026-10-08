@@ -17,11 +17,11 @@ window.SAINTS = /*JSON-START*/{
  "title": "Azizler",
  "en": "Saints",
  "intro": "Kilise yılın her gününde en az bir azizi anar. Her biri, imanla yaşamanın mümkün olduğunu gösterir.",
- "introEn": "Every day of the year, the Church remembers one or more saints. Each of them shows that a life of faith is possible.",
+ "introEn": "Every day of the year the Church remembers at least one saint: real people who showed that a life of faith can actually be lived.",
  "genelTitle": "Bugün İçin Özel Bir Aziz Yok",
- "genelTitleEn": "No Particular Saint for Today",
+ "genelTitleEn": "No Saint Listed Today",
  "genelBio": "Bu tarihe, ne Roma Genel Takvimi’nde ne de Roma Azizler Cetveli’nde, güvenle aktarabileceğimiz bir aziz yerleştirilmiş. Bu, o günün azizsiz olduğu anlamına gelmez. Kilise’nin tarih boyunca tanıdığı sayısız aziz arasında adı ve tarihi bu kadar ayrıntılı doğrulanamayan pek çok kutsal insan vardır. Böyle günlerde Kilise bizi, adlarını bilmesek de Allah’ın huzurunda olan bütün azizleri anmaya çağırır.",
- "genelBioEn": "Neither the General Roman Calendar nor the Roman Martyrology assigns a saint's commemoration to this date that we can confidently pass on. This does not mean the day passes without a saint; among the countless saints the Church has known throughout history, there are many holy people whose name and date cannot be confirmed with this level of certainty. On such days, the Church calls us to remember all the saints who stand before God, whether we know their names or not: all the holy souls in heaven.",
+ "genelBioEn": "Neither the General Roman Calendar nor the Roman Martyrology gives a saint for this date that we can name with confidence. That doesn’t mean the day has no saint. The Church knows of countless holy men and women whose names and dates are lost, so today, remember all of them: every saint in heaven, known or unknown.",
  "days": [
   {
    "m": 1,
@@ -72,7 +72,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "Bu gün İsa adının gücünü ve tatlılığını anar. Dayanağı, Yeni Ahit’teki şu sözdür: “Göğün altında insanlara verilmiş, bizi kurtarabilecek başka hiçbir ad yoktur” (Elçilerin İşleri 4:12). Bu anmayı Orta Çağ’dan beri özellikle Fransiskenler ve Cizvitler yaydı.",
      "nameEn": "The Holy Name of Jesus",
      "titleEn": "",
-     "bioEn": "This optional memorial commemorates the divine power and sweetness given to the name of Jesus, based on the New Testament's words, \"there is no other name under heaven given to men, whereby we must be saved\" (Acts 4:12). It has been especially promoted since the Middle Ages by the Franciscans and Jesuits."
+     "bioEn": "An optional memorial honouring the name of Jesus itself: “There is no other name under heaven given among men by which we must be saved” (Acts 4:12). The Franciscans and later the Jesuits spread the devotion from the Middle Ages on."
     }
    ]
   },

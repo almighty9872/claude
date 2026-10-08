@@ -1,33 +1,31 @@
 ---
 title: Accessibility
-subtitle: So that everyone can read it comfortably
-description: katolikdunyasi.com's approach to accessibility: supported features, known limitations, and how to report a problem.
-short: The accessibility features this site supports and how to report a problem.
+subtitle: Everyone should be able to read this site comfortably
+description: Accessibility on Verbum Domini: what's supported, what isn't yet, and how to report a problem.
+short: The accessibility features this site supports, and how to report a problem.
 ---
 
 ## Our commitment
 
-katolikdunyasi.com is designed to be usable comfortably by as wide an audience as possible, including blind visitors who use a screen reader. This isn't a one-time job; accessibility is reviewed continuously as the site grows.
+Verbum Domini is built to work for as many people as possible, including blind visitors using a screen reader. That isn’t a box we ticked once; we keep checking as the site grows.
 
-## Currently supported
+## What’s supported
 
-- **Accessibility settings:** open from the gear (Settings) icon in the header of every page. It offers ready-made profiles for motor impairment, blindness, color blindness and dyslexia, plus individually switchable settings such as increasing contrast, reducing color saturation, enlarging text, widening letter and line spacing, highlighting links, switching to Lexend, an open-source typeface designed for reading fluency, and a bigger cursor. Your choices are remembered in your browser, and you can return to the defaults at any time with "Reset All Settings."
-- **Screen reader helper:** when you turn on the "Screen Reader" setting in the Settings panel, it reads aloud whatever text you point at or focus with the keyboard, using your browser's own speech feature. This isn't a substitute for a real screen reader (VoiceOver, NVDA or TalkBack); the site already works with those on its own, through a meaningful heading order, landmark regions (menu, main content, footer), and spoken announcements for search results and self-updating areas like "today's saint."
-- **Keyboard use:** menus, the search box, the Settings panel, and every popup panel can be opened and closed with the keyboard alone, with no mouse required; the focused element is always visible. In the menus at the top of the page on a computer, Enter opens a menu, Tab and the arrow keys move through it, and Escape closes it.
-- **Touch screens:** on tablets, the first tap on a menu item with its own sub-list opens that list, and the second tap opens the page.
-- **Skip-to-content link:** every page begins with an invisible link that skips the menu and jumps straight to the content ("Skip to content").
-- **Reduced motion:** if your operating system's "reduce motion" preference is on, the site respects it and turns off unnecessary transition animations. On some pages each section's drawing draws itself as you scroll; with this preference on, the drawings appear already complete.
-- **Drawings:** the line drawings beside the sections are purely decorative; they are hidden from screen readers and carry no information. Each section's meaning is in its heading and text.
-- **Map:** the group names in the lower right corner of the Christianity in Anatolia map are buttons. Pointing at one, focusing it with the keyboard or tapping it highlights that group's places, and every place on the map can be chosen with the keyboard to open its card.
-- **Contact form:** every field has a visible label, and the result of sending (the thank-you or an error message) is announced to screen readers. Cloudflare Turnstile, the spam check, usually works invisibly and shows a one-click box only when needed.
-- **Dark and light themes:** choose whichever is easier on your eyes, for example if you have eye strain or light sensitivity; your choice is remembered.
-- **Color contrast:** text colors were chosen to target the contrast ratios recommended by the WCAG 2.2 AA standard, and can be strengthened further with the "Increase Contrast" setting in the Settings panel.
-- **Language:** every page has a Turkish and an English version. The TR | EN button in the bottom corner of every page opens the same page in the other language, at the same section; your choice is remembered. In the Catechism, the English is the original English text.
+- **Accessibility settings:** open them from the gear icon at the top of any page. There are ready-made profiles for motor impairment, blindness, colour blindness and dyslexia, plus individual switches: higher contrast, lower saturation, bigger text, wider letter and line spacing, highlighted links, the Lexend typeface (designed for easier reading) and a bigger cursor. Your choices are remembered, and "Reset All Settings" puts everything back.
+- **Read-aloud helper:** turn on "Screen Reader" in the settings and the site reads out whatever you point at or reach with the keyboard, using your browser’s built-in speech. It doesn’t replace a real screen reader (VoiceOver, NVDA or TalkBack), and you don’t need it with one: the site already works with them through a clear heading order, landmarks (menu, main content, footer) and spoken updates for search results and live areas like "today’s saint".
+- **Keyboard:** menus, search, settings and every popup open and close with the keyboard alone, and you can always see where the focus is. In the top menus on a computer, Enter opens a menu, Tab and the arrow keys move through it, and Escape closes it.
+- **Touch screens:** on a tablet, the first tap on a menu item with a sub-menu opens the sub-menu; the second tap opens the page.
+- **Skip to content:** every page starts with a hidden "Skip to content" link that jumps past the menu.
+- **Reduced motion:** if "reduce motion" is on in your system settings, the site turns off non-essential animations. Section drawings that normally draw themselves as you scroll simply appear finished.
+- **Drawings:** the line drawings next to sections are decoration only. Screen readers skip them, and nothing important is in them.
+- **Contact form:** every field has a visible label, and screen readers announce whether your message went through. Turnstile, the spam check, usually works invisibly and only shows a one-click box when it has to.
+- **Dark and light themes:** pick whichever is easier on your eyes; the site remembers.
+- **Colour contrast:** text colours aim for the contrast ratios in WCAG 2.2 AA, and "Increase Contrast" in the settings pushes them further.
 
 ## Known limitations
 
-This site is written and maintained by one person, and hasn't gone through a formal accessibility audit. The items above were implemented with the WCAG 2.2 AA guidelines in mind, and every page is checked with automated accessibility tests (axe) on computer and phone screens, in both themes, but that isn't a conformance statement or a certification. Something may have been missed; if you notice it, reporting it below is a big help.
+One person writes and maintains this site, and it hasn’t had a formal accessibility audit. Everything above was built with WCAG 2.2 AA in mind, and every page is tested automatically (axe) on desktop and mobile, in both themes. That isn’t a certificate, though, and things slip through. If you find one, please tell us.
 
-## Noticed a problem?
+## Found a problem?
 
-If a page doesn't work the way you'd expect with a screen reader, uses a color that's hard to read, or has something you can't reach with the keyboard, please write to us with the form on the [Contact](iletisim.html) page. Telling us which page, and which device and assistive technology you ran into it with, makes the problem much easier to find.
+If something doesn’t work with your screen reader, a colour is hard to read, or you can’t reach something with the keyboard, write to us through the [Contact](iletisim.html) page. Tell us which page, which device and which assistive technology you were using, and we’ll find it much faster.

@@ -14,7 +14,7 @@ window.CONFESSION = /*JSON-START*/{
  "title": "Günah Çıkarma",
  "en": "Confession",
  "intro": "Günah çıkarma, en çok çekinilen ama en çok özgürleştiren kutsal sırdır. İsa onu dirilişinin akşamı başlattı: “Kimin günahlarını bağışlarsanız, bağışlanmış olur” (Yuhanna 20:22-23). Rahip bir aracıdır; karşınızdaki Tanrı’dır.",
- "introEn": "Confession is the most feared and yet the most freeing sacrament of the Catholic faith. Jesus instituted it on the evening of the Resurrection with these words: \"Whose sins you forgive are forgiven them\" (John 20:22-23). The priest is only an instrument; the one you truly meet is God himself.",
+ "introEn": "Confession is the sacrament people dread most, and the one that sets them freest. Jesus gave it to the apostles on the evening of the Resurrection: “If you forgive the sins of any, they are forgiven” (John 20:22-23). The priest is only the instrument. The one you actually meet in there is God.",
  "steps": [
   {
    "title": "Vicdan Muhasebesi",
@@ -26,25 +26,25 @@ window.CONFESSION = /*JSON-START*/{
    "title": "Günah Çıkarma Yerine Girmek",
    "en": "Entering the Confessional",
    "text": "Perde arkasından (yüzünüzü göstermeden) ya da yüz yüze günah çıkarabilirsiniz. İkisi de geçerlidir; seçim sizin.",
-   "textEn": "You can confess behind a screen (without showing your face) or face to face; both are valid, and the choice is yours."
+   "textEn": "You can kneel behind a screen, where the priest can’t see you, or sit face to face. Both are fine; it’s your call."
   },
   {
    "title": "Haç İşareti ve Açılış",
    "en": "Sign of the Cross and Opening",
    "text": "Haç çıkarın ve şöyle başlayın: “Beni kutsayın peder, çünkü günah işledim. Son günah çıkarmamın üzerinden [şu kadar zaman] geçti.” İlk kezse bunu söyleyin; rahip size yol gösterir.",
-   "textEn": "Make the Sign of the Cross and begin: \"Bless me, Father, for I have sinned. It has been [this long] since my last confession.\" If it's your first time, say so; the priest will guide you."
+   "textEn": "Make the Sign of the Cross and begin: \"Bless me, Father, for I have sinned. It has been [this long] since my last confession.\" If it’s your first time, just say so and the priest will help you."
   },
   {
    "title": "Günahları İtiraf Etme",
    "en": "Confessing Your Sins",
    "text": "Günahlarınızı sade ve açık bir dille söyleyin. Ağır günahların türünü ve mümkünse kaç kez işlendiğini belirtin. Kendinizi savunmanıza gerek yok: Rahip sizi yargılamak için değil, Tanrı’nın bağışlamasını size iletmek için oradadır.",
-   "textEn": "Name your sins simply and clearly. For serious sins, say what they were and, if you can, how many times. There's no need to defend yourself: the priest is there to pass on forgiveness, not to judge."
+   "textEn": "Say your sins simply and plainly. For serious sins, say what they were and, if you can, roughly how many times. You don’t need to explain or defend yourself: the priest is there to forgive, not to judge."
   },
   {
    "title": "Rahibin Öğüdü ve Kefaret",
    "en": "Counsel and Penance",
    "text": "Rahip kısa bir öğüt verebilir ve size bir kefaret verir; bu genellikle bir dua ya da iyi bir davranıştır. Kefaret bir ceza değil, yeniden Tanrı’ya yönelmenin somut bir işaretidir.",
-   "textEn": "The priest may give you some brief advice, and then gives you a penance, usually a prayer or a good deed. It isn't a punishment but a concrete sign of turning back to God."
+   "textEn": "The priest may give you a word of advice, then a penance, usually a prayer or a good deed. It isn’t a punishment; it’s a first concrete step back toward God."
   },
   {
    "title": "Pişmanlık Duası",
@@ -62,17 +62,17 @@ window.CONFESSION = /*JSON-START*/{
    "title": "Kefareti Yerine Getirme",
    "en": "Fulfilling the Penance",
    "text": "Kefaretinizi en kısa sürede yerine getirin ve kavuştuğunuz huzuru gündelik hayatınıza taşıyın.",
-   "textEn": "Do your penance as soon as you can, and carry the peace you've found into daily life."
+   "textEn": "Do your penance as soon as you can, and take the peace you’ve found back into your everyday life."
   }
  ],
  "examenIntro": "Sorular On Emir’e göre sıralı. Günah çıkarmadan önce bu listeyle kendinizi gözden geçirin.",
- "examenIntroEn": "The questions follow the Ten Commandments. You can use the list below to examine your conscience and prepare for confession.",
+ "examenIntroEn": "The questions follow the Ten Commandments. Read through them slowly before you go.",
  "examenGroups": [
   {
    "title": "1. Tanrın RAB Ben’im: benden başka tanrın olmayacak",
    "titleEn": "1. I am the LORD your God: you shall not have other gods before me",
    "about": "Bu emir, Tanrı’yı hayatımızın merkezine koymamızı ister. Yalnızca başka ilahlara tapmak değil; parayı, başarıyı, şöhreti ya da bir insanı Tanrı’nın yerine koymak da bu emre aykırıdır. Fal, burç, büyü ve muska gibi batıl inançlar da buraya girer (KKK 2110-2128).",
-   "aboutEn": "It asks us to put God at the center of life. Not only worshipping other gods, but putting money, success, fame or a person in God’s place goes against it. Superstitious practices such as fortune-telling, horoscopes, magic and amulets belong here too (CCC 2110-2128).",
+   "aboutEn": "God comes first. You don’t have to bow to an idol to break this one: putting money, success, fame or a person in God’s place does it too. So do superstitions like fortune-telling, horoscopes, magic and lucky charms (CCC 2110-2128).",
    "items": [
     "Duayı ihmal ettim mi? Tanrı’yı yalnızca zor anlarda mı hatırladım?",
     "Fala, burca, büyüye ya da muskaya inandım mı, nazarlığa güvendim mi?",
@@ -83,7 +83,7 @@ window.CONFESSION = /*JSON-START*/{
    ],
    "itemsEn": [
     "Have I neglected prayer? Did I remember God only in hard times?",
-    "Have I trusted in fortune-telling, horoscopes, magic, amulets or charms against the evil eye?",
+    "Have I put my trust in fortune-tellers, horoscopes, magic or lucky charms?",
     "Have money, career, being liked or a relationship taken God’s place in my life?",
     "Have I been ashamed of my faith or hidden it?",
     "Have I knowingly and stubbornly rejected a truth the Church teaches?",
@@ -121,7 +121,7 @@ window.CONFESSION = /*JSON-START*/{
    ],
    "itemsEn": [
     "Have I missed Mass on a Sunday or holy day of obligation without a valid reason?",
-    "Have I come late to Mass on purpose, or had my mind on my phone throughout?",
+    "Have I come late to Mass on purpose, or spent it on my phone?",
     "Did I spend Sunday on work, shopping and screens? Did I make time for my family and for rest?",
     "Have I kept others (employees, family) from resting on Sunday?"
    ]
@@ -130,7 +130,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "4. Annene ve babana saygı göster",
    "titleEn": "4. Honor your father and your mother",
    "about": "Bu emir önce anne babamıza, sonra da ailede, işte ve toplumda sorumluluk taşıyan herkese saygı göstermemizi ister. Ama tek yönlü değildir: Anne babanın çocuğuna, işverenin çalışanına, yetişkin çocukların da yaşlanan anne babalarına karşı görevlerini de kapsar (KKK 2197-2233).",
-   "aboutEn": "It asks us to respect first our parents, then everyone who holds responsibility in the family, at work and in society. But it runs both ways: it also covers the duties of parents to their children, of employers to their workers, and of grown children to their aging parents (CCC 2197-2233).",
+   "aboutEn": "It starts with our parents and extends to everyone with responsibility over us, at home, at work and in society. It runs both ways: parents owe their children, employers owe their workers, and grown children owe their aging parents (CCC 2197-2233).",
    "items": [
     "Anne babama kaba, saygısız ya da nankör davrandım mı? Onları aramayı, ziyaret etmeyi ihmal ettim mi?",
     "Yaşlı ya da hasta aile büyüklerimle yeterince ilgilendim mi?",
@@ -192,7 +192,7 @@ window.CONFESSION = /*JSON-START*/{
    "title": "7. Çalmayacaksın",
    "titleEn": "7. You shall not steal",
    "about": "Bu emir, başkasının malına ve emeğine saygı göstermemizi ister. Hırsızlık yalnızca bir şey çalmak değildir: İşte kaytarıp maaşını tam almak, müşteriyi kandırmak, vergi kaçırmak, borcunu ödememek, korsan yazılım ya da film kullanmak ve bulduğu bir şeyi sahibine vermemek de buraya girer. Yoksullara yardım etmek ve doğayı korumak da bu emrin parçasıdır (KKK 2401-2449).",
-   "aboutEn": "It asks for respect for other people’s property and work. Stealing isn’t only taking things: slacking off at work while taking full pay, cheating customers, tax evasion, not paying debts, using pirated software or films, and keeping something you found also belong here. Helping the poor and caring for creation are part of it too (CCC 2401-2449).",
+   "aboutEn": "Respect what belongs to others, and their work. Stealing isn’t only taking things: slacking off on the clock, cheating customers, dodging taxes, not paying debts, pirating software or films and keeping something you found all count. Helping the poor and caring for creation are part of it too (CCC 2401-2449).",
    "items": [
     "Başkasının bir eşyasını izinsiz aldım mı? Ödünç aldığım bir şeyi geri vermedim ya da borcumu ödemedim mi?",
     "İşte kaytarıp mesaiyi boşa geçirdim mi? İş yerinin malzemelerini kendi işim için kullandım mı?",
@@ -253,56 +253,56 @@ window.CONFESSION = /*JSON-START*/{
   }
  ],
  "examenNote": "Neden 9 ve 10 bir arada? Kutsal Kitap On Emir’i numaralandırmaz; bu yüzden gelenekler onları farklı sayar. Katolik Kilisesi, Aziz Augustinus’u izleyerek, başka ilahlar ve putlarla ilgili yasağı tek bir emir, yani 1. emir sayar. Göz dikmeyle ilgili yasağı ise ikiye ayırır: 9. emir başkasının eşine, 10. emir başkasının malına göz dikmeyi yasaklar (Yasa’nın Tekrarı 5:21). Ortodoks ve Protestan kiliselerinin çoğu ise putlarla ilgili yasağı ayrı bir emir sayar ve göz dikmeyi tek emirde toplar. Burada son iki emri birlikte veriyoruz, çünkü ikisi de davranışlardan önce kalbin arzularına bakar (KKK 2514-2557).",
- "examenNoteEn": "Why are 9 and 10 together? The Bible doesn’t number the Ten Commandments, so traditions count them differently. The Catholic Church, following Saint Augustine, counts the ban on other gods and idols as one commandment, the first, and splits the ban on coveting in two: the ninth forbids coveting your neighbor’s spouse, the tenth your neighbor’s goods (Deuteronomy 5:21). Most Orthodox and Protestant churches count the ban on idols as a separate commandment and join the two on coveting into one. We give the last two together here because both look at the desires of the heart before any action (CCC 2514-2557).",
+ "examenNoteEn": "Why are 9 and 10 together? The Bible doesn’t number the commandments, so different traditions count them differently. Catholics follow St. Augustine: the ban on other gods and on idols is one commandment, the first, and the ban on coveting is split in two, your neighbor’s spouse (ninth) and your neighbor’s goods (tenth) (Deuteronomy 5:21). Most Orthodox and Protestant churches count idols separately and join the two on coveting. We put the last two together here because both are about what goes on in the heart before anything is done (CCC 2514-2557).",
  "faq": [
   {
    "id": "sir-saklanir-mi",
    "q": "Rahip söylediklerimi kimseye anlatır mı?",
    "qEn": "Will the priest tell anyone what I say?",
    "a": "Asla. “Günah çıkarma mührü” mutlaktır: Rahip duyduğu hiçbir şeyi, hiçbir koşulda, hiç kimseye açıklayamaz. Bazı rahipler bu sırrı açıklamaktansa ölmeyi seçti.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a>",
-   "aEn": "Never. The \"seal of confession\" is absolute: the priest can never reveal anything he hears, under any circumstances, to anyone. Some priests chose death rather than break it.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a>"
+   "aEn": "Never. The \"seal of confession\" is absolute: a priest may never reveal anything he hears there, to anyone, for any reason. Some priests have died rather than break it.<a href=\"#muhur-sehitleri\" class=\"footnote-ref\">*</a>"
   },
   {
    "id": "ne-soyleyecegimi-unutursam",
    "q": "Ne söyleyeceğimi unutursam ya da karıştırırsam ne olur?",
    "qEn": "What if I forget what to say or get confused?",
    "a": "Sorun değil. Bir şeyi unutursanız rahip hatırlatır, gerekirse sorular sorarak size yol gösterir. Söyleyeceklerinizi önceden bir kâğıda ya da telefonunuza yazıp okuyabilirsiniz. Önemli olan kusursuz konuşmak değil, içten olmaktır.",
-   "aEn": "That's fine. If you forget, the priest will prompt you and, if needed, guide you with questions. You can write down what you want to say on paper or your phone and read it; what matters isn't a flawless speech but sincerity."
+   "aEn": "That’s fine. The priest will help, and ask you questions if needed. You can also write your list on paper or on your phone and read from it. Nobody expects a polished speech, only honesty."
   },
   {
    "id": "cok-uzun-zaman-oldu",
    "q": "Üzerinden yıllar geçti, nasıl başlayacağımı bile bilmiyorum.",
    "qEn": "It's been years, and I don't even know how to begin.",
    "a": "Bunu rahibe açıkça söyleyin: “Peder, uzun zaman oldu, bana yardımcı olur musunuz?” Hiçbir rahip buna şaşırmaz; tam tersine sevinir ve size adım adım eşlik eder.",
-   "aEn": "Tell the priest plainly: \"Father, it's been a long time, can you help me?\" No priest is surprised by that; he'll be glad, and he'll walk you through it."
+   "aEn": "Just tell the priest: \"Father, it’s been a long time. Can you help me?\" He’s heard it many times before. He’ll be glad you came, and he’ll walk you through it."
   },
   {
    "id": "ayni-gunahlar-tekrar",
    "q": "Aynı günahları tekrar tekrar itiraf ediyorum; bu bir sorun mu?",
    "qEn": "I keep confessing the same sins over and over; is that a problem?",
    "a": "Hayır, bu çok normaldir. Kutsallaşmak zaman alır. Önemli olan kusursuz olmak değil, her seferinde yeniden Tanrı’ya dönmektir.",
-   "aEn": "No, it's completely normal. Holiness grows over time; what matters isn't being perfect but coming back to God each time."
+   "aEn": "No, that’s completely normal. Holiness takes time. The point isn’t being perfect; it’s coming back to God every time."
   },
   {
    "id": "perde-mi-yuz-yuze-mi",
    "q": "Perde arkasını mı, yüz yüze olanı mı seçmeliyim?",
    "qEn": "Should I confess behind a screen or face to face?",
    "a": "Size kalmış. İkisi de geçerlidir ve ikisi de yaygındır.",
-   "aEn": "It's up to you; both are valid and common."
+   "aEn": "Whichever you prefer. Both are valid and both are common."
   },
   {
    "id": "yargilanmak",
    "q": "Rahip beni yargılayacak mı, kızacak mı?",
    "qEn": "Will the priest judge me or get angry?",
    "a": "Hayır. Rahip kendi adına değil, Mesih’in kişiliğinde (in persona Christi) hareket eder; duyduğunuz bağışlama Mesih’in bağışlamasıdır. Deneyimli bir rahibi hiçbir şey şaşırtmaz. Çoğu rahip, gösterdiğiniz cesarete içtenlikle sevinir.",
-   "aEn": "No. The priest acts not in his own name but in the person of Christ (in persona Christi); the forgiveness you hear is Christ's. Nothing surprises an experienced priest, and most will be genuinely glad that you had the courage to come."
+   "aEn": "No. The priest acts in the person of Christ (in persona Christi), not in his own name; the forgiveness you hear is Christ’s. An experienced priest has heard it all, and most are genuinely glad you found the courage to come."
   },
   {
    "id": "kac-dakika-surer",
    "q": "Ne kadar sürer, nasıl hazırlanmalıyım?",
    "qEn": "How long does it take, and how should I prepare?",
    "a": "Genellikle birkaç dakika sürer. Önceden sakin bir anda yapacağınız bir vicdan muhasebesi yeterli bir hazırlıktır.",
-   "aEn": "Usually a few minutes. An examination of conscience beforehand, in a quiet moment, is preparation enough."
+   "aEn": "Usually a few minutes. A quiet examination of conscience beforehand is all the preparation you need."
   },
   {
    "id": "vaftizsizsem",
@@ -345,7 +345,7 @@ window.CONFESSION = /*JSON-START*/{
   "itemsEn": [
    {
     "name": "St. John Nepomucene (d. 1393)",
-    "detail": "Considered the first martyr of the sacramental seal. King Wenceslaus IV of Bohemia ordered him tortured and drowned in the Vltava River in Prague after he refused to divulge the confessions of the queen."
+    "detail": "Often called the first martyr of the seal. King Wenceslaus IV of Bohemia had him tortured and thrown into the Vltava in Prague for refusing to reveal the queen’s confessions."
    },
    {
     "name": "St. Mateo Correa Magallanes (d. 1927)",
