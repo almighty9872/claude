@@ -71,7 +71,8 @@ $PageSources = @{
   'iletisim.html' = @('cloudflare/contact-worker.js')   # the form and the worker that sends it on
 }
 $script:GitDates = @{}
-$script:HasGit = [bool](Get-Command git -ErrorAction SilentlyContinue) -and (Test-Path (Join-Path $Root '.git'))
+# verbumdomini/ sits inside the repository, so ask git rather than look for a .git folder here
+$script:HasGit = [bool](Get-Command git -ErrorAction SilentlyContinue) -and ((& git -C $Root rev-parse --is-inside-work-tree 2>$null) -eq 'true')
 function Page-LastMod([string]$file) {
   if (-not $script:HasGit) { return '' }
   $src = $PageSources[$file]
