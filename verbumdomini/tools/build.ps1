@@ -2024,8 +2024,8 @@ if ($EnglishSite) {
   clear.addEventListener('click', function () { q.value = ''; run(); q.focus(); });
   // a letter, or a term named in a definition: the whole list again if it was narrowed, then
   // the place itself, just below the pinned letters (on phones the app view would only allow
-  // for its own bar), and the term glows for a moment
-  var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  // for its own bar), and the term glows for a moment. The jump is instant: a glide from A to Z
+  // runs through hundreds of terms and takes too long
   window.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a.gl-x, .gl-az a');
     if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -2034,7 +2034,7 @@ if ($EnglishSite) {
     e.preventDefault(); e.stopPropagation();
     if (q.value) { q.value = ''; run(); }
     var off = (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight + 10;
-    window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + window.pageYOffset - off), behavior: smooth ? 'smooth' : 'auto' });
+    window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + window.pageYOffset - off), behavior: 'instant' });
     try { history.replaceState(history.state, '', '#' + t.id); } catch (err) { /* file:// */ }
     if (t.classList.contains('gl-e')) { t.classList.remove('gl-hit'); void t.offsetWidth; t.classList.add('gl-hit'); }
   }, true);
