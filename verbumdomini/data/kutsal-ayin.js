@@ -37,7 +37,7 @@ window.MASS = /*JSON-START*/{
    "title": "Cemaatin Toplanması",
    "en": "The Introductory Rites",
    "lead": "Rahip sunağı öper ve haç işareti yapar. Cemaat önce Allah’tan af diler.",
-   "leadEn": "The Priest goes up to the altar, kisses it and makes the Sign of the Cross. Before anything else, we ask God’s forgiveness.",
+   "leadEn": "The Priest goes up to the altar and kisses it.",
    "lines": [
     {
      "role": "N",
@@ -480,7 +480,7 @@ window.MASS = /*JSON-START*/{
    "title": "Şükran Duası",
    "en": "The Eucharistic Prayer",
    "lead": "Ayinin kalbi. Rahip Allah’a şükreder; Kutsal Ruh’un kudretiyle ekmek ve şarap, Mesih’in gerçek bedeni ve kanı olur.",
-   "leadEn": "The heart of the Mass. The Priest gives thanks to God for all of us, and by the power of the Holy Spirit the bread and wine become the Body and Blood of Christ.",
+   "leadEn": "The heart of the Mass. The Priest gives thanks to God for all of us, and by the power of the Holy Spirit the bread and wine become the Body and Blood of Christ. Everyone is standing.",
    "lines": [
     {
      "role": "P",

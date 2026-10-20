@@ -12,7 +12,7 @@ window.COMPENDIUM_SURECI = /*JSON-START*/{
  "title": "Katolik Olma Süreci",
  "en": "How to Become Catholic",
  "intro": "Katolik olmanın yolu, daha önce vaftiz olup olmadığınıza göre değişir. Varılan yer ise aynıdır: Vaftiz, Konfirmasyon ve Efkaristiya ile Kilise’yle tam birlik.",
- "introEn": "How you become Catholic depends on whether you've already been baptized. Either way, you end up in the same place: full communion with the Church through Baptism, Confirmation and the Eucharist.",
+ "introEn": "Your path to becoming Catholic depends on your baptismal status. Please select the option that applies to you.",
  "paths": [
   {
    "id": "vaftizsiz",

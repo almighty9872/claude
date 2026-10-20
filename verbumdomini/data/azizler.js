@@ -861,7 +861,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "II. yüzyılda İzmir (Smyrna) episkoposuydu ve Havari Yuhanna’nın öğrencisi olduğu kabul edilir. İlk Kilise’nin en önemli isimlerinden biridir. Doksan yaşını geçmişken imanını inkâr etmesi için baskı yapıldı. “Seksen altı yıldır O’na hizmet ediyorum, bana hiç kötülük etmedi” diyerek reddetti ve diri diri yakılarak şehit edildi. Şehitliği, Kilise tarihindeki en eski ve en ayrıntılı şehitlik anlatılarından birinde yazılıdır.",
      "nameEn": "Polycarp",
      "titleEn": "Bishop and Martyr",
-     "bioEn": "Bishop of Smyrna (modern İzmir) in the second century, one of the great figures of the early Church, held to be a disciple of the Apostle John. Over ninety years old and pressured to renounce his faith, he refused, saying, \"Eighty-six years I have served him, and he has done me no wrong,\" and was martyred by being burned alive. The account of his martyrdom is one of the oldest and most detailed in Church history."
+     "bioEn": "Bishop of Smyrna (modern Izmir) in the second century, one of the great figures of the early Church, held to be a disciple of the Apostle John. Over ninety years old and pressured to renounce his faith, he refused, saying, \"Eighty-six years I have served him, and he has done me no wrong,\" and was martyred by being burned alive. The account of his martyrdom is one of the oldest and most detailed in Church history."
     }
    ]
   },
@@ -3250,7 +3250,7 @@ window.SAINTS = /*JSON-START*/{
      "bio": "III-IV. yüzyılda Nikomedya’da, bugünkü İzmit’te, imparator sarayının hekimiydi ve sonra Hristiyan oldu. Yoksulları ücretsiz tedavi ettiği için kıskanıldı, ihbar edildi ve şehit edildi. Hekimlerin koruyucu azizlerindendir.",
      "nameEn": "Pantaleon",
      "titleEn": "Martyr",
-     "bioEn": "A physician at the imperial court in Nicomedia (modern İzmit, Turkey) around the year 300 who became a Christian. Jealous rivals denounced him for treating the poor free of charge, and he was martyred. He is one of the patron saints of physicians."
+     "bioEn": "A physician at the imperial court in Nicomedia (modern Izmit, Turkey) around the year 300 who became a Christian. Jealous rivals denounced him for treating the poor free of charge, and he was martyred. He is one of the patron saints of physicians."
     }
    ]
   },
