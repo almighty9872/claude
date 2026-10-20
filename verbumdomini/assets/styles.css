@@ -3613,3 +3613,85 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 /* English month names are longer than the Turkish ones ("September" against "Eylül"): on a
    phone the date card's day shrinks with the screen so the month fits the half-width card */
 @media (max-width: 979px) { html.lang-en .hm-card.hm-date .hm-day { font-size: min(7.4vw, 2.6rem); overflow-wrap: normal; } }
+
+/* ---------- Glossary (glossary.html, the English site only) ----------
+   A search field, the letters pinned under the header (the FAQ's row of links, as round
+   letters), and each letter's terms: the term, its definition, and the Catechism
+   paragraphs that teach it. A term reached by a link glows for a moment. */
+.gl-find {
+  position: relative; display: flex; align-items: center; max-width: 34rem; margin: 0 auto .4rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px; box-shadow: var(--shadow);
+  transition: border-color .2s, box-shadow .2s;
+}
+.gl-find:focus-within { border-color: var(--gold-soft); box-shadow: var(--shadow), 0 0 0 3px var(--gold-bg); }
+.gl-find > svg { flex: none; width: 1.15rem; height: 1.15rem; margin-left: 1.05rem; color: var(--muted); }
+.gl-find input {
+  flex: 1; min-width: 0; padding: .8rem .9rem .8rem .65rem; border: 0; background: none; color: var(--text);
+  font: inherit; font-size: 1rem; outline: none; -webkit-appearance: none; appearance: none;
+}
+.gl-find input::placeholder { color: var(--muted); opacity: 1; }
+.gl-find input::-webkit-search-cancel-button { display: none; }
+.gl-clear {
+  flex: none; display: grid; place-items: center; width: 2.1rem; height: 2.1rem; margin-right: .45rem; padding: 0;
+  border: 0; border-radius: 50%; background: var(--surface-2); color: var(--muted); cursor: pointer;
+}
+.gl-clear[hidden] { display: none; }
+.gl-clear:hover { color: var(--gold); }
+.gl-clear svg { width: 1rem; height: 1rem; }
+.gl-status { min-height: 1.4em; margin: 0 0 .4rem; text-align: center; font-family: var(--sans); font-size: .85rem; color: var(--muted); }
+.gl-az a, .gl-az .gl-off {
+  display: grid; place-items: center; width: 2.15rem; height: 2.15rem; padding: 0;
+  font-family: var(--serif); font-size: .92rem; font-weight: 500;
+}
+.gl-az .gl-off { border: 1px solid transparent; color: var(--muted); opacity: .4; }
+.gl-az a.gl-dim { opacity: .3; pointer-events: none; }
+.faq-toc.gl-az ul { gap: .3rem; }
+.gl-letter { margin: 1.6rem 0 2.6rem; }
+.gl-lh {
+  display: flex; align-items: baseline; gap: .9rem; margin: 0 0 .4rem; padding-bottom: .55rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+.gl-big { font-size: clamp(2.6rem, 6vw, 3.4rem); line-height: 1; font-weight: 600; color: var(--gold); }
+.gl-cnt { font-family: var(--sans); font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.gl-list { margin: 0; }
+.gl-e {
+  margin: 0 -1rem; padding: 1rem 1rem 1.05rem; border-radius: var(--radius-sm);
+}
+.gl-e + .gl-e { border-top: 1px solid var(--border); }
+.gl-e dt { margin: 0; font-size: 1.12rem; font-weight: 600; line-height: 1.35; color: var(--text); }
+.gl-e dfn { font-style: normal; }
+.gl-alt { font-weight: 400; color: var(--muted); }
+.gl-e dd { margin: .35rem 0 0; }
+.gl-e dd p { margin: 0; color: var(--text-soft); line-height: 1.7; }
+.gl-e dd p.gl-ref { margin-top: .5rem; font-family: var(--sans); font-size: .84rem; color: var(--muted); }
+.gl-ref abbr { margin-right: .25em; font-weight: 600; letter-spacing: .06em; text-decoration: none; color: var(--gold); }
+.gl-ref a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--border-strong); }
+.gl-ref a:hover { color: var(--gold); border-bottom-color: var(--gold-soft); }
+.gl-ref .ext { display: inline-block; width: .78em; height: .78em; margin-left: .3em; vertical-align: -.05em; }
+.gl-ref a:last-of-type { white-space: nowrap; }
+a.gl-x { color: inherit; text-decoration: underline dotted var(--gold-soft); text-underline-offset: .2em; text-decoration-thickness: 1.5px; }
+a.gl-x:hover { color: var(--gold); text-decoration-style: solid; }
+.gl-e:target, .gl-e.gl-hit { animation: gl-glow 2.6s ease-out; }
+@keyframes gl-glow { 0%, 35% { background: var(--gold-bg); box-shadow: inset 3px 0 0 var(--gold-soft); } 100% { background: transparent; box-shadow: inset 3px 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .gl-e:target, .gl-e.gl-hit { animation: none; background: var(--gold-bg); } }
+.gl-none { margin: 2rem auto 3rem; max-width: 30rem; text-align: center; color: var(--muted); }
+.gl-searching .gl-letter { margin-bottom: 1.4rem; }
+@media (max-width: 560px) {
+  .gl-e { margin: 0 -.25rem; padding: .9rem .25rem; }
+  .gl-e dt { font-size: 1.06rem; }
+}
+@media print {
+  .gl-find, .gl-status, .gl-az { display: none !important; }
+  .gl-e { break-inside: avoid; }
+}
+/* wide enough: all 26 letters on one line, sharing the width */
+@media (min-width: 760px) {
+  .faq-toc.gl-az ul { gap: .2rem; justify-content: space-between; }
+  .faq-toc.gl-az li { flex: 1 1 0; min-width: 0; max-width: 2.2rem; margin: 0 !important; }
+  .gl-az a, .gl-az .gl-off { width: 100%; height: auto; aspect-ratio: 1; }
+}
+/* Phones: the app view usually lists a page's sections itself and hides the pinned row; the
+   glossary keeps its letters pinned under the app's bar, scrolling sideways */
+@media (max-width: 979px) {
+  html.av .faq-toc.gl-az.is-sticky { display: block !important; }
+}

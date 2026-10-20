@@ -69,6 +69,7 @@ $PageSources = @{
   'index.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json', 'data/tablolar.json', 'data/azizler.js', 'data/buyuk-azizler.js')
   'kilise-tarihi.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json')
   'iletisim.html' = @('cloudflare/contact-worker.js')   # the form and the worker that sends it on
+  'sozluk.html' = @('content/glossary-en.txt')
 }
 $script:GitDates = @{}
 # verbumdomini/ sits inside the repository, so ask git rather than look for a .git folder here
@@ -228,6 +229,9 @@ Add-EnAlt 'gizlilik.html' 'privacy.html'
 Add-EnAlt 'tesbih-duasi.html' 'rosary.html'
 Add-EnAlt 'tesbih-tarihi.html' 'history-of-the-rosary.html'
 Add-EnAlt 'kilise-tarihi.html' 'history-of-the-church.html'
+# The glossary of Catholic terms is written in English and lives on the English site alone
+# (verbumdomini.ca/glossary.html): it is built only with -EnglishSite, so the Turkish site never has it
+if ($EnglishSite) { Add-EnAlt 'sozluk.html' 'glossary.html' }
 Add-EnAlt 'kutsal-kitap.html' 'bible.html'
 Add-EnAlt 'neden-katoligiz.html' 'why-were-catholic.html'
 Add-EnAlt 'topraklarimizda-hristiyanlik.html' 'anatolia.html'
@@ -975,6 +979,8 @@ $IcoAnswer = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 # Ateizme Cevap: a planet with its ring and a small star
 $IcoCosmos = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13.5" r="5"/><path d="M4.6 17.8c-1.9-1.2.6-4.6 5.6-7.1s9.9-3.2 11-1.5c.6 1-.4 2.6-2.5 4.3"/><path d="M18.5 2.8v3.6M16.7 4.6h3.6"/></svg>'
 $IcoLamp = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v13M8.5 20h7"/><path d="M9 7v2a3 3 0 0 0 6 0V7"/><path d="M6 7v2a6 6 0 0 0 12 0V7"/><path d="M3 7v2a9 9 0 0 0 18 0V7"/><path d="M3 4.6v.4M6 4.6v.4M9 4.6v.4M12 4.6v.4M15 4.6v.4M18 4.6v.4M21 4.6v.4"/></svg>'
+# Glossary: an open dictionary with a capital A on its page
+$IcoGlossary = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h11a2.5 2.5 0 0 1 2.5 2.5v13.5H7.5A2.5 2.5 0 0 1 5 18z"/><path d="M5 18a2.5 2.5 0 0 1 2.5-2.5h11"/><path d="m9.4 12.4 2.3-5.6 2.3 5.6M10.2 10.6h3"/></svg>'
 # href -> icon lookup for the mobile menu sheet (each real destination gets a small icon; the
 # plain-text ns-label section headers do not). Defined early, before Header-Html is first called
 # by the Compendium part-page loop below, so every icon it references must already exist here.
@@ -991,6 +997,7 @@ $NavIcons = @{
   'mucizeler.html'       = $IcoRadiance
   'azizler.html'         = $IcoStar
   'sss.html'             = $IcoAsk
+  'sozluk.html'          = $IcoGlossary
   'kiliseler.html'       = $IcoPin
   'topraklarimizda-hristiyanlik.html' = $IcoRoots
   'kilise-tarihi.html'   = $IcoHourglass
@@ -1033,6 +1040,14 @@ $SheetNav = @(
     @{ href = 'gizlilik.html'; t = 'Gizlilik Politikası'; s = 'Hangi veri, nasıl korunur'; te = 'Privacy Policy'; se = 'What data, and how it is kept'; ico = $IcoShield },
     @{ href = 'kaynaklar-ve-telif.html'; t = 'Kaynaklar ve Telif'; s = 'Metinler, tablolar, lisanslar'; te = 'Sources and Copyright'; se = 'Texts, paintings, licenses'; ico = $IcoBook }) }
 )
+# The glossary joins Learn, after the FAQ, on the English site only
+function Insert-After($items, [string]$after, $item) {
+  $out = @(); foreach ($x in $items) { $out += $x; if ($x.href -eq $after -or $x.f -eq $after) { $out += $item } }
+  return ,$out
+}
+if ($EnglishSite) {
+  $SheetNav[0].items = Insert-After $SheetNav[0].items 'sss.html' @{ href = 'sozluk.html'; t = 'Sözlük'; s = 'Katolik terimleri'; te = 'Glossary'; se = 'Catholic terms from A to Z'; ico = $IcoGlossary }
+}
 function Ns-Item($it, [string]$current, [string]$cls = 'ns-item') {
   $ico = if ($it.ico) { $it.ico } elseif ($NavIcons[$it.href]) { $NavIcons[$it.href] } else { $SmallCross }
   $sHtml = if ($it.s) { "<span class=`"ns-s`">$(T $it.s $it.se)</span>" } else { '' }
@@ -1061,6 +1076,7 @@ foreach ($f in @('kutsal-ayin.html', 'tesbih-duasi.html', 'tesbih-tarihi.html', 
 $AppOf['islama-cevap.html'] = 'tartis'
 $AppOf['ateizme-cevap.html'] = 'tartis'
 $AppOf['yahudilere-cagri.html'] = 'tartis'
+if ($EnglishSite) { $AppOf['sozluk.html'] = 'ogren' }
 foreach ($f in @('azizler.html', 'mucizeler.html', 'topraklarimizda-hristiyanlik.html', 'kilise-tarihi.html', 'kiliseler.html')) { $AppOf[$f] = 'kesfet' }
 foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
 
@@ -1502,9 +1518,10 @@ function Write-Page {
   $avNav = if ($isHome) { '' } else { Av-Nav $File $false }
   $appAttr += if ($isHome) { '' } else { " data-avp=`"$File`"" }
   # An article (every page but the home page, the Katekizm's, the calendar of saints, the
-  # churches and the contact form): read as one long page that grows as it is scrolled, with a
+  # churches, the contact form and the glossary, whose search needs every term there): read as
+  # one long page that grows as it is scrolled, with a
   # bar at the top for how far along the reader is (script.js, initArticleFlow)
-  $notArticle = $isHome -or $File -like 'en/*' -or ($KatekizmPages -contains $File) -or (@('azizler.html', 'kiliseler.html', 'iletisim.html', '404.html', 'katesizm.html') -contains $File)
+  $notArticle = $isHome -or $File -like 'en/*' -or ($KatekizmPages -contains $File) -or (@('azizler.html', 'kiliseler.html', 'iletisim.html', '404.html', 'katesizm.html', 'sozluk.html') -contains $File)
   if (-not $notArticle) { $appAttr += ' data-article' }
   $a11yHtml = $A11yWidgetHtml
   # The TR | EN switch: links to the page's two addresses (so crawlers find both), a pair of
@@ -1913,6 +1930,97 @@ $faqCats
 Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" -TitleEn "$($FaqData.en) | $SiteName" `
   -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, papalık, araf, evrim." -DescriptionEn "Common questions about the Catholic Church, answered from the Catechism: Mary and the saints, the Trinity, confession, the papacy, purgatory and more." `
   -Path 'sss.html' -Body $sssBody -JsonLd @((Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
+
+# ================================================================== GLOSSARY (glossary.html, English site only)
+# The glossary of Catholic terms (content/glossary-en.txt), A to Z: tools/en-site/glossary.py writes
+# the letters and their terms; here they get the site's page around them, the Catechism links and a
+# search that narrows the list as you type. Built only with -EnglishSite: the Turkish site has no
+# glossary, and its twin sozluk.html (never published) is only the step to en/glossary.html.
+if ($EnglishSite) {
+  $glPy = Get-Command python3, python -ErrorAction SilentlyContinue | Select-Object -First 1
+  if (-not $glPy) { throw 'The glossary needs Python (tools/en-site/glossary.py)' }
+  $glTmp = [IO.Path]::GetTempFileName()
+  & $glPy.Source (Join-Path $Root 'tools/en-site/glossary.py') $glTmp
+  if ($LASTEXITCODE) { throw 'tools/en-site/glossary.py failed' }
+  $glHtml = [IO.File]::ReadAllText($glTmp, $Utf8); Remove-Item $glTmp
+  $glInfo = [regex]::Match($glHtml, '<!--gl-count:(\d+)\|([^|]*)\|([^>]*)-->')
+  $glN = $glInfo.Groups[1].Value
+  $glHtml = $glHtml.Replace($glInfo.Value, '')
+  # each definition's Catechism paragraphs, one link per paragraph, as on the FAQ
+  $glHtml = [regex]::Replace($glHtml, '<p class="gl-ref" data-ccc="([^"]*)"></p>', {
+    param($m) "<p class=`"gl-ref`"><abbr title=`"Catechism of the Catholic Church`">CCC</abbr> $(Ccc-Link ([Net.WebUtility]::HtmlDecode($m.Groups[1].Value)) 'en')</p>" })
+  $Tablolar.pages | Add-Member -NotePropertyName 'sozluk.html' -NotePropertyValue 'i-disputa' -Force
+  $glSub = "$glN words of the faith, from $($glInfo.Groups[2].Value) to $($glInfo.Groups[3].Value), with the Catechism paragraphs that teach them"
+  $glScript = @'
+<script>
+(function () {
+  var q = document.getElementById('gl-q'); if (!q) return;
+  var clear = document.getElementById('gl-clear'), status = document.getElementById('gl-status'), none = document.getElementById('gl-none');
+  var norm = function (s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’']/g, ''); };
+  var items = [].slice.call(document.querySelectorAll('.gl-e')).map(function (e) {
+    return { el: e, t: norm(e.querySelector('dt').textContent), d: norm(e.querySelector('dd').textContent) };
+  });
+  var secs = [].slice.call(document.querySelectorAll('.gl-letter'));
+  var letters = [].slice.call(document.querySelectorAll('.gl-az a'));
+  var timer;
+  function run() {
+    var v = norm(q.value.trim());
+    clear.hidden = !q.value;
+    document.documentElement.classList.toggle('gl-searching', !!v);
+    var named = 0, shown = 0;
+    items.forEach(function (it) {
+      var byName = !v || it.t.indexOf(v) > -1, hit = byName || it.d.indexOf(v) > -1;
+      it.el.hidden = !hit;
+      if (hit) { shown++; if (v && byName) named++; }
+    });
+    secs.forEach(function (s, i) {
+      var any = !!s.querySelector('.gl-e:not([hidden])');
+      s.hidden = !any;
+      var a = letters.filter(function (x) { return x.getAttribute('href') === '#' + s.id; })[0];
+      if (a) a.classList.toggle('gl-dim', !any);
+    });
+    none.hidden = !v || shown > 0;
+    status.textContent = !v ? '' : shown === 0 ? '' : shown + (shown === 1 ? ' term' : ' terms') + ' found' +
+      (named && named < shown ? ', ' + named + ' by name' : '');
+  }
+  q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 110); });
+  q.addEventListener('keydown', function (e) { if (e.key === 'Escape' && q.value) { e.preventDefault(); q.value = ''; run(); } });
+  clear.addEventListener('click', function () { q.value = ''; run(); q.focus(); });
+  // a letter, or a term named in a definition: the whole list again if it was narrowed, then
+  // the place itself, just below the pinned letters (on phones the app view would only allow
+  // for its own bar), and the term glows for a moment
+  var row = document.querySelector('.gl-az');
+  var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  window.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a.gl-x, .gl-az a');
+    if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var t = document.getElementById(a.getAttribute('href').slice(1));
+    if (!t) return;
+    e.preventDefault(); e.stopPropagation();
+    if (q.value) { q.value = ''; run(); }
+    var off = (parseFloat(getComputedStyle(row).top) || 0) + row.offsetHeight + 10;
+    window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + window.pageYOffset - off), behavior: smooth ? 'smooth' : 'auto' });
+    try { history.replaceState(history.state, '', '#' + t.id); } catch (err) { /* file:// */ }
+    if (t.classList.contains('gl-e')) { t.classList.remove('gl-hit'); void t.offsetWidth; t.classList.add('gl-hit'); }
+  }, true);
+  // "/" puts the cursor in the search, as on many sites
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) { e.preventDefault(); q.focus(); }
+  });
+})();
+</script>
+'@
+  $glBody = @"
+<div class="wrap narrow gl-page">
+  <header class="page-head center">$(Page-Ico $IcoGlossary)<h1>Glossary of Catholic Terms</h1><p class="sub">$glSub</p></header>
+$glHtml
+</div>
+$glScript
+"@
+  $glDesc = "A glossary of $glN Catholic terms from A to Z, from Abba to Zucchetto, each with the paragraphs of the Catechism of the Catholic Church where it is taught."
+  Write-Page -File 'sozluk.html' -Title "Glossary of Catholic Terms | $SiteName" -TitleEn "Glossary of Catholic Terms | $SiteName" `
+    -Description $glDesc -DescriptionEn $glDesc -Path 'sozluk.html' -Body $glBody -JsonLd @((Breadcrumb-Ld 'Glossary of Catholic Terms' 'sozluk.html'))
+}
 
 # ================================================================== KUTSAL KITAP (kutsal-kitap.html)
 # Three quick answers first (what to read in Turkish, what in English, how to spot a Catholic
@@ -3279,6 +3387,11 @@ $HomeApps = @(
     @{ f = 'kiliseler.html'; ico = $IcoPin; t = 'Kilise Bul'; te = 'Find a Church'
        s = "Türkiye$($Apos)de ayine gidebileceğiniz kiliseler, şehir şehir."; se = 'Catholic churches in Turkey where you can attend Mass, city by city.' }) }
 )
+
+if ($EnglishSite) {
+  $HomeApps[0].pages = Insert-After $HomeApps[0].pages 'sss.html' @{ f = 'sozluk.html'; ico = $IcoGlossary; t = 'Sözlük'; te = 'Glossary'
+    s = 'Katolik terimleri, A-Z.'; se = 'Catholic terms from A to Z, with the Catechism paragraphs that teach them.' }
+}
 
 # The faint religious images in the corners of the home page's three cards
 $DecoSvg = { param($d) "<svg class=`"hm-deco`" viewBox=`"0 0 64 64`" aria-hidden=`"true`" fill=`"none`" stroke=`"currentColor`" stroke-width=`"2.2`" stroke-linecap=`"round`" stroke-linejoin=`"round`">$d</svg>" }
