@@ -1308,8 +1308,8 @@ function Foot-Dialog([string]$id, [string]$title, [string]$inner, [string]$src =
 # $TurnstileSiteKey is the widget's public site key (Cloudflare > Turnstile); the one below is
 # katolikdunyasi.com's own key.
 $TurnstileSiteKey = '0x4AAAAAAFLZFP4-Scpg6ov1'
-$ContactIntro = TB "<p>Bir hata gördüyseniz, bir konu önermek ya da merhaba demek istiyorsanız aşağıdaki formdan yazın.</p>" "<p>If you've spotted a mistake in a translation, there's a topic, saint or miracle you'd like to see added, or you'd simply like to say hello, you can write to us with the form below.</p>"
-$ContactOutro = TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I read every message myself. A reply can take a while, but every note is welcome.</p>"
+$ContactIntro = TB "<p>Bir hata gördüyseniz, bir konu önermek ya da merhaba demek istiyorsanız aşağıdaki formdan yazın.</p>" "<p>If you noticed an error in one of our translations or would like to send us feedback, comments, or a general inquiry, please complete and submit the form below.</p>"
+$ContactOutro = TB "<p>Gelen her mesajı bizzat okuyorum. Yoğunluğa bağlı olarak yanıt vermem biraz zaman alabilir; fakat paylaştığınız tüm geri bildirimler için şimdiden içtenlikle teşekkür ederim.</p>" "<p>I personally read every message I receive. Depending on volume, it may take me some time to reply, but I sincerely thank you in advance for all your feedback.</p>"
 $FooterHtml = @"
 <footer class="site-footer">
   <div class="wrap foot-grid">
