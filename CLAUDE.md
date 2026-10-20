@@ -1,3 +1,11 @@
+# Repository Rules (both sites)
+- Never commit, push or deploy without the owner's explicit "commit and deploy".
+- No em dashes anywhere (content, commits, PRs).
+- The owner's name and email never appear in the repo, commits, PRs or pages.
+- Commit messages carry no Claude lines: no `Co-Authored-By: Claude` and no `Claude-Session:` link (the repo is public).
+- Secrets (Cloudflare API token, Turnstile secret key) go into GitHub secrets by the owner. Never ask for them in chat and never write them to files.
+- Two sites, two folders: the Turkish site (katolikdunyasi.com) is everything outside `verbumdomini/`; the English site (verbumdomini.ca) is everything inside it. Work on one site never edits the other's files. English-site notes: `docs/english-site.md`.
+
 # Output & Verification Rules
 - Do NOT capture screenshots or spawn browser verification tools automatically after making updates.
 - Capture screenshots only when explicitly instructed in a prompt.
