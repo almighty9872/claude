@@ -1799,10 +1799,10 @@
           g += '<button type="button" class="cal-md ' + (c ? rankOf(c) : '') + (isToday(m, d) ? ' is-today' : '') + (sel ? ' is-sel' : '') + (wd(m, d) > 4 ? ' is-we' : '') +
             '" data-m="' + m + '" data-d="' + d + '" aria-pressed="' + sel + '" ' + pattr('aria-label', dayLabel(d, m, false, n)) + '><span class="cal-n">' + d + '</span><i class="cal-dot"></i></button>';
         }
-        var sm = nst.sel.m, sd = nst.sel.d, c = dayOf(sm, sd), rank = c ? $('.day-rank', c) : null;
+        var sm = nst.sel.m, sd = nst.sel.d, sc = dayOf(sm, sd), rank = sc ? $('.day-rank', sc) : null;
         var day = '<p class="cal-now-date"><b>' + phtml(pcat(sd + ' ', MONTHS[sm - 1])) + '</b>, ' + phtml(WDL[wd(sm, sd)]) + '</p>' +
-          (rank && rank.textContent.trim() ? '<p class="cal-now-rank"><i class="cal-dot ' + (c ? rankOf(c) : '') + '"></i>' + phtml(pstr(rank)) + '</p>' : '') +
-          (c ? $$('.saint-item', c).map(function (it) {
+          (rank && rank.textContent.trim() ? '<p class="cal-now-rank"><i class="cal-dot ' + (sc ? rankOf(sc) : '') + '"></i>' + phtml(pstr(rank)) + '</p>' : '') +
+          (sc ? $$('.saint-item', sc).map(function (it) {
             var nm = $('.s-name', it), t = $('.s-title', it), b = bioStart(it), lk = $('.s-links', it);
             return '<div class="cal-now-saint"><p class="cal-now-n">' + (nm ? nm.innerHTML : '') + '</p>' + (t ? '<p class="cal-now-st">' + t.innerHTML + '</p>' : '') +
               (b ? '<p class="cal-now-bio">' + phtml(b) + '</p>' : '') + (lk ? lk.outerHTML : '') + '</div>';
