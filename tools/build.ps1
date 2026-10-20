@@ -737,7 +737,9 @@ $BibleBooks = [ordered]@{
   'Zechariah' = 'Zechariah'; 'Malachi' = 'Malachi'; 'Philemon' = 'Philemon'; 'Jude' = 'Jude'
 }
 $bookAlt = (($BibleBooks.Keys | Sort-Object { -$_.Length }) | ForEach-Object { [regex]::Escape($_) }) -join '|'
-$VerseList = '\d{1,3}(?:\s?[-–]\s?\d{1,3})?(?:,\s?\d{1,3}(?:[-–]\d{1,3})?(?!\d*:))*'
+# (a number after a comma is another verse, unless a chapter follows it, "6:2", or it is the
+# number of the next book, "1 Korintliler 5:7")
+$VerseList = '\d{1,3}(?:\s?[-–]\s?\d{1,3})?(?:,\s?\d{1,3}(?:[-–]\d{1,3})?(?!\d*:)(?!\d*\.?\s\p{Lu}))*'
 $ScriptureRx = [regex]"(?<![\p{L}\d’'])(?:(?<n>[1-3])\.?\s)?(?<b>$bookAlt)\s(?<c>\d{1,3}):(?<v>$VerseList)"
 $ScriptureMoreRx = [regex]"(?<a><a class=`"bref`" data-b=`"(?<eb>[^`"]+)`"[^>]*>[^<]*</a>)(?<sep>;\s?)(?<c>\d{1,3}):(?<v>$VerseList)"
 $KkkRx = [regex]"(?<![\p{L}\d])(?<k>KKK|CCC)\s(?<p>\d{1,4}(?:\s?[-–]\s?\d{1,4})?(?:,\s?\d{1,4}(?:[-–]\d{1,4})?)*)"
@@ -1945,11 +1947,10 @@ $glScript = @'
 (function () {
   var q = document.getElementById('gl-q'); if (!q) return;
   var clear = document.getElementById('gl-clear'), status = document.getElementById('gl-status'), none = document.getElementById('gl-none');
-  // Turkish case first (İ/i and I/ı), then ı and i as one letter, without accents (â, î, é) or
-  // apostrophes: "isa", "İSA" and "ısa" all find İsa, "ihs" finds IHS. ç ğ ö ş ü are letters of
-  // their own, not accents, so "isa" does not find "işaret" (their marks, cedilla, breve and
-  // diaeresis, are the three kept)
-  var norm = function (s) { return s.toLocaleLowerCase('tr').normalize('NFD').replace(/[\u0300-\u0305\u0307\u0309-\u0326\u0328-\u036f]/g, '').normalize('NFC').replace(/ı/g, 'i').replace(/[’']/g, ''); };
+  // Turkish case first (İ/i and I/ı), then ı and i as one letter, and without accents or
+  // apostrophes, ç ğ ö ş ü folded too: "isa", "İSA" and "ısa" all find İsa, "ihs" finds IHS,
+  // "sozluk" finds "sözlük" (so on a keyboard without Turkish letters every term can be found)
+  var norm = function (s) { return s.toLocaleLowerCase('tr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ı/g, 'i').replace(/[’']/g, ''); };
   var items = [].slice.call(document.querySelectorAll('.gl-e')).map(function (e) {
     return { el: e, t: norm(e.querySelector('dt').textContent), d: norm(e.querySelector('dd').textContent) };
   });
