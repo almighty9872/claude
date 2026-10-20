@@ -2008,11 +2008,13 @@ if ($EnglishSite) {
     none.hidden = !v || shown > 0;
     status.textContent = !v ? '' : shown === 0 ? '' : shown + (shown === 1 ? ' term' : ' terms') + ' found' +
       (named && named < shown ? ', ' + named + ' by name' : '');
-    // read further down when typing: back to the first result, just under the pinned bar
+    // read further down when typing: back to the first result, just under the pinned bar. An
+    // instant jump, not the page's smooth scrolling: a glide still under way when the next
+    // letter narrows the list would stop short of the new first result
     if (v && bar.classList.contains('is-stuck')) {
       var first = secs.filter(function (s) { return !s.hidden; })[0] || none;
       var off = (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight + 10;
-      window.scrollTo(0, Math.max(0, first.getBoundingClientRect().top + window.pageYOffset - off));
+      window.scrollTo({ top: Math.max(0, first.getBoundingClientRect().top + window.pageYOffset - off), behavior: 'instant' });
     }
   }
   q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 110); });
