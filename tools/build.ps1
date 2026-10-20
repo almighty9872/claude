@@ -46,7 +46,6 @@ if (-not $SiteUrl) {
   else { $SiteUrl = 'https://www.example.com'; Write-Warning "CNAME is missing or still the placeholder: canonical/sitemap URLs use $SiteUrl" }
 }
 $SiteUrl = $SiteUrl.TrimEnd('/')
-$BuildDate = (Get-Date).ToString('yyyy-MM-dd')
 # Last-changed date of a page: the newest git commit touching the data it is built from
 # (sitemap <lastmod>, Article dateModified). Template-only changes don't count, and with no
 # git history (a plain folder, a shallow clone) pages simply carry no date.
@@ -152,8 +151,6 @@ $CssVer = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/styles.min.
 $Apos = [char]0x2019
 # The site is the brand now; the Compendium is one work published on it.
 $SiteName = 'katolikdunyasi.com'
-# The English site's own name (verbumdomini.ca)
-$BrandEn = 'Verbum Domini'
 $SiteTag = 'Türkçe Katolik Portalı'
 $SiteTagEn = 'Turkish Catholic Portal'
 $WorkName = 'Katolik Kilisesi İnanç Esasları Özeti'
@@ -793,7 +790,7 @@ function Qa-Html($it, [int]$hl) {
     "</article>"
 }
 # $tagLevel is the true HTML heading level (never skips a level in the DOM); it can
-# differ from $it.level, which only sets the sec-l$level class (visual size) — e.g. a
+# differ from $it.level, which only sets the sec-l$level class (visual size), e.g. a
 # bridging title like "The Creed" sits right under a Part heading and is styled a size
 # smaller (sec-l4) even though it is only one level deep, not four.
 function Heading-Html($it, [int]$tagLevel) {
@@ -931,35 +928,11 @@ $TextNav = @(
   @{ href = 'hristiyan-duasi.html'; t = 'IV. Hristiyan Duası';                s = 'Sorular 534–598';          te = 'IV. Christian Prayer'; se = 'Questions 534–598' },
   @{ href = 'ekler.html';           t = 'Ekler';                              s = 'Dualar ve formüller';      te = 'Appendix'; se = 'Prayers and formulas' }
 )
-# Every page that belongs to the Compendium, for the 'is-section' state and the breadcrumb
-$PrayerNav = @(
-  @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası';          s = 'Meryem Ana Tesbih Duası';    te = 'The Holy Rosary'; se = 'Prayers and the mysteries' },
-  @{ href = 'ekler.html';        t = 'Sık Kullanılan Dualar'; s = 'Günlük dualar ve formüller'; te = 'Common Prayers'; se = 'Everyday prayers and formulas' }
-)
 # Katekizm gets its own top-level nav menu (mirrors the English site's "Compendium" dropdown):
 # the overview page plus each of its seven chapters.
 $KatekizmNav = @(@{ href = 'katekizm.html'; t = 'Genel Bakış'; s = '598 soru ve yanıtın tam listesi'; te = 'Overview'; se = 'All 598 questions and answers' }) + $TextNav
-# "Kaynaklar": pages that stand on their own but are grouped under one menu now that there are many.
-$KaynaklarNav = @(
-  @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci';  s = 'Katolik olma süreci';           te = 'Becoming Catholic'; se = 'The OCIA/RCIA process' },
-  @{ href = 'gunah-cikarma.html';  t = 'Günah Çıkarma';        s = 'Nasıl işler, adım adım';        te = 'Confession'; se = 'Step by step, how it works' },
-  @{ href = 'kutsal-ayin.html';    t = 'Kutsal Ayin';          s = 'Ayinin sırası, adım adım';      te = 'The Holy Mass'; se = 'The order of Mass, step by step' },
-  @{ href = 'meseller.html';       t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel, düz bir dille'; te = 'The Parables of Jesus'; se = 'Thirty-two parables, plainly explained' },
-  @{ href = 'kutsal-kitap.html';   t = 'Kutsal Kitap';         s = 'Onaylı çeviriler';              te = 'The Bible'; se = 'Approved translations' },
-  @{ href = 'kiliseler.html';      t = 'Kilise Bul';           s = "Türkiye$($Apos)de kilise adresleri"; te = 'Find a Church'; se = 'Catholic churches in Turkey' },
-  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; s = "Pavlus$($Apos)tan İznik$($Apos)e"; te = 'Christianity in Anatolia'; se = 'From Paul to Nicaea' },
-  @{ href = 'kilise-tarihi.html'; t = "Kilise$($Apos)nin Tarihi"; s = 'Havarilerden bugüne'; te = 'History of the Church'; se = 'From the apostles to today' }
-)
+# Every page that belongs to the Compendium, for the 'is-section' state and the breadcrumb
 $KatekizmPages = @('katekizm.html') + ($TextNav | ForEach-Object { $_.href })
-# The five links shown directly in the bar at all times; everything else (including these
-# five again, for completeness) lives in the hamburger's full-screen overlay only.
-$CoreNav = @(
-  @{ href = 'neden-katoligiz.html'; t = 'Neden Katoliğiz?'; te = "Why We're Catholic" },
-  @{ href = 'katekizm.html';        t = 'Katekizm'; te = 'Catechism' },
-  @{ href = 'topraklarimizda-hristiyanlik.html'; t = 'Topraklarımızda Hristiyanlık'; te = 'Christianity in Anatolia' },
-  @{ href = 'kiliseler.html';       t = 'Kilise Bul'; te = 'Find a Church' },
-  @{ href = 'sss.html';             t = 'Sorular'; te = 'FAQ' }
-)
 $IcoBook = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.6 5.4 8.6 4.8 6 4.8H3.6v13.4H6c2.6 0 4.6.6 6 1.8 1.4-1.2 3.4-1.8 6-1.8h2.4V4.8H18c-2.6 0-4.6.6-6 1.8z"/><path d="M12 6.6v13.4"/></svg>'
 $IcoBeads = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="14.6" r="6.4"/><circle cx="12" cy="5.2" r="1.5"/><path d="M12 6.7v1.5" stroke-linecap="round"/><path d="M10.4 3.3h3.2M12 1.7v3.2" stroke-linecap="round"/></svg>'
 $IcoWay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c3-6 3-11 0-17"/><path d="M19 21c-3-6-3-11 0-17"/><path d="M9.5 15h5M9 10h6"/><circle cx="12" cy="4" r="1.4" fill="currentColor" stroke="none"/></svg>'
@@ -1124,7 +1097,6 @@ $IcoSpacing = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="c
 $IcoLink = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 14.5 14.5 9.5"/><path d="M11 7l1.3-1.3a3.5 3.5 0 0 1 4.9 4.9L15.9 12"/><path d="M13 17l-1.3 1.3a3.5 3.5 0 0 1-4.9-4.9L8.1 12"/></svg>'
 $IcoCursor = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 3.5 18 13l-5 .8 2.6 5.3-2 1-2.6-5.3L7.5 18Z"/></svg>'
 $IcoRefresh = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg>'
-$IcoCheckSquare = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></svg>'
 $IcoPlay = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M10.2 8.7v6.6l5.3-3.3z" fill="currentColor" stroke="none"/></svg>'
 # Settings panel, opened by the gear beside the logo: accessibility
 # profile presets + individual toggles, state kept in localStorage (see script.js), CSS driven

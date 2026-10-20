@@ -14,7 +14,6 @@
      their own English slugs (not a literal mirror of the Turkish filename), so a parallel list
      is needed; keep it in sync with $PartMeta's fileEn values. */
   var PAGES = ['iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html'];
-  var PAGES_EN = ['profession-of-faith.html', 'celebration-of-christian-mystery.html', 'life-in-christ.html', 'christian-prayer.html'];
   var DATA_FILES = ['data/compendium-1.js', 'data/compendium-2.js', 'data/compendium-3.js', 'data/compendium-4.js'];
   /* A content hash per data file, written in by tools/build.ps1, so every data file URL
      changes whenever its content does (and so can be cached for a long time) */
@@ -1025,7 +1024,6 @@
     /* the passages this page cites, written into it by the build (build.ps1, Embed-Refs) */
     var emb = document.getElementById('kd-refs');
     if (emb) { try { var ed = JSON.parse(emb.textContent); Object.keys(ed).forEach(function (n) { if (!window[n]) window[n] = ed[n]; }); } catch (err) {} }
-    var HD_BOOK = { bukhari: ['Buhari', 'Bukhari'], muslim: ['Müslim', 'Muslim'], abudawud: ['Ebu Davud', 'Abu Dawud'], tirmidhi: ['Tirmizi', 'Tirmidhi'], ibnmajah: ['İbn Mace', 'Ibn Majah'], nasai: ['Nesai', 'Nasa’i'] };
     var dlg = null, body, title, foot;
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function build() {
@@ -1834,18 +1832,6 @@
     '11-21': 'meryem-ana',
     '12-8': 'meryem-ana', '12-10': 'meryem-ana', '12-12': 'meryem-ana', '12-27': 'havari-yuhanna'
   };
-  /* English slugs for the same Top-20 ids (see Add-EnAlt calls in build.ps1). */
-  var TOP20_EN_SLUGS = {
-    'meryem-ana': 'mary', 'aziz-yusuf': 'saint-joseph', 'havari-petrus': 'saint-peter',
-    'havari-pavlus': 'saint-paul', 'vaftizci-yahya': 'john-the-baptist', 'havari-yuhanna': 'saint-john',
-    'aziz-augustinus': 'saint-augustine', 'aziz-thomas-aquinas': 'thomas-aquinas',
-    'assisili-aziz-francis': 'francis-of-assisi', 'sienali-aziz-catharina': 'catherine-of-siena',
-    'avilali-aziz-teresa': 'teresa-of-avila', 'lisieuxlu-kucuk-teresa': 'therese-of-lisieux',
-    'aziz-ignatius-loyola': 'ignatius-of-loyola', 'aziz-benedictus': 'saint-benedict',
-    'aziz-patrick': 'saint-patrick', 'padovali-aziz-antonius': 'anthony-of-padua',
-    'kalkutali-aziz-teresa': 'mother-teresa', 'aziz-ii-yuhanna-pavlus': 'john-paul-ii',
-    'padre-pio': 'padre-pio', 'aziz-hieronymus': 'saint-jerome'
-  };
   /* Shared by the home page's "Saint of the Day" pill and the nav overlay's today-pill. */
   function getTodaySaint() {
     var todayDate = new Date();
@@ -1905,7 +1891,6 @@
     function lead(m) { return (new Date(Y, m - 1, 1).getDay() + 6) % 7; }
     function wd(m, d) { return (new Date(Y, m - 1, d).getDay() + 6) % 7; }
     function isToday(m, d) { return m === today.month && d === today.day; }
-    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function names(cell) { return cell ? $$('.s-name', cell).map(pstr) : []; }
     /* the first paragraph of a saint's life, in both languages */
     function bioStart(it) {
@@ -2463,7 +2448,6 @@
     $$('article.qa[data-n]').forEach(function (a) { io.observe(a); });
   }
   var AV_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
-  var AV_OUT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8.5 8.5"/><path d="M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg>';
   var AV_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M8 11H6.5A1.5 1.5 0 0 0 5 12.5v7A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>';
   function avText(el) { return pstr(el); }
   /* marks the item that starts the page's usual "Bölümler" group, after a group of its own */
@@ -3325,8 +3309,7 @@
       return ks.reduce(function (a, k) { return a.concat(k === bigK ? split(k, depth + 1) : [k]); }, []);
     };
     parts = parts.reduce(function (a, el) { return a.concat(split(el, 0)); }, []);
-    var total = 0;
-    parts.forEach(function (el) { el._kdLen = Math.max(1, len(el)); total += el._kdLen; });
+    parts.forEach(function (el) { el._kdLen = Math.max(1, len(el)); });
     var vh = function () { return window.innerHeight || 700; };
     /* the first screens stay; the rest waits */
     var shown = 0, h = 0, top0 = box.getBoundingClientRect().top + window.pageYOffset;
