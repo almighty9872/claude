@@ -12,7 +12,7 @@ Türkçe çeviriler ve özgün içerik © 2026 katolikdunyasi.com.
 
 ## Metinler
 
-- **Katekizm:** [Katolik Kilisesi Katekizmi Özeti](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Özgün metin © 2005 Libreria Editrice Vaticana. Türkçe çeviri bu siteye aittir. İngilizce metin Vatikan’ın özgün metnidir.
+- **Katekizm:** [Katolik Kilisesi Katekizmi Özeti](https://www.vatican.va/archive/compendium_ccc/documents/archive_2005_compendium-ccc_en.html). Özgün metin © 2005 Libreria Editrice Vaticana. Türkçe çeviri bu siteye aittir.
 - **Kutsal Kitap:** ayetlerin Türkçesi bu site için çevrildi. İngilizcesi kamu malı Douay-Rheims çevirisidir. Ayet penceresindeki bağlantı, ayeti BibleGateway’de (RSVCE) açar.
 - **Tesbih Duası:** İstanbul Sant’Antuan Bazilikası’nın Türkçe dua kartı esas alındı.
 - **Kutsal Ayin:** Ankara Azize Tereza Kilisesi’nin Türkçe metni esas alındı.

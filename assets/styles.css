@@ -1463,13 +1463,6 @@ html:not(.js) .amap-card[hidden] {
 html:not(.js) .amap-swipe { display: none; }
 @media print { .amap-frame { display: none !important; } .amap-cards { display: grid !important; gap: .6rem; } .amap-card[hidden] { display: block !important; } }
 
-/* A parable's English: the Douay-Rheims text as plain text, under a line naming the passage */
-
-.p-en-src { margin: 0 0 .5rem; font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .05em; color: var(--muted); }
-.p-en-src a { color: var(--gold-active); }
-.p-en p:not(.p-en-src) { margin: 0 0 .8rem; color: var(--text); line-height: 1.6; }
-.p-en p:last-child { margin-bottom: 0; }
-
 .myst-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
 @media (min-width: 760px) { .myst-grid { grid-template-columns: 1fr 1fr; } }
 .myst {

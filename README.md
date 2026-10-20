@@ -6,19 +6,13 @@ The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no
 
 Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows today's date and time. The home page's "Bugün" card shows the day's liturgical season and the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, beside the day's saint and Rosary mysteries.
 
-## Languages: Turkish, with English on the Katekizm pages
+## Language: Turkish
 
-**The live site is Turkish.** Since October 2026 only the Katekizm pages (`katekizm`, `giris`, `motu-proprio`, the four parts and `ekler`) keep their English and their `en/` twins; every other page is built in Turkish alone (`Strip-En` in `tools/build.ps1` takes the English out of the finished page), with no TR | EN switch, no `hreflang` and no `en/` twin. Nothing English was deleted: the English text stays in `data/` and `content/`, and `pwsh tools/build.ps1 -WithEnglish` builds the whole bilingual site described below (for another site).
+**The site is Turkish only.** The English edition is a separate site, Verbum Domini (https://verbumdomini.ca), built from its own folder, `verbumdomini/`; nothing there is shared with this site. The Katekizm pages (`katekizm`, `giris`, `motu-proprio`, the four parts and `ekler`) point to their English editions on verbumdomini.ca with `hreflang` (`$VdTwin` in `tools/build.ps1`).
 
-The bilingual build (`-WithEnglish`): there is no separate English site. Each page carries both languages, and the TR | EN pill in the bottom corner (bottom left on the Katekizm's phone pages, where its button sits on the right) switches between them without reloading or losing the reader's place:
+Some data the browser loads keeps its English, because the Turkish pages use it: the Katekizm search finds a question by its English too (`data/compendium-*.js`), and the verse popups show the Douay-Rheims, Pickthall and hadith English beside the Turkish (`data/refs-*.js`). `assets/script.js` still writes its text through the paired helpers (`LT(tr, en)`, `pmake`, `pstr`), which give the Turkish here.
 
-- In the build, `T` (a phrase), `TB` (a block), `TS` (SVG text) and `TA` (an attribute) in `tools/build.ps1` write a Turkish and an English version side by side: `<span class="l-tr">…</span><span class="l-en" lang="en">…</span>`, or `aria-label="…" data-en-aria-label="…"` for an attribute. `TO` marks something shown only in Turkish (the small English glosses under Turkish titles). CSS shows one language and hides the other (`html.lang-en`); the wrappers are `display: contents`, so they don't change the layout.
-- Every page has two addresses: the Turkish one at the site root and an English twin under `en/` (`en/mass.html`, `en/church/<id>.html`; the names are in `$EnAltMap` in `tools/build.ps1`). The twin is the same page with an English `<html lang>`, title, description, canonical and structured data, so search engines index both languages; `hreflang` links and `sitemap.xml` pair them. The TR | EN switch is a pair of links between the two.
-- A visitor who opens the Turkish home page but prefers English (their earlier choice, stored as `kd-lang-choice` in localStorage, or else a browser and time zone outside Turkey) is sent to the English home page by `<head>` before the page is drawn. Deeper Turkish pages are never redirected (someone arriving there came from a Turkish link or search result, and a redirect would cost them a second page load); search engines and other bots are never redirected either.
-- The theme follows the sun: light from sunrise to sunset at the visitor's place, dark after. The place comes from the device's time zone only (a table in `script.js`, or the zone's offset); today's times are kept in `kd-sun` so `<head>` can pick the theme before the first paint. The theme switch overrides the sun until the next sunrise or sunset (`kd-theme-choice`).
-- Text the scripts write (the calendar, search results, the phone's app screens, the rosary) is paired the same way: `LT(tr, en)` for HTML, and "pair strings" (`pmake`, `pstr`, `pset` and friends in `assets/script.js`) for labels taken from the page.
-- Switching keeps the paragraph under the reading line in place, so a reader can flip back and forth in the middle of a long text.
-- Content in `data/` has its English beside the Turkish: `en`/`textEn`/`bodyEn`/`historyEn` and so on (each file's header says which), and `content/<name>-en.md` for the Markdown pages.
+The theme follows the sun: light from sunrise to sunset at the visitor's place, dark after. The place comes from the device's time zone only (a table in `script.js`, or the zone's offset); today's times are kept in `kd-sun` so `<head>` can pick the theme before the first paint. The theme switch overrides the sun until the next sunrise or sunset (`kd-theme-choice`).
 
 `sitemap.xml` gives each page a `<lastmod>`: the date its data file last changed in git (the deploy fetches the full history for this). After the build, the deploy checks every page's HTML with html-validate (`.htmlvalidate.json`) and stops before publishing if the markup is broken.
 
@@ -67,7 +61,6 @@ yahudilere-cagri.html   Tartış: A call to the Jewish people, in the humble ton
 tesbih-tarihi.html      The history of the Rosary
 iletisim.html           Contact page: a form that posts to the Cloudflare Worker (no address is published)
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
-en/                     The English twins of the Katekizm pages (every page with -WithEnglish)
 sitemap.xml, robots.txt, llms.txt, <IndexNow key>.txt
 favicon.ico, apple-touch-icon.png, site.webmanifest, assets/icon-192.png, assets/icon-512.png   Site icons
 assets/styles.css       All styling, hand-edited. Theme tokens at the top: dark = charcoal/gold, light = ivory/gold
@@ -112,7 +105,6 @@ data/refs-bible.js, refs-quran.js, refs-hadith.js ← The passages the reference
                           the ones each page cites into that page
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← Footer text: the one-line "about" sentence and the "Kaynaklar ve Telif" (sources and copyright) dialog (Markdown)
-content/*-en.md         ← The English of each Markdown page (hakkinda, kutsal-kitap, erisilebilirlik, gizlilik)
 tools/build.ps1         Regenerates the static pages from data/ and content/
 cloudflare/contact-worker.js  The contact form's Cloudflare Worker (pasted into the Cloudflare dashboard, not deployed by the workflow)
 cloudflare/README.md    Step-by-step Cloudflare setup for the contact form (Turnstile, Email Routing, Worker, route)
