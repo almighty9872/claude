@@ -6,6 +6,22 @@
 - Secrets (Cloudflare API token, Turnstile secret key) go into GitHub secrets by the owner. Never ask for them in chat and never write them to files.
 - Two sites, two folders: the Turkish site (katolikdunyasi.com) is everything outside `verbumdomini/`; the English site (verbumdomini.ca) is everything inside it. Work on one site never edits the other's files. English-site notes: `docs/english-site.md`.
 
+# Commands (run from the repo root)
+- Turkish build: `pwsh -NoProfile -File ./tools/build.ps1 2>&1 | tail -3`. English build: `pwsh -NoProfile -File ./verbumdomini/tools/build.ps1 -EnglishSite 2>&1 | tail -3`. Show more output only when the build fails.
+- Turkish QA (pass = no output, then `total bad 0`): `npx --yes html-validate@9 --config .htmlvalidate.json "./*.html" "kilise/*.html"` and `python3 tools/qa/links.py | tail -1`.
+- English QA: `npx --yes html-validate@9 --config verbumdomini/.htmlvalidate.json "verbumdomini/_site_en/*.html"` and `python3 verbumdomini/tools/qa/links.py verbumdomini/_site_en | tail -1`.
+- Inline page scripts: extract the script and run `node --check` on it.
+- Deploy: a push to main. The Turkish site deploys from `.github/workflows/deploy.yml`, the English from `deploy-english.yml`. A commit that changes no site files (CLAUDE.md, docs) carries `[skip ci]`.
+
+# Token Economy
+- Generated files are build output, listed in `.gitignore` (root and `kilise/` pages, sitemap, `*.min.*`, `data/azizler-adlar.js`, `data/azizler-ozet-*.js`, `verbumdomini/_site_en/`). `rg` skips them by default; don't search them with `--no-ignore` or by naming them, and never read them to understand the code. Read the sources instead: `tools/build.ps1`, `data/`, `content/`.
+- Lines in `build.ps1`, the data files and the pages run to thousands of characters: pipe every `rg`/`sed` on them through `cut -c1-200`.
+- Run QA once, at the end of a task before the commit, not after every step. Check a single page with `rg` on that page.
+- `git diff --stat` first; open the full diff of one file at a time.
+- After a deploy, verify with one `curl -s <page> | grep -c <change>` on one changed page. If it fails after the deploy has had time to finish, report it rather than investigating.
+- When a request could mean two things, ask one short question instead of working out both.
+- Final reply: at most about 8 lines (what changed, the QA result, the commit hash); no list of files.
+
 # Output & Verification Rules
 - Do NOT capture screenshots or spawn browser verification tools automatically after making updates.
 - Capture screenshots only when explicitly instructed in a prompt.
