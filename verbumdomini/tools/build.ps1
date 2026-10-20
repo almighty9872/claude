@@ -1962,16 +1962,42 @@ if ($EnglishSite) {
   });
   var secs = [].slice.call(document.querySelectorAll('.gl-letter'));
   var letters = [].slice.call(document.querySelectorAll('.gl-az a'));
-  var timer;
+  var timer, bar = document.querySelector('.gl-bar'), marks = [];
+  // the words typed, marked in each term and definition shown (the Catechism links aside); the
+  // text is compared as the search compares it, without accents or apostrophes, so each
+  // character of the flattened text keeps the place of the character it came from
+  function unmark() {
+    marks.forEach(function (m) { var p = m.parentNode; if (p) { p.replaceChild(document.createTextNode(m.textContent), m); p.normalize(); } });
+    marks = [];
+  }
+  function mark(el, v) {
+    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), nodes = [], n;
+    while ((n = walk.nextNode())) if (!n.parentNode.closest('.gl-ref')) nodes.push(n);
+    nodes.forEach(function (node) {
+      var s = node.nodeValue, flat = '', at = [], cuts = [], k, i, j, f;
+      for (i = 0; i < s.length; i++) { f = norm(s[i]); for (j = 0; j < f.length; j++) { flat += f[j]; at.push(i); } }
+      for (k = flat.indexOf(v); k > -1; k = flat.indexOf(v, k + v.length)) cuts.push([at[k], at[k + v.length - 1] + 1]);
+      if (!cuts.length) return;
+      var frag = document.createDocumentFragment(), last = 0;
+      cuts.forEach(function (c) {
+        if (c[0] > last) frag.appendChild(document.createTextNode(s.slice(last, c[0])));
+        var m = document.createElement('mark'); m.className = 'gl-mark'; m.textContent = s.slice(c[0], c[1]);
+        frag.appendChild(m); marks.push(m); last = c[1];
+      });
+      if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
   function run() {
     var v = norm(q.value.trim());
     clear.hidden = !q.value;
+    unmark();
     document.documentElement.classList.toggle('gl-searching', !!v);
     var named = 0, shown = 0;
     items.forEach(function (it) {
       var byName = !v || it.t.indexOf(v) > -1, hit = byName || it.d.indexOf(v) > -1;
       it.el.hidden = !hit;
-      if (hit) { shown++; if (v && byName) named++; }
+      if (hit) { shown++; if (v && byName) named++; if (v) mark(it.el, v); }
     });
     secs.forEach(function (s, i) {
       var any = !!s.querySelector('.gl-e:not([hidden])');
@@ -1982,6 +2008,12 @@ if ($EnglishSite) {
     none.hidden = !v || shown > 0;
     status.textContent = !v ? '' : shown === 0 ? '' : shown + (shown === 1 ? ' term' : ' terms') + ' found' +
       (named && named < shown ? ', ' + named + ' by name' : '');
+    // read further down when typing: back to the first result, just under the pinned bar
+    if (v && bar.classList.contains('is-stuck')) {
+      var first = secs.filter(function (s) { return !s.hidden; })[0] || none;
+      var off = (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight + 10;
+      window.scrollTo(0, Math.max(0, first.getBoundingClientRect().top + window.pageYOffset - off));
+    }
   }
   q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 110); });
   q.addEventListener('keydown', function (e) { if (e.key === 'Escape' && q.value) { e.preventDefault(); q.value = ''; run(); } });
@@ -1989,7 +2021,6 @@ if ($EnglishSite) {
   // a letter, or a term named in a definition: the whole list again if it was narrowed, then
   // the place itself, just below the pinned letters (on phones the app view would only allow
   // for its own bar), and the term glows for a moment
-  var row = document.querySelector('.gl-az');
   var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   window.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a.gl-x, .gl-az a');
@@ -1998,7 +2029,7 @@ if ($EnglishSite) {
     if (!t) return;
     e.preventDefault(); e.stopPropagation();
     if (q.value) { q.value = ''; run(); }
-    var off = (parseFloat(getComputedStyle(row).top) || 0) + row.offsetHeight + 10;
+    var off = (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight + 10;
     window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + window.pageYOffset - off), behavior: smooth ? 'smooth' : 'auto' });
     try { history.replaceState(history.state, '', '#' + t.id); } catch (err) { /* file:// */ }
     if (t.classList.contains('gl-e')) { t.classList.remove('gl-hit'); void t.offsetWidth; t.classList.add('gl-hit'); }

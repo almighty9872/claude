@@ -3639,6 +3639,14 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 .gl-clear:hover { color: var(--gold); }
 .gl-clear svg { width: 1rem; height: 1rem; }
 .gl-status { min-height: 1.4em; margin: 0 0 .4rem; text-align: center; font-family: var(--sans); font-size: .85rem; color: var(--muted); }
+/* The search rides in the pinned bar with the letters, so it stays on screen while the list
+   scrolls; the count shows under it only while searching, and the arrows of a sideways
+   scrolling row of letters sit beside the letters, not halfway down the bar */
+.gl-bar .gl-find { margin-bottom: .45rem; }
+.gl-bar .gl-status { min-height: 0; margin: -.1rem 0 .35rem; font-size: .8rem; }
+.gl-bar .gl-status:empty { display: none; }
+.gl-bar .toc-arrow { top: auto; bottom: calc(.55rem + 1px); margin-top: 0; }
+mark.gl-mark { padding: 0; border-radius: 2px; }
 .gl-az a, .gl-az .gl-off {
   display: grid; place-items: center; width: 2.15rem; height: 2.15rem; padding: 0;
   font-family: var(--serif); font-size: .92rem; font-weight: 500;

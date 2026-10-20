@@ -98,11 +98,13 @@ def main(out):
                  f'<h2 class="gl-lh" id="gl-h-{l}"><span class="gl-big">{l}</span><span class="gl-cnt">{n} term{"s" if n != 1 else ""}</span></h2>'
                  f'<dl class="gl-list">\n{items}</dl></section>\n')
     print(f'<!--gl-count:{total}|{esc(first)}|{esc(re.sub(r" [(].*", "", last))}-->')
+    # the search, its count and the letters ride together in one bar pinned under the header
+    print('<div class="faq-toc is-sticky gl-az gl-bar">')
     print('<div class="gl-find" role="search"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>'
           f'<input type="search" id="gl-q" placeholder="Search {total} terms" aria-label="Search the glossary" autocomplete="off" spellcheck="false">'
           '<button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>')
     print('<p class="gl-status" id="gl-status" aria-live="polite"></p>')
-    print(f'<nav class="faq-toc is-sticky gl-az" aria-label="Letters"><ul>{az}</ul></nav>')
+    print(f'<nav aria-label="Letters"><ul>{az}</ul></nav></div>')
     print(secs + '<p class="gl-none" id="gl-none" hidden>No term matches your search. Try a shorter word, or <a href="/contact.html">tell us</a> which term you would like to see added.</p>')
     pathlib.Path(out).write_text('\n'.join(put) + '\n', encoding='utf-8')
 
