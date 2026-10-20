@@ -22,6 +22,13 @@
 - When a request could mean two things, ask one short question instead of working out both.
 - Final reply: at most about 8 lines (what changed, the QA result, the commit hash); no list of files.
 
+# Session Habits (from a token audit: re-reading a long conversation was 98.6% of all tokens)
+- One task per session: start a new session after each "commit and deploy". This file and the git history carry what the next session needs.
+- After a long idle gap, start a new session instead of resuming a large one: the cached conversation expires and is rebuilt at full size.
+- Staying in one session: run `/compact` at about 150k-200k tokens of context, not at the automatic limit.
+- Batch related requests into one message; every message re-sends the whole conversation.
+- When a task ends with a deploy, Claude's final reply suggests a new session for the next task, in one line.
+
 # Output & Verification Rules
 - Do NOT capture screenshots or spawn browser verification tools automatically after making updates.
 - Capture screenshots only when explicitly instructed in a prompt.
