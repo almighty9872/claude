@@ -213,7 +213,7 @@ Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeD
   $dataVer["data/$($_.Name)"] = File-Ver ([IO.File]::ReadAllBytes($_.FullName))
 }
 $JsSrc = [IO.File]::ReadAllText((Join-Path $Root 'assets/script.js'))
-$JsFull = $JsSrc.Replace('{"__DATA_VER__": 1}', (ConvertTo-Json -InputObject $dataVer -Compress)).Replace('{"__EN_MAP__": 1}', '{}')
+$JsFull = $JsSrc.Replace('{"__DATA_VER__": 1}', (ConvertTo-Json -InputObject $dataVer -Compress))
 $JsMin = Esbuild-Min $JsFull 'js'
 if (-not $JsMin) { $JsMin = Minify-Js $JsFull }
 [IO.File]::WriteAllText((Join-Path $Root 'assets/script.min.js'), $JsMin, $Utf8)

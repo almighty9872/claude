@@ -3,8 +3,8 @@
    Vanilla JavaScript, no libraries. Loaded (defer) on every page.
    1. Theme toggle            5. Search (lazy-loads data/*.js on first use)
    2. Live clock              6. Reading bar: current chapter, prev/next
-   3. English-original reveal 7. Table-of-contents drawer (small screens)
-   4. "Show all English"       8. Main nav: dropdown + mobile sheet
+   7. Table-of-contents drawer (small screens)
+   8. Main nav: dropdown + mobile sheet
    9. Info panel (i)   10. Rosary
    ========================================================================= */
 (function () {
@@ -23,27 +23,11 @@
   /* Pages served at arbitrary URLs (404.html), and every /en/ page, declare <html data-root="/">
      so data and links resolve from the site root */
   var ROOT = document.documentElement.getAttribute('data-root') || '';
-  /* The language shown. Every page carries both languages; its address decides which one is
-     shown (URL_LANG: data-url-lang, 'tr' at the root, 'en' under /en/), and the TR | EN switch
-     goes to the other address. Only 404.html, which has no twin, switches in place. */
-  var LANG = document.documentElement.classList.contains('lang-en') ? 'en' : 'tr';
-  var URL_LANG = document.documentElement.getAttribute('data-url-lang') || '';
-  /* Turkish page -> its English twin's address (written in by tools/build.ps1) */
-  var EN_MAP = {"__EN_MAP__": 1};
-  /* where the English pages live: under en/ here, at the root of the English site (verbumdomini.ca,
-     whose pages say <html data-en-base="">) */
-  var EN_BASE = document.documentElement.getAttribute('data-en-base');
-  if (EN_BASE === null) EN_BASE = 'en/';
-  function enPathOf(file) {
-    if (file === '' || file === 'index.html') return EN_BASE;
-    if (EN_MAP[file]) return EN_BASE + EN_MAP[file].replace(/^en\//, '');
-    if (/^kilise\/[a-z0-9-]+\.html$/.test(file)) return EN_BASE + 'church/' + file.slice(7);
-    return null;
-  }
-  /* the English site (verbumdomini.ca, data-en-base="") is English alone: a link the script writes
-     goes straight to the English page, and the reference popups leave out the Turkish */
-  var EN_SITE = EN_BASE === '';
-  function siteHref(file) { var p = EN_SITE ? enPathOf(file) : null; return ROOT + (p === null ? file : p); }
+  /* The site is Turkish only; the English edition (verbumdomini.ca) has its own script. The text
+     tables below still hold both languages, and the helpers further down take a Turkish and an
+     English argument and give the Turkish. */
+  var LANG = 'tr';
+  function siteHref(file) { return ROOT + file; }
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
@@ -53,138 +37,21 @@
   var nextFrame = function (fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); };
 
   /* ---------------------------------------------------------------
-     0. Language: TR | EN. Every text is on the page in both languages, as a pair of wrappers
-        (.l-tr / .l-en, written by tools/build.ps1, or by LT() below for text made here), and
-        html.lang-en shows the English one. Attributes carry their English in data-en-<name>.
-        Until a reader picks one, <head> chooses before the first paint: Turkish in Turkey's time
-        zone or with a Turkish browser, English everywhere else. A choice made with the switch is
-        kept in localStorage and wins from then on. Switching keeps the passage being read where
-        it is on the screen.
+     0. Language: the helpers that once wrote both languages, kept so the text tables and their
+        callers stay as they are. A "pair string" is now just the Turkish.
      --------------------------------------------------------------- */
-  var LANG_KEY = 'kd-lang-choice';
-  function isEn() { return document.documentElement.classList.contains('lang-en'); }
-  /* the same pair, for text this script writes into the page */
-  function LT(tr, en) { if (EN_SITE) return en || tr; return (!en || en === tr) ? tr : '<span class="l-tr">' + tr + '</span><span class="l-en" lang="en">' + en + '</span>'; }
-  /* one of the two, for text that cannot hold markup (a confirm box, a document title) */
-  function L2(tr, en) { return isEn() && en ? en : tr; }
-  /* an attribute in both languages: swapAttrs() keeps it in step with the switch */
-  function setAttr2(el, name, tr, en) {
-    if (EN_SITE) { el.setAttribute(name, en || tr); return; }
-    el.setAttribute('data-tr-' + name, tr); el.setAttribute('data-en-' + name, en || tr);
-    el.setAttribute(name, isEn() && en ? en : tr);
-  }
-  var I18N_ATTRS = ['aria-label', 'title', 'placeholder', 'content', 'alt', 'data-tooltip', 'value'];
-  function swapAttrs(root) {
-    var en = isEn();
-    I18N_ATTRS.forEach(function (a) {
-      $$('[data-en-' + a + ']', root).forEach(function (el) {
-        if (!el.hasAttribute('data-tr-' + a)) el.setAttribute('data-tr-' + a, el.getAttribute(a) || '');
-        el.setAttribute(a, el.getAttribute(en ? 'data-en-' + a : 'data-tr-' + a));
-      });
-    });
-    var tEn = $('meta[name="kd-title-en"]');
-    if (tEn) {
-      if (!document.documentElement.hasAttribute('data-title-tr')) document.documentElement.setAttribute('data-title-tr', document.title);
-      document.title = en ? tEn.getAttribute('content') : document.documentElement.getAttribute('data-title-tr');
-    }
-  }
-  /* the pair wrapper under the reading line, and where in it the line falls */
-  function langAnchor() {
-    var y = Math.min(window.innerHeight * 0.3, (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64) + 40);
-    var el = document.elementFromPoint(window.innerWidth / 2, y), pair = null;
-    for (var n = el; n && n !== document.body; n = n.parentElement) if (n.classList && (n.classList.contains('l-tr') || n.classList.contains('l-en'))) pair = n;
-    if (pair) {
-      var r = boxOf(pair); if (!r) return null;
-      return { pair: pair, y: y, f: r.height ? (y - r.top) / r.height : 0 };
-    }
-    return el && el !== document.body ? { el: el, top: el.getBoundingClientRect().top } : null;
-  }
-  /* a display:contents wrapper has no box of its own: measure what it holds */
-  function boxOf(node) {
-    try { var rg = document.createRange(); rg.selectNodeContents(node); var r = rg.getBoundingClientRect(); return r.height || r.width ? r : null; } catch (e) { return null; }
-  }
-  /* Text taken from the page to label something else (the phone's rows and titles) keeps both
-     languages: one string, "Türkçe\u0001English". pset() writes it back as a pair. */
-  var PSEP = '\u0001';
-  function langTextOf(el, lang) {
-    var c = el.cloneNode(true);
-    $$(lang === 'en' ? '.l-tr' : '.l-en', c).forEach(function (x) { x.remove(); });
-    return c.textContent.replace(/\s+/g, ' ').trim();
-  }
-  function pmake(tr, en) { tr = tr == null ? '' : String(tr); en = en == null ? tr : String(en); return EN_SITE ? en : tr === en ? tr : tr + PSEP + en; }
-  function psplit(v) { v = v == null ? '' : String(v); var i = v.indexOf(PSEP); return i < 0 ? [v, v] : [v.slice(0, i), v.slice(i + 1)]; }
-  function pstr(el) {
-    if (!el) return '';
-    if (!(el.querySelector && el.querySelector('.l-tr, .l-en'))) return el.textContent.replace(/\s+/g, ' ').trim();
-    return pmake(langTextOf(el, 'tr'), langTextOf(el, 'en'));
-  }
-  function pcat() { var tr = '', en = ''; for (var i = 0; i < arguments.length; i++) { var x = psplit(arguments[i]); tr += x[0]; en += x[1]; } return pmake(tr, en); }
-  function pjoin(list, sep) { var a = list.filter(Boolean).map(psplit); return pmake(a.map(function (x) { return x[0]; }).join(sep), a.map(function (x) { return x[1]; }).join(sep)); }
-  function pmap(v, fn) { var x = psplit(v); return pmake(fn(x[0], 'tr'), fn(x[1], 'en')); }
-  function phtml(v) { var x = psplit(v); return x[0] === x[1] ? esc(x[0]) : LT(esc(x[0]), esc(x[1])); }
-  function pset(el, v) { if (!el) return; if (String(v == null ? '' : v).indexOf(PSEP) < 0) el.textContent = v == null ? '' : v; else el.innerHTML = phtml(v); }
-  function pnow(v) { var x = psplit(v); return isEn() ? x[1] : x[0]; }
-  /* an attribute written into markup from a pair string, kept in step by swapAttrs() */
-  function pattr(name, v) { var x = psplit(v); return name + '="' + esc(isEn() ? x[1] : x[0]) + '" data-tr-' + name + '="' + esc(x[0]) + '" data-en-' + name + '="' + esc(x[1]) + '"'; }
-  /* html has smooth scrolling on: this move must not be seen */
-  function jumpBy(d) { if (!d) return; try { window.scrollBy({ top: d, left: 0, behavior: 'instant' }); } catch (e) { window.scrollBy(0, d); } }
-  function setLang(lang, keepView, remember) {
-    var en = lang === 'en', root = document.documentElement;
-    var a = keepView ? langAnchor() : null;
-    root.classList.toggle('lang-en', en);
-    root.lang = en ? 'en' : 'tr';
-    LANG = en ? 'en' : 'tr';
-    if (remember) try { localStorage.setItem(LANG_KEY, LANG); } catch (e) { /* private mode */ }
-    swapAttrs(document);
-    $$('[data-set-lang]').forEach(function (b) {
-      var on = b.getAttribute('data-set-lang') === LANG;
-      if (b.tagName === 'A') { if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }
-      else b.setAttribute('aria-pressed', String(on));
-    });
-    if (a) {
-      if (a.pair) {
-        var other = a.pair.classList.contains('l-tr') ? a.pair.nextElementSibling : a.pair.previousElementSibling;
-        var r = other && boxOf(other);
-        if (r) jumpBy(r.top + a.f * r.height - a.y);
-      } else if (a.el) {
-        jumpBy(a.el.getBoundingClientRect().top - a.top);
-      }
-    }
-    try { document.dispatchEvent(new CustomEvent('kd:lang', { detail: LANG })); } catch (e) { /* old browsers */ }
-  }
-  function initLang() {
-    setLang(isEn() ? 'en' : 'tr', false);
-    document.addEventListener('click', function (e) {
-      var b = e.target.closest && e.target.closest('[data-set-lang]');
-      if (!b) return;
-      var want = b.getAttribute('data-set-lang');
-      /* a tap on the language already shown flips to the other one, like a switch */
-      if (want === LANG && b.closest('.lang-pill')) want = LANG === 'en' ? 'tr' : 'en';
-      if (URL_LANG) {
-        /* the other language lives at the page's other address: go there, keeping the #section */
-        e.preventDefault();
-        try { localStorage.setItem(LANG_KEY, want); } catch (err) { /* private mode */ }
-        if (want === URL_LANG) return;
-        var alt = document.querySelector('link[rel="alternate"][hreflang="' + want + '"]');
-        if (alt) location.href = alt.getAttribute('href').replace(/^https?:\/\/[^\/]+/, '') + location.hash;
-        return;
-      }
-      setLang(want, true, true);
-    });
-    /* On English pages, links the script writes (or any left pointing at a Turkish page) are sent
-       to the English twin just before they are followed */
-    if (URL_LANG === 'en') {
-      var toEn = function (e) {
-        var a = e.target.closest && e.target.closest('a[href]');
-        if (!a || a.closest('.lang-pill') || a.hasAttribute('hreflang')) return;
-        var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (err) { return; }
-        if (u.origin !== location.origin || /^\/en\//.test(u.pathname)) return;
-        var p = enPathOf(u.pathname.replace(/^\//, ''));
-        if (p) a.setAttribute('href', '/' + p + u.search + u.hash);
-      };
-      ['click', 'auxclick', 'contextmenu', 'focusin', 'touchstart'].forEach(function (t) { document.addEventListener(t, toEn, true); });
-    }
-  }
+  function LT(tr) { return tr; }
+  function L2(tr) { return tr; }
+  function setAttr2(el, name, tr) { el.setAttribute(name, tr); }
+  function pmake(tr) { return tr == null ? '' : String(tr); }
+  function pstr(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+  function pcat() { return Array.prototype.map.call(arguments, pmake).join(''); }
+  function pjoin(list, sep) { return list.filter(Boolean).join(sep); }
+  function pmap(v, fn) { return fn(pmake(v), 'tr'); }
+  function phtml(v) { return esc(pmake(v)); }
+  function pset(el, v) { if (el) el.textContent = pmake(v); }
+  function pnow(v) { return pmake(v); }
+  function pattr(name, v) { return name + '="' + esc(pmake(v)) + '"'; }
 
   /* ---------------------------------------------------------------
      The home page's strip of Church history: the arrows page through it, the slider and the
@@ -286,7 +153,7 @@
       }
       if (range) {
         if (document.activeElement !== range) range.value = String(m > 0 ? Math.round(x / m * 1000) : 0);
-        var yi = items[Math.round(f)]; range.setAttribute('aria-valuetext', (isEn() && yi.getAttribute('data-y-en')) || yi.getAttribute('data-y'));
+        var yi = items[Math.round(f)]; range.setAttribute('aria-valuetext', yi.getAttribute('data-y'));
       }
     };
     var raf = 0;
@@ -1029,7 +896,7 @@
     function build() {
       var close = $('.sources-close');
       dlg = el('dialog', 'sources-dialog ref-dialog'); dlg.id = 'ref-dialog'; dlg.setAttribute('aria-labelledby', 'ref-dialog-t');
-      var x = el('button', 'sources-close'); x.type = 'button'; x.setAttribute('aria-label', isEn() ? 'Close' : 'Kapat');
+      var x = el('button', 'sources-close'); x.type = 'button'; x.setAttribute('aria-label', 'Kapat');
       x.innerHTML = close ? close.innerHTML : '×';
       title = el('h2', 'sources-title'); title.id = 'ref-dialog-t';
       body = el('div', 'info-inner ref-body'); foot = el('p', 'ref-foot');
@@ -1052,13 +919,13 @@
       return p;
     }
     function arabic(text) { var p = el('p', 'ref-ar', text); p.lang = 'ar'; p.dir = 'rtl'; return p; }
-    /* the other language's translation, folded away */
+    /* the English translation, folded away under the Turkish */
     function other(label, node) { var d = el('details', 'ref-other'); d.appendChild(el('summary', '', label)); d.appendChild(node); return d; }
     function fill(kind, key, a) {
-      var en = isEn(), data = window[KINDS[kind].name], item = data && data[key];
+      var data = window[KINDS[kind].name], item = data && data[key];
       body.textContent = ''; foot.textContent = '';
       var label = a.textContent.trim();
-      if (kind === 'qref') label = (en ? 'Qur’an ' : 'Kur’an ') + key;
+      if (kind === 'qref') label = 'Kur’an ' + key;
       /* "Yuhanna 6:55; 6:66": the second link carries no book name, so borrow the first one's */
       if (kind === 'bref' && /^\d+:/.test(label)) {
         for (var prev = a.previousElementSibling; prev; prev = prev.previousElementSibling) {
@@ -1067,30 +934,29 @@
       }
       title.textContent = label;
       if (!item) {
-        body.appendChild(el('p', 'ref-note', data ? (en ? 'This passage isn’t in our collection yet.' : 'Bu metin henüz koleksiyonumuzda yok.') : (en ? 'Loading…' : 'Yükleniyor…')));
+        body.appendChild(el('p', 'ref-note', data ? 'Bu metin henüz koleksiyonumuzda yok.' : 'Yükleniyor…'));
       } else if (kind === 'bref') {
         var tr = verses(item.tr, 'tr', function (v) { return v[1]; }), dr = verses(item.en, 'en', function (v) { return v[1]; });
-        body.appendChild(en ? dr : tr);
-        if (!EN_SITE) body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Douay-Rheims)', en ? tr : dr));
+        body.appendChild(tr);
+        body.appendChild(other('İngilizcesi (Douay-Rheims)', dr));
       } else if (kind === 'qref') {
         var ar = el('p', 'ref-ar'); ar.lang = 'ar'; ar.dir = 'rtl';
         item.forEach(function (v, i) { ar.appendChild(document.createTextNode(v[1] + ' ')); ar.appendChild(el('span', 'ref-ayah', '﴿' + v[0].toLocaleString('ar-EG') + '﴾')); if (i < item.length - 1) ar.appendChild(document.createTextNode(' ')); });
         body.appendChild(ar);
         var qtr = verses(item, 'tr', function (v) { return v[2]; }), qen = verses(item, 'en', function (v) { return v[3]; });
-        body.appendChild(en ? qen : qtr);
-        if (!EN_SITE) body.appendChild(other(en ? 'Turkish' : 'İngilizcesi (Pickthall)', en ? qtr : qen));
+        body.appendChild(qtr);
+        body.appendChild(other('İngilizcesi (Pickthall)', qen));
       } else {
         body.appendChild(arabic(item.ar));
         var htr = el('p', 'ref-text', item.tr), hen = el('p', 'ref-text', item.en); htr.lang = 'tr'; hen.lang = 'en';
-        body.appendChild(en ? hen : htr);
-        if (!EN_SITE) body.appendChild(other(en ? 'Turkish' : 'İngilizcesi', en ? htr : hen));
+        body.appendChild(htr);
+        body.appendChild(other('İngilizcesi', hen));
       }
-      var src = { bref: en ? 'English: Douay-Rheims. The Turkish is our own translation.' : 'Türkçe çeviri bize aittir. İngilizcesi: Douay-Rheims.',
-        qref: en ? 'Arabic: Tanzil. English: Pickthall. The Turkish is our own translation.' : 'Arapça: Tanzil. Türkçe çeviri bize aittir. İngilizcesi: Pickthall.',
-        hdref: en ? 'Numbering follows sunnah.com. The English and Turkish translations are our own.' : 'Numaralar sunnah.com’a göredir. Türkçe ve İngilizce çeviriler bize aittir.' }[kind];
-      if (EN_SITE) src = { bref: 'English: Douay-Rheims.', qref: 'Arabic: Tanzil. English: Pickthall.', hdref: 'Numbering follows sunnah.com. The English translation is our own.' }[kind];
+      var src = { bref: 'Türkçe çeviri bize aittir. İngilizcesi: Douay-Rheims.',
+        qref: 'Arapça: Tanzil. Türkçe çeviri bize aittir. İngilizcesi: Pickthall.',
+        hdref: 'Numaralar sunnah.com’a göredir. Türkçe ve İngilizce çeviriler bize aittir.' }[kind];
       if (item) foot.appendChild(el('span', 'ref-src', src + ' '));
-      var out = el('a', '', en ? 'Open at the source ↗' : 'Kaynağında aç ↗');
+      var out = el('a', '', 'Kaynağında aç ↗');
       out.href = a.href; out.target = '_blank'; out.rel = 'noopener';
       foot.appendChild(out);
     }
@@ -1105,7 +971,7 @@
       if (!dlg.open) { if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
       dlg.scrollTop = 0;
       if (!window[k.name]) loadDataScript(k.file, k.name).then(function () { if (dlg.open) fill(kind, key, a); }, function () {
-        body.textContent = ''; body.appendChild(el('p', 'ref-note', isEn() ? 'The text couldn’t be loaded.' : 'Metin yüklenemedi.'));
+        body.textContent = ''; body.appendChild(el('p', 'ref-note', 'Metin yüklenemedi.'));
       });
     });
   }
@@ -1581,14 +1447,6 @@
       }
       wire();
       render(false);
-      /* the TR | EN switch: the guide's own words and the prayer in the other language */
-      document.addEventListener('kd:lang', function () {
-        T = RT_TEXT[LANG];
-        nameOptions();
-        if (!ui.resume.hidden) ui.resume.textContent = T.resumed;
-        ui.grip.setAttribute('aria-label', sheet.classList.contains('is-collapsed') ? T.show : T.hide);
-        render(false);
-      });
     })['catch'](function () {
       ui.title.textContent = T.loadFail;
       ui.text.textContent = '';
@@ -1892,10 +1750,10 @@
     function wd(m, d) { return (new Date(Y, m - 1, d).getDay() + 6) % 7; }
     function isToday(m, d) { return m === today.month && d === today.day; }
     function names(cell) { return cell ? $$('.s-name', cell).map(pstr) : []; }
-    /* the first paragraph of a saint's life, in both languages */
+    /* the first paragraph of a saint's life */
     function bioStart(it) {
-      var t = $('.saint-bio .l-tr p', it) || $('.saint-bio p', it), e = $('.saint-bio .l-en p', it);
-      return t ? pmake(t.textContent.replace(/\s+/g, ' ').trim(), e ? e.textContent.replace(/\s+/g, ' ').trim() : null) : '';
+      var t = $('.saint-bio p', it);
+      return t ? t.textContent.replace(/\s+/g, ' ').trim() : '';
     }
     var LEG_RK = ['rk-solemn', 'rk-feast', 'rk-memorial', 'rk-optional'];
     function legend() {
@@ -2530,7 +2388,7 @@
           var d = c.getAttribute('data-d'), mm = c.getAttribute('data-m');
           c.setAttribute('data-av-id', 'gun-' + mm + '-' + d);
           var names = pjoin($$('.s-name', c).map(avText), ', ');
-          avNode(c, pmake(d + ' ' + psplit(mn)[0], psplit(mn)[1] + ' ' + d), names || avText($('.day-rank', c)));
+          avNode(c, d + ' ' + mn, names || avText($('.day-rank', c)));
         });
       });
     },
@@ -2545,8 +2403,8 @@
             var r = document.createElement('a'), lab = avText($('.c-label', a)), rng = avText($('.rng', a));
             r.className = 'av-row' + (a.parentNode.classList.contains('lv4') ? ' av-row-sub' : ''); r.href = a.getAttribute('href');
             r.innerHTML = '<span class="av-rt"><span class="av-t"></span><span class="av-s"></span></span>' + AV_CHEV;
-            var hd = psplit(avHead($('span', a))), lp = psplit(lab), tt = pmake(hd[0].replace(lp[0], '').trim(), hd[1].replace(lp[1], '').trim());
-            pset($('.av-t', r), psplit(tt)[0] ? tt : avText(a));
+            var tt = avHead($('span', a)).replace(lab, '').trim();
+            pset($('.av-t', r), tt || avText(a));
             pset($('.av-s', r), pjoin([lab, rng], ' · '));
             rows.appendChild(r);
           });
@@ -2579,8 +2437,7 @@
       var sel = $('select', f);
       function go() {
         if (!sel.value) return;
-        var en = /^\/en\//.test(location.pathname);
-        location.href = en ? '/en/church/' + sel.value + '.html' : 'kilise/' + sel.value + '.html';
+        location.href = 'kilise/' + sel.value + '.html';
       }
       f.addEventListener('submit', function (e) { e.preventDefault(); go(); });
       /* a choice made with the pointer opens it at once; with the keyboard, Enter or the button */
@@ -2780,7 +2637,7 @@
       $$('a', crumbs).forEach(function (a, i) { pset(a, titleOf(list[i])); });
       crumbs.hidden = !list.length;
       if (!hero) return;
-      if (n) { hero.setAttribute('role', 'button'); hero.setAttribute('tabindex', '0'); setAttr2(hero, 'aria-label', AV_TX.tr.top + ': ' + psplit(pageT)[0], AV_TX.en.top + ': ' + psplit(pageT)[1]); }
+      if (n) { hero.setAttribute('role', 'button'); hero.setAttribute('tabindex', '0'); setAttr2(hero, 'aria-label', AV_TX.tr.top + ': ' + pageT); }
       else { hero.removeAttribute('role'); hero.removeAttribute('tabindex'); hero.removeAttribute('aria-label'); }
     }
     var navTitle = $('.av-title', nav), backA = $('[data-av-back]', nav), backL = $('[data-av-back-label]', nav);
@@ -2881,13 +2738,8 @@
     }
     /* the tab's title: the level's name and the page's, in the language shown */
     function setTitle() { document.title = cur ? pnow(titleOf(cur)) + ' | ' + pnow(pageT) : pageT0(); }
-    function pageT0() { return document.documentElement.getAttribute(isEn() ? 'data-title-en' : 'data-title-tr') || document.title; }
-    (function () {
-      var m = $('meta[name="kd-title-en"]');
-      if (!H.hasAttribute('data-title-tr')) H.setAttribute('data-title-tr', isEn() && m ? '' : document.title);
-      H.setAttribute('data-title-en', m ? m.getAttribute('content') : H.getAttribute('data-title-tr'));
-    })();
-    document.addEventListener('kd:lang', function () { setTitle(); });
+    var title0 = document.title;
+    function pageT0() { return title0; }
     function keyOf(n) { return n ? idOf(n) : ''; }
     /* Slide the new level in (forward) or back, with the page's icon and title shrinking or
        growing between them; the browser's own back swipe has already shown its picture of the
@@ -3151,9 +3003,9 @@
       fab.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor" stroke="none"/></svg>';
       var sh = document.createElement('div');
       sh.className = 'kq-sheet av-kq-sheet'; sh.hidden = true;
-      sh.innerHTML = '<div class="kq-sheet-bg" data-kq-close></div><div class="kq-sheet-panel" role="dialog" aria-modal="true" aria-label="' + esc(pnow(T.toc)) + '" data-tr-aria-label="' + AV_TX.tr.toc + '" data-en-aria-label="' + AV_TX.en.toc + '">' +
+      sh.innerHTML = '<div class="kq-sheet-bg" data-kq-close></div><div class="kq-sheet-panel" role="dialog" aria-modal="true" aria-label="' + esc(pnow(T.toc)) + '">' +
         '<div class="kq-grab" aria-hidden="true"></div><div class="kq-sheet-head"><p class="kq-sheet-t">' + phtml(T.toc) + '</p><button type="button" class="ios-done" data-kq-close>' + phtml(T.done) + '</button></div>' +
-        '<div class="kq-slider"><p class="kq-slider-l"></p><input type="range" min="1" max="' + KQ_TOTAL + '" step="1" aria-label="' + esc(pnow(T.q)) + '" data-tr-aria-label="' + AV_TX.tr.q + '" data-en-aria-label="' + AV_TX.en.q + '"><p class="kq-slider-q"></p></div>' +
+        '<div class="kq-slider"><p class="kq-slider-l"></p><input type="range" min="1" max="' + KQ_TOTAL + '" step="1" aria-label="' + esc(pnow(T.q)) + '"><p class="kq-slider-q"></p></div>' +
         '<div class="kq-sheet-scroll"><p class="av-gh kq-sheet-gh"></p><div class="av-rows kq-sheet-list"></div></div></div>';
       document.body.appendChild(fab); document.body.appendChild(sh);
       var range = $('input', sh), lab = $('.kq-slider-l', sh), qt = $('.kq-slider-q', sh);
@@ -3412,7 +3264,7 @@
     if (items.filter(function (x) { return !x.sub; }).length < 3) return;
     var box = document.createElement('div');
     box.className = 'jl';
-    var jlOn = isEn() ? 'On this page' : 'Bu sayfada', jlBtn = isEn() ? 'Sections: the headings on this page' : 'Bölümler: bu sayfadaki başlıklar';
+    var jlOn = 'Bu sayfada', jlBtn = 'Bölümler: bu sayfadaki başlıklar';
     box.innerHTML = '<nav class="jl-panel" id="jl-panel" aria-label="' + jlOn + '" hidden><p class="jl-h">' + jlOn + '</p><ol></ol></nav>' +
       '<button type="button" class="jl-btn" aria-expanded="false" aria-controls="jl-panel" aria-label="' + jlBtn + '">' +
       '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.6" cy="6.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4.6" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg>' +
@@ -3490,7 +3342,7 @@
       var read = seen.indexOf(a.getAttribute('data-gs')) >= 0;
       a.classList.toggle('is-seen', read);
       var n = $('.gs-n', a);
-      if (n && !read && !$('.visually-hidden', a)) a.insertAdjacentHTML('beforeend', '<span class="visually-hidden">' + (isEn() ? ', not yet read' : ', okunmadı') + '</span>');
+      if (n && !read && !$('.visually-hidden', a)) a.insertAdjacentHTML('beforeend', '<span class="visually-hidden">' + ', okunmadı' + '</span>');
     });
   }
 
@@ -3724,8 +3576,6 @@
          language of the element actually being read. */
       var effLang = ((el.closest('[lang]') || document.documentElement).getAttribute('lang') || document.documentElement.lang || 'tr').split('-')[0];
       var clone = el.cloneNode(true);
-      /* only the language the TR | EN switch is showing */
-      $$(isEn() ? '.l-tr' : '.l-en', clone).forEach(function (n) { n.remove(); });
       $$('[lang]', clone).forEach(function (n) {
         var l = (n.getAttribute('lang') || '').split('-')[0];
         if (l && l !== effLang) n.remove();
@@ -3869,7 +3719,7 @@
   function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   ready(function () {
-    initFrameBust(); initLang(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday(); initHistory();
+    initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday(); initHistory();
     initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
     initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initArticleFlow(); initJumpList(); initBannerPan(); initSaintStories(); initEraNav(); initChurchMap(); initChurchPick(); initLayoutSwitch();
   });
