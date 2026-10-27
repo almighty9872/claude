@@ -3695,7 +3695,7 @@ if ($EnglishSite) {
   }
   # the files the pages load, as the Turkish site's deploy collects them (.github/workflows/deploy.yml)
   Get-ChildItem (Join-Path $Root 'assets') -File | Where-Object { $_.Name -match '\.min\.(css|js)$|\.(jpg|png)$' } | Copy-Item -Destination (Join-Path $EnOut 'assets')
-  Copy-Item -Recurse (Join-Path $Root 'assets/fonts'), (Join-Path $Root 'assets/art') (Join-Path $EnOut 'assets')
+  Copy-Item -Recurse (Join-Path $Root 'assets/fonts'), (Join-Path $Root 'assets/art'), (Join-Path $Root 'assets/vendor') (Join-Path $EnOut 'assets')
   Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Copy-Item -Destination (Join-Path $EnOut 'data')
   foreach ($x in 'favicon.ico', 'apple-touch-icon.png') { Copy-Item (Join-Path $Root $x) $EnOut }
   # the data files and the passages the pages embed carry both languages: the Turkish half out

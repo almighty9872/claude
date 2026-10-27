@@ -1337,6 +1337,123 @@ html:not(.js) .rt { display: none; }
   .rt-text { max-height: 42vh; }
   .rt-sheet.is-collapsed .rt-text { display: block; }
 }
+/* Desktop (script.js sets html.rt-desk): the mystery's painting fills the whole window, edge to
+   edge. The prayer sits on a soft panel at the left, the whole rosary in 3D along the foot, each
+   over a shade that keeps it legible. Always dark, whatever the site's theme, for the painting. */
+html.rt-desk .rt {
+  --dk-panel: clamp(21rem, 27vw, 31rem); --dk-strand: clamp(150px, 25vh, 340px); --dk-pad: clamp(1rem, 2vw, 2.4rem);
+  --dk-ink: #f4ecdc; --dk-soft: rgba(244, 236, 220, .82); --dk-gold: #e6c27a;
+  position: relative; isolation: isolate; overflow: hidden;
+  width: var(--dk-w, 100vw); height: calc(100vh - var(--dk-bar, var(--header-h))); height: calc(100svh - var(--dk-bar, var(--header-h)));
+  min-height: 34rem; margin: var(--dk-pull, 0) 0 2.5rem calc(50% - var(--dk-w, 100vw) / 2);
+  background: #0e0c0a; color: var(--dk-ink);
+}
+html.rt-desk .rt:fullscreen { width: 100vw; height: 100vh; margin: 0; }
+html.rt-desk .rt-lead, html.rt-desk .rt-stage, html.rt-desk .rosary-jump { display: none; }
+/* the page's banner and the section heading stay for screen readers only: the painting is the page */
+html.rt-desk main .page-head, html.rt-desk .rt > h2 { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+html.rt-desk .rt-body { position: static; display: block; }
+.rt-dk-paint { position: absolute; inset: 0; z-index: 0; margin: 0; }
+.rt-dk-paint img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
+.rt-dk-paint img.is-on { opacity: 1; }
+/* shade: deeper under the panel at the left and under the beads at the foot, the rest untouched */
+.rt-dk-paint::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(8, 6, 4, .9), rgba(8, 6, 4, .55) calc(var(--dk-strand) * .7), transparent calc(var(--dk-strand) * 1.25)),
+    linear-gradient(to right, rgba(8, 6, 4, .55), rgba(8, 6, 4, .15) calc(var(--dk-panel) + 6rem), transparent calc(var(--dk-panel) + 14rem));
+}
+.rt-dk-paint figcaption { position: absolute; z-index: 1; right: var(--dk-pad); top: calc(var(--dk-pad) * .6); padding: .3rem .65rem; border-radius: 99px; background: rgba(8, 6, 4, .45); font-family: var(--sans); font-size: .76rem; letter-spacing: .02em; color: rgba(244, 236, 220, .8); }
+/* the beads: a band along the foot, beside the panel so it never hides them */
+/* (a canvas needs its width spelled out: left and right alone leave it at its own pixel size) */
+.rt-dk-strand { position: absolute; z-index: 2; left: calc(var(--dk-panel) + var(--dk-pad) * 1.5); bottom: 0; width: calc(100% - var(--dk-panel) - var(--dk-pad) * 1.5); height: var(--dk-strand); }
+.rt.dk-right .rt-dk-strand { left: 0; }
+html.rt-desk .rt-dk-dots { position: absolute; z-index: 2; left: 0; right: 0; bottom: calc(var(--dk-strand) / 2 - .7rem); display: flex; justify-content: center; align-items: center; gap: 8px; }
+html.rt-desk .rt-dk-dots[hidden] { display: none; }
+/* the first screen: a word of welcome over the opening painting; the prayer panel waits */
+.rt-dk-welcome {
+  position: absolute; z-index: 4; left: calc(var(--dk-pad) * 2); bottom: calc(var(--dk-strand) + var(--dk-pad)); width: min(36rem, 46vw);
+  padding: 2rem 2.2rem 1.8rem; border-radius: 22px; background: rgba(14, 10, 7, .55); border: 1px solid rgba(255, 240, 210, .12);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); box-shadow: 0 30px 80px rgba(0, 0, 0, .4);
+  animation: rt-fade .8s ease-out;
+}
+.rt-dk-welcome[hidden] { display: none; }
+.rt-dk-wk { margin: 0; font-family: var(--sans); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--dk-gold); }
+.rt-dk-wh { margin: .4rem 0 .7rem; font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: 1.05; font-weight: 600; color: var(--dk-ink); }
+.rt-dk-wp { margin: 0 0 .9rem; font-size: clamp(1.02rem, 1.1vw, 1.2rem); line-height: 1.6; color: var(--dk-soft); }
+.rt-dk-wt { margin: 0 0 1.3rem; font-family: var(--sans); font-size: .95rem; font-weight: 600; color: var(--dk-gold); }
+.rt-dk-go { min-height: 3rem; padding: .7rem 1.6rem; border: 0; border-radius: 99px; background: var(--dk-gold); color: #1d1610; font-family: var(--sans); font-size: 1rem; font-weight: 700; cursor: pointer; transition: background-color .18s, transform .12s; }
+.rt-dk-go:hover { background: #f0d08f; }
+.rt-dk-go:active { transform: scale(.98); }
+.rt-dk-wn { margin: 1rem 0 0; font-family: var(--sans); font-size: .8rem; color: rgba(244, 236, 220, .6); }
+html.rt-desk .rt.is-welcome .rt-sheet { visibility: hidden; opacity: 0; }
+/* a painting whose heart is at its left takes the panel on the right ("p" in data/tespih.js) */
+html.rt-desk .rt.dk-right .rt-sheet { left: auto; right: var(--dk-pad); }
+.rt.dk-right .rt-dk-paint figcaption { right: auto; left: var(--dk-pad); }
+.rt.dk-right .rt-dk-paint::after {
+  background:
+    linear-gradient(to top, rgba(8, 6, 4, .9), rgba(8, 6, 4, .55) calc(var(--dk-strand) * .7), transparent calc(var(--dk-strand) * 1.25)),
+    linear-gradient(to left, rgba(8, 6, 4, .55), rgba(8, 6, 4, .15) calc(var(--dk-panel) + 6rem), transparent calc(var(--dk-panel) + 14rem));
+}
+html.rt-desk .rt-sheet { transition: opacity .6s ease; }
+/* the prayer panel */
+html.rt-desk .rt-sheet {
+  position: absolute; z-index: 3; top: var(--dk-pad); left: var(--dk-pad); bottom: var(--dk-pad); width: var(--dk-panel);
+  display: flex; flex-direction: column; margin: 0; padding: 1.4rem 1.5rem 1.2rem; border-radius: 20px;
+  background: rgba(16, 12, 9, .46); border: 1px solid rgba(255, 240, 210, .1); box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25); backdrop-filter: blur(22px) saturate(1.25);
+  color: var(--dk-ink);
+}
+html.rt-desk .rt-bar { justify-content: space-between; align-items: center; margin: 0 0 1rem; }
+html.rt-desk .rt-select .label { display: none; }
+html.rt-desk .rt-select select, html.rt-desk .rt-restart {
+  color: var(--dk-ink); background-color: rgba(255, 255, 255, .06); border-color: rgba(255, 240, 210, .18);
+}
+html.rt-desk .rt-select select { max-width: 100%; min-height: 2.5rem; font-size: .92rem; }
+html.rt-desk .rt-select select option { color: #1d1712; background: #f6efe2; }
+html.rt-desk .rt-restart { min-height: 2.5rem; width: 2.5rem; padding: 0; justify-content: center; flex: none; }
+html.rt-desk .rt-restart span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+html.rt-desk .rt-restart:hover { color: var(--dk-gold); border-color: var(--dk-gold); }
+html.rt-desk .rt-progress { top: 0; left: 1.5rem; right: 1.5rem; background: rgba(255, 255, 255, .1); }
+html.rt-desk .rt-progress span { background: var(--dk-gold); }
+html.rt-desk .rt-context { color: var(--dk-gold); }
+html.rt-desk .rt-resume { color: var(--dk-soft); }
+html.rt-desk .rt-mystery { margin-top: .5rem; padding: .55rem .8rem; background: rgba(230, 194, 122, .12); color: var(--dk-ink); font-size: 1rem; }
+html.rt-desk .rt-mystery .rt-m-label { color: var(--dk-gold); }
+html.rt-desk .rt-mystery.is-announce { background: var(--dk-gold); color: #1d1610; }
+html.rt-desk .rt-title { margin: .8rem 0 .6rem; font-size: clamp(1.35rem, 1.5vw, 1.7rem); color: var(--dk-ink); }
+html.rt-desk .rt-sheet.is-done .rt-title { color: var(--dk-gold); }
+html.rt-desk .rt-text {
+  flex: 1; min-height: 0; max-height: none; padding-right: .4rem;
+  font-family: var(--serif); font-size: clamp(1rem, .98vw, 1.22rem); line-height: 1.6; color: var(--dk-soft);
+  scrollbar-color: rgba(255, 240, 210, .25) transparent;
+}
+html.rt-desk .rt-text p { margin-bottom: .8rem; }
+/* a long prayer (the Creed) scrolls inside the panel: its last lines fade so the rest reads as more to come */
+html.rt-desk .rt-text { padding-bottom: 1.6rem; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2rem), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2rem), transparent); }
+html.rt-desk .rt-nav { margin-top: 1rem; }
+html.rt-desk .rt-nav button { width: 3.1rem; height: 3.1rem; background: rgba(255, 255, 255, .06); border-color: rgba(255, 240, 210, .2); color: var(--dk-ink); }
+html.rt-desk .rt-nav .rt-next { background: var(--dk-gold); border-color: var(--dk-gold); color: #1d1610; }
+html.rt-desk .rt-nav .rt-next:hover { background: #f0d08f; }
+html.rt-desk .rt-nav .rt-prev:hover:not(:disabled) { color: var(--dk-gold); border-color: var(--dk-gold); }
+/* bead finish and full screen, at the panel's foot */
+.rt-dk-tools { display: flex; justify-content: space-between; align-items: center; margin-top: .9rem; padding-top: .8rem; border-top: 1px solid rgba(255, 240, 210, .1); }
+.rt-dk-finish { display: flex; gap: .45rem; }
+.rt-fin, .rt-dk-full { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 240, 210, .2); background: transparent; color: var(--dk-ink); cursor: pointer; }
+.rt-fin i { width: 1.05rem; height: 1.05rem; border-radius: 50%; }
+.rt-fin-wood i { background: radial-gradient(circle at 35% 30%, #e1bd85, #8a6236 70%, #5a3c1e); }
+.rt-fin-pearl i { background: radial-gradient(circle at 35% 30%, #fff, #e9dfd2 55%, #c9b9c7); }
+.rt-fin-lapis i { background: radial-gradient(circle at 35% 30%, #6d8fe0, #1c3a8f 65%, #10225a); }
+.rt-fin[aria-pressed="true"] { border-color: var(--dk-gold); box-shadow: 0 0 0 2px rgba(230, 194, 122, .35); }
+.rt-dk-full svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rt-fin:hover, .rt-dk-full:hover { border-color: var(--dk-gold); color: var(--dk-gold); }
+html.rt-desk .rt :focus-visible { outline: 2px solid var(--dk-gold); outline-offset: 2px; }
+html.rt-desk .rt-dk-tools [hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rt-dk-paint img { transition: opacity .4s; }
+  .rt-dk-welcome { animation: none; }
+}
+
 @media print { .rt { display: none !important; } }
 
 /* Phones (script.js sets html.rt-phone): the Rosary as one still screen that never scrolls. The
