@@ -160,7 +160,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
   "art": {
     "46ecceho": {
       "f": "46ecceho-800",
-      "hd": {"f": "rd-thorns", "w": [1600, 2560], "h": 1942, "x": 50, "y": 35, "a": "Caravaggio", "ae": "Caravaggio", "t": "Dikenli Taç", "te": "The Crowning with Thorns"},
+      "hd": {"f": "rd-thorns", "w": [1600, 2560], "h": 1942, "x": 50, "y": 35, "a": "Caravaggio", "ae": "Caravaggio", "te": "The Crowning with Thorns"},
       "t": "Ecce Homo",
       "te": "Ecce Homo",
       "a": "Caravaggio",
@@ -169,7 +169,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "55flagel": {
       "f": "55flagel-800",
-      "hd": {"f": "rd-flagel", "p": "r", "w": [1600, 2560], "h": 1955, "x": 50, "y": 35, "a": "Caravaggio", "ae": "Caravaggio", "t": "Direğe Bağlı İsa", "te": "Christ at the Column"},
+      "hd": {"f": "rd-flagel", "p": "r", "w": [1600, 2560], "h": 1955, "x": 50, "y": 35, "a": "Caravaggio", "ae": "Caravaggio", "te": "Christ at the Column"},
       "t": "Kırbaçlanma",
       "te": "The Flagellation of Christ",
       "a": "Caravaggio",
@@ -178,7 +178,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-agony": {
       "f": "i-agony-800",
-      "hd": {"f": "rd-agony", "w": [1600, 2560], "h": 1615, "x": 50, "y": 50, "a": "Giovanni Bellini", "ae": "Giovanni Bellini", "t": "Bahçedeki Istırap", "te": "The Agony in the Garden"},
+      "hd": {"f": "rd-agony", "w": [1600, 2560], "h": 1615, "x": 50, "y": 50, "a": "Giovanni Bellini", "ae": "Giovanni Bellini", "te": "The Agony in the Garden"},
       "t": "Bahçedeki Istırap",
       "te": "The Agony in the Garden",
       "a": "Mantegna",
@@ -187,7 +187,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-annunc": {
       "f": "i-annunc",
-      "hd": {"f": "rd-annunc", "w": [1600, 2560], "h": 2036, "x": 55, "y": 45, "a": "Fra Angelico", "ae": "Fra Angelico", "t": "Müjde", "te": "The Annunciation"},
+      "hd": {"f": "rd-annunc", "w": [1600, 2560], "h": 2036, "x": 55, "y": 45, "a": "Fra Angelico", "ae": "Fra Angelico", "te": "The Annunciation"},
       "t": "Müjde",
       "te": "The Annunciation",
       "a": "Fra Angelico",
@@ -196,7 +196,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-ascens": {
       "f": "i-ascens",
-      "hd": {"f": "rd-ascens", "w": [1600, 1920], "h": 1400, "x": 50, "y": 30, "a": "John Singleton Copley", "ae": "John Singleton Copley", "t": "İsa’nın Göğe Yükselişi", "te": "The Ascension"},
+      "hd": {"f": "rd-ascens", "w": [1600, 1920], "h": 1400, "x": 50, "y": 30, "a": "John Singleton Copley", "ae": "John Singleton Copley", "te": "The Ascension"},
       "t": "İsa’nın Göğe Yükselişi",
       "te": "The Ascension",
       "a": "Giotto",
@@ -205,7 +205,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-bapt": {
       "f": "i-bapt",
-      "hd": {"f": "rd-bapt", "w": [1600, 1920], "h": 1190, "x": 50, "y": 55, "a": "Pietro Perugino", "ae": "Pietro Perugino", "t": "İsa’nın Vaftizi", "te": "The Baptism of Christ"},
+      "hd": {"f": "rd-bapt", "w": [1600, 1920], "h": 1190, "x": 50, "y": 55, "a": "Pietro Perugino", "ae": "Pietro Perugino", "te": "The Baptism of Christ"},
       "t": "İsa’nın Vaftizi",
       "te": "The Baptism of Christ",
       "a": "Piero della Francesca",
@@ -214,7 +214,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-barocci": {
       "f": "i-barocci",
-      "hd": {"f": "rd-supper", "w": [1600, 1920], "h": 1216, "x": 50, "y": 50, "a": "Juan de Juanes", "ae": "Juan de Juanes", "t": "Son Akşam Yemeği", "te": "The Last Supper"},
+      "hd": {"f": "rd-supper", "w": [1600, 1920], "h": 1216, "x": 50, "y": 50, "a": "Juan de Juanes", "ae": "Juan de Juanes", "te": "The Last Supper"},
       "t": "Efkaristiya’nın Kuruluşu",
       "te": "The Institution of the Eucharist",
       "a": "Federico Barocci",
@@ -223,7 +223,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-calvary": {
       "f": "i-calvary",
-      "hd": {"f": "rd-carry", "w": [1600, 1920], "h": 1658, "x": 50, "y": 35, "a": "Tiziano", "ae": "Titian", "t": "Haçını Taşıyan İsa", "te": "Christ Carrying the Cross"},
+      "hd": {"f": "rd-carry", "w": [1600, 1920], "h": 1658, "x": 50, "y": 35, "a": "Tiziano", "ae": "Titian", "te": "Christ Carrying the Cross"},
       "t": "Golgota Yolu",
       "te": "The Road to Calvary",
       "a": "Giotto",
@@ -232,7 +232,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-doctors": {
       "f": "i-doctors-800",
-      "hd": {"f": "rd-doctors", "p": "r", "w": [1600, 1920], "h": 1606, "x": 50, "y": 35, "a": "Pensionante del Saraceni", "ae": "Pensionante del Saraceni", "t": "İsa Din Bilginleri Arasında", "te": "Christ among the Doctors"},
+      "hd": {"f": "rd-doctors", "p": "r", "w": [1600, 1920], "h": 1606, "x": 50, "y": 35, "a": "Pensionante del Saraceni", "ae": "Pensionante del Saraceni", "te": "Christ among the Doctors"},
       "t": "İsa Din Bilginleri Arasında",
       "te": "Christ among the Doctors",
       "a": "Giotto",
@@ -241,7 +241,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-nativ": {
       "f": "i-nativ",
-      "hd": {"f": "rd-nativ", "w": [1600, 2024], "h": 1626, "x": 50, "y": 50, "a": "Georges de La Tour", "ae": "Georges de La Tour", "t": "Çobanların Tapınması", "te": "The Adoration of the Shepherds"},
+      "hd": {"f": "rd-nativ", "w": [1600, 2024], "h": 1626, "x": 50, "y": 50, "a": "Georges de La Tour", "ae": "Georges de La Tour", "te": "The Adoration of the Shepherds"},
       "t": "İsa’nın Doğuşu",
       "te": "The Nativity",
       "a": "Giotto",
@@ -250,7 +250,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-pentec": {
       "f": "i-pentec",
-      "hd": {"f": "rd-pentec", "w": [1600, 2560], "h": 1523, "x": 50, "y": 40, "a": "Jean Restout", "ae": "Jean Restout", "t": "Pentekost", "te": "Pentecost"},
+      "hd": {"f": "rd-pentec", "w": [1600, 2560], "h": 1523, "x": 50, "y": 40, "a": "Jean Restout", "ae": "Jean Restout", "te": "Pentecost"},
       "t": "Pentekost",
       "te": "Pentecost",
       "a": "El Greco",
@@ -259,7 +259,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-resur": {
       "f": "i-resur",
-      "hd": {"f": "rd-resur", "w": [1600, 1896], "h": 1409, "x": 50, "y": 40, "a": "Sebastiano Ricci", "ae": "Sebastiano Ricci", "t": "Diriliş", "te": "The Resurrection"},
+      "hd": {"f": "rd-resur", "w": [1600, 1896], "h": 1409, "x": 50, "y": 40, "a": "Sebastiano Ricci", "ae": "Sebastiano Ricci", "te": "The Resurrection"},
       "t": "Diriliş",
       "te": "The Resurrection",
       "a": "Piero della Francesca",
@@ -268,7 +268,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-rosary": {
       "f": "i-rosary",
-      "hd": {"f": "rd-rosary", "w": [1600, 2560], "h": 2166, "x": 50, "y": 40, "a": "Albrecht Dürer", "ae": "Albrecht Dürer", "t": "Gül Çelenkleri Bayramı", "te": "The Feast of the Rose Garlands"},
+      "hd": {"f": "rd-rosary", "w": [1600, 2560], "h": 2166, "x": 50, "y": 40, "a": "Albrecht Dürer", "ae": "Albrecht Dürer", "te": "The Feast of the Rose Garlands"},
       "t": "Tesbihli Meryem ve Çocuk",
       "te": "Virgin and Child with a Rosary",
       "a": "Murillo",
@@ -277,7 +277,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-sermon": {
       "f": "i-sermon-800",
-      "hd": {"f": "rd-sermon", "w": [1600, 2560], "h": 1663, "x": 50, "y": 60, "a": "Claude Lorrain", "ae": "Claude Lorrain", "t": "Dağdaki Vaaz", "te": "The Sermon on the Mount"},
+      "hd": {"f": "rd-sermon", "w": [1600, 2560], "h": 1663, "x": 50, "y": 60, "a": "Claude Lorrain", "ae": "Claude Lorrain", "te": "The Sermon on the Mount"},
       "t": "Dağdaki Vaaz",
       "te": "The Sermon on the Mount",
       "a": "Carl Heinrich Bloch",
@@ -286,7 +286,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "i-transf": {
       "f": "i-transf",
-      "hd": {"f": "rd-transf", "w": [1525, 1525], "h": 1176, "x": 50, "y": 40, "a": "Giovanni Bellini", "ae": "Giovanni Bellini", "t": "Suretin Değişmesi", "te": "The Transfiguration"},
+      "hd": {"f": "rd-transf", "w": [1525, 1525], "h": 1176, "x": 50, "y": 40, "a": "Giovanni Bellini", "ae": "Giovanni Bellini", "te": "The Transfiguration"},
       "t": "Suretin Değişmesi",
       "te": "The Transfiguration",
       "a": "Raffaello",
@@ -295,7 +295,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "r-assunta": {
       "f": "r-assunta",
-      "hd": {"f": "rd-assunta", "w": [1600, 1720], "h": 1320, "x": 50, "y": 0, "a": "Palma il Vecchio", "ae": "Palma il Vecchio", "t": "Meryem’in Göğe Alınışı", "te": "The Assumption of the Virgin"},
+      "hd": {"f": "rd-assunta", "w": [1600, 1720], "h": 1320, "x": 50, "y": 0, "a": "Palma il Vecchio", "ae": "Palma il Vecchio", "te": "The Assumption of the Virgin"},
       "t": "Meryem’in Göğe Alınışı",
       "te": "The Assumption of the Virgin",
       "a": "Tiziano",
@@ -304,7 +304,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "r-cana": {
       "f": "r-cana",
-      "hd": {"f": "rd-cana", "w": [1600, 2560], "h": 1697, "x": 50, "y": 50, "a": "Paolo Veronese", "ae": "Paolo Veronese", "t": "Kana’daki Düğün", "te": "The Wedding at Cana"},
+      "hd": {"f": "rd-cana", "w": [1600, 2560], "h": 1697, "x": 50, "y": 50, "a": "Paolo Veronese", "ae": "Paolo Veronese", "te": "The Wedding at Cana"},
       "t": "Kana’daki Düğün",
       "te": "The Marriage at Cana",
       "a": "Giotto",
@@ -313,7 +313,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "r-coron": {
       "f": "r-coron-800",
-      "hd": {"f": "rd-coron", "w": [1600, 1876], "h": 1314, "x": 50, "y": 35, "a": "Fra Filippo Lippi", "ae": "Fra Filippo Lippi", "t": "Meryem’in Taçlandırılması", "te": "The Coronation of the Virgin"},
+      "hd": {"f": "rd-coron", "w": [1600, 1876], "h": 1314, "x": 50, "y": 35, "a": "Fra Filippo Lippi", "ae": "Fra Filippo Lippi", "te": "The Coronation of the Virgin"},
       "t": "Meryem’in Taçlandırılması",
       "te": "The Coronation of the Virgin",
       "a": "Diego Velázquez",
@@ -322,7 +322,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "r-cruc": {
       "f": "r-cruc-800",
-      "hd": {"f": "rd-cruc", "w": [1600, 2560], "h": 1830, "x": 50, "y": 30, "a": "Andrea Mantegna", "ae": "Andrea Mantegna", "t": "Çarmıha Geriliş", "te": "The Crucifixion"},
+      "hd": {"f": "rd-cruc", "w": [1600, 2560], "h": 1830, "x": 50, "y": 30, "a": "Andrea Mantegna", "ae": "Andrea Mantegna", "te": "The Crucifixion"},
       "t": "Çarmıha Geriliş",
       "te": "The Crucifixion",
       "a": "Giotto",
@@ -331,7 +331,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "r-visit": {
       "f": "r-visit-800",
-      "hd": {"f": "rd-visit", "w": [1556, 2489], "h": 2560, "x": 50, "y": 30, "a": "Domenico Ghirlandaio", "ae": "Domenico Ghirlandaio", "t": "Ziyaret", "te": "The Visitation"},
+      "hd": {"f": "rd-visit", "w": [1556, 2489], "h": 2560, "x": 50, "y": 30, "a": "Domenico Ghirlandaio", "ae": "Domenico Ghirlandaio", "te": "The Visitation"},
       "t": "Ziyaret",
       "te": "The Visitation",
       "a": "Domenico Ghirlandaio",
@@ -340,7 +340,7 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
     },
     "y-presen": {
       "f": "y-presen-800",
-      "hd": {"f": "rd-presen", "w": [1600, 2560], "h": 2023, "x": 50, "y": 40, "a": "Andrea Mantegna", "ae": "Andrea Mantegna", "t": "İsa’nın Tapınağa Sunuluşu", "te": "The Presentation in the Temple"},
+      "hd": {"f": "rd-presen", "w": [1600, 2560], "h": 2023, "x": 50, "y": 40, "a": "Andrea Mantegna", "ae": "Andrea Mantegna", "te": "The Presentation in the Temple"},
       "t": "İsa’nın Tapınağa Sunuluşu",
       "te": "The Presentation in the Temple",
       "a": "Andrea Mantegna",

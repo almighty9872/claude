@@ -1666,7 +1666,7 @@
       dk.capOf = c; dkCap();
       if (img.complete && img.naturalWidth) show();
     }
-    function dkCap() { var c = dk.capOf; if (c) dk.cap.textContent = LANG === 'en' ? (c.ae || c.a) + ' · ' + c.te : c.a + ' · ' + c.t; }
+    function dkCap() { var c = dk.capOf; if (c) dk.cap.textContent = LANG === 'en' ? (c.ae || c.a) + ' · ' + c.te : c.a + ' · ' + (c.t || c.te); }
     /* the TR | EN switch: the desktop's own labels */
     function dkLang() {
       if (!dk.el) return;
