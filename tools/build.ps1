@@ -999,8 +999,7 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder) {
 $DnSubs = @{
   'katekizm.html' = $KatekizmNav
   'tesbih-duasi.html' = @(
-    @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Dualar ve gizemler' },
-    @{ href = 'tesbih-duasi.html#tesbih-rehberi'; t = 'Adım Adım Tesbih'; s = 'Boncuk boncuk, birlikte dua edin' },
+    @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası Et'; s = 'Boncuk boncuk, birlikte dua edin' },
     @{ href = 'tesbih-tarihi.html'; t = 'Tesbihin Tarihi'; s = "İncil$($Apos)den Fatima$($Apos)ya" })
   'azizler.html' = @(
     @{ href = 'azizler.html'; t = 'Azizler Takvimi'; s = 'Yılın her günü için bir aziz' },
