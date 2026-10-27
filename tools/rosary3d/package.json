@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "description": "Builds assets/vendor/rosary3d.js (the desktop Rosary's 3D beads) from strand.js and three.js",
+  "scripts": {
+    "build": "esbuild strand.js --bundle --format=esm --minify --target=es2020 --legal-comments=eof --outfile=../../assets/vendor/rosary3d.js"
+  },
+  "devDependencies": { "three": "0.170.0", "esbuild": "0.25.0" }
+}

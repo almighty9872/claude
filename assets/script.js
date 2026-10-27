@@ -1169,7 +1169,13 @@
       next: 'Sonraki', finish: 'Bitir', again: 'Yeniden başla', hide: 'Dua metnini gizle', show: 'Dua metnini göster',
       resumed: 'Kaldığınız yerden devam ediyorsunuz.',
       more: 'Tesbih hakkında', close: 'Kapat', tapHint: 'Ekrana dokunun: sağ ileri, sol geri',
-      loadFail: 'Dualar yüklenemedi. Lütfen sayfayı yenileyin.'
+      loadFail: 'Dualar yüklenemedi. Lütfen sayfayı yenileyin.',
+      beadsLabel: 'Tesbih', finishes: { wood: 'Zeytin ağacı', pearl: 'İnci', lapis: 'Lapis' },
+      welcomeK: 'Meryem Ana Tesbih Duası', welcomeH: 'Hoş geldiniz',
+      welcomeP: 'Tesbih, Meryem Ana ile birlikte İsa’nın hayatını düşünerek dua etmektir. Her gizemde hayatından bir sahneye bakarak dua edeceksiniz; bütün tesbih yaklaşık yirmi dakika sürer.',
+      todayIs: 'Bugünün gizemleri:', begin: 'Duaya başla',
+      welcomeN: 'Sağ ok tuşuyla ya da ileri düğmesiyle ilerleyin; bir taneye tıklayarak oraya geçin.',
+      full: 'Tam ekran', fullExit: 'Tam ekrandan çık', strand: 'Tesbih taneleri: bir taneye geçmek için tıklayın ya da sürükleyin'
     },
     en: {
       opening: 'Opening', closing: 'Closing', today: 'today',
@@ -1180,7 +1186,13 @@
       next: 'Next', finish: 'Finish', again: 'Pray again', hide: 'Hide prayer text', show: 'Show prayer text',
       resumed: 'Picking up where you left off.',
       more: 'About the Rosary', close: 'Close', tapHint: 'Tap the screen: right for next, left for back',
-      loadFail: 'The prayers could not be loaded. Please reload the page.'
+      loadFail: 'The prayers could not be loaded. Please reload the page.',
+      beadsLabel: 'Beads', finishes: { wood: 'Olive wood', pearl: 'Pearl', lapis: 'Lapis' },
+      welcomeK: 'The Holy Rosary', welcomeH: 'Welcome',
+      welcomeP: 'The Rosary is the life of Jesus seen through the eyes of his mother. At each mystery you pray looking at a moment from his life; the whole Rosary takes about twenty minutes.',
+      todayIs: 'Today’s mysteries:', begin: 'Begin the Rosary',
+      welcomeN: 'Go on with the right arrow key or the next button; click a bead to go to it.',
+      full: 'Full screen', fullExit: 'Exit full screen', strand: 'Rosary beads: click a bead or drag the strand to move'
     }
   };
   function rosarySteps() {
@@ -1299,7 +1311,7 @@
       ui.text.classList.remove('is-scroll');
     }
     function segOf(st) { return st.phase === 'open' ? 0 : st.phase === 'close' ? 6 : st.decade; }
-    function phoneDots(st) {
+    function beadDots(box, st) {
       var ids, cur = -1, endOn = false;
       if (done || st.phase === 'close') ids = DOT_GROUPS.close;
       else if (st.phase === 'open') ids = DOT_GROUPS.open;
@@ -1314,12 +1326,12 @@
       else ids.forEach(function (id, i) { if (id === st.el && cur < 0) cur = i; });
       /* the closing prayers: the medal holds four of them, the cross the last */
       if (!done && st.phase === 'close' && st.el === 'crucifix') cur = 1;
-      ph.dots.textContent = '';
+      box.textContent = '';
       ids.forEach(function (id, i) {
         var b = document.createElement('i');
         var kind = id === 'crucifix' ? 'cross' : id === 'centerpiece' ? 'medal' : id === 'end' ? 'end' : /our-father|intro-bead-(1|5)$/.test(id) ? 'big' : '';
         b.className = (kind ? kind + ' ' : '') + (i < cur ? 'done' : i === cur ? 'cur' : '');
-        ph.dots.appendChild(b);
+        box.appendChild(b);
       });
     }
     function phoneRender(st) {
@@ -1355,7 +1367,7 @@
         ph.m.textContent = mysteryName(st.decade);
       } else { ph.k.textContent = st.phase === 'open' ? T.opening : T.closing; ph.m.textContent = setName(); }
       ph.art.classList.toggle('is-announce', !!(st && st.announce));
-      phoneDots(st);
+      beadDots(ph.dots, st);
       ph.nextL.textContent = ui.next.getAttribute('aria-label');
       phoneFit();
     }
@@ -1376,6 +1388,180 @@
       if (!fits()) el.classList.add('is-scroll');
     }
 
+    /* Desktop: the mystery's painting fills the screen, the prayer on a soft panel over it and the
+       whole rosary in 3D along the foot (assets/vendor/rosary3d.js, built from tools/rosary3d/),
+       the bead being prayed lit and lifted. Without WebGL a row of dots stands in for the beads. */
+    var dk = { on: false, el: null, bg: [], img: [], cap: null, cv: null, dots: null, strand: null, front: 0, artKey: '', tools: null };
+    var FINISH_KEY = 'kkio-rosary-finish';
+    /* a clicked bead: its step nearest the one being prayed; the glowing bead itself goes on */
+    function stepOfBead(id) {
+      var list = stepsFor[id], cur = done ? steps.length : idx;
+      if (!list) return -1;
+      var pick = list[0];
+      list.forEach(function (i) { if (Math.abs(i - cur) < Math.abs(pick - cur)) pick = i; });
+      return pick;
+    }
+    function savedFinish() { try { return localStorage.getItem(FINISH_KEY) || 'wood'; } catch (e) { return 'wood'; } }
+    function dkBuild() {
+      if (dk.el) return;
+      var el = document.createElement('div');
+      el.className = 'rt-dk';
+      el.innerHTML = '<figure class="rt-dk-paint"><img alt="" decoding="async"><img alt="" decoding="async"><figcaption></figcaption></figure>' +
+        '<canvas class="rt-dk-strand" role="img"></canvas><div class="rt-dots rt-dk-dots" aria-hidden="true" hidden></div>' +
+        '<div class="rt-dk-welcome" hidden><p class="rt-dk-wk"></p><h3 class="rt-dk-wh"></h3><p class="rt-dk-wp"></p>' +
+        '<p class="rt-dk-wt"></p><button type="button" class="rt-dk-go"></button><p class="rt-dk-wn"></p></div>' +
+        '<div class="rt-dk-tools"><div class="rt-dk-finish" role="group"></div>' +
+        '<button type="button" class="rt-dk-full"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>';
+      dk.el = el;
+      dk.img = $$('.rt-dk-paint img', el); dk.welcome = $('.rt-dk-welcome', el);
+      dk.cap = $('figcaption', el); dk.cv = $('canvas', el); dk.dots = $('.rt-dk-dots', el);
+      dk.cv.setAttribute('aria-label', T.strand);
+      var fin = $('.rt-dk-finish', el), cur = savedFinish();
+      fin.setAttribute('aria-label', T.beadsLabel);
+      ['wood', 'pearl', 'lapis'].forEach(function (f) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'rt-fin rt-fin-' + f; b.setAttribute('data-finish', f);
+        b.setAttribute('aria-pressed', String(f === cur)); b.title = T.finishes[f];
+        b.innerHTML = '<i aria-hidden="true"></i><span class="visually-hidden"></span>';
+        $('span', b).textContent = T.finishes[f];
+        fin.appendChild(b);
+      });
+      fin.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-finish]'); if (!b) return;
+        var f = b.getAttribute('data-finish');
+        $$('[data-finish]', fin).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        try { localStorage.setItem(FINISH_KEY, f); } catch (er) { /* private mode */ }
+        if (dk.strand) dk.strand.setFinish(f);
+      });
+      $('.rt-dk-go', el).addEventListener('click', function () {
+        dkWelcome(false);
+        try { ui.next.focus({ preventScroll: true }); } catch (e) { ui.next.focus(); }
+      });
+      var full = $('.rt-dk-full', el);
+      full.addEventListener('click', function () {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else if (root.requestFullscreen) root.requestFullscreen().catch(function () { /* refused */ });
+      });
+      var fullLabel = function () {
+        var l = document.fullscreenElement ? T.fullExit : T.full;
+        full.setAttribute('aria-label', l); full.title = l;
+        if (dk.on) dkSize();
+      };
+      document.addEventListener('fullscreenchange', fullLabel); fullLabel();
+      if (!root.requestFullscreen) full.hidden = true;
+      dkStrand();
+    }
+    function dkStrand() {
+      var gl = null;
+      try { gl = dk.cv.getContext('webgl2'); } catch (e) { gl = null; }
+      /* the 3D module makes its own context on the canvas: hand over a fresh one */
+      if (!gl || !window.ResizeObserver) { dkNoGl(); return; }
+      var fresh = dk.cv.cloneNode(false); dk.cv.parentNode.replaceChild(fresh, dk.cv); dk.cv = fresh;
+      import(new URL(ROOT + 'assets/vendor/rosary3d.js', document.baseURI).href).then(function (m) {
+        dk.strand = m.createRosary(dk.cv, {
+          still: reduceMotion,
+          onPick: function (id) {
+            if (!done && steps[idx].el === id) { next(); return; }
+            var i = stepOfBead(id); if (i >= 0) goTo(i, 50);
+          }
+        });
+        dk.strand.setFinish(savedFinish());
+        dk.strand.goTo(done ? null : steps[idx].el, true);
+      })['catch'](dkNoGl);
+    }
+    function dkNoGl() {
+      dk.cv.hidden = true; dk.dots.hidden = false;
+      $('.rt-dk-finish', dk.el).hidden = true;
+      dk.strand = null;
+      if (firstSet) render(false);
+    }
+    /* the section fills the window below the site's bar, edge to edge */
+    function dkSize() {
+      if (!dk.on) return;
+      root.style.removeProperty('--dk-pull');
+      var bar = topBar(), barH = bar && !document.fullscreenElement ? Math.round(bar.getBoundingClientRect().height) : 0;
+      var docTop = root.getBoundingClientRect().top + window.scrollY;
+      root.style.setProperty('--dk-bar', barH + 'px');
+      root.style.setProperty('--dk-pull', Math.min(0, barH - docTop) + 'px');
+      /* the window's width without its scroll bar; CSS centres the section on it */
+      root.style.setProperty('--dk-w', document.documentElement.clientWidth + 'px');
+    }
+    function dkOn() {
+      dkBuild();
+      dk.on = true;
+      document.documentElement.classList.add('rt-desk');
+      root.insertBefore(dk.el, root.firstChild);
+      sheet.insertBefore($('.rt-bar', root), sheet.firstChild);
+      sheet.appendChild($('.rt-dk-tools', dk.el));
+      dkSize();
+    }
+    function dkOff() {
+      dk.on = false;
+      dkWelcome(false);
+      document.documentElement.classList.remove('rt-desk');
+      if (document.fullscreenElement) document.exitFullscreen();
+      dk.el.appendChild($('.rt-dk-tools', sheet));
+      root.insertBefore($('.rt-bar', sheet), root.firstChild.nextSibling);
+      if (dk.el.parentNode) dk.el.parentNode.removeChild(dk.el);
+    }
+    /* a painting crossfades in over the last, filling the screen; "hd" in data/tespih.js: the
+       large painting for wide screens, in two sizes, and the point ("x", "y", in %) that stays in
+       view when the screen's shape crops it */
+    function dkArt(key) {
+      var data = window.COMPENDIUM_ROSARY, a = data && data.art[key];
+      if (!a || key === dk.artKey) return;
+      dk.artKey = key;
+      var h = a.hd, n = 1 - dk.front, img = dk.img[n], c = h || a;
+      var show = function () {
+        dk.front = n;
+        dk.img.forEach(function (x, i) { x.classList.toggle('is-on', i === n); });
+      };
+      img.onload = show;
+      if (h) {
+        var box = img.parentNode.getBoundingClientRect();
+        img.sizes = Math.max(320, Math.round(Math.max(box.width, box.height * h.w[1] / h.h))) + 'px';
+        img.srcset = 'assets/art/' + h.f + '-1600.jpg ' + h.w[0] + 'w, assets/art/' + h.f + '-2560.jpg ' + h.w[1] + 'w';
+        img.src = 'assets/art/' + h.f + '-1600.jpg';
+        img.style.objectPosition = (h.x == null ? 50 : h.x) + '% ' + (h.y == null ? 40 : h.y) + '%';
+      } else { img.removeAttribute('srcset'); img.src = 'assets/art/' + a.f + '.jpg'; img.style.objectPosition = '50% ' + a.y + '%'; }
+      /* "p": "r" puts the prayer panel on the right, for a painting whose heart is at its left */
+      root.classList.toggle('dk-right', !!(h && h.p === 'r'));
+      dk.cap.textContent = LANG === 'en' ? (c.ae || c.a) + ' · ' + c.te : c.a + ' · ' + c.t;
+      if (img.complete && img.naturalWidth) show();
+    }
+    /* the first screen: the opening painting and a word of welcome, until "Begin" (or a
+       return visit the same day, which goes straight back to the prayer it left) */
+    function dkWelcome(on) {
+      dk.welcoming = on;
+      dk.welcome.hidden = !on;
+      root.classList.toggle('is-welcome', on);
+      if (!on) return;
+      $('.rt-dk-wk', dk.welcome).textContent = T.welcomeK;
+      $('.rt-dk-wh', dk.welcome).textContent = T.welcomeH;
+      $('.rt-dk-wp', dk.welcome).textContent = T.welcomeP;
+      $('.rt-dk-wt', dk.welcome).textContent = T.todayIs + ' ' + setName();
+      $('.rt-dk-go', dk.welcome).textContent = T.begin;
+      $('.rt-dk-wn', dk.welcome).textContent = T.welcomeN;
+    }
+    function dkRender(st) {
+      if (!dk.on) return;
+      var data = window.COMPENDIUM_ROSARY;
+      if (data) dkArt(!done && st.decade ? currentSet().items[st.decade - 1].art : data.artOpen);
+      /* the next decade's painting, ready before it is needed */
+      if (data && st && st.decade && st.decade < 5) {
+        var nk = data.art[currentSet().items[st.decade].art];
+        if (nk) { var pre = new Image(); pre.src = 'assets/art/' + (nk.hd ? nk.hd.f + '-1600' : nk.f) + '.jpg'; }
+      }
+      dk.el.classList.toggle('is-done', done);
+      if (dk.welcoming) dkWelcome(true); // the set of mysteries may have changed
+      if (dk.strand) {
+        dk.strand.goTo(done ? null : steps[idx].el);
+        if (done && !dk.wasDone) dk.strand.celebrate();
+      }
+      dk.wasDone = done;
+      if (!dk.dots.hidden) beadDots(dk.dots, st);
+    }
+
     $$('.bead', svg).forEach(function (b) {
       beads[b.id] = b;
       hits.push({
@@ -1386,14 +1572,14 @@
       });
     });
     steps.forEach(function (st, i) { (stepsFor[st.el] = stepsFor[st.el] || []).push(i); });
-    if (narrow.matches) phoneOn();
+    if (narrow.matches) phoneOn(); else dkOn();
     var onScreen = function () {
-      if (narrow.matches && !ph.on) phoneOn(); else if (!narrow.matches && ph.on) phoneOff();
+      if (narrow.matches && !ph.on) { if (dk.on) dkOff(); phoneOn(); } else if (!narrow.matches && ph.on) { phoneOff(); dkOn(); }
       if (ph.on) phoneTop();
       if (firstSet) render(false);
     };
     if (narrow.addEventListener) narrow.addEventListener('change', onScreen); else if (narrow.addListener) narrow.addListener(onScreen);
-    window.addEventListener('resize', function () { if (ph.on) { phoneTop(); phoneFit(); } });
+    window.addEventListener('resize', function () { if (ph.on) { phoneTop(); phoneFit(); } if (dk.on) dkSize(); });
 
     /* Progress is kept in this browser only (localStorage), and only for the day it was
        prayed on: a new day starts fresh on that day's mysteries. */
@@ -1517,6 +1703,7 @@
       }
       if (user) ui.resume.hidden = true;
       phoneRender(st);
+      dkRender(st);
       saveProgress();
       if (user) keepVisible();
     }
@@ -1524,7 +1711,7 @@
     /* Keep the active bead on screen, between the sticky header and (on phones) the docked
        sheet: the whole rosary when it fits there, otherwise the bead centred. */
     function keepVisible() {
-      if (done || ph.on) return;
+      if (done || ph.on || dk.on) return;
       var b = beads[steps[idx].el];
       if (!b) return;
       var r = b.getBoundingClientRect(), head = topBar();
@@ -1543,6 +1730,7 @@
       buzz(steps[idx].announce ? [40, 60, 40] : pattern);
     }
     function next() {
+      if (dk.welcoming) { dkWelcome(false); return; }
       if (done) { goTo(0, 50); return; }
       if (idx === steps.length - 1) { done = true; render(true); buzz([60, 80, 60, 80, 120]); return; }
       goTo(idx + 1, 50);
@@ -1578,6 +1766,15 @@
         sx = null;
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { if (dx < 0) next(); else prev(); }
       }, { passive: true });
+      /* desktop: the arrow keys turn the beads wherever the focus is, but not inside a field */
+      document.addEventListener('keydown', function (e) {
+        if (!dk.on || root.contains(e.target) || e.altKey || e.ctrlKey || e.metaKey) return;
+        if (e.target.closest && e.target.closest('input, select, textarea, [contenteditable]')) return;
+        var r = root.getBoundingClientRect();
+        if (r.bottom < window.innerHeight / 2 || r.top > window.innerHeight / 2) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+      });
       root.addEventListener('keydown', function (e) {
         if (e.target === select || e.altKey || e.ctrlKey || e.metaKey) return;
         if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
@@ -1625,6 +1822,7 @@
       }
       wire();
       render(false);
+      if (dk.on && idx === 0 && !done) dkWelcome(true);
     })['catch'](function () {
       ui.title.textContent = T.loadFail;
       ui.text.textContent = '';

@@ -40,3 +40,6 @@ __pycache__/
 /verbumdomini/data/azizler-adlar.js
 /verbumdomini/data/azizler-ozet-*.js
 /verbumdomini/_site_en/
+
+# the 3D beads build tool (tools/rosary3d/README.md); its output, assets/vendor/rosary3d.js, is kept
+tools/rosary3d/node_modules/
