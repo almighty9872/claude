@@ -156,6 +156,177 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "en": "Conclude with the Hail Holy Queen and the closing prayer, then the Sign of the Cross."
     }
   ],
+  "artOpen": "i-rosary",
+  "art": {
+    "46ecceho": {
+      "f": "46ecceho-800",
+      "t": "Ecce Homo",
+      "te": "Ecce Homo",
+      "a": "Caravaggio",
+      "ae": "Caravaggio",
+      "y": 30
+    },
+    "55flagel": {
+      "f": "55flagel-800",
+      "t": "Kırbaçlanma",
+      "te": "The Flagellation of Christ",
+      "a": "Caravaggio",
+      "ae": "Caravaggio",
+      "y": 35
+    },
+    "i-agony": {
+      "f": "i-agony-800",
+      "t": "Bahçedeki Istırap",
+      "te": "The Agony in the Garden",
+      "a": "Mantegna",
+      "ae": "Mantegna",
+      "y": 80
+    },
+    "i-annunc": {
+      "f": "i-annunc",
+      "t": "Müjde",
+      "te": "The Annunciation",
+      "a": "Fra Angelico",
+      "ae": "Fra Angelico",
+      "y": 35
+    },
+    "i-ascens": {
+      "f": "i-ascens",
+      "t": "İsa’nın Göğe Yükselişi",
+      "te": "The Ascension",
+      "a": "Giotto",
+      "ae": "Giotto",
+      "y": 35
+    },
+    "i-bapt": {
+      "f": "i-bapt",
+      "t": "İsa’nın Vaftizi",
+      "te": "The Baptism of Christ",
+      "a": "Piero della Francesca",
+      "ae": "Piero della Francesca",
+      "y": 35
+    },
+    "i-barocci": {
+      "f": "i-barocci",
+      "t": "Efkaristiya’nın Kuruluşu",
+      "te": "The Institution of the Eucharist",
+      "a": "Federico Barocci",
+      "ae": "Federico Barocci",
+      "y": 35
+    },
+    "i-calvary": {
+      "f": "i-calvary",
+      "t": "Golgota Yolu",
+      "te": "The Road to Calvary",
+      "a": "Giotto",
+      "ae": "Giotto",
+      "y": 35
+    },
+    "i-doctors": {
+      "f": "i-doctors-800",
+      "t": "İsa Din Bilginleri Arasında",
+      "te": "Christ among the Doctors",
+      "a": "Giotto",
+      "ae": "Giotto",
+      "y": 70
+    },
+    "i-nativ": {
+      "f": "i-nativ",
+      "t": "İsa’nın Doğuşu",
+      "te": "The Nativity",
+      "a": "Giotto",
+      "ae": "Giotto",
+      "y": 35
+    },
+    "i-pentec": {
+      "f": "i-pentec",
+      "t": "Pentekost",
+      "te": "Pentecost",
+      "a": "El Greco",
+      "ae": "El Greco",
+      "y": 35
+    },
+    "i-resur": {
+      "f": "i-resur",
+      "t": "Diriliş",
+      "te": "The Resurrection",
+      "a": "Piero della Francesca",
+      "ae": "Piero della Francesca",
+      "y": 35
+    },
+    "i-rosary": {
+      "f": "i-rosary",
+      "t": "Tesbihli Meryem ve Çocuk",
+      "te": "Virgin and Child with a Rosary",
+      "a": "Murillo",
+      "ae": "Murillo",
+      "y": 35
+    },
+    "i-sermon": {
+      "f": "i-sermon-800",
+      "t": "Dağdaki Vaaz",
+      "te": "The Sermon on the Mount",
+      "a": "Carl Heinrich Bloch",
+      "ae": "Carl Heinrich Bloch",
+      "y": 30
+    },
+    "i-transf": {
+      "f": "i-transf",
+      "t": "Suretin Değişmesi",
+      "te": "The Transfiguration",
+      "a": "Raffaello",
+      "ae": "Raphael",
+      "y": 35
+    },
+    "r-assunta": {
+      "f": "r-assunta",
+      "t": "Meryem’in Göğe Alınışı",
+      "te": "The Assumption of the Virgin",
+      "a": "Tiziano",
+      "ae": "Titian",
+      "y": 22
+    },
+    "r-cana": {
+      "f": "r-cana",
+      "t": "Kana’daki Düğün",
+      "te": "The Marriage at Cana",
+      "a": "Giotto",
+      "ae": "Giotto",
+      "y": 60
+    },
+    "r-coron": {
+      "f": "r-coron-800",
+      "t": "Meryem’in Taçlandırılması",
+      "te": "The Coronation of the Virgin",
+      "a": "Diego Velázquez",
+      "ae": "Diego Velázquez",
+      "y": 35
+    },
+    "r-cruc": {
+      "f": "r-cruc-800",
+      "t": "Çarmıha Geriliş",
+      "te": "The Crucifixion",
+      "a": "Giotto",
+      "ae": "Giotto",
+      "y": 30
+    },
+    "r-visit": {
+      "f": "r-visit-800",
+      "t": "Ziyaret",
+      "te": "The Visitation",
+      "a": "Domenico Ghirlandaio",
+      "ae": "Domenico Ghirlandaio",
+      "y": 40
+    },
+    "y-presen": {
+      "f": "y-presen-800",
+      "t": "İsa’nın Tapınağa Sunuluşu",
+      "te": "The Presentation in the Temple",
+      "a": "Andrea Mantegna",
+      "ae": "Andrea Mantegna",
+      "y": 40
+    }
+  },
   "sets": [
     {
       "id": "sevinc",
@@ -170,23 +341,28 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "items": [
         {
           "tr": "Meleğin Meryem’e müjdeyi getirmesi",
-          "en": "The Annunciation"
+          "en": "The Annunciation",
+          "art": "i-annunc"
         },
         {
           "tr": "Meryem’in Elizabet’i ziyaret etmesi",
-          "en": "The Visitation"
+          "en": "The Visitation",
+          "art": "r-visit"
         },
         {
           "tr": "Mesih İsa’nın doğuşu",
-          "en": "The Nativity"
+          "en": "The Nativity",
+          "art": "i-nativ"
         },
         {
           "tr": "Mesih İsa’nın tapınakta sunulması",
-          "en": "The Presentation"
+          "en": "The Presentation",
+          "art": "y-presen"
         },
         {
           "tr": "Mesih İsa’nın kaybolması ve tapınakta bulunması",
-          "en": "The Finding in the Temple"
+          "en": "The Finding in the Temple",
+          "art": "i-doctors"
         }
       ]
     },
@@ -202,23 +378,28 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "items": [
         {
           "tr": "Mesih İsa’nın Ürdün nehrinde vaftizi",
-          "en": "The Baptism of Jesus"
+          "en": "The Baptism of Jesus",
+          "art": "i-bapt"
         },
         {
           "tr": "Mesih İsa’nın Kana düğününde kendini açıklaması",
-          "en": "The Wedding Feast of Cana"
+          "en": "The Wedding Feast of Cana",
+          "art": "r-cana"
         },
         {
           "tr": "Allah’ın Hükümdarlığı’nın ilan edilmesi",
-          "en": "The Proclamation of the Kingdom"
+          "en": "The Proclamation of the Kingdom",
+          "art": "i-sermon"
         },
         {
           "tr": "Mesih İsa’nın görünüm değiştirmesi",
-          "en": "The Transfiguration"
+          "en": "The Transfiguration",
+          "art": "i-transf"
         },
         {
           "tr": "Mesih İsa’nın Efkaristiya’yı kurması",
-          "en": "The Institution of the Eucharist"
+          "en": "The Institution of the Eucharist",
+          "art": "i-barocci"
         }
       ]
     },
@@ -235,23 +416,28 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "items": [
         {
           "tr": "Mesih İsa’nın Getsemani bahçesinde dua etmesi",
-          "en": "The Agony in the Garden"
+          "en": "The Agony in the Garden",
+          "art": "i-agony"
         },
         {
           "tr": "Mesih İsa’nın kırbaçlanması",
-          "en": "The Scourging at the Pillar"
+          "en": "The Scourging at the Pillar",
+          "art": "55flagel"
         },
         {
           "tr": "Mesih İsa’ya dikenli tacın takılması",
-          "en": "The Crowning with Thorns"
+          "en": "The Crowning with Thorns",
+          "art": "46ecceho"
         },
         {
           "tr": "Mesih İsa’nın haçı taşıması",
-          "en": "The Carrying of the Cross"
+          "en": "The Carrying of the Cross",
+          "art": "i-calvary"
         },
         {
           "tr": "Mesih İsa’nın haça gerilmesi ve ölümü",
-          "en": "The Crucifixion"
+          "en": "The Crucifixion",
+          "art": "r-cruc"
         }
       ]
     },
@@ -268,23 +454,28 @@ window.COMPENDIUM_ROSARY = /*JSON-START*/{
       "items": [
         {
           "tr": "Mesih İsa’nın dirilişi",
-          "en": "The Resurrection"
+          "en": "The Resurrection",
+          "art": "i-resur"
         },
         {
           "tr": "Mesih İsa’nın göğe çıkması",
-          "en": "The Ascension"
+          "en": "The Ascension",
+          "art": "i-ascens"
         },
         {
           "tr": "Mesih İsa’nın Kutsal Ruh’u göndermesi",
-          "en": "The Descent of the Holy Spirit"
+          "en": "The Descent of the Holy Spirit",
+          "art": "i-pentec"
         },
         {
           "tr": "Meryem Ana’nın göğe alınması",
-          "en": "The Assumption"
+          "en": "The Assumption",
+          "art": "r-assunta"
         },
         {
           "tr": "Meryem Ana’nın, yerin ve göğün kraliçesi olarak taçlandırılması",
-          "en": "The Coronation of Mary"
+          "en": "The Coronation of Mary",
+          "art": "r-coron"
         }
       ]
     }
