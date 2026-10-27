@@ -2552,8 +2552,7 @@ function Rosary-Tracker {
   $opts = ($Rosary.sets | ForEach-Object { "<option value=`"$($_.id)`" data-days=`"$($_.days -join ',')`">$($_.tr)</option>" }) -join ''
   return @"
   <section class="rt" id="tesbih-rehberi" aria-labelledby="rt-h">
-    <h2 class="section-title" id="rt-h">Adım Adım Tesbih</h2>
-    <p class="rt-lead">Parlayan taneye dokunun ya da ileri okuna basın; her tanenin duası dua panelinde görünür. Günün gizemleri kendiliğinden seçilir.</p>
+    <h2 class="visually-hidden" id="rt-h">Adım Adım Tesbih</h2>
     <div class="rt-bar">
       <label class="rt-select"><span class="label">Gizemler</span><select id="rt-set">$opts</select></label>
       <button type="button" class="rt-restart">$IcoRefresh<span>Baştan başla</span></button>
@@ -2602,12 +2601,9 @@ $Rosary.prayers | ForEach-Object { $PrayerById[$_.id] = $_ }
 $rosaryLead = if ($Rosary.about) { '<p class="rosary-note">' + ($Rosary.about.tr) + '</p>' } else { '' }
 $rosaryTip = if ($Rosary.about.tipTr) { '<p class="rosary-note">' + ($Rosary.about.tipTr) + '</p>' } else { '' }
 $tespihBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow" data-no-jl>
   $(Crumbs 'Tesbih Duası')
-  <header class="page-head center">$(Page-Ico $IcoBeads)<h1>$($Rosary.title)</h1></header>
-  <p class="rosary-jump"><a class="btn" href="#tesbih-rehberi">Hemen dua etmeye başlayın<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></p>
-  <p class="faq-intro">$((Inline $Rosary.intro))</p>
-  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">Okuyun</span><span class="t-title">Tesbihin Tarihi</span><span class="t-sub">İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya</span></a>
+  <h1 class="visually-hidden">$($Rosary.title)</h1>
 $(Rosary-Tracker)
   <h2 class="section-title" id="gizemler">Gizemler</h2>
   <div class="myst-grid">
@@ -2617,6 +2613,7 @@ $mysterySets
   $rosaryLead
   <ol class="steps">$stepList</ol>
   $rosaryTip
+  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">Okuyun</span><span class="t-title">Tesbihin Tarihi</span><span class="t-sub">İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya</span></a>
   <p class="conventions">Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir.</p>
 </div>
 "@

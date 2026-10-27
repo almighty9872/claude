@@ -2827,8 +2827,8 @@ html.av .to-top-wrap { display: none; }
 .ic-closing .prose p:last-child { margin-top: 1.4rem; text-align: center; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
 .ic-sources { max-width: 40rem; margin: 3.4rem auto 0; }
 .ic-sources ul { padding-left: 1.2rem; color: var(--text-soft); font-size: .92rem; line-height: 1.6; }
-/* Tesbihin Tarihi: the link to it on the Rosary page, its folding Bible lists, closing line and sources */
-.th-link { max-width: 34rem; margin: -.4rem auto 2.4rem; text-align: center; }
+/* Tesbihin Tarihi: the link to it at the foot of the Rosary page, its folding Bible lists, closing line and sources */
+.th-link { max-width: 34rem; margin: 2rem auto; text-align: center; }
 .th-page .th-fold { margin: 1.4rem 0; font-size: 1rem; }
 .th-page .th-fold > summary .faq-q { font-family: var(--sans); font-size: 1rem; }
 .th-page .th-fold .faq-a ul { margin-bottom: .9em; }

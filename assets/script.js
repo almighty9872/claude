@@ -3249,7 +3249,8 @@
      --------------------------------------------------------------- */
   function initJumpList() {
     var main = $('#main');
-    if (!main || !document.body.hasAttribute('data-article')) return;
+    /* data-no-jl: a page without the list (the Rosary page, where it would cover the prayer panel's buttons) */
+    if (!main || !document.body.hasAttribute('data-article') || $('[data-no-jl]', main)) return;
     /* the page's sections, and the numbered parts inside them (İslam'a Cevap, Tesbihin Tarihi) */
     var heads = $$('h2, h3.ic-sec-t', main).filter(function (h) {
       return !h.closest('.page-head, .av-hero, dialog, .ic-sources, .kt-nav') && !h.classList.contains('visually-hidden');
