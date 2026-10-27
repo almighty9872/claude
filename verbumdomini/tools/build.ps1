@@ -1194,8 +1194,7 @@ function Search-Form([string]$cls, [string]$id, [string]$placeholder, [string]$l
 $DnSubs = @{
   'katekizm.html' = $KatekizmNav
   'tesbih-duasi.html' = @(
-    @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası'; s = 'Dualar ve gizemler'; te = 'The Rosary'; se = 'Prayers and mysteries' },
-    @{ href = 'tesbih-duasi.html#tesbih-rehberi'; t = 'Adım Adım Tesbih'; s = 'Boncuk boncuk, birlikte dua edin'; te = 'Pray It Bead by Bead'; se = 'A guided rosary, on screen' },
+    @{ href = 'tesbih-duasi.html'; t = 'Tesbih Duası Et'; s = 'Boncuk boncuk, birlikte dua edin'; te = 'Pray the Rosary'; se = 'A guided rosary, on screen' },
     @{ href = 'tesbih-tarihi.html'; t = 'Tesbihin Tarihi'; s = "İncil$($Apos)den Fatima$($Apos)ya"; te = 'History of the Rosary'; se = 'From the Gospel to Fatima' })
   'azizler.html' = @(
     @{ href = 'azizler.html'; t = 'Azizler Takvimi'; s = 'Yılın her günü için bir aziz'; te = 'Calendar of Saints'; se = 'A saint for every day of the year' },
@@ -2868,8 +2867,7 @@ function Rosary-Tracker([string]$lang) {
   $opts = ($Rosary.sets | ForEach-Object { "<option value=`"$($_.id)`" data-days=`"$($_.days -join ',')`">$($_.tr)</option>" }) -join ''
   return @"
   <section class="rt" id="tesbih-rehberi" aria-labelledby="rt-h">
-    <h2 class="section-title" id="rt-h">$(T 'Adım Adım Tesbih' 'Pray the Rosary, Bead by Bead')</h2>
-    <p class="rt-lead">$(T 'Parlayan taneye dokunun ya da ileri okuna basın; her tanenin duası dua panelinde görünür. Günün gizemleri kendiliğinden seçilir.' "Tap the glowing bead or press Next; the prayer for each bead appears in the prayer panel. Today's mysteries are chosen for you.")</p>
+    <h2 class="visually-hidden" id="rt-h">$(T 'Adım Adım Tesbih' 'Pray the Rosary, Bead by Bead')</h2>
     <div class="rt-bar">
       <label class="rt-select"><span class="label">$(T 'Gizemler' 'Mysteries')</span><select id="rt-set">$opts</select></label>
       <button type="button" class="rt-restart">$IcoRefresh<span>$(T 'Baştan başla' 'Start over')</span></button>
@@ -2918,12 +2916,9 @@ $Rosary.prayers | ForEach-Object { $PrayerById[$_.id] = $_ }
 $rosaryLead = if ($Rosary.about) { '<p class="rosary-note">' + (T $Rosary.about.tr $Rosary.about.en) + '</p>' } else { '' }
 $rosaryTip = if ($Rosary.about.tipTr) { '<p class="rosary-note">' + (T $Rosary.about.tipTr $Rosary.about.tipEn) + '</p>' } else { '' }
 $tespihBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow" data-no-jl>
   $(Crumbs 'Tesbih Duası')
-  <header class="page-head center">$(Page-Ico $IcoBeads)<h1>$(T $Rosary.title $Rosary.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($Rosary.en)</p>")</header>
-  <p class="rosary-jump"><a class="btn" href="#tesbih-rehberi">$(T 'Hemen dua etmeye başlayın' 'Start praying now')<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></p>
-  <p class="faq-intro">$(T (Inline $Rosary.intro) (Inline $Rosary.introEn))</p>
-  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">$(T 'Okuyun' 'Read')</span><span class="t-title">$(T 'Tesbihin Tarihi' 'The History of the Rosary')</span><span class="t-sub">$(T "İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya" 'From its roots in the Gospel to St. Dominic, from Lepanto to Fatima')</span></a>
+  <h1 class="visually-hidden">$(T $Rosary.title $Rosary.en)</h1>
 $(Rosary-Tracker 'tr')
   <h2 class="section-title" id="gizemler">$(T 'Gizemler' 'The Mysteries')</h2>
   <div class="myst-grid">
@@ -2933,6 +2928,7 @@ $mysterySets
   $rosaryLead
   <ol class="steps">$stepList</ol>
   $rosaryTip
+  <a class="text-link th-link" href="tesbih-tarihi.html"><span class="label">$(T 'Okuyun' 'Read')</span><span class="t-title">$(T 'Tesbihin Tarihi' 'The History of the Rosary')</span><span class="t-sub">$(T "İncil$($Apos)deki kökünden Aziz Dominik$($Apos)e, İnebahtı$($Apos)dan Fatima$($Apos)ya" 'From its roots in the Gospel to St. Dominic, from Lepanto to Fatima')</span></a>
   <p class="conventions">$(T "Dua metinleri, İstanbul$($Apos)daki Sant$($Apos)Antuan (Aziz Antuan) Bazilikası$($Apos)nda tesbih duası için kullanılan Türkçe gelenek esas alınarak düzenlenmiştir." "The prayers are given in their traditional English form.")</p>
 </div>
 "@

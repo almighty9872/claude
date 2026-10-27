@@ -1311,6 +1311,62 @@
    "w": 1000,
    "h": 1228,
    "y": 40
+  },
+  "r-visit": {
+   "t": "Ziyaret",
+   "te": "The Visitation",
+   "a": "Domenico Ghirlandaio",
+   "loc": "Musée du Louvre, Paris",
+   "loce": "Musée du Louvre, Paris",
+   "src": "https://www.wikiart.org/en/domenico-ghirlandaio/the-visitation-1491",
+   "w": 1164,
+   "h": 1200,
+   "y": 40
+  },
+  "r-cana": {
+   "t": "Kana’daki Düğün",
+   "te": "The Marriage at Cana",
+   "a": "Giotto",
+   "loc": "Scrovegni Şapeli, Padova",
+   "loce": "Scrovegni Chapel, Padua",
+   "src": "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-24-_-_Marriage_at_Cana.jpg",
+   "w": 612,
+   "h": 576,
+   "y": 60
+  },
+  "r-cruc": {
+   "t": "Çarmıha Geriliş",
+   "te": "The Crucifixion",
+   "a": "Giotto",
+   "loc": "Scrovegni Şapeli, Padova",
+   "loce": "Scrovegni Chapel, Padua",
+   "src": "https://commons.wikimedia.org/wiki/File:Giotto_-_Scrovegni_-_-35-_-_Crucifixion.jpg",
+   "w": 874,
+   "h": 798,
+   "y": 30
+  },
+  "r-assunta": {
+   "t": "Meryem’in Göğe Alınışı",
+   "te": "The Assumption of the Virgin",
+   "a": "Tiziano",
+   "ae": "Titian",
+   "loc": "Santa Maria Gloriosa dei Frari, Venedik",
+   "loce": "Santa Maria Gloriosa dei Frari, Venice",
+   "src": "https://commons.wikimedia.org/wiki/File:Tizian_041.jpg",
+   "w": 700,
+   "h": 1243,
+   "y": 22
+  },
+  "r-coron": {
+   "t": "Meryem’in Taçlandırılması",
+   "te": "The Coronation of the Virgin",
+   "a": "Diego Velázquez",
+   "loc": "Museo del Prado, Madrid",
+   "loce": "Museo del Prado, Madrid",
+   "src": "https://www.wikiart.org/en/diego-velazquez/coronation-of-the-virgin-1644",
+   "w": 901,
+   "h": 1200,
+   "y": 35
   }
  },
  "sections": {

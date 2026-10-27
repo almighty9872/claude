@@ -1304,6 +1304,7 @@
       doneTitle: 'Tesbih tamamlandı', doneText: 'Beş onluğun hepsini tamamladınız. Dualarınız kabul olsun.',
       next: 'Sonraki', finish: 'Bitir', again: 'Yeniden başla', hide: 'Dua metnini gizle', show: 'Dua metnini göster',
       resumed: 'Kaldığınız yerden devam ediyorsunuz.',
+      more: 'Tesbih hakkında', close: 'Kapat', tapHint: 'Ekrana dokunun: sağ ileri, sol geri',
       loadFail: 'Dualar yüklenemedi. Lütfen sayfayı yenileyin.'
     },
     en: {
@@ -1314,6 +1315,7 @@
       doneTitle: 'Rosary complete', doneText: 'You have prayed all five decades. May your prayers be heard.',
       next: 'Next', finish: 'Finish', again: 'Pray again', hide: 'Hide prayer text', show: 'Show prayer text',
       resumed: 'Picking up where you left off.',
+      more: 'About the Rosary', close: 'Close', tapHint: 'Tap the screen: right for next, left for back',
       loadFail: 'The prayers could not be loaded. Please reload the page.'
     }
   };
@@ -1359,6 +1361,157 @@
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var narrow = window.matchMedia ? window.matchMedia('(max-width: 899.98px)') : { matches: true };
 
+    /* Phones: the Rosary as one still screen that never scrolls. The painting of the mystery
+       above (bars over it for the five decades), the prayer below with the beads of this part
+       of the rosary; a tap on the right of the screen goes on, on the left goes back. The rest
+       of the page waits in a sheet behind the ⋯ button. */
+    var ph = { on: false, art: null, img: null, segs: [], dots: null, more: null, moved: [], artKey: '', top: null };
+    var DOT_GROUPS = {
+      open: ['crucifix', 'intro-bead-1', 'intro-bead-2', 'intro-bead-3', 'intro-bead-4', 'intro-bead-5'],
+      close: ['centerpiece', 'crucifix']
+    };
+    function phoneBuild() {
+      if (ph.art) return;
+      var art = document.createElement('div');
+      art.className = 'rt-art';
+      art.innerHTML = '<img class="rt-art-img" alt="" decoding="async"><div class="rt-segs" aria-hidden="true"></div>' +
+        '<div class="rt-art-t" aria-hidden="true"><p class="rt-art-k"></p><p class="rt-art-m"></p><p class="rt-art-c"></p></div>';
+      var segBox = $('.rt-segs', art);
+      for (var i = 0; i < 7; i++) {
+        var sg = document.createElement('span'); sg.appendChild(document.createElement('i'));
+        if (i === 0 || i === 6) sg.className = 'sm';
+        segBox.appendChild(sg); ph.segs.push(sg.firstChild);
+      }
+      ph.art = art; ph.img = $('.rt-art-img', art);
+      ph.k = $('.rt-art-k', art); ph.m = $('.rt-art-m', art); ph.c = $('.rt-art-c', art);
+      ph.dots = document.createElement('div'); ph.dots.className = 'rt-dots'; ph.dots.setAttribute('aria-hidden', 'true');
+      ph.hint = document.createElement('p'); ph.hint.className = 'rt-hint'; ph.hint.setAttribute('aria-hidden', 'true'); ph.hint.textContent = T.tapHint;
+      ph.nextL = document.createElement('span'); ph.nextL.className = 'rt-next-l'; ph.nextL.setAttribute('aria-hidden', 'true');
+      var mb = document.createElement('button');
+      mb.type = 'button'; mb.className = 'rt-more-btn'; mb.setAttribute('aria-label', T.more); mb.setAttribute('aria-haspopup', 'dialog');
+      mb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg>';
+      ph.moreBtn = mb;
+      var dlg = document.createElement('dialog');
+      dlg.className = 'rt-more'; dlg.setAttribute('aria-labelledby', 'rt-more-t');
+      dlg.innerHTML = '<div class="rt-more-head"><p class="rt-more-t" id="rt-more-t"></p><button type="button" class="rt-more-x"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div class="rt-more-body"></div>';
+      $('.rt-more-t', dlg).textContent = T.more;
+      $('.rt-more-x', dlg).setAttribute('aria-label', T.close);
+      document.body.appendChild(dlg);
+      ph.more = dlg;
+      mb.addEventListener('click', function () { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); });
+      $('.rt-more-x', dlg).addEventListener('click', function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg && dlg.close) dlg.close(); });
+      /* a link inside the sheet to a place on this page (a mystery card) closes it first */
+      dlg.addEventListener('click', function (e) { if (e.target.closest('a[href^="#"]') && dlg.close) dlg.close(); });
+    }
+    function phoneTop() {
+      var nav = document.documentElement.classList.contains('av') && $('.av-nav');
+      root.style.setProperty('--rt-top', (nav ? Math.round(nav.getBoundingClientRect().bottom) : 0) + 'px');
+    }
+    function phoneOn() {
+      phoneBuild();
+      ph.on = true;
+      document.documentElement.classList.add('rt-phone');
+      root.insertBefore(ph.art, root.firstChild);
+      $('.rt-bar', root).appendChild(ph.moreBtn);
+      sheet.insertBefore(ph.dots, ui.context);
+      sheet.appendChild(ph.hint);
+      ui.next.appendChild(ph.nextL);
+      /* everything after the rosary goes into the sheet, in order */
+      var body = $('.rt-more-body', ph.more), n = root.nextSibling;
+      while (n) { var nx = n.nextSibling; ph.moved.push(n); body.appendChild(n); n = nx; }
+      phoneTop();
+      window.scrollTo(0, 0);
+    }
+    function phoneOff() {
+      ph.on = false;
+      document.documentElement.classList.remove('rt-phone', 'rt-long');
+      [ph.art, ph.moreBtn, ph.dots, ph.hint, ph.nextL].forEach(function (el) { if (el.parentNode) el.parentNode.removeChild(el); });
+      if (ph.more.open && ph.more.close) ph.more.close();
+      var at = root.nextSibling;
+      ph.moved.forEach(function (el) { root.parentNode.insertBefore(el, at); });
+      ph.moved = [];
+      ui.text.style.fontSize = '';
+      ui.text.classList.remove('is-scroll');
+    }
+    function segOf(st) { return st.phase === 'open' ? 0 : st.phase === 'close' ? 6 : st.decade; }
+    function phoneDots(st) {
+      var ids, cur = -1, endOn = false;
+      if (done || st.phase === 'close') ids = DOT_GROUPS.close;
+      else if (st.phase === 'open') ids = DOT_GROUPS.open;
+      else {
+        var d = st.decade, of = d === 1 ? 'intro-bead-5' : 'decade-' + d + '-our-father';
+        ids = [of]; for (var k = 1; k <= 10; k++) ids.push('decade-' + d + '-bead-' + k);
+        ids.push('end');
+        endOn = st.phase === 'end';
+      }
+      if (done) cur = ids.length;
+      else if (endOn) cur = ids.length - 1;
+      else ids.forEach(function (id, i) { if (id === st.el && cur < 0) cur = i; });
+      /* the closing prayers: the medal holds four of them, the cross the last */
+      if (!done && st.phase === 'close' && st.el === 'crucifix') cur = 1;
+      ph.dots.textContent = '';
+      ids.forEach(function (id, i) {
+        var b = document.createElement('i');
+        var kind = id === 'crucifix' ? 'cross' : id === 'centerpiece' ? 'medal' : id === 'end' ? 'end' : /our-father|intro-bead-(1|5)$/.test(id) ? 'big' : '';
+        b.className = (kind ? kind + ' ' : '') + (i < cur ? 'done' : i === cur ? 'cur' : '');
+        ph.dots.appendChild(b);
+      });
+    }
+    function phoneRender(st) {
+      if (!ph.on) return;
+      var data = window.COMPENDIUM_ROSARY;
+      /* the bars: one per decade, a short one for the opening and the closing prayers */
+      var cnt = [0, 0, 0, 0, 0, 0, 0], pos = [0, 0, 0, 0, 0, 0, 0];
+      steps.forEach(function (x, i) { var g = segOf(x); cnt[g]++; if (done || i < idx) pos[g]++; });
+      var curSeg = done ? 7 : segOf(st);
+      ph.segs.forEach(function (bar, g) {
+        var f = g < curSeg ? 1 : g > curSeg ? 0 : (pos[g] + 1) / cnt[g];
+        bar.style.width = Math.round(f * 100) + '%';
+      });
+      /* the painting: the mystery's own, the opening and closing their own (data/tespih.js "art",
+         credited from data/tablolar.json) */
+      var key = data && (!done && st.decade ? currentSet().items[st.decade - 1].art : data.artOpen);
+      var a = key && data.art[key] ? data.art[key] : null;
+      if (a && key !== ph.artKey) {
+        ph.artKey = key;
+        ph.img.src = 'assets/art/' + a.f + '.jpg';
+        ph.img.style.objectPosition = '50% ' + a.y + '%';
+        ph.art.classList.remove('is-fresh'); void ph.art.offsetWidth; ph.art.classList.add('is-fresh');
+        /* the next decade's painting, ready before it is needed */
+        if (st && st.decade && st.decade < 5) {
+          var nk = currentSet().items[st.decade].art;
+          if (data.art[nk]) { var pre = new Image(); pre.src = 'assets/art/' + data.art[nk].f + '.jpg'; }
+        }
+      }
+      if (a) ph.c.textContent = (LANG === 'en' ? a.ae + ' · ' + a.te : a.a + ' · ' + a.t);
+      if (done) { ph.k.textContent = T.closing; ph.m.textContent = T.doneTitle; }
+      else if (st.decade) {
+        ph.k.textContent = (st.announce ? T.announce + ' · ' : '') + T.ord[st.decade - 1];
+        ph.m.textContent = mysteryName(st.decade);
+      } else { ph.k.textContent = st.phase === 'open' ? T.opening : T.closing; ph.m.textContent = setName(); }
+      ph.art.classList.toggle('is-announce', !!(st && st.announce));
+      phoneDots(st);
+      ph.nextL.textContent = ui.next.getAttribute('aria-label');
+      phoneFit();
+    }
+    /* the prayer fits the space it has: the type steps down from 20px (never below 15px); for the longest
+       prayers the painting steps back; only if that is still not enough does the text scroll,
+       inside its card, never the page */
+    function phoneFit() {
+      if (!ph.on) return;
+      var el = ui.text, html = document.documentElement;
+      var fits = function () {
+        for (var px = 20; px >= 15; px -= .5) { el.style.fontSize = px + 'px'; if (el.scrollHeight <= el.clientHeight + 1) return true; }
+        return false;
+      };
+      el.classList.remove('is-scroll');
+      html.classList.remove('rt-long');
+      if (fits()) return;
+      html.classList.add('rt-long');
+      if (!fits()) el.classList.add('is-scroll');
+    }
+
     $$('.bead', svg).forEach(function (b) {
       beads[b.id] = b;
       hits.push({
@@ -1369,6 +1522,14 @@
       });
     });
     steps.forEach(function (st, i) { (stepsFor[st.el] = stepsFor[st.el] || []).push(i); });
+    if (narrow.matches) phoneOn();
+    var onScreen = function () {
+      if (narrow.matches && !ph.on) phoneOn(); else if (!narrow.matches && ph.on) phoneOff();
+      if (ph.on) phoneTop();
+      if (firstSet) render(false);
+    };
+    if (narrow.addEventListener) narrow.addEventListener('change', onScreen); else if (narrow.addListener) narrow.addListener(onScreen);
+    window.addEventListener('resize', function () { if (ph.on) { phoneTop(); phoneFit(); } });
 
     /* Progress is kept in this browser only (localStorage), and only for the day it was
        prayed on: a new day starts fresh on that day's mysteries. */
@@ -1491,6 +1652,7 @@
         ui.live.textContent = p.title + ', ' + ctx + (st.announce ? ', ' + ui.mTitle.textContent : '');
       }
       if (user) ui.resume.hidden = true;
+      phoneRender(st);
       saveProgress();
       if (user) keepVisible();
     }
@@ -1498,7 +1660,7 @@
     /* Keep the active bead on screen, between the sticky header and (on phones) the docked
        sheet: the whole rosary when it fits there, otherwise the bead centred. */
     function keepVisible() {
-      if (done) return;
+      if (done || ph.on) return;
       var b = beads[steps[idx].el];
       if (!b) return;
       var r = b.getBoundingClientRect(), head = topBar();
@@ -1536,6 +1698,22 @@
         ui.grip.setAttribute('aria-expanded', String(!collapsed));
         ui.grip.setAttribute('aria-label', collapsed ? T.show : T.hide);
       });
+      /* phones: a tap on the prayer card, right two thirds forward, left third back; a swipe as on a
+         book's page */
+      sheet.addEventListener('click', function (e) {
+        if (!ph.on || e.target.closest('button, a, select')) return;
+        if (window.getSelection && String(window.getSelection()).length) return;
+        var r = sheet.getBoundingClientRect();
+        if (e.clientX - r.left < r.width / 3) prev(); else next();
+      });
+      var sx = null, sy = 0;
+      root.addEventListener('touchstart', function (e) { if (ph.on && e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; } }, { passive: true });
+      root.addEventListener('touchend', function (e) {
+        if (sx === null) return;
+        var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        sx = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { if (dx < 0) next(); else prev(); }
+      }, { passive: true });
       root.addEventListener('keydown', function (e) {
         if (e.target === select || e.altKey || e.ctrlKey || e.metaKey) return;
         if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
@@ -3414,7 +3592,8 @@
      --------------------------------------------------------------- */
   function initJumpList() {
     var main = $('#main');
-    if (!main || !document.body.hasAttribute('data-article')) return;
+    /* data-no-jl: a page without the list (the Rosary page, where it would cover the prayer panel's buttons) */
+    if (!main || !document.body.hasAttribute('data-article') || $('[data-no-jl]', main)) return;
     /* the page's sections, and the numbered parts inside them (İslam'a Cevap, Tesbihin Tarihi) */
     var heads = $$('h2, h3.ic-sec-t', main).filter(function (h) {
       return !h.closest('.page-head, .av-hero, dialog, .ic-sources, .kt-nav') && !h.classList.contains('visually-hidden');
