@@ -1325,7 +1325,7 @@
       loadFail: 'The prayers could not be loaded. Please reload the page.',
       beadsLabel: 'Beads', finishes: { wood: 'Olive wood', pearl: 'Pearl', lapis: 'Lapis' },
       welcomeK: 'The Holy Rosary', welcomeH: 'Welcome',
-      welcomeP: 'The Rosary is the life of Jesus seen through the eyes of his mother. At each mystery you pray looking at a moment from his life; the whole Rosary takes about twenty minutes.',
+      welcomeP: 'The Rosary is a prayer in which we walk with Mary through the life of her Son. As you pray each mystery, you reflect on a moment from his life. Praying the full Rosary takes about twenty minutes.',
       todayIs: 'Today’s mysteries:', begin: 'Begin the Rosary',
       welcomeN: 'Go on with the right arrow key or the next button; click a bead to go to it.',
       full: 'Full screen', fullExit: 'Exit full screen', strand: 'Rosary beads: click a bead or drag the strand to move'
