@@ -51,6 +51,7 @@ All paths below are inside `verbumdomini/` (run them from there, e.g. `cd verbum
   - `apply.py <file> <patch.json>`: patch is `{ "/path": "new text" }`; replaces whole fields, refuses empty values and em dashes.
   - `sub.py <file> <patch.json>`: patch is `[[path, old, new], ...]`; replaces one unique substring in a field.
   - `data/tespih.js` doesn't round-trip; edit it with plain string replacement.
+  - Porting Rosary data or code from the Turkish `data/tespih.js` or `assets/script.js`: the `"hd"` objects on the Rosary art entries carry no Turkish `"t"` here (they keep f, w, h, x, y, p, a, ae, te). Leave `"t"` out, and keep the desktop caption's fallback to `"te"` when `"t"` is missing.
   - `usspell.py <file>` (add `--dry` to preview): makes British spellings American in a file's English fields (the site's English is US). It skips quoted Scripture (`/en/text`); check anything else inside quotation marks by hand, since quotations keep their published spelling.
 - `tools/yahudilere-cagri/`: `data/yahudilere-cagri.js` is generated. Turkish text lives in `gen.py`, English in `en.py`, auto-links in `linker.py`. Edit those, then `python3 tools/yahudilere-cagri/gen.py data/yahudilere-cagri.js`.
 - `tools/en-site/strip_tr.py _site_en`: run by `build.ps1 -EnglishSite` (needs Python). Empties the Turkish half of every pair in the English site's data files and in the passages each page embeds, keeping the structure the script expects; it lists any Turkish-only letters left over (names like İzmir or Wojtyła are expected). The build stops if it fails.
