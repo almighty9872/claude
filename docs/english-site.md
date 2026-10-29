@@ -10,6 +10,7 @@ The rules for both sites (commit and deploy, no em dashes, no Claude lines, the 
 - English should read like it was written in English: direct, plain, not "translated", not AI-sounding.
 - The live katolikdunyasi.com stays Turkish-only. Its Catechism pages still have an English toggle.
 - Nothing Turkish on verbumdomini.ca, and no links or language tags (hreflang) to the Turkish site.
+- `docs/security-audit.md` records the closed security audit; its "Things to keep in mind" section applies to English-site work. In particular: a new painting goes into `verbumdomini/assets/art/` as a JPEG at the top level (the deploy makes its AVIF and WebP copies), the contact form only accepts posts from verbumdomini.ca, and there is no workers.dev preview address.
 
 ## How it's built
 
