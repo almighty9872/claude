@@ -3370,8 +3370,8 @@ function Home-Page {
 <div class="wrap home-v2">
   <h1 class="visually-hidden">$tag</h1>
   <div class="hm-about"><p class="hm-about-t">$tag</p><p class="hm-about-s">$($fm['about'])</p></div>
-$cards
 $find
+$cards
   $searchDesk
   <nav class="hm-apps" $(TA 'aria-label' 'Bölümler')>$icons</nav>
   $lists

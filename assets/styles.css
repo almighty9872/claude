@@ -4045,3 +4045,5 @@ html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap 
 }
 /* the home bar's own link (Kilise Bul): same look as an app's tab */
 .hm-link { text-decoration: none; }
+.hm-find + .hm-today { margin-top: .8rem; }
+@media (min-width: 980px) { .hm-find + .hm-today { margin-top: 1rem; } }
