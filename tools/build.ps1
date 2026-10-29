@@ -1325,6 +1325,9 @@ function Write-Page {
   # before the first paint so the page doesn't jump
   $isHome = $File -match '(^|/)index\.html$'
   $avJs = if ($isHome) { '' } else { "if(window.matchMedia&&matchMedia('(max-width: 979px)').matches){document.documentElement.classList.add('av');setTimeout(function(){document.documentElement.classList.add('av-ready')},3000)}" }
+  # kiliseler.html is in Turkish and English at once; the language is chosen before the first paint
+  # (?lang=, the reader's last choice, or English when none of the browser's languages is Turkish)
+  $klJs = if ($File -eq 'kiliseler.html') { "(function(H){var l=null;try{var q=/[?&]lang=(en|tr)/.exec(location.search);l=q?q[1]:localStorage.getItem('kd-kl-lang')}catch(e){}if(l!=='en'&&l!=='tr'){var L=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];l='tr';for(var i=0;i<L.length;i++){if(/^tr/i.test(L[i])){l='tr';break}l='en'}}if(l==='en'){H.classList.add('kl-en-on');H.lang='en'}})(document.documentElement);" } else { '' }
   $avNav = if ($isHome) { '' } else { Av-Nav $File }
   $appAttr += if ($isHome) { '' } else { " data-avp=`"$File`"" }
   # An article (every page but the home page, the Katekizm's, the calendar of saints, the
@@ -1405,7 +1408,7 @@ $hreflang
 <link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/lexend-ext-a.woff2" as="font" type="font/woff2" crossorigin>
 $homeArt<link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
-<script>$HeadJs$($avJs)$HeadJs2</script>
+<script>$HeadJs$($avJs)$($klJs)$HeadJs2</script>
 $ldTr
 <script src="assets/script.min.js?v=$JsVer" defer></script>
 </head>
@@ -2864,6 +2867,12 @@ foreach ($city in $Churches.cities) {
 # lights up under the pointer and opens the list of its churches (script.js, initChurchMap), each
 # name leading to the church's page. The shape is the Anatolian Roots map's outline, with the
 # Marmara coast in full detail.
+function KL([string]$tr, [string]$en) { return "<span class=`"kl-tr`">$tr</span><span class=`"kl-en`" lang=`"en`">$en</span>" }
+function KLB([string]$tr, [string]$en) { return "<div class=`"kl-tr kl-blk`">$tr</div><div class=`"kl-en kl-blk`" lang=`"en`">$en</div>" }
+function City-En($city) { if ($city.nameEn) { return $city.nameEn } else { return ($city.name -replace ' \(.*\)$', '') } }
+$PickSide = @{ avrupa = @('Avrupa Yakası', 'European side'); anadolu = @('Anadolu Yakası', 'Asian side'); merkez = @('Şehir merkezi', 'City center'); selcuk = @('Selçuk (Efes)', 'Selçuk (Ephesus)') }
+# the city with its Turkish case ending ("İstanbul’da", "İzmir’de"), for the headings and the summaries
+$CityLoc = @{ istanbul = "İstanbul$($Apos)da"; izmir = "İzmir$($Apos)de"; bursa = "Bursa$($Apos)da"; ankara = "Ankara$($Apos)da"; konya = "Konya$($Apos)da"; antalya = "Antalya$($Apos)da"; mersin = "Mersin$($Apos)de"; adana = "Adana$($Apos)da"; hatay = "Hatay$($Apos)da"; samsun = "Samsun$($Apos)da"; trabzon = "Trabzon$($Apos)da"; diyarbakir = "Diyarbakır$($Apos)da"; mardin = "Mardin$($Apos)de" }
 $CmShape = Read-Data 'kilise-harita-sekli.js'
 function Cm-Pin([double]$lat, [double]$lon) { $p = Map-XY $lat $lon; return "data-x=`"$($p[0])`" data-y=`"$($p[1])`"" }
 $cmCities = New-Object Text.StringBuilder; $cmPops = New-Object Text.StringBuilder
@@ -2871,19 +2880,20 @@ $cmCities = New-Object Text.StringBuilder; $cmPops = New-Object Text.StringBuild
 $SideLabel = @{ avrupa = ('Avrupa Yakası'); anadolu = ('Anadolu Yakası'); merkez = ('Şehir merkezi'); selcuk = ('Selçuk (Efes)') }
 foreach ($city in $Churches.cities) {
   $lab = $city.label; $cityName = $city.name -replace ' \(.*\)$', ''
-  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" data-open=`"$($city.open)`" $(Cm-Pin $city.lat $city.lon) tabindex=`"0`" role=`"button`" aria-haspopup=`"true`" aria-expanded=`"false`" aria-controls=`"cmap-pop-$($city.id)`" $(TA 'aria-label' "$($city.name): kiliseleri göster")>" +
+  $aeShow = Attr ((City-En $city) + ': show churches'); $aeList = Attr ((City-En $city) + ' churches')
+  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" data-open=`"$($city.open)`" $(Cm-Pin $city.lat $city.lon) tabindex=`"0`" role=`"button`" aria-haspopup=`"true`" aria-expanded=`"false`" aria-controls=`"cmap-pop-$($city.id)`" $(TA 'aria-label' "$($city.name): kiliseleri göster") data-aria-en=`"$aeShow`">" +
     "<circle class=`"cc-hit`" r=`"18`"></circle><circle class=`"cc-glow`" r=`"13`"></circle><circle class=`"cc-dot`" r=`"5.5`"></circle>" +
     "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$($cityName)</text></g>")
-  $li = { param($list) ($list | ForEach-Object { "<li><a href=`"kilise/$($_.id).html`">$((Inline $_.short))</a></li>" }) -join '' }
+  $li = { param($list) ($list | ForEach-Object { "<li><a href=`"kilise/$($_.id).html`">$(KL (Inline $_.short) $(if ($_.shortEn) { $_.shortEn } else { Inline $_.short }))</a></li>" }) -join '' }
   $sides = @($city.churches | Where-Object { $_.side } | ForEach-Object { $_.side } | Select-Object -Unique)
   if ($sides.Count -gt 1) {
     $cols = ($sides | ForEach-Object { ,@($_, $SideLabel[$_]) } | ForEach-Object {
       $s = $_; $in = @($city.churches | Where-Object { $_.side -eq $s[0] }); $long = if ($in.Count -gt 12) { ' is-long' } else { '' }
       $rows = if ($long) { " style=`"--rows:$([Math]::Ceiling($in.Count / 2))`"" } else { '' }
-      "<div class=`"cmap-pop-col$long`"><p class=`"cmap-pop-h`">$($s[1])</p><ul$rows>$(& $li $in)</ul></div>"
+      "<div class=`"cmap-pop-col$long`"><p class=`"cmap-pop-h`">$(KL $s[1] $PickSide[$s[0]][1])</p><ul$rows>$(& $li $in)</ul></div>"
     }) -join ''
   } else { $cols = "<div class=`"cmap-pop-col`"><ul>$(& $li @($city.churches))</ul></div>" }
-  [void]$cmPops.Append("<div class=`"cmap-pop`" id=`"cmap-pop-$($city.id)`" role=`"group`" $(TA 'aria-label' "$($city.name) kiliseleri") hidden><p class=`"cmap-pop-t`">$($city.name)</p><div class=`"cmap-pop-cols`">$cols</div></div>")
+  [void]$cmPops.Append("<div class=`"cmap-pop`" id=`"cmap-pop-$($city.id)`" role=`"group`" $(TA 'aria-label' "$($city.name) kiliseleri") data-aria-en=`"$aeList`" hidden><p class=`"cmap-pop-t`">$(KL $city.name (City-En $city))</p><div class=`"cmap-pop-cols`">$cols</div></div>")
 }
 $cmTexts = (@(
   @{ t = 'Karadeniz'; lat = 42.55; lon = 34.6 }
@@ -2891,9 +2901,9 @@ $cmTexts = (@(
 ) | ForEach-Object { "<text class=`"cm-sea`" $(Cm-Pin $_.lat $_.lon)>$($_.t)</text>" }) -join ''
 $cmBox = $CmShape.box
 $churchMapHtml = @"
-<section class="cmap" id="harita" $(TA 'aria-label' 'Kilise haritası')>
+<section class="cmap" id="harita" $(TA 'aria-label' 'Kilise haritası') data-aria-en="Map of churches">
   <div class="cmap-frame">
-    <svg class="cmap-svg" viewBox="0 0 $($AnShape.W) $($AnShape.H)" role="group" $(TA 'aria-label' "Türkiye$($Apos)deki Katolik kiliselerinin haritası: bir şehir seçin")>
+    <svg class="cmap-svg" viewBox="0 0 $($AnShape.W) $($AnShape.H)" role="group" $(TA 'aria-label' "Türkiye$($Apos)deki Katolik kiliselerinin haritası: bir şehir seçin") data-aria-en="Map of Catholic churches in Turkey: choose a city">
       <defs><clipPath id="cmap-out"><path clip-rule="evenodd" d="M-500-500H1500V1100H-500ZM$($cmBox[0]) $($cmBox[1])H$($cmBox[2])V$($cmBox[3])H$($cmBox[0])Z"></path></clipPath></defs>
       <rect class="cmap-sea" x="-500" y="-500" width="2000" height="1600"></rect>
       <path class="cmap-land" d="$($AnShape.land)"></path>
@@ -2907,48 +2917,158 @@ $churchMapHtml = @"
   </div>
 </section>
 "@
-# ---------------- The same churches as a dropdown list under the map, grouped by city (and by side
-# of the city where it has two): choosing one opens its page (script.js, initChurchPick). One list
-# per language; the page shows the one in the language being read
-$PickSide = @{ avrupa = @('Avrupa Yakası', 'European side'); anadolu = @('Anadolu Yakası', 'Asian side'); merkez = @('Şehir merkezi', 'City center'); selcuk = @('Selçuk (Efes)', 'Selçuk (Ephesus)') }
-function Church-Pick {
+$IcoChevKl = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
+# ---------------- Every church of the page in two languages. Turkish is what is written in the
+# page; the English twin sits beside it in the same document (class kl-en), and the switch at the
+# top of the page shows one or the other at once (script.js, initKlLang), so the reader keeps the
+# place they were at. Text with an English twin goes through KL; whole blocks through KLB.
+$TotalChurches = 0; foreach ($c in $Churches.cities) { $TotalChurches += @($c.churches).Count }
+$TotalCities = @($Churches.cities).Count
+function Church-Pick([string]$lang) {
+  $en = $lang -eq 'en'
   $sb = New-Object Text.StringBuilder
   foreach ($city in $Churches.cities) {
-    $cn = $city.name -replace ' \(.*\)$', ''
+    $cn = if ($en) { City-En $city } else { $city.name -replace ' \(.*\)$', '' }
     $sides = @($city.churches | Where-Object { $_.side } | ForEach-Object { $_.side } | Select-Object -Unique)
     if ($sides.Count -lt 2) { $sides = @('') }
     foreach ($sd in $sides) {
       $list = if ($sd) { @($city.churches | Where-Object { $_.side -eq $sd }) } else { @($city.churches) }
-      $gl = if ($sd) { "$cn · $($PickSide[$sd][0])" } else { $cn }
+      $gl = if ($sd) { "$cn · $($PickSide[$sd][[int]$en])" } else { $cn }
       [void]$sb.Append("<optgroup label=`"$(Attr $gl)`">")
-      foreach ($ch in $list) { $nm = $ch.short; [void]$sb.Append("<option value=`"$($ch.id)`">$(Attr (Plain $nm))</option>") }
+      foreach ($ch in $list) { $nm = if ($en -and $ch.shortEn) { $ch.shortEn } else { $ch.short }; [void]$sb.Append("<option value=`"$($ch.id)`">$(Attr (Plain $nm))</option>") }
       [void]$sb.Append('</optgroup>')
     }
   }
-  $groups = $sb.ToString()
-  $id = 'ch-pick-tr'
-  $label = 'Ya da listeden seçin'
-  $ph = 'Bir kilise seçin…'
-  $go = 'Git'
-  return "<form class=`"ch-pick`" data-ch-pick action=`"#`"><label for=`"$id`">$label</label><div class=`"ch-pick-row`"><select id=`"$id`" name=`"kilise`" required><option value=`"`" selected disabled>$ph</option>$groups</select><button type=`"submit`" class=`"btn`">$go</button></div></form>"
+  $id = "ch-pick-$lang"
+  $label = if ($en) { 'Or choose from the list' } else { 'Ya da listeden seçin' }
+  $ph = if ($en) { 'Choose a church…' } else { 'Bir kilise seçin…' }
+  $go = if ($en) { 'Go' } else { 'Git' }
+  $form = "<form class=`"ch-pick`" data-ch-pick action=`"#`"><label for=`"$id`">$label</label><div class=`"ch-pick-row`"><select id=`"$id`" name=`"kilise`" required><option value=`"`" selected disabled>$ph</option>$($sb.ToString())</select><button type=`"submit`" class=`"btn`">$go</button></div></form>"
+  if ($en) { return "<div class=`"kl-en kl-blk`" lang=`"en`">$form</div>" } else { return "<div class=`"kl-tr kl-blk`">$form</div>" }
 }
-$churchPickHtml = (Church-Pick)
+$churchPickHtml = (Church-Pick 'tr') + (Church-Pick 'en')
+
+# One church as a card: name, rite and district, the address with a map link, every Mass time, the
+# notice when it is closed or has something to know, and the link to its own page
+function Church-Card($ch, [string]$cityName) {
+  $rite = $RiteLabels[$ch.rite]; $riteEn = (@($Churches.rites | Where-Object { $_.id -eq $ch.rite })[0]).en
+  $nmTr = Inline $ch.name; $nmEn = if ($ch.nameEn) { $ch.nameEn } else { $nmTr }
+  $mapQ = "$(Plain $ch.name), $cityName"
+  $times = ''
+  if (@($ch.mass).Count) {
+    $times = '<dl class="kl-mass">' + ((0..(@($ch.mass).Count - 1) | ForEach-Object {
+      $m = @($ch.mass)[$_]; $me = if ($ch.massEn -and @($ch.massEn).Count -gt $_) { @($ch.massEn)[$_] } else { $m }
+      "<div class=`"kl-mrow`"><dt>$(KL (Inline $m[0]) $me[0])</dt><dd>$(KL (Inline $m[1]) $me[1])</dd></div>"
+    }) -join '') + '</dl>'
+  }
+  $note = ''
+  if ($ch.massNote) { $note = "<p class=`"kl-mnote`">$(KL (Inline $ch.massNote) $(if ($ch.massNoteEn) { $ch.massNoteEn } else { Inline $ch.massNote }))</p>" }
+  $notice = ''
+  if ($ch.notice) {
+    $head = if ($ch.status -eq 'closed') { KL 'Şu anda kapalı.' 'Currently closed.' } elseif ($ch.status -eq 'active') { KL 'Duyuru.' 'Notice.' } else { KL 'Gitmeden önce.' 'Before you go.' }
+    $notice = "<div class=`"ch-notice kl-notice is-$($ch.status)`" role=`"note`">$IcoWarn<p><strong>$head</strong> $(KL (Inline $ch.notice) $(if ($ch.noticeEn) { $ch.noticeEn } else { Inline $ch.notice }))</p></div>"
+  }
+  $tel = ''
+  if (@($ch.phones).Count) { $p0 = @($ch.phones)[0]; $tel = "<a class=`"kl-tel`" href=`"$(Tel-Href $p0)`">$IcoPhone<span>$p0</span></a>" }
+  $addr = "<p class=`"kl-addr`">$IcoPin<span>$(Inline $ch.address)</span></p>"
+  return "<li><article class=`"kl-ch is-$($ch.status)`" id=`"k-$($ch.id)`">" +
+    "<h3 class=`"kl-name`"><a href=`"kilise/$($ch.id).html`">$(KL $nmTr $nmEn)</a></h3>" +
+    "<p class=`"kl-meta`"><span class=`"kl-rite`">$(KL $rite.tr $riteEn)</span><span class=`"kl-dist`">$(Inline $ch.district)</span></p>" +
+    "$notice$addr$times$note" +
+    "<p class=`"kl-links`"><a class=`"kl-map`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$(Attr $mapQ)`" target=`"_blank`" rel=`"noopener`">$IcoPin<span>$(KL 'Haritada aç' 'Open in Maps')</span></a>$tel" +
+    "<a class=`"kl-more`" href=`"kilise/$($ch.id).html`"><span>$(KL 'Tarihçe ve ayrıntılar' 'History and details (Turkish)')</span>$IcoChevKl</a></p>" +
+    "</article></li>"
+}
+
+# One city: its heading, a line saying what is there, then the churches (Istanbul by side of the Bosphorus)
+function City-Section($city) {
+  $cn = $city.name -replace ' \(.*\)$', ''; $cnEn = City-En $city; $n = @($city.churches).Count
+  $parts = @(); $partsEn = @()
+  foreach ($r in $Churches.rites) {
+    $k = @($city.churches | Where-Object { $_.rite -eq $r.id }).Count
+    if ($k) { $parts += "$k $($r.tr)"; $partsEn += "$k $($r.en)" }
+  }
+  $loc = $CityLoc[$city.id]
+  $sumTr = if ($n -eq 1) { "$loc 1 Katolik kilisesi bulunuyor: $($parts -join ', ')." } else { "$loc $n Katolik kilisesi bulunuyor: $($parts -join ', ')." }
+  $sumEn = if ($n -eq 1) { "$cnEn has 1 Catholic church: $($partsEn -join ', ')." } else { "$cnEn has $n Catholic churches: $($partsEn -join ', ')." }
+  $sides = @($city.churches | Where-Object { $_.side } | ForEach-Object { $_.side } | Select-Object -Unique)
+  if ($sides.Count -gt 1) {
+    $body = ($sides | ForEach-Object {
+      $s = $_; $in = @($city.churches | Where-Object { $_.side -eq $s })
+      "<h3 class=`"kl-side`">$(KL $PickSide[$s][0] $PickSide[$s][1])</h3><ul class=`"kl-grid`">$(($in | ForEach-Object { Church-Card $_ $cn }) -join '')</ul>"
+    }) -join ''
+  } else { $body = "<ul class=`"kl-grid`">$((@($city.churches) | ForEach-Object { Church-Card $_ $cn }) -join '')</ul>" }
+  return "<section class=`"kl-city`" id=`"$($city.id)`" aria-labelledby=`"h-$($city.id)`"><h2 class=`"kl-h`" id=`"h-$($city.id)`">$(KL "$loc Katolik Kiliseleri" "Catholic Churches in $cnEn")<span class=`"kl-count`">$n</span></h2>" +
+    "<p class=`"kl-sum`">$(KL $sumTr $sumEn)</p>$body</section>"
+}
+$klCities = ($Churches.cities | ForEach-Object { City-Section $_ }) -join "`n"
+
+# The pinned row: the cities as one-tap jumps, and the TR / EN switch at its right
+$klChips = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$(KL ($_.name -replace ' \(.*\)$', '') (City-En $_))<small>$(@($_.churches).Count)</small></a></li>" }) -join ''
+$klSwitch = "<div class=`"kl-lang`"><button type=`"button`" class=`"kl-lab`" data-kl-set=`"tr`" lang=`"tr`">TR</button><button type=`"button`" class=`"kl-switch`" role=`"switch`" aria-checked=`"false`" aria-label=`"Türkçe / English`" data-title-en=`"Catholic Churches in Turkey: Addresses and Mass Times | $SiteName`"><span class=`"kl-knob`"></span></button><button type=`"button`" class=`"kl-lab`" data-kl-set=`"en`" lang=`"en`">EN</button></div>"
+$klBar = "<div class=`"kl-bar`"><nav class=`"kl-chips`" aria-label=`"Şehirler`" data-aria-en=`"Cities`"><ul>$klChips</ul></nav>$klSwitch</div>"
+
+# Questions people search for, in both languages; the same text goes into the page's FAQ markup
+$riteCounts = ($Churches.rites | ForEach-Object { $r = $_; [pscustomobject]@{ tr = $r.tr; en = $r.en; n = (@($Churches.cities | ForEach-Object { $_.churches } | Where-Object { $_.rite -eq $r.id }).Count) } })
+$riteTr = ($riteCounts | Where-Object { $_.n } | ForEach-Object { "$($_.n) $($_.tr)" }) -join ', '
+$riteEn = ($riteCounts | Where-Object { $_.n } | ForEach-Object { "$($_.n) $($_.en)" }) -join ', '
+$klFaq = @(
+  @{ id = 'kac-kilise'
+     q = "Türkiye$($Apos)de kaç Katolik kilisesi var?"; qe = 'How many Catholic churches are there in Turkey?'
+     a = "Bu sayfada $TotalCities şehirde $TotalChurches Katolik kilisesi listeleniyor: $riteTr. En çok kilise İstanbul$($Apos)da ve İzmir$($Apos)de bulunuyor. Kapalı olanlar da listededir; durumları kendi kartlarında yazar."
+     ae = "This page lists $TotalChurches Catholic churches in $TotalCities cities: $riteEn. Most are in Istanbul and Izmir. Churches that are closed are listed too, and their cards say so." }
+  @{ id = 'ayin-saatleri-degisir-mi'
+     q = 'Pazar ayini ve hafta içi ayin saatleri değişir mi?'; qe = 'Do Sunday and weekday Mass times change?'
+     a = "Evet. Noel, Kutsal Hafta ve Paskalya gibi bayramlarda ve mevsime göre saatler değişebilir. Gitmeden önce kilisenin telefonundan ya da web sitesinden teyit edin; her kartta telefon ve kilisenin kendi sayfasına bağlantı var."
+     ae = "Yes. Times can change at feasts such as Christmas, Holy Week and Easter, and with the season. Check by phone or on the church$($Apos)s website before you go; every card has the phone number and a link to the church$($Apos)s own page." }
+  @{ id = 'katolik-olmayan-ayine-katilabilir-mi'
+     q = "Katolik olmayan biri Ayin$($Apos)e katılabilir mi?"; qe = 'Can a non-Catholic attend Mass?'
+     a = "Evet. Ayinler herkese açıktır; oturup izleyebilir, sessizce eşlik edebilirsiniz. Komünyon (kutsal ekmek) yalnızca Katolikler içindir; o sırada yerinizde kalabilirsiniz. Ayrıntı için <a href=`"sss.html#komunyon-kimler`">Kimler Kutsal Komünyon alabilir?</a> sorusuna bakın."
+     ae = "Yes. Mass is open to everyone; you can sit, watch and join in quietly. Communion is for Catholics only, and you can stay in your seat while it is given. See <a href=`"sss.html#komunyon-kimler`">Who can receive Holy Communion?</a> (in Turkish)." }
+  @{ id = 'ayin-dili'
+     q = 'Ayinler hangi dilde yapılıyor?'; qe = 'In which language is Mass celebrated?'
+     a = "Birçok kilisede Türkçe ayin vardır; ayrıca İngilizce, İtalyanca, Lehçe ve başka dillerde yapılan ayinler de bulunur. Her kartta saatin yanında ayinin dili yazıyor."
+     ae = "Many churches have a Mass in Turkish, and there are also Masses in English, Italian, Polish and other languages. Each card gives the language next to the time." }
+  @{ id = 'kiliseye-girerken'
+     q = 'Kiliseye girerken ne giymeli, nelere dikkat etmeli?'; qe = 'What should I wear and keep in mind when I visit a church?'
+     a = "Özel bir kıyafet gerekmez; omuzları ve dizleri örten sade bir giyim yeterlidir. İçeride sessiz olun ve telefonunuzu kapatın. Ayin sırasında fotoğraf ve video çekmemek en doğrusudur; ziyaret saatlerinde çekim için kiliseye sorun."
+     ae = "No special clothes are needed; simple dress that covers shoulders and knees is enough. Keep quiet inside and switch your phone off. It is best not to take photos or video during Mass; ask the church about photos during visiting hours." }
+  @{ id = 'katolik-olmak-icin'
+     q = 'Katolik olmak istiyorum, nereye başvurmalıyım?'; qe = 'I want to become Catholic. Where do I start?'
+     a = "Yakınınızdaki bir kiliseye gidip rahiple konuşun. Katolik Kilisesi$($Apos)ne katılım OCIA denen bir hazırlık süreciyle olur; <a href=`"katolik-sureci.html`">Katolik Olma Süreci</a> sayfasında adımlar anlatılıyor."
+     ae = "Visit a church near you and speak to the priest. Joining the Catholic Church happens through a period of preparation called OCIA; the steps are explained on the <a href=`"katolik-sureci.html`">Becoming Catholic</a> page (in Turkish)." }
+  @{ id = 'katolik-bulunamadiginda'
+     q = 'Yakınımda Katolik kilisesi yoksa ne yapmalıyım?'; qe = 'What if there is no Catholic church near me?'
+     a = (Inline $Churches.orthodoxNote); ae = $Churches.orthodoxNoteEn }
+)
+$klFaqHtml = '<div class="faq-list kl-faq">' + (($klFaq | ForEach-Object {
+  "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(KL $_.q $_.qe)</span>$IcoChevLg</summary><div class=`"faq-a`">$(KLB "<p>$($_.a)</p>" "<p>$($_.ae)</p>")</div></details>"
+}) -join "`n") + '</div>'
+
+$leadTr = "Türkiye$($Apos)de $TotalCities şehirde $TotalChurches Katolik kilisesinin adresi, telefonu, pazar ve hafta içi ayin saatleri, ziyaret bilgisi ve tarihçesi bu sayfada. Haritadan şehri seçin, listeden kiliseye bakın ya da yukarıdaki şehir düğmeleriyle doğrudan şehre geçin."
+$leadEn = "Address, phone number, Sunday and weekday Mass times, visiting information and history for $TotalChurches Catholic churches in $TotalCities cities across Turkey. Pick a city on the map, choose a church from the list, or jump straight to a city with the buttons above."
 $kiliselerBody = @"
-<div class="wrap narrow">
+<div class="wrap narrow kl-page">
   $(Crumbs 'Kilise Bul')
-  <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$($Churches.title)</h1></header>
+  <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$(KL "Türkiye$($Apos)de Katolik Kiliseleri" 'Catholic Churches in Turkey')</h1>
+    <p class="kl-lead">$(KL $leadTr $leadEn)</p></header>
+  $klBar
 $churchMapHtml
   $churchPickHtml
-  <p class="conventions">$((Inline $Churches.note))</p>
-  <div class="faq-list">
-    <details class="faq-item" id="katolik-bulunamadiginda" open><summary><span class="faq-q">Yakınımda Katolik kilisesi yoksa ne yapmalıyım?</span>$IcoChevLg</summary>
-      <div class="faq-a"><p>$((Inline $Churches.orthodoxNote))</p></div></details>
-  </div>
+$klCities
+  <section class="kl-faqs" id="sik-sorulanlar" aria-labelledby="h-kl-faq"><h2 class="kl-h" id="h-kl-faq">$(KL 'Sık Sorulan Sorular' 'Frequently Asked Questions')</h2>
+$klFaqHtml</section>
+  <p class="conventions">$(KL (Inline $Churches.note) $Churches.noteEn) $(KL "Son kontrol: $($Churches.updated)." "Last checked: $($Churches.updatedEn).")</p>
 </div>
 "@
-Write-Page -File 'kiliseler.html' -Title "$($Churches.title) | $SiteName" `
-  -Description "Türkiye$($Apos)deki Katolik kiliseleri haritası: Latin, Ermeni, Süryani ve Keldani Katolik kiliseleri; ayin ve ziyaret saatleri, adres ve tarihçe." `
-  -Path 'kiliseler.html' -Body $kiliselerBody -JsonLd @((Breadcrumb-Ld 'Kilise Bul' 'kiliseler.html'))
+# structured data: the list of churches (each leading to its own page) and the questions above
+$klItems = New-Object Collections.Generic.List[string]; $klPos = 0
+foreach ($city in $Churches.cities) { foreach ($ch in $city.churches) { $klPos++; $klItems.Add('{"@type":"ListItem","position":' + $klPos + ',"url":' + (JStr "$SiteUrl/kilise/$($ch.id).html") + ',"name":' + (JStr (Plain $ch.name)) + '}') } }
+$ldList = '{"@context":"https://schema.org","@type":"ItemList","name":' + (JStr "Türkiye$($Apos)de Katolik Kiliseleri") + ',"numberOfItems":' + $klPos + ',"itemListElement":[' + ($klItems -join ',') + ']}'
+$ldFaq = '{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"tr","mainEntity":[' + (($klFaq | ForEach-Object { '{"@type":"Question","name":' + (JStr $_.q) + ',"acceptedAnswer":{"@type":"Answer","text":' + (JStr (Plain $_.a)) + '}}' }) -join ',') + ']}'
+Write-Page -File 'kiliseler.html' -Title "Türkiye$($Apos)de Katolik Kiliseleri: Adres ve Ayin Saatleri | $SiteName" `
+  -Description (Meta-Trim "Türkiye$($Apos)deki $TotalChurches Katolik kilisesinin adresi, telefonu ve ayin saatleri: İstanbul, İzmir, Ankara, Bursa, Antalya. Harita, şehir şehir liste ve kısa tarihçeler.") `
+  -Path 'kiliseler.html' -Body $kiliselerBody -JsonLd @((Breadcrumb-Ld 'Kilise Bul' 'kiliseler.html'), $ldList, $ldFaq)
 
 # ================================================================== ILETISIM (iletisim.html)
 $cfMsgs = @(
@@ -3153,6 +3273,29 @@ function Home-Page {
     </a>
   </div>
 "@
+  # Kilise Bul on the front page: what people look for most. A small map of Turkey with a dot for
+  # every city that has a church, a line saying what is there, and the biggest cities as one-tap links
+  $mmB = $CmShape.box; $mmPad = 5
+  $mmVb = "$(Map-Num ($mmB[0] - $mmPad)) $(Map-Num ($mmB[1] - $mmPad)) $(Map-Num ($mmB[2] - $mmB[0] + 2 * $mmPad)) $(Map-Num ($mmB[3] - $mmB[1] + 2 * $mmPad))"
+  $mmDots = ($Churches.cities | ForEach-Object { $xy = Map-XY $_.lat $_.lon; $r = if (@($_.churches).Count -gt 5) { 5.2 } else { 3.6 }; "<circle class=`"mm-dot`" cx=`"$($xy[0])`" cy=`"$($xy[1])`" r=`"$r`"></circle>" }) -join ''
+  $mmSvg = "<svg class=`"mm-svg`" viewBox=`"$mmVb`" aria-hidden=`"true`" focusable=`"false`"><defs><clipPath id=`"mm-out`"><path clip-rule=`"evenodd`" d=`"M-500-500H1500V1100H-500ZM$($mmB[0]) $($mmB[1])H$($mmB[2])V$($mmB[3])H$($mmB[0])Z`"></path></clipPath></defs>" +
+    "<rect class=`"mm-sea`" x=`"-500`" y=`"-500`" width=`"2000`" height=`"1600`"></rect><path class=`"mm-land`" d=`"$($AnShape.land)`"></path><path class=`"mm-tr`" d=`"$($AnShape.turkey)`" clip-path=`"url(#mm-out)`"></path><path class=`"mm-tr`" d=`"$($CmShape.marmara)`"></path><path class=`"mm-lake`" d=`"$($AnShape.lakes)`"></path>$mmDots</svg>"
+  $mmN = 0; foreach ($c in $Churches.cities) { $mmN += @($c.churches).Count }
+  $mmCities = (($Churches.cities | Select-Object -First 7) | ForEach-Object { "<li><a href=`"kiliseler.html#$($_.id)`">$($_.name -replace ' \(.*\)$', '')<small>$(@($_.churches).Count)</small></a></li>" }) -join ''
+  $find = @"
+  <section class="hm-find" aria-labelledby="hm-find-h">
+    <div class="hm-find-top">
+      <a class="hm-find-main" href="kiliseler.html">
+        <span class="hm-label">$IcoPin Kilise Bul</span>
+        <h2 class="hm-find-t" id="hm-find-h">Türkiye$($Apos)de Katolik kilisesi mi arıyorsunuz?</h2>
+        <span class="hm-find-s">$(@($Churches.cities).Count) şehirde $mmN kilise: adres, telefon ve ayin saatleri.</span>
+        <span class="hm-go">Kiliseleri göster $IcoChevR</span>
+      </a>
+      <a class="hm-find-map" href="kiliseler.html#harita" tabindex="-1" aria-hidden="true">$mmSvg</a>
+    </div>
+    <ul class="hm-find-cities" $(TA 'aria-label' 'Şehirler')>$mmCities<li><a class="hm-find-all" href="kiliseler.html#harita">Tümü</a></li></ul>
+  </section>
+"@
   $placeholder = "Katekizm$($Apos)de ara: Türkçe, İngilizce ya da soru numarası"
   $searchDesk = "<div class=`"hm-search`">$(Search-Form 'hm-search-form' 'q-home' $placeholder)</div>"
   # The Church's history as a strip of small round pictures, oldest first (data/kilise-tarihi.json):
@@ -3209,6 +3352,8 @@ function Home-Page {
   }
   $icons = "<span class=`"hm-pill`" aria-hidden=`"true`"></span>" +
     (($HomeApps | ForEach-Object { "<button type=`"button`" class=`"hm-app`" data-app-open=`"$($_.id)`" aria-haspopup=`"dialog`" aria-controls=`"app-$($_.id)`"><span class=`"hm-icon`">$($dockGlyph[$_.id])</span><span class=`"hm-app-t`">$($_.t)</span></button>" }) -join '')
+  # Kilise Bul is one tap from the bar: a plain link, not an app that opens over the page
+  $icons += "<a class=`"hm-app hm-link`" href=`"kiliseler.html`"><span class=`"hm-icon`"><svg viewBox=`"0 0 24 24`" aria-hidden=`"true`"><g fill=`"none`" stroke=`"currentColor`" stroke-width=`"2.2`" stroke-linecap=`"round`" stroke-linejoin=`"round`"><path d=`"M12 21.5s7.2-6.6 7.2-12.2a7.2 7.2 0 0 0-14.4 0c0 5.6 7.2 12.2 7.2 12.2Z`"/><path d=`"M12 5.6v6.2M9.4 8.3h5.2`"/></g></svg></span><span class=`"hm-app-t`">Kilise Bul</span></a>"
   $close = 'Kapat'
   $apps = ($HomeApps | ForEach-Object {
     $app = $_; $appT = $app.t; $appA = TA 'aria-label' $app.t; $i = 0
@@ -3226,6 +3371,7 @@ function Home-Page {
   <h1 class="visually-hidden">$tag</h1>
   <div class="hm-about"><p class="hm-about-t">$tag</p><p class="hm-about-s">$($fm['about'])</p></div>
 $cards
+$find
   $searchDesk
   <nav class="hm-apps" $(TA 'aria-label' 'Bölümler')>$icons</nav>
   $lists
@@ -3257,7 +3403,7 @@ $pages = @(
   @{ p = 'gunah-cikarma.html'; pr = '0.9' }, @{ p = 'topraklarimizda-hristiyanlik.html'; pr = '0.9' }, @{ p = 'kilise-tarihi.html'; pr = '0.8' },
   @{ p = 'neden-katoligiz.html'; pr = '0.9' }, @{ p = 'islama-cevap.html'; pr = '0.8' }, @{ p = 'ateizme-cevap.html'; pr = '0.8' }, @{ p = 'yahudilere-cagri.html'; pr = '0.8' },
   @{ p = 'azizler.html'; pr = '0.9' }, @{ p = 'kutsal-ayin.html'; pr = '0.9' },
-  @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'sozluk.html'; pr = '0.8' }, @{ p = 'kiliseler.html'; pr = '0.7' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
+  @{ p = 'sss.html'; pr = '0.9' }, @{ p = 'sozluk.html'; pr = '0.8' }, @{ p = 'kiliseler.html'; pr = '0.9' }, @{ p = 'motu-proprio.html'; pr = '0.6' },
   @{ p = 'giris.html'; pr = '0.6' }, @{ p = 'mucizeler.html'; pr = '0.7' },
   @{ p = 'iletisim.html'; pr = '0.4' }, @{ p = 'meseller.html'; pr = '0.9' }, @{ p = 'erisilebilirlik.html'; pr = '0.3' },
   @{ p = 'gizlilik.html'; pr = '0.3' }, @{ p = 'kaynaklar-ve-telif.html'; pr = '0.3' }

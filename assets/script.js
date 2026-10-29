@@ -2525,10 +2525,10 @@
       var drag = null, noClick = 0;
       var appAt = function (x) {
         var best = null, bd = 1e9;
-        $$('.hm-app', dockBar).forEach(function (b) { var r = b.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - x); if (d < bd) { bd = d; best = b; } });
+        $$('.hm-app[data-app-open]', dockBar).forEach(function (b) { var r = b.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - x); if (d < bd) { bd = d; best = b; } });
         return best;
       };
-      var overTo = function (b) { $$('.hm-app', dockBar).forEach(function (x) { x.classList.toggle('is-over', x === b); }); };
+      var overTo = function (b) { $$('.hm-app[data-app-open]', dockBar).forEach(function (x) { x.classList.toggle('is-over', x === b); }); };
       var endDrag = function (e, cancel) {
         if (!drag || e.pointerId !== drag.id) return;
         var d = drag; drag = null;
@@ -2543,7 +2543,7 @@
       };
       dockBar.addEventListener('pointerdown', function (e) {
         if (e.button > 0) return;
-        var b = e.target.closest('.hm-app'); if (!b) return;
+        var b = e.target.closest('.hm-app[data-app-open]'); if (!b) return;
         drag = { id: e.pointerId, x0: e.clientX, moved: false, w: b.offsetWidth };
       });
       dockBar.addEventListener('pointermove', function (e) {
@@ -2554,7 +2554,7 @@
           try { dockBar.setPointerCapture(e.pointerId); } catch (err) { /* not capturable */ }
           dockBar.classList.add('is-drag');
         }
-        var bs = $$('.hm-app', dockBar), lo = bs[0].offsetLeft, hi = bs[bs.length - 1].offsetLeft;
+        var bs = $$('.hm-app[data-app-open]', dockBar), lo = bs[0].offsetLeft, hi = bs[bs.length - 1].offsetLeft;
         var x = e.clientX - dockBar.getBoundingClientRect().left - dockBar.clientLeft - drag.w / 2;
         pill.style.width = drag.w + 'px';
         pill.style.transform = 'translateX(' + Math.max(lo, Math.min(hi, x)) + 'px) scale(1.1)';
@@ -4009,6 +4009,101 @@
   }
 
   /* ---------------------------------------------------------------
+     Kilise Bul (kiliseler.html) in Turkish and English: the page holds both and the
+     switch shows one at once, with nothing loaded. The reading place is kept: the
+     element at the top of the screen stays at the same height, even though the other
+     language's text is longer or shorter. The pinned row's city buttons jump
+     instantly and follow the city being read.
+     --------------------------------------------------------------- */
+  function initKlLang() {
+    var sw = $('.kl-switch');
+    if (!sw) return;
+    var H = document.documentElement, KEY = 'kd-kl-lang', bar = $('.kl-bar');
+    var ANCHORS = '.kl-ch, .kl-h, .kl-side, .kl-sum, .kl-lead, .faq-item, .cmap, .ch-pick, .conventions, .page-head, .crumbs';
+    var title0 = document.title, titleEn = sw.getAttribute('data-title-en');
+    var chips = $$('.kl-chips a'), cities = chips.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    function isEn() { return H.classList.contains('kl-en-on'); }
+    function paint() {
+      var en = isEn();
+      sw.setAttribute('aria-checked', en ? 'true' : 'false');
+      H.lang = en ? 'en' : 'tr';
+      if (titleEn) document.title = en ? titleEn : title0;
+      $$('[data-aria-en]').forEach(function (el) {
+        if (el._tr == null) el._tr = el.getAttribute('aria-label') || '';
+        el.setAttribute('aria-label', en ? el.getAttribute('data-aria-en') : el._tr);
+      });
+    }
+    function topLine() {
+      var h = parseFloat(getComputedStyle(H).getPropertyValue('--header-h')) || 64;
+      return h + (bar ? bar.offsetHeight : 0) + 12;
+    }
+    function jumpTo(fn) {
+      H.style.scrollBehavior = 'auto';
+      fn();
+      H.style.scrollBehavior = '';
+    }
+    function setLang(en, user) {
+      if (en === isEn()) return;
+      /* the place being read: the smallest block that holds the line near the top of the screen
+         (else the first one below it), and how far down that block the line is */
+      var line = topLine(), el = null, area = 1e12, next = null, nextTop = 1e12;
+      $$(ANCHORS).forEach(function (c) {
+        if (c.closest('.kl-tr, .kl-en') || !c.offsetHeight) return;
+        var r = c.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line) { if (r.height * r.width < area) { area = r.height * r.width; el = c; } }
+        else if (r.top > line && r.top < nextTop) { nextTop = r.top; next = c; }
+      });
+      if (!el) el = next;
+      var rel = 0;
+      if (el) { var r0 = el.getBoundingClientRect(); rel = Math.max(0, Math.min(1, (line - r0.top) / Math.max(1, r0.height))); }
+      H.classList.toggle('kl-en-on', en);
+      paint();
+      if (el) {
+        var r1 = el.getBoundingClientRect(), want = line - rel * r1.height, d = r1.top - want;
+        if (Math.abs(d) > 0.5) jumpTo(function () { window.scrollBy(0, d); });
+      }
+      if (user) {
+        try { localStorage.setItem(KEY, en ? 'en' : 'tr'); } catch (e) { /* private mode */ }
+        try { var u = new URL(location.href); u.searchParams.set('lang', en ? 'en' : 'tr'); history.replaceState(history.state, '', u.pathname + u.search + u.hash); } catch (e) { /* not rewritable */ }
+      }
+      queue();
+    }
+    sw.addEventListener('click', function () { setLang(!isEn(), true); });
+    $$('[data-kl-set]').forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-kl-set') === 'en', true); }); });
+    paint();
+
+    /* the cities: an instant jump, and the city in view lit in the row */
+    chips.forEach(function (a, i) {
+      a.addEventListener('click', function (e) {
+        var t = cities[i]; if (!t) return;
+        e.preventDefault();
+        jumpTo(function () { t.scrollIntoView(true); });
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+        queue();
+      });
+    });
+    var ticking = false, cur = -2;
+    function update() {
+      ticking = false;
+      if (bar) bar.classList.toggle('is-stuck', bar.getBoundingClientRect().top <= (parseFloat(getComputedStyle(bar).top) || 64) + 1);
+      var line = topLine() + 8, pick = -1;
+      cities.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) pick = i; });
+      if (pick === cur) return;
+      cur = pick;
+      chips.forEach(function (a, i) {
+        a.classList.toggle('is-current', i === pick);
+        if (i === pick) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+      });
+      var list = chips[0] && chips[0].closest('ul'), a = chips[pick];
+      if (list && a && list.scrollWidth > list.clientWidth) list.scrollLeft = Math.max(0, a.offsetLeft - (list.clientWidth - a.offsetWidth) / 2);
+    }
+    function queue() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    queue();
+  }
+
+  /* ---------------------------------------------------------------
      11. Settings panel (the gear beside the logo): the language switch,
          then accessibility profile presets and individual settings
          (contrast, text spacing, a
@@ -4206,7 +4301,7 @@
     [
       initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initFaqDir, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initKlLang, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();
