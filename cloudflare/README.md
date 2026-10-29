@@ -34,34 +34,23 @@ as it is. The Worker sends to your personal address, which Email Routing has alr
 
 1. Go to the account home, not the domain, and open **Workers & Pages**. Press Ctrl+K and type "Workers" if it isn't in the menu.
 2. **Create** (or **Create application**) → **Start with Hello World!** → name it `katolikdunyasi-contact` → **Deploy**.
-3. Click **Edit code**. Delete everything, paste the whole of `cloudflare/contact-worker.js`, then
-   click **Deploy**.
+3. The code, the route, the `CONTACT_EMAIL` and `CONTACT_LIMIT` bindings and `FROM_ADDRESS` come
+   from this folder: `.github/workflows/deploy-contact.yml` publishes `contact-worker.js` with
+   `wrangler.jsonc` whenever something in `cloudflare/` changes. Don't edit the code in the dashboard:
+   the next deploy replaces it.
 4. Go back to the Worker → **Settings** → **Variables and Secrets** → **Add**:
 
    | Type | Name | Value |
    |---|---|---|
    | Secret | `TURNSTILE_SECRET` | the Turnstile **secret key** from Step 1 |
    | Secret | `TO_ADDRESS` | your personal email (the verified destination) |
-   | Text | `FROM_ADDRESS` | `form@katolikdunyasi.com` |
 
-   `FROM_ADDRESS` doesn't need to exist as a real mailbox. It only has to be an address at
-   katolikdunyasi.com.
-
-5. Still in **Settings** → **Bindings** → **Add** → **Send email**:
-   - **Variable name:** `CONTACT_EMAIL`
-   - **Destination address:** choose your personal email (the verified one).
-   - Save, then **Deploy** again if Cloudflare asks.
-
-6. Optional, recommended: **Settings** → **Bindings** → **Add** → **Rate limiting**:
-   - **Variable name:** `CONTACT_LIMIT`, **Namespace ID:** `1001`, **Limit:** 3 requests per 60 seconds.
-   - The Worker then turns away a fourth message within a minute from the same address. Without
-     this binding it works as before, with no limit.
+   `FROM_ADDRESS` (`form@katolikdunyasi.com`, set in `wrangler.jsonc`) doesn't need to exist as a
+   real mailbox. It only has to be an address at katolikdunyasi.com.
 
 ## Step 4: Connect the Worker to the site
 
-1. The Worker → **Settings** → **Domains & Routes** → **Add** → **Route**.
-2. **Zone:** `katolikdunyasi.com`. **Route:** `katolikdunyasi.com/api/*`.
-3. Save.
+The route `katolikdunyasi.com/api/*` is in `wrangler.jsonc`, so each deploy sets it.
 
 Only `/api/...` addresses go to the Worker. Every page of the site is still served from GitHub
 Pages exactly as before.
@@ -81,6 +70,7 @@ ever recreated, put the new site key there.
 
 ## If you ever want to change something
 
-- **Your receiving address:** change `TO_ADDRESS` and the binding's destination (Steps 3.4 and
-  3.5). It must be a verified destination in Email Routing.
-- **Turn the form off:** in Step 4, delete the route. The page stays, but sending stops.
+- **Your receiving address:** change the `TO_ADDRESS` secret (Step 3.4). It must be a verified
+  destination in Email Routing.
+- **Turn the form off:** take the route out of `wrangler.jsonc` and delete it under the Worker →
+  **Settings** → **Domains & Routes**. The page stays, but sending stops.

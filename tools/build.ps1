@@ -399,13 +399,19 @@ function Art-Img([string]$key, [string]$cls, [string]$sizes = '100vw', [string]$
   $a = $Tablolar.art.$key
   $fp = if ($prio -eq 'high') { ' fetchpriority="high"' } else { ' loading="lazy"' }
   # one file for a painting 800 wide or less; else an 800 copy, a 1200 copy when the original
-  # is wider than that (phones take it), and the original
+  # is wider than that (phones take it), and the original. Each in AVIF and WebP too, made next to
+  # the JPEG by the deploy (a browser that reads neither takes the JPEG).
   $w = [int]$a.w
-  $set = if ($w -le 800) { '' } else {
-    $mid = if ($w -gt 1200) { ", /assets/art/$key-1200.jpg 1200w" } else { '' }
-    " srcset=`"/assets/art/$key-800.jpg 800w$mid, /assets/art/$key.jpg $($w)w`" sizes=`"$sizes`""
+  $setOf = {
+    param($ext)
+    if ($w -le 800) { return "/assets/art/$key.$ext" }
+    $mid = if ($w -gt 1200) { ", /assets/art/$key-1200.$ext 1200w" } else { '' }
+    return "/assets/art/$key-800.$ext 800w$mid, /assets/art/$key.$ext $($w)w"
   }
-  return "<img class=`"$cls`" src=`"assets/art/$key.jpg`"$set width=`"$($a.w)`" height=`"$($a.h)`" alt=`"`" decoding=`"async`" style=`"object-position:50% $($a.y)%`"$fp>"
+  $sz = if ($w -le 800) { '' } else { " sizes=`"$sizes`"" }
+  $set = if ($w -le 800) { '' } else { " srcset=`"$(& $setOf 'jpg')`"$sz" }
+  return "<picture><source type=`"image/avif`" srcset=`"$(& $setOf 'avif')`"$sz><source type=`"image/webp`" srcset=`"$(& $setOf 'webp')`"$sz>" +
+    "<img class=`"$cls`" src=`"assets/art/$key.jpg`"$set width=`"$($a.w)`" height=`"$($a.h)`" alt=`"`" decoding=`"async`" style=`"object-position:50% $($a.y)%`"$fp></picture>"
 }
 # a picture inside a story (data file "art": a key of data/tablolar.json), with its credit under it
 # A painting's painter

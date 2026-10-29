@@ -21,6 +21,9 @@ _site/
 /assets/*.min.js
 /data/azizler-adlar.js
 /data/azizler-ozet-*.js
+# the WebP and AVIF copies of the paintings: the deploy makes them from the JPEGs
+/assets/art/*.webp
+/assets/art/*.avif
 
 
 __pycache__/
@@ -39,6 +42,8 @@ __pycache__/
 /verbumdomini/assets/*.min.js
 /verbumdomini/data/azizler-adlar.js
 /verbumdomini/data/azizler-ozet-*.js
+/verbumdomini/assets/art/*.webp
+/verbumdomini/assets/art/*.avif
 /verbumdomini/_site_en/
 
 # the 3D beads build tool (tools/rosary3d/README.md); its output, assets/vendor/rosary3d.js, is kept

@@ -1,0 +1,19 @@
+// The katolikdunyasi.com contact form (contact-worker.js) as the Worker "katolikdunyasi-contact".
+// Deployed by .github/workflows/deploy-contact.yml when something in cloudflare/ changes.
+// Only /api/* goes to the Worker; the pages are still served by GitHub Pages.
+{
+  "name": "katolikdunyasi-contact",
+  "main": "contact-worker.js",
+  "compatibility_date": "2026-09-01",
+  // no workers.dev address: the form is only reachable on the site's own domain
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "katolikdunyasi.com/api/*", "zone_name": "katolikdunyasi.com" }],
+  // Sends through Cloudflare Email Routing. The receiving address and the Turnstile secret key are
+  // secrets set in the Cloudflare dashboard (TO_ADDRESS, TURNSTILE_SECRET), never here; deploys keep
+  // them. No destination address on the binding either: TO_ADDRESS must be a verified destination.
+  "send_email": [{ "name": "CONTACT_EMAIL" }],
+  // contact-worker.js allows 3 posts a minute from one address
+  "ratelimits": [{ "name": "CONTACT_LIMIT", "namespace_id": "1002", "simple": { "limit": 3, "period": 60 } }],
+  "vars": { "FROM_ADDRESS": "form@katolikdunyasi.com" }
+}
