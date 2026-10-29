@@ -1920,32 +1920,39 @@ Write-Page -File 'ekler.html' -Title "Ekler: Dualar ve Katolik Öğreti Formüll
 # Plain <details>/<summary> accordions: they open without JavaScript, are searchable by the
 # browser find-in-page in supporting browsers, and each carries the CCC paragraphs it rests on.
 $script:FaqN = 0
-$faqToc = ($FaqData.categories | ForEach-Object { "<li><a href=`"#$($_.id)`">$(T (Inline $_.title) $_.en)</a></li>" }) -join ''
+$script:FdN = 0
+# The question directory (initFaqDir in script.js): category tabs on desktop, one "All questions"
+# button with a bottom sheet on phones. Without script the lists show in full, one after the other.
+$fdTabs = ($FaqData.categories | ForEach-Object { "<li><button type=`"button`" class=`"fd-tab`" aria-expanded=`"false`" aria-controls=`"fd-$($_.id)`"><span>$(if ($_.s) { $_.s } else { $_.title })</span><small>$(@($_.items).Count)</small>$IcoChevLg</button></li>" }) -join ''
+$fdPanels = ($FaqData.categories | ForEach-Object {
+  $lis = ($_.items | ForEach-Object { $script:FdN++; "<li><a href=`"#$($_.id)`"><b>$($script:FdN)</b><span>$(if ($_.s) { $_.s } else { $_.q })</span></a></li>" }) -join ''
+  "<section class=`"fd-panel`" id=`"fd-$($_.id)`"><h2 class=`"fd-ph`">$((Inline $_.title))</h2><ol class=`"fd-list`">$lis</ol></section>"
+}) -join ''
+$faqNav = "<nav class=`"faq-dir`" aria-label=`"Question index`"><div class=`"fd-bar`"><ul class=`"fd-tabs`">$fdTabs</ul><button type=`"button`" class=`"fd-all`" aria-expanded=`"false`" aria-controls=`"fd-panels`"><span>All questions</span><span class=`"fd-pos`" aria-hidden=`"true`">$($script:FdN) questions</span>$IcoChevLg</button></div><div class=`"fd-panels`" id=`"fd-panels`">$fdPanels</div><div class=`"fd-scrim`"></div></nav>"
 $faqCats = ($FaqData.categories | ForEach-Object {
   $script:FaqN++; $cat = $_
   $qs = ($cat.items | ForEach-Object {
     "<details class=`"faq-item`" id=`"$($_.id)`">" +
-      "<summary><span class=`"faq-q`">$(T (Inline $_.q) (Inline $_.qEn))</span>$IcoChevLg</summary>" +
+      "<summary><span class=`"faq-q`">$(Inline $_.q)</span>$IcoChevLg</summary>" +
       "<div class=`"faq-a`">" +
-        "<p class=`"faq-ref`" $(TA 'title' 'Katolik Kilisesi Katekizmi madde numaraları' 'Paragraph numbers in the Catechism of the Catholic Church')>$(Ccc-Link $_.ccc 'tr')</p>" +
-        "$(TB (Blocks $_.a) (Blocks $_.aEn))</div>" +
+        "<p class=`"faq-ref`" $(TA 'title' 'Katolik Kilisesi Katekizmi madde numaraları' 'Paragraph numbers in the Catechism of the Catholic Church')>$(Ccc-Link $_.ccc 'en')</p>" +
+        "$(Blocks $_.a)</div>" +
     "</details>"
   }) -join "`n"
-  $ma = @{ 'teolojik-yanilgilar' = @('trinity', 'blue'); 'kutsal-sirlar-uygulamalar' = @('shell', 'green'); 'otorite-ogretiler' = @('keys', 'gold'); 'akla-gelen-itirazlar' = @('oillamp', 'purple'); 'savunma-ve-guncel-sorular' = @('shield', 'red') }[$cat.id]
-  if (-not $ma) { $ma = @('candle', 'gold') }
+  $tone = @{ 'teolojik-yanilgilar' = 'blue'; 'kutsal-sirlar-uygulamalar' = 'green'; 'otorite-ogretiler' = 'gold'; 'akla-gelen-itirazlar' = 'purple'; 'savunma-ve-guncel-sorular' = 'red' }[$cat.id]
+  if (-not $tone) { $tone = 'gold' }
   $cnt = @($cat.items).Count
-  Ill-Sec -Id $cat.id -Art $ma[0] -Tone $ma[1] -Class 'faq-cat' -Kick (T "$cnt soru" "$cnt questions") -Head (T (Inline $cat.title) $cat.en) `
-    -Sub (TO "<p class=`"faq-cat-en`" lang=`"en`">$($cat.en)</p>") -Body "<div class=`"faq-list`">$qs</div>"
+  Ill-Sec -Id $cat.id -Art '' -Tone $tone -Class 'faq-cat' -Kick "$cnt questions" -Head (Inline $cat.title) -Body "<div class=`"faq-list`">$qs</div>"
 }) -join "`n"
 $sssBody = @"
 <div class="wrap narrow ill-page">
   $(Crumbs 'Sıkça Sorulan Sorular')
-  <header class="page-head center">$(Page-Ico $IcoQuestion)<h1>$(T (Inline $FaqData.title) $FaqData.en)</h1>$(TO "<p class=`"sub`" lang=`"en`">$($FaqData.en)</p>")</header>
-  <nav class="faq-toc is-sticky" $(TA 'aria-label' 'Kategoriler' 'Categories')><ul>$faqToc</ul></nav>
+  <header class="page-head center"><h1>$(Inline $FaqData.title)</h1></header>
+  $faqNav
 $faqCats
 </div>
 "@
-Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" -TitleEn "$($FaqData.en) | $SiteName" `
+Write-Page -File 'sss.html' -Title "$($FaqData.title) | $SiteName" -TitleEn "$($FaqData.title) | $SiteName" `
   -Description "Katolik Kilisesi hakkında sık sorulan sorular ve Katekizm$($Apos)e dayanan yanıtlar: Meryem ve azizlere saygı, Kutsal Üçlü, günah çıkarma, papalık, araf, evrim." -DescriptionEn "Common questions about the Catholic Church, answered from the Catechism: Mary and the saints, the Trinity, confession, the papacy, purgatory and more." `
   -Path 'sss.html' -Body $sssBody -JsonLd @((Breadcrumb-Ld 'Sıkça Sorulan Sorular' 'sss.html'))
 

@@ -715,6 +715,85 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 }
 .faq-toc a:hover { border-color: var(--gold-soft); color: var(--gold); }
 .faq-cat { scroll-margin-top: calc(var(--header-h) + 2rem); }
+/* FAQ question directory (sss.html): one pinned row under the header. Desktop: five category
+   tabs, each opening a short list of its questions. Phones: a single "All questions" button that
+   opens a bottom sheet with every question, two to a row. Every jump is instant (script.js
+   initFaqDir) and opens the answer. Without script the lists simply show in full. */
+.faq-dir { position: sticky; top: var(--header-h); z-index: 30; margin: 0 0 1rem; font-family: var(--sans); }
+.faq-dir::before {
+  content: ""; position: absolute; z-index: -1; inset: 0 calc(50% - 50vw); opacity: 0; transition: opacity .2s;
+  background: var(--glass); border-bottom: 1px solid var(--glass-brd);
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+}
+.faq-dir.is-stuck::before { opacity: 1; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .faq-dir::before { background: var(--bg); } }
+.fd-bar { display: flex; align-items: center; justify-content: center; min-height: 3.25rem; }
+.fd-tabs { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin: 0; padding: 0; }
+.fd-tab {
+  display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .8rem; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); font: inherit; font-size: .82rem; color: var(--text-soft); cursor: pointer; transition: border-color .2s, color .2s;
+}
+.fd-tab small { color: var(--muted); font-size: .72rem; }
+.fd-tab .chev { width: .85rem; height: .85rem; }
+.fd-tab:hover, .fd-tab[aria-expanded="true"] { border-color: var(--gold-soft); color: var(--gold); }
+.fd-tab[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.fd-tab.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); font-weight: 600; }
+.fd-tab:focus-visible, .fd-all:focus-visible, .fd-list a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.fd-all { display: none; }
+.fd-panels { position: absolute; left: 0; right: 0; top: 100%; }
+.fd-panel {
+  display: none; position: absolute; top: .1rem; left: var(--x, 0); width: min(21rem, 100%);
+  max-height: min(26rem, calc(100vh - var(--header-h) - 6rem)); overflow-y: auto; overscroll-behavior: contain;
+  padding: .35rem; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius);
+  box-shadow: var(--shadow), 0 18px 40px -18px rgba(0, 0, 0, .35);
+}
+.fd-panel.is-open { display: block; }
+.fd-ph { display: none; margin: 0; }
+.fd-list { list-style: none; margin: 0; padding: 0; }
+.fd-list a {
+  display: flex; align-items: baseline; gap: .6rem; padding: .5rem .65rem; border-radius: .5rem;
+  font-size: .92rem; line-height: 1.3; color: var(--text); text-decoration: none;
+}
+.fd-list a b { flex: none; min-width: 1.4rem; color: var(--gold); font-size: .8rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fd-list a:hover { background: var(--gold-bg); }
+.fd-list a.is-current { background: var(--gold-bg); color: var(--gold-active); font-weight: 600; }
+.fd-scrim { display: none; }
+.faq-dir:not(.fd-on) { position: static; }
+.faq-dir:not(.fd-on) .fd-bar { display: none; }
+.faq-dir:not(.fd-on) .fd-panels { position: static; }
+.faq-dir:not(.fd-on) .fd-panel { display: block; position: static; width: auto; max-height: none; box-shadow: none; margin-bottom: .6rem; }
+.faq-dir:not(.fd-on) .fd-ph { display: block; padding: .3rem .65rem; font-size: .8rem; }
+html:has(.faq-dir.fd-on) { scroll-padding-top: calc(var(--header-h) + 4rem); }
+html:has(.faq-dir.fd-on) .faq-item { scroll-margin-top: .5rem; }
+html.fd-lock, html.fd-lock body { overflow: hidden; }
+@media (max-width: 720px) {
+  .fd-tabs { display: none; }
+  .fd-all {
+    display: flex; align-items: center; gap: .6rem; width: 100%; min-height: 2.75rem; padding: .6rem 1rem;
+    border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); box-shadow: var(--shadow);
+    font: inherit; font-size: .95rem; font-weight: 600; color: var(--text); cursor: pointer;
+  }
+  .fd-pos { margin-left: auto; font-size: .82rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .fd-all .chev { width: 1rem; height: 1rem; }
+  .faq-dir.is-sheet .fd-all .chev { transform: rotate(180deg); }
+  .fd-panels {
+    position: fixed; left: 0; right: 0; top: auto; bottom: 0; z-index: 2; max-height: 78vh; max-height: 78dvh;
+    overflow-y: auto; overscroll-behavior: contain; padding: 0 .75rem calc(env(safe-area-inset-bottom) + 1rem);
+    background: var(--surface); border-radius: 1.1rem 1.1rem 0 0; box-shadow: 0 -12px 40px rgba(0, 0, 0, .3);
+    transform: translateY(105%); visibility: hidden; transition: transform .22s ease, visibility 0s .22s;
+  }
+  .faq-dir.is-sheet .fd-panels { transform: none; visibility: visible; transition: transform .22s ease; }
+  .fd-panel, .fd-panel.is-open { display: block; position: static; width: auto; max-height: none; padding: 0; border: 0; box-shadow: none; background: none; }
+  .fd-ph {
+    display: block; position: sticky; top: 0; padding: .8rem .5rem .35rem; background: var(--surface);
+    font: 600 .72rem var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
+  }
+  .fd-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: .1rem .5rem; }
+  .fd-list a { align-items: center; min-height: 2.75rem; padding: .4rem .5rem; }
+  .fd-scrim { display: block; position: fixed; inset: 0; z-index: 1; background: rgba(0, 0, 0, .45); opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s .2s; }
+  .faq-dir.is-sheet .fd-scrim { opacity: 1; visibility: visible; transition: opacity .2s; }
+}
+@media (prefers-reduced-motion: reduce) { .fd-panels, .fd-scrim { transition: none !important; } }
 .faq-cat-en { margin: -.55rem 0 1.1rem; text-align: center; color: var(--muted); font-family: var(--sans); font-size: .85rem; letter-spacing: .02em; }
 .faq-list { display: grid; gap: .65rem; margin-bottom: 2.2rem; }
 .faq-item {
