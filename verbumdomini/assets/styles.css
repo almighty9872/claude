@@ -144,6 +144,8 @@ body {
 }
 @media (min-width: 720px) { :root { --gutter: 1.5rem; } }
 img, svg { display: block; max-width: 100%; }
+/* the paintings come in <picture> (AVIF, WebP, JPEG): the <img> stays the box the layouts size */
+picture { display: contents; }
 a { color: inherit; text-decoration-color: var(--gold-soft); text-underline-offset: .2em; text-decoration-thickness: 1px; }
 a:hover { color: var(--gold); }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
@@ -164,9 +166,12 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 
 /* ---------- 3. Header ---------- */
 .site-header {
-  position: sticky; top: 0; z-index: 40;
-  background: var(--glass); border-bottom: 1px solid var(--glass-brd);
-  -webkit-backdrop-filter: saturate(180%) blur(22px); backdrop-filter: saturate(180%) blur(22px);
+  position: sticky;
+  top: 0;
+  background: var(--glass);
+  border-bottom: 1px solid var(--glass-brd);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
   box-shadow: inset 0 1px 0 var(--glass-hi);
 }
 /* Specular top edge: the highlight that makes the blur read as a pane of glass rather than a tint */
@@ -213,8 +218,6 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 .
 .bm-cross svg { width: 28px; height: 28px; }
 .bm-halo { position: absolute; left: 50%; top: 50%; width: 58px; height: 38px; margin: -19px 0 0 -29px; border-radius: 50%; pointer-events: none;
   background: radial-gradient(closest-side, var(--bm-glow), transparent); animation: bm-glow 2.4s ease-in-out infinite; }
-:root { --bm-glow: rgba(214, 160, 50, .32); --bm-shine: rgba(224, 165, 38, .55); }
-[data-theme="dark"] { --bm-glow: rgba(255, 205, 110, .30); --bm-shine: rgba(255, 212, 121, .6); }
 @keyframes bm-glow { 0%, 100% { opacity: .35; transform: scale(.82); } 50% { opacity: 1; transform: scale(1.06); } }
 @media (prefers-reduced-motion: reduce) {
   .bm-in, .bm-fish, .bm-cross { transition: none; }
@@ -833,7 +836,6 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
 .ns-date { margin: 0; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--text-soft); }
 .ns-time { color: var(--gold); font-variant-numeric: tabular-nums; }
 
-
 .ns-nav[hidden] { display: none; }
 /* Each labeled section fades and slides in on its own delay (set inline per group in
    build.ps1) when the overlay opens, for the staggered reveal effect. */
@@ -1091,12 +1093,11 @@ body.sheet-open { overflow: hidden; }
 /* The header and the Settings panel keep the usual fonts: Lexend's wider letters would push the
    bar onto two lines and the panel past the screen */
 :root[data-a11y-dyslexia="1"] :is(.site-header, .a11y-panel) {
-  --serif: "Lexend", Verdana, Tahoma, sans-serif;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-family: var(--serif); letter-spacing: normal;
+  font-family: var(--serif);
+  letter-spacing: normal;
 }
 /* Lexend runs large; a slightly smaller size keeps lines at a comfortable length */
-[data-a11y-dyslexia="1"] body { font-size: calc(1.1875rem * .9); line-height: 1.75; }
+[data-a11y-dyslexia="1"] body { font-size: calc(1.1875rem * .9); }
 [data-a11y-cursor="1"], [data-a11y-cursor="1"] a, [data-a11y-cursor="1"] button {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path d="M6 3.5 18 13l-5 .8 2.6 5.3-2 1-2.6-5.3L7.5 18Z" fill="black" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg>') 4 4, auto;
 }
@@ -1399,13 +1400,25 @@ html.rt-desk .rt.dk-right .rt-sheet { left: auto; right: var(--dk-pad); }
     linear-gradient(to top, rgba(8, 6, 4, .9), rgba(8, 6, 4, .55) calc(var(--dk-strand) * .7), transparent calc(var(--dk-strand) * 1.25)),
     linear-gradient(to left, rgba(8, 6, 4, .55), rgba(8, 6, 4, .15) calc(var(--dk-panel) + 6rem), transparent calc(var(--dk-panel) + 14rem));
 }
-html.rt-desk .rt-sheet { transition: opacity .6s ease; }
 /* the prayer panel */
 html.rt-desk .rt-sheet {
-  position: absolute; z-index: 3; top: var(--dk-pad); left: var(--dk-pad); bottom: var(--dk-pad); width: var(--dk-panel);
-  display: flex; flex-direction: column; margin: 0; padding: 1.4rem 1.5rem 1.2rem; border-radius: 20px;
-  background: rgba(16, 12, 9, .46); border: 1px solid rgba(255, 240, 210, .1); box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
-  -webkit-backdrop-filter: blur(22px) saturate(1.25); backdrop-filter: blur(22px) saturate(1.25);
+  transition: opacity .6s ease;
+  position: absolute;
+  z-index: 3;
+  top: var(--dk-pad);
+  left: var(--dk-pad);
+  bottom: var(--dk-pad);
+  width: var(--dk-panel);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 1.4rem 1.5rem 1.2rem;
+  border-radius: 20px;
+  background: rgba(16, 12, 9, .46);
+  border: 1px solid rgba(255, 240, 210, .1);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  backdrop-filter: blur(22px) saturate(1.25);
   color: var(--dk-ink);
 }
 html.rt-desk .rt-bar { justify-content: space-between; align-items: center; margin: 0 0 1rem; }
@@ -1427,14 +1440,9 @@ html.rt-desk .rt-mystery .rt-m-label { color: var(--dk-gold); }
 html.rt-desk .rt-mystery.is-announce { background: var(--dk-gold); color: #1d1610; }
 html.rt-desk .rt-title { margin: .8rem 0 .6rem; font-size: clamp(1.35rem, 1.5vw, 1.7rem); color: var(--dk-ink); }
 html.rt-desk .rt-sheet.is-done .rt-title { color: var(--dk-gold); }
-html.rt-desk .rt-text {
-  flex: 1; min-height: 0; max-height: none; padding-right: .4rem;
-  font-family: var(--serif); font-size: clamp(1rem, .98vw, 1.22rem); line-height: 1.6; color: var(--dk-soft);
-  scrollbar-color: rgba(255, 240, 210, .25) transparent;
-}
 html.rt-desk .rt-text p { margin-bottom: .8rem; }
 /* a long prayer (the Creed) scrolls inside the panel: its last lines fade so the rest reads as more to come */
-html.rt-desk .rt-text { padding-bottom: 1.6rem; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2rem), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2rem), transparent); }
+html.rt-desk .rt-text { flex: 1; min-height: 0; max-height: none; padding-right: .4rem; font-family: var(--serif); font-size: clamp(1rem, .98vw, 1.22rem); line-height: 1.6; color: var(--dk-soft); scrollbar-color: rgba(255, 240, 210, .25) transparent; padding-bottom: 1.6rem; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2rem), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2rem), transparent); }
 html.rt-desk .rt-nav { margin-top: 1rem; }
 html.rt-desk .rt-nav button { width: 3.1rem; height: 3.1rem; background: rgba(255, 255, 255, .06); border-color: rgba(255, 240, 210, .2); color: var(--dk-ink); }
 html.rt-desk .rt-nav .rt-next { background: var(--dk-gold); border-color: var(--dk-gold); color: #1d1610; }
@@ -1579,7 +1587,6 @@ html.rt-phone .rt-hint { display: block; margin: .45rem 0 0; font-family: var(--
 .amap-tr { fill: var(--amap-tr); stroke: var(--gold-soft); stroke-width: 1.2; stroke-linejoin: round; }
 .amap-lake { stroke: var(--border-strong); stroke-width: .5; }
 .amap-seas text { fill: var(--muted); font-size: 15px; font-style: italic; letter-spacing: .18em; text-anchor: middle; opacity: .8; }
-.amap-site { cursor: pointer; outline: none; }
 .amap-hit { fill: transparent; }
 .amap-dot {
   fill: var(--cat); stroke: var(--amap-tr); stroke-width: 2;
@@ -1594,7 +1601,7 @@ html.rt-phone .rt-hint { display: block; margin: .45rem 0 0; font-family: var(--
 .amap-site.is-active .amap-label, .amap-site:hover .amap-label { fill: var(--cat); }
 .amap-site:focus-visible .amap-hit { stroke: var(--focus); stroke-width: 2; }
 /* a place pointed at in the list below: lit up, the others dimmed */
-.amap-site { transition: opacity .2s ease; }
+.amap-site { cursor: pointer; outline: none; transition: opacity .2s ease; }
 .amap-svg.has-lit .amap-site:not(.is-lit) { opacity: .28; }
 .amap-site.is-lit .amap-dot { transform: scale(1.5); stroke: var(--cat); stroke-width: 5; stroke-opacity: .35; }
 .amap-site.is-lit .amap-label { fill: var(--cat); }
@@ -1825,17 +1832,31 @@ html[lang="en"] .myst.is-today .m-day::after { content: ' · today'; }
 }
 .mass-video-note svg { display: inline-block; width: 1.1rem; height: 1.1rem; margin-right: .3rem; vertical-align: -.25em; color: var(--gold); }
 .mass-pills {
-  position: sticky; top: calc(var(--header-h) + .5rem); z-index: 20; background: var(--bg);
-  display: flex; justify-content: center; gap: .5rem; margin: 0 0 1.8rem; padding: .4rem 0; flex-wrap: wrap;
+  position: sticky;
+  top: calc(var(--header-h) + .5rem);
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  margin: 0 0 1.8rem;
+  padding: .4rem 0;
+  flex-wrap: wrap;
 }
 .mass-pills a {
-  position: relative; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%;
-  background: var(--surface); border: 1px solid var(--border); color: var(--text-soft);
-  text-decoration: none; transition: border-color .2s, color .2s, background-color .2s, transform .2s;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: border-color .2s, color .2s, background-color .2s, transform .2s;
 }
 .mass-pills a svg { width: 1.25rem; height: 1.25rem; }
 .mass-pills a:hover { color: var(--gold); border-color: var(--gold-soft); transform: translateY(-2px); }
-.mass-pills a.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); }
+.mass-pills a.is-current { border-color: var(--gold-soft); color: var(--gold-active); }
 /* Custom tooltip: the browser's native title="" delay makes it easy to miss which
    icon jumps to which part of the Mass, so show the part name instantly on hover/focus.
    It opens below the icon: the row sticks right under the site header, and a tooltip
@@ -2062,12 +2083,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 .foot-contact { display: none; }
 .home-v2 { padding-top: 1.1rem; padding-bottom: 2rem; }
 .hm-today { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
-.hm-card {
-  position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; gap: .3rem;
-  min-height: 10.5rem; padding: 1rem 1.05rem; border-radius: 1.4rem; color: #fff; text-decoration: none;
-  box-shadow: 0 12px 28px -16px rgba(20, 20, 40, .6);
-}
-.hm-card { --hc-ink: #f3e8d2; --hc-title: #f2d189; color: var(--hc-ink); }
+.hm-card { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; gap: .3rem; min-height: 10.5rem; padding: 1rem 1.05rem; border-radius: 1.4rem; text-decoration: none; box-shadow: 0 12px 28px -16px rgba(20, 20, 40, .6); --hc-ink: #f3e8d2; --hc-title: #f2d189; color: var(--hc-ink); }
 /* in the corner of each card, faintly: the Holy Spirit's dove, the cross, the chalice */
 .hm-deco { position: absolute; right: -.4rem; top: -.5rem; z-index: -1; width: 7.6rem; height: 7.6rem; color: var(--hc-ink); opacity: .13; pointer-events: none; }
 .hm-card .hm-sn, .hm-card .hm-day, .hm-card .hm-mn { color: var(--hc-title); }
@@ -2105,7 +2121,7 @@ html:has(.faq-toc.is-sticky) :is(.faq-item, .mira-item) { scroll-margin-top: .5r
 :root:not([data-theme="dark"]) .hm-deco { opacity: .16; }
 a.hm-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 /* The site's link hover (gold text) would turn these white cards' words dark: they lift a little instead */
-a.hm-card:hover { color: var(--hc-ink); transform: translateY(-2px); box-shadow: 0 16px 32px -16px rgba(20, 20, 40, .65); }
+a.hm-card:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -16px rgba(20, 20, 40, .65); }
 a.hm-card { transition: transform .2s, box-shadow .2s; }
 .hm-time { font-family: var(--sans); font-size: .82rem; font-weight: 600; letter-spacing: .04em; opacity: .9; font-variant-numeric: tabular-nums; }
 .hm-about { margin: .3rem .3rem 1.2rem; text-align: center; }
@@ -2150,8 +2166,7 @@ html.app-open { overflow: hidden; }
 }
 .ios-page::before { content: ""; position: absolute; inset: 0; background: var(--wall); pointer-events: none; }
 .ios-page > * { position: relative; }
-.ios-page.is-current { visibility: visible; transition: transform .45s cubic-bezier(.32, .72, 0, 1), filter .45s, visibility 0s; }
-.ios-page.is-current { transform: none; }
+.ios-page.is-current { visibility: visible; transition: transform .45s cubic-bezier(.32, .72, 0, 1), filter .45s, visibility 0s; transform: none; }
 
 .ios-nav { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: .4rem; align-items: center; min-height: 3.2rem; padding: calc(env(safe-area-inset-top) + .2rem) .6rem .2rem; background: var(--chrome); border-bottom: 1px solid transparent; transition: border-color .2s; z-index: 2; }
 .ios-page.is-scrolled .ios-nav { border-bottom-color: var(--border); }
@@ -2162,8 +2177,7 @@ html.app-open { overflow: hidden; }
   background: color-mix(in srgb, var(--chrome) 70%, transparent);
   -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
 }
-.ios-done { padding: .4rem; border: 0; background: none; color: var(--gold-active); font-family: var(--sans); font-size: 1rem; cursor: pointer; }
-.ios-done { justify-self: end; font-weight: 700; }
+.ios-done { padding: .4rem; border: 0; background: none; color: var(--gold-active); font-family: var(--sans); font-size: 1rem; cursor: pointer; justify-self: end; font-weight: 700; }
 .ios-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: calc(env(safe-area-inset-top) + 3.9rem) 1rem calc(2rem + env(safe-area-inset-bottom)); }
 .ios-app, .ios-app *, .ios-spot, .ios-spot *, .hm-app { -webkit-tap-highlight-color: transparent; }
 .ios-large { margin: .2rem 0; font-size: 2.1rem; line-height: 1.1; }
@@ -2264,7 +2278,6 @@ html.app-open { overflow: hidden; }
   .mainnav { order: 2; }
   .header-tools { order: 3; }
   .settings-btn { order: 4; }
-  .menu-toggle { order: 5; }
 }
 
 /* ======================================================================
@@ -2282,7 +2295,6 @@ html.av body { padding-bottom: 0 !important; }
 /* The page is rebuilt into app screens once the script runs: keep it out of sight until then
    so it doesn't jump (the head script shows it anyway after 3 s if the script never runs) */
 html.av:not(.av-ready) #main, html.av:not(.av-ready) .site-footer { visibility: hidden; }
-html.av { scroll-behavior: auto; scroll-padding-top: calc(env(safe-area-inset-top) + 4rem); }
 html.av main [tabindex="-1"]:focus { outline: none; }
 
 /* The bar at the top: back, the level's name, theme and settings; glass over the page */
@@ -2351,9 +2363,8 @@ html.av main .why-part { margin: 0 0 1.6rem; }
 html.av main .why-thesis { font-size: .95rem; }
 html.av main .why-list { border: 0; }
 html.av main .why-item.av-cur > summary { display: block; padding: .2rem 0 .8rem; margin: 0 0 1rem; border-bottom: 1px solid var(--border); }
-html.av main .why-item.av-cur .why-hook { font-size: 1.35rem; line-height: 1.3; font-weight: 600; }
 html.av main .why-item.av-cur .why-hook-k { display: block; }
-html.av main .why-item.av-cur .why-hook { display: block; }
+html.av main .why-item.av-cur .why-hook { font-size: 1.35rem; line-height: 1.3; font-weight: 600; display: block; }
 html.av main .why-item.av-cur .why-body { padding: 0; }
 html.av main .why-item.av-cur .why-points li { color: var(--text); }
 
@@ -2408,16 +2419,24 @@ html.av main .av-cur > .sec { margin: .4rem 0 .8rem; }
 html.av main .sec-l4, html.av main .sec-l5 { margin: 1.3rem .9rem .45rem; padding: 0; border: 0; font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 html.av main .sec-l4 .sec-label, html.av main .sec-l5 .sec-label, html.av main .sec-l4 .en, html.av main .sec-l5 .en { display: none; }
 html.av main .day-cell.av-cur { display: block; padding: 0; border: 0; background: none; min-height: 0; }
-html.av main .day-cell.av-cur .day-num { display: block; font-size: 2rem; }
 
 /* The Katekizm's questions, one at a time */
 html.av main article.qa.av-cur { margin: 0; padding: 0; border: 0; background: none; box-shadow: none; }
 html.av main article.qa.av-cur .qa-q { font-size: 1.45rem; line-height: 1.25; }
 html.av main article.qa.av-cur .qa-num { display: none; }
-html.av.av-reader main { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
 html.av .av-kq-fab {
-  position: fixed; right: 1rem; bottom: calc(1.1rem + env(safe-area-inset-bottom)); z-index: 55; display: none;
-  place-items: center; width: 3.4rem; height: 3.4rem; border: 0; border-radius: 50%; background: var(--app-gold); color: #fff; cursor: pointer;
+  position: fixed;
+  right: 1rem;
+  z-index: 55;
+  display: none;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--app-gold);
+  color: #fff;
+  cursor: pointer;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 10px 24px -10px rgba(20, 20, 40, .6);
 }
 html.av.av-reader .av-kq-fab { display: grid; }
@@ -2525,7 +2544,7 @@ html.av main .amap-card.av-cur { padding: 0; border: 0; background: none; box-sh
 .av-close { color: var(--gold-active); text-decoration: none; }
 .av-close:active { opacity: .5; }
 /* The home screen's icons, small, at the foot of every page: always one tap from another app */
-html.av { --dock-h: env(safe-area-inset-bottom); }
+html.av { scroll-behavior: auto; scroll-padding-top: calc(env(safe-area-inset-top) + 4rem); --dock-h: env(safe-area-inset-bottom); }
 
 /* room for it under the page, and above it for what sits at the foot of the screen */
 html.av .av-foot { padding-bottom: calc(var(--dock-h) + 1rem); }
@@ -2562,9 +2581,8 @@ html.av.av-sub .av-crumbs:not([hidden]) {
 summary .bref, summary .cref { pointer-events: auto; }
 
 /* English and Latin originals read like the Turkish they replace: no box, the same type */
-html.av[data-orig] main :is(details.latin) { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; animation: none; }
 html.av[data-orig] main :is(details.latin) :is(p, li) { font-size: inherit; line-height: inherit; }
-html.av[data-orig] main :is(details.latin) { font-size: inherit; line-height: inherit; }
+html.av[data-orig] main :is(details.latin) { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; animation: none; font-size: inherit; line-height: inherit; }
 
 /* The Katekizm's search: grows from the magnifier across the whole bar */
 .av-findbar { display: none; }
@@ -2583,10 +2601,6 @@ html.av .av-findbar .search-results { position: absolute; left: 0; right: 0; top
 .cal-phone, .cal-app { display: none; }
 .saints-cal.cal-on, .month-pills.cal-on { display: none; }
 .cal-dot { display: inline-block; flex: none; width: .5rem; height: .5rem; border-radius: 50%; background: transparent; }
-.cal-dot.rk-hi, .cal-dot.rk-solemn { background: var(--gold-active); }
-.cal-dot.rk-feast { background: var(--gold); }
-.cal-dot.rk-memorial { background: var(--gold-soft); }
-.cal-dot.rk-optional { background: transparent; box-shadow: inset 0 0 0 1.5px var(--gold-soft); }
 .cal-legend { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; justify-content: center; margin: .9rem 0 0; font-family: var(--sans); font-size: .75rem; color: var(--muted); }
 .cal-legend span { display: inline-flex; align-items: center; gap: .4rem; }
 
@@ -2686,9 +2700,6 @@ html.av .cal-md .cal-n { display: grid; place-items: center; width: 2.2rem; heig
 html.av .cal-md.is-today .cal-n { background: var(--gold-active); color: var(--surface); font-weight: 700; }
 html.av .cal-md .cal-dot { width: .38rem; height: .38rem; }
 html.av .cal-md.rk-hi .cal-dot, html.av .cal-md.rk-solemn .cal-dot { background: var(--gold-active); }
-html.av .cal-md.rk-feast .cal-dot { background: var(--gold); }
-html.av .cal-md.rk-memorial .cal-dot { background: var(--gold-soft); }
-html.av .cal-md.rk-optional .cal-dot { box-shadow: inset 0 0 0 1.2px var(--gold-soft); }
 
 .day-mon { display: none; }
 html.av main .day-cell.av-cur { padding: .4rem 0 0; }
@@ -2810,8 +2821,8 @@ html.av main :is(.av-cur, .av-cur > *, .av-cur summary, .av-cur h2, .av-cur h3):
 html.av main .av-cur summary:focus, html.av main .av-cur [tabindex="-1"]:focus, html.av .av-hero h1:focus { outline: none; box-shadow: none; }
 
 /* ---------- The calendar's ranks, each in its own colour ---------- */
-:root { --rk-solemn: #b7860b; --rk-feast: #c0392b; --rk-memorial: #2f6fd6; --rk-optional: #1f8a5a; }
-[data-theme="dark"] { --rk-solemn: #e3b341; --rk-feast: #ef6b5f; --rk-memorial: #6d9cf0; --rk-optional: #4cc38a; }
+:root { --bm-glow: rgba(214, 160, 50, .32); --bm-shine: rgba(224, 165, 38, .55); --rk-solemn: #b7860b; --rk-feast: #c0392b; --rk-memorial: #2f6fd6; --rk-optional: #1f8a5a; }
+[data-theme="dark"] { --bm-glow: rgba(255, 205, 110, .30); --bm-shine: rgba(255, 212, 121, .6); --rk-solemn: #e3b341; --rk-feast: #ef6b5f; --rk-memorial: #6d9cf0; --rk-optional: #4cc38a; }
 .cal-dot.rk-hi, .cal-dot.rk-solemn { background: var(--rk-solemn); box-shadow: none; }
 .cal-dot.rk-feast { background: var(--rk-feast); box-shadow: none; }
 .cal-dot.rk-memorial { background: var(--rk-memorial); box-shadow: none; }
@@ -2979,7 +2990,6 @@ html.av .to-top-wrap { display: none; }
 .ic-lead { max-width: 40rem; margin: 0 auto 1.8rem; font-size: 1.14rem; line-height: 1.7; text-align: center; color: var(--text-soft); }
 .ic-lead-note { max-width: 38rem; margin: -1.1rem auto 1.8rem; font-family: var(--sans); font-size: .8rem; line-height: 1.6; text-align: center; color: var(--muted); }
 .ic-tldr { padding: .2rem 1.2rem .8rem; border: 1px solid var(--border); border-radius: 1.2rem; background: var(--surface); }
-.ic-tldr .section-title { margin: .8rem 0 .6rem; font-size: clamp(1.3rem, 3vw, 1.6rem); }
 /* each point is one short paragraph: number, title, the sentence and "Tümünü oku" run together */
 .ic-tl-list { list-style: none; display: grid; gap: .1rem 1.6rem; margin: 0; padding: 0; }
 .ic-tl { display: block; padding: .45rem .3rem; border-radius: .5rem; color: var(--text-soft); font-size: .86rem; line-height: 1.45; text-decoration: none; }
@@ -3159,7 +3169,7 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
    a small pill holding only its title; clicked, it grows to the full-width box of cards */
 .ic-tldr-s { display: flex; align-items: center; justify-content: center; gap: .45rem; cursor: pointer; list-style: none; border-radius: .8rem; }
 .ic-tldr-s::-webkit-details-marker { display: none; }
-.ic-tldr-s > svg { width: 1.3rem; height: 1.3rem; flex: none; color: var(--gold); transition: transform .25s; }
+.ic-tldr-s > svg { flex: none; color: var(--gold); transition: transform .25s; }
 .ic-tldr-d[open] > .ic-tldr-s > svg { transform: rotate(180deg); }
 .ic-tldr-s:hover .section-title { color: var(--gold); }
 .ic-tldr-s:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -3171,8 +3181,7 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 }
 
 /* the folded summary: a small centred pill, not a full-width box */
-.ic-tldr:has(> .ic-tldr-d:not([open])) { width: fit-content; max-width: 100%; margin-inline: auto; padding: .15rem 1.3rem; border-radius: 999px; }
-.ic-tldr:has(> .ic-tldr-d:not([open])) .section-title { margin: .45rem 0; font-size: clamp(1.1rem, 2.4vw, 1.3rem); }
+.ic-tldr:has(> .ic-tldr-d:not([open])) { width: fit-content; max-width: 100%; margin-inline: auto; border-radius: 999px; }
 .ic-tldr:has(> .ic-tldr-d:not([open])):hover { border-color: var(--gold-soft); }
 .ic-tldr { transition: border-color .2s; }
 .ic-tldr-d[open] .ic-tl-v { animation: tldr-open .35s ease-out; }
@@ -3193,7 +3202,7 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
    (the Katekizm, the Rosary, the saints) opens a further list beside it. The hamburger and
    its overlay are for narrower screens only. */
 @media (min-width: 980px) {
-  .menu-toggle { display: none; }
+  .menu-toggle { order: 5; display: none; }
   .dnav > ul { gap: .2rem; flex-wrap: nowrap; }
   .dn-top { position: relative; }
   .dn-btn { font-size: .95rem; padding-inline: .8rem; }
@@ -3456,14 +3465,9 @@ html:not([data-a11y-dyslexia="1"]) body { letter-spacing: 0; }
 main h1, main h2, .hj-h {
   font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; line-height: 1.04;
 }
-main h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); }
-main .prose h2, main h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
 /* the dyslexia setting keeps its own, easier letters */
 :root[data-a11y-dyslexia="1"] main h1, :root[data-a11y-dyslexia="1"] main h2, :root[data-a11y-dyslexia="1"] .hj-h { font-family: inherit; text-transform: none; }
 /* reading: a size up on wide screens */
-@media (min-width: 980px) {
-  .prose { font-size: 1.24rem; line-height: 1.6; }
-}
 
 /* ---- A painted page header: the painting behind the title, darker towards the words ---- */
 html:not(.av) .page-head.painted {
@@ -3534,7 +3538,7 @@ html.av .page-head .ph-art { display: none; }
 
 /* ---- A section's painting in place of its line drawing ---- */
 .ill-art.ill-photo { width: 100%; max-width: 30rem; margin: 0 0 1.2rem; }
-.ill-photo .ill-img { display: block; width: 100%; height: auto; max-height: 22rem; object-fit: cover; border-radius: 16px; box-shadow: 0 16px 34px -24px rgba(29, 36, 51, .6); }
+.ill-photo .ill-img { display: block; border-radius: 16px; box-shadow: 0 16px 34px -24px rgba(29, 36, 51, .6); }
 .ill-photo figcaption { margin-top: .45rem; font: .74rem var(--sans); color: var(--muted); }
 .ill-photo cite { font-style: italic; }
 
@@ -3566,7 +3570,7 @@ html.av .page-head .ph-art { display: none; }
 @media (min-width: 600px) and (max-width: 979px) { .hd-grid { grid-template-columns: 1fr 1fr; } .hd-card { min-height: 18rem; } }
 
 /* ---- Phones: the page's painting at the top of the screen; no line-drawn emblem beside it ---- */
-html.av .page-head.painted .ph-art { display: block; width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover; border-radius: 18px; margin: 0 0 1rem; box-shadow: 0 16px 34px -24px rgba(0, 0, 0, .6); }
+html.av .page-head.painted .ph-art { display: block; border-radius: 18px; margin: 0 0 1rem; box-shadow: 0 16px 34px -24px rgba(0, 0, 0, .6); }
 html.av .page-head.painted .emblem, html.av .page-head.painted .page-ico { display: none; }
 html.av .page-head.painted .ph-cap { display: block; order: 9; margin: .3rem 0 0; font: .72rem var(--sans); color: var(--muted); }
 :root .hm-journey .hd-card .hd-t { color: #fff; text-shadow: 0 2px 18px rgba(0, 0, 0, .5); }
@@ -3773,7 +3777,7 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 .mass-pills a { pointer-events: auto; background: var(--glass-strong); border-color: var(--glass-brd); box-shadow: 0 6px 18px -10px rgba(29, 36, 51, .45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 .mass-pills a.is-current { background: color-mix(in srgb, var(--gold) 16%, var(--surface)); }
 .mira-fig { margin: .2rem 0 1.2rem; }
-.mira-img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.mira-img { display: block; height: auto; border-radius: 12px; }
 .mira-fig figcaption { margin-top: .4rem; font: .74rem var(--sans); color: var(--muted); text-align: center; }
 /* a banner that is a window onto its painting (Tesbih Duası): the painting at its full width,
    moving inside it as the page scrolls (script.js, initBannerPan) */
@@ -3781,18 +3785,17 @@ main .page-head.painted.ph-pan .ph-win { position: relative; width: 100vw; margi
 @media (min-width: 980px) { main .page-head.painted.ph-pan .ph-win { aspect-ratio: auto; height: clamp(260px, 34vw, 460px); } }
 main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; top: 0; left: 0; margin: 0 !important; width: 100% !important; height: auto !important; aspect-ratio: auto !important; object-fit: fill !important; transform: translate3d(0, var(--pan, 0px), 0) !important; will-change: transform; }
 /* İslam'a Cevap, Ateizme Cevap: the summary, always open, one point under another */
-.ic-tldr { padding: .4rem 1.4rem 1rem; }
 .ic-tldr .ic-tl-list.ic-tl-v { display: block; overflow: visible; padding: 0; counter-reset: none; }
 .ic-tl-v > li { display: block; }
 .ic-tl-v > li + li { border-top: 1px solid var(--border); }
-.ic-tl-v .ic-tl { display: grid !important; grid-template-columns: 2.2rem 1fr; gap: .1rem .8rem; align-items: start; width: auto; padding: .9rem .2rem !important; border: 0 !important; border-radius: 10px !important; background: none !important; font-size: 1rem !important; }
+.ic-tl-v .ic-tl { display: grid !important; align-items: start; width: auto; border: 0 !important; border-radius: 10px !important; background: none !important; }
 .ic-tl-v .ic-tl:hover { background: var(--gold-bg) !important; }
 .ic-tl-v .ic-tl-k { display: none !important; }
-.ic-tl-v .ic-tl-n { display: grid !important; grid-row: span 2; width: 2.1rem; height: 2.1rem; margin: 0; font-size: .95rem; }
+.ic-tl-v .ic-tl-n { display: grid !important; grid-row: span 2; margin: 0; }
 .ic-tl-v .ic-tl-b { display: flex !important; flex-direction: column; gap: .25rem; }
-.ic-tl-v .ic-tl-t { margin: 0; font-size: 1.06rem; line-height: 1.3; }
-.ic-tl-v .ic-tl-s { display: block !important; color: var(--text-soft); line-height: 1.55; }
-.ic-tl-v .ic-tl-more { display: inline-flex; margin: .1rem 0 0 .35rem !important; font-size: .85em; }
+.ic-tl-v .ic-tl-t { margin: 0; line-height: 1.3; }
+.ic-tl-v .ic-tl-s { display: block !important; color: var(--text-soft); }
+.ic-tl-v .ic-tl-more { margin: .1rem 0 0 .35rem !important; font-size: .85em; }
 /* ---- Azizler: the twenty best-known saints as round portraits, ringed like an unseen story until
    the saint's page has been read (script.js, initSaintStories) ---- */
 .gs-stories { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.2rem, 1fr)); gap: 1.4rem .8rem; margin: 1.4rem 0 1rem; }
