@@ -2,7 +2,7 @@
 
 A static Catholic resource site in Turkish. Only the Katekizm pages keep a TR | EN switch, which turns the page into the Vatican's English in place (Latin originals are shown on request); see below. It includes a full translation of the **Compendium of the Catechism of the Catholic Church** (Libreria Editrice Vaticana, 2005; all 598 questions and answers, the Motu Proprio, the Introduction, both Creeds, the Decalogue table, the Our Father, and the full Appendix), plus original Turkish sections making the case for the Catholic faith, the OCIA/RCIA process for becoming Catholic, how Confession works, the Mass explained step by step, the parables of Jesus explained plainly, the Rosary and common prayers, a calendar of the saints, a guide to the Bible in Turkish, well-known Catholic miracles, Christianity's roots in Anatolia, the Church's history, the history of the Rosary, answers to Islam and to atheism, a call to the Jewish people, frequently asked questions, and a directory of active Catholic churches in Turkey.
 
-The site uses plain HTML, CSS and JavaScript. It loads no libraries and makes no CDN requests (the one exception is Cloudflare Turnstile, the spam check, loaded only on the contact page); the fonts (Lexend for all text, EB Garamond capitals for the logo) are self-hosted in `assets/fonts/`. You can open `index.html` straight from disk, or upload the folder to any static host.
+The site uses plain HTML, CSS and JavaScript. It makes no CDN requests (the one exception is Cloudflare Turnstile, the spam check, loaded only on the contact page); the fonts (Lexend for all text, EB Garamond capitals for the logo) are self-hosted in `assets/fonts/`, and the one library, three.js for the Rosary's 3D beads on a computer, is bundled into `assets/vendor/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
 Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows today's date and time. The home page's "Bugün" card shows the day's liturgical season and the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, beside the day's saint and Rosary mysteries.
 
@@ -60,6 +60,10 @@ ateizme-cevap.html      Tartış: Answering atheism, the same layout
 yahudilere-cagri.html   Tartış: A call to the Jewish people, in the humble tone the Vatican's documents ask for
 tesbih-tarihi.html      The history of the Rosary
 iletisim.html           Contact page: a form that posts to the Cloudflare Worker (no address is published)
+sozluk.html             Glossary of Catholic terms, A-Z
+gizlilik.html           Privacy policy
+erisilebilirlik.html    Accessibility statement
+kaynaklar-ve-telif.html Sources and copyright, with the credits of every painting and portrait
 404.html                "Page not found" page (GitHub Pages serves it for unknown URLs)
 sitemap.xml, robots.txt, llms.txt, <IndexNow key>.txt
 favicon.ico, apple-touch-icon.png, site.webmanifest, assets/icon-192.png, assets/icon-512.png   Site icons
@@ -71,6 +75,8 @@ assets/fonts/           Lexend .woff2 files for all text, and kd-brand-* (EB Gar
                         (SIL Open Font License; OFL*.txt); the *-ext-a files
                         are cut down to Latin Extended-A (Turkish ğ ş İ) to keep them small
 assets/og-image.jpg     1200×630 social preview image
+assets/art/             The paintings (see data/tablolar.json), the history strip's pictures (tl/) and the saints' portraits (saints/)
+assets/vendor/          rosary3d.js: the Rosary's 3D beads with three.js, bundled by tools/rosary3d
 data/compendium-1..4.js ← Compendium content (Turkish + English pairs), one file per part
 data/kilise-tarihi.json ← Church history: eras (years, introduction) and events (year, title, short line, full text, picture, link),
                           shown on the home page's strip and on kilise-tarihi.html
@@ -105,12 +111,24 @@ data/refs-bible.js, refs-quran.js, refs-hadith.js ← The passages the reference
                           the ones each page cites into that page
 content/kutsal-kitap.md ← Bible guide text (Markdown)
 content/hakkinda.md     ← Footer text: the one-line "about" sentence and the "Kaynaklar ve Telif" (sources and copyright) dialog (Markdown)
+content/gizlilik.md, erisilebilirlik.md ← The privacy and accessibility pages (Markdown)
+content/glossary-tr.txt ← The glossary's terms, one per line (built into sozluk.html by tools/sozluk.py)
 tools/build.ps1         Regenerates the static pages from data/ and content/
-cloudflare/contact-worker.js  The contact form's Cloudflare Worker (pasted into the Cloudflare dashboard, not deployed by the workflow)
+tools/sozluk.py         Builds the glossary page's body from content/glossary-tr.txt
+tools/yahudilere-cagri/ Builds data/yahudilere-cagri.js from its source text
+tools/rosary3d/         Source of assets/vendor/rosary3d.js (Node)
+tools/qa/               links.py (internal links and anchors, run by the deploy) and runtime.js (script errors in a browser)
+cloudflare/contact-worker.js  The contact form's Cloudflare Worker, deployed by deploy-contact.yml
+cloudflare/wrangler.jsonc     The Worker's config: its name, the katolikdunyasi.com/api/* route, the email and rate-limit bindings
 cloudflare/README.md    Step-by-step Cloudflare setup for the contact form (Turnstile, Email Routing, Worker, route)
 tools/anadolu-harita-sekli.mjs  Regenerates the map outline (Node; only if the map frame should change)
 tools/kilise-harita-sekli.mjs   Regenerates the parish map's detailed Marmara coast (Node)
-.github/workflows/deploy.yml  Builds and publishes the site on every push to main
+.github/workflows/deploy.yml  Builds and publishes this site to GitHub Pages on every push to main
+.github/workflows/deploy-contact.yml  Publishes the contact form Worker when cloudflare/ changes
+.github/workflows/deploy-english.yml  Builds verbumdomini/ and publishes the English site to Cloudflare
+verbumdomini/           The English site (verbumdomini.ca), self-contained; see its README.md
+docs/                   english-site.md (English site notes), owner-steps.md (dashboard settings), security-audit.md
+CLAUDE.md               Rules and commands for AI-assisted work on both sites
 CNAME                   Your domain (one line). Also used for canonical/sitemap URLs
 ```
 
@@ -143,7 +161,7 @@ Most guide pages (Topraklarımızda Hristiyanlık, Günah Çıkarma, Neden Katol
 
 Search reads the data files at runtime, so edits show up in search results immediately. The pages themselves are pre-rendered for search engines, so they need the build.
 
-**Domain:** the build reads your domain from the `CNAME` file (one line, e.g. `ornekalan.com`) and uses `https://<that domain>` for canonical, Open Graph and sitemap URLs. The file currently holds the placeholder `alanadiniz.com`, so the build prints a warning and falls back to `https://www.example.com` until you replace it.
+**Domain:** the build reads your domain from the `CNAME` file (one line, e.g. `ornekalan.com`) and uses `https://<that domain>` for canonical, Open Graph and sitemap URLs. The file holds `katolikdunyasi.com`. If it is missing or holds a placeholder, the build prints a warning and falls back to `https://www.example.com`.
 
 ## Phones: pages as app screens
 
@@ -189,7 +207,7 @@ Raw HTML is shown as plain text, so the page can't be broken by accident.
 - Put your domain in `CNAME` (e.g. `ornekalan.com` or `www.ornekalan.com`) and commit.
 - Settings → Pages → **Custom domain**: enter the same domain → Save. (With Actions deployments, this setting, not the CNAME file, is what GitHub uses for serving; the file feeds the build.)
 
-**4. Cloudflare DNS** (Cloudflare → your domain → DNS → Records). Keep your existing GitHub verification TXT record.
+**4. Cloudflare DNS** (Cloudflare → your domain → DNS → Records). Keep the GitHub domain verification TXT record (`_github-pages-challenge-<your-github-username>`): it makes katolikdunyasi.com a verified domain, so no other GitHub account can claim it.
 - Apex domain (`ornekalan.com`): four **A** records for `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`. Optional **AAAA** records for `@`: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`.
 - `www`: a **CNAME** record `www` → `<your-github-username>.github.io`. GitHub then redirects between www and the apex automatically.
 - Set these records to **DNS only** (grey cloud) at first, so GitHub can issue its HTTPS certificate.

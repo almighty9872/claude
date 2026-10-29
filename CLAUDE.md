@@ -4,6 +4,7 @@
 - The owner's name and email never appear in the repo, commits, PRs or pages.
 - Commit messages carry no Claude lines: no `Co-Authored-By: Claude` and no `Claude-Session:` link (the repo is public).
 - Secrets (Cloudflare API token, Turnstile secret key) go into GitHub secrets by the owner. Never ask for them in chat and never write them to files.
+- Repository: `almighty9872/katolikdunyasi` (renamed from `claude`; never create a new repo named `claude`, it would break GitHub's redirects). katolikdunyasi.com is a verified GitHub Pages domain: keep the `_github-pages-challenge-almighty9872` TXT record in Cloudflare DNS.
 - Two sites, two folders: the Turkish site (katolikdunyasi.com) is everything outside `verbumdomini/`; the English site (verbumdomini.ca) is everything inside it. Work on one site never edits the other's files. English-site notes: `docs/english-site.md`.
 
 # Commands (run from the repo root)
