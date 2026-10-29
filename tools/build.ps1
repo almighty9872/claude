@@ -1647,7 +1647,13 @@ Write-Page -File 'ekler.html' -Title "Ekler: Dualar ve Katolik Öğreti Formüll
 # Plain <details>/<summary> accordions: they open without JavaScript, are searchable by the
 # browser find-in-page in supporting browsers, and each carries the CCC paragraphs it rests on.
 $script:FaqN = 0
-$faqToc = ($FaqData.categories | ForEach-Object { "<li><a href=`"#$($_.id)`">$((Inline $_.title))</a></li>" }) -join ''
+$script:FdN = 0
+$fdTabs = ($FaqData.categories | ForEach-Object { "<li><button type=`"button`" class=`"fd-tab`" aria-expanded=`"false`" aria-controls=`"fd-$($_.id)`"><span>$(if ($_.s) { $_.s } else { $_.title })</span><small>$(@($_.items).Count)</small>$IcoChevLg</button></li>" }) -join ''
+$fdPanels = ($FaqData.categories | ForEach-Object {
+  $lis = ($_.items | ForEach-Object { $script:FdN++; "<li><a href=`"#$($_.id)`"><b>$($script:FdN)</b><span>$(if ($_.s) { $_.s } else { $_.q })</span></a></li>" }) -join ''
+  "<section class=`"fd-panel`" id=`"fd-$($_.id)`"><h2 class=`"fd-ph`">$((Inline $_.title))</h2><ol class=`"fd-list`">$lis</ol></section>"
+}) -join ''
+$faqNav = "<nav class=`"faq-dir`" $(TA 'aria-label' 'Soru dizini')><div class=`"fd-bar`"><ul class=`"fd-tabs`">$fdTabs</ul><button type=`"button`" class=`"fd-all`" aria-expanded=`"false`" aria-controls=`"fd-panels`"><span>Tüm sorular</span><span class=`"fd-pos`" aria-hidden=`"true`">$($script:FdN) soru</span>$IcoChevLg</button></div><div class=`"fd-panels`" id=`"fd-panels`">$fdPanels</div><div class=`"fd-scrim`"></div></nav>"
 $faqCats = ($FaqData.categories | ForEach-Object {
   $script:FaqN++; $cat = $_
   $qs = ($cat.items | ForEach-Object {
@@ -1668,7 +1674,7 @@ $sssBody = @"
 <div class="wrap narrow ill-page">
   $(Crumbs 'Sıkça Sorulan Sorular')
   <header class="page-head center"><h1>$((Inline $FaqData.title))</h1></header>
-  <nav class="faq-toc is-sticky" $(TA 'aria-label' 'Kategoriler')><ul>$faqToc</ul></nav>
+  $faqNav
 $faqCats
 </div>
 "@
