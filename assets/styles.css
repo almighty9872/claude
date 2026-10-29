@@ -473,6 +473,12 @@ a.qa-num:hover { background: var(--gold); color: var(--bg); }
   border-bottom: 1px dotted var(--border-strong);
 }
 .qa-ref a:hover, .faq-ref a:hover { color: var(--gold); border-bottom-color: var(--gold-soft); }
+/* The external-link mark after a link that opens another site (tools/build.ps1 $IcoExternal): one mask
+   in the text's colour instead of an inline SVG in every link */
+.ext { display: inline-block; width: .78em; height: .78em; flex: none; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3C/svg%3E") center / contain no-repeat; }
+@media (forced-colors: active) { .ext { forced-color-adjust: none; background: CanvasText; } }
 .qa-ref .ext, .faq-ref .ext { display: inline-block; width: .78em; height: .78em; margin-left: .3em; vertical-align: -.05em; }
 .qa-ref a:last-of-type, .faq-ref a:last-of-type { white-space: nowrap; }
 .qa-a { margin-top: .6rem; }

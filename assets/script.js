@@ -3195,7 +3195,7 @@
     /* the browser's back and forward */
     var viaButton = false;
     window.addEventListener('popstate', function () {
-      var n = nodeOf(byId(decodeURIComponent(location.hash.slice(1))));
+      var n = nodeOf(byId(hashId()));
       /* anything but the page's own back button (a swipe from the edge, the browser's back or
          forward) has already been drawn by the browser: no slide of our own on top of it */
       var native = !viaButton;
@@ -3426,7 +3426,7 @@
     }
 
     /* ----- start: at the level the address points to */
-    var start = byId(decodeURIComponent(location.hash.slice(1)));
+    var start = byId(hashId());
     /* the hero takes its size at once on load; after that every change of level resizes it */
     H.classList.add('av-still');
     requestAnimationFrame(function () { requestAnimationFrame(function () { H.classList.remove('av-still'); }); });
@@ -3811,7 +3811,7 @@
     showOnlyCity('istanbul');
     markCurrentCity('istanbul');
     /* Arriving at a city or a church (from the home screen's Kilise Bul, say): open that city */
-    var hashEl = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var hashEl = location.hash && document.getElementById(hashId());
     var hashCity = hashEl && (hashEl.classList.contains('church-city') ? hashEl : hashEl.closest && hashEl.closest('.church-city'));
     if (hashCity) { goToCity(hashCity.id); requestAnimationFrame(function () { hashEl.scrollIntoView(); }); }
   }
@@ -3826,7 +3826,7 @@
     var wrap = $('main') || document.body;
     if (!$('.why-item, .kk-sec', wrap) || document.documentElement.classList.contains('av')) return;
     function openHash() {
-      var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+      var id = hashId(), el = id && document.getElementById(id);
       if (!el || !wrap.contains(el) || !el.matches('.why-item, .kk-sec')) return;
       el.open = true;
       requestAnimationFrame(function () { el.scrollIntoView({ block: 'start' }); });
@@ -4094,10 +4094,15 @@
 
   /* The bar at the top of the screen: the site's header, or on phones the app view's own bar */
   function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
+  /* The address's #fragment as an id; a malformed escape (#%E0) gives '' instead of throwing */
+  function hashId() { try { return decodeURIComponent(location.hash.slice(1)); } catch (e) { return ''; } }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  /* each part of the page starts on its own: one that fails leaves the others working */
   ready(function () {
-    initFrameBust(); initHeaderHeight(); initTheme(); initFontSize(); initContactForm(); initNavToday(); initHistory();
-    initSearch(); initReader(); initDrawer(); initNav(); initDeskNav(); initSources(); initRefs(); initRosary(); initRosaryTracker(); initAnatoliaMap(); initDrawings(); initSaints(); initMass(); initHome(); initPrintExpand();
-    initChurchFilter(); initStickyToc(); initWhyHooks(); initMapLinks(); initA11y(); initAppView(); initReadMarks(); initToTop(); initArticleFlow(); initJumpList(); initBannerPan(); initSaintStories(); initEraNav(); initChurchMap(); initChurchPick(); initLayoutSwitch();
+    [
+      initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
+      initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
+      initChurchFilter, initStickyToc, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+    ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();
