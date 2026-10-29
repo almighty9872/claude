@@ -52,6 +52,11 @@ as it is. The Worker sends to your personal address, which Email Routing has alr
    - **Destination address:** choose your personal email (the verified one).
    - Save, then **Deploy** again if Cloudflare asks.
 
+6. Optional, recommended: **Settings** → **Bindings** → **Add** → **Rate limiting**:
+   - **Variable name:** `CONTACT_LIMIT`, **Namespace ID:** `1001`, **Limit:** 3 requests per 60 seconds.
+   - The Worker then turns away a fourth message within a minute from the same address. Without
+     this binding it works as before, with no limit.
+
 ## Step 4: Connect the Worker to the site
 
 1. The Worker → **Settings** → **Domains & Routes** → **Add** → **Route**.

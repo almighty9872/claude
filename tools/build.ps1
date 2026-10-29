@@ -212,6 +212,8 @@ $dataVer = [ordered]@{}
 Get-ChildItem (Join-Path $Root 'data') -Filter '*.js' | Where-Object { $RuntimeData -contains $_.Name } | Sort-Object Name | ForEach-Object {
   $dataVer["data/$($_.Name)"] = File-Ver ([IO.File]::ReadAllBytes($_.FullName))
 }
+# the 3D rosary module too: its URL changes with its content, so it can be cached for a year
+$dataVer['assets/vendor/rosary3d.js'] = File-Ver ([IO.File]::ReadAllBytes((Join-Path $Root 'assets/vendor/rosary3d.js')))
 $JsSrc = [IO.File]::ReadAllText((Join-Path $Root 'assets/script.js'))
 $JsFull = $JsSrc.Replace('{"__DATA_VER__": 1}', (ConvertTo-Json -InputObject $dataVer -Compress))
 $JsMin = Esbuild-Min $JsFull 'js'
@@ -1435,8 +1437,6 @@ function Breadcrumb-Ld([string]$name, [string]$path, [string]$parentName = '', [
 # stays, for search results); both functions are kept so the page code calling them is unchanged.
 function Crumbs([string]$here, [string]$parentName = '', [string]$parentPath = '') {
   return ''
-  $mid = if ($parentName) { "<a href=`"$parentPath`">$parentName</a><span aria-hidden=`"true`">›</span>" } else { '' }
-  return "<nav class=`"crumbs`" aria-label=`"Konum`"><a href=`"index.html`">Ana Sayfa</a><span aria-hidden=`"true`">›</span>$mid<span aria-current=`"page`">$here</span></nav>"
 }
 
 Write-Host "Building pages ($SiteUrl)..."
@@ -2779,7 +2779,7 @@ $Churches.rites | ForEach-Object { $RiteLabels[$_.id] = @{ tr = $_.tr } }
 function Map-Url([string]$q) { return 'https://www.google.com/maps/search/?api=1&query=' + [uri]::EscapeDataString($q) }
 $IcoClock = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 7.4V12l3.2 2"/></svg>'
 $IcoPhone = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4h3.1l1.3 4-2 1.4a12.5 12.5 0 0 0 5.9 5.9l1.4-2 4 1.3v3.1a1.6 1.6 0 0 1-1.7 1.6A16.3 16.3 0 0 1 3.6 5.7 1.6 1.6 0 0 1 5.2 4Z"/></svg>'
-$IcoExternal = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
+$IcoExternalCh = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/></svg>'
 $IcoWarn = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 18.2a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0Z"/><path d="M12 9.5v4.4"/><circle cx="12" cy="16.8" r="1" fill="currentColor" stroke="none"/></svg>'
 $IcoChurch = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6v3.1M10.6 4.1h2.8"/><path d="M5 10.8 12 6l7 4.8V21H5Z"/><path d="M9.6 21v-4.6a2.4 2.4 0 0 1 4.8 0V21"/></svg>'
 $IcoMailSm = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.4" y="5.4" width="17.2" height="13.2" rx="2"/><path d="m4 7 8 6 8-6"/></svg>'
@@ -2810,13 +2810,13 @@ foreach ($city in $Churches.cities) {
     # contact: address (with a map link), phones, e-mail, website
     $mapQ = "$(Plain $ch.name), $cityName"
     $rows = New-Object Text.StringBuilder
-    [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoPin<span>Adres</span></dt><dd>$(Inline $ch.address)<br><a class=`"map-link`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$(Attr $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada aç $IcoExternal</a></dd></div>")
+    [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoPin<span>Adres</span></dt><dd>$(Inline $ch.address)<br><a class=`"map-link`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$(Attr $mapQ)`" target=`"_blank`" rel=`"noopener`">Haritada aç $IcoExternalCh</a></dd></div>")
     if (@($ch.phones).Count) {
       $ph = (@($ch.phones) | ForEach-Object { "<a href=`"$(Tel-Href $_)`">$_</a>" }) -join '<br>'
       [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoPhone<span>Telefon</span></dt><dd>$ph</dd></div>")
     }
     if ($ch.email) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoMailSm<span>E-posta</span></dt><dd><a href=`"mailto:$($ch.email)`">$($ch.email)</a></dd></div>") }
-    if ($ch.website) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoGlobe<span>Web</span></dt><dd><a href=`"$($ch.website)`" target=`"_blank`" rel=`"noopener`">$(Site-Host $ch.website) $IcoExternal</a></dd></div>") }
+    if ($ch.website) { [void]$rows.Append("<div class=`"ch-row`"><dt>$IcoGlobe<span>Web</span></dt><dd><a href=`"$($ch.website)`" target=`"_blank`" rel=`"noopener`">$(Site-Host $ch.website) $IcoExternalCh</a></dd></div>") }
     $times = (0..(@($ch.mass).Count - 1) | ForEach-Object { $m = @($ch.mass)[$_]; "<tr><th scope=`"row`">$((Inline $m[0]))</th><td>$((Inline $m[1]))</td></tr>" }) -join ''
     $massNote = if ($ch.massNote) { "<p class=`"ch-note`">$((Inline $ch.massNote))</p>" } else { '' }
     $ocia = if ($ch.ocia) { "<section class=`"ch-sec ch-ocia`" id=`"ocia`"><h2 class=`"ch-h`">$IcoCompass Katolik Olmak İsteyenler İçin</h2><p>$((Inline $ch.ocia))</p></section>" } else { '' }

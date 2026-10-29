@@ -45,6 +45,9 @@ jobs:
       - name: Check the built HTML (fails the deploy on broken markup)
         run: npx --yes html-validate@9.7.1 --config .htmlvalidate.json "./*.html" "kilise/*.html"
 
+      - name: Check the internal links and anchors (fails the deploy on a broken one)
+        run: python3 tools/qa/links.py | tee links.txt && grep -q 'total bad 0' links.txt
+
       - name: Collect the public files into _site
         # Only what the pages load: the minified CSS/JS (not their sources), the fonts and images,
         # and the few data files the scripts fetch at run time (the rest is built into the HTML).
