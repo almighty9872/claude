@@ -4045,5 +4045,15 @@ html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap 
 }
 /* the home bar's own link (Kilise Bul): same look as an app's tab */
 .hm-link { text-decoration: none; }
-.hm-find + .hm-today { margin-top: .8rem; }
-@media (min-width: 980px) { .hm-find + .hm-today { margin-top: 1rem; } }
+.hm-today-date { grid-template-columns: 1fr; }
+.hm-today-date .hm-date { min-height: 0; }
+.hm-find, .hm-today-rest { margin-top: .8rem; }
+.hm-today-rest .hm-myst { grid-column: 1 / -1; min-height: 9rem; }
+@media (min-width: 980px) {
+  .hm-find, .hm-today-rest { margin-top: 1rem; }
+  .hm-today-date .hm-date { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: .3rem 1.6rem; min-height: 0; padding: 1rem 1.4rem; }
+  .hm-today-date .hm-date .hm-label { flex: 0 0 100%; }
+  .hm-today-rest { grid-template-columns: 1fr 1fr; }
+  .hm-today-rest .hm-myst { grid-column: auto; order: 1; min-height: 11rem; }
+  .hm-today-rest .hm-saint { order: 2; }
+}

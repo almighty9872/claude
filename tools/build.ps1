@@ -3254,22 +3254,26 @@ $SaintArtJson = '{' + (($Tablolar.pages.PSObject.Properties | ForEach-Object { "
 $SetArtJson = '{"sevinc":"66annunc","isik":"47emmau","aci":"55flagel","yucelik":"45death","*":"58rosar"}'
 function Home-Page {
   $loading = 'Yükleniyor…'
-  $cards = @"
-  <div class="hm-today" id="bugun">
-    <a class="hm-card hm-saint" href="azizler.html" data-home-saint data-art-map="$(Attr $SaintArtJson)"><span class="hm-art" aria-hidden="true"></span>$DecoChalice
-      <span class="hm-label">$IcoStar Bugünün Azizi</span>
-      <span class="hm-sn" data-hs-name>$loading</span><span class="hm-sub" data-hs-title></span><span class="hm-bio" data-hs-bio></span>
-      <span class="hm-go">Hayatını oku $IcoChevR</span>
-    </a>
+  $cardDate = @"
+  <div class="hm-today hm-today-date" id="bugun">
     <div class="hm-card hm-date" data-home-lit>$(Art-Img '13fligh' 'hm-art' '(min-width: 980px) 40vw, 50vw' 'high')$DecoDove
       <span class="hm-label">Bugün</span>
       <span class="hm-day" data-hd-day>$loading</span><span class="hm-year" data-hd-year></span><time class="hm-time" data-hd-time></time>
       <span class="hm-season" data-hd-season></span><span class="hm-sub" data-hd-colour></span>
     </div>
+  </div>
+"@
+  $cardsRest = @"
+  <div class="hm-today hm-today-rest">
     <a class="hm-card hm-myst" href="tesbih-duasi.html#tesbih-rehberi" data-home-mystery data-art-map="$(Attr $SetArtJson)"><span class="hm-art" aria-hidden="true"></span>$DecoCross
       <span class="hm-label">$IcoBeads Günün Gizemi</span>
       <span class="hm-mn" data-hm-name>$loading</span><span class="hm-sub" data-hm-days></span>
       <span class="hm-go">Tesbihe başla $IcoChevR</span>
+    </a>
+    <a class="hm-card hm-saint" href="azizler.html" data-home-saint data-art-map="$(Attr $SaintArtJson)"><span class="hm-art" aria-hidden="true"></span>$DecoChalice
+      <span class="hm-label">$IcoStar Bugünün Azizi</span>
+      <span class="hm-sn" data-hs-name>$loading</span><span class="hm-sub" data-hs-title></span><span class="hm-bio" data-hs-bio></span>
+      <span class="hm-go">Hayatını oku $IcoChevR</span>
     </a>
   </div>
 "@
@@ -3370,8 +3374,9 @@ function Home-Page {
 <div class="wrap home-v2">
   <h1 class="visually-hidden">$tag</h1>
   <div class="hm-about"><p class="hm-about-t">$tag</p><p class="hm-about-s">$($fm['about'])</p></div>
+$cardDate
 $find
-$cards
+$cardsRest
   $searchDesk
   <nav class="hm-apps" $(TA 'aria-label' 'Bölümler')>$icons</nav>
   $lists
