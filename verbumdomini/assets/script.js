@@ -1090,9 +1090,14 @@
       var src = { bref: en ? 'English: Douay-Rheims. The Turkish is our own translation.' : 'Türkçe çeviri bize aittir. İngilizcesi: Douay-Rheims.',
         qref: en ? 'Arabic: Tanzil. English: Pickthall. The Turkish is our own translation.' : 'Arapça: Tanzil. Türkçe çeviri bize aittir. İngilizcesi: Pickthall.',
         hdref: en ? 'Numbering follows sunnah.com. The English and Turkish translations are our own.' : 'Numaralar sunnah.com’a göredir. Türkçe ve İngilizce çeviriler bize aittir.' }[kind];
-      if (EN_SITE) src = { bref: 'English: Douay-Rheims.', qref: 'Arabic: Tanzil. English: Pickthall.', hdref: 'Numbering follows sunnah.com. The English translation is our own.' }[kind];
+      if (EN_SITE) src = { bref: 'Douay-Rheims translation.', qref: 'Arabic: Tanzil. English: Pickthall.', hdref: 'Numbering follows sunnah.com. The English translation is our own.' }[kind];
       if (item) foot.appendChild(el('span', 'ref-src', src + ' '));
       var out = el('a', '', en ? 'Open at the source ↗' : 'Kaynağında aç ↗');
+      /* the Bible links open BibleGateway in a different translation from the one shown above */
+      if (EN_SITE && kind === 'bref') {
+        var ver = ''; try { ver = new URL(a.href).searchParams.get('version') || ''; } catch (err) {}
+        out.textContent = ver === 'RSVCE' ? 'Read on BibleGateway (RSV Catholic Edition) ↗' : 'Read on BibleGateway ↗';
+      }
       out.href = a.href; out.target = '_blank'; out.rel = 'noopener';
       foot.appendChild(out);
     }
