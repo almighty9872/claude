@@ -3937,6 +3937,7 @@ a.gl-x:hover { color: var(--gold); text-decoration-style: solid; }
 html.kl-en-on .kl-tr { display: none; }
 html.kl-en-on .kl-en { display: inline; }
 html.kl-en-on .kl-en.kl-blk { display: block; }
+.kl-checked { display: block; margin-top: .45rem; font-size: .78rem; font-style: italic; color: var(--muted); }
 .kl-lead { max-width: 62ch; margin: .6rem auto 0; font-size: .98rem; color: var(--text-soft); }
 /* the pinned row: city jumps, then the TR / EN switch */
 .kl-bar { position: sticky; top: var(--header-h); z-index: 30; display: flex; align-items: center; gap: .7rem; margin: 1rem 0 0; padding: .5rem 0; font-family: var(--sans); }

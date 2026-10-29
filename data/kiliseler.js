@@ -19,7 +19,7 @@
 window.CHURCHES = /*JSON-START*/{
  "title": "Kilise Bul",
  "en": "Find a Church",
- "updated": "Eylül 2026",
+ "updated": "Ekim 2026",
  "note": "Bu bilgiler kiliselerin kendi sitelerinden, İzmir Katolik Başepiskoposluğu’ndan, Türkiye Katolik Ruhani Reisler Kurulu’nun ayin saatleri listesinden, İstanbul Valiliği’nin Dijital İstanbul envanterinden ve başka açık kaynaklardan derlenmiştir; resmî ve eksiksiz bir kilise sicili değildir. Bir bilgide hata gördüyseniz İletişim sayfasından bize bildirebilirsiniz.",
  "orthodoxNote": "Yakınınızda Katolik kilisesi yoksa Ortodoks bir kilise olabilir. Kilise Hukuku’na göre (Kanun 844 §2), Katolik bir rahibe ulaşmak mümkün değilse ve gerçek bir ihtiyaç varsa, bir Katolik Efkaristiya’yı, Günah Çıkarma’yı ve Hastaların Meshi’ni, sırları geçerli olan Ortodoks Kilisesi’nden alabilir. Bu olağan değil, istisnai bir izindir; her cemaatin kendi disiplini vardır ve rahip her zaman komünyon vermeyebilir.",
  "rites": [
@@ -1930,6 +1930,10 @@ window.CHURCHES = /*JSON-START*/{
        "10:00 İngilizce · 12:00 Türkçe · 18:00 Lehçe"
       ],
       [
+       "Cumartesi",
+       "17:30 Tespih Duası · 18:00 Türkçe ayin (pazar arifesi)"
+      ],
+      [
        "Pazartesi–Cuma",
        "17:30 Tespih Duası · 18:00 Türkçe ayin"
       ],
@@ -1974,6 +1978,10 @@ window.CHURCHES = /*JSON-START*/{
       [
        "Sunday",
        "10:00 English · 12:00 Turkish · 18:00 Polish"
+      ],
+      [
+       "Saturday",
+       "17:30 Rosary · 18:00 Mass in Turkish (Sunday vigil)"
       ],
       [
        "Monday–Friday",
@@ -2511,7 +2519,7 @@ window.CHURCHES = /*JSON-START*/{
        "11:00 Türkçe"
       ],
       [
-       "Pazartesi–Cuma",
+       "Pazartesi–Cumartesi",
        "11:00 Türkçe"
       ],
       [
@@ -2550,7 +2558,7 @@ window.CHURCHES = /*JSON-START*/{
        "11:00 Turkish"
       ],
       [
-       "Monday–Friday",
+       "Monday–Saturday",
        "11:00 Turkish"
       ],
       [
@@ -2588,9 +2596,13 @@ window.CHURCHES = /*JSON-START*/{
       [
        "Pazartesi–Cumartesi",
        "Akşam ayini: 17:15 (Kasım–Mart) · 18:15 (Nisan–Ekim)"
+      ],
+      [
+       "Sabah ayini",
+       "07:15 (tatil ve bayram günlerinde 10:30), kilisenin kendi sitesine göre"
       ]
      ],
-     "massNote": "Başepiskoposluğun sitesinde hafta içi 18:15’te Tespih Duası geçiyor; CET 2023 listesi ise aynı saatlerde ayin veriyor. Hac grupları için ayin önceden ayarlanabilir.",
+     "massNote": "Kaynaklar farklı saat veriyor: Meryem Ana Evi’nin kendi sitesi (2026) normal günlerde her sabah 07:15’te, tatil ve bayram günlerinde 10:30’da ayin yapıldığını yazıyor; başepiskoposluğun sitesinde hafta içi 18:15’te Tespih Duası geçiyor, CET 2023 listesi ve weekdaymasses ise akşam ayini (17:15 / 18:15) veriyor. Gitmeden telefonla teyit edin. Hac grupları için ayin önceden ayarlanabilir.",
      "visits": "Meryem Ana Evi’nin bulunduğu alan her gün ziyaretçilere açıktır; giriş ücretlidir ve saatler mevsime göre değişir.",
      "history": [
       "Bülbüldağı’nın yamacındaki Meryem Ana Evi, geleneğe göre Meryem Ana’nın hayatının son yıllarını Havari Yuhanna ile birlikte geçirdiği evdir. Yuhanna’nın Efes’te yaşadığı ve öldüğü eski kaynaklarda anlatılır; mezarının kalıntıları bugün Selçuk’taki Aziz Yuhanna Bazilikası’ndadır.",
@@ -2627,9 +2639,13 @@ window.CHURCHES = /*JSON-START*/{
       [
        "Monday–Saturday",
        "Evening Mass: 17:15 (November–March) · 18:15 (April–October)"
+      ],
+      [
+       "Morning Mass",
+       "07:15 (10:30 on holidays and feast days), according to the shrine’s own website"
       ]
      ],
-     "massNoteEn": "The archdiocese’s website lists the Rosary at 18:15 on weekdays, while the CET’s 2023 list gives Mass at the same times. Mass can be arranged in advance for pilgrim groups.",
+     "massNoteEn": "The sources give different times: the shrine’s own website (2026) says Mass is held every morning at 07:15 on ordinary days and at 10:30 on holidays and feast days; the archdiocese’s website lists the Rosary at 18:15 on weekdays, while the CET’s 2023 list and weekdaymasses give an evening Mass (17:15 / 18:15). Please confirm by phone before you go. Mass can be arranged in advance for pilgrim groups.",
      "visitsEn": "The site of the House of the Virgin Mary is open to visitors every day; there is an entrance fee, and the hours vary with the season.",
      "historyEn": [
       "The House of the Virgin Mary, on the slope of Bülbüldağı (Mount Koressos), is according to tradition the house where the Virgin Mary spent the last years of her life together with the Apostle John. Ancient sources tell that John lived and died in Ephesus; the remains of his tomb are today in the Basilica of St. John in Selçuk.",
@@ -3138,7 +3154,7 @@ window.CHURCHES = /*JSON-START*/{
        "18:00 Türkçe"
       ]
      ],
-     "massNote": "",
+     "massNote": "Kaynaklar hafta içi saati farklı veriyor: kışın 17:00, yazın 18:00 (weekdaymasses, 2020). Gitmeden teyit edin.",
      "visits": "Önceden randevu alarak gün içinde ziyaret edilebilir.",
      "history": [
       "Mersin’in Latin Katolik kilisesi, kentin 19. yüzyılda bir liman şehri olarak hızla büyüdüğü dönemin eseridir. 1840’taki olaylardan sonra Lübnan’dan gelen Maruni Katolik aileler Mersin’e yerleşmişti. Kilise yapma kararı 1853’te alındı; Mayıs 1854’te Kapuçin rahip Antonio Mersin’e yerleşti ve Sultan Abdülmecid’in 18 Eylül 1855 tarihli fermanıyla kilise inşa edildi.",
@@ -3175,7 +3191,8 @@ window.CHURCHES = /*JSON-START*/{
      "historyEn": [
       "Mersin’s Latin Catholic church is a product of the city’s rapid growth as a port in the 19th century. After the events of 1840, Maronite Catholic families from Lebanon had settled in Mersin. The decision to build a church was taken in 1853; in May 1854 the Capuchin friar Antonio settled in Mersin, and the church was built under a firman of Sultan Abdülmecid dated 18 September 1855.",
       "Beside the church the Capuchins also had a friary school, completed in 1898. The school was confiscated in 1923 and in 1944 became Mersin’s Üçocak Primary School. The church is dedicated to St. Anthony of Padua and is still run by Capuchin friars today."
-     ]
+     ],
+     "massNoteEn": "Sources differ on the weekday time: 17:00 in winter and 18:00 in summer (weekdaymasses, 2020). Please confirm before you go."
     }
    ]
   },
@@ -3209,7 +3226,7 @@ window.CHURCHES = /*JSON-START*/{
        "11:00 Türkçe"
       ]
      ],
-     "massNote": "",
+     "massNote": "Kaynaklar farklı saat veriyor: CET 2023 listesi pazar 11:00 diyor; weekdaymasses (2024) hafta içi 18:00, cumartesi akşamı 18:00 ve pazar 16:00 yazıyor. Gitmeden telefonla (0545 495 19 18) teyit edin.",
      "visits": "Pazartesi, çarşamba ve cumartesi günleri ziyaret edilebilir.",
      "history": [
       "Adana’nın eski Tepebağ mahallesindeki bu kilise, halk arasında “Bebekli Kilise” olarak bilinir. Adı, kulenin tepesindeki yaklaşık 2,5 metre yüksekliğindeki bronz Meryem Ana heykelinden gelir; heykel uzaktan bir bebeği andırdığı için kiliseye bu ad verilmiştir.",
@@ -3246,7 +3263,8 @@ window.CHURCHES = /*JSON-START*/{
      "historyEn": [
       "This church in Adana’s old Tepebağ neighborhood is popularly known as the “Bebekli Kilise” (the Church with the Baby). The name comes from the bronze statue of the Virgin Mary, about 2.5 meters high, on top of the tower; because from a distance the statue looks like a baby, the church was given this name.",
       "Built in the 1880s by Italian Catholics and dedicated to St. Paul, the church is all the more meaningful for being close to the land where St. Paul of Tarsus was born. Today it belongs to the Apostolic Vicariate of Anatolia and serves its community with a Sunday Mass in Turkish."
-     ]
+     ],
+     "massNoteEn": "Sources differ: the CET’s 2023 list gives Sunday at 11:00, while weekdaymasses (2024) lists weekdays at 18:00, Saturday evening at 18:00 and Sunday at 16:00. Please confirm by phone (0545 495 19 18) before you go."
     }
    ]
   },
@@ -3427,8 +3445,8 @@ window.CHURCHES = /*JSON-START*/{
       ]
      ],
      "massNote": "Noel, Yılbaşı ve Paskalya programı için kiliseye e-postayla yazabilirsiniz.",
- "ocia": "Kilise, Katolik olmak isteyen yetişkinler için OCIA (eski adıyla RCIA) hazırlığını internet sitesinde duyuruyor. Türkiye’de bu hazırlık çoğu zaman herkese açık bir kayıt tarihiyle duyurulmaz; rahip her adayla ayrı ayrı görüşerek planlar. Yani başka kiliseler de bu hazırlığı sunuyor olabilir. Ayrıntılar için <a href=\"https://www.materdolorosakatolikkilisesi.org/rcia\" target=\"_blank\" rel=\"noopener\">kilisenin OCIA sayfasına</a> bakabilir ya da kiliseye e-postayla yazabilirsiniz. Sürecin nasıl ilerlediğini <a href=\"katolik-sureci.html\">Katolik Olma Süreci</a> sayfasında bulabilirsiniz.",
- "ociaEn": "The church announces OCIA (formerly RCIA) preparation for adults who want to become Catholic on its website. In Turkey this preparation is usually not advertised with public enrollment dates; the priest plans it with each candidate individually. So other churches may offer it too. For details, see <a href=\"https://www.materdolorosakatolikkilisesi.org/rcia\" target=\"_blank\" rel=\"noopener\">the church’s OCIA page</a> or write to the church by email. You can see how the process works on the <a href=\"katolik-sureci.html\">Becoming Catholic</a> page.",
+     "ocia": "Kilise, Katolik olmak isteyen yetişkinler için OCIA (eski adıyla RCIA) hazırlığını internet sitesinde duyuruyor. Türkiye’de bu hazırlık çoğu zaman herkese açık bir kayıt tarihiyle duyurulmaz; rahip her adayla ayrı ayrı görüşerek planlar. Yani başka kiliseler de bu hazırlığı sunuyor olabilir. Ayrıntılar için <a href=\"https://www.materdolorosakatolikkilisesi.org/rcia\" target=\"_blank\" rel=\"noopener\">kilisenin OCIA sayfasına</a> bakabilir ya da kiliseye e-postayla yazabilirsiniz. Sürecin nasıl ilerlediğini <a href=\"katolik-sureci.html\">Katolik Olma Süreci</a> sayfasında bulabilirsiniz.",
+     "ociaEn": "The church announces OCIA (formerly RCIA) preparation for adults who want to become Catholic on its website. In Turkey this preparation is usually not advertised with public enrollment dates; the priest plans it with each candidate individually. So other churches may offer it too. For details, see <a href=\"https://www.materdolorosakatolikkilisesi.org/rcia\" target=\"_blank\" rel=\"noopener\">the church’s OCIA page</a> or write to the church by email. You can see how the process works on the <a href=\"katolik-sureci.html\">Becoming Catholic</a> page.",
      "visits": "Pazartesi, salı, çarşamba ve cuma 15:30–17:30; perşembe 15:30–16:30. Cumartesi ve pazar ziyarete kapalıdır.",
      "history": [
       "1845’te Gürcistan’ı terk etmek zorunda kalan sekiz İtalyan Kapuçin rahip, Karadeniz’den geçerken kilisesi olmayan Latin Katoliklerle karşılaştı; Samsun’un yanı sıra Trabzon ve Giresun’da da böyle topluluklar vardı. 1851’de Fransız Marist rahipler bir okul açtı; İtalyan bir hanımın bağışladığı arazide ahşap bir kilise ve ev yapıldı. O yıllarda Samsun nüfusunun yaklaşık yüzde 30’u Hristiyandı.",
@@ -3513,6 +3531,10 @@ window.CHURCHES = /*JSON-START*/{
      "website": "https://www.trabzonkatolikkilisesi.com",
      "mass": [
       [
+       "Hafta içi",
+       "Akşam ayini; saati kilisenin sitesinde gün gün ilan edilir (örneğin 29 Ekim 2026: 18:00)"
+      ],
+      [
        "Pazar",
        "11:30"
       ]
@@ -3548,6 +3570,10 @@ window.CHURCHES = /*JSON-START*/{
      "nameEn": "Santa Maria Catholic Church",
      "shortEn": "Santa Maria",
      "massEn": [
+      [
+       "Weekdays",
+       "Evening Mass; the time is announced day by day on the church’s website (for example 29 October 2026: 18:00)"
+      ],
       [
        "Sunday",
        "11:30"
@@ -3831,5 +3857,7 @@ window.CHURCHES = /*JSON-START*/{
  ],
  "noteEn": "This information has been compiled from the churches’ own websites, the Catholic Archdiocese of Izmir, the Mass times list of the Bishops’ Conference of Turkey, the Istanbul Governorship’s Dijital İstanbul inventory and other public sources; it is not an official or complete register of churches. If you spot a mistake, you can let us know through the Contact page.",
  "orthodoxNoteEn": "If there is no Catholic church near you, there may be an Orthodox one. Under Canon Law (Canon 844 §2), when it is impossible to reach a Catholic priest and there is genuine need, a Catholic may receive the Eucharist, Confession and the Anointing of the Sick from the Orthodox Church, whose sacraments are valid. This is an exceptional permission, not the ordinary rule; each community has its own discipline, and an Orthodox priest may not always agree to give Communion.",
- "updatedEn": "September 2026"
+ "updatedEn": "October 2026",
+ "checked": "29 Ekim 2026, 23:07 (İstanbul saati)",
+ "checkedEn": "29 October 2026, 23:07 (Istanbul time)"
 }/*JSON-END*/;

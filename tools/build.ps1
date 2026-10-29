@@ -3045,20 +3045,20 @@ $klFaqHtml = '<div class="faq-list kl-faq">' + (($klFaq | ForEach-Object {
   "<details class=`"faq-item`" id=`"$($_.id)`"><summary><span class=`"faq-q`">$(KL $_.q $_.qe)</span>$IcoChevLg</summary><div class=`"faq-a`">$(KLB "<p>$($_.a)</p>" "<p>$($_.ae)</p>")</div></details>"
 }) -join "`n") + '</div>'
 
-$leadTr = "Türkiye$($Apos)de $TotalCities şehirde $TotalChurches Katolik kilisesinin adresi, telefonu, pazar ve hafta içi ayin saatleri, ziyaret bilgisi ve tarihçesi bu sayfada. Haritadan şehri seçin, listeden kiliseye bakın ya da yukarıdaki şehir düğmeleriyle doğrudan şehre geçin."
-$leadEn = "Address, phone number, Sunday and weekday Mass times, visiting information and history for $TotalChurches Catholic churches in $TotalCities cities across Turkey. Pick a city on the map, choose a church from the list, or jump straight to a city with the buttons above."
+$leadTr = "Türkiye$($Apos)de $TotalCities şehirde $TotalChurches Katolik kilisesinin adresi, telefonu, pazar ve hafta içi ayin saatleri, ziyaret bilgisi ve tarihçesi bu sayfada. Haritadan şehri seçin, listeden kiliseye bakın ya da aşağıdaki şehir düğmeleriyle doğrudan şehre geçin."
+$leadEn = "Address, phone number, Sunday and weekday Mass times, visiting information and history for $TotalChurches Catholic churches in $TotalCities cities across Turkey. Pick a city on the map, choose a church from the list, or jump straight to a city with the buttons below."
 $kiliselerBody = @"
 <div class="wrap narrow kl-page">
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$(KL "Türkiye$($Apos)de Katolik Kiliseleri" 'Catholic Churches in Turkey')</h1>
-    <p class="kl-lead">$(KL $leadTr $leadEn)</p></header>
+    <p class="kl-lead">$(KL $leadTr $leadEn)<em class="kl-checked">$(KL "Son kontrol: $($Churches.checked)" "Last checked: $($Churches.checkedEn)")</em></p></header>
   $klBar
 $churchMapHtml
   $churchPickHtml
 $klCities
   <section class="kl-faqs" id="sik-sorulanlar" aria-labelledby="h-kl-faq"><h2 class="kl-h" id="h-kl-faq">$(KL 'Sık Sorulan Sorular' 'Frequently Asked Questions')</h2>
 $klFaqHtml</section>
-  <p class="conventions">$(KL (Inline $Churches.note) $Churches.noteEn) $(KL "Son kontrol: $($Churches.updated)." "Last checked: $($Churches.updatedEn).")</p>
+  <p class="conventions">$(KL (Inline $Churches.note) $Churches.noteEn)</p>
 </div>
 "@
 # structured data: the list of churches (each leading to its own page) and the questions above
