@@ -129,12 +129,13 @@ the year.)
 Check: `curl -sI https://katolikdunyasi.com/assets/art/13fligh.jpg | grep -i cache-control` shows
 `max-age=2592000`.
 
-## 6. Optional, Cloudflare, katolikdunyasi.com: silence a console error (from audit M3)
+## 6. Nothing to do: Cloudflare's bot-detection script (from audit M3)
 
-Cloudflare injects a small bot-detection script into the pages; the pages' script policy now blocks
-it, which shows as one harmless error in the browser console. To stop Cloudflare adding it:
-Cloudflare → **katolikdunyasi.com** → **Security** → **Bots** → **JavaScript Detections** → Off.
-Bot Fight Mode and Turnstile keep working without it.
+Cloudflare adds a small bot-detection script ("JavaScript detections") to the pages. The pages'
+script policy blocks it, which shows as one harmless error in the browser console; visitors notice
+nothing. On the Free plan this cannot be switched off on its own (only paid plans have a separate
+switch), and with Bot Fight Mode off Cloudflare does not act on its result. Letting it run would
+mean weakening the pages' script policy for every page, so it stays blocked.
 
 ---
 
