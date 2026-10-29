@@ -710,24 +710,41 @@ function Ccc-Url([int]$n) {
   foreach ($r in $CccMap) { if ($n -ge [int]$r.from -and $n -le [int]$r.to) { return $r.url } }
   return $CccHome
 }
-# "971, 2096–2097, 2132": one link per paragraph or range; a "CIC kan." (canon law) part stays text
+# Canons go to the Code of Canon Law on vatican.va: data/canon-vatican.json maps canon ranges to the
+# page holding them (one page per group of canons; the site has no anchor for a single canon)
+$CanonMapFile = Join-Path $Root 'data/canon-vatican.json'
+$CanonMap = if (Test-Path $CanonMapFile) { @(Get-Content -Raw -Encoding UTF8 $CanonMapFile | ConvertFrom-Json) } else { @() }
+$CanonHome = 'https://www.vatican.va/archive/cod-iuris-canonici/cic_index_en.html'
+function Canon-Url([int]$n) {
+  foreach ($r in $CanonMap) { if ($n -ge [int]$r.from -and $n -le [int]$r.to) { return $r.url } }
+  return $CanonHome
+}
+# "971, 2096–2097, 2132": one link per paragraph or range; "CIC can. 983, 749 §1" links each canon the same way
 function Ccc-Link([string]$text, [string]$lang) {
   $title = TA 'title' "Katolik Kilisesi Katekizmi, vatican.va (yeni pencerede açılır)" 'Catechism of the Catholic Church, vatican.va (opens in a new window)'
   $parts = $text -split ' · '
   $out = foreach ($part in $parts) {
-    if ($part -match '^\s*CIC') { if ($part -match 'kan\.') { T $part ($part -replace 'kan\.', 'can.') } else { $part }; continue }
+    if ($part -match '^\s*CIC') {
+      $ctitle = TA 'title' 'Kilise Hukuku Kitabı, vatican.va (yeni pencerede açılır)' 'Code of Canon Law, vatican.va (opens in a new window)'
+      $cpre = if ($part -match 'kan\.') { T 'CIC kan. ' 'CIC can. ' } else { 'CIC can. ' }
+      $cbody = $part -replace '^\s*CIC\s(?:kan|can)\.\s*', ''
+      $ch = $cpre + ((($cbody -split ',\s*') | ForEach-Object {
+        if ($_ -match '^(\d{1,4})') { "<a href=`"$(Canon-Url ([int]$Matches[1]))`" target=`"_blank`" rel=`"noopener`" $ctitle>$_</a>" } else { $_ }
+      }) -join ', ')
+      $ci = $ch.LastIndexOf('</a>'); if ($ci -ge 0) { $ch = $ch.Substring(0, $ci) + $IcoExternal + $ch.Substring($ci) }
+      $ch; continue
+    }
     $pre = ''; $body = $part
     if ($part -match '^(\s*(?:CCC|KKK)\s)(.*)$') { $pre = $Matches[1]; $body = $Matches[2] }
     $items = $body -split ',\s*'
-    $pre + (($items | ForEach-Object {
+    $h = $pre + (($items | ForEach-Object {
       if ($_ -match '^(\d{1,4})') { "<a href=`"$(Ccc-Url ([int]$Matches[1]))`" target=`"_blank`" rel=`"noopener`" $title>$_</a>" } else { $_ }
     }) -join ', ')
+    # the small "opens elsewhere" arrow rides inside the last link, so it never wraps onto a line alone
+    $i = $h.LastIndexOf('</a>')
+    if ($i -ge 0) { $h.Substring(0, $i) + $IcoExternal + $h.Substring($i) } else { $h }
   }
-  $h = $out -join ' · '
-  # the small "opens elsewhere" arrow rides inside the last link, so it never wraps onto a line alone
-  $i = $h.LastIndexOf('</a>')
-  if ($i -ge 0) { return $h.Substring(0, $i) + $IcoExternal + $h.Substring($i) }
-  return $h
+  return ($out -join ' · ')
 }
 # Scripture: every "Matta 13:1–23", "1. Korintliler 12:13", "Luke 15:3–7" in a page's text links
 # to that passage on BibleGateway, in the Revised Standard Version, Catholic Edition.
@@ -763,6 +780,10 @@ $bookAlt = (($BibleBooks.Keys | Sort-Object { -$_.Length }) | ForEach-Object { [
 $VerseList = '\d{1,3}(?:\s?[-–]\s?\d{1,3})?(?:,\s?\d{1,3}(?:[-–]\d{1,3})?(?!\d*:)(?!\d*\.?\s\p{Lu}))*'
 $ScriptureRx = [regex]"(?<![\p{L}\d’'])(?:(?<n>[1-3])\.?\s)?(?<b>$bookAlt)\s(?<c>\d{1,3}):(?<v>$VerseList)"
 $ScriptureMoreRx = [regex]"(?<a><a class=`"bref`" data-b=`"(?<eb>[^`"]+)`"[^>]*>[^<]*</a>)(?<sep>;\s?)(?<c>\d{1,3}):(?<v>$VerseList)"
+# "2 John 7": the one-chapter letters give a verse without a chapter
+$ScriptureOneRx = [regex]"(?<![\p{L}\d’'])(?<n>[23])\.?\s(?<b>John)\s(?<v>\d{1,3}(?:\s?[-–]\s?\d{1,3})?)(?![\d:])"
+# "canon 1188", "Canon 749 §1", "canons 330–331": linked to the Code of Canon Law
+$CanonRx = [regex]"(?<![\p{L}\d])(?<w>[Cc]anons?)\s(?<p>\d{1,4}(?:\s?[-–]\s?\d{1,4})?(?:\s§\d+)?)(?![\d:])"
 $KkkRx = [regex]"(?<![\p{L}\d])(?<k>KKK|CCC)\s(?<p>\d{1,4}(?:\s?[-–]\s?\d{1,4})?(?:,\s?\d{1,4}(?:[-–]\d{1,4})?)*)"
 function Bible-Url([string]$book, [string]$c, [string]$v) {
   $q = "$book $($c):$(($v -replace '–', '-') -replace '\s', '')"
@@ -778,6 +799,16 @@ $ScriptureMoreEval = [System.Text.RegularExpressions.MatchEvaluator]{
   param($m)
   $en = $m.Groups['eb'].Value; $t = "$($m.Groups['c'].Value):$($m.Groups['v'].Value)"
   "$($m.Groups['a'].Value)$($m.Groups['sep'].Value)<a class=`"bref`" data-b=`"$en`" href=`"$(Bible-Url $en $m.Groups['c'].Value $m.Groups['v'].Value)`" target=`"_blank`" rel=`"noopener`">$t</a>"
+}
+$ScriptureOneEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  $en = "$($m.Groups['n'].Value) John"
+  "<a class=`"bref`" data-b=`"$en`" href=`"$(Bible-Url $en '1' $m.Groups['v'].Value)`" target=`"_blank`" rel=`"noopener`">$($m.Value)</a>"
+}
+$CanonEval = [System.Text.RegularExpressions.MatchEvaluator]{
+  param($m)
+  $first = [int]([regex]::Match($m.Groups['p'].Value, '\d+').Value)
+  "<a class=`"cref`" href=`"$(Canon-Url $first)`" target=`"_blank`" rel=`"noopener`" title=`"Kilise Hukuku Kitabı, vatican.va`" data-en-title=`"Code of Canon Law, vatican.va`">$($m.Value)</a>"
 }
 $KkkEval = [System.Text.RegularExpressions.MatchEvaluator]{
   param($m)
@@ -797,8 +828,10 @@ function Link-Refs([string]$html) {
     }
     if ($inA -or $skip -or $p.Length -lt 6) { [void]$sb.Append($p); continue }
     $t = $ScriptureRx.Replace($p, $ScriptureEval)
+    $t = $ScriptureOneRx.Replace($t, $ScriptureOneEval)
     for ($k = 0; $k -lt 6; $k++) { $t2 = $ScriptureMoreRx.Replace($t, $ScriptureMoreEval); if ($t2 -eq $t) { break }; $t = $t2 }
     $t = $KkkRx.Replace($t, $KkkEval)
+    $t = $CanonRx.Replace($t, $CanonEval)
     [void]$sb.Append($t)
   }
   return $sb.ToString()
