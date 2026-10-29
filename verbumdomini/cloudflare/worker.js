@@ -6,21 +6,47 @@
    /api/contact (the contact form) is handled in contact.js. */
 import { contact } from './contact.js';
 
+// Sent with every response this script makes; the files Cloudflare serves directly get the same
+// headers from _headers (written by verbumdomini/tools/build.ps1)
+const SECURITY_HEADERS = {
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Content-Security-Policy': "frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self)',
+  'Cross-Origin-Opener-Policy': 'same-origin'
+};
+function secure(res) {
+  const out = new Response(res.body, res);
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) if (!out.headers.has(k)) out.headers.set(k, v);
+  return out;
+}
+// A redirect that can only stay on this site: this request's own address with a new path
+function redirectTo(url, pathname) {
+  const to = new URL(url.href);
+  to.pathname = pathname;
+  return Response.redirect(to.href, 301);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const path = url.pathname;
-    if (path === '/api/contact') return contact(request, env);
+    if (url.pathname === '/api/contact') return secure(await contact(request, env));
+    // "//host/page" (and "/\host/page", which URL parsing turns into it) would read as another
+    // host: repeated slashes become one first
+    const path = url.pathname.replace(/\/{2,}/g, '/');
+    if (path !== url.pathname) return secure(redirectTo(url, path));
     if (path.endsWith('/')) {
-      const index = await env.ASSETS.fetch(new URL(path + 'index.html', url));
-      if (index.ok) return index;
+      const index = await env.ASSETS.fetch(new URL(path + 'index.html', url.origin));
+      if (index.ok) return secure(index);
     } else if (!path.slice(path.lastIndexOf('/') + 1).includes('.')) {
-      const page = await env.ASSETS.fetch(new URL(path + '.html', url), { method: 'HEAD' });
-      if (page.ok) return Response.redirect(new URL(path + '.html' + url.search, url), 301);
+      const page = await env.ASSETS.fetch(new URL(path + '.html', url.origin), { method: 'HEAD' });
+      if (page.ok) return secure(redirectTo(url, path + '.html'));
     }
     const asset = await env.ASSETS.fetch(request);
-    if (asset.status !== 404) return asset;
-    const notFound = await env.ASSETS.fetch(new URL('/404.html', url));
-    return new Response(notFound.body, { status: 404, headers: notFound.headers });
+    if (asset.status !== 404) return secure(asset);
+    const notFound = await env.ASSETS.fetch(new URL('/404.html', url.origin));
+    return secure(new Response(notFound.body, { status: 404, headers: notFound.headers }));
   }
 };

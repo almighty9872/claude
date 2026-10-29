@@ -3735,6 +3735,38 @@ if ($EnglishSite) {
     (($enInfo | Where-Object Index | ForEach-Object { "  <url><loc>$($_.Url)</loc>$(if ($_.Mod) { "<lastmod>$($_.Mod)</lastmod>" })</url>" }) -join "`n") + "`n</urlset>`n"
   [IO.File]::WriteAllText((Join-Path $EnOut 'sitemap.xml'), $smEn, $Utf8)
   [IO.File]::WriteAllText((Join-Path $EnOut 'robots.txt'), "User-agent: *`nAllow: /`n`nSitemap: $EnSiteUrl/sitemap.xml`n", $Utf8)
+  # Response headers for the files Cloudflare serves straight from _site_en (cloudflare/worker.js adds
+  # the same security headers to the responses it makes itself). The CSS, the JS and the data files
+  # are loaded with ?v=<content hash>, so they keep for a year; the rest keep their names when they change.
+  $enHeaders = @'
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self)
+  Cross-Origin-Opener-Policy: same-origin
+
+/assets/styles.min.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/script.min.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/data/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/fonts/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
+
+/assets/art/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
+
+/assets/vendor/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+'@
+  [IO.File]::WriteAllText((Join-Path $EnOut '_headers'), $enHeaders.Replace("`r", '') + "`n", $Utf8)
   $llmsEn = "# Verbum Domini`n`n> A Catholic portal in English: the Compendium of the Catechism of the Catholic Church (598 questions and answers), the saints of the calendar, prayers and the Rosary, the order of the Mass, the history of the Church, and answers about the faith, Islam, atheism and Judaism. A sister site of katolikdunyasi.com, which publishes the same work in Turkish.`n`n## Pages`n`n" +
     (($enInfo | Where-Object Index | ForEach-Object { "- [$($_.Title)]($($_.Url)): $($_.Desc)" }) -join "`n") + "`n"
   [IO.File]::WriteAllText((Join-Path $EnOut 'llms.txt'), $llmsEn, $Utf8)
