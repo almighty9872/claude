@@ -1096,7 +1096,7 @@
       /* the Bible links open BibleGateway in a different translation from the one shown above */
       if (EN_SITE && kind === 'bref') {
         var ver = ''; try { ver = new URL(a.href).searchParams.get('version') || ''; } catch (err) {}
-        out.textContent = ver === 'RSVCE' ? 'Read this passage on BibleGateway, in the Revised Standard Version, Catholic Edition ↗' : 'Read this passage on BibleGateway ↗';
+        out.textContent = ver === 'RSVCE' ? 'Read on BibleGateway (RSV Catholic Edition) ↗' : 'Read on BibleGateway ↗';
       }
       out.href = a.href; out.target = '_blank'; out.rel = 'noopener';
       foot.appendChild(out);
