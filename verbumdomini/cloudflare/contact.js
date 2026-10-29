@@ -12,12 +12,21 @@ import { EmailMessage } from 'cloudflare:email';
 
 const SITE = 'https://verbumdomini.ca';
 const ORIGINS = [SITE, 'https://www.verbumdomini.ca'];
+const HOSTS = ['verbumdomini.ca', 'www.verbumdomini.ca'];
+const MAX_BYTES = 16384;
 const EMAIL_RX = /^[^\s@<>"',;]+@[^\s@<>"',;]+\.[^\s@<>"',;]{2,}$/;
 
 export async function contact(request, env) {
   if (request.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers: { Allow: 'POST' } });
   const origin = request.headers.get('Origin');
-  if (origin && !ORIGINS.includes(origin)) return new Response('Forbidden', { status: 403 });
+  // A browser always sends Origin on a form post, so a request without one is not from the page
+  if (!origin || !ORIGINS.includes(origin)) return new Response('Forbidden', { status: 403 });
+  if (Number(request.headers.get('Content-Length') || 0) > MAX_BYTES) return new Response('Payload Too Large', { status: 413 });
+  // At most a few posts a minute from one address (the CONTACT_LIMIT rate limit binding)
+  if (env.CONTACT_LIMIT) {
+    const { success } = await env.CONTACT_LIMIT.limit({ key: request.headers.get('CF-Connecting-IP') || 'unknown' });
+    if (!success) return new Response('Too Many Requests', { status: 429, headers: { 'Retry-After': '60' } });
+  }
 
   const asJson = (request.headers.get('Accept') || '').includes('application/json');
   let form;
@@ -36,9 +45,9 @@ export async function contact(request, env) {
   check.append('secret', env.TURNSTILE_SECRET || '');
   check.append('response', String(form.get('cf-turnstile-response') || ''));
   check.append('remoteip', request.headers.get('CF-Connecting-IP') || '');
-  const verdict = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: check })
+  const verdict = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: check, signal: AbortSignal.timeout(5000) })
     .then(r => r.json()).catch(() => ({ success: false }));
-  if (!verdict.success) return answer(false, 'check', asJson);
+  if (!verdict.success || !HOSTS.includes(verdict.hostname)) return answer(false, 'check', asJson);
 
   const subject = 'Verbum Domini: ' + (name || email);
   const body = ['Name: ' + (name || '-'), 'Email: ' + email, '', message, '', '-- ', 'verbumdomini.ca contact form'].join('\n');

@@ -450,7 +450,7 @@
       });
     });
     /* the page left open over sunrise or sunset changes with it */
-    setInterval(function () { applyTheme(wantedTheme()); }, 60000);
+    setInterval(function () { if (!document.hidden) applyTheme(wantedTheme()); }, 60000);
     document.addEventListener('visibilitychange', function () { if (!document.hidden) applyTheme(wantedTheme()); });
     /* Back to a page the browser kept in memory (Safari's swipe back, the back button): it comes
        back as it was left, so a theme, text size or accessibility setting changed on a later page
@@ -1594,7 +1594,7 @@
       /* the 3D module makes its own context on the canvas: hand over a fresh one */
       if (!gl || !window.ResizeObserver) { dkNoGl(); return; }
       var fresh = dk.cv.cloneNode(false); dk.cv.parentNode.replaceChild(fresh, dk.cv); dk.cv = fresh;
-      import(new URL(ROOT + 'assets/vendor/rosary3d.js', document.baseURI).href).then(function (m) {
+      import(new URL(dataUrl('assets/vendor/rosary3d.js'), document.baseURI).href).then(function (m) {
         dk.strand = m.createRosary(dk.cv, {
           still: reduceMotion,
           onPick: function (id) {

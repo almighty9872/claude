@@ -1,11 +1,11 @@
 // The English site (verbumdomini.ca) as a Cloudflare Worker that serves static files.
 // Deployed by .github/workflows/deploy-english.yml after verbumdomini/tools/build.ps1 -EnglishSite writes verbumdomini/_site_en/.
-// Address: https://verbumdomini.ca (preview: https://verbumdomini.tzjcqs5g44.workers.dev)
+// Address: https://verbumdomini.ca (no workers.dev address: it would serve the site outside the zone's rules)
 {
   "name": "verbumdomini",
   "main": "worker.js",
   "compatibility_date": "2026-09-01",
-  "workers_dev": true,
+  "workers_dev": false,
   "preview_urls": false,
   // Cloudflare creates the DNS record and the certificate for a custom domain by itself
   "routes": [{ "pattern": "verbumdomini.ca", "custom_domain": true }],
@@ -21,5 +21,7 @@
   // for verbumdomini.ca. The receiving address and the Turnstile secret key are secrets set in the
   // Cloudflare dashboard (TO_ADDRESS, TURNSTILE_SECRET), never here; deploys keep them.
   "send_email": [{ "name": "CONTACT_EMAIL" }],
+  // contact.js allows 3 posts a minute from one address
+  "ratelimits": [{ "name": "CONTACT_LIMIT", "namespace_id": "1001", "simple": { "limit": 3, "period": 60 } }],
   "vars": { "FROM_ADDRESS": "form@verbumdomini.ca" }
 }
