@@ -1661,13 +1661,13 @@ $faqCats = ($FaqData.categories | ForEach-Object {
   $ma = @{ 'teolojik-yanilgilar' = @('trinity', 'blue'); 'kutsal-sirlar-uygulamalar' = @('shell', 'green'); 'otorite-ogretiler' = @('keys', 'gold'); 'akla-gelen-itirazlar' = @('oillamp', 'purple'); 'savunma-ve-guncel-sorular' = @('shield', 'red') }[$cat.id]
   if (-not $ma) { $ma = @('candle', 'gold') }
   $cnt = @($cat.items).Count
-  Ill-Sec -Id $cat.id -Art $ma[0] -Tone $ma[1] -Class 'faq-cat' -Kick ("$cnt soru") -Head ((Inline $cat.title)) `
+  Ill-Sec -Id $cat.id -Art '' -Tone $ma[1] -Class 'faq-cat' -Kick ("$cnt soru") -Head ((Inline $cat.title)) `
     -Sub ('') -Body "<div class=`"faq-list`">$qs</div>"
 }) -join "`n"
 $sssBody = @"
 <div class="wrap narrow ill-page">
   $(Crumbs 'Sıkça Sorulan Sorular')
-  <header class="page-head center">$(Page-Ico $IcoQuestion)<h1>$((Inline $FaqData.title))</h1></header>
+  <header class="page-head center"><h1>$((Inline $FaqData.title))</h1></header>
   <nav class="faq-toc is-sticky" $(TA 'aria-label' 'Kategoriler')><ul>$faqToc</ul></nav>
 $faqCats
 </div>
