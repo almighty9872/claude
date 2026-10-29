@@ -4015,6 +4015,110 @@
     openHash();
   }
 
+    /* ---------------------------------------------------------------
+     FAQ question directory (sss.html): a pinned row of category tabs, each
+     opening the list of its questions (on phones one button that opens a
+     bottom sheet with all of them). A choice opens that answer and jumps
+     to it at once, with no scrolling animation. The row also shows where
+     the reader is: the current category, and on phones "12 / 39".
+     --------------------------------------------------------------- */
+  function initFaqDir() {
+    var nav = $('.faq-dir');
+    if (!nav) return;
+    var root = document.documentElement;
+    var tabs = $$('.fd-tab', nav), panels = $$('.fd-panel', nav), links = $$('.fd-list a', nav);
+    var allBtn = $('.fd-all', nav), pos = $('.fd-pos', nav), scrim = $('.fd-scrim', nav), box = $('.fd-panels', nav);
+    var items = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var mq = window.matchMedia('(max-width: 720px)');
+    var restText = pos ? pos.textContent : '', ticking = false, current = -1;
+    nav.classList.add('fd-on');
+
+    function closeAll() {
+      tabs.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+      panels.forEach(function (p) { p.classList.remove('is-open'); });
+      nav.classList.remove('is-sheet');
+      allBtn.setAttribute('aria-expanded', 'false');
+      root.classList.remove('fd-lock');
+    }
+    function toCurrent(container) {
+      var cur = $('a.is-current', container);
+      if (cur) container.scrollTop = Math.max(0, cur.offsetTop - container.clientHeight / 2 + cur.offsetHeight / 2);
+    }
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        var was = tab.getAttribute('aria-expanded') === 'true';
+        closeAll();
+        if (was) return;
+        var p = panels[i];
+        tab.setAttribute('aria-expanded', 'true');
+        p.classList.add('is-open');
+        var x = tab.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+        p.style.setProperty('--x', Math.max(0, Math.min(x, nav.clientWidth - p.offsetWidth)) + 'px');
+        toCurrent(p);
+      });
+    });
+    allBtn.addEventListener('click', function () {
+      var was = nav.classList.contains('is-sheet');
+      closeAll();
+      if (was) return;
+      nav.classList.add('is-sheet');
+      allBtn.setAttribute('aria-expanded', 'true');
+      root.classList.add('fd-lock');
+      toCurrent(box);
+    });
+    scrim.addEventListener('click', closeAll);
+    document.addEventListener('click', function (e) { if (!mq.matches && !nav.contains(e.target)) closeAll(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+    var onMq = function () { closeAll(); };
+    if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
+
+    function go(id, keepHash) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (el.tagName === 'DETAILS') el.open = true;
+      closeAll();
+      root.style.scrollBehavior = 'auto';
+      el.scrollIntoView(true);
+      root.style.scrollBehavior = '';
+      if (!keepHash) { try { history.replaceState(null, '', '#' + id); } catch (e) { /* file: or sandbox */ } }
+      var s = $('summary', el);
+      if (s) s.focus({ preventScroll: true });
+      queue();
+    }
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); go(a.getAttribute('href').slice(1)); });
+    });
+    function hashGo() { var id = hashId(); if (id && items.some(function (t) { return t && t.id === id; })) go(id, true); }
+    window.addEventListener('hashchange', hashGo);
+    hashGo();
+
+    function update() {
+      ticking = false;
+      var top = parseFloat(getComputedStyle(nav).top) || 64;
+      nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top + 1);
+      var line = top + nav.offsetHeight + 24, pick = -1;
+      items.forEach(function (t, i) {
+        if (!t) return;
+        var r = t.getBoundingClientRect();
+        /* far-away sections are not rendered (content-visibility) and report an empty box */
+        if (r.height && r.top <= line) pick = i;
+      });
+      if (pick === current) return;
+      current = pick;
+      links.forEach(function (a, i) {
+        a.classList.toggle('is-current', i === pick);
+        if (i === pick) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+      });
+      var cat = pick < 0 ? -1 : panels.indexOf(links[pick].closest('.fd-panel'));
+      tabs.forEach(function (t, i) { t.classList.toggle('is-current', i === cat); });
+      if (pos) pos.textContent = pick < 0 ? restText : (pick + 1) + ' / ' + links.length;
+    }
+    function queue() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    queue();
+  }
+
   /* ---------------------------------------------------------------
      Pinned section links (Kilise Bul, Meseller, Mucizeler, Sorular): the row
      gets .is-stuck once it reaches the header (for its glass band)
@@ -4284,7 +4388,7 @@
     [
       initFrameBust, initLang, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();
