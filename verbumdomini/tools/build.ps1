@@ -350,6 +350,16 @@ $PartMeta = @{
 $GlossRx = '\[\[([^|\]]+)\|([^\]]+)\]\]'
 function Inline([string]$s) { if (-not $s) { return '' }; return [regex]::Replace($s, $GlossRx, '$1<span class="gloss" lang="en"> ($2)</span>') }
 function Plain([string]$s)  { if (-not $s) { return '' }; $s = [regex]::Replace($s, $GlossRx, '$1 ($2)'); return (($s -replace '<[^>]+>', '') -replace '\s+', ' ').Trim() }
+# script-src lists the SHA-256 of each inline script on the page instead of 'unsafe-inline', so markup
+# that got into a page some other way cannot run (JSON and JSON-LD blocks don't run and need none)
+# The browser reads CR LF in a page as LF before it hashes a script, so the hash is taken the same way.
+$Sha256 = [Security.Cryptography.SHA256]::Create()
+function Pin-InlineScripts([string]$h) {
+  $pins = [regex]::Matches($h, '<script(?![^>]*\b(?:src|type)=)[^>]*>([\s\S]*?)</script>') | ForEach-Object {
+    "'sha256-" + [Convert]::ToBase64String($Sha256.ComputeHash([Text.Encoding]::UTF8.GetBytes($_.Groups[1].Value.Replace("`r`n", "`n").Replace("`r", "`n")))) + "'"
+  } | Select-Object -Unique
+  return $h.Replace("script-src 'self' 'unsafe-inline'", "script-src 'self' $($pins -join ' ')")
+}
 function Attr([string]$s)   { return ($s -replace '&', '&amp;' -replace '"', '&quot;' -replace '<', '&lt;' -replace '>', '&gt;') }
 # ---- Both languages on every page. Each text is written in Turkish and English side by side and
 # the TR | EN switch (script.js, initLang) shows one of them, in place, without reloading:
@@ -678,7 +688,8 @@ $BrandName = '<span class="brand-name"><span class="visually-hidden">Katolik Dü
 $Favicon = 'data:image/svg+xml,' + ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#16161a"/><g fill="#d6b16b" transform="translate(12 12) scale(.76)">' + $CrossShapes + '</g></svg>').Replace('<', '%3C').Replace('>', '%3E').Replace('#', '%23').Replace('"', "'")
 
 # ------------------------------------------------------------------ components
-$IcoExternal = '<svg class="ext" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>'
+# drawn by CSS (.ext in styles.css): one rule instead of an inline SVG in every link (the glossary has 600 of them)
+$IcoExternal = '<i class="ext" aria-hidden="true"></i>'
 # ---- References to the Catechism (CCC / KKK) and to Scripture, linked to their sources
 # CCC paragraphs go to the Catechism on vatican.va, in a new window. data/ccc-vatican.json, when
 # present, maps paragraph ranges to the vatican.va page holding them ([{ "from": 1420, "to": 1498,
@@ -3690,6 +3701,7 @@ if ($EnglishSite) {
     $h = [regex]::Replace($h, '(?<!https://)katolikdunyasi\.com', 'Verbum Domini')
     # the Catechism search looks in the English (and the Turkish) text; the English site need not say so
     $h = $h.Replace('English, Turkish or a question number', 'a word or a question number').Replace('English, Turkish or a number', 'a word or a number').Replace('(English or Turkish, or a question number)', '(a word or a question number)')
+    $h = Pin-InlineScripts $h
     [IO.File]::WriteAllText((Join-Path $EnOut $name), $h, $Utf8)
     if ($name -ne '404.html') { $enPages.Add($name) }
   }
