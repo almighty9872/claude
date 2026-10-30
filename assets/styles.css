@@ -2937,7 +2937,17 @@ html.av main .av-cur > .cal-year.cal-phone:not(.is-open) { display: none; }
 .to-top-wrap { display: flex; justify-content: center; margin-top: 2rem; }
 .av-foot-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
 html.av .to-top-wrap { display: none; }
-@media print { .to-top, .to-top-wrap { display: none !important; } }
+.to-top-float {
+  position: fixed; z-index: 65; left: max(1.2rem, env(safe-area-inset-left)); bottom: calc(1.2rem + env(safe-area-inset-bottom));
+  min-height: 2.6rem; padding: 0 1rem; border: 1px solid var(--glass-brd); background: var(--glass-strong); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .25s, transform .25s, visibility 0s .25s;
+}
+.to-top-float.is-on { opacity: 1; visibility: visible; transform: none; transition: opacity .25s, transform .25s; }
+/* above the app bar on a phone */
+@media (max-width: 979px) { body:has(.hm-apps) .to-top-float { bottom: calc(5rem + env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion: reduce) { .to-top-float, .to-top-float.is-on { transition: none; } }
+@media print { .to-top, .to-top-wrap, .to-top-float { display: none !important; } }
 
 /* ---------- Kilise Bul: the map (Turkey, fixed; a city's churches open in a glass card beside it) ---------- */
 .cmap { --amap-sea: #dce7ec; --amap-land: #e9e2d3; --amap-tr: var(--surface); --pop-bg: rgba(255, 252, 245, .96); --pop-line: rgba(160, 120, 40, .35); margin: 1.5rem 0 2.2rem; }
@@ -2967,6 +2977,15 @@ html.av .to-top-wrap { display: none; }
 .cmap-port .cp-name { font-family: var(--sans); font-size: 11px; font-weight: 600; fill: var(--port); paint-order: stroke; stroke: var(--amap-tr); stroke-width: 3px; stroke-linejoin: round; }
 .cmap-port:hover .cp-name, .cmap-port:focus-visible .cp-name { text-decoration: underline; }
 .cmap-port:focus-visible .cp-dot { stroke: var(--focus); stroke-width: 2.5; }
+/* the Greek islands with a Catholic church; a port under the pointer draws its crossing and names its island */
+.cmap-isle { pointer-events: none; }
+.cmap-isle .ci-dot { fill: var(--amap-land); stroke: var(--port); stroke-width: 1.4; transition: fill .25s; }
+.cmap-isle .ci-name { font-family: var(--sans); font-size: 11px; font-weight: 600; fill: var(--port); paint-order: stroke; stroke: var(--amap-sea); stroke-width: 3px; stroke-linejoin: round; opacity: 0; transition: opacity .25s .15s; }
+.cmap-isle.is-on .ci-dot { fill: var(--port); }
+.cmap-isle.is-on .ci-name { opacity: 1; }
+.cf-line { fill: none; stroke: var(--port); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; pointer-events: none; transition: stroke-dashoffset .45s ease-out, opacity .15s; }
+.cf-line.is-on { stroke-dashoffset: 0; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .cf-line, .cmap-isle .ci-name { transition: none; } }
 .cmap-key { margin: .55rem 0 0; font: .82rem var(--sans); text-align: center; }
 .cmap-key a { display: inline-flex; align-items: center; gap: .45rem; color: var(--port); text-decoration: none; }
 .cmap-key a:hover { text-decoration: underline; }

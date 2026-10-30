@@ -2991,15 +2991,34 @@ foreach ($city in $Churches.cities) {
   } else { $cols = "<div class=`"cmap-pop-col`"><ul>$(& $li @($city.churches))</ul></div>" }
   [void]$cmPops.Append("<div class=`"cmap-pop`" id=`"cmap-pop-$($city.id)`" role=`"group`" $(TA 'aria-label' "$($city.name) kiliseleri") data-aria-en=`"$aeList`" hidden><p class=`"cmap-pop-t`">$(KL $city.name (City-En $city))</p><div class=`"cmap-pop-cols`">$cols</div></div>")
 }
-# the ferry ports to the Greek islands with a Catholic church: a blue dot leading to the question about them
-$cmPorts = (@(
-  @{ n = 'Ayvalık'; lat = 39.32; lon = 26.69; l = @(9, 4, 'start') }
-  @{ n = 'Çeşme'; lat = 38.32; lon = 26.30; l = @(0, 15, 'middle') }
-  @{ n = 'Kuşadası'; lat = 37.86; lon = 27.26; l = @(9, 4, 'start') }
-  @{ n = 'Bodrum'; lat = 37.03; lon = 27.43; l = @(0, 15, 'middle') }
-  @{ n = 'Marmaris'; lat = 36.85; lon = 28.27; l = @(0, -9, 'middle') }
-  @{ n = 'Fethiye'; lat = 36.62; lon = 29.12; l = @(0, 15, 'middle') }
-) | ForEach-Object { "<a class=`"cmap-port`" href=`"#yunan-adalari`" $(Cm-Pin $_.lat $_.lon)><title>$($_.n): Yunan adalarına feribot</title><circle class=`"cp-hit`" r=`"12`"></circle><circle class=`"cp-dot`" r=`"4`"></circle><text class=`"cp-name`" x=`"$($_.l[0])`" y=`"$($_.l[1])`" text-anchor=`"$($_.l[2])`">$($_.n)</text></a>" }) -join ''
+# the Greek islands with a Catholic church, each a small ring at its main town (the name shows when its port is in focus)
+$cmIsles = @(
+  @{ id = 'midilli'; n = 'Midilli'; e = 'Lesbos'; lat = 39.17; lon = 26.30; l = @(-8, 4, 'end') }
+  @{ id = 'sakiz'; n = 'Sakız'; e = 'Chios'; lat = 38.37; lon = 26.03; l = @(-8, 4, 'end') }
+  @{ id = 'sisam'; n = 'Sisam'; e = 'Samos'; lat = 37.73; lon = 26.80; l = @(-8, 4, 'end') }
+  @{ id = 'istankoy'; n = 'İstanköy'; e = 'Kos'; lat = 36.85; lon = 27.12; l = @(-8, 4, 'end') }
+  @{ id = 'rodos'; n = 'Rodos'; e = 'Rhodes'; lat = 36.25; lon = 27.98; l = @(0, 15, 'middle') }
+)
+# the ferry ports to those islands: a blue dot leading to the question about them; under the pointer
+# a line runs out to its island (script.js, initChurchMap)
+$cmPortList = @(
+  @{ id = 'ayvalik'; n = 'Ayvalık'; to = 'midilli'; lat = 39.32; lon = 26.69; l = @(9, 4, 'start') }
+  @{ id = 'cesme'; n = 'Çeşme'; to = 'sakiz'; lat = 38.32; lon = 26.30; l = @(0, 15, 'middle') }
+  @{ id = 'kusadasi'; n = 'Kuşadası'; to = 'sisam'; lat = 37.86; lon = 27.26; l = @(9, 4, 'start') }
+  @{ id = 'bodrum'; n = 'Bodrum'; to = 'istankoy'; lat = 37.03; lon = 27.43; l = @(0, 15, 'middle') }
+  @{ id = 'marmaris'; n = 'Marmaris'; to = 'rodos'; lat = 36.85; lon = 28.27; l = @(0, -9, 'middle') }
+  @{ id = 'fethiye'; n = 'Fethiye'; to = 'rodos'; lat = 36.62; lon = 29.12; l = @(0, 15, 'middle') }
+)
+$isleOf = @{}; foreach ($i in $cmIsles) { $isleOf[$i.id] = $i }
+$cmIsleHtml = ($cmIsles | ForEach-Object { "<g class=`"cmap-isle`" data-isle=`"$($_.id)`" $(Cm-Pin $_.lat $_.lon)><circle class=`"ci-dot`" r=`"3.2`"></circle><text class=`"ci-name`" x=`"$($_.l[0])`" y=`"$($_.l[1])`" text-anchor=`"$($_.l[2])`"><tspan class=`"kl-tr`">$($_.n)</tspan><tspan class=`"kl-en`">$($_.e)</tspan></text></g>" }) -join ''
+# a gentle arc from the port to the island, bowing to the left of the crossing
+$cmFerries = ($cmPortList | ForEach-Object {
+  $a = Map-XY $_.lat $_.lon; $isle = $isleOf[$_.to]; $b = Map-XY $isle.lat $isle.lon
+  $x1 = [double]$a[0]; $y1 = [double]$a[1]; $x2 = [double]$b[0]; $y2 = [double]$b[1]
+  $cx = Map-Num (($x1 + $x2) / 2 + ($y2 - $y1) * .18); $cy = Map-Num (($y1 + $y2) / 2 - ($x2 - $x1) * .18)
+  "<path class=`"cf-line`" data-port=`"$($_.id)`" pathLength=`"1`" d=`"M$($a[0]) $($a[1])Q$cx $cy $($b[0]) $($b[1])`"></path>"
+}) -join ''
+$cmPorts = ($cmPortList | ForEach-Object { "<a class=`"cmap-port`" href=`"#yunan-adalari`" data-port=`"$($_.id)`" data-to=`"$($_.to)`" $(Cm-Pin $_.lat $_.lon)><title>$($_.n): $($isleOf[$_.to].n) adasına feribot</title><circle class=`"cp-hit`" r=`"12`"></circle><circle class=`"cp-dot`" r=`"4`"></circle><text class=`"cp-name`" x=`"$($_.l[0])`" y=`"$($_.l[1])`" text-anchor=`"$($_.l[2])`">$($_.n)</text></a>" }) -join ''
 $cmTexts = (@(
   @{ t = 'Karadeniz'; lat = 42.55; lon = 34.6 }
   @{ t = 'Akdeniz'; lat = 35.25; lon = 31.2 }
@@ -3016,6 +3035,8 @@ $churchMapHtml = @"
       <path class="cmap-tr" d="$($CmShape.marmara)"></path>
       <path class="cmap-lake" d="$($AnShape.lakes)"></path>
       <g class="cmap-texts" aria-hidden="true">$cmTexts</g>
+      <g class="cmap-ferries" aria-hidden="true">$cmFerries</g>
+      <g class="cmap-isles" aria-hidden="true">$cmIsleHtml</g>
       <g class="cmap-ports">$cmPorts</g>
       <g class="cmap-cities">$($cmCities.ToString())</g>
     </svg>

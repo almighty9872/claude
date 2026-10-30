@@ -2876,7 +2876,7 @@
     var sec = $('.cmap'); if (!sec) return;
     var svg = $('.cmap-svg', sec), frame = $('.cmap-frame', sec);
     var pin = function (el) { el._x = +el.getAttribute('data-x'); el._y = +el.getAttribute('data-y'); return el; };
-    var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin), ports = $$('.cmap-port', svg).map(pin);
+    var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin), ports = $$('.cmap-port', svg).map(pin), isles = $$('.cmap-isle', svg).map(pin);
     var line = document.createElement('div'); line.className = 'cmap-line'; line.hidden = true; frame.appendChild(line);
     var vb = null, open = null;
 
@@ -2892,7 +2892,7 @@
       /* dots and names keep their size on screen (a little smaller in a phone's narrow frame) */
       var fw = svg.clientWidth || 1, k = Math.max(.8, Math.min(1, fw / 640)), s = vb.w / fw * k;
       cities.forEach(function (c) { c.setAttribute('transform', 'translate(' + c._x + ' ' + c._y + ') scale(' + s + ')'); });
-      texts.concat(ports).forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
+      texts.concat(ports, isles).forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
       if (open) place(open);
     }
     /* a ferry port (and the key under the map): straight to the question about the Greek islands, opened */
@@ -2904,6 +2904,15 @@
         var r = document.documentElement; r.style.scrollBehavior = 'auto'; t.scrollIntoView(true); r.style.scrollBehavior = '';
         try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
       });
+    });
+    /* a port under the pointer or in focus: a line runs out to its island, which shows its name */
+    ports.forEach(function (p) {
+      var ln = $('.cf-line[data-port="' + p.getAttribute('data-port') + '"]', svg), is = $('.cmap-isle[data-isle="' + p.getAttribute('data-to') + '"]', svg);
+      var on = function (v) { if (ln) ln.classList.toggle('is-on', v); if (is) is.classList.toggle('is-on', v); };
+      p.addEventListener('pointerenter', function () { on(true); });
+      p.addEventListener('pointerleave', function () { on(false); });
+      p.addEventListener('focus', function () { on(true); });
+      p.addEventListener('blur', function () { on(false); });
     });
     function popOf(c) { return document.getElementById('cmap-pop-' + c.getAttribute('data-city')); }
     /* the list beside its city: vertically round the dot, kept inside the frame where it fits */
@@ -2986,11 +2995,25 @@
       w.appendChild(b);
       foot.parentNode.insertBefore(w, foot);
     }
-    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var check = function () { b.hidden = document.documentElement.scrollHeight < window.innerHeight * 1.25; };
-    b.addEventListener('click', function () {
+    /* "Yukarı çık": on a long page, a pill in the lower corner once the reader is well down it
+       (it steps aside while the button at the foot is in view) */
+    var f = document.createElement('button');
+    f.type = 'button'; f.className = 'to-top to-top-float';
+    f.innerHTML = b.innerHTML.replace(/<span>.*<\/span>/, '<span>' + LT('Yukarı çık', 'Back to top') + '</span>');
+    document.body.appendChild(f);
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches, footIn = false;
+    var check = function () { b.hidden = document.documentElement.scrollHeight < window.innerHeight * 1.25; floatOn(); };
+    var floatOn = function () {
+      var long = document.documentElement.scrollHeight > window.innerHeight * 2.5;
+      f.classList.toggle('is-on', long && !footIn && window.scrollY > window.innerHeight * 1.2);
+    };
+    var up = function () {
       try { window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
-    });
+    };
+    b.addEventListener('click', up);
+    f.addEventListener('click', function () { up(); f.blur(); });
+    if (window.IntersectionObserver) new IntersectionObserver(function (es) { footIn = es[0].isIntersecting; floatOn(); }).observe(foot);
+    window.addEventListener('scroll', floatOn, { passive: true });
     if (window.ResizeObserver) new ResizeObserver(check).observe(document.body);
     window.addEventListener('resize', check);
     check();
