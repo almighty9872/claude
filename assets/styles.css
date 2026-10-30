@@ -3028,7 +3028,7 @@ html.av .to-top-wrap { display: none; }
 .cmap-pop.is-below ul, .cmap-pop.is-below .cmap-pop-col.is-long ul { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-flow: row; column-gap: .8rem; }
 .cmap-pop.is-below .cmap-pop-col:only-child ul { grid-template-columns: 1fr; }
 .cmap-pop.is-below a { font-size: .8rem; white-space: normal; line-height: 1.35; padding: .12rem 0; }
-@media (prefers-reduced-motion: reduce) { .cmap-pop, .cmap-city .cc-glow { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .cmap-pop, .cmap-city .cc-glow, .cmap-pop-tg::after { transition: none; } }
 @media print { .cmap-pop, .cmap-line { display: none !important; } }
 
 /* ---------- Kilise Bul: a city's own map (script.js, initChurchMap; drawn from OpenStreetMap by tools/kilise-sehir-haritalari.py) ---------- */
@@ -3123,6 +3123,17 @@ html.av .to-top-wrap { display: none; }
 .cmap-pop.is-dock .cmap-pop-cols { flex-direction: column; gap: .7rem; }
 .cmap-pop.is-dock ul, .cmap-pop.is-dock .cmap-pop-col.is-long ul { display: block; }
 .cmap-pop.is-dock a { white-space: normal; padding: .18rem 0; }
+/* the fold buttons on a city with two lists (script.js, foldSides) */
+.cmap-pop.is-dock.is-slim { width: auto; }
+.cmap-pop.is-dock .cmap-pop-col.is-shut ul { display: none; }
+.cmap-pop.is-dock .cmap-pop-h { margin: 0; }
+.cmap-pop-tg { display: flex; align-items: center; gap: .45rem; width: 100%; min-height: 2rem; padding: 0; border: 0; background: none; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; text-align: left; cursor: pointer; }
+.cmap-pop-tg::after { content: ""; width: .45rem; height: .45rem; margin-left: auto; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.cmap-pop-tg[aria-expanded="false"]::after { transform: rotate(-45deg); }
+.cmap-pop-tg:hover { color: var(--gold-active); }
+.cmap-pop-tg:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.cmap-pop-n { padding: 0 .4rem; border-radius: 999px; background: var(--pop-line); font-size: .7rem; letter-spacing: 0; color: var(--text-soft); }
+.cmap-pop.is-dock.is-slim .cmap-pop-cols { gap: .2rem; }
 @media (max-width: 759px) { .cmap-pop.is-dock { display: none; } }
 /* a phone: the frame grows taller while a city is open */
 @media (max-width: 759px) { .cmap.is-city .cmap-frame { aspect-ratio: 4 / 5; max-height: 78vh; max-height: 78svh; } .cv-title { font-size: .95rem; } }

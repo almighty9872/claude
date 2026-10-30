@@ -3285,13 +3285,37 @@
       var fw = svg.clientWidth, from = vb, a = from.h / from.w, w1 = 22, to = { x: c._x - w1 / 2, y: c._y - w1 * a / 2, w: w1, h: w1 * a };
       cv.style.transformOrigin = ((c._x - from.x) / from.w * fw) + 'px ' + ((c._y - from.y) / from.h * svg.clientHeight) + 'px';
       cv.classList.remove('is-in'); cv.hidden = false;
-      dock = pop; dock.hidden = false; dock.classList.add('is-dock');
+      dock = pop; dock.hidden = false; dock.classList.add('is-dock'); foldSides(dock);
       var first = own[0].getAttribute('data-map');
       var done = showArea(first, false);
       zoomCountry(from, to, function () {
         done.then(function () { cv.classList.add('is-in'); busy = false; dock.classList.add('is-open'); if (focus) /** @type {HTMLElement} */ ($('.cv-back', cv)).focus({ preventScroll: true }); })
           .catch(function () { busy = false; closeCity(true); show(c, focus); });
       });
+    }
+    /* a city with two lists (Istanbul's two sides, İzmir and Selçuk): each heading folds its list
+       away, and on a narrow map both start folded so the docked lists don't cover the city */
+    function foldSides(p) {
+      var cols = $$('.cmap-pop-col', p), shut = cv.clientWidth < 1000;
+      if (cols.length < 2) return;
+      cols.forEach(function (col, i) {
+        var h = $('.cmap-pop-h', col), ul = $('ul', col);
+        if (!h || !ul) return;
+        var b = $('.cmap-pop-tg', h);
+        if (!b) {
+          ul.id = p.id + '-' + i;
+          h.innerHTML = '<button type="button" class="cmap-pop-tg" aria-controls="' + ul.id + '">' + h.innerHTML + '<span class="cmap-pop-n">' + $$('li', ul).length + '</span></button>';
+          b = $('.cmap-pop-tg', h);
+          if (b) b.addEventListener('click', function () { fold(col, !col.classList.contains('is-shut')); });
+        }
+        fold(col, shut);
+      });
+      function fold(col, s) {
+        col.classList.toggle('is-shut', s);
+        var t = $('.cmap-pop-tg', col);
+        if (t) t.setAttribute('aria-expanded', String(!s));
+        p.classList.toggle('is-slim', cols.every(function (c) { return c.classList.contains('is-shut'); }));
+      }
     }
     function zoomCountry(from, to, then) {
       if (still) { setVb(to); svg.style.opacity = '0'; then(); return; }
