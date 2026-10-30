@@ -3016,6 +3016,12 @@ $IcoChevKl = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 # place they were at. Text with an English twin goes through KL; whole blocks through KLB.
 $TotalChurches = 0; foreach ($c in $Churches.cities) { $TotalChurches += @($c.churches).Count }
 $TotalCities = @($Churches.cities).Count
+# sort key in the Turkish alphabet (c, ç, d ... ı, i ... s, ş ... u, ü), the same on every machine
+function Tr-Key([string]$s) {
+  $al = 'abcçdefgğhıijklmnoöpqrsştuüvwxyz'
+  $t = $s.Replace('İ', 'i').Replace('I', 'ı').ToLowerInvariant()
+  return -join ($t.ToCharArray() | ForEach-Object { $i = $al.IndexOf($_); if ($i -ge 0) { [char](65 + $i) } else { [char]32 } })
+}
 function Church-Pick([string]$lang) {
   $en = $lang -eq 'en'
   $sb = New-Object Text.StringBuilder
@@ -3027,7 +3033,7 @@ function Church-Pick([string]$lang) {
       $list = if ($sd) { @($city.churches | Where-Object { $_.side -eq $sd }) } else { @($city.churches) }
       $gl = if ($sd) { "$cn · $($PickSide[$sd][[int]$en])" } else { $cn }
       [void]$sb.Append("<optgroup label=`"$(Attr $gl)`">")
-      foreach ($ch in $list) { $nm = if ($en -and $ch.shortEn) { $ch.shortEn } else { $ch.short }; [void]$sb.Append("<option value=`"$($ch.id)`">$(Attr (Plain $nm))</option>") }
+      foreach ($ch in @($list | Sort-Object { Tr-Key (Plain $(if ($en -and $_.shortEn) { $_.shortEn } else { $_.short })) })) { $nm = if ($en -and $ch.shortEn) { $ch.shortEn } else { $ch.short }; [void]$sb.Append("<option value=`"$($ch.id)`">$(Attr (Plain $nm))</option>") }
       [void]$sb.Append('</optgroup>')
     }
   }
