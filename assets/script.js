@@ -40,10 +40,10 @@
      0. Language: the helpers that once wrote both languages, kept so the text tables and their
         callers stay as they are. A "pair string" is now just the Turkish.
      --------------------------------------------------------------- */
-  function LT(tr) { return tr; }
-  function L2(tr) { return tr; }
-  function setAttr2(el, name, tr) { el.setAttribute(name, tr); }
-  function pmake(tr) { return tr == null ? '' : String(tr); }
+  function LT(tr, en) { return tr; }
+  function L2(tr, en) { return tr; }
+  function setAttr2(el, name, tr, en) { el.setAttribute(name, tr); }
+  function pmake(tr, en) { return tr == null ? '' : String(tr); }
   function pstr(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
   function pcat() { return Array.prototype.map.call(arguments, pmake).join(''); }
   function pjoin(list, sep) { return list.filter(Boolean).join(sep); }
@@ -457,7 +457,7 @@
       [11, 30, 'andrew', 'red'], [12, 26, 'stephen', 'red'], [12, 27, 'johnAp', 'white'], [12, 28, 'innocents', 'red']];
     var yields = same(today, ash) || (today >= palm && today <= add(easter, 7));
     for (var j = 0; j < FEASTS.length && !yields; j++) {
-      var f = FEASTS[j];
+      var f = /** @type {any[]} */ (FEASTS[j]);
       if (f[0] * 100 + f[1] === md && (today.getDay() !== 0 || f[4])) return res(F[f[2]], 0, f[3]);
     }
 
@@ -971,7 +971,7 @@
     /* the English translation, folded away under the Turkish */
     function other(label, node) { var d = el('details', 'ref-other'); d.appendChild(el('summary', '', label)); d.appendChild(node); return d; }
     function fill(kind, key, a) {
-      var data = window[KINDS[kind].name], item = data && data[key];
+      var data = /** @type {any} */ (window)[KINDS[kind].name], item = data && data[key];
       body.textContent = ''; foot.textContent = '';
       var label = a.textContent.trim();
       if (kind === 'qref') label = 'Kur’an ' + key;
@@ -1284,7 +1284,7 @@
     var steps = rosarySteps(), idx = 0, done = false, prayers = {}, sets = {}, firstSet = null, lastCenter = '';
     var beads = {}, stepsFor = {}, hits = [];
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var narrow = window.matchMedia ? window.matchMedia('(max-width: 899.98px)') : { matches: true };
+    var narrow = /** @type {MediaQueryList} */ (window.matchMedia ? window.matchMedia('(max-width: 899.98px)') : { matches: true });
 
     /* Phones: the Rosary as one still screen that never scrolls. The painting of the mystery
        above (bars over it for the five decades), the prayer below with the beads of this part
@@ -2900,7 +2900,7 @@
       a.addEventListener('click', function (e) {
         var t = document.getElementById((a.getAttribute('href') || a.getAttribute('xlink:href') || '').slice(1)); if (!t) return;
         e.preventDefault();
-        if (t.tagName === 'DETAILS') t.open = true;
+        if (t.tagName === 'DETAILS') /** @type {HTMLDetailsElement} */ (t).open = true;
         var r = document.documentElement; r.style.scrollBehavior = 'auto'; t.scrollIntoView(true); r.style.scrollBehavior = '';
         try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
       });
@@ -3388,8 +3388,9 @@
       }
       kqTools();
       var qn = +a.getAttribute('data-av-qn');
-      clearTimeout(reader.t);
-      if (!KKREAD.has(qn)) reader.t = setTimeout(function () { if (cur === a) { KKREAD.mark(qn); readMark(a); } }, 3000);
+      var rd = /** @type {any} */ (reader);
+      clearTimeout(rd.t);
+      if (!KKREAD.has(qn)) rd.t = setTimeout(function () { if (cur === a) { KKREAD.mark(qn); readMark(a); } }, 3000);
       readMark(a);
     }
     /* the question's own line: "Okundu" with a tick once it has been read */
@@ -3722,7 +3723,7 @@
     };
     btn.addEventListener('click', function () { open(panel.hidden); });
     list.addEventListener('click', function (e) { if (e.target.closest('a')) setTimeout(function () { open(false); }, 0); });
-    document.addEventListener('click', function (e) { if (!panel.hidden && !box.contains(e.target)) open(false); });
+    document.addEventListener('click', function (e) { if (!panel.hidden && !box.contains(/** @type {Node} */ (e.target))) open(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { open(false); btn.focus(); } });
     var raf = 0;
     var update = function () {
@@ -3858,7 +3859,7 @@
       select.value = 'all';
       showOnlyCity(id);
       var sec = document.getElementById(id);
-      if (sec) sec.open = true;
+      if (sec) /** @type {HTMLDetailsElement} */ (sec).open = true;
       markCurrentCity(id);
     }
 
@@ -3887,7 +3888,7 @@
     function openHash() {
       var id = hashId(), el = id && document.getElementById(id);
       if (!el || !wrap.contains(el) || !el.matches('.why-item, .kk-sec')) return;
-      el.open = true;
+      /** @type {HTMLDetailsElement} */ (el).open = true;
       requestAnimationFrame(function () { el.scrollIntoView({ block: 'start' }); });
     }
     window.addEventListener('hashchange', openHash);
@@ -3949,7 +3950,7 @@
       var btn = document.createElement('button');
       btn.type = 'button'; btn.className = 'toc-arrow ' + x[0]; btn.tabIndex = -1; btn.setAttribute('aria-hidden', 'true');
       btn.innerHTML = chev(x[1]);
-      btn.addEventListener('click', function () { list.scrollBy({ left: x[2] * list.clientWidth * 0.7, behavior: smooth ? 'smooth' : 'auto' }); });
+      btn.addEventListener('click', function () { list.scrollBy({ left: /** @type {number} */ (x[2]) * list.clientWidth * 0.7, behavior: smooth ? 'smooth' : 'auto' }); });
       nav.appendChild(btn);
     });
     list.addEventListener('scroll', ends, { passive: true });
@@ -4023,7 +4024,7 @@
     function go(id, keepHash) {
       var el = document.getElementById(id);
       if (!el) return;
-      if (el.tagName === 'DETAILS') el.open = true;
+      if (el.tagName === 'DETAILS') /** @type {HTMLDetailsElement} */ (el).open = true;
       closeAll();
       root.style.scrollBehavior = 'auto';
       el.scrollIntoView(true);
@@ -4142,7 +4143,7 @@
       if (en === isEn()) return;
       /* the place being read: the smallest block that holds the line near the top of the screen
          (else the first one below it), and how far down that block the line is */
-      var line = topLine(), el = null, area = 1e12, next = null, nextTop = 1e12;
+      var line = topLine(), el = /** @type {Element | null} */ (null), area = 1e12, next = /** @type {Element | null} */ (null), nextTop = 1e12;
       $$(ANCHORS).forEach(function (c) {
         if (c.closest('.kl-tr, .kl-en') || !c.offsetHeight) return;
         var r = c.getBoundingClientRect();
@@ -4430,7 +4431,7 @@
        nothing here makes it lay the page out early (reading offsetHeight at startup did) */
     if (window.ResizeObserver) {
       new ResizeObserver(function (entries) {
-        var e = entries[0], box = e.borderBoxSize && (e.borderBoxSize[0] || e.borderBoxSize);
+        var e = entries[0], box = /** @type {ResizeObserverSize} */ (e.borderBoxSize && (e.borderBoxSize[0] || e.borderBoxSize));
         set(box && box.blockSize ? box.blockSize : header.offsetHeight);
       }).observe(header);
     } else {
