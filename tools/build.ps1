@@ -3020,7 +3020,9 @@ $TotalCities = @($Churches.cities).Count
 function Tr-Key([string]$s) {
   $al = 'abcçdefgğhıijklmnoöpqrsştuüvwxyz'
   $t = $s.Replace('İ', 'i').Replace('I', 'ı').ToLowerInvariant()
-  return -join ($t.ToCharArray() | ForEach-Object { $i = $al.IndexOf($_); if ($i -ge 0) { [char](65 + $i) } else { [char]32 } })
+  # two plain capital letters per character (0 = anything else, then the alphabet from 1): a culture-aware
+  # sort ranks punctuation before letters, capitals alone compare the same in every culture
+  return -join ($t.ToCharArray() | ForEach-Object { $c = $al.IndexOf($_) + 1; "$([char](65 + [int][Math]::Floor($c / 26)))$([char](65 + $c % 26))" })
 }
 function Church-Pick([string]$lang) {
   $en = $lang -eq 'en'
