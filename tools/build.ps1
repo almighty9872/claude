@@ -2866,8 +2866,13 @@ foreach ($city in $Churches.cities) {
     }
     $moreHtml += "<p class=`"ch-next`"><a href=`"kutsal-ayin.html`">Kutsal Ayin nasıl yapılır?</a> · <a href=`"katolik-sureci.html`">Katolik Olma Süreci</a> · <a href=`"kilise-tarihi.html`">Kilise’nin Tarihi</a> · <a href=`"kiliseler.html`">Türkiye’deki tüm kiliseler</a></p>"
     $moreSec = "<section class=`"ch-sec ch-more`" id=`"diger-kiliseler`"><h2 class=`"ch-h`">$IcoPin Yakındaki ve İlgili Sayfalar</h2>$moreHtml</section>"
+    # the trail back up: home, Kilise Bul, the city's churches, this church (phones have the bar instead)
+    $crumbs = "<nav class=`"crumbs`" $(TA 'aria-label' 'Bulunduğunuz yer')><ol><li><a href=`"index.html`">Ana Sayfa</a></li><li><a href=`"kiliseler.html`">Kilise Bul</a></li>" +
+      $(if ($CityPages[$city.id]) { "<li><a href=`"$($CityPages[$city.id])`">$cityName</a></li>" } else { '' }) +
+      "<li><span aria-current=`"page`">$(Inline $ch.name)</span></li></ol></nav>"
     $body = @"
 <div class="wrap narrow">
+  $crumbs
   <article class="article church-page" id="article">
     <header class="page-head center">$(Page-Ico $IcoChurch)<p class="label">$($rite.tr) · $cityName</p><h1>$((Inline $ch.name))</h1><p class="sub">$(Inline $ch.district), $cityName</p></header>
     $notice

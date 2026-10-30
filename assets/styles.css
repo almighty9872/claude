@@ -3142,6 +3142,15 @@ html.av .to-top-wrap { display: none; }
 
 /* ---------- A church's own page (kilise/<id>.html) ---------- */
 .church-page .page-head .sub { margin-top: .2rem; }
+.crumbs { margin: 1.1rem 0 0; font-family: var(--sans); font-size: .85rem; color: var(--muted); }
+.crumbs ol { display: flex; flex-wrap: wrap; gap: .2rem .45rem; margin: 0; padding: 0; list-style: none; }
+.crumbs li { display: inline-flex; align-items: center; gap: .45rem; min-width: 0; }
+.crumbs li + li::before { content: "\203A"; color: var(--muted); opacity: .7; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover, .crumbs a:focus-visible { color: var(--gold); text-decoration: underline; }
+.crumbs [aria-current] { color: var(--text); }
+html.av .crumbs { display: none; }
+@media print { .crumbs { display: none; } }
 .ch-notice { display: flex; gap: .7rem; align-items: flex-start; margin: 0 0 1.4rem; padding: .85rem 1rem; border-radius: var(--radius); border: 1px solid rgba(207, 84, 72, .45); background: rgba(207, 84, 72, .1); }
 .ch-notice.is-limited { border-color: rgba(201, 161, 63, .5); background: rgba(201, 161, 63, .1); }
 .ch-notice svg { flex: none; width: 1.3rem; height: 1.3rem; margin-top: .15rem; color: #cf5448; }
