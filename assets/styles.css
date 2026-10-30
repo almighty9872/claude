@@ -2952,6 +2952,8 @@ html.av .to-top-wrap { display: none; }
 /* ---------- Kilise Bul: the map (Turkey, fixed; a city's churches open in a glass card beside it) ---------- */
 .cmap { --amap-sea: #dce7ec; --amap-land: #e9e2d3; --amap-tr: var(--surface); --pop-bg: rgba(255, 252, 245, .96); --pop-line: rgba(160, 120, 40, .35); margin: 1.5rem 0 2.2rem; }
 :root[data-theme="dark"] .cmap { --amap-sea: #111215; --amap-land: #1c1d22; --amap-tr: #2a2b31; --pop-bg: rgba(28, 28, 32, .96); --pop-line: rgba(233, 196, 106, .28); }
+/* a wide screen: the map leaves the text column and grows with the window, never taller than about 4/5 of it */
+@media (min-width: 1000px) { html:not(.av) .cmap { --cmw: min(96vw, 135vh, 1900px); width: max(100%, var(--cmw)); margin-inline: calc(50% - max(100%, var(--cmw)) / 2); } }
 .cmap-frame { position: relative; aspect-ratio: 1000 / 594; background: var(--amap-sea); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); touch-action: manipulation; }
 .cmap-svg { display: block; width: 100%; height: 100%; border-radius: var(--radius); }
 .cmap-sea, .cmap-lake { fill: var(--amap-sea); }
@@ -2983,7 +2985,7 @@ html.av .to-top-wrap { display: none; }
 .cmap-isle .ci-name { font-family: var(--sans); font-size: 11px; font-weight: 600; fill: var(--port); paint-order: stroke; stroke: var(--amap-sea); stroke-width: 3px; stroke-linejoin: round; opacity: 0; transition: opacity .25s .15s; }
 .cmap-isle.is-on .ci-dot { fill: var(--port); }
 .cmap-isle.is-on .ci-name { opacity: 1; }
-.cf-line { fill: none; stroke: var(--port); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; pointer-events: none; transition: stroke-dashoffset .45s ease-out, opacity .15s; }
+.cf-line { fill: none; stroke: var(--port); stroke-width: calc(2.2px * var(--cm-s, 1)); stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; pointer-events: none; transition: stroke-dashoffset .45s ease-out, opacity .15s; }
 .cf-line.is-on { stroke-dashoffset: 0; opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .cf-line, .cmap-isle .ci-name { transition: none; } }
 .cmap-key { margin: .55rem 0 0; font: .82rem var(--sans); text-align: center; }
@@ -3028,6 +3030,104 @@ html.av .to-top-wrap { display: none; }
 .cmap-pop.is-below a { font-size: .8rem; white-space: normal; line-height: 1.35; padding: .12rem 0; }
 @media (prefers-reduced-motion: reduce) { .cmap-pop, .cmap-city .cc-glow { transition: none; } }
 @media print { .cmap-pop, .cmap-line { display: none !important; } }
+
+/* ---------- Kilise Bul: a city's own map (script.js, initChurchMap; drawn from OpenStreetMap by tools/kilise-sehir-haritalari.py) ---------- */
+.cmap {
+  --cv-land: #f2ede2; --cv-water: #b8d2df; --cv-water-t: #4f7f99; --cv-green: #d5e2c2; --cv-bld: #e4dac8;
+  --cv-road: #ffffff; --cv-road1: #f3cf86; --cv-rail: #a99d89; --cv-lab: #6d6355; --cv-sight: #4a3f2e; --cv-halo: rgba(250, 247, 240, .92);
+  --cv-glass: rgba(255, 252, 245, .9);
+}
+:root[data-theme="dark"] .cmap {
+  --cv-land: #1d1e22; --cv-water: #13222d; --cv-water-t: #7fb0cb; --cv-green: #1d2a21; --cv-bld: #2a2a30;
+  --cv-road: #3a3b42; --cv-road1: #6e5c33; --cv-rail: #565049; --cv-lab: #a49c8f; --cv-sight: #e7dfcf; --cv-halo: rgba(20, 20, 24, .9);
+  --cv-glass: rgba(28, 28, 32, .9);
+}
+.cmap-svg { transition: none; }
+.cv { position: absolute; inset: 0; z-index: 3; overflow: hidden; border-radius: var(--radius); background: var(--cv-land); opacity: 0; transform: scale(.28); transition: opacity .45s ease, transform .7s cubic-bezier(.2, .75, .2, 1); }
+.cv.is-in { opacity: 1; transform: none; }
+.cv[hidden] { display: none; }
+.cv.is-swap .cv-svg { opacity: 0; }
+.cv-svg { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; transition: opacity .18s; outline: none; }
+.cv-svg.is-drag { cursor: grabbing; }
+.cv-svg:focus-visible { box-shadow: inset 0 0 0 3px var(--focus); }
+.cv-land { fill: var(--cv-land); }
+.cv-green { fill: var(--cv-green); }
+.cv-water { fill: var(--cv-water); }
+.cv-river { fill: none; stroke: var(--cv-water); stroke-linecap: round; stroke-linejoin: round; }
+.cv-bld { fill: var(--cv-bld); opacity: 0; transition: opacity .3s; }
+.cv-r1, .cv-r2, .cv-r3, .cv-r4, .cv-rail, .cv-ferry { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cv-r1 { stroke: var(--cv-road1); }
+.cv-r2, .cv-r3, .cv-r4 { stroke: var(--cv-road); }
+.cv-r4 { opacity: 0; transition: opacity .3s; }
+.cv-rail { stroke: var(--cv-rail); stroke-dasharray: 6 4; }
+.cv-ferry { stroke: var(--cv-water-t); stroke-dasharray: 2 6; opacity: 0; transition: opacity .3s; }
+.cv-svg.is-near .cv-ferry { opacity: .4; }
+.cv-svg.is-near .cv-r4 { opacity: .95; }
+.cv-svg.is-close .cv-bld { opacity: 1; }
+/* the names round the churches: districts in small capitals, the sea in italics, sights with a dot */
+.cv-lab { pointer-events: none; }
+.cv-lab text { font-family: var(--sans); font-size: 11.5px; text-anchor: middle; paint-order: stroke; stroke: var(--cv-halo); stroke-width: 3.5px; stroke-linejoin: round; }
+.cv-lab.is-d text { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; fill: var(--cv-lab); }
+.cv-lab.is-w text { font-family: var(--serif, Georgia, serif); font-size: 14px; font-style: italic; letter-spacing: .06em; fill: var(--cv-water-t); stroke: none; }
+.cv-lab.is-s text { font-weight: 600; fill: var(--cv-sight); }
+.cv-lab.is-t text { font-size: 10.5px; font-weight: 600; fill: var(--cv-water-t); }
+.cv-lab-dot { fill: var(--cv-sight); stroke: var(--cv-halo); stroke-width: 1.5; }
+.cv-lab.is-t .cv-lab-dot { fill: var(--cv-water-t); }
+/* the churches: gold, a white cross; closed ones grey; a position known only roughly in a dashed ring */
+.cv-pin, .cv-bub { cursor: pointer; outline: none; }
+.cvp-halo, .cvb-halo { fill: var(--gold); opacity: 0; transition: opacity .2s; }
+.cvp-dot { fill: var(--gold); stroke: #fff; stroke-width: 2; filter: drop-shadow(0 1px 2px rgba(40, 30, 10, .35)); }
+.cvp-cross { fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; }
+.cvp-ring { fill: none; stroke: var(--gold-active); stroke-width: 1.4; stroke-dasharray: 3 3; }
+.cv-pin.is-closed .cvp-dot { fill: #9c958a; }
+.cvp-name { display: none; font-family: var(--sans); font-size: 12.5px; font-weight: 700; text-anchor: middle; fill: var(--text); paint-order: stroke; stroke: var(--cv-halo); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.cv-pin.is-named .cvp-name, .cv-pin:hover .cvp-name, .cv-pin:focus-visible .cvp-name, .cv-pin.is-sel .cvp-name, .cv-pin.is-hot .cvp-name { display: inline; }
+.cv-pin:hover .cvp-halo, .cv-pin:focus-visible .cvp-halo, .cv-pin.is-sel .cvp-halo, .cv-pin.is-hot .cvp-halo, .cv-bub:hover .cvb-halo, .cv-bub:focus-visible .cvb-halo, .cv-bub.is-hot .cvb-halo { opacity: .3; }
+.cv-pin:focus-visible .cvp-dot, .cv-bub:focus-visible .cvb-dot { stroke: var(--focus); stroke-width: 3; }
+.cvb-dot { fill: var(--gold); stroke: #fff; stroke-width: 2.5; filter: drop-shadow(0 1px 3px rgba(40, 30, 10, .35)); }
+.cv-bub text { font-family: var(--sans); font-size: 13px; font-weight: 800; text-anchor: middle; fill: #fff; pointer-events: none; }
+/* the bar: back to Turkey, the city's name, its maps */
+.cv-bar { position: absolute; top: .7rem; left: .7rem; right: .7rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; pointer-events: none; }
+.cv-bar > * { pointer-events: auto; }
+.cv-back, .cv-maps button, .cv-zoom button {
+  display: inline-flex; align-items: center; justify-content: center; gap: .3rem; min-height: 2.5rem; padding: 0 .95rem; border: 1px solid var(--glass-brd); border-radius: 999px;
+  background: var(--cv-glass); color: var(--text); font: 700 .86rem var(--sans); cursor: pointer; box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.cv-back { padding-left: .6rem; color: var(--gold-active); }
+.cv-back svg { width: 1.1rem; height: 1.1rem; }
+.cv-back:hover, .cv-maps button:hover, .cv-zoom button:hover { filter: brightness(1.05); }
+.cv-back:focus-visible, .cv-maps button:focus-visible, .cv-zoom button:focus-visible, .cv-card-a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.cv-title { margin: 0; padding: .3rem .9rem; border-radius: 999px; background: var(--cv-glass); font: 600 1.05rem var(--serif, Georgia, serif); color: var(--text); box-shadow: var(--glass-shadow); }
+.cv-maps { display: flex; gap: .35rem; }
+.cv-maps:empty { display: none; }
+.cv-maps button { min-height: 2.2rem; padding: 0 .8rem; font-size: .8rem; }
+.cv-maps button[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #fff; }
+.cv-zoom { position: absolute; left: .7rem; bottom: .7rem; display: flex; flex-direction: column; gap: .35rem; }
+.cv-zoom button { width: 2.5rem; padding: 0; font-size: 1.25rem; line-height: 1; }
+.cv-credit { position: absolute; right: .5rem; bottom: .3rem; margin: 0; font: .68rem var(--sans); }
+.cv-credit a { color: var(--cv-lab); text-decoration: none; padding: .1rem .35rem; border-radius: 4px; background: var(--cv-halo); }
+.cv-wait { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; padding: .5rem 1rem; border-radius: 999px; background: var(--cv-glass); font: 600 .85rem var(--sans); color: var(--text-soft); }
+.cv-wait[hidden] { display: none; }
+/* a church's card */
+.cv-card { position: absolute; z-index: 2; width: max-content; max-width: min(17rem, calc(100% - 1rem)); padding: .7rem .9rem .75rem; border: 1px solid var(--glass-brd); border-radius: 14px; background: var(--cv-glass); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-family: var(--sans); animation: cv-card .2s ease-out; }
+.cv-card[hidden] { display: none; }
+@keyframes cv-card { from { opacity: 0; transform: translateY(4px); } }
+.cv-card-t { margin: 0; font-size: .95rem; font-weight: 700; line-height: 1.3; color: var(--text); }
+.cv-card-n { margin: .25rem 0 0; font-size: .78rem; color: var(--text-soft); }
+.cv-card-a { display: inline-block; margin-top: .45rem; font-size: .84rem; font-weight: 700; color: var(--gold-active); text-decoration: none; }
+.cv-card-a:hover { text-decoration: underline; }
+/* the city's list docked at the side of its map */
+.cmap-pop.is-dock { z-index: 4; left: auto !important; right: .7rem; top: 3.9rem !important; max-height: calc(100% - 5.5rem); width: 17rem; max-width: none; overflow-y: auto; overscroll-behavior: contain; }
+.cmap-pop.is-dock::before { display: none; }
+.cmap-pop.is-dock .cmap-pop-t { display: none; }
+.cmap-pop.is-dock .cmap-pop-cols { flex-direction: column; gap: .7rem; }
+.cmap-pop.is-dock ul, .cmap-pop.is-dock .cmap-pop-col.is-long ul { display: block; }
+.cmap-pop.is-dock a { white-space: normal; padding: .18rem 0; }
+@media (max-width: 759px) { .cmap-pop.is-dock { display: none; } }
+/* a phone: the frame grows taller while a city is open */
+@media (max-width: 759px) { .cmap.is-city .cmap-frame { aspect-ratio: 4 / 5; max-height: 78vh; max-height: 78svh; } .cv-title { font-size: .95rem; } }
+@media (prefers-reduced-motion: reduce) { .cv, .cv-svg, .cv-bld, .cv-r4 { transition: none; } .cv-card { animation: none; } }
+@media print { .cv { display: none !important; } }
 
 /* ---------- A church's own page (kilise/<id>.html) ---------- */
 .church-page .page-head .sub { margin-top: .2rem; }

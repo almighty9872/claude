@@ -2878,7 +2878,8 @@
     var pin = function (el) { el._x = +el.getAttribute('data-x'); el._y = +el.getAttribute('data-y'); return el; };
     var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin), ports = $$('.cmap-port', svg).map(pin), isles = $$('.cmap-isle', svg).map(pin);
     var line = document.createElement('div'); line.className = 'cmap-line'; line.hidden = true; frame.appendChild(line);
-    var vb = null, open = null;
+    var vb = null, open = null, city = null, busy = false;
+    var still = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
     /* the view: the whole country, as wide as the frame's own shape needs */
     function whole() {
@@ -2886,14 +2887,21 @@
       var x0 = 10, x1 = 995, y0 = 60, y1 = 430, w = Math.max(x1 - x0, (y1 - y0) / a), h = w * a;
       return { x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w: w, h: h };
     }
-    function draw() {
-      vb = whole();
+    function setVb(v) {
+      vb = v;
       svg.setAttribute('viewBox', vb.x + ' ' + vb.y + ' ' + vb.w + ' ' + vb.h);
       /* dots and names keep their size on screen (a little smaller in a phone's narrow frame) */
-      var fw = svg.clientWidth || 1, k = Math.max(.8, Math.min(1, fw / 640)), s = vb.w / fw * k;
+      var fw = svg.clientWidth || 1, k = Math.max(.8, Math.min(1, fw / 640)) * Math.max(1, Math.min(1.5, fw / 1100)), s = Math.min(vb.w / fw * k, whole().w / fw * k);
+      /* the ferry lines keep a steady width on screen */
+      svg.style.setProperty('--cm-s', String(vb.w / fw));
       cities.forEach(function (c) { c.setAttribute('transform', 'translate(' + c._x + ' ' + c._y + ') scale(' + s + ')'); });
       texts.concat(ports, isles).forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
+    }
+    function draw() {
+      if (busy) return;
+      if (!city) setVb(whole());
       if (open) place(open);
+      if (city) cvResize();
     }
     /* a ferry port (and the key under the map): straight to the question about the Greek islands, opened */
     $$('.cmap-port, .cmap-key a', sec).forEach(function (a) {
@@ -2961,14 +2969,365 @@
     }
     svg.addEventListener('click', function (e) {
       var c = e.target.closest('.cmap-city');
-      if (c) show(c, false); else hide();
+      if (c) openCity(c, false); else hide();
     });
     svg.addEventListener('keydown', function (e) {
       var c = e.target.closest && e.target.closest('.cmap-city');
-      if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); show(c, true); }
+      if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openCity(c, true); }
     });
     document.addEventListener('click', function (e) { if (open && !frame.contains(e.target)) hide(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) hide(true); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (open) hide(true);
+      else if (city && !cvCard.hidden) closeCard(true);
+      else if (city) closeCity();
+    });
+
+    /* ---------- the city: clicking a city zooms into a drawn map of it (assets/sehir/<map>.json,
+       made by tools/kilise-sehir-haritalari.py from OpenStreetMap), its churches where they stand and
+       the well-known places round them; "Türkiye" zooms back out */
+    var cv = /** @type {HTMLElement} */ ($('.cv', frame)), cvSvg = /** @type {SVGSVGElement} */ ($('.cv-svg', cv));
+    var cvCard = /** @type {HTMLElement} */ ($('.cv-card', cv)), cvTitle = $('.cv-title', cv), cvMaps = $('.cv-maps', cv), cvWait = /** @type {HTMLElement} */ ($('.cv-wait', cv));
+    var NS = 'http://www.w3.org/2000/svg', maps = {}, area = null, view = null, links = [], pins = [], labels = [], roads = {}, bubbles = [], picked = null, fly = 0, dock = null;
+    var WIDTHS = { r1: [8, 1.6], r2: [5, 1.1], r3: [3.2, .8], r4: [2.2, .6], rail: [1.6, .8], ferry: [1.6, .7], river: [6, 1] };
+    var kl = function (tr, en) { return '<span class="kl-tr">' + tr + '</span><span class="kl-en" lang="en">' + en + '</span>'; };
+    var mk = function (tag, cls, parent) { var n = document.createElementNS(NS, tag); if (cls) n.setAttribute('class', cls); if (parent) parent.appendChild(n); return n; };
+    var ease = function (t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+    function tspans(t, tr, en) {
+      var a = mk('tspan', 'kl-tr', t), b = mk('tspan', 'kl-en', t); a.textContent = tr; b.textContent = en;
+    }
+    function load(id) {
+      if (maps[id]) return Promise.resolve(maps[id]);
+      return fetch('assets/sehir/' + id + '.json').then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); }).then(function (d) { maps[id] = d; return d; });
+    }
+    /* a position in an area's units (Web Mercator pixels at its zoom, from its corner) */
+    function proj(d, lat, lon) {
+      var n = 256 * Math.pow(2, d.z), r = lat * Math.PI / 180;
+      return [(lon + 180) / 360 * n - d.o[0], (1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * n - d.o[1]];
+    }
+    function drawArea(d) {
+      cvSvg.textContent = ''; roads = {}; pins = []; labels = []; bubbles = []; closeCard();
+      var bg = mk('rect', 'cv-land', cvSvg); bg.setAttribute('width', String(d.w)); bg.setAttribute('height', String(d.h));
+      /* round the churches the sea comes from closer tiles: the coarse one is cut away there */
+      if (d.cover && d.cover.length) {
+        var cp = mk('clipPath', null, mk('defs', null, cvSvg)); cp.id = 'cv-cut-' + d.id;
+        mk('path', null, cp).setAttribute('d', 'M-9 -9H' + (d.w + 9) + 'V' + (d.h + 9) + 'H-9Z' + d.cover.map(function (c) { return 'M' + c[0] + ' ' + c[1] + 'V' + c[3] + 'H' + c[2] + 'V' + c[1] + 'Z'; }).join(''));
+      }
+      ['green', 'water', 'dwater', 'river', 'bld', 'r4', 'r3', 'r2', 'r1', 'rail', 'ferry'].forEach(function (k) {
+        if (!d.layers[k]) return;
+        var p = mk('path', 'cv-' + (k === 'dwater' ? 'water' : k), cvSvg); p.setAttribute('d', d.layers[k]); roads[k] = p;
+        if (k === 'water' && d.cover && d.cover.length) p.setAttribute('clip-path', 'url(#cv-cut-' + d.id + ')');
+      });
+      var lg = mk('g', 'cv-labs', cvSvg); lg.setAttribute('aria-hidden', 'true');
+      d.places.forEach(function (pl) {
+        var g = mk('g', 'cv-lab is-' + pl.k, lg), t;
+        if (pl.k === 's' || pl.k === 't') { var c = mk('circle', 'cv-lab-dot', g); c.setAttribute('r', '2.6'); }
+        t = mk('text', null, g); t.setAttribute('y', pl.k === 's' || pl.k === 't' ? '-6' : '4'); tspans(t, pl.t, pl.e);
+        labels.push({ el: g, x: pl.x, y: pl.y, r: pl.r, k: pl.k });
+      });
+      labels.sort(function (p, q) { return p.r - q.r || 'wdst'.indexOf(p.k) - 'wdst'.indexOf(q.k); });
+      var pg = mk('g', 'cv-pins', cvSvg);
+      links.forEach(function (a) {
+        if (a.getAttribute('data-map') !== d.id) return;
+        var ll = (a.getAttribute('data-ll') || '').split(' ').map(Number), xy = proj(d, ll[0], ll[1]);
+        var tr = $('.kl-tr', a), en = $('.kl-en', a), st = a.getAttribute('data-st');
+        var g = mk('g', 'cv-pin' + (st ? ' is-' + st : '') + (a.hasAttribute('data-approx') ? ' is-approx' : ''), pg);
+        g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button'); g.setAttribute('aria-label', tr ? tr.textContent || '' : '');
+        mk('circle', 'cvp-halo', g).setAttribute('r', '15');
+        if (a.hasAttribute('data-approx')) mk('circle', 'cvp-ring', g).setAttribute('r', '12');
+        mk('circle', 'cvp-dot', g).setAttribute('r', '8');
+        mk('path', 'cvp-cross', g).setAttribute('d', 'M0-4.6V4.2M-3.1-1.6H3.1');
+        var t = mk('text', 'cvp-name', g); t.setAttribute('y', '-14'); tspans(t, tr ? tr.textContent : '', en ? en.textContent : '');
+        pins.push({ el: g, a: a, x: xy[0], y: xy[1], sx: 0, sy: 0 });
+      });
+    }
+    /* the view's shape follows the frame's */
+    function fitView(v) {
+      var d = area, a = (cvSvg.clientHeight / cvSvg.clientWidth) || .594, w = v.w, h = w * a;
+      if (v.h > h) { h = v.h; w = h / a; }
+      var maxW = Math.min(d.w, d.h / a), minW = 650;
+      w = Math.max(minW, Math.min(maxW, w)); h = w * a;
+      var cx = v.x + v.w / 2, cy = v.y + v.h / 2;
+      return { x: Math.max(0, Math.min(d.w - w, cx - w / 2)), y: Math.max(0, Math.min(d.h - h, cy - h / 2)), w: w, h: h };
+    }
+    function home() {
+      /* the churches with a margin, or the area's own view when it has one church */
+      var d = area, ps = pins, v;
+      if (ps.length < 2) v = { x: d.view[0], y: d.view[1], w: d.view[2], h: d.view[3] };
+      else {
+        var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        ps.forEach(function (p) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); y0 = Math.min(y0, p.y); y1 = Math.max(y1, p.y); });
+        var m = Math.max(x1 - x0, y1 - y0) * .14 + 500;
+        v = { x: x0 - m, y: y0 - m, w: x1 - x0 + 2 * m, h: y1 - y0 + 2 * m };
+      }
+      /* the list docked at the side covers part of the map: the churches go in the rest of it */
+      var fw = cvSvg.clientWidth || 1, dw = dock && dock.offsetWidth ? dock.offsetWidth + 20 : 0, f = Math.max(.5, (fw - dw) / fw);
+      var a = (cvSvg.clientHeight / fw) || .594, w = Math.max(v.w, v.h / a) / f;
+      return fitView({ x: v.x + v.w / 2 - w * f / 2, y: v.y + v.h / 2 - w * a / 2, w: w, h: w * a });
+    }
+    function apply() {
+      if (!area || !view) return;
+      cvSvg.setAttribute('viewBox', view.x + ' ' + view.y + ' ' + view.w + ' ' + view.h);
+      var fw = cvSvg.clientWidth || 1, k = fw / view.w, s = 1 / k;
+      /* roads as wide as they are, but never thinner than a line on screen */
+      Object.keys(WIDTHS).forEach(function (r) { if (roads[r]) roads[r].setAttribute('stroke-width', String(Math.max(WIDTHS[r][1] / k, WIDTHS[r][0]))); });
+      cvSvg.classList.toggle('is-near', k > .09);
+      cvSvg.classList.toggle('is-close', k > .22);
+      var boxes = [];
+      /* churches closer than a fingertip on screen gather into a numbered bubble */
+      var groups = [];
+      pins.forEach(function (p) {
+        p.sx = (p.x - view.x) * k; p.sy = (p.y - view.y) * k;
+        var g = null;
+        for (var i = 0; i < groups.length && !g; i++) if (Math.abs(groups[i].sx - p.sx) < 24 && Math.abs(groups[i].sy - p.sy) < 24) g = groups[i];
+        if (g) { g.ps.push(p); g.sx = (g.sx * (g.ps.length - 1) + p.sx) / g.ps.length; g.sy = (g.sy * (g.ps.length - 1) + p.sy) / g.ps.length; }
+        else groups.push({ ps: [p], sx: p.sx, sy: p.sy });
+      });
+      var named = k > .12 || pins.length < 4, bi = 0, pg = $('.cv-pins', cvSvg);
+      groups.forEach(function (g) {
+        if (g.ps.length === 1) {
+          var p = g.ps[0]; p.el.style.display = '';
+          p.el.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ') scale(' + s + ')');
+          p.el.classList.toggle('is-named', named);
+          return;
+        }
+        g.ps.forEach(function (p) { p.el.style.display = 'none'; });
+        var b = bubbles[bi++];
+        if (!b) {
+          b = { el: mk('g', 'cv-bub', pg), ps: [] };
+          b.el.setAttribute('tabindex', '0'); b.el.setAttribute('role', 'button');
+          mk('circle', 'cvb-halo', b.el).setAttribute('r', '19'); mk('circle', 'cvb-dot', b.el).setAttribute('r', '13');
+          var t = mk('text', null, b.el); t.setAttribute('y', '4.5');
+          bubbles.push(b);
+        }
+        b.ps = g.ps; b.el.style.display = '';
+        $('text', b.el).textContent = String(g.ps.length);
+        b.el.setAttribute('aria-label', g.ps.length + ' ' + LT('kilise: yakınlaştır', 'churches: zoom in'));
+        b.el.setAttribute('transform', 'translate(' + (view.x + g.sx / k) + ' ' + (view.y + g.sy / k) + ') scale(' + s + ')');
+      });
+      for (; bi < bubbles.length; bi++) { bubbles[bi].el.style.display = 'none'; bubbles[bi].ps = []; }
+      /* the names round them, the most important first: one that would cover a church or another
+         name moves below its place, or stays hidden */
+      boxes.push([0, 0, fw, 54]);
+      groups.forEach(function (g) {
+        boxes.push([g.sx - 13, g.sy - 13, g.sx + 13, g.sy + 13]);
+        var nm = g.ps.length === 1 && named ? (($('.kl-tr', g.ps[0].a) || g.ps[0].a).textContent || '').length * 3.6 + 4 : 0;
+        if (nm) boxes.push([g.sx - nm, g.sy - 28, g.sx + nm, g.sy - 10]);
+      });
+      var hit = function (b) { return boxes.some(function (o) { return b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]; }); };
+      labels.forEach(function (l) {
+        var on = l.r === 1 || (l.r === 2 && k > .045) || (l.r === 3 && k > .16), dy = 0;
+        if (on) {
+          var x = (l.x - view.x) * k, y = (l.y - view.y) * k, t = l.el.textContent || '', n = t.length / 2;
+          var hw = n * (l.k === 'd' ? 4.6 : l.k === 'w' ? 4.4 : 3.3) + 4, top = l.k === 's' || l.k === 't' ? -17 : -8, bot = l.k === 's' || l.k === 't' ? 3 : 7;
+          var b = [x - hw, y + top, x + hw, y + bot];
+          if (hit(b)) { dy = 26; b = [x - hw, y + top + dy, x + hw, y + bot + dy]; if (hit(b)) on = false; }
+          if (on) boxes.push(b);
+        }
+        l.el.style.display = on ? '' : 'none';
+        if (on) l.el.setAttribute('transform', 'translate(' + l.x + ' ' + (l.y + dy / k) + ') scale(' + s + ')');
+      });
+      if (picked) placeCard();
+    }
+    function flyTo(t, ms) {
+      var f = view, id = ++fly;
+      if (still || !ms) { view = t; apply(); return; }
+      var t0 = performance.now();
+      (function step(now) {
+        if (id !== fly) return;
+        var u = Math.min(1, (now - t0) / ms), e = ease(u), w = Math.exp(Math.log(f.w) + (Math.log(t.w) - Math.log(f.w)) * e);
+        var cx = f.x + f.w / 2 + (t.x + t.w / 2 - f.x - f.w / 2) * e, cy = f.y + f.h / 2 + (t.y + t.h / 2 - f.y - f.h / 2) * e, h = w * t.h / t.w;
+        view = { x: cx - w / 2, y: cy - h / 2, w: w, h: h }; apply();
+        if (u < 1) requestAnimationFrame(step);
+      })(t0);
+    }
+    /* zoom by a factor round a point on screen (px), or round the middle */
+    function zoomBy(f, px, py, ms) {
+      var fw = cvSvg.clientWidth, fh = cvSvg.clientHeight;
+      if (px == null) { px = fw / 2; py = fh / 2; }
+      var ux = view.x + px / fw * view.w, uy = view.y + py / fh * view.h, w = view.w / f, h = view.h / f;
+      var t = fitView({ x: ux - px / fw * w, y: uy - py / fh * h, w: w, h: h });
+      if (ms) flyTo(t, ms); else { fly++; view = t; apply(); }
+    }
+    function cvResize() { if (area && view) { view = fitView(view); apply(); } }
+
+    /* a church: a small card with its name and the way to its page */
+    function openCard(p, focus) {
+      closeCard(); picked = p; p.el.classList.add('is-sel');
+      var a = p.a, st = a.getAttribute('data-st'), note = '';
+      if (st === 'closed') note = kl('Şu anda kapalı', 'Currently closed');
+      else if (st === 'limited') note = kl('Gitmeden önce sayfasına bakın', 'Check its page before you go');
+      if (a.hasAttribute('data-approx')) note += (note ? ' · ' : '') + kl('Yaklaşık konum', 'Approximate location');
+      cvCard.innerHTML = '<p class="cv-card-t">' + a.innerHTML + '</p>' + (note ? '<p class="cv-card-n">' + note + '</p>' : '') +
+        '<a class="cv-card-a" href="' + a.getAttribute('href') + '">' + kl('Kilisenin sayfası', 'Church page') + ' <span aria-hidden="true">&#8594;</span></a>';
+      cvCard.hidden = false; placeCard();
+      if (focus) { var l = $('a', cvCard); if (l) l.focus({ preventScroll: true }); }
+    }
+    function placeCard() {
+      var p = picked; if (!p) return;
+      var fw = cvSvg.clientWidth, fh = cvSvg.clientHeight, w = cvCard.offsetWidth, h = cvCard.offsetHeight;
+      var x = Math.max(8, Math.min(fw - w - 8, p.sx - w / 2)), y = p.sy - h - 22;
+      if (y < 56) y = p.sy + 22;
+      cvCard.style.left = x + 'px'; cvCard.style.top = Math.max(8, Math.min(fh - h - 8, y)) + 'px';
+    }
+    function closeCard(back) {
+      if (!picked) return;
+      var p = picked; picked = null; p.el.classList.remove('is-sel'); cvCard.hidden = true;
+      if (back) p.el.focus({ preventScroll: true });
+    }
+
+    /* panning and zooming: drag, wheel, two fingers, double click, the buttons, the keyboard */
+    var ptrs = {}, drag = null, moved = false;
+    cvSvg.addEventListener('pointerdown', function (e) {
+      if (!view) return;
+      ptrs[e.pointerId] = { x: e.clientX, y: e.clientY }; fly++;
+      drag = { v: view, ps: JSON.parse(JSON.stringify(ptrs)) }; moved = false;
+    });
+    cvSvg.addEventListener('pointermove', function (e) {
+      if (!drag || !ptrs[e.pointerId]) return;
+      ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(ptrs), r = cvSvg.getBoundingClientRect(), k = r.width / drag.v.w, a = drag.ps[ids[0]], b = ptrs[ids[0]];
+      if (!a) return;
+      if (ids.length === 1) {
+        var dx = b.x - a.x, dy = b.y - a.y;
+        if (!moved && Math.abs(dx) + Math.abs(dy) < 5) return;
+        /* held only once it moves, so a tap still reaches the church under it */
+        if (!moved) try { cvSvg.setPointerCapture(e.pointerId); } catch (err) { /* not capturable */ }
+        moved = true; cvSvg.classList.add('is-drag');
+        view = fitView({ x: drag.v.x - dx / k, y: drag.v.y - dy / k, w: drag.v.w, h: drag.v.h }); apply();
+      } else if (drag.ps[ids[1]]) {
+        var a2 = drag.ps[ids[1]], b2 = ptrs[ids[1]];
+        var d0 = Math.hypot(a2.x - a.x, a2.y - a.y) || 1, d1 = Math.hypot(b2.x - b.x, b2.y - b.y);
+        var mx0 = (a.x + a2.x) / 2 - r.left, my0 = (a.y + a2.y) / 2 - r.top, mx1 = (b.x + b2.x) / 2 - r.left, my1 = (b.y + b2.y) / 2 - r.top;
+        var w = drag.v.w * d0 / d1, ux = drag.v.x + mx0 / k, uy = drag.v.y + my0 / k, k1 = r.width / w;
+        moved = true;
+        view = fitView({ x: ux - mx1 / k1, y: uy - my1 / k1, w: w, h: w * drag.v.h / drag.v.w }); apply();
+      }
+    });
+    var lift = function (e) {
+      delete ptrs[e.pointerId];
+      cvSvg.classList.remove('is-drag');
+      drag = Object.keys(ptrs).length ? { v: view, ps: JSON.parse(JSON.stringify(ptrs)) } : null;
+    };
+    cvSvg.addEventListener('pointerup', lift); cvSvg.addEventListener('pointercancel', lift);
+    cvSvg.addEventListener('wheel', function (e) {
+      if (!view) return;
+      e.preventDefault();
+      var r = cvSvg.getBoundingClientRect(), dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+      zoomBy(Math.exp(-dy * .0022), e.clientX - r.left, e.clientY - r.top, 0);
+    }, { passive: false });
+    cvSvg.addEventListener('dblclick', function (e) { var r = cvSvg.getBoundingClientRect(); zoomBy(2, e.clientX - r.left, e.clientY - r.top, 420); });
+    cvSvg.addEventListener('click', function (e) {
+      if (moved) return;
+      var t = /** @type {Element} */ (e.target), pn = t.closest('.cv-pin'), bb = t.closest('.cv-bub');
+      if (pn) { var p = pins.filter(function (q) { return q.el === pn; })[0]; if (p) { if (picked === p) closeCard(); else openCard(p, false); } return; }
+      if (bb) { zoomToGroup(bb); return; }
+      closeCard();
+    });
+    cvSvg.addEventListener('keydown', function (e) {
+      var t = /** @type {Element} */ (e.target), pn = t.closest && t.closest('.cv-pin'), bb = t.closest && t.closest('.cv-bub');
+      if ((e.key === 'Enter' || e.key === ' ') && (pn || bb)) {
+        e.preventDefault();
+        if (bb) { zoomToGroup(bb); return; }
+        var p = pins.filter(function (q) { return q.el === pn; })[0]; if (p) openCard(p, true);
+        return;
+      }
+      var step = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+      if (step) { e.preventDefault(); flyTo(fitView({ x: view.x + step[0] * view.w * .25, y: view.y + step[1] * view.h * .25, w: view.w, h: view.h }), 260); }
+      else if (e.key === '+' || e.key === '=') zoomBy(1.6, null, null, 300);
+      else if (e.key === '-') zoomBy(1 / 1.6, null, null, 300);
+    });
+    function zoomToGroup(bb) {
+      var b = bubbles.filter(function (q) { return q.el === bb; })[0]; if (!b || !b.ps.length) return;
+      var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      b.ps.forEach(function (p) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); y0 = Math.min(y0, p.y); y1 = Math.max(y1, p.y); });
+      var m = Math.max(x1 - x0, y1 - y0) * .35 + 60, t = fitView({ x: x0 - m, y: y0 - m, w: x1 - x0 + 2 * m, h: y1 - y0 + 2 * m });
+      if (t.w >= view.w * .9) t = fitView({ x: view.x + view.w * .25, y: view.y + view.h * .25, w: view.w / 2, h: view.h / 2 });
+      flyTo(t, 650);
+    }
+    $$('.cv-zoom button', cv).forEach(function (b) {
+      b.addEventListener('click', function () { if (view) zoomBy(b.getAttribute('data-z') === '1' ? 1.8 : 1 / 1.8, null, null, 320); });
+    });
+
+    /* the list of the city's churches beside its map, on a wide screen: a name under the pointer lights its church */
+    function hot(a, on) {
+      pins.forEach(function (p) { if (p.a === a) p.el.classList.toggle('is-hot', on); });
+      bubbles.forEach(function (b) { if (b.ps.some(function (p) { return p.a === a; })) b.el.classList.toggle('is-hot', on); });
+    }
+    links = $$('.cmap-pop a[data-ll]', frame);
+    links.forEach(function (a) {
+      a.addEventListener('pointerenter', function () { hot(a, true); });
+      a.addEventListener('pointerleave', function () { hot(a, false); });
+      a.addEventListener('focus', function () { hot(a, true); });
+      a.addEventListener('blur', function () { hot(a, false); });
+    });
+
+    function showArea(id, enter) {
+      cvMaps.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-map') === id)); });
+      var wait = setTimeout(function () { cvWait.hidden = false; }, 350);
+      return load(id).then(function (d) {
+        clearTimeout(wait); cvWait.hidden = true;
+        area = d; drawArea(d); view = home(); apply();
+        if (enter) cv.classList.add('is-in');
+      });
+    }
+    function openCity(c, focus) {
+      if (city || busy) return;
+      var pop = popOf(c), own = pop ? $$('a[data-ll]', pop) : [];
+      if (!own.length || !window.fetch || !window.Promise) { show(c, focus); return; }
+      hide(); city = c; busy = true;
+      var ids = (c.getAttribute('data-maps') || '').split(';').filter(Boolean).map(function (m) { return m.split('|'); });
+      cvMaps.innerHTML = ids.map(function (m) { return '<button type="button" data-map="' + m[0] + '" aria-pressed="false">' + kl(m[1], m[2]) + '</button>'; }).join('');
+      cvTitle.innerHTML = ($('.cmap-pop-t', pop) || c).innerHTML;
+      sec.classList.add('is-city');
+      setVb(whole());
+      /* the country zooms into the city while the city's map grows out of its dot */
+      var fw = svg.clientWidth, from = vb, a = from.h / from.w, w1 = 22, to = { x: c._x - w1 / 2, y: c._y - w1 * a / 2, w: w1, h: w1 * a };
+      cv.style.transformOrigin = ((c._x - from.x) / from.w * fw) + 'px ' + ((c._y - from.y) / from.h * svg.clientHeight) + 'px';
+      cv.classList.remove('is-in'); cv.hidden = false;
+      dock = pop; dock.hidden = false; dock.classList.add('is-dock');
+      var first = own[0].getAttribute('data-map');
+      var done = showArea(first, false);
+      zoomCountry(from, to, function () {
+        done.then(function () { cv.classList.add('is-in'); busy = false; dock.classList.add('is-open'); if (focus) /** @type {HTMLElement} */ ($('.cv-back', cv)).focus({ preventScroll: true }); })
+          .catch(function () { busy = false; closeCity(true); show(c, focus); });
+      });
+    }
+    function zoomCountry(from, to, then) {
+      if (still) { setVb(to); svg.style.opacity = '0'; then(); return; }
+      var t0 = performance.now(), ms = 800;
+      (function step(now) {
+        var u = Math.min(1, (now - t0) / ms), e = ease(u), w = Math.exp(Math.log(from.w) + (Math.log(to.w) - Math.log(from.w)) * e), h = w * from.h / from.w;
+        var cx = from.x + from.w / 2 + (to.x + to.w / 2 - from.x - from.w / 2) * e, cy = from.y + from.h / 2 + (to.y + to.h / 2 - from.y - from.h / 2) * e;
+        setVb({ x: cx - w / 2, y: cy - h / 2, w: w, h: h });
+        svg.style.opacity = String(u < .55 ? 1 : 1 - (u - .55) / .45);
+        if (u < 1) requestAnimationFrame(step); else then();
+      })(t0);
+    }
+    function closeCity(now) {
+      if (!city) return;
+      var c = city; closeCard(); busy = true; fly++;
+      cv.classList.remove('is-in');
+      if (dock) { dock.classList.remove('is-open', 'is-dock'); dock.hidden = true; }
+      sec.classList.remove('is-city');
+      var to = whole(), a = to.h / to.w, w1 = 22, from = { x: c._x - w1 / 2, y: c._y - w1 * a / 2, w: w1, h: w1 * a };
+      var end = function () { cv.hidden = true; city = null; area = null; view = null; busy = false; svg.style.opacity = ''; setVb(whole()); if (!now) c.focus({ preventScroll: true }); };
+      if (now || still) { end(); return; }
+      var t0 = performance.now(), ms = 750;
+      (function step(t) {
+        var u = Math.min(1, (t - t0) / ms), e = ease(u), w = Math.exp(Math.log(from.w) + (Math.log(to.w) - Math.log(from.w)) * e), h = w * a;
+        var cx = from.x + from.w / 2 + (to.x + to.w / 2 - from.x - from.w / 2) * e, cy = from.y + from.h / 2 + (to.y + to.h / 2 - from.y - from.h / 2) * e;
+        setVb({ x: cx - w / 2, y: cy - h / 2, w: w, h: h });
+        svg.style.opacity = String(Math.min(1, u / .45));
+        if (u < 1) requestAnimationFrame(step); else end();
+      })(t0);
+    }
+    $('.cv-back', cv).addEventListener('click', function () { closeCity(false); });
+    cvMaps.addEventListener('click', function (e) {
+      var b = /** @type {Element} */ (e.target).closest('button'); if (!b || !area || b.getAttribute('data-map') === area.id) return;
+      cv.classList.add('is-swap');
+      setTimeout(function () { showArea(b.getAttribute('data-map'), false).then(function () { cv.classList.remove('is-swap'); }); }, 180);
+    });
     var lastW = 0;
     var refit = function () { var fw = frame.clientWidth; if (!fw || fw === lastW) return; lastW = fw; draw(); };
     if (window.ResizeObserver) new ResizeObserver(refit).observe(frame); else window.addEventListener('resize', refit);

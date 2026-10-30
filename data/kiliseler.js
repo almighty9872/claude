@@ -7,6 +7,9 @@
  *     name shown in the map's list; "side" (Istanbul only) is the side of
  *     the Bosphorus; "status" is active, limited or closed, with "notice"
  *     explaining it. "open" on a city is the side of its dot the list opens.
+ *     "lat"/"lon" place a church on its city map (from OpenStreetMap; "approx"
+ *     marks a position known only to the street or district; "map" puts a church
+ *     on a map of its own, away from the city's, e.g. Selçuk for İzmir).
  *     English, shown when the reader switches to EN, sits beside each
  *     Turkish field ("nameEn", "shortEn", "massEn", "massNoteEn",
  *     "visitsEn", "historyEn", "noticeEn"; a source's third item, when its
@@ -59,6 +62,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "sent-antuan",
+     "lat": 41.03228,
+     "lon": 28.9772,
      "side": "avrupa",
      "short": "Sent Antuan",
      "name": "Sent Antuan Bazilikası",
@@ -158,6 +163,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "santa-maria-draperis",
+     "lat": 41.0301,
+     "lon": 28.97615,
      "side": "avrupa",
      "short": "Santa Maria Draperis",
      "name": "Santa Maria Draperis Kilisesi",
@@ -244,6 +251,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "sen-piyer",
+     "lat": 41.02484,
+     "lon": 28.97294,
      "side": "avrupa",
      "short": "Sen Piyer (Galata)",
      "name": "Sen Piyer ve Pol Kilisesi",
@@ -309,6 +318,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "sent-esprit",
+     "lat": 41.0447,
+     "lon": 28.98573,
      "side": "avrupa",
      "short": "Sent Esprit Katedrali",
      "name": "Kutsal Ruh Katedrali (Sent Esprit)",
@@ -392,6 +403,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "sankt-georg",
+     "lat": 41.02439,
+     "lon": 28.97344,
      "side": "avrupa",
      "short": "St. Georg (Karaköy)",
      "name": "Sankt Georg Kilisesi",
@@ -468,6 +481,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "saint-benoit",
+     "lat": 41.02508,
+     "lon": 28.97677,
      "side": "avrupa",
      "short": "Saint Benoît (Karaköy)",
      "name": "Saint Benoît Kilisesi",
@@ -544,6 +559,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "aziz-louis",
+     "lat": 41.0352,
+     "lon": 28.9823,
+     "approx": true,
      "side": "avrupa",
      "short": "Saint-Louis (Fransız)",
      "name": "Saint-Louis des Français Kilisesi",
@@ -595,6 +613,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "bomonti-lourdes",
+     "lat": 41.05866,
+     "lon": 28.98301,
      "side": "avrupa",
      "short": "Notre-Dame de Lourdes (Bomonti)",
      "name": "Notre-Dame de Lourdes Gürcü Katolik Kilisesi",
@@ -666,6 +686,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "aziz-pavlus-nisantasi",
+     "lat": 41.05339,
+     "lon": 28.99738,
      "side": "avrupa",
      "short": "St. Paul (Nişantaşı)",
      "name": "Aziz Pavlus Kilisesi (St. Paul)",
@@ -722,6 +744,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "kutsal-kalp-bebek",
+     "lat": 41.07676,
+     "lon": 29.0413,
      "side": "avrupa",
      "short": "Kutsal Kalp (Bebek)",
      "name": "Kutsal Kalp Kilisesi (Bebek)",
@@ -781,6 +805,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "rosario-bakirkoy",
+     "lat": 40.97708,
+     "lon": 28.8797,
      "side": "avrupa",
      "short": "Rosario (Bakırköy)",
      "name": "Meryem Ana Rosario Kilisesi",
@@ -847,6 +873,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "aziz-stefanos-yesilkoy",
+     "lat": 40.95756,
+     "lon": 28.82188,
      "side": "avrupa",
      "short": "Aziz Stefanos (Yeşilköy)",
      "name": "Aziz Stefanos Kilisesi (St. Etienne)",
@@ -914,6 +942,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "buyukdere-meryem-ana",
+     "lat": 41.16035,
+     "lon": 29.04172,
      "side": "avrupa",
      "short": "Santa Maria (Büyükdere)",
      "name": "Meryem Ana’nın Doğuşu Kilisesi (Santa Maria)",
@@ -986,6 +1016,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-asdvadzadzin",
+     "lat": 41.03556,
+     "lon": 28.9797,
      "side": "avrupa",
      "short": "Surp Asdvadzadzin Katedrali",
      "name": "Surp Asdvadzadzin Ermeni Katolik Katedrali",
@@ -1040,6 +1072,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-hovhan-vosgeperan",
+     "lat": 41.03644,
+     "lon": 28.9832,
      "side": "avrupa",
      "short": "Surp Hovhan Vosgeperan",
      "name": "Surp Hovhan Vosgeperan Ermeni Katolik Kilisesi",
@@ -1094,6 +1128,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-pirgic",
+     "lat": 41.0245,
+     "lon": 28.97601,
      "side": "avrupa",
      "short": "Surp Pırgiç (Galata)",
      "name": "Surp Pırgiç Ermeni Katolik Kilisesi",
@@ -1148,6 +1184,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "anarad-higutyun",
+     "lat": 40.99945,
+     "lon": 28.9307,
      "side": "avrupa",
      "short": "Anarad Hığutyun (Fatih)",
      "name": "Anarad Hığutyun Ermeni Katolik Kilisesi",
@@ -1202,6 +1240,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-krikor-ortakoy",
+     "lat": 41.05218,
+     "lon": 29.0245,
      "side": "avrupa",
      "short": "Surp Krikor Lusavoriç (Ortaköy)",
      "name": "Surp Krikor Lusavoriç Ermeni Katolik Kilisesi",
@@ -1254,6 +1294,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-bogos-buyukdere",
+     "lat": 41.16228,
+     "lon": 29.04694,
      "side": "avrupa",
      "short": "Surp Boğos (Büyükdere)",
      "name": "Surp Boğos Ermeni Katolik Kilisesi",
@@ -1306,6 +1348,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-andon-sariyer",
+     "lat": 41.167,
+     "lon": 29.056,
+     "approx": true,
      "side": "avrupa",
      "short": "Surp Andon (Sarıyer)",
      "name": "Surp Andon Ermeni Katolik Kilisesi",
@@ -1353,6 +1398,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "suryani-katolik-gumussuyu",
+     "lat": 41.036,
+     "lon": 28.99,
+     "approx": true,
      "side": "avrupa",
      "short": "Süryani Katolik (Gümüşsuyu)",
      "name": "Kutsal Kalp Süryani Katolik Kilisesi",
@@ -1433,6 +1481,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "keldani-istanbul",
+     "lat": 41.035,
+     "lon": 28.9826,
+     "approx": true,
      "side": "avrupa",
      "short": "Keldani Katolik (Beyoğlu)",
      "name": "Keldani Katolik Kilisesi (İstanbul)",
@@ -1480,6 +1531,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "assomption-moda",
+     "lat": 40.98411,
+     "lon": 29.0252,
      "side": "anadolu",
      "short": "Notre Dame de l’Assomption (Moda)",
      "name": "Notre Dame de l’Assomption Kilisesi",
@@ -1559,6 +1612,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "tubini-sapeli",
+     "lat": 40.9898,
+     "lon": 29.02932,
+     "approx": true,
      "side": "anadolu",
      "short": "Tubini Şapeli (Kadıköy)",
      "name": "Meryem Ana Latin Katolik Kilisesi (Tubini Şapeli)",
@@ -1618,6 +1674,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "aziz-augustin-fenerbahce",
+     "lat": 40.97159,
+     "lon": 29.04159,
      "side": "anadolu",
      "short": "Aziz Augustin (Fenerbahçe)",
      "name": "Aziz Augustin Kilisesi",
@@ -1676,6 +1734,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-levon-kadikoy",
+     "lat": 40.98972,
+     "lon": 29.02947,
      "side": "anadolu",
      "short": "Surp Levon (Kadıköy)",
      "name": "Surp Levon Ermeni Katolik Kilisesi",
@@ -1728,6 +1788,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "polonezkoy",
+     "lat": 41.10986,
+     "lon": 29.20739,
      "side": "anadolu",
      "short": "Polonezköy Meryem Ana",
      "name": "Częstochowa Meryem Ana Kilisesi (Polonezköy)",
@@ -1780,6 +1842,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "san-pacifico-buyukada",
+     "lat": 40.87214,
+     "lon": 29.12769,
      "side": "anadolu",
      "short": "San Pacifico (Büyükada)",
      "name": "Aziz Pasifiko Kilisesi (San Pacifico)",
@@ -1847,6 +1911,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "verapokhumin-buyukada",
+     "lat": 40.87209,
+     "lon": 29.12617,
      "side": "anadolu",
      "short": "Verapokhumin (Büyükada)",
      "name": "Verapokhumin Surp Asdvadzadzin Ermeni Katolik Kilisesi",
@@ -1914,6 +1980,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "aziz-yuhanna-izmir",
+     "lat": 38.42888,
+     "lon": 27.13963,
      "short": "Aziz Yuhanna Katedrali",
      "name": "Aziz Yuhanna Katedral Bazilikası",
      "rite": "latin",
@@ -2005,6 +2073,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "aziz-polikarp",
+     "lat": 38.42569,
+     "lon": 27.13581,
      "short": "Aziz Polikarp",
      "name": "Aziz Polikarp Kilisesi (Sen Polikarp)",
      "rite": "latin",
@@ -2076,6 +2146,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "santo-rosario-izmir",
+     "lat": 38.43842,
+     "lon": 27.1429,
      "short": "Santo Rosario (Alsancak)",
      "name": "Notre Dame du Rosaire Kilisesi (Santo Rosario)",
      "rite": "latin",
@@ -2164,6 +2236,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "santa-maria-izmir",
+     "lat": 38.42655,
+     "lon": 27.13473,
      "short": "Santa Maria (Pasaport)",
      "name": "Santa Maria Kilisesi",
      "rite": "latin",
@@ -2223,6 +2297,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "bornova-meryemin-adi",
+     "lat": 38.46566,
+     "lon": 27.2199,
      "short": "Meryem’in Kutsal Adı (Bornova)",
      "name": "Meryem’in Kutsal Adı Kilisesi (Saint Nom de Marie)",
      "rite": "latin",
@@ -2295,6 +2371,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "buca-vaftizci-yahya",
+     "lat": 38.3873,
+     "lon": 27.17355,
      "short": "Vaftizci Yahya (Buca)",
      "name": "Vaftizci Aziz Yahya Kilisesi",
      "rite": "latin",
@@ -2359,6 +2437,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "goztepe-lourdes",
+     "lat": 38.39794,
+     "lon": 27.09103,
      "short": "Notre-Dame de Lourdes (Göztepe)",
      "name": "Notre-Dame de Lourdes Kilisesi",
      "rite": "latin",
@@ -2431,6 +2511,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "karsiyaka-helena",
+     "lat": 38.456,
+     "lon": 27.11,
+     "approx": true,
      "short": "Azize Helena (Karşıyaka)",
      "name": "Azize Helena Kilisesi (Saint Hélène)",
      "rite": "latin",
@@ -2505,6 +2588,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "bayrakli-antuan",
+     "lat": 38.46599,
+     "lon": 27.16421,
      "short": "Aziz Antuan (Bayraklı)",
      "name": "Aziz Antuan Kilisesi (Saint Antoine)",
      "rite": "latin",
@@ -2577,6 +2662,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "meryem-ana-evi",
+     "map": "selcuk",
+     "lat": 37.91156,
+     "lon": 27.33401,
      "short": "Meryem Ana Evi",
      "name": "Meryem Ana Evi (Efes)",
      "rite": "latin",
@@ -2655,6 +2743,10 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "selcuk-aziz-yuhanna",
+     "map": "selcuk",
+     "lat": 37.95282,
+     "lon": 27.3679,
+     "approx": true,
      "short": "Aziz Yuhanna (Selçuk)",
      "name": "Aziz Yuhanna Katolik Kilisesi (Selçuk)",
      "rite": "latin",
@@ -2724,6 +2816,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "aziz-meryem-bursa",
+     "lat": 40.18039,
+     "lon": 29.06631,
      "short": "Aziz Meryem (Fransız Kilisesi)",
      "name": "Aziz Meryem Fransız Kilisesi",
      "rite": "latin",
@@ -2799,6 +2893,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "azize-tereza-ankara",
+     "lat": 39.93973,
+     "lon": 32.86158,
      "short": "Azize Tereza (Ulus)",
      "name": "Azize Tereza Kilisesi",
      "rite": "latin",
@@ -2870,6 +2966,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "meryem-ana-ankara",
+     "lat": 39.87849,
+     "lon": 32.87205,
      "short": "Meryem Ana (Çankaya)",
      "name": "Meryem Ana Kilisesi (Vatikan Büyükelçiliği)",
      "rite": "latin",
@@ -2982,6 +3080,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "aziz-pavlus-konya",
+     "lat": 37.87092,
+     "lon": 32.49326,
      "short": "Aziz Pavlus",
      "name": "Aziz Pavlus Kilisesi",
      "rite": "latin",
@@ -3054,6 +3154,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "st-nikolaus-antalya",
+     "lat": 36.8825,
+     "lon": 30.70949,
      "short": "St. Nikolaus",
      "name": "St. Nikolaus Kilisesi",
      "rite": "latin",
@@ -3136,6 +3238,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "aziz-antuan-mersin",
+     "lat": 36.80109,
+     "lon": 34.63405,
      "short": "Aziz Antuan",
      "name": "Aziz Antuan Latin Katolik Kilisesi",
      "rite": "latin",
@@ -3210,6 +3314,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "bebekli-kilise-adana",
+     "lat": 36.98749,
+     "lon": 35.32588,
      "short": "Aziz Pavlus (Bebekli Kilise)",
      "name": "Aziz Pavlus Kilisesi (Bebekli Kilise)",
      "rite": "latin",
@@ -3282,6 +3388,10 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "antakya-petrus-pavlus",
+     "map": "antakya",
+     "lat": 36.19827,
+     "lon": 36.16028,
+     "approx": true,
      "short": "Petrus ve Pavlus (Antakya)",
      "name": "Aziz Petrus ve Pavlus Katolik Kilisesi",
      "rite": "latin",
@@ -3344,6 +3454,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "iskenderun-mujde",
+     "map": "iskenderun",
+     "lat": 36.59091,
+     "lon": 36.16825,
      "short": "Müjde Katedrali (İskenderun)",
      "name": "Müjde Katedrali (İskenderun Latin Katolik Kilisesi)",
      "rite": "latin",
@@ -3418,6 +3531,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "mater-dolorosa-samsun",
+     "lat": 41.28917,
+     "lon": 36.329,
      "short": "Mater Dolorosa",
      "name": "Mater Dolorosa Katolik Kilisesi (Acı Çeken Meryem Ana)",
      "rite": "latin",
@@ -3519,6 +3634,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "santa-maria-trabzon",
+     "lat": 41.00718,
+     "lon": 39.73198,
      "short": "Santa Maria",
      "name": "Santa Maria Katolik Kilisesi",
      "rite": "latin",
@@ -3604,6 +3721,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "mar-petyun-diyarbakir",
+     "lat": 37.9108,
+     "lon": 40.23804,
      "short": "Mar Petyun (Keldani)",
      "name": "Mar Petyun Keldani Katolik Kilisesi",
      "rite": "keldani",
@@ -3670,6 +3789,9 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "surp-hovsep-diyarbakir",
+     "lat": 37.9095,
+     "lon": 40.237,
+     "approx": true,
      "short": "Surp Hovsep (Ermeni Katolik)",
      "name": "Surp Hovsep Ermeni Katolik Kilisesi",
      "rite": "ermeni",
@@ -3743,6 +3865,8 @@ window.CHURCHES = /*JSON-START*/{
    "churches": [
     {
      "id": "meryem-ana-mardin",
+     "lat": 37.31378,
+     "lon": 40.7349,
      "short": "Meryem Ana Katedrali",
      "name": "Meryem Ana Süryani Katolik Katedrali",
      "rite": "suryani",
@@ -3802,6 +3926,8 @@ window.CHURCHES = /*JSON-START*/{
     },
     {
      "id": "mor-efrem-mardin",
+     "lat": 37.31381,
+     "lon": 40.72868,
      "short": "Mor Efrem",
      "name": "Mor Efrem Süryani Katolik Kilisesi",
      "rite": "suryani",

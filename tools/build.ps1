@@ -2972,15 +2972,29 @@ $PickSide = @{ avrupa = @('Avrupa Yakası', 'European side'); anadolu = @('Anado
 $CmShape = Read-Data 'kilise-harita-sekli.js'
 function Cm-Pin([double]$lat, [double]$lon) { $p = Map-XY $lat $lon; return "data-x=`"$($p[0])`" data-y=`"$($p[1])`"" }
 $cmCities = New-Object Text.StringBuilder; $cmPops = New-Object Text.StringBuilder
+# a city's own maps when a church stands far from the rest (its "map" in data/kiliseler.js)
+$MapNames = @{ selcuk = @('Selçuk (Efes)', 'Selçuk (Ephesus)'); antakya = @('Antakya', 'Antakya (Antioch)'); iskenderun = @('İskenderun', 'İskenderun') }
 # the columns of a city's list: Istanbul's two sides of the Bosphorus; İzmir and Selçuk (Efes)
 $SideLabel = @{ avrupa = ('Avrupa Yakası'); anadolu = ('Anadolu Yakası'); merkez = ('Şehir merkezi'); selcuk = ('Selçuk (Efes)') }
 foreach ($city in $Churches.cities) {
   $lab = $city.label; $cityName = $city.name -replace ' \(.*\)$', ''
   $aeShow = Attr ((City-En $city) + ': show churches'); $aeList = Attr ((City-En $city) + ' churches')
-  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" data-open=`"$($city.open)`" $(Cm-Pin $city.lat $city.lon) tabindex=`"0`" role=`"button`" aria-haspopup=`"true`" aria-expanded=`"false`" aria-controls=`"cmap-pop-$($city.id)`" $(TA 'aria-label' "$($city.name): kiliseleri göster") data-aria-en=`"$aeShow`">" +
+  $maps = @($city.churches | ForEach-Object { if ($_.map) { $_.map } else { $city.id } } | Select-Object -Unique)
+  $mapsAttr = if ($maps.Count -gt 1) { ' data-maps="' + (($maps | ForEach-Object { $n = if ($MapNames[$_]) { $MapNames[$_] } else { @($cityName, (City-En $city)) }; "$_|$($n[0])|$($n[1])" }) -join ';') + '"' } else { '' }
+  [void]$cmCities.Append("<g class=`"cmap-city`" data-city=`"$($city.id)`" data-open=`"$($city.open)`"$mapsAttr $(Cm-Pin $city.lat $city.lon) tabindex=`"0`" role=`"button`" aria-haspopup=`"true`" aria-expanded=`"false`" aria-controls=`"cmap-pop-$($city.id)`" $(TA 'aria-label' "$($city.name): kiliseleri göster") data-aria-en=`"$aeShow`">" +
     "<circle class=`"cc-hit`" r=`"18`"></circle><circle class=`"cc-glow`" r=`"13`"></circle><circle class=`"cc-dot`" r=`"5.5`"></circle>" +
     "<text class=`"cc-name`" x=`"$($lab[0])`" y=`"$($lab[1])`" text-anchor=`"$($lab[2])`">$($cityName)</text></g>")
-  $li = { param($list) ($list | ForEach-Object { "<li><a href=`"kilise/$($_.id).html`">$(KL (Inline $_.short) $(if ($_.shortEn) { $_.shortEn } else { Inline $_.short }))</a></li>" }) -join '' }
+  # each church also carries its place on the city map (script.js, initChurchMap): its position, the
+  # map it is on (assets/sehir/<map>.json), and whether that position is only approximate or it is closed
+  $li = { param($list) ($list | ForEach-Object {
+    $ll = ''
+    if ($_.lat) {
+      $mp = if ($_.map) { $_.map } else { $city.id }
+      $ll = " data-ll=`"$($_.lat) $($_.lon)`" data-map=`"$mp`""
+      if ($_.approx) { $ll += ' data-approx' }
+      if ($_.status -ne 'active') { $ll += " data-st=`"$($_.status)`"" }
+    }
+    "<li><a href=`"kilise/$($_.id).html`"$ll>$(KL (Inline $_.short) $(if ($_.shortEn) { $_.shortEn } else { Inline $_.short }))</a></li>" }) -join '' }
   $sides = @($city.churches | Where-Object { $_.side } | ForEach-Object { $_.side } | Select-Object -Unique)
   if ($sides.Count -gt 1) {
     $cols = ($sides | ForEach-Object { ,@($_, $SideLabel[$_]) } | ForEach-Object {
@@ -3041,6 +3055,14 @@ $churchMapHtml = @"
       <g class="cmap-cities">$($cmCities.ToString())</g>
     </svg>
     $($cmPops.ToString())
+    <div class="cv" hidden>
+      <svg class="cv-svg" role="group" $(TA 'aria-label' 'Şehir haritası') data-aria-en="City map"></svg>
+      <div class="cv-bar"><button type="button" class="cv-back"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>$(KL 'Türkiye' 'Turkey')</button><p class="cv-title"></p><div class="cv-maps" role="group"></div></div>
+      <div class="cv-zoom"><button type="button" data-z="1" $(TA 'aria-label' 'Yakınlaştır') data-aria-en="Zoom in">+</button><button type="button" data-z="-1" $(TA 'aria-label' 'Uzaklaştır') data-aria-en="Zoom out">&#8722;</button></div>
+      <div class="cv-card" hidden></div>
+      <p class="cv-wait" hidden>$(KL 'Harita yükleniyor…' 'Loading the map…')</p>
+      <p class="cv-credit"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">&#169; OpenStreetMap</a></p>
+    </div>
   </div>
   <p class="cmap-key"><a href="#yunan-adalari"><span class="cp-swatch" aria-hidden="true"></span>$(KL 'Katolik kilisesi olan Yunan adalarına feribot limanları: Ayvalık, Çeşme, Kuşadası, Bodrum, Marmaris, Fethiye' 'Ferry ports to Greek islands with a Catholic church: Ayvalık, Çeşme, Kuşadası, Bodrum, Marmaris, Fethiye')</a></p>
 </section>

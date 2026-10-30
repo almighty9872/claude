@@ -1,0 +1,93 @@
+{
+ "_": "The places named on each city map of Kilise Bul: [Turkish, English, kind, rank, lat, lon]. Kind: d district, s sight, w water, t transport. Rank 1 shows on the whole city, 2 once zoomed in, 3 up close. Positions from OpenStreetMap. Read by tools/kilise-sehir-haritalari.py.",
+ "istanbul": [
+  ["Beyoğlu", "Beyoğlu", "d", 1, 41.0370, 28.9770], ["Kadıköy", "Kadıköy", "d", 1, 40.9905, 29.0300], ["Beşiktaş", "Beşiktaş", "d", 1, 41.0435, 29.0060],
+  ["Üsküdar", "Üsküdar", "d", 1, 41.0240, 29.0160], ["Fatih", "Fatih", "d", 1, 41.0150, 28.9450], ["Şişli", "Şişli", "d", 1, 41.0610, 28.9880],
+  ["Bakırköy", "Bakırköy", "d", 1, 40.9810, 28.8700], ["Sarıyer", "Sarıyer", "d", 1, 41.1690, 29.0570], ["Büyükada", "Büyükada", "d", 1, 40.8610, 29.1200],
+  ["Polonezköy", "Polonezköy", "d", 1, 41.1130, 29.2050], ["Yeşilköy", "Yeşilköy", "d", 2, 40.9630, 28.8240],
+  ["Taksim", "Taksim", "d", 2, 41.0385, 28.9860], ["Galata", "Galata", "d", 3, 41.0255, 28.9705], ["Karaköy", "Karaköy", "d", 2, 41.0220, 28.9790],
+  ["Nişantaşı", "Nişantaşı", "d", 2, 41.0510, 28.9935], ["Harbiye", "Harbiye", "d", 3, 41.0455, 28.9895], ["Bomonti", "Bomonti", "d", 3, 41.0595, 28.9800],
+  ["Ortaköy", "Ortaköy", "d", 2, 41.0500, 29.0270], ["Bebek", "Bebek", "d", 2, 41.0785, 29.0440], ["Büyükdere", "Büyükdere", "d", 2, 41.1580, 29.0420],
+  ["Moda", "Moda", "d", 2, 40.9800, 29.0270], ["Fenerbahçe", "Fenerbahçe", "d", 2, 40.9690, 29.0390], ["Samatya", "Samatya", "d", 2, 41.0005, 28.9330],
+  ["Cihangir", "Cihangir", "d", 3, 41.0315, 28.9830], ["Tünel", "Tünel", "d", 3, 41.0283, 28.9745],
+  ["Haliç", "Golden Horn", "w", 1, 41.0310, 28.9580], ["İstanbul Boğazı", "Bosphorus", "w", 1, 41.0950, 29.0640], ["Marmara Denizi", "Sea of Marmara", "w", 1, 40.9350, 28.9800],
+  ["Galata Kulesi", "Galata Tower", "s", 2, 41.0256, 28.9742], ["Taksim Meydanı", "Taksim Square", "s", 2, 41.0370, 28.9852], ["İstiklal Caddesi", "İstiklal Avenue", "s", 3, 41.0336, 28.9780],
+  ["Ayasofya", "Hagia Sophia", "s", 1, 41.0086, 28.9800], ["Sultanahmet Camii", "Blue Mosque", "s", 2, 41.0054, 28.9768], ["Topkapı Sarayı", "Topkapı Palace", "s", 2, 41.0115, 28.9834],
+  ["Kapalıçarşı", "Grand Bazaar", "s", 2, 41.0107, 28.9681], ["Dolmabahçe Sarayı", "Dolmabahçe Palace", "s", 2, 41.0392, 29.0004], ["Ortaköy Camii", "Ortaköy Mosque", "s", 3, 41.0473, 29.0269],
+  ["Rumeli Hisarı", "Rumeli Fortress", "s", 2, 41.0847, 29.0567], ["Kız Kulesi", "Maiden's Tower", "s", 2, 41.0211, 29.0041], ["Yedikule Hisarı", "Yedikule Fortress", "s", 2, 40.9939, 28.9229],
+  ["Pera Müzesi", "Pera Museum", "s", 3, 41.0317, 28.9746], ["Haydarpaşa Garı", "Haydarpaşa Station", "t", 2, 40.9969, 29.0189], ["Kadıköy İskelesi", "Kadıköy ferry pier", "t", 3, 40.9925, 29.0227],
+  ["Karaköy İskelesi", "Karaköy ferry pier", "t", 3, 41.0220, 28.9765], ["Atatürk Havalimanı", "Atatürk Airport", "t", 1, 40.9769, 28.8146], ["Şükrü Saracoğlu Stadyumu", "Fenerbahçe Stadium", "s", 3, 40.9876, 29.0369]
+ ],
+ "izmir": [
+  ["Konak", "Konak", "d", 1, 38.4160, 27.1290], ["Alsancak", "Alsancak", "d", 1, 38.4380, 27.1460], ["Karşıyaka", "Karşıyaka", "d", 1, 38.4580, 27.1150],
+  ["Bornova", "Bornova", "d", 1, 38.4680, 27.2150], ["Buca", "Buca", "d", 1, 38.3870, 27.1770], ["Göztepe", "Göztepe", "d", 1, 38.3995, 27.0850], ["Bayraklı", "Bayraklı", "d", 1, 38.4630, 27.1700],
+  ["İzmir Körfezi", "Gulf of İzmir", "w", 1, 38.4420, 27.0950],
+  ["Saat Kulesi", "Clock Tower", "s", 1, 38.4189, 27.1287], ["Kemeraltı Çarşısı", "Kemeraltı Bazaar", "s", 2, 38.4195, 27.1335], ["Kültürpark", "Kültürpark", "s", 1, 38.4300, 27.1460],
+  ["Kordon", "Kordon", "s", 2, 38.4340, 27.1380], ["Agora (Smyrna)", "Agora of Smyrna", "s", 3, 38.4183, 27.1393], ["Kadifekale", "Kadifekale", "s", 2, 38.4120, 27.1430],
+  ["Pasaport İskelesi", "Pasaport ferry pier", "t", 2, 38.4288, 27.1323], ["Alsancak İskelesi", "Alsancak ferry pier", "t", 3, 38.4390, 27.1407], ["Alsancak Garı", "Alsancak Station", "t", 3, 38.4388, 27.1472],
+  ["Konak İskelesi", "Konak ferry pier", "t", 3, 38.4188, 27.1255]
+ ],
+ "selcuk": [
+  ["Selçuk", "Selçuk", "d", 1, 37.9505, 27.3720], ["Efes Antik Kenti", "Ancient Ephesus", "s", 1, 37.9395, 27.3410], ["Aziz Yuhanna Bazilikası", "Basilica of St. John", "s", 1, 37.9525, 27.3676],
+  ["Artemis Tapınağı", "Temple of Artemis", "s", 2, 37.9498, 27.3636], ["Ayasuluk Kalesi", "Ayasuluk Castle", "s", 2, 37.9555, 27.3675], ["Efes Müzesi", "Ephesus Museum", "s", 3, 37.9490, 27.3679],
+  ["Yedi Uyurlar Mağarası", "Cave of the Seven Sleepers", "s", 2, 37.9438, 27.3537], ["Bülbüldağı", "Mount Koressos", "d", 2, 37.9180, 27.3270]
+ ],
+ "bursa": [
+  ["Ulu Cami", "Grand Mosque", "s", 1, 40.1840, 29.0617], ["Koza Han", "Koza Han", "s", 2, 40.1831, 29.0640], ["Heykel", "Heykel", "d", 1, 40.1820, 29.0680],
+  ["Tophane", "Tophane", "d", 1, 40.1878, 29.0575], ["Saat Kulesi", "Clock Tower", "s", 2, 40.1880, 29.0585], ["Yeşil Cami", "Green Mosque", "s", 1, 40.1817, 29.0744],
+  ["Emir Sultan Camii", "Emir Sultan Mosque", "s", 2, 40.1811, 29.0810], ["Hisar", "Hisar", "s", 3, 40.1836, 29.0537], ["Setbaşı", "Setbaşı", "d", 2, 40.1800, 29.0710]
+ ],
+ "ankara": [
+  ["Ulus", "Ulus", "d", 1, 39.9430, 32.8540], ["Kızılay", "Kızılay", "d", 1, 39.9208, 32.8541], ["Kavaklıdere", "Kavaklıdere", "d", 1, 39.9040, 32.8610], ["Çankaya", "Çankaya", "d", 1, 39.8850, 32.8620],
+  ["Ankara Kalesi", "Ankara Citadel", "s", 1, 39.9415, 32.8654], ["Anıtkabir", "Anıtkabir", "s", 1, 39.9250, 32.8369], ["Anadolu Medeniyetleri Müzesi", "Museum of Anatolian Civilizations", "s", 2, 39.9379, 32.8618],
+  ["Augustus Tapınağı", "Temple of Augustus", "s", 2, 39.9442, 32.8582], ["Gençlik Parkı", "Gençlik Park", "s", 2, 39.9363, 32.8496], ["Kocatepe Camii", "Kocatepe Mosque", "s", 2, 39.9164, 32.8607],
+  ["Atakule", "Atakule", "s", 1, 39.8860, 32.8559], ["Tunalı Hilmi Caddesi", "Tunalı Hilmi Street", "s", 3, 39.9040, 32.8590], ["Hamamönü", "Hamamönü", "d", 3, 39.9345, 32.8660]
+ ],
+ "konya": [
+  ["Mevlana Müzesi", "Mevlana Museum", "s", 1, 37.8709, 32.5048], ["Alaaddin Tepesi", "Alaaddin Hill", "s", 1, 37.8735, 32.4935], ["İnce Minare Müzesi", "İnce Minare Museum", "s", 2, 37.8729, 32.4900],
+  ["Karatay Müzesi", "Karatay Museum", "s", 2, 37.8750, 32.4929], ["Zafer Meydanı", "Zafer Square", "s", 2, 37.8713, 32.4900], ["Sırçalı Medrese", "Sırçalı Madrasa", "s", 3, 37.8701, 32.4941],
+  ["Bedesten Çarşısı", "Bedesten Bazaar", "s", 2, 37.8713, 32.5007], ["Meram", "Meram", "d", 1, 37.8650, 32.4840], ["Selçuklu", "Selçuklu", "d", 1, 37.8800, 32.4880], ["Karatay", "Karatay", "d", 1, 37.8700, 32.5100]
+ ],
+ "antalya": [
+  ["Kaleiçi", "Kaleiçi (Old Town)", "d", 1, 36.8840, 30.7055], ["Hadrian Kapısı", "Hadrian's Gate", "s", 1, 36.8853, 30.7085], ["Yivli Minare", "Yivli Minaret", "s", 2, 36.8870, 30.7056],
+  ["Saat Kulesi", "Clock Tower", "s", 3, 36.8868, 30.7059], ["Hıdırlık Kulesi", "Hıdırlık Tower", "s", 2, 36.8813, 30.7037], ["Kesik Minare", "Kesik Minaret", "s", 3, 36.8827, 30.7057],
+  ["Yat Limanı", "Old Harbour", "t", 1, 36.8844, 30.7022], ["Karaalioğlu Parkı", "Karaalioğlu Park", "s", 2, 36.8790, 30.7110], ["Akdeniz", "Mediterranean Sea", "w", 1, 36.8700, 30.6950]
+ ],
+ "mersin": [
+  ["Mersin Limanı", "Port of Mersin", "t", 1, 36.7999, 34.6379], ["Mersin Garı", "Mersin Station", "t", 2, 36.8032, 34.6338], ["Kongre ve Sergi Sarayı", "Congress Centre", "s", 2, 36.7990, 34.6337],
+  ["Kent Tarihi Müzesi", "City History Museum", "s", 3, 36.8001, 34.6282], ["Atatürk Evi", "Atatürk House", "s", 3, 36.7951, 34.6266], ["Çamlıbel Yat Limanı", "Çamlıbel Marina", "t", 2, 36.7904, 34.6261],
+  ["Akdeniz", "Mediterranean Sea", "w", 1, 36.7850, 34.6400], ["Akdeniz ilçesi", "Akdeniz district", "d", 1, 36.8060, 34.6300]
+ ],
+ "adana": [
+  ["Büyük Saat Kulesi", "Great Clock Tower", "s", 1, 36.9839, 35.3302], ["Taşköprü", "Stone Bridge", "s", 1, 36.9863, 35.3350], ["Kapalı Çarşı", "Covered Bazaar", "s", 2, 36.9838, 35.3296],
+  ["Seyhan Nehri", "Seyhan River", "w", 1, 36.9920, 35.3370], ["Tepebağ Höyük", "Tepebağ Mound", "s", 2, 36.9882, 35.3281], ["Merkez Park", "Central Park", "s", 2, 36.9990, 35.3350],
+  ["Adana Müzesi", "Adana Museum", "s", 3, 36.9951, 35.3131], ["Seyhan", "Seyhan", "d", 1, 36.9900, 35.3200], ["Yüreğir", "Yüreğir", "d", 1, 36.9850, 35.3480]
+ ],
+ "antakya": [
+  ["Uzun Çarşı", "Long Bazaar", "s", 1, 36.2027, 36.1629], ["Asi Nehri", "Orontes River", "w", 1, 36.2040, 36.1560], ["Hatay Şehir Müzesi", "Hatay City Museum", "s", 2, 36.2019, 36.1601],
+  ["Kurtuluş Caddesi", "Kurtuluş Street", "s", 2, 36.2005, 36.1630], ["St. Pierre Kilisesi", "Church of St. Peter", "s", 1, 36.2094, 36.1782], ["Defne", "Defne", "d", 1, 36.1930, 36.1480]
+ ],
+ "iskenderun": [
+  ["İskenderun Körfezi", "Gulf of İskenderun", "w", 1, 36.6010, 36.1650], ["Deniz Müzesi", "Maritime Museum", "s", 2, 36.5939, 36.1636], ["İskenderun Belediyesi", "Town Hall", "s", 2, 36.5910, 36.1689],
+  ["Balıkçı Barınağı", "Fishing harbour", "t", 2, 36.5933, 36.1781], ["Kordon", "Seafront", "s", 2, 36.5950, 36.1700]
+ ],
+ "samsun": [
+  ["Gazi Müzesi", "Gazi Museum", "s", 2, 41.2902, 36.3324], ["Bandırma Gemi Müzesi", "Bandırma Ship Museum", "s", 1, 41.2929, 36.3389], ["Samsun Kent Müzesi", "Samsun City Museum", "s", 2, 41.2865, 36.3398],
+  ["Atatürk Kültür Merkezi", "Atatürk Cultural Centre", "s", 2, 41.2944, 36.3352], ["Karadeniz", "Black Sea", "w", 1, 41.3000, 36.3500], ["İlkadım", "İlkadım", "d", 1, 41.2860, 36.3250], ["Sevgi Gölü", "Sevgi Lake", "s", 3, 41.2862, 36.3449]
+ ],
+ "trabzon": [
+  ["Meydan Parkı", "Meydan Park", "s", 1, 41.0049, 39.7276], ["Trabzon Müzesi", "Trabzon Museum", "s", 2, 41.0050, 39.7266], ["Güzelhisar Kalesi", "Güzelhisar Castle", "s", 2, 41.0078, 39.7347],
+  ["Trabzon Limanı", "Port of Trabzon", "t", 1, 41.0052, 39.7411], ["Zağnos Paşa Kulesi", "Zağnos Pasha Tower", "s", 2, 41.0046, 39.7169], ["Boztepe", "Boztepe", "d", 1, 40.9970, 39.7300],
+  ["Karadeniz", "Black Sea", "w", 1, 41.0150, 39.7350], ["Ortahisar", "Ortahisar", "d", 1, 41.0050, 39.7180]
+ ],
+ "diyarbakir": [
+  ["Sur", "Sur (Old City)", "d", 1, 37.9100, 40.2330], ["Dört Ayaklı Minare", "Four-Legged Minaret", "s", 1, 37.9107, 40.2378], ["Hasan Paşa Hanı", "Hasan Pasha Han", "s", 2, 37.9127, 40.2374],
+  ["Diyarbakır Ulu Camii", "Great Mosque", "s", 1, 37.9128, 40.2357], ["Surp Giragos", "Surp Giragos", "s", 2, 37.9108, 40.2387], ["Keçi Burcu", "Keçi Tower", "s", 2, 37.9055, 40.2369],
+  ["Diyarbakır Müzesi", "Diyarbakır Museum", "s", 2, 37.9155, 40.2415], ["Dicle Nehri", "Tigris River", "w", 1, 37.9050, 40.2520], ["Mardin Kapı", "Mardin Gate", "s", 3, 37.9040, 40.2300]
+ ],
+ "mardin": [
+  ["Mardin Kalesi", "Mardin Castle", "s", 1, 37.3154, 40.7384], ["Zinciriye Medresesi", "Zinciriye Madrasa", "s", 2, 37.3142, 40.7399], ["Mardin Müzesi", "Mardin Museum", "s", 2, 37.3138, 40.7346],
+  ["Kasımiye Medresesi", "Kasımiye Madrasa", "s", 2, 37.3076, 40.7198], ["Tellallar Çarşısı", "Tellallar Bazaar", "s", 3, 37.3134, 40.7411], ["Sabancı Kent Müzesi", "Sabancı City Museum", "s", 3, 37.3145, 40.7460],
+  ["Mor Yusuf Kilisesi", "Mor Yusuf Church", "s", 3, 37.3136, 40.7334], ["Artuklu", "Artuklu", "d", 1, 37.3214, 40.7254], ["Mezopotamya Ovası", "Mesopotamian Plain", "d", 1, 37.2990, 40.7300]
+ ]
+}
