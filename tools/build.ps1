@@ -2940,8 +2940,10 @@ foreach ($city in $Churches.cities) {
   } else { $lists = "<section class=`"ch-sec`"><h2 class=`"ch-h`">$IcoPin Kiliseler</h2><ul class=`"cp-list`">$(& $li @($city.churches))</ul></section>" }
   $others = (($Churches.cities | Where-Object { $CityPages[$_.id] -and $_.id -ne $city.id } | ForEach-Object { "<a href=`"$($CityPages[$_.id])`">$($_.name -replace ' \(.*\)$', '')</a>" }) -join ' · ')
   $othersHtml = ''; if ($others) { $othersHtml = '      <p class="ch-next">Diğer şehirler: ' + $others + '</p>' }
+  $cpCrumbs = "<nav class=`"crumbs`" $(TA 'aria-label' 'Bulunduğunuz yer')><ol><li><a href=`"index.html`">Ana Sayfa</a></li><li><a href=`"kiliseler.html`">Kilise Bul</a></li><li><span aria-current=`"page`">$cn</span></li></ol></nav>"
   $cpBody = @"
 <div class="wrap narrow">
+  $cpCrumbs
   <article class="article church-page" id="article">
     <header class="page-head center">$(Page-Ico $IcoChurch)<p class="label">Kilise Bul</p><h1>$cdaki Katolik Kiliseleri</h1><p class="sub">$n kilise: $($parts -join ', ')</p></header>
     <p class="cp-lead">$cn şehrindeki Katolik kiliselerinin adresi, telefonu, ayin saatleri, ziyaret bilgisi ve tarihçesi, kilise kilise. Her kilisenin kendi sayfasında harita bağlantısı ve kaynaklar da var.</p>
