@@ -3107,6 +3107,20 @@ function City-Section($city) {
 }
 $klCities = ($Churches.cities | ForEach-Object { City-Section $_ }) -join "`n"
 
+# Church news: the newest few dated items from the data file, each with its source and a link to the church or city it concerns
+$klNewsHtml = ''
+$newsItems = @($Churches.news | Sort-Object { $_.date } -Descending | Select-Object -First 5)
+if ($newsItems.Count) {
+  $klNewsHtml = '<section class="kl-news" id="haberler" aria-labelledby="h-kl-news"><h2 class="kl-h" id="h-kl-news">' + (KL 'Kilise Haberleri' 'Church News') + '</h2><ul class="kl-news-list">' + (($newsItems | ForEach-Object {
+    $n = $_
+    $rel = ''
+    if ($n.churchId) { $rel = "<a href=`"kilise/$($n.churchId).html`">$(KL 'İlgili kilise' 'The church')</a>" }
+    elseif ($n.cityId) { $rel = "<a href=`"#$($n.cityId)`">$(KL 'İlgili şehir' 'The city')</a>" }
+    $srcEn = if ($n.source.Count -gt 2) { $n.source[2] } else { $n.source[0] }
+    "<li class=`"kl-news-item`"><time datetime=`"$($n.date)`">$(KL $n.dateTr $n.dateEn)</time><h3>$(KL $n.title $n.titleEn)</h3><p>$(KL $n.text $n.textEn)</p><p class=`"kl-news-src`"><a href=`"$($n.source[1])`" rel=`"noopener`">$(KL $n.source[0] $srcEn)</a>$(if ($rel) { " · $rel" })</p></li>"
+  }) -join '') + '</ul></section>'
+}
+
 # The pinned row: the cities as one-tap jumps, and the TR / EN switch at its right
 $klChips = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$(KL ($_.name -replace ' \(.*\)$', '') (City-En $_))<small>$(@($_.churches).Count)</small></a></li>" }) -join ''
 $klSwitch = "<div class=`"kl-lang`"><button type=`"button`" class=`"kl-lab`" data-kl-set=`"tr`" lang=`"tr`">TR</button><button type=`"button`" class=`"kl-switch`" role=`"switch`" aria-checked=`"false`" aria-label=`"Türkçe / English`" data-title-en=`"Catholic Churches in Turkey: Addresses and Mass Times | $SiteName`"><span class=`"kl-knob`"></span></button><button type=`"button`" class=`"kl-lab`" data-kl-set=`"en`" lang=`"en`">EN</button></div>"
@@ -3160,6 +3174,7 @@ $kiliselerBody = @"
 $churchMapHtml
   $churchPickHtml
 $klCities
+  $klNewsHtml
   <section class="kl-faqs" id="sik-sorulanlar" aria-labelledby="h-kl-faq"><h2 class="kl-h" id="h-kl-faq">$(KL 'Sık Sorulan Sorular' 'Frequently Asked Questions')</h2>
 $klFaqHtml</section>
   <p class="conventions">$(KL (Inline $Churches.note) $Churches.noteEn)</p>

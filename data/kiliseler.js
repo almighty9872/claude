@@ -3857,6 +3857,26 @@ window.CHURCHES = /*JSON-START*/{
  ],
  "noteEn": "This information has been compiled from the churches’ own websites, the Catholic Archdiocese of Izmir, the Mass times list of the Bishops’ Conference of Turkey, the Istanbul Governorship’s Dijital İstanbul inventory and other public sources; it is not an official or complete register of churches. If you spot a mistake, you can let us know through the Contact page.",
  "orthodoxNoteEn": "If there is no Catholic church near you, there may be an Orthodox one. Under Canon Law (Canon 844 §2), when it is impossible to reach a Catholic priest and there is genuine need, a Catholic may receive the Eucharist, Confession and the Anointing of the Sick from the Orthodox Church, whose sacraments are valid. This is an exceptional permission, not the ordinary rule; each community has its own discipline, and an Orthodox priest may not always agree to give Communion.",
+ "news": [
+  {
+   "date": "2026-10-01", "dateTr": "1 Ekim 2026", "dateEn": "1 October 2026",
+   "title": "İskenderun’daki Katolik kiliselerinin restorasyonu sürüyor",
+   "titleEn": "Restoration of İskenderun’s Catholic churches continues",
+   "text": "Yerel basın, İskenderun’daki Rum Katolik ve Süryani Katolik kiliselerinin restorasyonunun sürdüğünü bildirdi; yetkililer güçlendirme çalışmalarını yerinde inceledi. Tamamlanma tarihi açıklanmadı. Şehrin Latin Katolik katedrali Müjde ise bu listede kapalı olarak duruyor.",
+   "textEn": "Local press reports that restoration of the Greek Catholic and Syriac Catholic churches in İskenderun is continuing, and officials inspected the reinforcement work on site. No completion date was given. The city’s Latin Catholic cathedral, Müjde, is still listed here as closed.",
+   "cityId": "hatay",
+   "source": ["Haberkenti: İskenderun’da tarihi kiliselerin restorasyonu devam ediyor", "https://www.haberkenti.com/iskenderunda-tarihi-kiliselerin-restorasyonu-devam-ediyor", "Haberkenti: restoration of İskenderun’s historic churches continues (Turkish)"]
+  },
+  {
+   "date": "2026-08-21", "dateTr": "21 Ağustos 2026", "dateEn": "21 August 2026",
+   "title": "Mgr. Louis-Armel Pelâtre hayatını kaybetti",
+   "titleEn": "Mgr. Louis-Armel Pelâtre has died",
+   "text": "1992–2016 arasında İstanbul Apostolik Vekili olan ve Türkiye Katolik Piskoposlar Konferansı’na 1995–2001 arasında başkanlık eden Mgr. Louis-Armel Pelâtre, 20 Ağustos 2026’da 86 yaşında vefat etti. Cenaze ayininin 24 Ağustos’ta Kutsal Ruh Katedrali’nde yapılacağı duyuruldu.",
+   "textEn": "Mgr. Louis-Armel Pelâtre, Apostolic Vicar of Istanbul from 1992 to 2016 and President of the Catholic Bishops’ Conference of Turkey from 1995 to 2001, died on 20 August 2026 at the age of 86. His funeral was announced for 24 August at the Cathedral of the Holy Spirit.",
+   "churchId": "sent-esprit",
+   "source": ["Türkiye Katolik Piskoposlar Konferansı: Mgr. Kmetec’in taziye mesajı", "https://www.katolik-kilisesi.org/en/message-of-his-excellency-monsignor-martin-kmetec-president-of-the-catholic-bishops-conference-of-turkey-on-the-occasion-of-the-death-of-monsignor-louis-pelatre/", "Catholic Bishops’ Conference of Turkey: condolence message by Mgr. Kmetec"]
+  }
+ ],
  "updatedEn": "October 2026",
  "checked": "29 Ekim 2026, 23:07 (İstanbul saati)",
  "checkedEn": "29 October 2026, 23:07 (Istanbul time)"
