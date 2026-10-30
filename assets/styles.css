@@ -4013,14 +4013,26 @@ html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap 
 .kl-links { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; margin: auto 0 0; padding-top: .3rem; font: .82rem var(--sans); }
 .kl-links a { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; color: var(--gold-active); text-decoration: none; }
 .kl-links a:hover { text-decoration: underline; }
-/* the card's way to its own page: a rounded button across the foot of the card */
+/* the card's way to its own page: a quiet outlined button across the foot of the card */
 .kl-links .kl-more {
-  order: 3; flex: 0 0 100%; justify-content: center; gap: .4rem; min-height: 2.6rem; margin-top: .3rem; padding: .5rem 1rem;
-  border-radius: 999px; background: var(--gold); color: var(--bg); font-size: .86rem; text-decoration: none; transition: filter .15s;
+  order: 3; flex: 0 0 100%; justify-content: center; gap: .35rem; margin-top: .2rem; padding: .35rem .8rem;
+  border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text-soft); font-size: .8rem; font-weight: 600; text-decoration: none; transition: border-color .15s, color .15s;
 }
-.kl-links .kl-more:hover { text-decoration: none; filter: brightness(1.1); }
-.kl-links .kl-more:active { filter: brightness(.92); }
-.kl-links .kl-more svg { width: .95rem; height: .95rem; margin: 0; color: inherit; }
+.kl-links .kl-more:hover { text-decoration: none; border-color: var(--gold); color: var(--gold-active); }
+.kl-links .kl-more svg { width: .85rem; height: .85rem; margin: 0; color: inherit; }
+/* the address: a small pin button beside the rite that opens a popup card (hover on desktop, tap on touch) */
+.kl-adr { position: relative; display: inline-flex; }
+.kl-adr-btn { display: inline-flex; align-items: center; gap: .3rem; padding: .1rem .2rem; border: 0; background: none; font: 600 .8rem var(--sans); color: var(--gold-active); cursor: pointer; }
+.kl-adr-btn svg { width: .95rem; height: .95rem; color: var(--gold); }
+.kl-adr-btn:hover span, .kl-adr.is-open .kl-adr-btn span { text-decoration: underline; }
+.kl-adr-btn:focus-visible, .kl-pop-map:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.kl-pop { display: none; position: absolute; z-index: 20; left: 0; top: 100%; width: min(18rem, 78vw); margin-top: .35rem; padding: .7rem .8rem; flex-direction: column; gap: .55rem; background: var(--surface); border: 1px solid var(--border); border-radius: .8rem; box-shadow: 0 8px 24px rgba(0, 0, 0, .18); font: .84rem/1.45 var(--sans); color: var(--text-soft); text-transform: none; letter-spacing: 0; }
+.kl-pop::before { content: ""; position: absolute; left: 0; right: 0; top: -.4rem; height: .4rem; }
+.kl-adr.is-open .kl-pop { display: flex; }
+@media (hover: hover) { .kl-adr:hover .kl-pop, .kl-adr:focus-within .kl-pop { display: flex; } }
+.kl-pop-map { display: inline-flex; align-items: center; gap: .3rem; padding-top: .5rem; border-top: 1px solid var(--border); font-weight: 600; color: var(--gold-active); text-decoration: none; }
+.kl-pop-map:hover { text-decoration: underline; }
+.kl-pop-map svg { width: .85rem; height: .85rem; }
 .kl-faqs { margin: 3rem 0 1.5rem; }
 .kl-faq { margin-top: 1rem; }
 

@@ -4274,6 +4274,30 @@
     });
   }
 
+  /* Church cards: the address button opens its popup on tap/click; outside tap or Escape closes it */
+  function initAddrPops() {
+    var wraps = $$('.kl-adr');
+    if (!wraps.length) return;
+    function closeAll(except) {
+      wraps.forEach(function (w) {
+        if (w === except) return;
+        w.classList.remove('is-open');
+        w.firstElementChild.setAttribute('aria-expanded', 'false');
+      });
+    }
+    wraps.forEach(function (w) {
+      var b = w.firstElementChild;
+      b.addEventListener('click', function () {
+        var open = !w.classList.contains('is-open');
+        closeAll(w);
+        w.classList.toggle('is-open', open);
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.kl-adr')) closeAll(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  }
+
   function initHeaderHeight() {
     var header = topBar();
     if (!header) return;
@@ -4301,7 +4325,7 @@
     [
       initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initFaqDir, initKlLang, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initKlLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();

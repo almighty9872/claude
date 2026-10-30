@@ -2970,12 +2970,15 @@ function Church-Card($ch, [string]$cityName) {
   }
   $tel = ''
   if (@($ch.phones).Count) { $p0 = @($ch.phones)[0]; $tel = "<a class=`"kl-tel`" href=`"$(Tel-Href $p0)`">$IcoPhone<span>$p0</span></a>" }
-  $addr = "<p class=`"kl-addr`">$IcoPin<span>$(Inline $ch.address)</span></p>"
+  $adrLab = KL 'Adres' 'Address'
+  $adr = "<span class=`"kl-adr`"><button type=`"button`" class=`"kl-adr-btn`" aria-expanded=`"false`" aria-haspopup=`"true`">$IcoPin<span>$adrLab</span></button>" +
+    "<span class=`"kl-pop`" role=`"group`"><span class=`"kl-pop-addr`">$(Inline $ch.address)</span>" +
+    "<a class=`"kl-pop-map map-link`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$(Attr $mapQ)`" target=`"_blank`" rel=`"noopener`"><span>$(KL 'Haritada aç' 'Open in Maps')</span> $IcoExternalCh</a></span></span>"
   return "<li><article class=`"kl-ch is-$($ch.status)`" id=`"k-$($ch.id)`">" +
     "<h3 class=`"kl-name`"><a href=`"kilise/$($ch.id).html`">$(KL $nmTr $nmEn)</a></h3>" +
-    "<p class=`"kl-meta`"><span class=`"kl-rite`">$(KL $rite.tr $riteEn)</span><span class=`"kl-dist`">$(Inline $ch.district)</span></p>" +
-    "$notice$addr$times$note" +
-    "<p class=`"kl-links`"><a class=`"kl-map`" href=`"$(Map-Url $mapQ)`" data-map-q=`"$(Attr $mapQ)`" target=`"_blank`" rel=`"noopener`">$IcoPin<span>$(KL 'Haritada aç' 'Open in Maps')</span></a>$tel" +
+    "<p class=`"kl-meta`"><span class=`"kl-rite`">$(KL $rite.tr $riteEn)</span>$adr</p>" +
+    "$notice$times$note" +
+    "<p class=`"kl-links`">$tel" +
     "<a class=`"kl-more`" href=`"kilise/$($ch.id).html`"><span>$(KL 'Tarihçe ve ayrıntılar' 'History and details (Turkish)')</span>$IcoChevKl</a></p>" +
     "</article></li>"
 }
