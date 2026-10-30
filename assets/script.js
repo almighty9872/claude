@@ -382,13 +382,27 @@
      (with its week) and the colour the priest wears. Special days of the Proper of Time that
      change the colour are included: rose on Gaudete and Laetare Sundays, red on Palm Sunday,
      Good Friday and Pentecost, white through the Triduum's feasts, Trinity Sunday and Christ
-     the King. Feasts of individual saints are left out: this is the season's colour. */
+     the King. The solemnities of the General Roman Calendar come first, moved as the rubrics
+     move them (St Joseph and the Annunciation out of Holy Week and the Easter Octave, a
+     solemnity off an Advent or Lent Sunday), with All Souls; then the feasts, which give way to
+     a Sunday (unless they are feasts of the Lord), to Ash Wednesday, Holy Week and the Easter
+     Octave. Memorials are left out: the season's colour is worn on them. */
   var LIT_TEXT = {
     tr: {
       advent: 'Advent', christmas: 'Noel Dönemi', ordinary: 'Olağan Zaman', lent: 'Büyük Perhiz', easter: 'Paskalya Dönemi',
       week: function (n) { return n + '. Hafta'; }, ash: 'Kül Çarşambası', palm: 'Hurma Pazarı', holyWeek: 'Kutsal Hafta',
       thu: 'Kutsal Perşembe', fri: 'Kutsal Cuma', sat: 'Kutsal Cumartesi', easterDay: 'Paskalya', pentecost: 'Pentekost',
       trinity: 'Kutsal Üçlü Birlik', king: 'Evrenin Kralı Mesih', colour: 'Litürjik renk',
+      motherOfGod: 'Tanrı’nın Annesi Meryem', joseph: 'Aziz Yusuf', annunciation: 'Müjde', ascension: 'İsa’nın Göğe Yükselişi',
+      corpus: 'Mesih’in Bedeni ve Kanı', heart: 'İsa’nın Kutsal Kalbi', john: 'Vaftizci Yahya’nın Doğuşu',
+      peterPaul: 'Aziz Petrus ve Aziz Pavlus', assumption: 'Meryem’in Göğe Alınışı', saints: 'Bütün Azizler',
+      souls: 'Ölüleri Anma Günü', immaculate: 'Lekesiz Gebelik',
+      feasts: { convPaul: 'Aziz Pavlus’un İmana Gelişi', presentation: 'İsa’nın Tapınağa Sunuluşu', chairPeter: 'Aziz Petrus’un Kürsüsü',
+        mark: 'Aziz Markos', philipJames: 'Aziz Filipus ve Aziz Yakup', matthias: 'Aziz Mattias', visitation: 'Meryem’in Elizabet’i Ziyareti',
+        thomas: 'Aziz Tomas', magdalene: 'Mecdelli Aziz Meryem', james: 'Aziz Yakup', transfiguration: 'Suretin Değişmesi',
+        lawrence: 'Aziz Laurentius', bartholomew: 'Aziz Bartalmay', nativityMary: 'Meryem’in Doğuşu', cross: 'Kutsal Haç’ın Yüceltilmesi',
+        matthew: 'Aziz Matta', archangels: 'Başmelekler Mikail, Cebrail ve Rafael', luke: 'Aziz Luka', simonJude: 'Aziz Simun ve Aziz Yahuda',
+        lateran: 'Lateran Bazilikası’nın Kutsanması', andrew: 'Aziz Andreas', stephen: 'Aziz İstefanos', johnAp: 'Aziz Yuhanna', innocents: 'Masum Çocuklar' },
       colours: { green: 'yeşil', violet: 'mor', white: 'beyaz', red: 'kırmızı', rose: 'pembe' }
     },
     en: {
@@ -396,6 +410,16 @@
       week: function (n) { return 'Week ' + n; }, ash: 'Ash Wednesday', palm: 'Palm Sunday', holyWeek: 'Holy Week',
       thu: 'Holy Thursday', fri: 'Good Friday', sat: 'Holy Saturday', easterDay: 'Easter Sunday', pentecost: 'Pentecost',
       trinity: 'The Holy Trinity', king: 'Christ the King', colour: 'Liturgical color',
+      motherOfGod: 'Mary, Mother of God', joseph: 'Saint Joseph', annunciation: 'The Annunciation', ascension: 'The Ascension',
+      corpus: 'Corpus Christi', heart: 'The Sacred Heart', john: 'Birth of John the Baptist',
+      peterPaul: 'Saints Peter and Paul', assumption: 'The Assumption', saints: 'All Saints',
+      souls: 'All Souls', immaculate: 'The Immaculate Conception',
+      feasts: { convPaul: 'Conversion of Saint Paul', presentation: 'The Presentation of the Lord', chairPeter: 'Chair of Saint Peter',
+        mark: 'Saint Mark', philipJames: 'Saints Philip and James', matthias: 'Saint Matthias', visitation: 'The Visitation',
+        thomas: 'Saint Thomas', magdalene: 'Saint Mary Magdalene', james: 'Saint James', transfiguration: 'The Transfiguration',
+        lawrence: 'Saint Lawrence', bartholomew: 'Saint Bartholomew', nativityMary: 'Nativity of Mary', cross: 'Exaltation of the Holy Cross',
+        matthew: 'Saint Matthew', archangels: 'The Archangels', luke: 'Saint Luke', simonJude: 'Saints Simon and Jude',
+        lateran: 'Dedication of the Lateran Basilica', andrew: 'Saint Andrew', stephen: 'Saint Stephen', johnAp: 'Saint John', innocents: 'The Holy Innocents' },
       colours: { green: 'green', violet: 'violet', white: 'white', red: 'red', rose: 'rose' }
     }
   };
@@ -411,6 +435,31 @@
     var pentecost = add(easter, 49), christmas = date(12, 25);
     var advent = add(christmas, -(christmas.getDay() || 7) - 21), king = add(advent, -7);
     var epiphany = date(1, 6), baptism = add(epiphany, 7 - epiphany.getDay());
+    var lentSun1 = add(ash, 4), heart = add(easter, 68);
+    // a fixed solemnity on a Sunday of Advent or Lent moves to the Monday
+    function offSunday(d) { return d.getDay() === 0 && ((d >= lentSun1 && d < palm) || d >= advent) ? add(d, 1) : d; }
+    var joseph = offSunday(date(3, 19)), annunciation = offSunday(date(3, 25));
+    if (joseph >= palm && joseph <= add(easter, 7)) joseph = add(palm, -1);
+    if (annunciation >= palm && annunciation <= add(easter, 7)) annunciation = add(easter, 8);
+    var john = same(date(6, 24), heart) || same(date(6, 24), add(easter, 60)) ? date(6, 23) : date(6, 24);
+    var feasts = [[date(1, 1), L.motherOfGod, 'white'], [joseph, L.joseph, 'white'], [annunciation, L.annunciation, 'white'],
+      [add(easter, 39), L.ascension, 'white'], [add(easter, 60), L.corpus, 'white'], [heart, L.heart, 'white'],
+      [john, L.john, 'white'], [date(6, 29), L.peterPaul, 'red'], [date(8, 15), L.assumption, 'white'],
+      [date(11, 1), L.saints, 'white'], [date(11, 2), L.souls, 'violet'], [offSunday(date(12, 8)), L.immaculate, 'white']];
+    for (var i = 0; i < feasts.length; i++) if (same(today, feasts[i][0])) return res(feasts[i][1], 0, feasts[i][2]);
+    // feasts: [month, day, key, colour, feast of the Lord]
+    var F = L.feasts, md = (today.getMonth() + 1) * 100 + today.getDate();
+    var FEASTS = [[1, 25, 'convPaul', 'white'], [2, 2, 'presentation', 'white', 1], [2, 22, 'chairPeter', 'white'], [4, 25, 'mark', 'red'],
+      [5, 3, 'philipJames', 'red'], [5, 14, 'matthias', 'red'], [5, 31, 'visitation', 'white'], [7, 3, 'thomas', 'red'],
+      [7, 22, 'magdalene', 'white'], [7, 25, 'james', 'red'], [8, 6, 'transfiguration', 'white', 1], [8, 10, 'lawrence', 'red'],
+      [8, 24, 'bartholomew', 'red'], [9, 8, 'nativityMary', 'white'], [9, 14, 'cross', 'red', 1], [9, 21, 'matthew', 'red'],
+      [9, 29, 'archangels', 'white'], [10, 18, 'luke', 'red'], [10, 28, 'simonJude', 'red'], [11, 9, 'lateran', 'white', 1],
+      [11, 30, 'andrew', 'red'], [12, 26, 'stephen', 'red'], [12, 27, 'johnAp', 'white'], [12, 28, 'innocents', 'red']];
+    var yields = same(today, ash) || (today >= palm && today <= add(easter, 7));
+    for (var j = 0; j < FEASTS.length && !yields; j++) {
+      var f = FEASTS[j];
+      if (f[0] * 100 + f[1] === md && (today.getDay() !== 0 || f[4])) return res(F[f[2]], 0, f[3]);
+    }
 
     if (today >= christmas || today <= baptism) return res(L.christmas, 0, 'white');
     if (today >= advent) {
@@ -420,8 +469,8 @@
     if (today < ash) return res(L.ordinary, Math.floor(days(today, baptism) / 7) + 1, 'green');
     if (same(today, ash)) return res(L.ash, 0, 'violet');
     if (today < palm) {
-      var lentSun = add(ash, 4), lw = today < lentSun ? 0 : Math.floor(days(today, lentSun) / 7) + 1;
-      return res(L.lent, lw, same(today, add(lentSun, 21)) ? 'rose' : 'violet');
+      var lw = today < lentSun1 ? 0 : Math.floor(days(today, lentSun1) / 7) + 1;
+      return res(L.lent, lw, same(today, add(lentSun1, 21)) ? 'rose' : 'violet');
     }
     if (same(today, palm)) return res(L.palm, 0, 'red');
     if (today < add(easter, -3)) return res(L.holyWeek, 0, 'violet');
@@ -2827,7 +2876,7 @@
     var sec = $('.cmap'); if (!sec) return;
     var svg = $('.cmap-svg', sec), frame = $('.cmap-frame', sec);
     var pin = function (el) { el._x = +el.getAttribute('data-x'); el._y = +el.getAttribute('data-y'); return el; };
-    var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin);
+    var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin), ports = $$('.cmap-port', svg).map(pin);
     var line = document.createElement('div'); line.className = 'cmap-line'; line.hidden = true; frame.appendChild(line);
     var vb = null, open = null;
 
@@ -2843,9 +2892,19 @@
       /* dots and names keep their size on screen (a little smaller in a phone's narrow frame) */
       var fw = svg.clientWidth || 1, k = Math.max(.8, Math.min(1, fw / 640)), s = vb.w / fw * k;
       cities.forEach(function (c) { c.setAttribute('transform', 'translate(' + c._x + ' ' + c._y + ') scale(' + s + ')'); });
-      texts.forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
+      texts.concat(ports).forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
       if (open) place(open);
     }
+    /* a ferry port (and the key under the map): straight to the question about the Greek islands, opened */
+    $$('.cmap-port, .cmap-key a', sec).forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = document.getElementById((a.getAttribute('href') || a.getAttribute('xlink:href') || '').slice(1)); if (!t) return;
+        e.preventDefault();
+        if (t.tagName === 'DETAILS') t.open = true;
+        var r = document.documentElement; r.style.scrollBehavior = 'auto'; t.scrollIntoView(true); r.style.scrollBehavior = '';
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+      });
+    });
     function popOf(c) { return document.getElementById('cmap-pop-' + c.getAttribute('data-city')); }
     /* the list beside its city: vertically round the dot, kept inside the frame where it fits */
     function place(c) {
@@ -4015,13 +4074,50 @@
      language's text is longer or shorter. The pinned row's city buttons jump
      instantly and follow the city being read.
      --------------------------------------------------------------- */
+  /* the band across each church card wears the colour of today's liturgy (liturgicalDay);
+     without the script it keeps the stained-glass default */
+  function initLitBand() {
+    if ($('.kl-ch')) document.documentElement.setAttribute('data-lit', liturgicalDay(new Date(), 'en').colour);
+  }
+  /* Kilise Bul, Mass by language: one language at a time (a second tap clears it), kept in ?dil= */
+  function initMassLang() {
+    var box = $('.kl-lf');
+    if (!box) return;
+    var btns = $$('[data-lf]', box), status = $('.kl-lf-status', box), items = $$('.kl-lf-list li', box);
+    function pick(l, user) {
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lf') === l ? 'true' : 'false'); });
+      box.classList.toggle('has-pick', !!l);
+      var nCh = 0, nMass = 0;
+      items.forEach(function (li) {
+        var on = !!l && (' ' + li.getAttribute('data-l') + ' ').indexOf(' ' + l + ' ') > -1;
+        if (li.classList.contains('kl-lf-city')) on = !!l && $$('.kl-lf-ch', li).some(function (c) { return (' ' + c.getAttribute('data-l') + ' ').indexOf(' ' + l + ' ') > -1; });
+        else if (on && li.classList.contains('kl-lf-ch')) nCh++;
+        else if (on) nMass++;
+        li.classList.toggle('is-match', on);
+      });
+      var b = btns.filter(function (x) { return x.getAttribute('data-lf') === l; })[0];
+      if (b) {
+        var tr = $('.kl-tr', b).textContent, en = $('.kl-en', b).textContent;
+        status.innerHTML = '<span class="kl-tr">' + tr + ': ' + nCh + ' kilisede ' + nMass + ' ayin saati</span><span class="kl-en" lang="en">' + en + ': ' + nMass + (nMass === 1 ? ' Mass time' : ' Mass times') + ' in ' + nCh + (nCh === 1 ? ' church' : ' churches') + '</span>';
+      } else status.textContent = '';
+      if (user) {
+        try { var u = new URL(location.href); if (l) u.searchParams.set('dil', l); else u.searchParams.delete('dil'); history.replaceState(history.state, '', u.pathname + u.search + u.hash); } catch (e) { /* not rewritable */ }
+      }
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { pick(b.getAttribute('aria-pressed') === 'true' ? '' : b.getAttribute('data-lf'), true); });
+    });
+    box.classList.add('is-on');
+    var q = /[?&]dil=([a-z]+)/.exec(location.search);
+    pick(q && btns.some(function (b) { return b.getAttribute('data-lf') === q[1]; }) ? q[1] : '', false);
+  }
   function initKlLang() {
     var sw = $('.kl-switch');
     if (!sw) return;
     var H = document.documentElement, KEY = 'kd-kl-lang', bar = $('.kl-bar');
     var ANCHORS = '.kl-ch, .kl-h, .kl-side, .kl-sum, .kl-lead, .faq-item, .cmap, .ch-pick, .conventions, .page-head, .crumbs';
     var title0 = document.title, titleEn = sw.getAttribute('data-title-en');
-    var chips = $$('.kl-chips a'), cities = chips.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var chips = $$('.kl-chips > ul a'), cities = chips.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
     function isEn() { return H.classList.contains('kl-en-on'); }
     function paint() {
       var en = isEn();
@@ -4082,6 +4178,32 @@
         queue();
       });
     });
+    /* "Tüm şehirler" (desktop): the same instant jump, then the menu closes; a click outside or Escape closes it too */
+    var all = $('.kl-all'), allLinks = all ? $$('ul a', all) : [];
+    allLinks.forEach(function (a, i) {
+      a.addEventListener('click', function (e) {
+        var t = cities[i]; if (!t) return;
+        e.preventDefault();
+        all.open = false;
+        jumpTo(function () { t.scrollIntoView(true); });
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+        queue();
+      });
+    });
+    if (all) {
+      document.addEventListener('click', function (e) { if (all.open && !all.contains(e.target)) all.open = false; });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && all.open) { all.open = false; $('summary', all).focus(); } });
+    }
+    /* the section jumps on the banner (map, news, questions): instant too */
+    $$('.ph-jump a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = document.getElementById(a.getAttribute('href').slice(1)); if (!t) return;
+        e.preventDefault();
+        jumpTo(function () { t.scrollIntoView(true); });
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+        queue();
+      });
+    });
     var ticking = false, cur = -2;
     function update() {
       ticking = false;
@@ -4094,6 +4216,8 @@
         a.classList.toggle('is-current', i === pick);
         if (i === pick) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
       });
+      allLinks.forEach(function (a, i) { a.classList.toggle('is-current', i === pick); });
+      if (all) $('summary', all).classList.toggle('is-current', !!(chips[pick] && chips[pick].parentNode.classList.contains('kl-x')));
       var list = chips[0] && chips[0].closest('ul'), a = chips[pick];
       if (list && a && list.scrollWidth > list.clientWidth) list.scrollLeft = Math.max(0, a.offsetLeft - (list.clientWidth - a.offsetWidth) / 2);
     }
@@ -4274,6 +4398,30 @@
     });
   }
 
+  /* Church cards: the address button opens its popup on tap/click; outside tap or Escape closes it */
+  function initAddrPops() {
+    var wraps = $$('.kl-adr');
+    if (!wraps.length) return;
+    function closeAll(except) {
+      wraps.forEach(function (w) {
+        if (w === except) return;
+        w.classList.remove('is-open');
+        w.firstElementChild.setAttribute('aria-expanded', 'false');
+      });
+    }
+    wraps.forEach(function (w) {
+      var b = w.firstElementChild;
+      b.addEventListener('click', function () {
+        var open = !w.classList.contains('is-open');
+        closeAll(w);
+        w.classList.toggle('is-open', open);
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.kl-adr')) closeAll(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  }
+
   function initHeaderHeight() {
     var header = topBar();
     if (!header) return;
@@ -4301,7 +4449,7 @@
     [
       initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initFaqDir, initKlLang, initWhyHooks, initMapLinks, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initLitBand, initKlLang, initMassLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();

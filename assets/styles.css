@@ -2958,6 +2958,21 @@ html.av .to-top-wrap { display: none; }
 .cmap-city:hover .cc-dot, .cmap-city:focus-visible .cc-dot, .cmap-city.is-sel .cc-dot { filter: drop-shadow(0 0 3px #f3cf6a) drop-shadow(0 0 7px #e0b24a); }
 .cmap-city:hover .cc-name, .cmap-city:focus-visible .cc-name, .cmap-city.is-sel .cc-name { fill: var(--gold-active); }
 .cmap-city:focus-visible .cc-dot { stroke: var(--focus); stroke-width: 3; }
+/* the ferry ports to the Greek islands: sea blue, smaller than the cities */
+.cmap { --port: #2b6f9e; }
+:root[data-theme="dark"] .cmap { --port: #6fb1de; }
+.cmap-port { cursor: pointer; outline: none; }
+.cmap-port .cp-hit { fill: transparent; }
+.cmap-port .cp-dot { fill: var(--port); stroke: var(--amap-tr); stroke-width: 1.5; }
+.cmap-port .cp-name { font-family: var(--sans); font-size: 11px; font-weight: 600; fill: var(--port); paint-order: stroke; stroke: var(--amap-tr); stroke-width: 3px; stroke-linejoin: round; }
+.cmap-port:hover .cp-name, .cmap-port:focus-visible .cp-name { text-decoration: underline; }
+.cmap-port:focus-visible .cp-dot { stroke: var(--focus); stroke-width: 2.5; }
+.cmap-key { margin: .55rem 0 0; font: .82rem var(--sans); text-align: center; }
+.cmap-key a { display: inline-flex; align-items: center; gap: .45rem; color: var(--port); text-decoration: none; }
+.cmap-key a:hover { text-decoration: underline; }
+/* a phone's frame is too small for their names beside the cities: the dots stay, the key under the map names them */
+@media (max-width: 599px) { .cmap-port .cp-name { display: none; } }
+.cp-swatch { flex: none; width: .6rem; height: .6rem; border-radius: 50%; background: var(--port); }
 /* the list of a city's churches */
 .cmap-pop {
   position: absolute; z-index: 5; min-width: 11rem; max-width: calc(100vw - 2rem); padding: .75rem .9rem .7rem; font-family: var(--sans);
@@ -3026,6 +3041,19 @@ html.av .to-top-wrap { display: none; }
 .ch-note { margin: .6rem 0 0; font-size: .9rem; color: var(--muted); }
 .ch-sources ul { margin: 0 0 .8rem; padding-left: 1.1rem; font-size: .92rem; }
 .ch-sources li { margin: .25rem 0; }
+.ch-more h3 { margin: 1.1rem 0 .4rem; font-size: 1rem; }
+.ch-links { margin: 0 0 .6rem; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: .35rem .9rem; }
+.ch-links li { display: flex; flex-direction: column; line-height: 1.35; }
+.ch-links span { font-size: .84rem; color: var(--muted); }
+.ch-next { font-size: .95rem; line-height: 1.7; }
+.cp-lead { margin: 0 0 1rem; line-height: 1.6; }
+.cp-list { margin: 0; padding: 0; list-style: none; }
+.cp-ch { padding: .8rem 0; border-top: 1px solid var(--border); }
+.cp-ch h3 { margin: 0; font-size: 1.05rem; }
+.cp-ch p { margin: .2rem 0 0; font-size: .93rem; line-height: 1.5; }
+.cp-ch .cp-meta, .cp-k { color: var(--muted); }
+.cp-closed { color: #cf5448; }
+.kl-citypage { margin: .2rem 0 .8rem; font-size: .92rem; }
 .ch-back { margin: 0 0 2.4rem; text-align: center; }
 .ch-back .btn { display: inline-flex; align-items: center; gap: .45rem; }
 .ch-back .btn svg { width: 1rem; height: 1rem; }
@@ -3625,6 +3653,22 @@ main .prose h2, main h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); }
 /* the dyslexia setting now adds room between letters, words and lines */
 [data-a11y-dyslexia="1"] body { letter-spacing: .02em; word-spacing: .1em; line-height: 1.9; }
 main .page-head.painted .ph-text h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem) !important; }
+/* Kilise Bul (the Antwerp banner): the title and intro sit on the painting, on a translucent dark panel */
+main .page-head.painted[data-art="n-antwerp"] { align-items: center !important; justify-content: center !important; min-height: clamp(23rem, 46vw, 30rem) !important; margin: 0 calc(50% - 50vw) 1.4rem !important; padding: 2.2rem 1rem 2.8rem !important; overflow: hidden !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-art { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; margin: 0 !important; aspect-ratio: auto !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-text { max-width: 44rem; padding: 1.2rem 1.4rem !important; border-radius: 1.1rem; background: rgba(12, 10, 8, .58) !important; color: #fff !important; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+main .page-head.painted[data-art="n-antwerp"] .ph-text :is(h1, p, .kl-lead) { color: #fff !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-text .kl-checked { color: rgba(255, 255, 255, .78) !important; }
+/* the section jumps under the panel: the same translucent dark glass, one pill each */
+.ph-jump { position: relative; z-index: 1; margin-top: .8rem; }
+.ph-jump ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; margin: 0; padding: 0; }
+.ph-jump a {
+  display: inline-block; padding: .5rem 1.15rem; border-radius: 999px; background: rgba(12, 10, 8, .58); font: 600 .9rem var(--sans); color: #fff; text-decoration: none;
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); transition: background-color .2s;
+}
+.ph-jump a:hover { background: rgba(12, 10, 8, .74); color: #ffe3a3; }
+.ph-jump a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+main .page-head.painted[data-art="n-antwerp"] .ph-cap { top: auto !important; bottom: .7rem !important; right: .8rem !important; }
 main .work-hero:has(> .banner-only) { padding-top: 0 !important; margin-top: 0 !important; }
 main .page-head.banner-only { width: 100%; }
 main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important; width: max-content; max-width: calc(100vw - 1.4rem); }
@@ -3963,6 +4007,34 @@ html.kl-en-on .kl-en.kl-blk { display: block; }
 .kl-chips a:hover, .hm-find-cities a:hover { border-color: var(--gold-soft); color: var(--gold); }
 .kl-chips a.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); font-weight: 600; }
 .kl-chips a:focus-visible, .kl-lab:focus-visible, .kl-switch:focus-visible, .kl-links a:focus-visible, .hm-find a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* "Tüm şehirler": on desktop the row keeps four chips and the other cities move into this menu; phones keep the swipe row */
+.kl-all { display: none; position: relative; flex: none; }
+.kl-all summary {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .38rem .8rem; border: 1px solid var(--gold-soft); border-radius: 999px; white-space: nowrap; cursor: pointer;
+  background: var(--surface); font-size: .82rem; color: var(--gold); list-style: none; transition: background-color .2s;
+}
+.kl-all summary::-webkit-details-marker { display: none; }
+.kl-all summary::after { content: ""; width: .4rem; height: .4rem; margin: -.2rem 0 0 .1rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); transition: transform .2s; }
+.kl-all[open] summary::after { margin-top: .2rem; transform: rotate(-135deg); }
+.kl-all summary small { color: var(--muted); font-size: .72rem; }
+.kl-all summary:hover, .kl-all[open] summary, .kl-all summary.is-current { background: var(--gold-bg); }
+.kl-all summary.is-current { color: var(--gold-active); font-weight: 600; }
+.kl-all summary:focus-visible, .kl-all ul a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.kl-all ul {
+  position: absolute; top: calc(100% + .5rem); right: 0; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 19rem; margin: 0; padding: .45rem; list-style: none;
+  background: var(--glass-strong); border: 1px solid var(--glass-brd); border-radius: var(--radius); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+}
+.kl-all ul a { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; padding: .45rem .65rem; border-radius: var(--radius-sm); font-size: .86rem; color: var(--text-soft); text-decoration: none; }
+.kl-all ul a small { color: var(--muted); font-size: .72rem; }
+.kl-all ul a:hover { background: var(--gold-bg); color: var(--gold); }
+.kl-all ul a.is-current { background: var(--gold-bg); color: var(--gold-active); font-weight: 600; }
+@media (min-width: 760px) {
+  .kl-chips { display: flex; align-items: center; gap: .45rem; }
+  .kl-chips > ul { flex: 1 1 auto; -webkit-mask-image: none; mask-image: none; }
+  .kl-chips .kl-x { display: none; }
+  .kl-all { display: block; }
+}
 /* the switch: a pill with a knob, like the one in iOS Settings; TR on the left, EN on the right */
 .kl-lang { flex: none; display: inline-flex; align-items: center; gap: .4rem; }
 .kl-lab { padding: .25rem .1rem; border: 0; background: none; font: 700 .78rem var(--sans); letter-spacing: .06em; color: var(--muted); cursor: pointer; -webkit-tap-highlight-color: transparent; }
@@ -3982,7 +4054,7 @@ html:not(.kl-en-on) .kl-lab[data-kl-set="tr"], html.kl-en-on .kl-lab[data-kl-set
 .kl-switch:active .kl-knob { width: 1.8rem; }
 .kl-switch[aria-checked="true"]:active .kl-knob { transform: translateX(.85rem); }
 html:has(.kl-bar) { scroll-padding-top: calc(var(--header-h) + 3.8rem); }
-html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap { scroll-margin-top: 0; }
+html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-lf, html:has(.kl-bar) .kl-news, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap { scroll-margin-top: 0; }
 /* a city's section */
 .kl-city { margin: 2.6rem 0 0; }
 .kl-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .65rem; margin: 0 0 .35rem; font-size: 1.5rem; line-height: 1.2; }
@@ -3992,29 +4064,89 @@ html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap 
 .kl-grid { list-style: none; display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 0; padding: 0; }
 @media (min-width: 760px) { .kl-grid { grid-template-columns: 1fr 1fr; } }
 .kl-grid > li { display: flex; min-width: 0; }
-.kl-ch { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .45rem; padding: .95rem 1.05rem .85rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+/* a church card: the name and rite on a stained-glass band (amber, burgundy, navy), the Mass times as tiles below */
+.kl-ch { --kl-band: linear-gradient(90deg, #3a2a12, #5a1f24 55%, #1f2a4a); --kl-band-ink: #f6e7c4; --kl-band-gold: #ffe3a3; flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); }
+/* the band in today's liturgical colour (script.js, initLitBand); white is worn as gold leaf */
+html[data-lit="green"] .kl-ch { --kl-band: linear-gradient(90deg, #10291c, #1f5137 55%, #163a3a); --kl-band-ink: #eaf5ec; --kl-band-gold: #f3d98e; }
+html[data-lit="violet"] .kl-ch { --kl-band: linear-gradient(90deg, #26123a, #4b2366 55%, #2a1f52); --kl-band-ink: #f3e9ff; --kl-band-gold: #f5d58c; }
+html[data-lit="white"] .kl-ch { --kl-band: linear-gradient(90deg, #422c0c, #7a5419 55%, #422c0c); --kl-band-ink: #fff3d6; --kl-band-gold: #ffe9b0; }
+html[data-lit="red"] .kl-ch { --kl-band: linear-gradient(90deg, #3e0c14, #7a1c26 55%, #3e0c14); --kl-band-ink: #fde9e6; --kl-band-gold: #ffd98a; }
+html[data-lit="rose"] .kl-ch { --kl-band: linear-gradient(90deg, #4a1a2c, #8a3a5a 55%, #4a1a2c); --kl-band-ink: #fff0f5; --kl-band-gold: #ffd9a8; }
 .kl-ch.is-closed { border-style: dashed; }
 .kl-ch:target { border-color: var(--gold); }
-.kl-name { margin: 0; font-size: 1.08rem; line-height: 1.25; }
-.kl-name a { color: var(--text); text-decoration: none; }
-.kl-name a:hover { color: var(--gold); }
-.kl-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; margin: 0; font: .8rem var(--sans); color: var(--muted); }
-.kl-rite { padding: .12rem .55rem; border-radius: 999px; background: var(--gold-bg); font-size: .68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--gold-active); }
+.kl-name { margin: 0; padding: .7rem 1rem .1rem; border-radius: 15px 15px 0 0; background: var(--kl-band); font-size: 1.08rem; line-height: 1.25; }
+.kl-name a { color: var(--kl-band-ink); text-decoration: none; }
+.kl-name a:hover { color: var(--kl-band-gold); }
+.kl-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; margin: 0; padding: .15rem 1rem .6rem; background: var(--kl-band); font: .8rem var(--sans); color: var(--kl-band-ink); }
+.kl-rite { padding: .1rem .55rem; border-radius: 999px; background: rgba(255, 255, 255, .12); font-size: .68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--kl-band-gold); }
 .kl-addr { display: flex; gap: .45rem; margin: 0; font: .88rem/1.4 var(--sans); color: var(--text-soft); }
 .kl-addr svg, .kl-links svg { flex: none; width: 1rem; height: 1rem; margin-top: .12rem; color: var(--gold); }
-.kl-mass { margin: .15rem 0 0; padding: .5rem .7rem; border-radius: .7rem; background: var(--gold-bg); font: .84rem/1.4 var(--sans); }
-.kl-mrow { display: grid; grid-template-columns: 6.6rem minmax(0, 1fr); gap: .1rem .7rem; padding: .18rem 0; }
-.kl-mrow dt { font-weight: 700; color: var(--text); }
-.kl-mrow dd { margin: 0; color: var(--text-soft); }
-@media (max-width: 440px) { .kl-mrow { grid-template-columns: 1fr; } }
-.kl-mnote { margin: 0; font: italic .8rem/1.4 var(--sans); color: var(--muted); }
-.kl-ch .ch-notice { margin: 0; padding: .6rem .75rem; font: .82rem/1.45 var(--sans); }
+.kl-mass { display: flex; flex-wrap: wrap; gap: .45rem; margin: .75rem 1rem 0; font: .84rem/1.4 var(--sans); }
+.kl-mrow { display: flex; flex-direction: column; min-width: 0; padding: .4rem .7rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); }
+.kl-mrow dt { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.kl-mrow dd { margin: 0; font-weight: 600; color: var(--text); }
+.kl-mnote { margin: .6rem 1rem 0; font: italic .8rem/1.4 var(--sans); color: var(--muted); }
+.kl-ch .ch-notice { margin: .75rem 1rem 0; padding: .6rem .75rem; font: .82rem/1.45 var(--sans); }
 .kl-ch .ch-notice svg { width: 1.1rem; height: 1.1rem; }
-.kl-links { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; margin: auto 0 0; padding-top: .3rem; font: .82rem var(--sans); }
+.kl-links { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: auto 0 0; padding: .7rem 1rem .85rem; font: .82rem var(--sans); }
 .kl-links a { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; color: var(--gold-active); text-decoration: none; }
 .kl-links a:hover { text-decoration: underline; }
-.kl-links .kl-more { margin-left: auto; }
-.kl-links .kl-more svg { width: .9rem; height: .9rem; margin: 0; }
+/* the card's way to its own page: a gold button at the foot of the card, on the right */
+.kl-links .kl-more {
+  margin-left: auto; justify-content: center; gap: .35rem; padding: .4rem .9rem;
+  border: 0; border-radius: 999px; background: var(--gold); color: var(--surface); font-size: .8rem; font-weight: 600; text-decoration: none; transition: filter .15s;
+}
+.kl-links .kl-more:hover { text-decoration: none; filter: brightness(1.08); }
+.kl-links .kl-more svg { width: .85rem; height: .85rem; margin: 0; color: inherit; }
+/* the address: a small pin button beside the rite that opens a popup card (hover on desktop, tap on touch) */
+.kl-adr { position: relative; display: inline-flex; }
+.kl-adr-btn { display: inline-flex; align-items: center; gap: .3rem; padding: .1rem .2rem; border: 0; background: none; font: 600 .8rem var(--sans); color: var(--kl-band-gold); cursor: pointer; }
+.kl-adr-btn svg { width: .95rem; height: .95rem; color: var(--kl-band-gold); }
+.kl-adr-btn:hover span, .kl-adr.is-open .kl-adr-btn span { text-decoration: underline; }
+.kl-adr-btn:focus-visible, .kl-pop-map:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.kl-pop { display: none; position: absolute; z-index: 20; left: 0; top: 100%; width: min(18rem, 78vw); margin-top: .35rem; padding: .7rem .8rem; flex-direction: column; gap: .55rem; background: var(--surface); border: 1px solid var(--border); border-radius: .8rem; box-shadow: 0 8px 24px rgba(0, 0, 0, .18); font: .84rem/1.45 var(--sans); color: var(--text-soft); text-transform: none; letter-spacing: 0; }
+.kl-pop::before { content: ""; position: absolute; left: 0; right: 0; top: -.4rem; height: .4rem; }
+.kl-adr.is-open .kl-pop { display: flex; }
+@media (hover: hover) { .kl-adr:hover .kl-pop, .kl-adr:focus-within .kl-pop { display: flex; } }
+.kl-pop-map { display: inline-flex; align-items: center; gap: .3rem; padding-top: .5rem; border-top: 1px solid var(--border); font-weight: 600; color: var(--gold-active); text-decoration: none; }
+.kl-pop-map:hover { text-decoration: underline; }
+.kl-pop-map svg { width: .85rem; height: .85rem; }
+/* church news: dated items under the city lists */
+/* Mass by language: a button per language, then that language's Masses city by city */
+.kl-lf { margin: 1rem 0 0; padding: 1.1rem 1.1rem 1rem; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.kl-lf-btns { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; margin: 0; padding: 0; font-family: var(--sans); }
+.kl-lf-btns button {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 2.5rem; padding: .3rem .85rem; border: 1px solid var(--border-strong); border-radius: 999px;
+  background: var(--surface-2); color: var(--text); font: 600 .88rem var(--sans); cursor: pointer;
+}
+.kl-lf-btns button small { color: var(--muted); font-size: .72rem; }
+.kl-lf-btns button:hover { border-color: var(--gold-soft); color: var(--gold); }
+.kl-lf-btns button[aria-pressed="true"] { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); }
+.kl-lf-btns button:focus-visible, .kl-lf-list a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.kl-lf-status { margin: .8rem 0 0; font: 600 .9rem var(--sans); color: var(--text-soft); }
+.kl-lf-status:empty { display: none; }
+.kl-lf-list, .kl-lf-list ul { list-style: none; margin: 0; padding: 0; }
+.kl-lf-list { display: grid; gap: 1rem; margin-top: .9rem; }
+.kl-lf-city h3 { margin: 0 0 .45rem; font: 700 .75rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.kl-lf-city > ul { display: grid; gap: .5rem; }
+.kl-lf-ch { padding: .6rem .8rem; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 10px; background: var(--surface-2); }
+.kl-lf-ch > a { font-weight: 700; color: var(--text); text-decoration: none; }
+.kl-lf-ch > a:hover { color: var(--gold-active); text-decoration: underline; }
+.kl-lf-ch li { margin-top: .2rem; font: .88rem/1.4 var(--sans); color: var(--text-soft); }
+.kl-lf-day { font-weight: 700; color: var(--text); }
+.kl-lf-day::after { content: ":"; }
+.kl-lf-note { margin: .9rem 0 0; font-size: .85rem; color: var(--muted); }
+/* with the script on, only the chosen language's Masses show, and nothing until one is chosen */
+.kl-lf.is-on .kl-lf-list li:not(.is-match) { display: none; }
+.kl-lf.is-on:not(.has-pick) .kl-lf-list { display: none; }
+.kl-news { margin: 3rem 0 0; }
+.kl-news-list { list-style: none; display: grid; gap: .75rem; margin: .8rem 0 0; padding: 0; }
+.kl-news-item { padding: .85rem 1rem .9rem; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 12px; background: var(--surface); }
+.kl-news-item time { font: 700 .72rem var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.kl-news-item h3 { margin: .2rem 0 .35rem; font-size: 1.05rem; line-height: 1.3; }
+.kl-news-item p { margin: 0; font-size: .95rem; color: var(--text-soft); }
+.kl-news-item .kl-news-src { margin-top: .5rem; font: .8rem var(--sans); color: var(--muted); }
+.kl-news-item .kl-news-src a { font-weight: 600; color: var(--gold-active); }
 .kl-faqs { margin: 3rem 0 1.5rem; }
 .kl-faq { margin-top: 1rem; }
 
@@ -4045,3 +4177,18 @@ html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap 
 }
 /* the home bar's own link (Kilise Bul): same look as an app's tab */
 .hm-link { text-decoration: none; }
+.hm-duo, .hm-today-rest { margin-top: .8rem; }
+.hm-duo { display: grid; grid-template-columns: 1fr; gap: .8rem; }
+.hm-duo > .hm-today { display: flex; }
+.hm-duo > .hm-today > .hm-card { flex: 1; min-height: 0; }
+.hm-duo .hm-find { margin: 0; }
+.hm-today-rest .hm-myst { grid-column: 1 / -1; min-height: 9rem; }
+@media (min-width: 700px) {
+  .hm-duo { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .hm-duo .hm-find-top { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: .9rem; }
+  .hm-duo .hm-find-t { font-size: 1.2rem; }
+  .hm-today-rest { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .hm-today-rest .hm-myst { grid-column: auto; order: 1; min-height: 11rem; }
+  .hm-today-rest .hm-saint { order: 2; grid-column: auto; min-height: 11rem; }
+}
+@media (min-width: 980px) { .hm-duo, .hm-today-rest { margin-top: 1rem; } }
