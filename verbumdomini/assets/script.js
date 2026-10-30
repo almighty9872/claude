@@ -1057,7 +1057,7 @@
     /* the other language's translation, folded away */
     function other(label, node) { var d = el('details', 'ref-other'); d.appendChild(el('summary', '', label)); d.appendChild(node); return d; }
     function fill(kind, key, a) {
-      var en = isEn(), data = window[KINDS[kind].name], item = data && data[key];
+      var en = isEn(), data = /** @type {any} */ (window)[KINDS[kind].name], item = data && data[key];
       body.textContent = ''; foot.textContent = '';
       var label = a.textContent.trim();
       if (kind === 'qref') label = (en ? 'Qur’an ' : 'Kur’an ') + key;
@@ -1376,7 +1376,7 @@
     var steps = rosarySteps(), idx = 0, done = false, prayers = {}, sets = {}, firstSet = null, lastCenter = '';
     var beads = {}, stepsFor = {}, hits = [];
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var narrow = window.matchMedia ? window.matchMedia('(max-width: 899.98px)') : { matches: true };
+    var narrow = /** @type {MediaQueryList} */ (window.matchMedia ? window.matchMedia('(max-width: 899.98px)') : { matches: true });
 
     /* Phones: the Rosary as one still screen that never scrolls. The painting of the mystery
        above (bars over it for the five decades), the prayer below with the beads of this part
@@ -3513,8 +3513,9 @@
       }
       kqTools();
       var qn = +a.getAttribute('data-av-qn');
-      clearTimeout(reader.t);
-      if (!KKREAD.has(qn)) reader.t = setTimeout(function () { if (cur === a) { KKREAD.mark(qn); readMark(a); } }, 3000);
+      var rd = /** @type {any} */ (reader);
+      clearTimeout(rd.t);
+      if (!KKREAD.has(qn)) rd.t = setTimeout(function () { if (cur === a) { KKREAD.mark(qn); readMark(a); } }, 3000);
       readMark(a);
     }
     /* the question's own line: "Okundu" with a tick once it has been read */
@@ -3848,7 +3849,7 @@
     };
     btn.addEventListener('click', function () { open(panel.hidden); });
     list.addEventListener('click', function (e) { if (e.target.closest('a')) setTimeout(function () { open(false); }, 0); });
-    document.addEventListener('click', function (e) { if (!panel.hidden && !box.contains(e.target)) open(false); });
+    document.addEventListener('click', function (e) { if (!panel.hidden && !box.contains(/** @type {Node} */ (e.target))) open(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { open(false); btn.focus(); } });
     var raf = 0;
     var update = function () {
@@ -3984,7 +3985,7 @@
       select.value = 'all';
       showOnlyCity(id);
       var sec = document.getElementById(id);
-      if (sec) sec.open = true;
+      if (sec) /** @type {HTMLDetailsElement} */ (sec).open = true;
       markCurrentCity(id);
     }
 
@@ -4013,7 +4014,7 @@
     function openHash() {
       var id = hashId(), el = id && document.getElementById(id);
       if (!el || !wrap.contains(el) || !el.matches('.why-item, .kk-sec')) return;
-      el.open = true;
+      /** @type {HTMLDetailsElement} */ (el).open = true;
       requestAnimationFrame(function () { el.scrollIntoView({ block: 'start' }); });
     }
     window.addEventListener('hashchange', openHash);
@@ -4080,7 +4081,7 @@
     function go(id, keepHash) {
       var el = document.getElementById(id);
       if (!el) return;
-      if (el.tagName === 'DETAILS') el.open = true;
+      if (el.tagName === 'DETAILS') /** @type {HTMLDetailsElement} */ (el).open = true;
       closeAll();
       root.style.scrollBehavior = 'auto';
       el.scrollIntoView(true);
@@ -4179,7 +4180,7 @@
       var btn = document.createElement('button');
       btn.type = 'button'; btn.className = 'toc-arrow ' + x[0]; btn.tabIndex = -1; btn.setAttribute('aria-hidden', 'true');
       btn.innerHTML = chev(x[1]);
-      btn.addEventListener('click', function () { list.scrollBy({ left: x[2] * list.clientWidth * 0.7, behavior: smooth ? 'smooth' : 'auto' }); });
+      btn.addEventListener('click', function () { list.scrollBy({ left: /** @type {number} */ (x[2]) * list.clientWidth * 0.7, behavior: smooth ? 'smooth' : 'auto' }); });
       nav.appendChild(btn);
     });
     list.addEventListener('scroll', ends, { passive: true });
@@ -4374,7 +4375,7 @@
        nothing here makes it lay the page out early (reading offsetHeight at startup did) */
     if (window.ResizeObserver) {
       new ResizeObserver(function (entries) {
-        var e = entries[0], box = e.borderBoxSize && (e.borderBoxSize[0] || e.borderBoxSize);
+        var e = entries[0], box = /** @type {ResizeObserverSize} */ (e.borderBoxSize && (e.borderBoxSize[0] || e.borderBoxSize));
         set(box && box.blockSize ? box.blockSize : header.offsetHeight);
       }).observe(header);
     } else {
