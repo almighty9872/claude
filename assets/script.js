@@ -4117,7 +4117,7 @@
     var H = document.documentElement, KEY = 'kd-kl-lang', bar = $('.kl-bar');
     var ANCHORS = '.kl-ch, .kl-h, .kl-side, .kl-sum, .kl-lead, .faq-item, .cmap, .ch-pick, .conventions, .page-head, .crumbs';
     var title0 = document.title, titleEn = sw.getAttribute('data-title-en');
-    var chips = $$('.kl-chips a'), cities = chips.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    var chips = $$('.kl-chips > ul a'), cities = chips.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
     function isEn() { return H.classList.contains('kl-en-on'); }
     function paint() {
       var en = isEn();
@@ -4178,6 +4178,22 @@
         queue();
       });
     });
+    /* "Tüm şehirler" (desktop): the same instant jump, then the menu closes; a click outside or Escape closes it too */
+    var all = $('.kl-all'), allLinks = all ? $$('ul a', all) : [];
+    allLinks.forEach(function (a, i) {
+      a.addEventListener('click', function (e) {
+        var t = cities[i]; if (!t) return;
+        e.preventDefault();
+        all.open = false;
+        jumpTo(function () { t.scrollIntoView(true); });
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+        queue();
+      });
+    });
+    if (all) {
+      document.addEventListener('click', function (e) { if (all.open && !all.contains(e.target)) all.open = false; });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && all.open) { all.open = false; $('summary', all).focus(); } });
+    }
     /* the section jumps on the banner (map, news, questions): instant too */
     $$('.ph-jump a').forEach(function (a) {
       a.addEventListener('click', function (e) {
@@ -4200,6 +4216,8 @@
         a.classList.toggle('is-current', i === pick);
         if (i === pick) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
       });
+      allLinks.forEach(function (a, i) { a.classList.toggle('is-current', i === pick); });
+      if (all) $('summary', all).classList.toggle('is-current', !!(chips[pick] && chips[pick].parentNode.classList.contains('kl-x')));
       var list = chips[0] && chips[0].closest('ul'), a = chips[pick];
       if (list && a && list.scrollWidth > list.clientWidth) list.scrollLeft = Math.max(0, a.offsetLeft - (list.clientWidth - a.offsetWidth) / 2);
     }

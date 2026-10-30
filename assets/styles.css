@@ -4007,6 +4007,34 @@ html.kl-en-on .kl-en.kl-blk { display: block; }
 .kl-chips a:hover, .hm-find-cities a:hover { border-color: var(--gold-soft); color: var(--gold); }
 .kl-chips a.is-current { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); font-weight: 600; }
 .kl-chips a:focus-visible, .kl-lab:focus-visible, .kl-switch:focus-visible, .kl-links a:focus-visible, .hm-find a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* "Tüm şehirler": on desktop the row keeps four chips and the other cities move into this menu; phones keep the swipe row */
+.kl-all { display: none; position: relative; flex: none; }
+.kl-all summary {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .38rem .8rem; border: 1px solid var(--gold-soft); border-radius: 999px; white-space: nowrap; cursor: pointer;
+  background: var(--surface); font-size: .82rem; color: var(--gold); list-style: none; transition: background-color .2s;
+}
+.kl-all summary::-webkit-details-marker { display: none; }
+.kl-all summary::after { content: ""; width: .4rem; height: .4rem; margin: -.2rem 0 0 .1rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); transition: transform .2s; }
+.kl-all[open] summary::after { margin-top: .2rem; transform: rotate(-135deg); }
+.kl-all summary small { color: var(--muted); font-size: .72rem; }
+.kl-all summary:hover, .kl-all[open] summary, .kl-all summary.is-current { background: var(--gold-bg); }
+.kl-all summary.is-current { color: var(--gold-active); font-weight: 600; }
+.kl-all summary:focus-visible, .kl-all ul a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.kl-all ul {
+  position: absolute; top: calc(100% + .5rem); right: 0; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 19rem; margin: 0; padding: .45rem; list-style: none;
+  background: var(--glass-strong); border: 1px solid var(--glass-brd); border-radius: var(--radius); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+}
+.kl-all ul a { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; padding: .45rem .65rem; border-radius: var(--radius-sm); font-size: .86rem; color: var(--text-soft); text-decoration: none; }
+.kl-all ul a small { color: var(--muted); font-size: .72rem; }
+.kl-all ul a:hover { background: var(--gold-bg); color: var(--gold); }
+.kl-all ul a.is-current { background: var(--gold-bg); color: var(--gold-active); font-weight: 600; }
+@media (min-width: 760px) {
+  .kl-chips { display: flex; align-items: center; gap: .45rem; }
+  .kl-chips > ul { flex: 1 1 auto; -webkit-mask-image: none; mask-image: none; }
+  .kl-chips .kl-x { display: none; }
+  .kl-all { display: block; }
+}
 /* the switch: a pill with a knob, like the one in iOS Settings; TR on the left, EN on the right */
 .kl-lang { flex: none; display: inline-flex; align-items: center; gap: .4rem; }
 .kl-lab { padding: .25rem .1rem; border: 0; background: none; font: 700 .78rem var(--sans); letter-spacing: .06em; color: var(--muted); cursor: pointer; -webkit-tap-highlight-color: transparent; }

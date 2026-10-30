@@ -3185,10 +3185,14 @@ if ($newsItems.Count) {
   }) -join '') + '</ul></section>'
 }
 
-# The pinned row: the cities as one-tap jumps, and the TR / EN switch at its right
-$klChips = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$(KL ($_.name -replace ' \(.*\)$', '') (City-En $_))<small>$(@($_.churches).Count)</small></a></li>" }) -join ''
+# The pinned row: the cities as one-tap jumps, and the TR / EN switch at its right. On desktop only the
+# $klTop cities stay as chips; the rest sit in the "Tüm şehirler" menu, which lists every city
+$klTop = @('istanbul', 'izmir', 'ankara', 'antalya')
+$klChips = ($Churches.cities | ForEach-Object { $x = if ($klTop -notcontains $_.id) { ' class="kl-x"' } else { '' }; "<li$x><a href=`"#$($_.id)`">$(KL ($_.name -replace ' \(.*\)$', '') (City-En $_))<small>$(@($_.churches).Count)</small></a></li>" }) -join ''
+$klAllList = ($Churches.cities | ForEach-Object { "<li><a href=`"#$($_.id)`">$(KL ($_.name -replace ' \(.*\)$', '') (City-En $_))<small>$(@($_.churches).Count)</small></a></li>" }) -join ''
+$klAll = "<details class=`"kl-all`"><summary>$(KL 'Tüm şehirler' 'All cities')<small>$(@($Churches.cities).Count)</small></summary><ul>$klAllList</ul></details>"
 $klSwitch = "<div class=`"kl-lang`"><button type=`"button`" class=`"kl-lab`" data-kl-set=`"tr`" lang=`"tr`">TR</button><button type=`"button`" class=`"kl-switch`" role=`"switch`" aria-checked=`"false`" aria-label=`"Türkçe / English`" data-title-en=`"Catholic Churches in Turkey: Addresses and Mass Times | $SiteName`"><span class=`"kl-knob`"></span></button><button type=`"button`" class=`"kl-lab`" data-kl-set=`"en`" lang=`"en`">EN</button></div>"
-$klBar = "<div class=`"kl-bar`"><nav class=`"kl-chips`" aria-label=`"Şehirler`" data-aria-en=`"Cities`"><ul>$klChips</ul></nav>$klSwitch</div>"
+$klBar = "<div class=`"kl-bar`"><nav class=`"kl-chips`" aria-label=`"Şehirler`" data-aria-en=`"Cities`"><ul>$klChips</ul>$klAll</nav>$klSwitch</div>"
 
 # Questions people search for, in both languages; the same text goes into the page's FAQ markup
 $riteCounts = ($Churches.rites | ForEach-Object { $r = $_; [pscustomobject]@{ tr = $r.tr; en = $r.en; n = (@($Churches.cities | ForEach-Object { $_.churches } | Where-Object { $_.rite -eq $r.id }).Count) } })
