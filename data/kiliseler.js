@@ -1906,9 +1906,9 @@ window.CHURCHES = /*JSON-START*/{
    "lat": 38.42,
    "lon": 27.14,
    "label": [
-    -11,
+    11,
     5,
-    "end"
+    "start"
    ],
    "open": "r",
    "churches": [

@@ -2958,6 +2958,21 @@ html.av .to-top-wrap { display: none; }
 .cmap-city:hover .cc-dot, .cmap-city:focus-visible .cc-dot, .cmap-city.is-sel .cc-dot { filter: drop-shadow(0 0 3px #f3cf6a) drop-shadow(0 0 7px #e0b24a); }
 .cmap-city:hover .cc-name, .cmap-city:focus-visible .cc-name, .cmap-city.is-sel .cc-name { fill: var(--gold-active); }
 .cmap-city:focus-visible .cc-dot { stroke: var(--focus); stroke-width: 3; }
+/* the ferry ports to the Greek islands: sea blue, smaller than the cities */
+.cmap { --port: #2b6f9e; }
+:root[data-theme="dark"] .cmap { --port: #6fb1de; }
+.cmap-port { cursor: pointer; outline: none; }
+.cmap-port .cp-hit { fill: transparent; }
+.cmap-port .cp-dot { fill: var(--port); stroke: var(--amap-tr); stroke-width: 1.5; }
+.cmap-port .cp-name { font-family: var(--sans); font-size: 11px; font-weight: 600; fill: var(--port); paint-order: stroke; stroke: var(--amap-tr); stroke-width: 3px; stroke-linejoin: round; }
+.cmap-port:hover .cp-name, .cmap-port:focus-visible .cp-name { text-decoration: underline; }
+.cmap-port:focus-visible .cp-dot { stroke: var(--focus); stroke-width: 2.5; }
+.cmap-key { margin: .55rem 0 0; font: .82rem var(--sans); text-align: center; }
+.cmap-key a { display: inline-flex; align-items: center; gap: .45rem; color: var(--port); text-decoration: none; }
+.cmap-key a:hover { text-decoration: underline; }
+/* a phone's frame is too small for their names beside the cities: the dots stay, the key under the map names them */
+@media (max-width: 599px) { .cmap-port .cp-name { display: none; } }
+.cp-swatch { flex: none; width: .6rem; height: .6rem; border-radius: 50%; background: var(--port); }
 /* the list of a city's churches */
 .cmap-pop {
   position: absolute; z-index: 5; min-width: 11rem; max-width: calc(100vw - 2rem); padding: .75rem .9rem .7rem; font-family: var(--sans);
@@ -3644,6 +3659,15 @@ main .page-head.painted[data-art="n-antwerp"] .ph-art { position: absolute !impo
 main .page-head.painted[data-art="n-antwerp"] .ph-text { max-width: 44rem; padding: 1.2rem 1.4rem !important; border-radius: 1.1rem; background: rgba(12, 10, 8, .58) !important; color: #fff !important; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
 main .page-head.painted[data-art="n-antwerp"] .ph-text :is(h1, p, .kl-lead) { color: #fff !important; }
 main .page-head.painted[data-art="n-antwerp"] .ph-text .kl-checked { color: rgba(255, 255, 255, .78) !important; }
+/* the section jumps under the panel: the same translucent dark glass, one pill each */
+.ph-jump { position: relative; z-index: 1; margin-top: .8rem; }
+.ph-jump ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; margin: 0; padding: 0; }
+.ph-jump a {
+  display: inline-block; padding: .5rem 1.15rem; border-radius: 999px; background: rgba(12, 10, 8, .58); font: 600 .9rem var(--sans); color: #fff; text-decoration: none;
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); transition: background-color .2s;
+}
+.ph-jump a:hover { background: rgba(12, 10, 8, .74); color: #ffe3a3; }
+.ph-jump a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 main .page-head.painted[data-art="n-antwerp"] .ph-cap { top: auto !important; bottom: .7rem !important; right: .8rem !important; }
 main .work-hero:has(> .banner-only) { padding-top: 0 !important; margin-top: 0 !important; }
 main .page-head.banner-only { width: 100%; }
@@ -4002,7 +4026,7 @@ html:not(.kl-en-on) .kl-lab[data-kl-set="tr"], html.kl-en-on .kl-lab[data-kl-set
 .kl-switch:active .kl-knob { width: 1.8rem; }
 .kl-switch[aria-checked="true"]:active .kl-knob { transform: translateX(.85rem); }
 html:has(.kl-bar) { scroll-padding-top: calc(var(--header-h) + 3.8rem); }
-html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap { scroll-margin-top: 0; }
+html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-news, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap { scroll-margin-top: 0; }
 /* a city's section */
 .kl-city { margin: 2.6rem 0 0; }
 .kl-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .65rem; margin: 0 0 .35rem; font-size: 1.5rem; line-height: 1.2; }

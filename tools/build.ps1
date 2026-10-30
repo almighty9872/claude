@@ -465,7 +465,11 @@ function Paint-Head([string]$body, [string]$file) {
   $open = "<header class=`"$cls`" data-art=`"$key`"$($m.Groups[2].Value)>$imgs"
   $end = $body.IndexOf('</header>', $m.Index)
   $inner = $body.Substring($m.Index + $m.Length, $end - $m.Index - $m.Length)
-  return $body.Substring(0, $m.Index) + $open + "<div class=`"ph-text`">$inner</div>" + (Art-Cap $key) + $body.Substring($end)
+  # a row of section jumps (class ph-jump) sits on the painting below the title's panel, not in it
+  $jump = [regex]::Match($inner, '<nav class="ph-jump"[\s\S]*?</nav>')
+  $after = ''
+  if ($jump.Success) { $after = $jump.Value; $inner = $inner.Remove($jump.Index, $jump.Length) }
+  return $body.Substring(0, $m.Index) + $open + "<div class=`"ph-text`">$inner</div>$after" + (Art-Cap $key) + $body.Substring($end)
 }
 
 # ---- Illustrated sections: a page section with a line drawing of its own beside it (in the section's
@@ -2987,6 +2991,15 @@ foreach ($city in $Churches.cities) {
   } else { $cols = "<div class=`"cmap-pop-col`"><ul>$(& $li @($city.churches))</ul></div>" }
   [void]$cmPops.Append("<div class=`"cmap-pop`" id=`"cmap-pop-$($city.id)`" role=`"group`" $(TA 'aria-label' "$($city.name) kiliseleri") data-aria-en=`"$aeList`" hidden><p class=`"cmap-pop-t`">$(KL $city.name (City-En $city))</p><div class=`"cmap-pop-cols`">$cols</div></div>")
 }
+# the ferry ports to the Greek islands with a Catholic church: a blue dot leading to the question about them
+$cmPorts = (@(
+  @{ n = 'Ayvalık'; lat = 39.32; lon = 26.69; l = @(9, 4, 'start') }
+  @{ n = 'Çeşme'; lat = 38.32; lon = 26.30; l = @(0, 15, 'middle') }
+  @{ n = 'Kuşadası'; lat = 37.86; lon = 27.26; l = @(9, 4, 'start') }
+  @{ n = 'Bodrum'; lat = 37.03; lon = 27.43; l = @(0, 15, 'middle') }
+  @{ n = 'Marmaris'; lat = 36.85; lon = 28.27; l = @(0, -9, 'middle') }
+  @{ n = 'Fethiye'; lat = 36.62; lon = 29.12; l = @(0, 15, 'middle') }
+) | ForEach-Object { "<a class=`"cmap-port`" href=`"#yunan-adalari`" $(Cm-Pin $_.lat $_.lon)><title>$($_.n): Yunan adalarına feribot</title><circle class=`"cp-hit`" r=`"12`"></circle><circle class=`"cp-dot`" r=`"4`"></circle><text class=`"cp-name`" x=`"$($_.l[0])`" y=`"$($_.l[1])`" text-anchor=`"$($_.l[2])`">$($_.n)</text></a>" }) -join ''
 $cmTexts = (@(
   @{ t = 'Karadeniz'; lat = 42.55; lon = 34.6 }
   @{ t = 'Akdeniz'; lat = 35.25; lon = 31.2 }
@@ -3003,10 +3016,12 @@ $churchMapHtml = @"
       <path class="cmap-tr" d="$($CmShape.marmara)"></path>
       <path class="cmap-lake" d="$($AnShape.lakes)"></path>
       <g class="cmap-texts" aria-hidden="true">$cmTexts</g>
+      <g class="cmap-ports">$cmPorts</g>
       <g class="cmap-cities">$($cmCities.ToString())</g>
     </svg>
     $($cmPops.ToString())
   </div>
+  <p class="cmap-key"><a href="#yunan-adalari"><span class="cp-swatch" aria-hidden="true"></span>$(KL 'Katolik kilisesi olan Yunan adalarına feribot limanları: Ayvalık, Çeşme, Kuşadası, Bodrum, Marmaris, Fethiye' 'Ferry ports to Greek islands with a Catholic church: Ayvalık, Çeşme, Kuşadası, Bodrum, Marmaris, Fethiye')</a></p>
 </section>
 "@
 $IcoChevKl = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>'
@@ -3155,6 +3170,10 @@ $klFaq = @(
      q = 'Katolik olmak istiyorum, nereye başvurmalıyım?'; qe = 'I want to become Catholic. Where do I start?'
      a = "Yakınınızdaki bir kiliseye gidip rahiple konuşun. Katolik Kilisesi$($Apos)ne katılım OCIA denen bir hazırlık süreciyle olur; <a href=`"katolik-sureci.html`">Katolik Olma Süreci</a> sayfasında adımlar anlatılıyor."
      ae = "Visit a church near you and speak to the priest. Joining the Catholic Church happens through a period of preparation called OCIA; the steps are explained on the <a href=`"katolik-sureci.html`">Becoming Catholic</a> page (in Turkish)." }
+  @{ id = 'yunan-adalari'
+     q = "Yakındaki Yunan adalarında Katolik kilisesi var mı?"; qe = 'Are there Catholic churches on the nearby Greek islands?'
+     a = "Evet. Türkiye kıyısından feribotla kısa sürede gidilen beş Yunan adasında Katolik kilisesi var: Rodos$($Apos)ta (Marmaris$($Apos)ten ve Fethiye$($Apos)den) Assisili Aziz Francis Katedrali ve Fransisken rahiplerin hizmet verdiği Zafer Meryemi Kilisesi; Sakız Adası$($Apos)nda (Çeşme$($Apos)den) Aziz Nikolaos Katedrali; Sisam$($Apos)da (Kuşadası$($Apos)ndan) Meryem$($Apos)in Göğe Alınışı Kilisesi; Midilli$($Apos)de (Ayvalık$($Apos)tan ve Dikili$($Apos)den) Midilli şehrindeki Meryem$($Apos)in Göğe Alınışı Kilisesi; İstanköy$($Apos)de (Bodrum$($Apos)dan) İstanköy şehrindeki Agnus Dei Kilisesi. Bu cemaatler küçüktür; pazar ayini çoğu zaman tektir ve Yunanca ya da İngilizce olabilir. Seferlerin çoğu yaz aylarındadır. Türk vatandaşları Hızlı Vize (Visa Express) uygulamasıyla Midilli, Sakız, Sisam, İstanköy, Rodos, Kalimnos, Limni, İleriye, Sömbeki ve Meis adalarına önceden başvurmadan gidebilir: geçerli pasaportla limanda 60 avroya 7 günlük vize verilir. Bu vize yalnızca bu adalarda geçerlidir, başka Avrupa ülkelerine gitmeye izin vermez; uygulama şu an Nisan 2027$($Apos)ye kadar uzatılmış durumda. Başka ülkelerin vatandaşları için her zamanki Schengen kuralları geçerlidir. Yola çıkmadan önce feribot saatlerini, vize koşullarını ve ayin saatini kiliseyle teyit edin."
+     ae = "Yes. Five Greek islands a short ferry ride from the Turkish coast have Catholic churches: on Rhodes (from Marmaris and Fethiye), St. Francis of Assisi Cathedral and the Franciscan-run Church of Our Lady of Victory; on Chios (from Çeşme), St. Nicholas Cathedral; on Samos (from Kuşadası), the Church of the Assumption; on Lesbos (from Ayvalık and Dikili), the Church of the Assumption in Mytilene; and on Kos (from Bodrum), the Agnus Dei church in Kos town. These are small communities, often with a single Sunday Mass, which may be in Greek or English. Most crossings run in the summer months. Turkish citizens can visit Lesvos, Chios, Samos, Kos, Rhodes, Kalymnos, Limnos, Leros, Symi and Kastellorizo without applying in advance under the Visa Express scheme: with a valid passport, a 7-day visa is issued at the port for 60 euros. It is valid on these islands only and does not allow travel to other European countries; the scheme currently runs until April 2027. Other nationalities need a Schengen visa or visa-free entry as usual. Before you go, check the ferry times, the visa rules and the Mass time with the church." }
   @{ id = 'katolik-bulunamadiginda'
      q = 'Yakınımda Katolik kilisesi yoksa ne yapmalıyım?'; qe = 'What if there is no Catholic church near me?'
      a = (Inline $Churches.orthodoxNote); ae = $Churches.orthodoxNoteEn }
@@ -3169,7 +3188,8 @@ $kiliselerBody = @"
 <div class="wrap narrow kl-page">
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$(KL "Türkiye$($Apos)de Katolik Kiliseleri" 'Catholic Churches in Turkey')</h1>
-    <p class="kl-lead">$(KL $leadTr $leadEn)<em class="kl-checked">$(KL "Son kontrol: $($Churches.checked)" "Last checked: $($Churches.checkedEn)")</em></p></header>
+    <p class="kl-lead">$(KL $leadTr $leadEn)<em class="kl-checked">$(KL "Son kontrol: $($Churches.checked)" "Last checked: $($Churches.checkedEn)")</em></p>
+    <nav class="ph-jump" aria-label="Bölümler" data-aria-en="Sections"><ul><li><a href="#harita">$(KL 'Harita' 'Map')</a></li>$(if ($klNewsHtml) { "<li><a href=`"#haberler`">$(KL 'Haberler' 'News')</a></li>" })<li><a href="#sik-sorulanlar">$(KL 'Sorular' 'Questions')</a></li></ul></nav></header>
   $klBar
 $churchMapHtml
   $churchPickHtml

@@ -2876,7 +2876,7 @@
     var sec = $('.cmap'); if (!sec) return;
     var svg = $('.cmap-svg', sec), frame = $('.cmap-frame', sec);
     var pin = function (el) { el._x = +el.getAttribute('data-x'); el._y = +el.getAttribute('data-y'); return el; };
-    var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin);
+    var cities = $$('.cmap-city', svg).map(pin), texts = $$('.cmap-texts text', svg).map(pin), ports = $$('.cmap-port', svg).map(pin);
     var line = document.createElement('div'); line.className = 'cmap-line'; line.hidden = true; frame.appendChild(line);
     var vb = null, open = null;
 
@@ -2892,9 +2892,19 @@
       /* dots and names keep their size on screen (a little smaller in a phone's narrow frame) */
       var fw = svg.clientWidth || 1, k = Math.max(.8, Math.min(1, fw / 640)), s = vb.w / fw * k;
       cities.forEach(function (c) { c.setAttribute('transform', 'translate(' + c._x + ' ' + c._y + ') scale(' + s + ')'); });
-      texts.forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
+      texts.concat(ports).forEach(function (t) { t.setAttribute('transform', 'translate(' + t._x + ' ' + t._y + ') scale(' + s + ')'); });
       if (open) place(open);
     }
+    /* a ferry port (and the key under the map): straight to the question about the Greek islands, opened */
+    $$('.cmap-port, .cmap-key a', sec).forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = document.getElementById((a.getAttribute('href') || a.getAttribute('xlink:href') || '').slice(1)); if (!t) return;
+        e.preventDefault();
+        if (t.tagName === 'DETAILS') t.open = true;
+        var r = document.documentElement; r.style.scrollBehavior = 'auto'; t.scrollIntoView(true); r.style.scrollBehavior = '';
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+      });
+    });
     function popOf(c) { return document.getElementById('cmap-pop-' + c.getAttribute('data-city')); }
     /* the list beside its city: vertically round the dot, kept inside the frame where it fits */
     function place(c) {
@@ -4130,6 +4140,16 @@
     chips.forEach(function (a, i) {
       a.addEventListener('click', function (e) {
         var t = cities[i]; if (!t) return;
+        e.preventDefault();
+        jumpTo(function () { t.scrollIntoView(true); });
+        try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
+        queue();
+      });
+    });
+    /* the section jumps on the banner (map, news, questions): instant too */
+    $$('.ph-jump a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = document.getElementById(a.getAttribute('href').slice(1)); if (!t) return;
         e.preventDefault();
         jumpTo(function () { t.scrollIntoView(true); });
         try { history.replaceState(history.state, '', location.pathname + location.search + '#' + t.id); } catch (err) { /* not rewritable */ }
