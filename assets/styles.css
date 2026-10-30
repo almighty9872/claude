@@ -4013,8 +4013,14 @@ html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap 
 .kl-links { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; margin: auto 0 0; padding-top: .3rem; font: .82rem var(--sans); }
 .kl-links a { display: inline-flex; align-items: center; gap: .3rem; font-weight: 600; color: var(--gold-active); text-decoration: none; }
 .kl-links a:hover { text-decoration: underline; }
-.kl-links .kl-more { margin-left: auto; }
-.kl-links .kl-more svg { width: .9rem; height: .9rem; margin: 0; }
+/* the card's way to its own page: a rounded button across the foot of the card */
+.kl-links .kl-more {
+  order: 3; flex: 0 0 100%; justify-content: center; gap: .4rem; min-height: 2.6rem; margin-top: .3rem; padding: .5rem 1rem;
+  border-radius: 999px; background: var(--gold); color: var(--bg); font-size: .86rem; text-decoration: none; transition: filter .15s;
+}
+.kl-links .kl-more:hover { text-decoration: none; filter: brightness(1.1); }
+.kl-links .kl-more:active { filter: brightness(.92); }
+.kl-links .kl-more svg { width: .95rem; height: .95rem; margin: 0; color: inherit; }
 .kl-faqs { margin: 3rem 0 1.5rem; }
 .kl-faq { margin-top: 1rem; }
 
