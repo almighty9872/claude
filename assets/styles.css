@@ -3625,6 +3625,13 @@ main .prose h2, main h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); }
 /* the dyslexia setting now adds room between letters, words and lines */
 [data-a11y-dyslexia="1"] body { letter-spacing: .02em; word-spacing: .1em; line-height: 1.9; }
 main .page-head.painted .ph-text h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem) !important; }
+/* Kilise Bul (the Antwerp banner): the title and intro sit on the painting, on a translucent dark panel */
+main .page-head.painted[data-art="n-antwerp"] { align-items: center !important; justify-content: center !important; min-height: clamp(23rem, 46vw, 30rem) !important; margin: 0 calc(50% - 50vw) 1.4rem !important; padding: 2.2rem 1rem 2.8rem !important; overflow: hidden !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-art { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; margin: 0 !important; aspect-ratio: auto !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-text { max-width: 44rem; padding: 1.2rem 1.4rem !important; border-radius: 1.1rem; background: rgba(12, 10, 8, .58) !important; color: #fff !important; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+main .page-head.painted[data-art="n-antwerp"] .ph-text :is(h1, p, .kl-lead) { color: #fff !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-text .kl-checked { color: rgba(255, 255, 255, .78) !important; }
+main .page-head.painted[data-art="n-antwerp"] .ph-cap { top: auto !important; bottom: .7rem !important; right: .8rem !important; }
 main .work-hero:has(> .banner-only) { padding-top: 0 !important; margin-top: 0 !important; }
 main .page-head.banner-only { width: 100%; }
 main .page-head.banner-only .ph-cap { right: calc(50% - 50vw + .7rem) !important; width: max-content; max-width: calc(100vw - 1.4rem); }
