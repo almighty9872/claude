@@ -68,7 +68,7 @@ $PageSources = @{
   'gizlilik.html' = @('content/gizlilik.md', 'content/gizlilik-en.md'); 'kaynaklar-ve-telif.html' = @('content/hakkinda.md', 'content/hakkinda-en.md', 'data/tablolar.json', 'data/aziz-portreleri.json')
   'index.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json', 'data/tablolar.json', 'data/azizler.js', 'data/buyuk-azizler.js')
   'kilise-tarihi.html' = @('data/kilise-tarihi.json', 'data/tarih-gorseller.json')
-  'iletisim.html' = @('cloudflare/contact-worker.js')   # the form and the worker that sends it on
+  'iletisim.html' = @('cloudflare/contact.js')   # the form and the worker that sends it on
   'sozluk.html' = @('content/glossary-en.txt')
 }
 $script:GitDates = @{}
