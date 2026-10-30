@@ -4079,6 +4079,38 @@
   function initLitBand() {
     if ($('.kl-ch')) document.documentElement.setAttribute('data-lit', liturgicalDay(new Date(), 'en').colour);
   }
+  /* Kilise Bul, Mass by language: one language at a time (a second tap clears it), kept in ?dil= */
+  function initMassLang() {
+    var box = $('.kl-lf');
+    if (!box) return;
+    var btns = $$('[data-lf]', box), status = $('.kl-lf-status', box), items = $$('.kl-lf-list li', box);
+    function pick(l, user) {
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lf') === l ? 'true' : 'false'); });
+      box.classList.toggle('has-pick', !!l);
+      var nCh = 0, nMass = 0;
+      items.forEach(function (li) {
+        var on = !!l && (' ' + li.getAttribute('data-l') + ' ').indexOf(' ' + l + ' ') > -1;
+        if (li.classList.contains('kl-lf-city')) on = !!l && $$('.kl-lf-ch', li).some(function (c) { return (' ' + c.getAttribute('data-l') + ' ').indexOf(' ' + l + ' ') > -1; });
+        else if (on && li.classList.contains('kl-lf-ch')) nCh++;
+        else if (on) nMass++;
+        li.classList.toggle('is-match', on);
+      });
+      var b = btns.filter(function (x) { return x.getAttribute('data-lf') === l; })[0];
+      if (b) {
+        var tr = $('.kl-tr', b).textContent, en = $('.kl-en', b).textContent;
+        status.innerHTML = '<span class="kl-tr">' + tr + ': ' + nCh + ' kilisede ' + nMass + ' ayin saati</span><span class="kl-en" lang="en">' + en + ': ' + nMass + (nMass === 1 ? ' Mass time' : ' Mass times') + ' in ' + nCh + (nCh === 1 ? ' church' : ' churches') + '</span>';
+      } else status.textContent = '';
+      if (user) {
+        try { var u = new URL(location.href); if (l) u.searchParams.set('dil', l); else u.searchParams.delete('dil'); history.replaceState(history.state, '', u.pathname + u.search + u.hash); } catch (e) { /* not rewritable */ }
+      }
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { pick(b.getAttribute('aria-pressed') === 'true' ? '' : b.getAttribute('data-lf'), true); });
+    });
+    box.classList.add('is-on');
+    var q = /[?&]dil=([a-z]+)/.exec(location.search);
+    pick(q && btns.some(function (b) { return b.getAttribute('data-lf') === q[1]; }) ? q[1] : '', false);
+  }
   function initKlLang() {
     var sw = $('.kl-switch');
     if (!sw) return;
@@ -4399,7 +4431,7 @@
     [
       initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initFaqDir, initLitBand, initKlLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initLitBand, initKlLang, initMassLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();

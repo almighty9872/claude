@@ -4026,7 +4026,7 @@ html:not(.kl-en-on) .kl-lab[data-kl-set="tr"], html.kl-en-on .kl-lab[data-kl-set
 .kl-switch:active .kl-knob { width: 1.8rem; }
 .kl-switch[aria-checked="true"]:active .kl-knob { transform: translateX(.85rem); }
 html:has(.kl-bar) { scroll-padding-top: calc(var(--header-h) + 3.8rem); }
-html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-news, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap { scroll-margin-top: 0; }
+html:has(.kl-bar) .kl-city, html:has(.kl-bar) .kl-lf, html:has(.kl-bar) .kl-news, html:has(.kl-bar) .kl-faqs, html:has(.kl-bar) .cmap { scroll-margin-top: 0; }
 /* a city's section */
 .kl-city { margin: 2.6rem 0 0; }
 .kl-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .65rem; margin: 0 0 .35rem; font-size: 1.5rem; line-height: 1.2; }
@@ -4084,6 +4084,33 @@ html[data-lit="rose"] .kl-ch { --kl-band: linear-gradient(90deg, #4a1a2c, #8a3a5
 .kl-pop-map:hover { text-decoration: underline; }
 .kl-pop-map svg { width: .85rem; height: .85rem; }
 /* church news: dated items under the city lists */
+/* Mass by language: a button per language, then that language's Masses city by city */
+.kl-lf { margin: 1rem 0 0; padding: 1.1rem 1.1rem 1rem; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.kl-lf-btns { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; margin: 0; padding: 0; font-family: var(--sans); }
+.kl-lf-btns button {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 2.5rem; padding: .3rem .85rem; border: 1px solid var(--border-strong); border-radius: 999px;
+  background: var(--surface-2); color: var(--text); font: 600 .88rem var(--sans); cursor: pointer;
+}
+.kl-lf-btns button small { color: var(--muted); font-size: .72rem; }
+.kl-lf-btns button:hover { border-color: var(--gold-soft); color: var(--gold); }
+.kl-lf-btns button[aria-pressed="true"] { background: var(--gold-bg); border-color: var(--gold-soft); color: var(--gold-active); }
+.kl-lf-btns button:focus-visible, .kl-lf-list a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.kl-lf-status { margin: .8rem 0 0; font: 600 .9rem var(--sans); color: var(--text-soft); }
+.kl-lf-status:empty { display: none; }
+.kl-lf-list, .kl-lf-list ul { list-style: none; margin: 0; padding: 0; }
+.kl-lf-list { display: grid; gap: 1rem; margin-top: .9rem; }
+.kl-lf-city h3 { margin: 0 0 .45rem; font: 700 .75rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.kl-lf-city > ul { display: grid; gap: .5rem; }
+.kl-lf-ch { padding: .6rem .8rem; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 10px; background: var(--surface-2); }
+.kl-lf-ch > a { font-weight: 700; color: var(--text); text-decoration: none; }
+.kl-lf-ch > a:hover { color: var(--gold-active); text-decoration: underline; }
+.kl-lf-ch li { margin-top: .2rem; font: .88rem/1.4 var(--sans); color: var(--text-soft); }
+.kl-lf-day { font-weight: 700; color: var(--text); }
+.kl-lf-day::after { content: ":"; }
+.kl-lf-note { margin: .9rem 0 0; font-size: .85rem; color: var(--muted); }
+/* with the script on, only the chosen language's Masses show, and nothing until one is chosen */
+.kl-lf.is-on .kl-lf-list li:not(.is-match) { display: none; }
+.kl-lf.is-on:not(.has-pick) .kl-lf-list { display: none; }
 .kl-news { margin: 3rem 0 0; }
 .kl-news-list { list-style: none; display: grid; gap: .75rem; margin: .8rem 0 0; padding: 0; }
 .kl-news-item { padding: .85rem 1rem .9rem; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 12px; background: var(--surface); }

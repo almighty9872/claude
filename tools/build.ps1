@@ -3122,6 +3122,55 @@ function City-Section($city) {
 }
 $klCities = ($Churches.cities | ForEach-Object { City-Section $_ }) -join "`n"
 
+# Mass by language: every Mass time whose language the sources give, read from the English Mass text
+# ("10:00 English · 11:30 Spanish"); a row ending in ", Polish / Turkish" gives the language of all its
+# times, and an Armenian Catholic church's times count as Armenian and Turkish (its note says so).
+# Closed churches and times with no language stated are left out. The reader picks a language on the page.
+$MassLangs = [ordered]@{
+  en = @('İngilizce', 'English', 'English'); fr = @('Fransızca', 'French', 'French'); it = @('İtalyanca', 'Italian', 'Italian')
+  es = @('İspanyolca', 'Spanish', 'Spanish'); de = @('Almanca', 'German', 'German'); pl = @('Lehçe', 'Polish', 'Polish')
+  ko = @('Korece', 'Korean', 'Korean'); ar = @('Arapça', 'Arabic', 'Arabic'); syr = @('Süryanice (Aramice)', 'Syriac (Aramaic)', 'Aramaic|Syriac')
+  hy = @('Ermenice', 'Armenian', 'Armenian'); tr = @('Türkçe', 'Turkish', 'Turkish')
+}
+function Mass-Langs([string]$s) { return @($MassLangs.Keys | Where-Object { $s -match "\b($($MassLangs[$_][2]))\b" }) }
+$lfCount = @{}; $lfCities = New-Object Text.StringBuilder
+foreach ($city in $Churches.cities) {
+  $chHtml = New-Object Text.StringBuilder
+  foreach ($ch in @($city.churches | Where-Object { $_.status -ne 'closed' })) {
+    $rows = New-Object Text.StringBuilder; $chLangs = @{}
+    for ($i = 0; $i -lt @($ch.mass).Count; $i++) {
+      $m = @($ch.mass)[$i]; $me = @($ch.massEn)[$i]
+      $segTr = $m[1] -split ' · '; $segEn = $me[1] -split ' · '
+      $rowLangs = @()
+      if ($segEn[-1] -match ', ([A-Z][a-z]+(?: / [A-Z][a-z]+)*)$') { $rowLangs = Mass-Langs $Matches[1] }
+      for ($j = 0; $j -lt $segEn.Count; $j++) {
+        $e = $segEn[$j]
+        if ($e -notmatch '\d{1,2}:\d{2}' -or ($e -match 'Rosary|Adoration' -and $e -notmatch 'Mass')) { continue }
+        $ls = Mass-Langs $e
+        if (-not $ls.Count) { $ls = $rowLangs }
+        if (-not $ls.Count -and $ch.rite -eq 'ermeni') { $ls = @('hy', 'tr') }
+        if (-not $ls.Count) { continue }
+        foreach ($l in $ls) { $chLangs[$l] = 1 }
+        [void]$rows.Append("<li data-l=`"$($ls -join ' ')`"><span class=`"kl-lf-day`">$(KL (Inline $m[0]) $me[0])</span> $(KL (Inline $segTr[$j]) $e)</li>")
+      }
+    }
+    if (-not $rows.Length) { continue }
+    foreach ($l in $chLangs.Keys) { $lfCount[$l] = 1 + [int]$lfCount[$l] }
+    $nmEn = if ($ch.nameEn) { $ch.nameEn } else { Inline $ch.name }
+    [void]$chHtml.Append("<li class=`"kl-lf-ch`" data-l=`"$(@($chLangs.Keys) -join ' ')`"><a href=`"#k-$($ch.id)`">$(KL (Inline $ch.name) $nmEn)</a><ul>$rows</ul></li>")
+  }
+  if ($chHtml.Length) { [void]$lfCities.Append("<li class=`"kl-lf-city`"><h3>$(KL ($city.name -replace ' \(.*\)$', '') (City-En $city))</h3><ul>$chHtml</ul></li>") }
+}
+# the buttons: the other languages by how many churches have them, Turkish last
+$lfKeys = @(@($MassLangs.Keys | Where-Object { $_ -ne 'tr' -and $lfCount[$_] } | Sort-Object { - $lfCount[$_] }, { $MassLangs[$_][1] }) + @('tr' | Where-Object { $lfCount[$_] }))
+$lfBtns = ($lfKeys | ForEach-Object { "<li><button type=`"button`" data-lf=`"$_`" aria-pressed=`"false`">$(KL $MassLangs[$_][0] $MassLangs[$_][1])<small>$($lfCount[$_])</small></button></li>" }) -join ''
+$klLangHtml = "<section class=`"kl-lf`" id=`"dile-gore`" aria-labelledby=`"h-kl-lf`"><h2 class=`"kl-h`" id=`"h-kl-lf`">$(KL 'Dile Göre Ayinler' 'Mass by Language')</h2>" +
+  "<p class=`"kl-sum`">$(KL 'Bir dil seçin: o dildeki bütün ayinler şehir şehir, gün ve saatiyle listelenir. Rakam, o dilde ayin olan kilise sayısıdır.' 'Choose a language to see every Mass in it, city by city, with its day and time. The number is how many churches have Mass in that language.')</p>" +
+  "<ul class=`"kl-lf-btns`" role=`"group`" aria-label=`"Ayin dili`" data-aria-en=`"Language of the Mass`">$lfBtns</ul>" +
+  "<p class=`"kl-lf-status`" role=`"status`" aria-live=`"polite`"></p>" +
+  "<ul class=`"kl-lf-list`">$lfCities</ul>" +
+  "<p class=`"kl-lf-note`">$(KL 'Dili belirtilmeyen ayinler bu listede yok; kartlarda bütün saatler yazıyor. Gitmeden önce saati kiliseden teyit edin.' 'Masses whose language the sources do not give are not in this list; the cards below have every time. Check the time with the church before you go.')</p></section>"
+
 # Church news: the newest few dated items from the data file, each with its source and a link to the church or city it concerns
 $klNewsHtml = ''
 $newsItems = @($Churches.news | Sort-Object { $_.date } -Descending | Select-Object -First 5)
@@ -3160,8 +3209,8 @@ $klFaq = @(
      ae = "Yes. Mass is open to everyone; you can sit, watch and join in quietly. Communion is for Catholics only, and you can stay in your seat while it is given. See <a href=`"sss.html#komunyon-kimler`">Who can receive Holy Communion?</a> (in Turkish)." }
   @{ id = 'ayin-dili'
      q = 'Ayinler hangi dilde yapılıyor?'; qe = 'In which language is Mass celebrated?'
-     a = "Birçok kilisede Türkçe ayin vardır; ayrıca İngilizce, İtalyanca, Lehçe ve başka dillerde yapılan ayinler de bulunur. Her kartta saatin yanında ayinin dili yazıyor."
-     ae = "Many churches have a Mass in Turkish, and there are also Masses in English, Italian, Polish and other languages. Each card gives the language next to the time." }
+     a = "Birçok kilisede Türkçe ayin vardır; ayrıca İngilizce, İtalyanca, Lehçe ve başka dillerde yapılan ayinler de bulunur. Her kartta saatin yanında ayinin dili yazıyor; <a href=`"#dile-gore`">Dile Göre Ayinler</a> bölümünde bir dil seçip o dildeki bütün ayinleri görebilirsiniz."
+     ae = "Many churches have a Mass in Turkish, and there are also Masses in English, Italian, Polish and other languages. Each card gives the language next to the time, and in <a href=`"#dile-gore`">Mass by Language</a> you can pick a language and see every Mass in it." }
   @{ id = 'kiliseye-girerken'
      q = 'Kiliseye girerken ne giymeli, nelere dikkat etmeli?'; qe = 'What should I wear and keep in mind when I visit a church?'
      a = "Özel bir kıyafet gerekmez; omuzları ve dizleri örten sade bir giyim yeterlidir. İçeride sessiz olun ve telefonunuzu kapatın. Ayin sırasında fotoğraf ve video çekmemek en doğrusudur; ziyaret saatlerinde çekim için kiliseye sorun."
@@ -3172,8 +3221,8 @@ $klFaq = @(
      ae = "Visit a church near you and speak to the priest. Joining the Catholic Church happens through a period of preparation called OCIA; the steps are explained on the <a href=`"katolik-sureci.html`">Becoming Catholic</a> page (in Turkish)." }
   @{ id = 'yunan-adalari'
      q = "Yakındaki Yunan adalarında Katolik kilisesi var mı?"; qe = 'Are there Catholic churches on the nearby Greek islands?'
-     a = "Evet. Türkiye kıyısından feribotla kısa sürede gidilen beş Yunan adasında Katolik kilisesi var: Rodos$($Apos)ta (Marmaris$($Apos)ten ve Fethiye$($Apos)den) Assisili Aziz Francis Katedrali ve Fransisken rahiplerin hizmet verdiği Zafer Meryemi Kilisesi; Sakız Adası$($Apos)nda (Çeşme$($Apos)den) Aziz Nikolaos Katedrali; Sisam$($Apos)da (Kuşadası$($Apos)ndan) Meryem$($Apos)in Göğe Alınışı Kilisesi; Midilli$($Apos)de (Ayvalık$($Apos)tan ve Dikili$($Apos)den) Midilli şehrindeki Meryem$($Apos)in Göğe Alınışı Kilisesi; İstanköy$($Apos)de (Bodrum$($Apos)dan) İstanköy şehrindeki Agnus Dei Kilisesi. Bu cemaatler küçüktür; pazar ayini çoğu zaman tektir ve Yunanca ya da İngilizce olabilir. Seferlerin çoğu yaz aylarındadır. Türk vatandaşları Hızlı Vize (Visa Express) uygulamasıyla Midilli, Sakız, Sisam, İstanköy, Rodos, Kalimnos, Limni, İleriye, Sömbeki ve Meis adalarına önceden başvurmadan gidebilir: geçerli pasaportla limanda 60 avroya 7 günlük vize verilir. Bu vize yalnızca bu adalarda geçerlidir, başka Avrupa ülkelerine gitmeye izin vermez; uygulama şu an Nisan 2027$($Apos)ye kadar uzatılmış durumda. Başka ülkelerin vatandaşları için her zamanki Schengen kuralları geçerlidir. Yola çıkmadan önce feribot saatlerini, vize koşullarını ve ayin saatini kiliseyle teyit edin."
-     ae = "Yes. Five Greek islands a short ferry ride from the Turkish coast have Catholic churches: on Rhodes (from Marmaris and Fethiye), St. Francis of Assisi Cathedral and the Franciscan-run Church of Our Lady of Victory; on Chios (from Çeşme), St. Nicholas Cathedral; on Samos (from Kuşadası), the Church of the Assumption; on Lesbos (from Ayvalık and Dikili), the Church of the Assumption in Mytilene; and on Kos (from Bodrum), the Agnus Dei church in Kos town. These are small communities, often with a single Sunday Mass, which may be in Greek or English. Most crossings run in the summer months. Turkish citizens can visit Lesvos, Chios, Samos, Kos, Rhodes, Kalymnos, Limnos, Leros, Symi and Kastellorizo without applying in advance under the Visa Express scheme: with a valid passport, a 7-day visa is issued at the port for 60 euros. It is valid on these islands only and does not allow travel to other European countries; the scheme currently runs until April 2027. Other nationalities need a Schengen visa or visa-free entry as usual. Before you go, check the ferry times, the visa rules and the Mass time with the church." }
+     a = "Evet. Türkiye kıyısından feribotla kısa sürede gidilen beş Yunan adasında Katolik kilisesi var: Rodos$($Apos)ta (Marmaris$($Apos)ten ve Fethiye$($Apos)den) Assisili Aziz Francis Katedrali ve Fransisken rahiplerin hizmet verdiği Zafer Meryemi Kilisesi; Sakız Adası$($Apos)nda (Çeşme$($Apos)den) Aziz Nikolaos Katedrali; Sisam$($Apos)da (Kuşadası$($Apos)ndan) Meryem$($Apos)in Göğe Alınışı Kilisesi; Midilli$($Apos)de (Ayvalık$($Apos)tan ve Dikili$($Apos)den) Midilli şehrindeki Meryem$($Apos)in Göğe Alınışı Kilisesi; İstanköy$($Apos)de (Bodrum$($Apos)dan) İstanköy şehrindeki Agnus Dei Kilisesi. Bu cemaatler küçüktür; pazar ayini çoğu zaman tektir ve Yunanca ya da İngilizce olabilir. Seferlerin çoğu yaz aylarındadır. Türk vatandaşları Hızlı Vize (Visa Express) uygulamasıyla bu beş adaya önceden başvurmadan gidebilir: geçerli pasaportla limanda 60 avroya 7 günlük vize verilir. Bu vize yalnızca uygulamaya dahil Yunan adalarında geçerlidir, başka Avrupa ülkelerine gitmeye izin vermez; uygulama şu an Nisan 2027$($Apos)ye kadar uzatılmış durumda. Başka ülkelerin vatandaşları için her zamanki Schengen kuralları geçerlidir. Yola çıkmadan önce feribot saatlerini, vize koşullarını ve ayin saatini kiliseyle teyit edin."
+     ae = "Yes. Five Greek islands a short ferry ride from the Turkish coast have Catholic churches: on Rhodes (from Marmaris and Fethiye), St. Francis of Assisi Cathedral and the Franciscan-run Church of Our Lady of Victory; on Chios (from Çeşme), St. Nicholas Cathedral; on Samos (from Kuşadası), the Church of the Assumption; on Lesbos (from Ayvalık and Dikili), the Church of the Assumption in Mytilene; and on Kos (from Bodrum), the Agnus Dei church in Kos town. These are small communities, often with a single Sunday Mass, which may be in Greek or English. Most crossings run in the summer months. Turkish citizens can visit all five islands without applying in advance under the Visa Express scheme: with a valid passport, a 7-day visa is issued at the port for 60 euros. It is valid only on the Greek islands in the scheme and does not allow travel to other European countries; the scheme currently runs until April 2027. Other nationalities need a Schengen visa or visa-free entry as usual. Before you go, check the ferry times, the visa rules and the Mass time with the church." }
   @{ id = 'katolik-bulunamadiginda'
      q = 'Yakınımda Katolik kilisesi yoksa ne yapmalıyım?'; qe = 'What if there is no Catholic church near me?'
      a = (Inline $Churches.orthodoxNote); ae = $Churches.orthodoxNoteEn }
@@ -3189,10 +3238,11 @@ $kiliselerBody = @"
   $(Crumbs 'Kilise Bul')
   <header class="page-head center">$(Page-Ico $IcoChurch)<h1>$(KL "Türkiye$($Apos)de Katolik Kiliseleri" 'Catholic Churches in Turkey')</h1>
     <p class="kl-lead">$(KL $leadTr $leadEn)<em class="kl-checked">$(KL "Son kontrol: $($Churches.checked)" "Last checked: $($Churches.checkedEn)")</em></p>
-    <nav class="ph-jump" aria-label="Bölümler" data-aria-en="Sections"><ul><li><a href="#harita">$(KL 'Harita' 'Map')</a></li>$(if ($klNewsHtml) { "<li><a href=`"#haberler`">$(KL 'Haberler' 'News')</a></li>" })<li><a href="#sik-sorulanlar">$(KL 'Sorular' 'Questions')</a></li></ul></nav></header>
+    <nav class="ph-jump" aria-label="Bölümler" data-aria-en="Sections"><ul><li><a href="#harita">$(KL 'Harita' 'Map')</a></li><li><a href="#dile-gore">$(KL 'Diller' 'Languages')</a></li>$(if ($klNewsHtml) { "<li><a href=`"#haberler`">$(KL 'Haberler' 'News')</a></li>" })<li><a href="#sik-sorulanlar">$(KL 'Sorular' 'Questions')</a></li></ul></nav></header>
   $klBar
 $churchMapHtml
   $churchPickHtml
+  $klLangHtml
 $klCities
   $klNewsHtml
   <section class="kl-faqs" id="sik-sorulanlar" aria-labelledby="h-kl-faq"><h2 class="kl-h" id="h-kl-faq">$(KL 'Sık Sorulan Sorular' 'Frequently Asked Questions')</h2>
