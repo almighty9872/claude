@@ -382,13 +382,27 @@
      (with its week) and the colour the priest wears. Special days of the Proper of Time that
      change the colour are included: rose on Gaudete and Laetare Sundays, red on Palm Sunday,
      Good Friday and Pentecost, white through the Triduum's feasts, Trinity Sunday and Christ
-     the King. Feasts of individual saints are left out: this is the season's colour. */
+     the King. The solemnities of the General Roman Calendar come first, moved as the rubrics
+     move them (St Joseph and the Annunciation out of Holy Week and the Easter Octave, a
+     solemnity off an Advent or Lent Sunday), with All Souls; then the feasts, which give way to
+     a Sunday (unless they are feasts of the Lord), to Ash Wednesday, Holy Week and the Easter
+     Octave. Memorials are left out: the season's colour is worn on them. */
   var LIT_TEXT = {
     tr: {
       advent: 'Advent', christmas: 'Noel Dönemi', ordinary: 'Olağan Zaman', lent: 'Büyük Perhiz', easter: 'Paskalya Dönemi',
       week: function (n) { return n + '. Hafta'; }, ash: 'Kül Çarşambası', palm: 'Hurma Pazarı', holyWeek: 'Kutsal Hafta',
       thu: 'Kutsal Perşembe', fri: 'Kutsal Cuma', sat: 'Kutsal Cumartesi', easterDay: 'Paskalya', pentecost: 'Pentekost',
       trinity: 'Kutsal Üçlü Birlik', king: 'Evrenin Kralı Mesih', colour: 'Litürjik renk',
+      motherOfGod: 'Tanrı’nın Annesi Meryem', joseph: 'Aziz Yusuf', annunciation: 'Müjde', ascension: 'İsa’nın Göğe Yükselişi',
+      corpus: 'Mesih’in Bedeni ve Kanı', heart: 'İsa’nın Kutsal Kalbi', john: 'Vaftizci Yahya’nın Doğuşu',
+      peterPaul: 'Aziz Petrus ve Aziz Pavlus', assumption: 'Meryem’in Göğe Alınışı', saints: 'Bütün Azizler',
+      souls: 'Ölüleri Anma Günü', immaculate: 'Lekesiz Gebelik',
+      feasts: { convPaul: 'Aziz Pavlus’un İmana Gelişi', presentation: 'İsa’nın Tapınağa Sunuluşu', chairPeter: 'Aziz Petrus’un Kürsüsü',
+        mark: 'Aziz Markos', philipJames: 'Aziz Filipus ve Aziz Yakup', matthias: 'Aziz Mattias', visitation: 'Meryem’in Elizabet’i Ziyareti',
+        thomas: 'Aziz Tomas', magdalene: 'Mecdelli Aziz Meryem', james: 'Aziz Yakup', transfiguration: 'Suretin Değişmesi',
+        lawrence: 'Aziz Laurentius', bartholomew: 'Aziz Bartalmay', nativityMary: 'Meryem’in Doğuşu', cross: 'Kutsal Haç’ın Yüceltilmesi',
+        matthew: 'Aziz Matta', archangels: 'Başmelekler Mikail, Cebrail ve Rafael', luke: 'Aziz Luka', simonJude: 'Aziz Simun ve Aziz Yahuda',
+        lateran: 'Lateran Bazilikası’nın Kutsanması', andrew: 'Aziz Andreas', stephen: 'Aziz İstefanos', johnAp: 'Aziz Yuhanna', innocents: 'Masum Çocuklar' },
       colours: { green: 'yeşil', violet: 'mor', white: 'beyaz', red: 'kırmızı', rose: 'pembe' }
     },
     en: {
@@ -396,6 +410,16 @@
       week: function (n) { return 'Week ' + n; }, ash: 'Ash Wednesday', palm: 'Palm Sunday', holyWeek: 'Holy Week',
       thu: 'Holy Thursday', fri: 'Good Friday', sat: 'Holy Saturday', easterDay: 'Easter Sunday', pentecost: 'Pentecost',
       trinity: 'The Holy Trinity', king: 'Christ the King', colour: 'Liturgical color',
+      motherOfGod: 'Mary, Mother of God', joseph: 'Saint Joseph', annunciation: 'The Annunciation', ascension: 'The Ascension',
+      corpus: 'Corpus Christi', heart: 'The Sacred Heart', john: 'Birth of John the Baptist',
+      peterPaul: 'Saints Peter and Paul', assumption: 'The Assumption', saints: 'All Saints',
+      souls: 'All Souls', immaculate: 'The Immaculate Conception',
+      feasts: { convPaul: 'Conversion of Saint Paul', presentation: 'The Presentation of the Lord', chairPeter: 'Chair of Saint Peter',
+        mark: 'Saint Mark', philipJames: 'Saints Philip and James', matthias: 'Saint Matthias', visitation: 'The Visitation',
+        thomas: 'Saint Thomas', magdalene: 'Saint Mary Magdalene', james: 'Saint James', transfiguration: 'The Transfiguration',
+        lawrence: 'Saint Lawrence', bartholomew: 'Saint Bartholomew', nativityMary: 'Nativity of Mary', cross: 'Exaltation of the Holy Cross',
+        matthew: 'Saint Matthew', archangels: 'The Archangels', luke: 'Saint Luke', simonJude: 'Saints Simon and Jude',
+        lateran: 'Dedication of the Lateran Basilica', andrew: 'Saint Andrew', stephen: 'Saint Stephen', johnAp: 'Saint John', innocents: 'The Holy Innocents' },
       colours: { green: 'green', violet: 'violet', white: 'white', red: 'red', rose: 'rose' }
     }
   };
@@ -411,6 +435,31 @@
     var pentecost = add(easter, 49), christmas = date(12, 25);
     var advent = add(christmas, -(christmas.getDay() || 7) - 21), king = add(advent, -7);
     var epiphany = date(1, 6), baptism = add(epiphany, 7 - epiphany.getDay());
+    var lentSun1 = add(ash, 4), heart = add(easter, 68);
+    // a fixed solemnity on a Sunday of Advent or Lent moves to the Monday
+    function offSunday(d) { return d.getDay() === 0 && ((d >= lentSun1 && d < palm) || d >= advent) ? add(d, 1) : d; }
+    var joseph = offSunday(date(3, 19)), annunciation = offSunday(date(3, 25));
+    if (joseph >= palm && joseph <= add(easter, 7)) joseph = add(palm, -1);
+    if (annunciation >= palm && annunciation <= add(easter, 7)) annunciation = add(easter, 8);
+    var john = same(date(6, 24), heart) || same(date(6, 24), add(easter, 60)) ? date(6, 23) : date(6, 24);
+    var feasts = [[date(1, 1), L.motherOfGod, 'white'], [joseph, L.joseph, 'white'], [annunciation, L.annunciation, 'white'],
+      [add(easter, 39), L.ascension, 'white'], [add(easter, 60), L.corpus, 'white'], [heart, L.heart, 'white'],
+      [john, L.john, 'white'], [date(6, 29), L.peterPaul, 'red'], [date(8, 15), L.assumption, 'white'],
+      [date(11, 1), L.saints, 'white'], [date(11, 2), L.souls, 'violet'], [offSunday(date(12, 8)), L.immaculate, 'white']];
+    for (var i = 0; i < feasts.length; i++) if (same(today, feasts[i][0])) return res(feasts[i][1], 0, feasts[i][2]);
+    // feasts: [month, day, key, colour, feast of the Lord]
+    var F = L.feasts, md = (today.getMonth() + 1) * 100 + today.getDate();
+    var FEASTS = [[1, 25, 'convPaul', 'white'], [2, 2, 'presentation', 'white', 1], [2, 22, 'chairPeter', 'white'], [4, 25, 'mark', 'red'],
+      [5, 3, 'philipJames', 'red'], [5, 14, 'matthias', 'red'], [5, 31, 'visitation', 'white'], [7, 3, 'thomas', 'red'],
+      [7, 22, 'magdalene', 'white'], [7, 25, 'james', 'red'], [8, 6, 'transfiguration', 'white', 1], [8, 10, 'lawrence', 'red'],
+      [8, 24, 'bartholomew', 'red'], [9, 8, 'nativityMary', 'white'], [9, 14, 'cross', 'red', 1], [9, 21, 'matthew', 'red'],
+      [9, 29, 'archangels', 'white'], [10, 18, 'luke', 'red'], [10, 28, 'simonJude', 'red'], [11, 9, 'lateran', 'white', 1],
+      [11, 30, 'andrew', 'red'], [12, 26, 'stephen', 'red'], [12, 27, 'johnAp', 'white'], [12, 28, 'innocents', 'red']];
+    var yields = same(today, ash) || (today >= palm && today <= add(easter, 7));
+    for (var j = 0; j < FEASTS.length && !yields; j++) {
+      var f = FEASTS[j];
+      if (f[0] * 100 + f[1] === md && (today.getDay() !== 0 || f[4])) return res(F[f[2]], 0, f[3]);
+    }
 
     if (today >= christmas || today <= baptism) return res(L.christmas, 0, 'white');
     if (today >= advent) {
@@ -420,8 +469,8 @@
     if (today < ash) return res(L.ordinary, Math.floor(days(today, baptism) / 7) + 1, 'green');
     if (same(today, ash)) return res(L.ash, 0, 'violet');
     if (today < palm) {
-      var lentSun = add(ash, 4), lw = today < lentSun ? 0 : Math.floor(days(today, lentSun) / 7) + 1;
-      return res(L.lent, lw, same(today, add(lentSun, 21)) ? 'rose' : 'violet');
+      var lw = today < lentSun1 ? 0 : Math.floor(days(today, lentSun1) / 7) + 1;
+      return res(L.lent, lw, same(today, add(lentSun1, 21)) ? 'rose' : 'violet');
     }
     if (same(today, palm)) return res(L.palm, 0, 'red');
     if (today < add(easter, -3)) return res(L.holyWeek, 0, 'violet');
@@ -4015,6 +4064,11 @@
      language's text is longer or shorter. The pinned row's city buttons jump
      instantly and follow the city being read.
      --------------------------------------------------------------- */
+  /* the band across each church card wears the colour of today's liturgy (liturgicalDay);
+     without the script it keeps the stained-glass default */
+  function initLitBand() {
+    if ($('.kl-ch')) document.documentElement.setAttribute('data-lit', liturgicalDay(new Date(), 'en').colour);
+  }
   function initKlLang() {
     var sw = $('.kl-switch');
     if (!sw) return;
@@ -4325,7 +4379,7 @@
     [
       initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initFaqDir, initKlLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initLitBand, initKlLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();
