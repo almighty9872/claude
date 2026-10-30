@@ -3142,7 +3142,13 @@ html.av .to-top-wrap { display: none; }
 
 /* ---------- A church's own page (kilise/<id>.html) ---------- */
 .church-page .page-head .sub { margin-top: .2rem; }
-.crumbs { margin: 1.1rem 0 0; font-family: var(--sans); font-size: .85rem; color: var(--muted); }
+.crumbs {
+  position: sticky; top: var(--header-h); z-index: 30; margin: .6rem 0 0; padding: .55rem 0;
+  border-bottom: 1px solid var(--glass-brd); background: var(--glass);
+  -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+  font-family: var(--sans); font-size: .85rem; color: var(--muted);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .crumbs { background: var(--surface); } }
 .crumbs ol { display: flex; flex-wrap: wrap; gap: .2rem .45rem; margin: 0; padding: 0; list-style: none; }
 .crumbs li { display: inline-flex; align-items: center; gap: .45rem; min-width: 0; }
 .crumbs li + li::before { content: "\203A"; color: var(--muted); opacity: .7; }
