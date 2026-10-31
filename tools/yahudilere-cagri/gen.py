@@ -76,12 +76,12 @@ parts.append(dict(id="isaretler", kicker="İşaretler", kickerEn="", title="Tana
 
 S("zaman", "Mesih ne zaman gelecekti?", """
 Yahudi geleneği Mesih’i bugün hâlâ bekler. Ama Tanah’ta, onun geleceği zamanı belli bir olaya bağlayan üç metin var. Üçü de Kudüs’teki İkinci Tapınak’tan söz eder. Bu Tapınak, Babil sürgününden sonra yeniden yapılmış ve MS 70’te Romalılar tarafından yıkılmıştı.
-@art y-daniel
 ### 1. Hagay: daha büyük bir görkem
 Sürgünden dönenler İkinci Tapınağı yaptığında yaşlılar ağladı, çünkü yeni Tapınak Süleyman’ınkinin yanında çok mütevazıydı. Tanrı peygamber Hagay aracılığıyla şöyle dedi: “Bu tapınağın son görkemi, ilkinden daha büyük olacak. Bu yere esenlik vereceğim” (Hagay 2:9). Ama Talmud, İkinci Tapınak’ta beş şeyin eksik olduğunu kabul eder: Antlaşma Sandığı, gökten inen ateş, Tanrı’nın görünür varlığı (Şekina), Kutsal Ruh ve Urim ile Tummim (Yoma 21b). Peki bu Tapınağın görkemi nasıl daha büyük oldu? Bizim cevabımız şu: Tanrı’nın kendisi o Tapınağa insan olarak girdi.
 ### 2. Malaki: Rab ansızın Tapınağına gelecek
 “Önümden yolu hazırlasın diye ulağımı gönderiyorum. Aradığınız Rab ansızın tapınağına gelecek” (Malaki 3:1). Bu sözler İkinci Tapınak döneminde söylendi. O Tapınak artık yok. Demek ki Rab’bin ziyareti o Tapınak ayaktayken gerçekleşmeliydi.
 ### 3. Daniel: yetmiş hafta
+@art y-daniel
 Daniel kitabı, Kudüs’ün yeniden yapılması emrinden başlayarak bir süre verir. Bu süre içinde “isyan sona erecek, günaha son verilecek, suç bağışlanacak ve sonsuz doğruluk getirilecek.” Sonra “meshedilmiş biri ortadan kaldırılacak.” Ardından gelecek bir önderin halkı, “kenti ve kutsal yeri yıkacak” (Daniel 9:24-26). Başlangıç yılının hesabı üzerine farklı görüşler var. Ama sıra açık: önce meshedilmiş biri öldürülecek, sonra kent ve Tapınak yıkılacak.
 Rabbiler de Daniel’i dikkatle okudu. Talmud’da yer alan bir görüşe göre, Mesih’in gelişi için belirlenen bütün süreler çoktan geçti ve artık her şey tövbeye bağlıdır (Sanhedrin 97b). Bu dürüst bir itiraf. Biz ise bu sürelerin geçmediğini, tam zamanında dolduğunu düşünüyoruz.
 Talmud ilginç bir şey daha kaydeder: Tapınağın yıkılışından kırk yıl önce, yani yaklaşık MS 30 yılında, Kefaret Günü’nün işaretleri değişmeye başladı. “Rab için” kurası artık sağ ele çıkmadı, kırmızı yün beyaza dönmedi ve Tapınak’taki batı kandili yanmaz oldu (Yoma 39b). Hristiyanlar bu tarihin, İsa’nın Kudüs’te çarmıha gerildiği tarihe ne kadar yakın olduğunu fark etmeden edemez.

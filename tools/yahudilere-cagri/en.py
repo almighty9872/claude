@@ -65,12 +65,12 @@ Finally, we have something in common: both of us are waiting for the Messiah. Je
 
 SECTIONS["zaman"] = ("When was the Messiah to come?", """
 Jewish tradition is still waiting for the Messiah today. But the Tanakh has three passages that tie the time of his coming to a particular event. All three speak of the Second Temple in Jerusalem, the Temple rebuilt after the exile in Babylon and destroyed by the Romans in AD 70.
-@art y-daniel
 ### 1. Haggai: a greater glory
 When those who returned from exile built the Second Temple, the old men wept, because it was so modest next to Solomon’s. Through the prophet Haggai, God said: “The latter splendour of this house shall be greater than the former. In this place I will give peace” (Haggai 2:9). Yet the Talmud admits that five things were missing from the Second Temple: the Ark of the Covenant, the fire from heaven, the visible presence of God (the Shekhinah), the Holy Spirit, and the Urim and Thummim (Yoma 21b). So how could the glory of this Temple be greater? Our answer is this: God himself entered that Temple as a man.
 ### 2. Malachi: the Lord will suddenly come to his temple
 “Behold, I send my messenger to prepare the way before me, and the Lord whom you seek will suddenly come to his temple” (Malachi 3:1). These words were spoken in the time of the Second Temple. That Temple no longer exists. So the Lord’s visit had to take place while it was still standing.
 ### 3. Daniel: seventy weeks
+@art y-daniel
 The book of Daniel gives a period of time that begins with the decree to rebuild Jerusalem. Within it, “transgression will be finished, sin brought to an end, iniquity atoned for, and everlasting righteousness brought in.” Then “an anointed one shall be cut off.” After that, the people of a prince who is to come “shall destroy the city and the sanctuary” (Daniel 9:24-26). There are different views on how to count the starting year. But the order is clear: first an anointed one is killed, then the city and the Temple are destroyed.
 The rabbis read Daniel carefully too. According to one view recorded in the Talmud, all the dates set for the coming of the Messiah have long passed, and now everything depends on repentance (Sanhedrin 97b). That is an honest admission. We believe the dates did not pass by; they were fulfilled right on time.
 The Talmud records something else of interest. Forty years before the Temple was destroyed, around AD 30, the signs of the Day of Atonement began to change. The lot “for the Lord” no longer came up in the right hand, the crimson wool no longer turned white, and the western lamp of the Temple would not stay lit (Yoma 39b). Christians cannot help noticing how close this date is to the crucifixion of Jesus in Jerusalem.

@@ -4385,7 +4385,7 @@ main .prose :is(h4, h5), .ic-page .prose :is(h4, h3.ic-sub), .stage-body h3, .il
 .ic-lead { font-size: var(--fs-body); }
 .ic-sec-t { gap: .45rem; margin-bottom: .8rem; padding-bottom: 0; border-bottom: 0; }
 .ic-sec-t .label, .ill-sec .ic-sec-t .label {
-  min-width: 0; height: auto; margin: 0; padding: 0; border-radius: 0; background: none;
+  display: block; min-width: 0; height: auto; margin: 0; padding: 0; border-radius: 0; background: none;
   font: inherit; letter-spacing: 0; color: var(--tone, var(--gold));
 }
 .ic-sec-t .label::after { content: " ·"; }
