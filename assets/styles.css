@@ -2,7 +2,7 @@
    Katolik Kilisesi İnanç Esasları Özeti · styles.css
    Modern reading layout. Dark = charcoal & gold, light = soft ivory & gold.
    No external requests: fonts are self-hosted in assets/fonts (Inter for
-   text and headings, Lexend for menus and the dyslexia setting, EB Garamond capitals for the logo; SIL Open Font License).
+   text, headings, menus and buttons, Lexend for the dyslexia setting, EB Garamond capitals for the logo; SIL Open Font License).
    All colours are CSS custom properties (section 1).
    ========================================================================= */
 
@@ -29,7 +29,7 @@
 }
 
 /* Inter (SIL OFL 1.1, see fonts/OFL-Inter.txt), a typeface made for reading on screens,
-   for all text and headings. Cut to weights 400-800 (optical sizes kept), the same subsets as Lexend. */
+   for all text, headings, menus and buttons. Cut to weights 400-800 (optical sizes kept), the same subsets as Lexend. */
 @font-face {
   font-family: "Inter"; font-style: normal; font-weight: 400 800; font-display: swap;
   src: url("fonts/inter-ext-a.woff2") format("woff2");
@@ -98,7 +98,7 @@
   --danger-border: rgba(179, 38, 30, .38);
 
   --serif: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --sans: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
   --radius: 14px;
   --radius-sm: 9px;
   --header-h: 64px;
@@ -3806,9 +3806,9 @@ main .page-head.painted .ph-text .label { color: var(--gold) !important; }
   main .page-head.painted .ph-cap { top: calc(clamp(260px, 34vw, 460px) - 2.6rem) !important; right: calc(50% - 50vw + 1rem) !important; }
 }
 
-/* ---------- Fonts: Inter for text and headings, Lexend for menus and buttons ---------- */
+/* ---------- Fonts: Inter for text, headings, menus and buttons ---------- */
 :root, html:not([data-a11y-dyslexia="1"]) {
-  --serif: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif; --sans: "Lexend", Verdana, Tahoma, sans-serif; --display: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --serif: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif; --sans: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif; --display: "Inter", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
 }
 body, html:not([data-a11y-dyslexia="1"]) body { font-size: calc(1.1875rem * .9); line-height: 1.75; letter-spacing: 0; }
 @media (min-width: 980px) { .prose { font-size: 1.1rem; line-height: 1.75; } }

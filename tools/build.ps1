@@ -1410,8 +1410,6 @@ $hreflang
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="assets/fonts/kd-brand-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/kd-brand-ext.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/lexend-ext-a.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-ext-a.woff2" as="font" type="font/woff2" crossorigin>
 $homeArt<link rel="stylesheet" href="assets/styles.min.css?v=$CssVer">
