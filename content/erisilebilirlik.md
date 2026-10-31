@@ -20,7 +20,7 @@ Seçimleriniz tarayıcınızda hatırlanır. “Tüm Ayarları Sıfırla” heps
 
 ## Okumayı kolaylaştıranlar
 
-- **Yazı tipi:** bütün metinler, okuma kolaylığı için tasarlanmış Lexend yazı tipiyle yazılır.
+- **Yazı tipi:** metinler ve başlıklar, ekranda uzun okuma için tasarlanmış Literata yazı tipiyle yazılır. Disleksi ayarı açıkken okuma kolaylığı için tasarlanmış Lexend kullanılır.
 - **Koyu ve açık tema:** güneşe göre kendiliğinden değişir; isterseniz kendiniz seçersiniz.
 - **Bölüm listesi:** uzun yazılarda sağ alt köşedeki yuvarlak düğme, sayfanın bölümlerini açar.
 - **Okuma çubuğu:** sayfanın en üstündeki ince altın çizgi, yazının ne kadarını okuduğunuzu gösterir.

@@ -1,8 +1,8 @@
 /* =========================================================================
    Katolik Kilisesi İnanç Esasları Özeti · styles.css
    Modern reading layout. Dark = charcoal & gold, light = soft ivory & gold.
-   No external requests: fonts are self-hosted in assets/fonts (Lexend for all
-   text, EB Garamond capitals for the logo; SIL Open Font License).
+   No external requests: fonts are self-hosted in assets/fonts (Literata for
+   text and headings, Lexend for menus and the dyslexia setting, EB Garamond capitals for the logo; SIL Open Font License).
    All colours are CSS custom properties (section 1).
    ========================================================================= */
 
@@ -25,6 +25,29 @@
 @font-face {
   font-family: "Lexend"; font-style: normal; font-weight: 100 900; font-display: swap;
   src: url("fonts/lexend-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Literata (SIL OFL 1.1, see fonts/OFL-Literata.txt), a typeface made for long reading on screens,
+   for all text and headings. Cut to weights 400-800 (optical sizes kept), the same subsets as Lexend. */
+@font-face {
+  font-family: "Literata"; font-style: normal; font-weight: 400 800; font-display: swap;
+  src: url("fonts/literata-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
+}
+@font-face {
+  font-family: "Literata"; font-style: normal; font-weight: 400 800; font-display: swap;
+  src: url("fonts/literata-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Literata"; font-style: italic; font-weight: 400 800; font-display: swap;
+  src: url("fonts/literata-italic-ext-a.woff2") format("woff2");
+  unicode-range: U+0100-017F, U+01FD, U+1E62;
+}
+@font-face {
+  font-family: "Literata"; font-style: italic; font-weight: 400 800; font-display: swap;
+  src: url("fonts/literata-italic-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -74,7 +97,7 @@
   --danger-bg: rgba(179, 38, 30, .1);
   --danger-border: rgba(179, 38, 30, .38);
 
-  --serif: "Lexend", Verdana, Tahoma, sans-serif;
+  --serif: "Literata", Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --radius: 14px;
   --radius-sm: 9px;
@@ -1155,6 +1178,7 @@ body.sheet-open { overflow: hidden; }
 }
 :root[data-a11y-dyslexia="1"] {
   --serif: "Lexend", Verdana, Tahoma, sans-serif; --sans: "Lexend", Verdana, Tahoma, sans-serif;
+  --display: "Lexend", Verdana, Tahoma, sans-serif;
 }
 /* The header and the Settings panel keep the usual fonts: Lexend's wider letters would push the
    bar onto two lines and the panel past the screen */
@@ -3634,7 +3658,7 @@ html:not([data-theme="dark"]) .ic-sec .label { color: #7a5a1a; }
    The app's look on the website: cream paper, Caravaggio and the old masters behind the page
    titles and on the home page's cards.
    ========================================================================= */
-:root { --display: "Lexend", Verdana, Tahoma, sans-serif; }
+:root { --display: "Literata", Georgia, serif; }
 html:not([data-a11y-dyslexia="1"]) body { letter-spacing: 0; }
 /* light: the app's cream, plain, with navy ink */
 :root:not([data-theme="dark"]) {
@@ -3782,9 +3806,9 @@ main .page-head.painted .ph-text .label { color: var(--gold) !important; }
   main .page-head.painted .ph-cap { top: calc(clamp(260px, 34vw, 460px) - 2.6rem) !important; right: calc(50% - 50vw + 1rem) !important; }
 }
 
-/* ---------- Reading font: Lexend everywhere, text, headings, menus and buttons alike ---------- */
+/* ---------- Fonts: Literata for text and headings, Lexend for menus and buttons ---------- */
 :root, html:not([data-a11y-dyslexia="1"]) {
-  --serif: "Lexend", Verdana, Tahoma, sans-serif; --sans: "Lexend", Verdana, Tahoma, sans-serif; --display: "Lexend", Verdana, Tahoma, sans-serif;
+  --serif: "Literata", Georgia, serif; --sans: "Lexend", Verdana, Tahoma, sans-serif; --display: "Literata", Georgia, serif;
 }
 body, html:not([data-a11y-dyslexia="1"]) body { font-size: calc(1.1875rem * .9); line-height: 1.75; letter-spacing: 0; }
 @media (min-width: 980px) { .prose { font-size: 1.1rem; line-height: 1.75; } }
