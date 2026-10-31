@@ -3863,6 +3863,21 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 main .page-head.painted.ph-pan .ph-win { position: relative; width: 100vw; margin: 0 0 0 calc(50% - 50vw); aspect-ratio: 16 / 10; overflow: hidden; background: #111; opacity: var(--fade, 1); }
 @media (min-width: 980px) { main .page-head.painted.ph-pan .ph-win { aspect-ratio: auto; height: clamp(260px, 34vw, 460px); } }
 main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; top: 0; left: 0; margin: 0 !important; width: 100% !important; height: auto !important; aspect-ratio: auto !important; object-fit: fill !important; transform: translate3d(0, var(--pan, 0px), 0) !important; will-change: transform; }
+/* the page's title on the banner, over a dark veil that deepens toward the bottom; the painting's
+   name small at its lower right. The banner grows when the title needs more room than it has. */
+main .page-head.painted:not(.banner-only) { gap: 0 !important; }
+main .page-head.painted:not(.banner-only, .ph-pan) .ph-art, main .page-head.painted.ph-pan .ph-win { position: absolute !important; top: 0 !important; left: calc(50% - 50vw) !important; z-index: 0 !important; width: 100vw !important; height: 100% !important; margin: 0 !important; aspect-ratio: auto !important; }
+main .page-head.painted .ph-text { align-self: stretch; min-height: 62.5vw; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 100vw; max-width: none !important; margin: 0 0 0 calc(50% - 50vw) !important; padding: 1.4rem max(1rem, calc(50vw - 23rem)) 2.1rem !important; background: linear-gradient(to bottom, rgba(10, 9, 8, .12), rgba(10, 9, 8, .38) 45%, rgba(10, 9, 8, .8)) !important; color: #fbf6ea !important; }
+main .page-head.painted .ph-text :is(h1, .label, .sub, p) { text-shadow: 0 1px 3px rgba(0, 0, 0, .55) !important; }
+main .page-head.painted .ph-text .label { color: #ecd08c !important; }
+main .page-head.painted .ph-text :is(.emblem, .emblem-cap) { color: #fbf6ea !important; }
+main .page-head.painted .ph-text .page-ico { background: rgba(255, 255, 255, .16); color: #fbf6ea; }
+main .page-head.painted .ph-cap { top: auto !important; bottom: .45rem !important; padding: 0 !important; background: none !important; color: rgba(243, 234, 214, .78) !important; font: 400 .6rem/1.2 var(--sans) !important; text-shadow: 0 1px 2px rgba(0, 0, 0, .7); }
+main .page-head.banner-only .ph-cap { bottom: .45rem !important; }
+@media (min-width: 980px) {
+  main .page-head.painted .ph-text { min-height: clamp(260px, 34vw, 460px); padding-bottom: 2.4rem !important; }
+  main .page-head.painted .ph-cap { bottom: .6rem !important; font-size: .64rem !important; }
+}
 /* İslam'a Cevap, Ateizme Cevap: the summary, always open, one point under another */
 .ic-tldr .ic-tl-list.ic-tl-v { display: block; overflow: visible; padding: 0; counter-reset: none; }
 .ic-tl-v > li { display: block; }
