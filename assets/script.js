@@ -4849,6 +4849,43 @@
   /* The bar at the top of the screen: the site's header, or on phones the app view's own bar */
   function topBar() { return $(document.documentElement.classList.contains('av') ? '.av-nav' : '.site-header'); }
   /* The address's #fragment as an id; a malformed escape (#%E0) gives '' instead of throwing */
+  /* ----- A painting in the text (.art-sq, built by build.ps1 Art-Sq): a click opens it whole in a
+     dialog, with its name, painter, place and a plain description of what it shows */
+  function initArtView() {
+    var figs = $$('.art-sq');
+    if (!figs.length) return;
+    var dlg = document.createElement('dialog');
+    dlg.className = 'sources-dialog art-dlg';
+    dlg.setAttribute('aria-labelledby', 'art-dlg-t');
+    dlg.innerHTML = '<button type="button" class="sources-close" aria-label="Kapat"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' +
+      '<div class="art-dlg-pic"></div><h2 class="art-dlg-t" id="art-dlg-t"></h2><p class="art-dlg-m"></p><p class="art-dlg-d"></p>';
+    document.body.appendChild(dlg);
+    var close = function () { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); };
+    $('.sources-close', dlg).addEventListener('click', close);
+    /* a click on the backdrop, outside the box, closes it too */
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+    /* the dialog empties when it closes, so a large painting is not kept in memory */
+    dlg.addEventListener('close', function () { $('.art-dlg-pic', dlg).textContent = ''; });
+    figs.forEach(function (fig) {
+      var btn = $('.art-sq-btn', fig), pic = btn && $('picture', btn);
+      if (!pic) return;
+      btn.addEventListener('click', function () {
+        /* the same picture at the size of the dialog: the browser picks the larger file */
+        var big = /** @type {HTMLElement} */ (pic.cloneNode(true));
+        $$('source, img', big).forEach(function (el) { if (el.hasAttribute('sizes')) el.setAttribute('sizes', '(min-width: 1000px) 58rem, 100vw'); });
+        var img = $('img', big);
+        if (img) { img.className = 'art-dlg-img'; img.removeAttribute('style'); img.removeAttribute('loading'); img.alt = fig.getAttribute('data-t') || ''; }
+        var box = $('.art-dlg-pic', dlg);
+        box.textContent = ''; box.appendChild(big);
+        $('.art-dlg-t', dlg).textContent = fig.getAttribute('data-t') || '';
+        $('.art-dlg-m', dlg).textContent = [fig.getAttribute('data-a'), fig.getAttribute('data-loc')].filter(Boolean).join(' · ');
+        var d = $('.art-dlg-d', dlg), dt = fig.getAttribute('data-d') || '';
+        d.textContent = dt; d.hidden = !dt;
+        if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+      });
+    });
+  }
+
   function hashId() { try { return decodeURIComponent(location.hash.slice(1)); } catch (e) { return ''; } }
   function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
   /* each part of the page starts on its own: one that fails leaves the others working */
@@ -4856,7 +4893,7 @@
     [
       initFrameBust, initHeaderHeight, initTheme, initFontSize, initContactForm, initNavToday, initHistory,
       initSearch, initReader, initDrawer, initNav, initDeskNav, initSources, initRefs, initRosary, initRosaryTracker, initAnatoliaMap, initDrawings, initSaints, initMass, initHome, initPrintExpand,
-      initChurchFilter, initStickyToc, initFaqDir, initLitBand, initKlLang, initMassLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
+      initChurchFilter, initStickyToc, initFaqDir, initLitBand, initKlLang, initMassLang, initWhyHooks, initMapLinks, initAddrPops, initA11y, initAppView, initReadMarks, initToTop, initArticleFlow, initJumpList, initBannerPan, initArtView, initSaintStories, initEraNav, initChurchMap, initChurchPick, initLayoutSwitch
     ].forEach(function (init) { try { init(); } catch (e) { if (window.console) console.error(e); } });
   });
 })();

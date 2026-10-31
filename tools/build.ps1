@@ -416,11 +416,19 @@ function Art-Img([string]$key, [string]$cls, [string]$sizes = '100vw', [string]$
 # a picture inside a story (data file "art": a key of data/tablolar.json), with its credit under it
 # A painting's painter
 function Art-A($a) { $a.a }
+# A painting in the run of the text: a small square the text wraps round; a click opens it whole,
+# with its painter, where it is and what it shows (script.js, initArtView)
+function Art-Sq([string]$key) {
+  $a = $Tablolar.art.$key
+  # a photo under a Creative Commons licence carries the licence in its credit
+  $lic = if ($a.loc -match '^CC') { " · $($a.loc)" } else { '' }
+  $data = "$(TA 'data-t' $a.t) $(TA 'data-a' $a.a) $(TA 'data-loc' $a.loc) $(TA 'data-d' $a.d)"
+  return "<figure class=`"art-sq`" $data><button type=`"button`" class=`"art-sq-btn`" aria-haspopup=`"dialog`" $(TA 'aria-label' "Büyüt: $($a.t)")>" +
+    "$(Art-Img $key 'art-sq-img' '(min-width: 600px) 13rem, 9rem')</button><figcaption>$(Art-A $a) · <cite>$($a.t)</cite>$lic</figcaption></figure>"
+}
 function Mira-Fig([string]$key) {
   if (-not $key) { return '' }
-  $a = $Tablolar.art.$key
-  $lic = if ($a.loc -match '^CC') { " · $($a.loc)" } else { '' }
-  return "<figure class=`"mira-fig`">$(Art-Img $key 'mira-img' '(min-width: 980px) 44rem, 100vw')<figcaption><cite>$($a.t)</cite> · $(Art-A $a)$lic</figcaption></figure>"
+  return Art-Sq $key
 }
 function Art-Cap([string]$key) {
   $a = $Tablolar.art.$key
@@ -434,10 +442,8 @@ function Paint-Sections([string]$body, [string]$file) {
   $map = $Tablolar.sections.$file
   if (-not $map) { return $body }
   foreach ($p in $map.PSObject.Properties) {
-    $key = $p.Value; $a = $Tablolar.art.$key
-    # a landscape painting runs the width of the text; an upright one stands in the middle of it
-    $shape = if ([int]$a.w -ge [int]$a.h * 1.15) { 'ill-wide' } else { 'ill-tall' }
-    $fig = "<figure class=`"ill-art ill-photo $shape`">$(Art-Img $key 'ill-img' '(min-width: 980px) 46rem, 100vw')<figcaption>$($a.a) · <cite>$($a.t)</cite></figcaption></figure>"
+    $key = $p.Value
+    $fig = Art-Sq $key
     # the painting goes under the section's heading, in the run of the text
     $rx = '(<(?:section|article)\b[^>]*\bid="' + [regex]::Escape($p.Name) + '"[^>]*>)<div class="ill-art" aria-hidden="true"><svg[\s\S]*?</svg></div>(<div class="ill-body">(?:<p class="ill-kick">[\s\S]*?</p>)?<h2[\s\S]*?</h2>)'
     $body = [regex]::Replace($body, $rx, { param($m) $m.Groups[1].Value + $m.Groups[2].Value + $fig })

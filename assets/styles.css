@@ -3741,10 +3741,6 @@ a.hm-card:hover { color: #fff; }
 html.av .page-head .ph-art { display: none; }
 
 /* ---- A section's painting in place of its line drawing ---- */
-.ill-art.ill-photo { width: 100%; max-width: 30rem; margin: 0 0 1.2rem; }
-.ill-photo .ill-img { display: block; border-radius: 16px; box-shadow: 0 16px 34px -24px rgba(29, 36, 51, .6); }
-.ill-photo figcaption { margin-top: .45rem; font: .74rem var(--sans); color: var(--muted); }
-.ill-photo cite { font-style: italic; }
 
 /* ---- Home: the two debate pages, each with its painting ---- */
 .hd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .4rem; }
@@ -3779,8 +3775,6 @@ html.av .page-head.painted .emblem, html.av .page-head.painted .page-ico { displ
 html.av .page-head.painted .ph-cap { display: block; order: 9; margin: .3rem 0 0; font: .72rem var(--sans); color: var(--muted); }
 :root .hm-journey .hd-card .hd-t { color: #fff; text-shadow: 0 2px 18px rgba(0, 0, 0, .5); }
 /* paintings are shown whole, never cropped to a detail */
-.ill-photo .ill-img { width: auto; max-width: 100%; height: auto; max-height: 34rem; object-fit: contain; margin: 0 auto; }
-@media (max-width: 979px) { .ill-photo .ill-img { max-height: 70vh; } .ill-art.ill-photo { max-width: none; text-align: center; } }
 html.av .page-head.painted .ph-art { width: auto; max-width: 100%; height: auto; max-height: 62vh; aspect-ratio: auto; object-fit: contain; margin-inline: auto; }
 /* a saint or a mystery: the upper part of the painting, where the faces are */
 .hm-saint .hm-art, .hm-myst .hm-art { background-position: center 18%; }
@@ -3959,16 +3953,10 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 .hx-track { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); mask-image: linear-gradient(90deg, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }
 
 /* ---- Long articles: the text in one column in the middle of the screen; each section's painting
-   under its heading, a landscape one across the column, an upright one standing in the middle;
+   a small square under its heading that the text wraps round (.art-sq);
    the section's first paragraph opens with a large letter ---- */
-.ill-sec .ill-photo { position: static; width: 100%; max-width: none; margin: .2rem 0 1.6rem; float: none; }
-.ill-photo .ill-img { border-radius: 16px; }
-.ill-photo.ill-wide .ill-img { width: 100%; max-height: none; object-fit: cover; }
-.ill-photo.ill-tall { text-align: center; }
-.ill-photo.ill-tall .ill-img { width: auto; max-width: 100%; max-height: min(27rem, 64vh); }
-.ill-photo figcaption { text-align: center; }
-.ill-body > :is(.ill-photo, .ill-h) + p:not(.faq-cat-en)::first-letter,
-.ill-body > :is(.ill-photo, .ill-h) + .faq-intro::first-letter {
+.ill-body > :is(.art-sq, .ill-h) + p:not(.faq-cat-en)::first-letter,
+.ill-body > :is(.art-sq, .ill-h) + .faq-intro::first-letter {
   float: left; margin: .06em .12em 0 0; font-size: 3.3em; line-height: .82; font-weight: 600; color: var(--tone);
 }
 .ill-body > .ill-h { margin-bottom: .9rem; }
@@ -3996,9 +3984,6 @@ main .kt-t { margin: 0 0 .4rem; font-size: 1.35rem; font-weight: 600; line-heigh
 .mass-pills { background: none; pointer-events: none; }
 .mass-pills a { pointer-events: auto; background: var(--glass-strong); border-color: var(--glass-brd); box-shadow: 0 6px 18px -10px rgba(29, 36, 51, .45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 .mass-pills a.is-current { background: color-mix(in srgb, var(--gold) 16%, var(--surface)); }
-.mira-fig { margin: .2rem 0 1.2rem; }
-.mira-img { display: block; height: auto; border-radius: 12px; }
-.mira-fig figcaption { margin-top: .4rem; font: .74rem var(--sans); color: var(--muted); text-align: center; }
 /* a banner that is a window onto its painting (Tesbih Duası): the painting at its full width,
    moving inside it as the page scrolls (script.js, initBannerPan) */
 main .page-head.painted.ph-pan .ph-win { position: relative; width: 100vw; margin: 0 0 0 calc(50% - 50vw); aspect-ratio: 16 / 10; overflow: hidden; background: #111; opacity: var(--fade, 1); }
@@ -4031,9 +4016,6 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 .gs-credit { margin: .4rem 0 2rem; font-size: .76rem; color: var(--muted); text-align: center; }
 @media (max-width: 599px) { .gs-stories { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem .4rem; } .gs-ring { width: 4.6rem; height: 4.6rem; } .gs-st .gs-s { display: none; } }
 @media (prefers-reduced-motion: reduce) { .gs-ring { transition: none; } }
-/* a story's picture: whole, at most about half a screen tall, in the middle */
-.mira-fig { text-align: center; }
-.mira-img { width: auto; max-width: 100%; max-height: min(26rem, 60vh); margin: 0 auto; }
 /* Cevap Ver pages: a smaller summary ("Özet Geç"), closed and open */
 .ic-tldr:has(> .ic-tldr-d:not([open])) { padding: .05rem 1rem; }
 .ic-tldr:has(> .ic-tldr-d:not([open])) .section-title { margin: .3rem 0; font-size: 1rem; }
@@ -4361,3 +4343,25 @@ html[data-lit="rose"] .kl-ch { --kl-band: linear-gradient(90deg, #4a1a2c, #8a3a5
   .hm-today-rest .hm-saint { order: 2; grid-column: auto; min-height: 11rem; }
 }
 @media (min-width: 980px) { .hm-duo, .hm-today-rest { margin-top: 1rem; } }
+
+/* ---------- A painting in the text: a small square on the right that the text wraps round; a
+   click opens the whole painting with its painter, place and a plain description (script.js,
+   initArtView) ---------- */
+.art-sq { float: right; clear: right; width: 13rem; max-width: 42%; margin: .3rem 0 .9rem 1.3rem; }
+.art-sq-btn { display: block; width: 100%; padding: 0; border: 0; border-radius: 14px; background: none; cursor: zoom-in; overflow: hidden; box-shadow: 0 12px 26px -18px rgba(29, 36, 51, .6); }
+.art-sq-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.art-sq-img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; transition: transform .3s ease; }
+.art-sq-btn:hover .art-sq-img { transform: scale(1.04); }
+.art-sq figcaption { margin-top: .4rem; font: .72rem/1.35 var(--sans); color: var(--muted); }
+.art-sq cite { font-style: italic; }
+@media (max-width: 599px) { .art-sq { width: 9rem; margin-left: 1rem; } }
+@media (prefers-reduced-motion: reduce) { .art-sq-img { transition: none; } }
+/* the text round a square holds it; a block with its own frame starts under it */
+.ill-body, .mira-bio, .prose:has(> .art-sq) { display: flow-root; }
+.ill-body > :is(.mira-list, .faq-list) { clear: both; }
+.art-dlg { width: min(60rem, calc(100vw - 2rem)); padding: 1rem 1rem 1.3rem; }
+.art-dlg-img { display: block; width: 100%; height: auto; max-height: 70vh; max-height: 70dvh; object-fit: contain; border-radius: 12px; background: var(--surface-2); }
+.art-dlg-t { margin: 1rem 2.6rem .25rem 0; font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.art-dlg-m { margin: 0 0 .7rem; font: .85rem var(--sans); color: var(--muted); }
+.art-dlg-d { margin: 0; font-size: 1rem; line-height: 1.6; }
+.art-dlg .sources-close { z-index: 1; background: var(--glass-strong); }

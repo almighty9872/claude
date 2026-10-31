@@ -77,7 +77,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/04/23conta.html",
    "w": 1590,
    "h": 1500,
-   "y": 55
+   "y": 55,
+   "d": "Matta vergi masasında arkadaşlarıyla para sayarken İsa içeri giriyor ve eliyle onu gösteriyor. Pencereden gelen ışık Matta’nın yüzüne düşüyor. Matta şaşkın, kendini gösteriyor: “Ben mi?”"
   },
   "26conta": {
    "t": "Aziz Matta’nın İlhamı",
@@ -88,7 +89,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/04/26conta.html",
    "w": 1125,
    "h": 1800,
-   "y": 40
+   "y": 40,
+   "d": "Aziz Matta masasında İncil’ini yazıyor. Bir dizi sandalyede, başını yukarı çevirmiş. Tepesinde uçan bir melek parmaklarıyla sayarak ona ne yazacağını anlatıyor."
   },
   "33isaac": {
    "t": "İshak’ın Kurban Edilmesi",
@@ -99,7 +101,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/06/33isaac.html",
    "w": 1600,
    "h": 1233,
-   "y": 22
+   "y": 22,
+   "d": "İbrahim oğlu İshak’ı bir taşın üstüne bastırmış, elinde bıçak var. Çocuk korkuyla bağırıyor. Bir melek İbrahim’in elini tutup durduruyor ve yanındaki koçu gösteriyor: kurban çocuk değil, koç olacak."
   },
   "34thomas": {
    "t": "Kuşkucu Tomas",
@@ -132,7 +135,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/07/37depos.html",
    "w": 1312,
    "h": 1900,
-   "y": 45
+   "y": 45,
+   "d": "İsa’nın ölü bedeni çarmıhtan indirilmiş. İki adam onu taşıyıp mezar taşının üstüne indiriyor. Arkada Meryem ve iki kadın ağlıyor, biri ellerini göğe kaldırmış."
   },
   "42loreto": {
    "t": "Loreto Meryemi",
@@ -143,7 +147,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/07/42loreto.html",
    "w": 1210,
    "h": 2000,
-   "y": 35
+   "y": 35,
+   "d": "Meryem bebek İsa’yı kucağında tutarak bir kapının önünde duruyor. Önünde diz çökmüş iki yoksul yolcu dua ediyor. Adamın çıplak ve kirli ayakları öne doğru uzanıyor."
   },
   "43jerome": {
    "t": "Yazı Yazan Aziz Hieronymus",
@@ -154,7 +159,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/07/43jerome.html",
    "w": 1321,
    "h": 1800,
-   "y": 45
+   "y": 45,
+   "d": "Yaşlı ve zayıf Aziz Hieronymus masasında eğilmiş, bir kitabı okuyup yazıyor. Kırmızı bir örtüye sarınmış. Masanın öbür ucunda bir kafatası duruyor."
   },
   "45death": {
    "t": "Meryem’in Ölümü",
@@ -165,7 +171,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/07/45death.html",
    "w": 1206,
    "h": 1800,
-   "y": 50
+   "y": 50,
+   "d": "Meryem kırmızı elbisesiyle yatağa uzanmış, ölmüş. Havariler başlarını eğmiş, yüzlerini kapatarak ağlıyor. Önde bir kadın oturmuş, başı dizlerinde. Üstte büyük kırmızı bir perde asılı."
   },
   "46ecceho": {
    "t": "Ecce Homo",
@@ -176,7 +183,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/08/46ecceho.html",
    "w": 1000,
    "h": 1309,
-   "y": 30
+   "y": 30,
+   "d": "İsa’nın başında dikenli bir taç var, elleri bağlı. Arkasındaki asker omzuna bir pelerin koyuyor. Önde Pilatus halka dönüp İsa’yı gösteriyor: “İşte o adam.”"
   },
   "47emmau": {
    "t": "Emmaus’ta Akşam Yemeği",
@@ -187,7 +195,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/08/47emmau.html",
    "w": 1234,
    "h": 1000,
-   "y": 45
+   "y": 45,
+   "d": "Dirilmiş İsa bir masada iki öğrencisiyle oturuyor ve ekmeği kutsuyor. Öğrenciler onu o an tanıyor. Arkada bir hancı ile yaşlı bir kadın duruyor."
   },
   "49franci": {
    "t": "Tefekkür Eden Aziz Fransuva",
@@ -198,7 +207,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/08/49franci.html",
    "w": 1529,
    "h": 2000,
-   "y": 35
+   "y": 35,
+   "d": "Kahverengi keşiş giysili Aziz Fransuva diz çökmüş, elinde bir kafatasına bakıyor. Yerde tahtadan küçük bir haç var. Ölümü ve Tanrı’yı düşünüyor."
   },
   "53mercy": {
    "t": "Yedi Merhamet İşi",
@@ -209,7 +219,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/09/53mercy.html",
    "w": 1342,
    "h": 2000,
-   "y": 45
+   "y": 45,
+   "d": "Karanlık bir Napoli sokağında insanlar birbirine yardım ediyor: aç olanı doyuruyor, çıplak olanı giydiriyor, ölüyü gömüyor. Bir kadın hapisteki yaşlı babasını emziriyor. Tepede melekler ve kucağında İsa ile Meryem aşağı bakıyor."
   },
   "55flagel": {
    "t": "Kırbaçlanma",
@@ -220,7 +231,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/09/55flagel.html",
    "w": 1196,
    "h": 1600,
-   "y": 35
+   "y": 35,
+   "d": "İsa bir sütuna bağlanmış, beline bir bez sarılı. Üç adam onu kırbaçlamak için hazırlanıyor, biri yerde eğilmiş kırbacı bağlıyor. İsa’nın yüzü acı içinde."
   },
   "58rosar": {
    "t": "Tesbih Meryemi",
@@ -231,7 +243,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/09/58rosar.html",
    "w": 1380,
    "h": 2000,
-   "y": 30
+   "y": 30,
+   "d": "Meryem bebek İsa’yı kucağında tutarak yüksekte oturuyor. Aziz Dominik ve keşişler, aşağıda diz çökmüş yoksul insanlara tesbih dağıtıyor. İnsanlar ellerini tesbihlere uzatıyor."
   },
   "66annunc": {
    "t": "Müjde",
@@ -242,7 +255,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/11/66annunc.html",
    "w": 1394,
    "h": 1900,
-   "y": 40
+   "y": 40,
+   "d": "Melek Cebrail elinde zambakla yukarıdan iniyor ve Meryem’i gösteriyor. Meryem başını eğmiş, diz çökmüş, haberi alçakgönüllülükle kabul ediyor."
   },
   "72denial": {
    "t": "Petrus’un İnkârı",
@@ -253,7 +267,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/11/72denial.html",
    "w": 1030,
    "h": 764,
-   "y": 30
+   "y": 30,
+   "d": "Bir asker ve bir kadın Petrus’u parmaklarıyla gösteriyor: “Sen de onunla birlikteydin.” Petrus ellerini göğsüne götürmüş, İsa’yı tanımadığını söylüyor."
   },
   "i-agony": {
    "t": "Bahçedeki Istırap",
@@ -286,7 +301,8 @@
    "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris06.html",
    "w": 1276,
    "h": 1200,
-   "y": 70
+   "y": 70,
+   "d": "On iki yaşındaki İsa tapınakta, kırmızı giysiyle din bilginlerinin ortasında oturuyor ve onlarla konuşuyor. Solda onu üç gündür arayan Meryem ile Yusuf içeri giriyor."
   },
   "i-keys": {
    "t": "İsa Anahtarları Petrus’a Veriyor",
@@ -297,7 +313,8 @@
    "src": "https://www.wga.hu/html/p/perugino/sistina/keys.html",
    "w": 1090,
    "h": 690,
-   "y": 70
+   "y": 70,
+   "d": "Büyük bir meydanda İsa, önünde diz çökmüş Petrus’a cennetin anahtarlarını veriyor. Etrafta havariler ve başka insanlar duruyor. Arkada kubbeli bir yapı ve iki zafer takı var."
   },
   "i-pentec": {
    "t": "Pentekost",
@@ -308,7 +325,8 @@
    "src": "https://www.wga.hu/html/g/greco_el/12/1214grec.html",
    "w": 700,
    "h": 1492,
-   "y": 35
+   "y": 35,
+   "d": "Meryem ve havariler bir odada toplanmış. Tepede beyaz bir güvercin parlıyor ve her birinin başının üstünde küçük bir alev yanıyor. Bazıları kollarını kaldırmış, şaşkınlıkla yukarı bakıyor."
   },
   "i-sermon": {
    "t": "Dağdaki Vaaz",
@@ -319,7 +337,8 @@
    "src": "https://www.wga.hu/html/b/bloch/christ1.html",
    "w": 1070,
    "h": 1200,
-   "y": 30
+   "y": 30,
+   "d": "İsa kırmızı ve mavi giysiyle bir kayanın üstünde oturuyor, eliyle göğü gösteriyor. Etrafında kadınlar, erkekler ve çocuklar oturmuş onu dinliyor."
   },
   "i-sevens": {
    "t": "Yedi Kutsal Sır",
@@ -342,7 +361,8 @@
    "w": 750,
    "h": 932,
    "y": 35,
-   "ae": "Andrei Rublev"
+   "ae": "Andrei Rublev",
+   "d": "Üç melek bir masanın etrafında oturuyor, masanın ortasında bir kâse var. Üçü de birbirine eğilmiş. Bu ikon Baba, Oğul ve Kutsal Ruh’u anlatıyor."
   },
   "12magda": {
    "t": "Tövbekâr Mecdelli Meryem",
@@ -353,7 +373,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/02/12magda.html",
    "w": 1353,
    "h": 1700,
-   "y": 35
+   "y": 35,
+   "d": "Mecdelli Meryem alçak bir sandalyede oturuyor, başı öne eğik, elleri kucağında. Yerde çıkarıp attığı inciler, takılar ve bir şişe duruyor. Eski hayatını bırakıp tövbe ediyor."
   },
   "64lucy": {
    "t": "Azize Lucia’nın Defni",
@@ -364,7 +385,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/10/64lucy.html",
    "w": 1318,
    "h": 1800,
-   "y": 35
+   "y": 35,
+   "d": "Büyük taş bir mahzende Azize Lucia’nın bedeni yerde yatıyor. İki iri mezarcı kazmalarıyla mezar kazıyor. Arkada bir piskopos ve yas tutan insanlar duruyor."
   },
   "67sheph": {
    "t": "Çobanların Tapınması",
@@ -375,7 +397,8 @@
    "src": "https://www.wga.hu/html/c/caravagg/10/67sheph.html",
    "w": 1346,
    "h": 2000,
-   "y": 35
+   "y": 35,
+   "d": "Bir ahırda Meryem yerde yatıyor ve bebek İsa’yı yanağına yaslamış. Çobanlar ve Yusuf yanlarında diz çökmüş ona bakıyor. Arkada eşek ve öküz duruyor."
   },
   "i-annunc": {
    "t": "Müjde",
@@ -386,7 +409,8 @@
    "src": "https://www.wga.hu/html/a/angelico/01/1prado.html",
    "w": 680,
    "h": 667,
-   "y": 35
+   "y": 35,
+   "d": "Melek Cebrail sütunlu bir revakta Meryem’in önünde eğilmiş, ona haberi veriyor. Meryem kollarını göğsünde kavuşturmuş, başını eğmiş. Solda bahçeden kovulan Adem ile Havva görünüyor."
   },
   "i-ascens": {
    "t": "İsa’nın Göğe Yükselişi",
@@ -397,7 +421,8 @@
    "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris22.html",
    "w": 680,
    "h": 629,
-   "y": 35
+   "y": 35,
+   "d": "İsa beyaz giysiler içinde, kolları yukarıda, mavi gökyüzüne yükseliyor. İki yanında melekler ve azizler var. Aşağıda Meryem ve havariler diz çökmüş, yukarı bakıyor; iki melek onlara bir şey anlatıyor."
   },
   "i-athens": {
    "t": "Atina Okulu",
@@ -409,7 +434,8 @@
    "w": 680,
    "h": 464,
    "y": 35,
-   "ae": "Raphael"
+   "ae": "Raphael",
+   "d": "Büyük kemerli bir salonda eski Yunan bilginleri toplanmış. Ortada Platon eliyle göğü, Aristoteles yeri gösteriyor. Etraflarında başkaları konuşuyor, yazıyor, ders çalışıyor."
   },
   "i-bapt": {
    "t": "İsa’nın Vaftizi",
@@ -420,7 +446,8 @@
    "src": "https://www.wga.hu/html/p/piero/3/02bapti1.html",
    "w": 492,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Yahya bir derede duran İsa’nın başından su döküyor. İsa ellerini birleştirmiş, dua ediyor. Başının üstünde beyaz bir güvercin uçuyor. Solda bir ağacın yanında üç melek bekliyor."
   },
   "i-calvary": {
    "t": "Golgota Yolu",
@@ -431,7 +458,8 @@
    "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris18.html",
    "w": 680,
    "h": 629,
-   "y": 35
+   "y": 35,
+   "d": "İsa sırtında büyük bir tahta haç taşıyor, askerler onu şehrin kapısından dışarı götürüyor. Arkada Meryem ve kadınlar ağlayarak onu izliyor."
   },
   "i-confess": {
    "t": "Günah Çıkarma",
@@ -442,7 +470,8 @@
    "src": "https://www.wga.hu/html/c/crespi/giuseppe/sacramen/sacrame2.html",
    "w": 505,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Bir kilisede tahta bir günah çıkarma kabini var. İçinde oturan rahip bir eliyle kabinin penceresine dönmüş, dışarıda diz çökmüş bir adamın günahlarını dinliyor."
   },
   "i-disputa": {
    "t": "Kutsal Sır Üzerine Tartışma",
@@ -454,7 +483,8 @@
    "w": 1600,
    "h": 1154,
    "y": 35,
-   "ae": "Raphael"
+   "ae": "Raphael",
+   "d": "Resim ikiye bölünmüş. Yukarıda bulutların üstünde İsa, Meryem, Yahya ve azizler oturuyor, en tepede Baba Tanrı var. Aşağıda bir sunağın üstündeki kutsanmış ekmeğin çevresinde papalar ve din bilginleri konuşuyor."
   },
   "i-george": {
    "t": "Aziz Yorgi ve Ejderha",
@@ -466,7 +496,8 @@
    "w": 516,
    "h": 680,
    "y": 35,
-   "ae": "Raphael"
+   "ae": "Raphael",
+   "d": "Zırhlı Aziz Yorgi beyaz bir ata binmiş, mızrağını yerdeki ejderhaya saplıyor. Arkada kurtardığı prenses diz çökmüş, dua ediyor."
   },
   "i-greg": {
    "t": "Aziz Gregorius’un Ayini",
@@ -477,7 +508,8 @@
    "src": "https://www.wga.hu/html/b/baldung/2/02altar2.html",
    "w": 680,
    "h": 485,
-   "y": 35
+   "y": 35,
+   "d": "Aziz Gregorius sunağın önünde diz çökmüş Ayin yapıyor. Sunağın üstünde yaralı İsa beliriyor, kollarını açmış. Etraftaki kardinaller ve rahipler bunu görüyor."
   },
   "i-instros": {
    "t": "Tesbihin Kuruluşu",
@@ -488,7 +520,8 @@
    "src": "https://www.wga.hu/html/t/tiepolo/gianbatt/2_gesuat/02gesuat.html",
    "w": 268,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Bir kilisenin tavan resmi. Gökyüzünde melekler ve Meryem görünüyor. Aşağıda merdivenlerin üstünde Aziz Dominik insanlara tesbih dağıtıyor; en altta günahkârlar karanlığa düşüyor."
   },
   "i-jerome": {
    "t": "Aziz Hieronymus",
@@ -499,7 +532,8 @@
    "src": "https://www.wga.hu/html/r/ribera/1/jerome.html",
    "w": 537,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Yaşlı Aziz Hieronymus belinden yukarısı çıplak, kırmızı bir örtüye sarınmış. Elinde bir kalem var, yukarıdan çalan bir boruya bakıyor. Önünde açık bir kâğıt tomarı ve bir kafatası duruyor."
   },
   "i-lamb": {
    "t": "Kuzu’ya Tapınma",
@@ -510,7 +544,8 @@
    "src": "https://www.wga.hu/html/e/eyck_van/jan/09ghent/1open3/l3adora.html",
    "w": 680,
    "h": 414,
-   "y": 35
+   "y": 35,
+   "d": "Yeşil bir çayırın ortasında bir sunak var. Sunağın üstünde göğsünden kan akan bir kuzu duruyor, çevresinde melekler diz çökmüş. Her yönden azizler, peygamberler, din adamları ve kadınlar kalabalık gruplar halinde kuzuya geliyor."
   },
   "i-lastjud": {
    "t": "Son Yargı",
@@ -521,7 +556,8 @@
    "src": "https://www.wga.hu/html/m/memling/1early3/02last.html",
    "w": 680,
    "h": 483,
-   "y": 35
+   "y": 35,
+   "d": "Üç parçalı bir resim. Ortada İsa bir gökkuşağının üstünde oturuyor, altında Başmelek Mikail ruhları teraziyle tartıyor. Solda kurtulanlar cennetin kapısına çıkıyor, sağda mahkûm olanlar ateşe düşüyor."
   },
   "i-michael": {
    "t": "Başmelek Mikail",
@@ -544,7 +580,8 @@
    "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris01.html",
    "w": 672,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Bir ahırın çatısı altında Meryem uzanmış, bebek İsa’yı yatağına koyuyor. Önde Yusuf oturmuş düşünüyor. Yanda koyunlar ve iki çoban var, yukarıda melekler uçuyor."
   },
   "i-nicholas": {
    "t": "Myralı Aziz Nikola",
@@ -555,7 +592,8 @@
    "src": "https://www.wga.hu/html/a/angelico/00/11fieso3.html",
    "w": 231,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Aziz Nikola piskopos giysileri ve başlığıyla ayakta duruyor. Bir elinde piskopos asası, öbüründe bir kitap var. Arkası altın renkli."
   },
   "i-pantoc": {
    "t": "Mesih Pantokrator (ikon)",
@@ -567,7 +605,8 @@
    "w": 529,
    "h": 680,
    "y": 35,
-   "ae": "Unknown icon painter"
+   "ae": "Unknown icon painter",
+   "d": "Eski bir tahta ikon. İsa önden bakıyor, başının çevresinde altın bir hale var. Sağ eliyle kutsuyor, sol elinde süslü bir İncil tutuyor."
   },
   "i-patmos": {
    "t": "Patmos’ta Aziz Yuhanna",
@@ -578,7 +617,8 @@
    "src": "https://www.wga.hu/html/b/bosch/5panels/05patmos.html",
    "w": 458,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Genç Yuhanna Patmos adasında bir tepede oturmuş, kucağındaki kitaba yazıyor. Gökyüzünde Meryem beliriyor ve bir melek onu gösteriyor. Sağ altta küçük, garip bir şeytan yaratık duruyor."
   },
   "i-paulath": {
    "t": "Pavlus Atina’da Vaaz Ediyor",
@@ -590,7 +630,8 @@
    "w": 680,
    "h": 528,
    "y": 35,
-   "ae": "Raphael"
+   "ae": "Raphael",
+   "d": "Pavlus kırmızı giysiyle bir basamağın üstünde duruyor, kollarını kaldırmış Atinalılara vaaz ediyor. Önünde kalabalık oturmuş onu dinliyor. Arkada yuvarlak sütunlu bir tapınak var."
   },
   "i-petpaul": {
    "t": "Havariler Petrus ve Pavlus",
@@ -601,7 +642,8 @@
    "src": "https://www.wga.hu/html/g/greco_el/10/1003grec.html",
    "w": 579,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Havariler Petrus ve Pavlus yan yana duruyor. Solda sarı giysili, beyaz sakallı Petrus elinde bir anahtar tutuyor. Sağda kırmızı giysili Pavlus elini açık bir kitabın üstüne koymuş."
   },
   "i-prodig": {
    "t": "Savurgan Oğulun Dönüşü",
@@ -612,7 +654,8 @@
    "src": "https://www.wga.hu/html/r/rembrand/14biblic/69newtes.html",
    "w": 509,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Evden ayrılıp her şeyini kaybeden oğul geri dönmüş, yırtık giysilerle babasının önünde diz çökmüş. Yaşlı baba iki eliyle onu sırtından sarıyor. Yanda büyük kardeş ayakta bakıyor."
   },
   "i-resur": {
    "t": "Diriliş",
@@ -623,7 +666,8 @@
    "src": "https://www.wga.hu/html/p/piero/3/08resur1.html",
    "w": 640,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "İsa mezarından çıkıyor, bir ayağı mezarın kenarında, elinde haçlı bir bayrak var. Önde dört asker uyuyor. Arkada solda ağaçlar çıplak, sağda yapraklı."
   },
   "i-rosary": {
    "t": "Tesbihli Meryem ve Çocuk",
@@ -634,7 +678,8 @@
    "src": "https://www.wga.hu/html/m/murillo/1/109muril.html",
    "w": 456,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Meryem oturmuş, bebek İsa’yı kucağında tutuyor. İkisi de bize bakıyor. Bebek İsa’nın elinde bir tesbih sarkıyor."
   },
   "i-rosegar": {
    "t": "Gül Çelenkleri Bayramı",
@@ -645,7 +690,8 @@
    "src": "https://www.wga.hu/html/d/durer/1/05/3rose.html",
    "w": 680,
    "h": 571,
-   "y": 35
+   "y": 35,
+   "d": "Meryem bebek İsa’yı kucağında tutarak ortada oturuyor. Papa, imparator ve önde diz çökmüş insanlar onun etrafında. Meryem, İsa ve melekler onların başına güllerden çelenkler koyuyor."
   },
   "i-sultan": {
    "t": "Aziz Fransuva Sultanın Huzurunda",
@@ -656,7 +702,8 @@
    "src": "https://www.wga.hu/html/g/giotto/assisi/upper/legend/franc11.html",
    "w": 628,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Aziz Fransuva Mısır sultanının sarayında. Sultan tahtında oturmuş, ona bakıyor. Fransuva, imanını göstermek için yanan bir ateşin içinden geçmeyi teklif ediyor. Sultanın din adamları korkup geri çekiliyor."
   },
   "i-transf": {
    "t": "Suretin Değişmesi",
@@ -668,7 +715,8 @@
    "w": 463,
    "h": 680,
    "y": 35,
-   "ae": "Raphael"
+   "ae": "Raphael",
+   "d": "Yukarıda İsa bembeyaz parlayarak bir dağın üstünde havada duruyor, iki yanında Musa ile İlyas var. Üç havari yere kapanmış. Aşağıda bir kalabalık, hasta bir çocuğu iyileştirmeleri için diğer havarilere getiriyor."
   },
   "i-trent": {
    "t": "Trento Konsili",
@@ -690,7 +738,8 @@
    "src": "https://www.wga.hu/html/b/barocci/eucharis.html",
    "w": 419,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "İsa bir masanın başında ayakta, elinde ekmek, havarilerine Son Akşam Yemeği’ni veriyor. Havariler etrafında dua ediyor, biri yere eğilmiş. Yukarıda iki küçük melek uçuyor."
   },
   "i-comm": {
    "t": "Aziz Hieronymus’un Son Komünyonu",
@@ -701,7 +750,8 @@
    "src": "https://www.wga.hu/html/d/domenich/1/lastcomm.html",
    "w": 417,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Yaşlı ve zayıf Aziz Hieronymus ölmek üzere. İki kişi onu tutuyor. Altın giysili bir rahip ona son kez Komünyon veriyor. Yukarıda melekler uçuyor, yerde aslanı yatıyor."
   },
   "i-matha": {
    "t": "Matalı Aziz Yuhanna’nın İlk Ayini",
@@ -712,7 +762,8 @@
    "src": "https://www.wga.hu/html/c/carreno/mass_mat.html",
    "w": 462,
    "h": 680,
-   "y": 35
+   "y": 35,
+   "d": "Bir kilisede Aziz Yuhanna sunağın önünde ilk Ayini’ni yapıyor ve kutsanmış ekmeği yukarı kaldırıyor. Tepede bulutların üstünde İsa, Baba Tanrı ve melekler görünüyor."
   },
   "n-antwerp": {
    "t": "Anvers Katedrali",
@@ -1078,7 +1129,8 @@
    "w": 922,
    "h": 590,
    "y": 50,
-   "ae": "Ilustração Portuguesa, 29 October 1917"
+   "ae": "Ilustração Portuguesa, 29 October 1917",
+   "d": "1917’de bir Portekiz dergisinde çıkan fotoğraflar. Fatima’da açık arazide toplanmış kalabalık başını kaldırmış, güneşe bakıyor. Bazıları şapkasını çıkarmış, bazıları elini gözüne siper etmiş."
   },
   "mira-zeytun": {
    "t": "Zeytun’daki görünmenin 1968 fotoğrafı",
@@ -1090,7 +1142,8 @@
    "w": 286,
    "h": 500,
    "y": 30,
-   "ae": "Anonymous photograph"
+   "ae": "Anonymous photograph",
+   "d": "Kahire’deki Zeytun kilisesinin kubbesi, gece çekilmiş siyah beyaz bir fotoğraf. Kubbenin yanında, havada parlak beyaz bir ışık ve bir kadın silueti görünüyor."
   },
   "mira-guadalupe": {
    "t": "Guadalupe Meryem Ana’sı tasviri",
@@ -1102,7 +1155,8 @@
    "src": "https://commons.wikimedia.org/wiki/File:Virgen_de_guadalupe1.jpg",
    "w": 788,
    "h": 1226,
-   "y": 25
+   "y": 25,
+   "d": "Meksika’daki tilmanın üstündeki tasvirin tamamı. Meryem başı hafif eğik, ellerini birleştirmiş dua ediyor. Yıldızlı mavi-yeşil bir pelerin giymiş, çevresinde güneş ışınları var, ayaklarının altında bir hilal ve bir melek duruyor."
   },
   "mira-lourdes": {
    "t": "Lourdes’taki mağara, 1890’lar",
@@ -1113,7 +1167,8 @@
    "src": "https://www.loc.gov/item/2001698648/",
    "w": 1024,
    "h": 766,
-   "y": 50
+   "y": 50,
+   "d": "Lourdes’taki mağaranın 1890’lardaki renkli fotoğrafı. Kayanın oyuğunda beyaz bir Meryem heykeli duruyor. Mağaranın duvarında iyileşenlerin bıraktığı koltuk değnekleri asılı, önünde tahta sıralar var."
   },
   "mira-kefen": {
    "t": "Torino Kefeni: kumaş ve negatif görüntüsü",
@@ -1125,7 +1180,8 @@
    "w": 708,
    "h": 465,
    "y": 30,
-   "ae": "Photo: Dianelos Georgoudis"
+   "ae": "Photo: Dianelos Georgoudis",
+   "d": "Torino Kefeni’nde bir yüzün iki görüntüsü yan yana. Solda kumaş kendi hâliyle: soluk kahverengi lekeler. Sağda fotoğraf negatifi: aynı lekelerden sakallı bir adamın yüzü açıkça çıkıyor."
   },
   "mira-tilma": {
    "t": "Tilmadaki yüz, yakından",
@@ -1137,7 +1193,8 @@
    "w": 515,
    "h": 570,
    "y": 35,
-   "ae": "Photo: Lyricmac"
+   "ae": "Photo: Lyricmac",
+   "d": "Guadalupe tasvirinde Meryem’in yüzü, yakından. Başı eğik, gözleri yere bakıyor, yüzü sakin. Başında yeşil, altın kenarlı bir örtü var."
   },
   "mira-lanciano": {
    "t": "Lanciano’daki et ve kan kalıntıları",
@@ -1149,7 +1206,8 @@
    "w": 667,
    "h": 1200,
    "y": 25,
-   "ae": "Photo: AFC photo"
+   "ae": "Photo: AFC photo",
+   "d": "Lanciano’daki gümüş kutsal emanet kabı. Tepedeki yuvarlak camın içinde ete dönüşmüş ekmek, aşağıdaki kristal kadehte kana dönüşmüş şaraptan kalan pıhtılar duruyor. İki yanında gümüş melekler var."
   },
   "mira-bolsena": {
    "t": "Bolsena Ayini",
@@ -1161,7 +1219,8 @@
    "w": 1200,
    "h": 786,
    "y": 50,
-   "ae": "Raphael, Apostolic Palace, Vatican"
+   "ae": "Raphael, Apostolic Palace, Vatican",
+   "d": "Raffaello’nun bir duvar resmi. Bir rahip sunakta Ayin yaparken kutsanmış ekmekten kan damlıyor ve sunak örtüsüne düşüyor. Solda halk, sağda diz çökmüş papa ve askerler bunu görüyor."
   },
   "mira-bernadette": {
    "t": "Bernadette’in bedeni, 1925",
@@ -1173,7 +1232,8 @@
    "w": 1200,
    "h": 768,
    "y": 40,
-   "ae": "Anonymous photograph"
+   "ae": "Anonymous photograph",
+   "d": "1925’te çekilmiş siyah beyaz bir fotoğraf. Rahibe giysili Bernadette, ölümünden 46 yıl sonra, uyuyor gibi yatıyor. Elinde bir tesbih var, yanında beyaz zambaklar duruyor."
   },
   "mira-padre-pio": {
    "t": "Padre Pio",
@@ -1185,7 +1245,8 @@
    "w": 1200,
    "h": 1494,
    "y": 30,
-   "ae": "Anonymous photograph"
+   "ae": "Anonymous photograph",
+   "d": "Padre Pio’nun renkli portresi. Kahverengi keşiş giysili, beyaz sakallı yaşlı bir adam, hafifçe gülümseyerek yana bakıyor."
   },
   "mira-vianney": {
    "t": "Aziz Jean-Marie Vianney’nin bedeni, Ars",
@@ -1197,7 +1258,8 @@
    "w": 831,
    "h": 533,
    "y": 50,
-   "ae": "Photo: Herwig Reidlinger"
+   "ae": "Photo: Herwig Reidlinger",
+   "d": "Ars’taki kilisede, süslü altın bir camekânın içinde Aziz Jean-Marie Vianney’nin bedeni yatıyor. Rahip giysileri içinde, başı bir yastıkta."
   },
   "mira-buenos-aires": {
    "t": "Buenos Aires Metropolitan Katedrali",
@@ -1209,7 +1271,8 @@
    "w": 960,
    "h": 720,
    "y": 50,
-   "ae": "Photo: Alexis González Molina"
+   "ae": "Photo: Alexis González Molina",
+   "d": "Buenos Aires Metropolitan Katedrali’nin içi. Uzun bir koridorun iki yanında sıralar var. En sonda altın süslemeli büyük bir sunak duruyor, önünde birkaç ziyaretçi var."
   },
   "y-presen": {
    "t": "İsa’nın Tapınağa Sunuluşu",
@@ -1232,7 +1295,8 @@
    "w": 917,
    "h": 500,
    "y": 50,
-   "ae": "Rembrandt (etching)"
+   "ae": "Rembrandt (etching)",
+   "d": "Siyah beyaz bir gravür. Sinagogun önünde uzun giysili, sarıklı yaşlı Yahudi adamlar duruyor. Öndeki iki adam bir şey konuşuyor, biri bastonuna dayanmış."
   },
   "y-isaiah": {
    "t": "Peygamber Yeşaya",
@@ -1243,7 +1307,8 @@
    "src": "https://www.wga.hu/html/m/michelan/3sistina/3prophet/03_7pr3.html",
    "w": 943,
    "h": 960,
-   "y": 40
+   "y": 40,
+   "d": "Peygamber Yeşaya bir tahtta oturuyor, elindeki kitabı kapatmış, başını yana çevirmiş. Arkasındaki bir çocuk ona bir şey gösteriyor; Yeşaya düşünceli."
   },
   "y-daniel": {
    "t": "Peygamber Daniel",
@@ -1254,7 +1319,8 @@
    "src": "https://www.wga.hu/html/m/michelan/3sistina/3prophet/07_7pr5.html",
    "w": 951,
    "h": 950,
-   "y": 40
+   "y": 40,
+   "d": "Genç peygamber Daniel bir tahtta oturuyor. Kucağındaki büyük kitabı bir çocuk taşıyor, Daniel yanındaki küçük masaya yazıyor."
   },
   "y-zechar": {
    "t": "Peygamber Zekeriya",
@@ -1265,7 +1331,8 @@
    "src": "https://www.wga.hu/html/m/michelan/3sistina/3prophet/00_3pr1.html",
    "w": 926,
    "h": 970,
-   "y": 40
+   "y": 40,
+   "d": "Yaşlı peygamber Zekeriya bir tahtta oturuyor, uzun beyaz sakallı. Elindeki kitabı okuyor. Arkasında iki çocuk ona bakıyor."
   },
   "y-entry": {
    "t": "İsa’nın Kudüs’e Girişi",
@@ -1276,7 +1343,8 @@
    "src": "https://www.wga.hu/html/g/giotto/padova/3christ/chris10.html",
    "w": 1289,
    "h": 1200,
-   "y": 50
+   "y": 50,
+   "d": "İsa bir eşeğe binmiş, Kudüs’ün kapısına geliyor. İnsanlar giysilerini yola seriyor, ağaçlardan dal kesiyor. Arkasında havariler yürüyor."
   },
   "y-joseph": {
    "t": "Yusuf’un Kardeşleriyle Tanışması",
@@ -1287,7 +1355,8 @@
    "src": "https://www.wga.hu/html/c/corneliu/fresco2.html",
    "w": 1030,
    "h": 833,
-   "y": 45
+   "y": 45,
+   "d": "Mısır’da bir sarayda Yusuf kardeşlerine kendini tanıtıyor ve onlardan birini kucaklıyor. Kardeşleri şaşkın; biri yere diz çökmüş, bazıları yüzünü kapatıyor."
   },
   "y-passov": {
    "t": "Fısıh Yemeği",
@@ -1298,7 +1367,8 @@
    "src": "https://www.wga.hu/html/b/bouts/dirk_e/lastsupp/4feast.html",
    "w": 900,
    "h": 1135,
-   "y": 50
+   "y": 50,
+   "d": "Ayakta duran bir aile masanın etrafında Fısıh yemeğini yiyor. Ellerinde birer değnek var, yolculuğa hazır gibiler. Masada kuzu eti ve ekmek var."
   },
   "y-simeon": {
    "t": "Tapınakta Bebek İsa’yı Kucağına Alan Simeon",
@@ -1309,7 +1379,8 @@
    "src": "https://www.wga.hu/html/r/rembrand/14biblic/68newtes.html",
    "w": 1000,
    "h": 1228,
-   "y": 40
+   "y": 40,
+   "d": "Yaşlı Simeon tapınakta bebek İsa’yı kucağına almış. Gözleri kapalı, mutlu ve huzurlu. Arkasında karanlıkta Meryem duruyor."
   },
   "r-visit": {
    "t": "Ziyaret",
