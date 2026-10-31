@@ -424,7 +424,7 @@ function Art-Sq([string]$key) {
   $lic = if ($a.loc -match '^CC') { " · $($a.loc)" } else { '' }
   $data = "$(TA 'data-t' $a.t) $(TA 'data-a' $a.a) $(TA 'data-loc' $a.loc) $(TA 'data-d' $a.d)"
   return "<figure class=`"art-sq`" $data><button type=`"button`" class=`"art-sq-btn`" aria-haspopup=`"dialog`" $(TA 'aria-label' "Büyüt: $($a.t)")>" +
-    "$(Art-Img $key 'art-sq-img' '(min-width: 600px) 13rem, 9rem')</button><figcaption>$(Art-A $a) · <cite>$($a.t)</cite>$lic</figcaption></figure>"
+    "$(Art-Img $key 'art-sq-img' '(min-width: 600px) 13rem, 9rem')</button><figcaption>$(Art-A $a)$lic</figcaption></figure>"
 }
 function Mira-Fig([string]$key) {
   if (-not $key) { return '' }
@@ -444,9 +444,17 @@ function Paint-Sections([string]$body, [string]$file) {
   foreach ($p in $map.PSObject.Properties) {
     $key = $p.Value
     $fig = Art-Sq $key
-    # the painting goes under the section's heading, in the run of the text
+    # the painting goes at the start of the section's first paragraph, so its top is level with
+    # that paragraph's first line and the headings above it keep the full width (not a paragraph
+    # inside a fold, a box, a list of steps or a quote: then it stays under the heading)
     $rx = '(<(?:section|article)\b[^>]*\bid="' + [regex]::Escape($p.Name) + '"[^>]*>)<div class="ill-art" aria-hidden="true"><svg[\s\S]*?</svg></div>(<div class="ill-body">(?:<p class="ill-kick">[\s\S]*?</p>)?<h2[\s\S]*?</h2>)'
-    $body = [regex]::Replace($body, $rx, { param($m) $m.Groups[1].Value + $m.Groups[2].Value + $fig })
+    $m = [regex]::Match($body, $rx)
+    if (-not $m.Success) { continue }
+    $head = $m.Groups[1].Value + $m.Groups[2].Value
+    $rest = $body.Substring($m.Index + $m.Length)
+    $para = [regex]::Match($rest, '<p(?=[\s>])(?![^>]*class="(?:ill-kick|faq-cat-en|label)")')
+    $at = if ($para.Success -and $rest.Substring(0, $para.Index) -notmatch '</section>|<blockquote|<details|kk-quick|stage-list') { $para.Index } else { 0 }
+    $body = $body.Substring(0, $m.Index) + $head + $rest.Substring(0, $at) + $fig + $rest.Substring($at)
   }
   return $body
 }
