@@ -37,6 +37,6 @@ Diğer bütün yazılar (aziz hayatları, meseller, mucizeler, Kilise’nin tari
 
 ## Yazı tipleri
 
-Metinler ve başlıklar için Literata, menüler ve disleksi ayarı için Lexend, logo için EB Garamond. Üçü de SIL Open Font License ile kullanılır ve sitenin kendi sunucusundan yüklenir.
+Metinler ve başlıklar için Inter, menüler ve disleksi ayarı için Lexend, logo için EB Garamond. Üçü de SIL Open Font License ile kullanılır ve sitenin kendi sunucusundan yüklenir.
 
 *Son güncelleme: {{TARIH}}*
