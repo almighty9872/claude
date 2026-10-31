@@ -1,6 +1,6 @@
 /* =====================================================================
- * EN: "Ateizme Cevap" (Answering Atheism), the second page of the Tartış
- *     (Debate) section, built like "İslam'a Cevap": a short summary
+ * EN: "Ateizme Cevap" (Answering Atheism), the second page of the Cevap Ver
+ *     (Answer) section, built like "İslam'a Cevap": a short summary
  *     ("tldr", each item pointing to its section) and then the full case
  *     in four parts: moments from debates and admissions by atheists,
  *     that God exists, that Jesus rose from the dead, and answers to the

@@ -763,7 +763,7 @@
         shown at every width, that opens the full-site overlay menu.
         Plain DOM, no dependencies.
      --------------------------------------------------------------- */
-  // Desktop menus: Öğren, Tartış, Dua Et, Keşfet open on hover (a mouse), on click and from the
+  // Desktop menus: Öğren, Cevap Ver, Dua Et, Keşfet open on hover (a mouse), on click and from the
   // keyboard; Escape or a click elsewhere closes them. A page with more inside opens its own list
   // beside the panel the same way.
   function initDeskNav() {

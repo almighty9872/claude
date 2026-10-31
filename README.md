@@ -4,7 +4,7 @@ A static Catholic resource site in Turkish. Only the Katekizm pages keep a TR | 
 
 The site uses plain HTML, CSS and JavaScript. It makes no CDN requests (the one exception is Cloudflare Turnstile, the spam check, loaded only on the contact page); the fonts (Lexend for all text, EB Garamond capitals for the logo) are self-hosted in `assets/fonts/`, and the one library, three.js for the Rosary's 3D beads on a computer, is bundled into `assets/vendor/`. You can open `index.html` straight from disk, or upload the folder to any static host.
 
-Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Tartış, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows today's date and time. The home page's "Bugün" card shows the day's liturgical season and the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, beside the day's saint and Rosary mysteries.
+Apart from the contact form, the site makes no outside network calls, and it never asks for the visitor's location. On a computer the header carries five dropdown menus (Öğren, Cevap Ver, Dua Et, Keşfet, built by `Desk-Nav` in `tools/build.ps1`, and İletişim / Contact, built by `Dn-Contact`: the contact page, then the pages about the site under "Site Hakkında"); below 980px they fold into the full-menu overlay opened from the hamburger icon, which shows today's date and time. The home page's "Bugün" card shows the day's liturgical season and the colour the priest wears (green, violet, white, red or rose), worked out in the browser from the date alone by `assets/script.js`'s `liturgicalDay()`, beside the day's saint and Rosary mysteries.
 
 ## Language: Turkish
 
@@ -55,9 +55,9 @@ sss.html                Frequently asked questions, grouped by topic
 kiliseler.html          Parish locator: a map of Turkey; a city's dot opens the list of its churches
 kilise/<id>.html        One page per church: Mass and visiting times, address, history, sources
 kilise-tarihi.html      Kilise'nin Tarihi: the Church's history, era by era, every event with its picture
-islama-cevap.html       Tartış (Debate): Answering Islam, a short summary then the full case in four parts
-ateizme-cevap.html      Tartış: Answering atheism, the same layout
-yahudilere-cagri.html   Tartış: A call to the Jewish people, in the humble tone the Vatican's documents ask for
+islama-cevap.html       Cevap Ver (Answer): Answering Islam, a short summary then the full case in four parts
+ateizme-cevap.html      Cevap Ver: Answering atheism, the same layout
+yahudilere-cagri.html   Cevap Ver: A call to the Jewish people, in the humble tone the Vatican's documents ask for
 tesbih-tarihi.html      The history of the Rosary
 iletisim.html           Contact page: a form that posts to the Cloudflare Worker (no address is published)
 sozluk.html             Glossary of Catholic terms, A-Z
@@ -165,7 +165,7 @@ Search reads the data files at runtime, so edits show up in search results immed
 
 ## Phones: pages as app screens
 
-Below 980px wide, every page except the home screen is shown as a screen of an app (`initAppView` in `assets/script.js`). The Katekizm's pages and the calendar of saints are read in levels: the page's sections as a list, a section with its items as a list, an item on its own. Every other page is one long page, as on a computer. All of the page's text stays in its HTML, so search engines read the same page on a phone as on a computer. Each level has its own `#anchor` address, so the browser's back steps back a level and links open the right level. The bar at the top leads back to the page's home screen app (Öğren, Dua Et, Keşfet, Tartış) or the page it belongs to (`Av-Parent` in `tools/build.ps1`); where a level holds Latin originals, a Türkçe / Latina switch swaps the text in place. Which elements are levels on each page is set in `AV_PAGES` in `assets/script.js`.
+Below 980px wide, every page except the home screen is shown as a screen of an app (`initAppView` in `assets/script.js`). The Katekizm's pages and the calendar of saints are read in levels: the page's sections as a list, a section with its items as a list, an item on its own. Every other page is one long page, as on a computer. All of the page's text stays in its HTML, so search engines read the same page on a phone as on a computer. Each level has its own `#anchor` address, so the browser's back steps back a level and links open the right level. The bar at the top leads back to the page's home screen app (Öğren, Dua Et, Keşfet, Cevap Ver) or the page it belongs to (`Av-Parent` in `tools/build.ps1`); where a level holds Latin originals, a Türkçe / Latina switch swaps the text in place. Which elements are levels on each page is set in `AV_PAGES` in `assets/script.js`.
 
 An X beside the settings gear returns to the home screen, where the four app icons are. The home screen's bar is drawn after the App Store's: a glyph and a name for each app, the open one in a capsule; tapping another app switches to it at once. The type, on every screen size, is Lexend (`assets/fonts`, SIL Open Font License); the logo alone is set in EB Garamond. Resizing a window across the phone width (980px) reloads an inner page in the other layout. Further into a page, its small icon and name lead straight back to the page's first screen (going back in the browser's history as many steps as that takes), with the levels in between shown under them. On the Katekizm's own pages a magnifier in the bar opens the question search across it.
 

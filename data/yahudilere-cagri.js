@@ -1,6 +1,6 @@
 /* =====================================================================
  * EN: "Yahudilere Çağrı" (A Call to Our Jewish Friends), the third page of
- *     the Tartış (Debate) section, built like "İslam'a Cevap": a short
+ *     the Cevap Ver (Answer) section, built like "İslam'a Cevap": a short
  *     summary ("tldr", each item pointing to its section) and then the
  *     case in three parts and a closing. Written to follow the Church's
  *     own documents on Catholic-Jewish relations (Nostra Aetate 4, 1974,

@@ -3351,7 +3351,7 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .prayer-book .latin summary::before { content: "▸ "; }
 .prayer-book .latin[open] > summary::before { content: "▾ "; }
 
-/* Tartış pages: the summary ("Özet Geç :)" / "TL;DR") is folded shut when the page loads, as
+/* Cevap Ver pages: the summary ("Özet Geç :)" / "TL;DR") is folded shut when the page loads, as
    a small pill holding only its title; clicked, it grows to the full-width box of cards */
 .ic-tldr-s { display: flex; align-items: center; justify-content: center; gap: .45rem; cursor: pointer; list-style: none; border-radius: .8rem; }
 .ic-tldr-s::-webkit-details-marker { display: none; }
@@ -3383,7 +3383,7 @@ html.av main .av-cur .prayer-book .text-card:not(.church-card) { border-top: 0; 
 .ch-pick select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .ch-pick .btn { flex: none; height: 2.75rem; padding: 0 1.1rem; }
 
-/* ---------- Desktop menus (980px and up): Öğren, Tartış, Dua Et, Keşfet ----------
+/* ---------- Desktop menus (980px and up): Öğren, Cevap Ver, Dua Et, Keşfet ----------
    Each opens a panel of its pages on hover, click or keyboard; a page with more inside
    (the Katekizm, the Rosary, the saints) opens a further list beside it. The hamburger and
    its overlay are for narrower screens only. */
@@ -4010,7 +4010,7 @@ main .page-head.painted.ph-pan .ph-win .ph-art { position: absolute !important; 
 /* a story's picture: whole, at most about half a screen tall, in the middle */
 .mira-fig { text-align: center; }
 .mira-img { width: auto; max-width: 100%; max-height: min(26rem, 60vh); margin: 0 auto; }
-/* Tartış pages: a smaller summary ("Özet Geç"), closed and open */
+/* Cevap Ver pages: a smaller summary ("Özet Geç"), closed and open */
 .ic-tldr:has(> .ic-tldr-d:not([open])) { padding: .05rem 1rem; }
 .ic-tldr:has(> .ic-tldr-d:not([open])) .section-title { margin: .3rem 0; font-size: 1rem; }
 .ic-tldr-s > svg { width: 1.05rem; height: 1.05rem; }

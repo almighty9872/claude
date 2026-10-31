@@ -817,7 +817,7 @@ $IcoAsk = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="curre
 $IcoGlossary = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h11a2.5 2.5 0 0 1 2.5 2.5v13.5H7.5A2.5 2.5 0 0 1 5 18z"/><path d="M5 18a2.5 2.5 0 0 1 2.5-2.5h11"/><path d="m9.4 12.4 2.3-5.6 2.3 5.6M10.2 10.6h3"/></svg>'
 $IcoPin = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>'
 $SmallCross = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor">' + $CrossShapes + '</g></svg>'
-# Tartış: two speech bubbles; İslam'a Cevap: a speech bubble with a cross in it
+# Cevap Ver: two speech bubbles; İslam'a Cevap: a speech bubble with a cross in it
 $IcoDebate = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.6h9.6a1.6 1.6 0 0 1 1.6 1.6v5.2a1.6 1.6 0 0 1-1.6 1.6H8.4l-3.6 3v-3H4a1.6 1.6 0 0 1-1.6-1.6V6.2A1.6 1.6 0 0 1 4 4.6Z"/><path d="M15.2 8.6H20a1.6 1.6 0 0 1 1.6 1.6v5.2A1.6 1.6 0 0 1 20 17h-.8v3l-3.6-3h-4.4a1.6 1.6 0 0 1-1.6-1.6V13"/></svg>'
 $IcoAnswer = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.8h14a1.8 1.8 0 0 1 1.8 1.8v9.2a1.8 1.8 0 0 1-1.8 1.8h-7.4L7 20.4v-3.8H5a1.8 1.8 0 0 1-1.8-1.8V5.6A1.8 1.8 0 0 1 5 3.8Z"/><path d="M12 6.6v7.2M9.4 9.2h5.2"/></svg>'
 # Ateizme Cevap: a planet with its ring and a small star
@@ -862,7 +862,7 @@ $SheetNav = @(
     @{ href = 'sozluk.html'; t = 'Sözlük'; s = 'Katolik terimleri, A-Z'; ico = $IcoGlossary },
     @{ href = 'katolik-sureci.html'; t = 'Katolik Olma Süreci'; s = 'OCIA, adım adım' },
     @{ href = 'meseller.html'; t = "İsa$($Apos)nın Meselleri"; s = 'Otuz iki mesel' }) },
-  @{ label = 'Tartış'; items = @(
+  @{ label = 'Cevap Ver'; items = @(
     @{ href = 'islama-cevap.html'; t = "İslam$($Apos)a Cevap"; s = 'İslam, kendi kaynaklarıyla' },
     @{ href = 'ateizme-cevap.html'; t = 'Ateizme Cevap'; s = 'Akıl ve kanıtla Tanrı' },
     @{ href = 'yahudilere-cagri.html'; t = 'Yahudilere Çağrı'; s = "Tanah$($Apos)ın sözleriyle Mesih" }) },
@@ -918,7 +918,7 @@ foreach ($gs in $GreatSaints.saints) { $AppOf["$($gs.id).html"] = 'kesfet' }
 # All of the page's text stays in its HTML, as on a computer; the phone shows it one level at a
 # time. The bar at the top leads back to where the page belongs: its app on the home screen, or
 # the page it is part of.
-$AppNames = @{ ogren = 'Öğren'; tartis = 'Tartış'; dua = 'Dua Et'; kesfet = 'Keşfet' }
+$AppNames = @{ ogren = 'Öğren'; tartis = 'Cevap Ver'; dua = 'Dua Et'; kesfet = 'Keşfet' }
 $KatekizmSub = @('motu-proprio.html', 'giris.html', 'iman-ikrari.html', 'kutsal-sirlar.html', 'mesihte-yasam.html', 'hristiyan-duasi.html')
 function Av-Parent([string]$trFile) {
   if ($trFile -like 'kilise/*' -or $trFile -like 'kiliseler-*.html') { return @{ href = 'kiliseler.html'; t = 'Kilise Bul' } }
@@ -1105,7 +1105,7 @@ $(Nav-Sheet $current)
 </div>
 "@
 }
-# The footer's site map follows the header's menus (Öğren, Tartış, Dua Et, Keşfet, Site), with the
+# The footer's site map follows the header's menus (Öğren, Cevap Ver, Dua Et, Keşfet, Site), with the
 # Katekizm's parts as a column of their own and the Rosary's history beside the Rosary
 function Foot-Group([string]$label, $items) {
   $lis = ($items | ForEach-Object { "<li><a href=`"$($_.href)`">$($_.t)</a></li>" }) -join ''
@@ -2048,7 +2048,7 @@ Write-Page -File 'topraklarimizda-hristiyanlik.html' -Title "$($Anatolia.title) 
   -Path 'topraklarimizda-hristiyanlik.html' -Body $anatoliaBody -JsonLd @((Breadcrumb-Ld 'Topraklarımızda Hristiyanlık' 'topraklarimizda-hristiyanlik.html'))
 
 # ================================================================== İSLAM'A CEVAP (islama-cevap.html)
-# The Tartış section's first page: a short summary ("Kısaca"), each point leading to its section,
+# The Cevap Ver section's first page: a short summary ("Kısaca"), each point leading to its section,
 # then the full case in parts. In the text, "Kur’an 9:29" (and "; 6:114" after it) links to that
 # verse on quran.com, and "Buhari 25", "Müslim 1452a", "Ebu Davud 4002", "Tirmizi 2653", "İbn Mace 1944" or
 # "Nesai 3959" to the hadith on sunnah.com
@@ -2095,7 +2095,7 @@ function Ic-Blocks([string]$s) {
 }
 $IcoArrowL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
 $IcoSections = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>'
-# One case page of the Tartış section (İslam'a Cevap, Ateizme Cevap): the summary, the parts, the
+# One case page of the Cevap Ver section (İslam'a Cevap, Ateizme Cevap): the summary, the parts, the
 # closing, the sources and the footnote, from one data file of the same shape
 
 # Each part of a case page, and its closing, as an illustrated section: drawing and colour by part id
@@ -2172,7 +2172,7 @@ Write-Page -File 'islama-cevap.html' -Title "$(Plain $Ic.title): Kur'an ve Hadis
   -Path 'islama-cevap.html' -Body $icBody -JsonLd @($icLd, (Breadcrumb-Ld "İslam$($Apos)a Cevap" 'islama-cevap.html'))
 
 # ================================================================== ATEIZME CEVAP (ateizme-cevap.html)
-# The Tartış section's second page, built like İslam'a Cevap from data/ateizme-cevap.js: God's
+# The Cevap Ver section's second page, built like İslam'a Cevap from data/ateizme-cevap.js: God's
 # existence argued from reason and evidence, then the testimony of miracles and converts, then the
 # objections (evil, hiddenness, many religions, science).
 $Ac = Read-Data 'ateizme-cevap.js'
@@ -2183,7 +2183,7 @@ Write-Page -File 'ateizme-cevap.html' -Title "$(Plain $Ac.title): Akıl ve Kanı
   -Path 'ateizme-cevap.html' -Body $acBody -JsonLd @($acLd, (Breadcrumb-Ld 'Ateizme Cevap' 'ateizme-cevap.html'))
 
 # ================================================================== YAHUDILERE CAGRI (yahudilere-cagri.html)
-# The Tartış section's third page, built like the other two from data/yahudilere-cagri.js: a humble
+# The Cevap Ver section's third page, built like the other two from data/yahudilere-cagri.js: a humble
 # witness to Jesus as Israel's Messiah, from the Tanakh, written to the Church's own guidance on
 # Catholic-Jewish relations. Its paintings are named in data/tablolar.json.
 $Yc = Read-Data 'yahudilere-cagri.js'
@@ -2653,7 +2653,7 @@ Write-Page -File 'tesbih-duasi.html' -Title "$($Rosary.title) | $SiteName" `
 
 # ================================================================== TESBIHIN TARIHI (tesbih-tarihi.html)
 # The history of the Rosary, linked from the Tesbih Duası page under its intro. Read like the
-# Tartış pages (numbered sections, quotes, sources); the two lists of Bible references fold away.
+# Cevap Ver pages (numbered sections, quotes, sources); the two lists of Bible references fold away.
 $RosaryHistory = Read-Data 'tesbih-tarihi.js'
 function Th-Inline([string]$s) { return [regex]::Replace([regex]::Replace($s, '\*\*(.+?)\*\*', '<strong>$1</strong>'), '(?<![\*\w])\*([^*]+)\*(?!\*)', '<em>$1</em>') }
 # One paragraph per line; "- " list item, "> " quotation, "[[+ Title]] ... [[-]]" a part that folds away
@@ -3436,7 +3436,7 @@ Write-Page -File '404.html' -Title "Sayfa bulunamadı | $SiteName" -Description 
 # Phones: an iPhone-like home screen. Today's saint, the date with the liturgical season (the card
 # takes the season's colour) and the day's rosary mysteries, then four app icons: Ara opens the
 # Katekizm search over the blurred screen, and Öğren, Dua Et and Keşfet open Settings-style pages
-# listing their pages, with each page's own sections one level further in (see initHome). Tartış
+# listing their pages, with each page's own sections one level further in (see initHome). Cevap Ver
 # (İslam'a Cevap) took Ara's place; the Katekizm's own pages keep their search.
 # Desktop: the same three cards in a row, a search bar, and the three lists side by side.
 # Each page's own content, down to single questions and prayers, is laid out in the browser from
@@ -3456,7 +3456,7 @@ $HomeApps = @(
        s = 'Katolik olmak isteyenler için OCIA süreci, adım adım.' },
     @{ f = 'meseller.html'; ico = $IcoScroll; t = "İsa$($Apos)nın Meselleri"
        s = 'Otuz iki mesel, düz bir dille açıklanmış.' }) },
-  @{ id = 'tartis'; t = 'Tartış'; s = 'İtirazlara cevap, inancın savunusu'; ico = $IcoDebate; pages = @(
+  @{ id = 'tartis'; t = 'Cevap Ver'; s = 'Sorulara cevap, inancın gerekçeleri'; ico = $IcoDebate; pages = @(
     @{ f = 'islama-cevap.html'; ico = $IcoAnswer; t = "İslam$($Apos)a Cevap"
        s = "İslam$($Apos)ın iddiaları, Kur$($Apos)an ve hadislerle sınanıyor." },
     @{ f = 'ateizme-cevap.html'; ico = $IcoCosmos; t = 'Ateizme Cevap'
@@ -3565,7 +3565,7 @@ function Home-Page {
   $lists = @"
 <div class="hm-journey">
   <div class="hj-grid">
-    <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">Tartış</p><h2 class="hj-h" id="hj-h">Sorular ve itirazlar</h2>
+    <section class="hj-debate" aria-labelledby="hj-h"><p class="hj-kick">Cevap Ver</p><h2 class="hj-h" id="hj-h">Sorular ve itirazlar</h2>
       <div class="hd-grid">
         <a class="hd-card" href="islama-cevap.html">$(Art-Img 'w-sultan' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">İslam$($Apos)a Cevap</span><span class="hd-d">Kur$($Apos)an, hadisler ve İslam tarihi ışığında Hristiyanlığa yöneltilen sorulara cevaplar.</span><span class="hd-more">Okuyun$IcoChevR</span></a>
         <a class="hd-card" href="ateizme-cevap.html">$(Art-Img '34thomas' 'hd-art' '(min-width: 980px) 24vw, 50vw')<span class="hd-t">Ateizme Cevap</span><span class="hd-d">Tanrı var mı, İsa dirildi mi? Aklın ve tarihin söyledikleri.</span><span class="hd-more">Okuyun$IcoChevR</span></a>

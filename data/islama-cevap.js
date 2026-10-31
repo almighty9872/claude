@@ -1,6 +1,6 @@
 /* =====================================================================
- * EN: "İslam'a Cevap" (Answering Islam), the first page of the Tartış
- *     (Debate) section. A short summary ("tldr", each item pointing to its
+ * EN: "İslam'a Cevap" (Answering Islam), the first page of the Cevap Ver
+ *     (Answer) section. A short summary ("tldr", each item pointing to its
  *     section) and then the full case in four parts. The case follows the
  *     Christian apologists Sam Shamoun (Hubal and Baal), David Wood and
  *     Avery of GodLogic Apologetics (the Islamic dilemma and its escape
